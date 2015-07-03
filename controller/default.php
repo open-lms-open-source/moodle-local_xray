@@ -30,8 +30,9 @@ class local_xray_controller_default extends mr_controller {
      */
     public function view_action() {
         global $OUTPUT, $PAGE, $COURSE;
-        $output = get_string("welcome_xray","local_xray");
-
+        
+        // Load renderer.
+        $output  = $this->output->welcome();
         return $output;
     }
 }

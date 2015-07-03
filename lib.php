@@ -1,5 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
+require_once $CFG->dirroot.'/local/xray/classes/local_xray_reports_utils.php';
 /**
  * Local xray lang file
  *
@@ -27,12 +28,13 @@ function local_xray_extends_navigation(global_navigation $nav) {
 															     array("controller" => "reports", "action" => "list")));
 	
 	// Add links to reports.
-	$firstnode->add(get_string('report1', 'local_xray'), 
-			        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => "reporta")));
-	$firstnode->add(get_string('report2', 'local_xray'), 
-			        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => "reportb")));
-	$firstnode->add(get_string('report3', 'local_xray'), 
-			        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => "reportc")));		
+	$reports = local_xray_reports_utils::list_reports();
+	if(!empty($reports)) {
+		foreach($reports as $report) {
+			$firstnode->add($report->fullname,
+					        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => $report->id)));			
+		}
+	}
 
 }
 
@@ -50,24 +52,24 @@ function local_xray_extends_settings_navigation($settingsnav, $context) {
 	}
 
 	if ($settingnode = $settingsnav->find('courseadmin', navigation_node::TYPE_COURSE)) {
-			
-	// Add links on block navigation.
-	$extranavigation = $settingnode->add(get_string('navigation_xray', 'local_xray'), 
-			                                  new moodle_url('/local/xray/view.php', 
-			                                  		        array("controller" => "default", "action" => "view")), 
-			                                  navigation_node::TYPE_CONTAINER);
-	
-	$firstnode = $extranavigation->add(get_string('reports', 'local_xray'), 
-												  new moodle_url('/local/xray/view.php', 
-															     array("controller" => "reports", "action" => "list")));
-	
-	// Add links to reports.
-	$firstnode->add(get_string('report1', 'local_xray'), 
-			        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => "reporta")));
-	$firstnode->add(get_string('report2', 'local_xray'), 
-			        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => "reportb")));
-	$firstnode->add(get_string('report3', 'local_xray'), 
-			        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => "reportc")));	
+				
+		// Add links on block navigation.
+		$extranavigation = $settingnode->add(get_string('navigation_xray', 'local_xray'), 
+				                                  new moodle_url('/local/xray/view.php', 
+				                                  		        array("controller" => "default", "action" => "view")), 
+				                                  navigation_node::TYPE_CONTAINER);
+		
+		$firstnode = $extranavigation->add(get_string('reports', 'local_xray'), 
+													  new moodle_url('/local/xray/view.php', 
+																     array("controller" => "reports", "action" => "list")));
+		// Add links to reports.
+		$reports = local_xray_reports_utils::list_reports();
+		if(!empty($reports)) {
+			foreach($reports as $report) {
+				$firstnode->add($report->fullname,
+						        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => $report->id)));
+			}
+		}
 	
 	}
 }
