@@ -30,9 +30,9 @@ function local_xray_extends_navigation(global_navigation $nav) {
 	// Add links to reports.
 	$reports = local_xray_reports_utils::list_reports();
 	if(!empty($reports)) {
-		foreach($reports as $reportid => $reportname) {
-			$firstnode->add($reportname,
-					        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => $reportid)));			
+		foreach($reports as $report) {
+			$firstnode->add($report[1],
+					        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => $report[0])));			
 		}
 	}
 
@@ -65,9 +65,9 @@ function local_xray_extends_settings_navigation($settingsnav, $context) {
 		// Add links to reports.
 		$reports = local_xray_reports_utils::list_reports();
 		if(!empty($reports)) {
-			foreach($reports as $reportid => $reportname) {
-				$firstnode->add($reportname,
-						        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => $reportid)));
+			foreach($reports as $report) {
+				$firstnode->add($report[1],
+						        new moodle_url('/local/xray/view.php', array("controller" => "reports", "action" => $report[0])));
 			}
 		}
 	

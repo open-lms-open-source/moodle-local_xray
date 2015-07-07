@@ -8,8 +8,8 @@ $(document).ready(function() {
 	$('#reportslist').dataTable( {
         "bProcessing": true,
         "bServerSide": true,
-	    "paging": true,
-	    "searching": true,
+	    "paging": false,
+	    "searching": false,
 	    "retrieve": true,
 	    "oLanguage": {
 	      "sProcessing": "Fetching Data, Please wait..."
