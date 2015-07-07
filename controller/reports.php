@@ -40,15 +40,7 @@ class local_xray_controller_reports extends mr_controller {
     
     public function jsonlist_action() {
     	
-    	// TODO:: test
-    	
-    	echo '{ "data": [
-	["Trident","Internet Explorer 4.0","Win 95+","4","X"],
-	["Trident","Internet Explorer 5.0","Win 95+","5","C"]
-] }';
-    	exit();
-    		
-     echo json_encode(local_xray_reports_utils::list_reports());
+        echo json_encode(array("data" => local_xray_reports_utils::list_reports()));
     	exit();
     }
     

@@ -43,11 +43,6 @@ class local_xray_renderer extends plugin_renderer_base {
 			                <th>Fullname</th>
 			            </tr>
 			        </thead>
-			        <tfoot>
-			            <tr>
-			                <th>Fullname</th>
-			            </tr>
-			        </tfoot>
 			        </table>";
     	
     	return $output;
