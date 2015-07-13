@@ -3,7 +3,7 @@
  * Local xray integration
  * @author Pablo Pagnone
  * @author German Vitale
- * @package local/xray
+ * @package local_xray
  */
 
 $plugin->version  = 2015070302;
