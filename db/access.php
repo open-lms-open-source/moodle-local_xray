@@ -5,7 +5,7 @@ defined('MOODLE_INTERNAL') or die();
  *
  * @author Pablo Pagnone
  * @author German Vitale
- * @package local/xray
+ * @package local_xray
  */
  
 $capabilities = array(

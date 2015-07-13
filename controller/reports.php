@@ -7,7 +7,7 @@ require_once $CFG->dirroot.'/local/xray/classes/local_xray_reports_utils.php';
  *
  * @author Pablo Pagnone
  * @author German Vitale
- * @package local/xray
+ * @package local_xray
  */
 class local_xray_controller_reports extends mr_controller {
 

@@ -6,7 +6,7 @@ defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
  *
  * @author Pablo Pagnone
  * @author German Vitale
- * @package local/xray
+ * @package local_xray
  */
 class local_xray_controller_default extends mr_controller {
 

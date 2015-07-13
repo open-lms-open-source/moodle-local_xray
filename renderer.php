@@ -6,7 +6,7 @@ require_once $CFG->dirroot.'/local/xray/classes/local_xray_reports_utils.php';
  * Renderer
  *
  * @author Pablo Pagnone
- * @package local/xray
+ * @package local_xray
  */
 class local_xray_renderer extends plugin_renderer_base {
 
