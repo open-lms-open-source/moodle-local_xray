@@ -37,23 +37,26 @@ abstract class wsapi {
     public static function login() {
         $username = get_config(self::PLUGIN, 'xrayusername');
         $pass     = get_config(self::PLUGIN, 'xraypassword');
-        $url      = get_config(self::PLUGIN, 'xrayurl');
-        if (($username === false) || ($pass === false) || ($url === false)) {
+        $baseurl      = get_config(self::PLUGIN, 'xrayurl');
+        if (($username === false) || ($pass === false) || ($baseurl === false)) {
             return false;
         }
         $data = array('email' => $username, 'pass' => $pass);
-        $result = xrayws::instance()->post_hook($url+'/user/login', $data);
+        $url = sprintf('%s/user/login', $baseurl);
+        $result = xrayws::instance()->post_hook($url, $data);
         if ($result) {
             $data = json_decode(xrayws::instance()->lastresponse());
             $result = (!is_null($data) && isset($data['ok']) && $data['ok'] && xrayws::instance()->hascookie());
         }
 
+        /** @var bool $result */
         return $result;
     }
 
     /**
-     * Generic GET call for API
      * @param string $url
+     * @param null|int $start
+     * @param null|int $count
      * @return bool|mixed
      */
     protected static function generic_getcall($url, $start = null, $count = null) {
@@ -93,8 +96,8 @@ abstract class wsapi {
         if ($baseurl === false) {
             return false;
         }
-
-        return self::generic_getcall($baseurl + '/' + $domain, $start, $count);
+        $url = sprintf('%s/%s', $baseurl, $domain);
+        return self::generic_getcall($url, $start, $count);
     }
 
     /**
