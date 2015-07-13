@@ -3,7 +3,7 @@
  * View renderer
  * @author Pablo Pagnone
  * @author German Vitale
- * @package local/xray
+ * @package local_xray
  */
 require_once('../../config.php');
 require($CFG->dirroot.'/local/mr/bootstrap.php');

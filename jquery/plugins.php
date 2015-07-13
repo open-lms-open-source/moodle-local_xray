@@ -4,7 +4,7 @@
  * for loading via Moodle's plugin manager
  * 
  * @author Pablo Pagnone
- * @package local/xray
+ * @package local_xray
  */
 
 $plugins = array(
