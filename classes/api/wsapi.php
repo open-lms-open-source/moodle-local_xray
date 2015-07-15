@@ -120,11 +120,11 @@ abstract class wsapi {
 
     /**
      * Return specific course report
-     * @param string $domain
-     * @param int $courseid
-     * @param string $report
-     * @param null|int $start
-     * @param null|int $count
+     * @param string $domain Name of the domain
+     * @param int $courseid numeric id of the course within domain
+     * @param string $report name of the report to be used
+     * @param null|int $start pagination start (default null)
+     * @param null|int $count pagination element count (default null)
      * @return bool|mixed
      * @throws \Exception
      * @throws \dml_exception

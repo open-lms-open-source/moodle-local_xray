@@ -27,8 +27,6 @@ defined('MOODLE_INTERNAL') || die;
 /* @var $ADMIN admin_root */
 if ($hassiteconfig) { // needs this condition or there is error on login page
 
-    require_once $CFG->dirroot . '/local/xray/classes/local_xray_reports_utils.php';
-
     $settings = new admin_settingpage('local_xray', new lang_string('pluginname', 'local_xray'));
 
     // Xray url webservice
