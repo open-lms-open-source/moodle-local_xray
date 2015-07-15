@@ -149,14 +149,18 @@ class xrayws {
     }
 
     /**
-     * test
+     * Returns path to the available CA Certificate needed to establish secure
+     * connection to the web service endpoint.
+     *
+     * @return null|string
      */
     public static function getcert() {
         global $CFG;
 
-        // Bundle in dataroot always wins.
-        if (is_readable("$CFG->dataroot/xrayca.pem")) {
-            return realpath("$CFG->dataroot/xrayca.pem");
+        // Bundle in dataroot always wins if present.
+        $cacert = "$CFG->dataroot/xrayca.pem";
+        if (is_readable($cacert)) {
+            return realpath($cacert);
         }
 
         // Next comes the default from php.ini
@@ -168,10 +172,11 @@ class xrayws {
         /**
          * This is a standard set of certificates that ships with Moodle
          * Should work for any standard issue certificate.
-         * For self-signed certificates make sure to set xrayca.pem properly
+         * For self-signed certificates make sure to set xrayca.pem or curl.cainfo properly
          */
-        if (is_readable("$CFG->libdir/cacert.pem")) {
-            return realpath("$CFG->libdir/cacert.pem");
+        $cacert = "$CFG->libdir/cacert.pem";
+        if (is_readable($cacert)) {
+            return realpath($cacert);
         }
 
         return null;
@@ -183,6 +188,7 @@ class xrayws {
      * @return int
      */
     public static function header_callback($ch, $header) {
+        ($ch === null); // To remove unused variable warning.
         $length = strlen($header);
         if ($length > 11) {
             $pos = stripos($header, 'set-cookie:');
