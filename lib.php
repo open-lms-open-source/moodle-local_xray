@@ -1,6 +1,5 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
-require_once $CFG->dirroot.'/local/xray/classes/local_xray_reports_utils.php';
 /**
  * Local xray lang file
  *
