@@ -19,6 +19,7 @@ class local_xray_renderer extends plugin_renderer_base {
     }
     /**
      * List reports.
+     * Example of implementation of table with jquery datatable.
      */
     public function list_reports() {
         global $CFG, $PAGE;
@@ -45,6 +46,32 @@ class local_xray_renderer extends plugin_renderer_base {
                     </table>";
 
         return $output;
+    }
+    
+    /**
+     * Example of report activity of student by day.
+     */
+    public function report_activity_of_student_by_day() {
+    	
+    	global $CFG, $PAGE;
+    	
+    	// Load Jquery.
+    	$PAGE->requires->jquery();
+    	$PAGE->requires->jquery_plugin('ui');
+    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2
+    	
+    	
+    	// Strings for js.
+    	//$PAGE->requires->string_for_js('', 'local_xray');
+    	$output = "";
+    	$output .= html_writer::tag('div', get_string("report_activity_of_student_by_day","local_xray"), array());
+    	$output .= html_writer::empty_tag('img', array("class" => "imgResizable bs_tooltip fancybox",
+    			                                       "src" => new moodle_url("/local/xray/img/report_activity_of_student_by_day.png"),
+    			                                       "width" => "100%"
+    	));
+    	
+    	return $output;    	
+    	
     }
     
 }

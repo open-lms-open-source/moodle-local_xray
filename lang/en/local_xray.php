@@ -21,16 +21,18 @@
  * @author German Vitale
  * @package local_xray
  */
-$string['list_reports'] = 'Availables reports'; 
 $string['navigation_xray'] = 'Xray Integration'; 
 $string['navitationcourse_xray'] = 'Xray Integration';
 $string['pluginname'] = 'X-Ray Integration';
+$string['welcome_xray'] = 'Welcome to xray';
+
+/* Reports */
 $string['reports'] = 'Reports';
 $string['reporta'] = 'Report A';
 $string['reportb'] = 'Report B';
 $string['reportc'] = 'Report C';
 $string['reportd'] = 'Report D';
-$string['welcome_xray'] = 'Welcome to xray';
+$string['report_activity_of_student_by_day'] = 'Activity of student by day';
 
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';

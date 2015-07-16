@@ -12,5 +12,10 @@ $plugins = array(
         'files' => array(
             'dataTables/jquery.dataTables.min.js', 'dataTables/jquery.dataTables.min.css'
         )
-     ),
+     ),    
+	 'local_xray-fancybox2' => array(
+        'files' => array(
+            'fancybox2/jquery.fancybox.js', 'fancybox2/jquery.fancybox.css'
+        )
+     )
 );
