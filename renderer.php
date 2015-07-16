@@ -53,7 +53,7 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function report_activity_of_student_by_day() {
     	
-    	global $CFG, $PAGE;
+    	global $CFG, $PAGE, $OUTPUT;
     	
     	// Load Jquery.
     	$PAGE->requires->jquery();
@@ -66,7 +66,7 @@ class local_xray_renderer extends plugin_renderer_base {
     	$output = "";
     	$output .= html_writer::tag('div', get_string("report_activity_of_student_by_day","local_xray"), array());
     	$output .= html_writer::empty_tag('img', array("class" => "imgResizable bs_tooltip fancybox",
-    			                                       "src" => new moodle_url("/local/xray/img/report_activity_of_student_by_day.png"),
+    			                                       "src" => $OUTPUT->pix_url("report_activity_of_student_by_day", "local_xray"),     
     			                                       "width" => "100%"
     	));
     	
