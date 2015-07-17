@@ -1,0 +1,13 @@
+/* General plugin styles */
+#page-local-xray-view .reportsname {
+    background-color: #bfffcf;
+    color: #f89829;
+    padding: 5px 0 5px 3px;
+}
+
+
+/* Report Activity of student by day */
+#page-local-xray-view .report_activity_of_student_by_day {
+	width:800px;
+	text-align:center;
+}

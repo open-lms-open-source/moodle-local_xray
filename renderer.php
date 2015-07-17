@@ -28,13 +28,13 @@ class local_xray_renderer extends plugin_renderer_base {
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         $PAGE->requires->jquery_plugin('local_xray-dataTables', 'local_xray');  // Load jquery datatables  
-        $PAGE->requires->js('/local/xray/js/list_reports.js', true);
+        $PAGE->requires->jquery_plugin('local_xray-list_reports', 'local_xray');
 
         // Strings for js.
         //$PAGE->requires->string_for_js('', 'local_xray');
 
         $output = "";
-        $output .= html_writer::tag('div', get_string("list_reports","local_xray"), array());
+        $output .= html_writer::tag('div', get_string("reports","local_xray"), array("class" => "reportsname"));
         
         // Table jquery datatables for show reports.
         $output .= "<table id='reportslist' class='display' cellspacing='0' width='100%'>
@@ -58,17 +58,18 @@ class local_xray_renderer extends plugin_renderer_base {
     	// Load Jquery.
     	$PAGE->requires->jquery();
     	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2
-    	
-    	
-    	// Strings for js.
-    	//$PAGE->requires->string_for_js('', 'local_xray');
+    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2 	
+        $PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
+        
     	$output = "";
-    	$output .= html_writer::tag('div', get_string("report_activity_of_student_by_day","local_xray"), array());
-    	$output .= html_writer::empty_tag('img', array("class" => "imgResizable bs_tooltip fancybox",
-    			                                       "src" => $OUTPUT->pix_url("report_activity_of_student_by_day", "local_xray"),     
-    			                                       "width" => "100%"
-    	));
+    	$output .= html_writer::tag('div', get_string("report_activity_of_student_by_day","local_xray"), array("class" => "reportsname"));
+    	
+    	// TODO:: Change url of image to load.
+    	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => "http://www.techjournal.org/wp-content/uploads/2011/06/Moodlerooms-01.jpg"));
+    	$output .= html_writer::empty_tag('img', array("class" => "report_activity_of_student_by_day",
+    			                                       "src" => $OUTPUT->pix_url("report_activity_of_student_by_day", "local_xray")
+    	                                  ));
+    	$output .= html_writer::end_tag('a');
     	
     	return $output;    	
     	

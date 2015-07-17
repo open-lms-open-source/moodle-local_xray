@@ -55,8 +55,8 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
     $reports = local_xray_reports_utils::list_reports();
     if (!empty($reports)) {
         $r = array();
-        foreach ($reports as $reportid => $reportname) {
-            $r[$reportid] = $reportname;
+        foreach ($reports as $report) {
+            $r[$report[0]] = $report[1];
         }
 
         $settings->add(new admin_setting_configmulticheckbox("enabledreports",
