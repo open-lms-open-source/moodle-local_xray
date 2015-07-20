@@ -11,3 +11,10 @@
 	width:800px;
 	text-align:center;
 }
+
+
+.glyphicon {
+	width:10px;
+	height:10px;
+	background-color:#fff;
+}

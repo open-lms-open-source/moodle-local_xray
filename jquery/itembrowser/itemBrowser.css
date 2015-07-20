@@ -1,0 +1,130 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+#itemBrowser {
+	float: left;
+	position: relative;
+	height: 100%;
+	width: 100%;
+	overflow:hidden;
+	background-color: #000;
+}
+
+#itemBrowserNav{
+	/*position: absolute;*/
+	left: 0px;
+}
+
+#itemBrowserNav a{
+    display: block;
+}
+
+#itemBrowserContent {
+	float: left;
+	position:relative;
+	width: 100%;
+	height: 99%;
+	margin-top: 1%;
+}
+
+.name{
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#iconWrap,#galleryWrap {
+	width: 100%;
+	height: 95%;
+	position: relative;
+	overflow: auto;
+	margin-top: 10px;
+	padding-right: 2%;
+	padding-left: 5%;
+}
+
+#iconWrap .icon{
+	float: left;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+#iconWrap .icon img{
+	float: left;
+	height: 80%;
+	width: 80%;
+	margin-top: 5%;
+	margin-right: 0%;
+	margin-bottom: 5%;
+	margin-left: 10%;
+}
+
+#iconWrap .icon img.highlight, #listWrap .listitem img.highlight{
+    box-shadow: 0px 0px 5px 5px #900;
+}
+
+#iconWrap .icon .name{
+	float: left;
+	height: 10%;
+	width: 100%;
+	line-height:30px;
+}
+
+#listWrap, #namesWrap {
+	height: 80%;
+	width: 95%;
+	list-style-type: none;
+	padding: 0px;
+	float: left;
+	overflow: auto;
+	margin-left:5%;
+	margin-top: 40px;
+}
+
+#listWrap .listitem, #namesWrap .listitem{
+	float: left;
+	width: 100%;
+	margin-top: 10px;
+	overflow: hidden;
+	margin-left:0;
+}
+
+#listWrap .listitem img{
+	float: left;
+	margin-right: 10px;
+	margin-left: 10px;
+	position: relative;
+	text-align: center;
+	height: 95%;
+	box-shadow:#333 2px 2px 2px;
+	border: 2px solid #666;
+}
+
+#listWrap .listitem .name, #namesWrap .listitem .name{
+	text-align: left;
+	float: left;
+	margin-left:5%;
+	margin-top: 50%;
+}
+
+#galleryWrap .item{
+	width: 30%; position: relative; float: left;margin: 2px;
+}
+#galleryWrap .item img{
+	width: 100%;
+}
+#galleryWrap .item .title{
+	position: absolute; bottom: 0px;width: 100%;opacity: 0.7;height: 0px; background: #111;
+	border-top: 1px solid #000;overflow: hidden;padding: 1px 0px 0px 10px ;
+}
+
+.expand{
+    position: absolute;
+    display: block;
+    top     : 2px;
+    right   : 2px;
+}

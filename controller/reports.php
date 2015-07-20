@@ -66,9 +66,10 @@ class local_xray_controller_reports extends mr_controller {
      *
      */
     public function reportb_action() {
+    	
         global $OUTPUT, $PAGE, $COURSE;
         $output = "";
-    
+        $output .= $this->output->report_shaniformat();
     	return $output;
     }
     

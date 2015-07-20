@@ -29,5 +29,15 @@ $plugins = array(
         'files' => array(
             'show_on_lightbox.js'
         )
+     ),    
+	 'local_xray-itemBrowser' => array(
+        'files' => array(
+            'itembrowser/itemBrowser.js',
+            'itembrowser/itemBrowser.css',
+            'ContentFlow/contentflow.js',
+            'ContentFlow/contentflow.css',
+        	'ContentFlow/mycontentflow.css',
+            'show_modal_xrayformat.js',
+        )
      )
 );
