@@ -49,17 +49,4 @@ class local_xray_controller_reports extends mr_controller {
         echo json_encode(array("data" => local_xray_reports_utils::list_reports()));
         exit();
     }
-    
-    /**
-     * Report C
-     *
-     */
-
-    public function reportdiscussionbyuser_action() {
-         
-        global $OUTPUT, $PAGE, $COURSE;
-        $output = "";
-        $output .= $this->output->report_duscission_user();
-        return $output;
-    }
 }

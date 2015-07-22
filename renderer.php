@@ -77,7 +77,7 @@ class local_xray_renderer extends plugin_renderer_base {
     	
     }
     
-    public function report_duscission_user(){
+    public function discussion_by_user(){
     
         global $CFG, $PAGE, $OUTPUT;
     

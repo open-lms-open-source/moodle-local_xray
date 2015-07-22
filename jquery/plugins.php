@@ -50,6 +50,7 @@ $plugins = array(
     'local_xray-image_gallery_with_vertical_thumbnail' => array(
         'files' => array(
             'image_gallery_with_vertical_thumbnail.js',
+            'image_gallery_with_vertical_thumbnail.css',
         )
     )
 );
