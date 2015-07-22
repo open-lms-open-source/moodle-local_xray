@@ -76,42 +76,6 @@ class local_xray_renderer extends plugin_renderer_base {
     	return $output;    	
     	
     }
-    /**
-     * Example to show images like modal x-ray format.
-     * This use plugin worked by Shani on x-ray site.
-     *  
-     */
-    public function report_shaniformat() {
-    	
-    	global $CFG, $PAGE, $OUTPUT;
-    	 
-    	// Load Jquery.
-    	$PAGE->requires->jquery();
-    	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');
-    	$PAGE->requires->jquery_plugin('local_xray-itemBrowser', 'local_xray');
-    	
-    	$output = "";
-    	$output .= html_writer::tag('div', get_string("report_activity_of_student_by_day","local_xray"), array("class" => "reportsname"));
-    	 
-    	$output .= "<div id='itemBrowserArea'>
-    			    <div id='xrayItemBrowser' style='height:600px; width: 1200px;'></div>
-    			    <div style='display: none; position: fixed; left: 10px;top: 10px;border: 1px solid #009; padding: 10px; background: white;' 
-    			         id='itbopenlinkopts'>
-						<div style='margin-bottom: 2px;'>
-							<a class='btn btn-primary btn-xs' id='itbnewtab'>Open report in new tab</a>
-						</div>
-						<div style='margin-bottom: 2px;'>
-							<a class='btn btn-primary btn-xs' id='itbthistab'>Open report in this tab</a>
-						</div>
-						<div style='margin-bottom: 2px;'>
-							<a class='btn btn-primary btn-xs' href='#'>Cancel</a>
-						</div>
-					</div>
-    			    </div>";
-
-    	return $output;    	
-    }
     
     public function report_duscission_user(){
     
