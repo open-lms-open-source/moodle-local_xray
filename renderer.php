@@ -47,28 +47,30 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $output;
     }
-    
+
     /**
      * Example of report activity of student by day.
+     * @param stdClass $response
      */
-    public function report_activity_of_student_by_day() {
+    public function activity_of_student_by_day($element) {
     	
     	global $CFG, $PAGE, $OUTPUT;
-    	
+
     	// Load Jquery.
     	$PAGE->requires->jquery();
     	$PAGE->requires->jquery_plugin('ui');
     	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2 	
         $PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
         
+        $baseurl  = get_config("local_xray", 'xrayurl');
+
     	$output = "";
-    	$output .= html_writer::tag('div', get_string("report_activity_of_student_by_day","local_xray"), array("class" => "reportsname"));
-    	
-    	// TODO:: Change url of image to load.
-    	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => "http://www.techjournal.org/wp-content/uploads/2011/06/Moodlerooms-01.jpg"));
-    	$output .= html_writer::empty_tag('img', array("class" => "report_activity_of_student_by_day",
-    			                                       "src" => $OUTPUT->pix_url("report_activity_of_student_by_day", "local_xray")
-    	                                  ));
+    	$output .= html_writer::tag('div', get_string("report_activity_of_student_by_day","local_xray"), array("class" => "reportsname"));  
+    	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $baseurl.$element->url));
+    	$output .= html_writer::empty_tag('img', array("class" => "activity_of_student_by_day",
+    			                                       "title" => $element->tooltip,
+    			                                       "src" => $baseurl.$element->url)
+    	                                  );
     	$output .= html_writer::end_tag('a');
     	
     	return $output;    	

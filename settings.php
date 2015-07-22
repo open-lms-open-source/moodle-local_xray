@@ -28,29 +28,30 @@ defined('MOODLE_INTERNAL') || die;
 if ($hassiteconfig) { // needs this condition or there is error on login page
 
     $settings = new admin_settingpage('local_xray', new lang_string('pluginname', 'local_xray'));
-
+    $configs = array();
+    
     // Xray url webservice
-    $settings->add(new admin_setting_configtext("xrayurl",
-        new lang_string("xrayurl", "local_xray"),
-        new lang_string("xrayurl_desc", "local_xray"),
-        ""));
+    $configs[] = new admin_setting_configtext("xrayurl",
+										      new lang_string("xrayurl", "local_xray"),
+										      new lang_string("xrayurl_desc", "local_xray"),
+										      "");
 
     // Xray user webservice
-    $settings->add(new admin_setting_configtext("xrayusername",
-        new lang_string("xrayusername", "local_xray"),
-        new lang_string("xrayusername_desc", "local_xray"),
-        ""));
+    $configs[] = new admin_setting_configtext("xrayusername",
+										      new lang_string("xrayusername", "local_xray"),
+										      new lang_string("xrayusername_desc", "local_xray"),
+										      "");
     // Xray password webservice
-    $settings->add(new admin_setting_password_unmask_encrypted("xraypassword",
-        new lang_string("xraypassword", "local_xray"),
-        new lang_string("xraypassword_desc", "local_xray"),
-        ""));
+    $configs[] = new admin_setting_configtext("xraypassword",
+											  new lang_string("xraypassword", "local_xray"),
+											  new lang_string("xraypassword_desc", "local_xray"),
+											  "");
 
     // Xray client identifier webservice
-    $settings->add(new admin_setting_configtext("xrayclientid",
-        new lang_string("xrayclientid", "local_xray"),
-        new lang_string("xrayclientid_desc", "local_xray"),
-        ""));
+    $configs[] = new admin_setting_configtext("xrayclientid",
+										      new lang_string("xrayclientid", "local_xray"),
+										      new lang_string("xrayclientid_desc", "local_xray"),
+										      "");
 
     $reports = local_xray_reports_utils::list_reports();
     if (!empty($reports)) {
@@ -59,12 +60,16 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
             $r[$report[0]] = $report[1];
         }
 
-        $settings->add(new admin_setting_configmulticheckbox("enabledreports",
-            new lang_string("enabledreports", "local_xray"),
-            new lang_string("enabledreports_desc", "local_xray"),
-            "",
-            $r));
+        $configs[] = new admin_setting_configmulticheckbox("enabledreports",
+												           new lang_string("enabledreports", "local_xray"),
+												           new lang_string("enabledreports_desc", "local_xray"),
+												           "",
+												           $r);
     }
-
+    
     $ADMIN->add('localplugins', $settings);
+    foreach($configs as $config) {
+    	$config->plugin = 'local_xray';
+    	$settings->add($config);
+    }
 }

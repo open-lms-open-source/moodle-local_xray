@@ -1,5 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
+require($CFG->dirroot.'/local/xray/classes/api/wsapi.php');
 
 /**
  * Xray integration Reports Controller
@@ -9,7 +10,10 @@ defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
  * @package local_xray
  */
 class local_xray_controller_reports extends mr_controller {
-
+	
+	const XRAY_COURSEID = 7; //TODO:: Example first integration. This is hardcoded for test with xray.
+	const XRAY_DOMAIN = "moodlerooms"; //TODO:: Example first integration. This is hardcoded for test with xray.
+	
     /**
      * Require capabilities
      */
@@ -45,23 +49,7 @@ class local_xray_controller_reports extends mr_controller {
         echo json_encode(array("data" => local_xray_reports_utils::list_reports()));
         exit();
     }
-    
-    /**
-     * Report A example
-     * Example: Activity of student by day.
-     *
-     */
-    public function reportactivityofstudentbyday_action() {
-    	
-        global $OUTPUT, $PAGE, $COURSE;
-        // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string('report_activity_of_student_by_day', 'local_xray'));
-        $output  = $this->output->report_activity_of_student_by_day();
 
-        return $output;
-    }
-    
-    
     /**
      * Report B
      *
@@ -86,5 +74,4 @@ class local_xray_controller_reports extends mr_controller {
         $output .= $this->output->report_duscission_user();
         return $output;
     }
-    
 }
