@@ -28,6 +28,12 @@ namespace local_xray\api;
 abstract class wsapi {
     const PLUGIN = 'local_xray';
 
+    const XRAYLIST          = 'xrayList';
+    const XRAYTABLE         = 'xrayTable';
+    const XRAYPLOT          = 'xrayPlot';
+    const XRAYSECTIONHEADER = 'xraySectionHeader';
+    const XRAYHEATMAP       = 'xrayHeatmap';
+
     /**
      * @return bool
      * @throws \Exception
@@ -37,7 +43,7 @@ abstract class wsapi {
     public static function login() {
         $username = get_config(self::PLUGIN, 'xrayusername');
         $pass     = get_config(self::PLUGIN, 'xraypassword');
-        $baseurl      = get_config(self::PLUGIN, 'xrayurl');
+        $baseurl  = get_config(self::PLUGIN, 'xrayurl');
         if (($username === false) || ($pass === false) || ($baseurl === false)) {
             return false;
         }
@@ -47,6 +53,10 @@ abstract class wsapi {
         if ($result) {
             $data = json_decode(xrayws::instance()->lastresponse());
             $result = (!is_null($data) && isset($data['ok']) && $data['ok'] && xrayws::instance()->hascookie());
+            if (!$result) {
+                // Should check this some more?
+                xrayws::instance()->resetcookie();
+            }
         }
 
         /** @var bool $result */
@@ -70,6 +80,11 @@ abstract class wsapi {
             }
             $query = http_build_query(array('start' => $start, 'count' => $count));
             $url .= '?' . $query;
+        }
+        if (!xrayws::instance()->hascookie()) {
+            if (!self::login()) {
+                return false;
+            }
         }
         $result = xrayws::instance()->get_withcookie($url);
         if ($result) {
@@ -122,23 +137,77 @@ abstract class wsapi {
      * Return specific course report
      * @param string $domain Name of the domain
      * @param int $courseid numeric id of the course within domain
-     * @param string $report name of the report to be used
+     * @param string $report name of the report to be used (See wiki documetation for available types)
+     * @param int $userid - numerical user id value
+     * @param string $date - single date in format YYYY-MM-DD
+     * @param string $subtype - optional report type (usually empty)
      * @param null|int $start pagination start (default null)
      * @param null|int $count pagination element count (default null)
      * @return bool|mixed
      * @throws \Exception
      * @throws \dml_exception
      */
-    public static function course($domain, $courseid, $report = '', $start = null, $count = null) {
+    public static function course($domain, $courseid, $report = '', $userid = null, $date = '', $subtype = '', $start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
         if ($baseurl === false) {
             return false;
         }
         $url = sprintf('%s/%s/course/%s', $baseurl, $domain, $courseid);
+        if (!empty($userid)) {
+            $url .= "/{$userid}";
+        }
         if (!empty($report)) {
             $url .= "/{$report}";
+        }
+        if (!empty($subtype)) {
+            $url .= "/{$subtype}";
+        }
+        if (!empty($date)) {
+            $url .= "/{$date}";
         }
         return self::generic_getcall($url, $start, $count);
     }
 
+    /**
+     * Get list of participants for domain
+     * @param string $domain
+     * @param null|int $start
+     * @param null|int $count
+     * @return bool|mixed
+     */
+    public static function participants($domain, $start = null, $count = null) {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        if ($baseurl === false) {
+            return false;
+        }
+
+        $url = sprintf('%s/participant', $baseurl, $domain);
+        return self::generic_getcall($url, $start, $count);
+    }
+
+    /**
+     * @param $domain
+     * @param $userid
+     * @param $report
+     * @param string $subtype
+     * @param string $date
+     * @param null $start
+     * @param null $count
+     * @return bool|mixed
+     */
+    public static function participantreport($domain, $userid, $report, $subtype = '', $date = '', $start = null, $count = null) {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        if ($baseurl === false) {
+            return false;
+        }
+
+        $url = sprintf('%s/participant/%s/%s', $baseurl, $domain, $userid, $report);
+        if (!empty($subtype)) {
+            $url .= "/{$subtype}";
+        }
+        if (!empty($date)) {
+            $url .= "/{$date}";
+        }
+        return self::generic_getcall($url, $start, $count);
+    }
 }
