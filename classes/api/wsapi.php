@@ -52,7 +52,7 @@ abstract class wsapi {
         $result = xrayws::instance()->post_hook($url, $data);
         if ($result) {
             $data = json_decode(xrayws::instance()->lastresponse());
-            $result = (!is_null($data) && isset($data['ok']) && $data['ok'] && xrayws::instance()->hascookie());
+            $result = (!is_null($data) && isset($data->ok) && $data->ok && xrayws::instance()->hascookie());
             if (!$result) {
                 // Should check this some more?
                 xrayws::instance()->resetcookie();
@@ -70,7 +70,7 @@ abstract class wsapi {
      * @return bool|mixed
      */
     protected static function generic_getcall($url, $start = null, $count = null) {
-        if (!empty($url)) {
+        if (empty($url)) {
             return false;
         }
 
