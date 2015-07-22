@@ -49,18 +49,6 @@ class local_xray_controller_reports extends mr_controller {
         echo json_encode(array("data" => local_xray_reports_utils::list_reports()));
         exit();
     }
-
-    /**
-     * Report B
-     *
-     */
-    public function reportb_action() {
-    	
-        global $OUTPUT, $PAGE, $COURSE;
-        $output = "";
-        $output .= $this->output->report_shaniformat();
-    	return $output;
-    }
     
     /**
      * Report C
