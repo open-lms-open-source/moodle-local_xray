@@ -266,7 +266,7 @@ abstract class wsapi {
             $url .= "/{$date}";
         }
         $url .= "/elements/{$name}";
-        return self::generic_getcall($url, $start, $count);
+        return self::generic_getcall($url);
     }
 
 }
