@@ -1,6 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
-require($CFG->dirroot.'/local/xray/controller/reports.php');
+require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 
 /**
  * Xray integration Reports Controller
