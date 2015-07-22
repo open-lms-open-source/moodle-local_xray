@@ -61,6 +61,7 @@ class local_xray_controller_reports extends mr_controller {
         return $output;
     }
     
+    
     /**
      * Report B
      *
@@ -77,10 +78,12 @@ class local_xray_controller_reports extends mr_controller {
      * Report C
      *
      */
-    public function reportc_action() {
+
+    public function reportdiscussionbyuser_action() {
+         
         global $OUTPUT, $PAGE, $COURSE;
         $output = "";
-    
+        $output .= $this->output->report_duscission_user();
         return $output;
     }
     
