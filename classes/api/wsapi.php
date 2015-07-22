@@ -169,6 +169,38 @@ abstract class wsapi {
     }
 
     /**
+     * @param string $domain
+     * @param int $courseid
+     * @param string $name - element name (element1, etc.)
+     * @param string $report
+     * @param null $userid
+     * @param string $date
+     * @param string $subtype
+     * @return bool|mixed
+     */
+    public static function courseelement($domain, $courseid, $name, $report = '', $userid = null, $date = '', $subtype = '') {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        if ($baseurl === false) {
+            return false;
+        }
+        $url = sprintf('%s/%s/course/%s', $baseurl, $domain, $courseid);
+        if (!empty($userid)) {
+            $url .= "/{$userid}";
+        }
+        if (!empty($report)) {
+            $url .= "/{$report}";
+        }
+        if (!empty($subtype)) {
+            $url .= "/{$subtype}";
+        }
+        if (!empty($date)) {
+            $url .= "/{$date}";
+        }
+        $url .= "/elements/{$name}";
+        return self::generic_getcall($url);
+    }
+
+    /**
      * Get list of participants for domain
      * @param string $domain
      * @param null|int $start
@@ -210,4 +242,31 @@ abstract class wsapi {
         }
         return self::generic_getcall($url, $start, $count);
     }
+
+    /**
+     * @param string $domain
+     * @param int $userid
+     * @param string $report
+     * @param string $name - name of the element
+     * @param string $subtype
+     * @param string $date
+     * @return bool|mixed
+     */
+    public static function participantreportelements($domain, $userid, $report, $name, $subtype = '', $date = '') {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        if ($baseurl === false) {
+            return false;
+        }
+
+        $url = sprintf('%s/participant/%s/%s', $baseurl, $domain, $userid, $report);
+        if (!empty($subtype)) {
+            $url .= "/{$subtype}";
+        }
+        if (!empty($date)) {
+            $url .= "/{$date}";
+        }
+        $url .= "/elements/{$name}";
+        return self::generic_getcall($url, $start, $count);
+    }
+
 }
