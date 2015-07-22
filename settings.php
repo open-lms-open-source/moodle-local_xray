@@ -52,20 +52,6 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
 										      new lang_string("xrayclientid", "local_xray"),
 										      new lang_string("xrayclientid_desc", "local_xray"),
 										      "");
-
-    $reports = local_xray_reports_utils::list_reports();
-    if (!empty($reports)) {
-        $r = array();
-        foreach ($reports as $report) {
-            $r[$report[0]] = $report[1];
-        }
-
-        $configs[] = new admin_setting_configmulticheckbox("enabledreports",
-												           new lang_string("enabledreports", "local_xray"),
-												           new lang_string("enabledreports_desc", "local_xray"),
-												           "",
-												           $r);
-    }
     
     $ADMIN->add('localplugins', $settings);
     foreach($configs as $config) {
