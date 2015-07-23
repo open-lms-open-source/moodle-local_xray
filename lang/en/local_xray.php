@@ -29,7 +29,9 @@ $string['welcome_xray'] = 'Welcome to xray';
 /* Reports */
 $string['reports'] = 'Reports';
 $string['activity_report'] = 'Activity Report';
+$string['students_activity'] = 'Students Activity';
 $string['activity_of_course_by_day'] = 'Activity of course by day';
+$string['activity_by_time_of_day'] = 'Activity by time of day';
 $string['report_discussion_by_user'] = 'Discussion By User';
 
 /* Settings */

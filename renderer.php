@@ -49,12 +49,40 @@ class local_xray_renderer extends plugin_renderer_base {
         return $output;
     }
 
+    /************************** Elements for Report Activity **************************/
+    
     /**
      * Graphic students activity (TABLE)
      * @param stdClass $element
      */
     public function students_activity($element) {
     	
+    	global $CFG, $PAGE;
+    	
+    	// Load Jquery.
+    	$PAGE->requires->jquery();
+    	$PAGE->requires->jquery_plugin('ui');
+    	$PAGE->requires->jquery_plugin('local_xray-studentsactivity', 'local_xray');
+    	
+    	$output = "";
+    	$output .= html_writer::tag('div', get_string("students_activity","local_xray"), array("class" => "reportsname"));
+    	
+    	// Table jquery datatables for show reports.
+    	$output .= "<table id='students_activity' class='display' cellspacing='0' width='100%'>
+                    <thead>
+                        <tr>
+                            <th>Lastname</th>
+    			            <th>Firstname</th>
+    			            <th>Last Activity</th>
+    			            <th>Discussion Posts</th>
+    			            <th>Posts last week</th>
+    			            <th>Time spent in course</th>
+    			            <th>Regularity (weekly)</th>
+                        </tr>
+                    </thead>
+                    </table>";
+    	
+    	return $output;    	 
     }
     
     /**
@@ -85,6 +113,36 @@ class local_xray_renderer extends plugin_renderer_base {
     	return $output;    	
     	
     }
+    
+    /**
+     * Graphic activity by time of day.(Graph)
+     * @param stdClass $element
+     */    
+    public function activity_by_time_of_day($element) {
+    	
+    	global $PAGE;
+    	
+    	// Load Jquery.
+    	$PAGE->requires->jquery();
+    	$PAGE->requires->jquery_plugin('ui');
+    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2
+    	$PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
+    	
+    	$baseurl  = get_config("local_xray", 'xrayurl');
+    	
+    	$output = "";
+    	$output .= html_writer::tag('div', get_string("activity_by_time_of_day","local_xray"), array("class" => "reportsname"));
+    	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $baseurl.$element->url));
+    	$output .= html_writer::empty_tag('img', array("class" => "activity_by_time_of_day",
+    			                                       "title" => $element->tooltip,
+    			                                       "src" => $baseurl.$element->url)
+    	                                  );
+    	$output .= html_writer::end_tag('a');
+    	 
+    	return $output;    	
+    }
+    
+    /************************** End Elements for Report Activity **************************/
     
     public function discussion_by_user(){
     

@@ -25,19 +25,16 @@ $plugins = array(
             'list_reports.js'
         )
     ),
+	'local_xray-studentsactivity' => array(
+			'files' => array(
+					'dataTables/jquery.dataTables.min.js',
+					'dataTables/jquery.dataTables.min.css',
+					'students_activity.js'
+			)
+	),
     'local_xray-show_on_lightbox' => array(
         'files' => array(
             'show_on_lightbox.js'
-        )
-    ),
-    'local_xray-itemBrowser' => array(
-        'files' => array(
-            'itembrowser/itemBrowser.js',
-            'itembrowser/itemBrowser.css',
-            'ContentFlow/contentflow.js',
-            'ContentFlow/contentflow.css',
-            'ContentFlow/mycontentflow.css',
-            'show_modal_xrayformat.js',
         )
     ),
     'local_xray-jssor' => array(
