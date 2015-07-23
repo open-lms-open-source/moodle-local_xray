@@ -176,9 +176,11 @@ abstract class wsapi {
      * @param null $userid
      * @param string $date
      * @param string $subtype
+     * @param int $start
+     * @param int $count
      * @return bool|mixed
      */
-    public static function courseelement($domain, $courseid, $name, $report = '', $userid = null, $date = '', $subtype = '') {
+    public static function courseelement($domain, $courseid, $name, $report = '', $userid = null, $date = '', $subtype = '', $start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
         if ($baseurl === false) {
             return false;
@@ -197,7 +199,7 @@ abstract class wsapi {
             $url .= "/{$date}";
         }
         $url .= "/elements/{$name}";
-        return self::generic_getcall($url);
+        return self::generic_getcall($url, $start, $count);
     }
 
     /**
@@ -250,9 +252,11 @@ abstract class wsapi {
      * @param string $name - name of the element
      * @param string $subtype
      * @param string $date
+     * @param int $start
+     * @param int $count
      * @return bool|mixed
      */
-    public static function participantreportelements($domain, $userid, $report, $name, $subtype = '', $date = '') {
+    public static function participantreportelements($domain, $userid, $report, $name, $subtype = '', $date = '', $start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
         if ($baseurl === false) {
             return false;
@@ -266,7 +270,7 @@ abstract class wsapi {
             $url .= "/{$date}";
         }
         $url .= "/elements/{$name}";
-        return self::generic_getcall($url);
+        return self::generic_getcall($url, $start, $count);
     }
 
 }
