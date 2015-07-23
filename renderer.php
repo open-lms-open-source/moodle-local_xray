@@ -151,6 +151,21 @@ class local_xray_renderer extends plugin_renderer_base {
     	return $this->show_on_lightbox("activity_last_two_weeks_by_weekday", $element); 	
     }
     
+    /**
+     * Graphic activity by participant 1
+     * @param stdClass $element
+     */
+    public function activity_by_participant1($element) {
+    	return $this->show_on_lightbox("activity_by_participant1", $element); 	
+    }
+    
+    /**
+     * Graphic activity by participant 2
+     * @param stdClass $element
+     */
+    public function activity_by_participant2($element) {
+    	return $this->show_on_lightbox("activity_by_participant2", $element);
+    }    
     /************************** End Elements for Report Activity **************************/
     
     public function discussion_by_user(){

@@ -8,13 +8,24 @@ $(document).ready(function() {
 	$('#students_activity').dataTable( {
         "bProcessing": true,
         "bServerSide": true,
-	    "paging": false,
-	    "searching": false,
+	    "paging": true,
+	    "searching": true,
 	    "retrieve": true,
 	    "oLanguage": {
 	      "sProcessing": "Fetching Data, Please wait..."
 	    },
-	    "sAjaxSource": 'view.php?controller="activity_report"&action="jsonstudentsactivity"'
+	    "sAjaxDataProp": "", // Very important, default format json. BY default this uses aaData.
+	    "sAjaxSource": 'view.php?controller="activity_report"&action="jsonstudentsactivity"',
+	    "aoColumns": [
+	                  {"mData": "lastname"},
+	                  {"mData": "firstname"},
+	                  {"mData": "lastactivity"},
+	                  {"mData": "discussionposts"},
+	                  {"mData": "postslastweek"},
+	                  {"mData": "timespentincourse"},	
+	                  {"mData": "regularity"},
+	                 ]
+	    	
 	} );
 	
 } );

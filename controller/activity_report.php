@@ -15,7 +15,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
      * Require capabilities
      */
     public function require_capability() {
-    	
+    	// TODO: To determinate.
     }
     
     public function view_action(){
@@ -35,12 +35,15 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     		} else {
     			
 		    	// Show graphs.
-		    	$output .= $this->students_activiy(); // Its a table, I will get info with new call.
+		    	$output .= $this->students_activity(); // Its a table, I will get info with new call.
 		    	$output .= $this->activity_of_course_by_day($response->elements[1]);
 		    	$output .= $this->activity_by_time_of_day($response->elements[4]);
 		    	$output .= $this->activity_last_two_weeks($response->elements[6]);
-		    	$output .= $this->activity_last_two_weeks_by_weekday($response->elements[7]);
-    	
+		    	$output .= $this->activity_last_two_weeks_by_weekday($response->elements[7]);	    	
+		    	$output .= $this->activity_by_participant1($response->elements[9]);
+		    	$output .= $this->activity_by_participant2($response->elements[10]); 
+		    	//$output .= $this->first_login();	
+		    	
     		}		 
     	} catch(exception $e) {
     		print_error('', 'local_xray','',null, $e->getMessage());
@@ -53,7 +56,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
      * Report Students activity (table).
      *
      */
-    private function students_activiy() {
+    private function students_activity() {
     
     	$output = "";
     	$output .= $this->output->students_activity();
@@ -64,7 +67,40 @@ class local_xray_controller_activity_report extends local_xray_controller_report
      * Json for provide data to students_activity table.
      */
     public function jsonstudentsactivity_action() {
-    	// TODO:: Implement.
+    	
+    	// TODO:: Review , implement search, sortable, pagination.
+    	$return = array();
+    	try {
+    		$report = "activity";
+    		$element = "element1";
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+    		if(!$response) {
+    			// TODO:: Fail response of webservice.
+    			throw new Exception(\local_xray\api\xrayws::geterrormsg());
+    			 
+    		} else {
+    			if(!empty($response->elements[0]->data)){
+    				foreach($response->elements[0]->data as $row) {
+    					$r = new stdClass();
+    					$r->firstname = $row->firstname->value;
+    					$r->lastname = $row->lastname->value;
+    					$r->lastactivity = $row->last_activity->value;
+    					$r->discussionposts = $row->discussion_posts->value;
+    					$r->postslastweek = $row->discussion_posts_last_week->value;
+    					$r->timespentincourse = $row->timeOnTask->value;
+    					$r->regularity = $row->regularity->value;
+    					$return[] = $r;
+    				}
+    			}
+    			
+    		}
+    	} catch(exception $e) {
+    		// TODO:: Send message error to js.
+    		$return = "";
+    	}
+    	
+    	echo json_encode($return);
+    	exit();
     }
     
     /**
@@ -109,5 +145,35 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     	$output .= $this->output->activity_last_two_weeks_by_weekday($element);
     	return $output;
     }   
+    
+    /**
+     * Report Activity by Participant 1
+     */
+    private function activity_by_participant1($element) {
+    
+    	$output = "";
+    	$output .= $this->output->activity_by_participant1($element);
+    	return $output;
+    }   
+    
+    /**
+     * Report Activity by Participant 2
+     */
+    private function activity_by_participant2($element) {
+    
+    	$output = "";
+    	$output .= $this->output->activity_by_participant2($element);
+    	return $output;
+    }
+    
+    /**
+     * Report First login
+     * TODO:: Pending to determinate what must I show?
+     */
+    private function first_login() {
+    
+    	$output = "";
+    	return $output;
+    }    
     
 }

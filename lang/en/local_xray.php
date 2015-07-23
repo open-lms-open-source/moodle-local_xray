@@ -34,6 +34,9 @@ $string['activity_of_course_by_day'] = 'Activity of course by day';
 $string['activity_by_time_of_day'] = 'Activity by time of day';
 $string['activity_last_two_weeks'] = 'Activity Last two weeks';
 $string['activity_last_two_weeks_by_weekday'] = 'Activity Last two weeks by weekday';
+$string['activity_by_participant1'] = 'Activity by participant 1';
+$string['activity_by_participant2'] = 'Activity by participant 2';
+$string['first_login'] = 'First Login';
 $string['report_discussion_by_user'] = 'Discussion By User';
 
 /* Settings */
