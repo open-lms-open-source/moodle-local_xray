@@ -17,6 +17,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = get_string("welcome_xray","local_xray");
         return html_writer::tag('div', $output, array());
     }
+    
     /**
      * List reports.
      * Example of implementation of table with jquery datatable.
@@ -49,12 +50,20 @@ class local_xray_renderer extends plugin_renderer_base {
     }
 
     /**
-     * Example of report activity of student by day.
-     * @param stdClass $response
+     * Graphic students activity (TABLE)
+     * @param stdClass $element
+     */
+    public function students_activity($element) {
+    	
+    }
+    
+    /**
+     * Graphic activity of course by day.(Graph)
+     * @param stdClass $element
      */
     public function activity_of_course_by_day($element) {
     	
-    	global $CFG, $PAGE, $OUTPUT;
+    	global $PAGE;
 
     	// Load Jquery.
     	$PAGE->requires->jquery();

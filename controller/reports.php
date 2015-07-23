@@ -13,21 +13,7 @@ class local_xray_controller_reports extends mr_controller {
 	
 	const XRAY_COURSEID = 7; //TODO:: Example first integration. This is hardcoded for test with xray.
 	const XRAY_DOMAIN = "moodlerooms"; //TODO:: Example first integration. This is hardcoded for test with xray.
-	
-    /**
-     * Require capabilities
-     */
-    public function require_capability() {
-    }
-
-    /**
-     * Controller Initialization
-     *
-     */
-    public function init() {
-
-    }
-    
+	    
     /**
      * List of reports (Example using jquery datatable).
      *

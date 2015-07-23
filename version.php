@@ -6,10 +6,12 @@
  * @package local_xray
  */
 
-$plugin->version  = 2015070302;
+$plugin->version  = 2015070303;
 $plugin->requires = 2014111005;//moodle 2.8
 $plugin->cron = 0;
 $plugin->component = 'local_xray';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '1.0 (Build: 2012123101)';
-//$plugin->dependencies = '';
+$plugin->dependencies = array(
+        'local_mr'       => ANY_VERSION
+);

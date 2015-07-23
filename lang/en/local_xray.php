@@ -28,10 +28,7 @@ $string['welcome_xray'] = 'Welcome to xray';
 
 /* Reports */
 $string['reports'] = 'Reports';
-$string['reporta'] = 'Report A';
-$string['reportb'] = 'Report B';
-$string['reportc'] = 'Report C';
-$string['reportd'] = 'Report D';
+$string['activity_report'] = 'Activity Report';
 $string['activity_of_course_by_day'] = 'Activity of course by day';
 $string['report_discussion_by_user'] = 'Discussion By User';
 
