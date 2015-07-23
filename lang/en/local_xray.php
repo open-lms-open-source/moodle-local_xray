@@ -32,6 +32,8 @@ $string['activity_report'] = 'Activity Report';
 $string['students_activity'] = 'Students Activity';
 $string['activity_of_course_by_day'] = 'Activity of course by day';
 $string['activity_by_time_of_day'] = 'Activity by time of day';
+$string['activity_last_two_weeks'] = 'Activity Last two weeks';
+$string['activity_last_two_weeks_by_weekday'] = 'Activity Last two weeks by weekday';
 $string['report_discussion_by_user'] = 'Discussion By User';
 
 /* Settings */

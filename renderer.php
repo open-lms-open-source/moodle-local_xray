@@ -1,5 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
+require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 
 /**
  * Renderer
@@ -48,6 +49,39 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $output;
     }
+    
+    /**
+     * Generate img with lightbox.
+     * General template for show graph with lightbox.
+     * @param String   $name 
+     * @param stdClass $element
+     */
+    private function show_on_lightbox($name, $element) {
+    	 
+    	global $PAGE;
+    
+    	// Load Jquery.
+    	$PAGE->requires->jquery();
+    	$PAGE->requires->jquery_plugin('ui');
+    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2
+    	$PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
+    
+    	$baseurl  = get_config("local_xray", 'xrayurl');
+    	$domain = local_xray_controller_reports::XRAY_DOMAIN;
+    	$img_url = sprintf('%s/%s/%s', $baseurl, $domain, $element->uuid);
+    
+    	$output = "";
+    	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
+    	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $img_url));
+    	$output .= html_writer::empty_tag('img', array("class" => $name,
+										    		   "title" => $element->tooltip,
+										    		   "src" => $img_url)
+    	                                  );
+    	$output .= html_writer::end_tag('a');
+    	 
+    	return $output;
+    	 
+    }
 
     /************************** Elements for Report Activity **************************/
     
@@ -55,7 +89,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * Graphic students activity (TABLE)
      * @param stdClass $element
      */
-    public function students_activity($element) {
+    public function students_activity() {
     	
     	global $CFG, $PAGE;
     	
@@ -89,29 +123,8 @@ class local_xray_renderer extends plugin_renderer_base {
      * Graphic activity of course by day.(Graph)
      * @param stdClass $element
      */
-    public function activity_of_course_by_day($element) {
-    	
-    	global $PAGE;
-
-    	// Load Jquery.
-    	$PAGE->requires->jquery();
-    	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2 	
-        $PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
-        
-        $baseurl  = get_config("local_xray", 'xrayurl');
-
-    	$output = "";
-    	$output .= html_writer::tag('div', get_string("activity_of_course_by_day","local_xray"), array("class" => "reportsname"));  
-    	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $baseurl.$element->url));
-    	$output .= html_writer::empty_tag('img', array("class" => "activity_of_course_by_day",
-    			                                       "title" => $element->tooltip,
-    			                                       "src" => $baseurl.$element->url)
-    	                                  );
-    	$output .= html_writer::end_tag('a');
-    	
-    	return $output;    	
-    	
+    public function activity_of_course_by_day($element) {    	
+    	return $this->show_on_lightbox("activity_of_course_by_day", $element);	    	
     }
     
     /**
@@ -119,27 +132,23 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */    
     public function activity_by_time_of_day($element) {
-    	
-    	global $PAGE;
-    	
-    	// Load Jquery.
-    	$PAGE->requires->jquery();
-    	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2
-    	$PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
-    	
-    	$baseurl  = get_config("local_xray", 'xrayurl');
-    	
-    	$output = "";
-    	$output .= html_writer::tag('div', get_string("activity_by_time_of_day","local_xray"), array("class" => "reportsname"));
-    	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $baseurl.$element->url));
-    	$output .= html_writer::empty_tag('img', array("class" => "activity_by_time_of_day",
-    			                                       "title" => $element->tooltip,
-    			                                       "src" => $baseurl.$element->url)
-    	                                  );
-    	$output .= html_writer::end_tag('a');
-    	 
-    	return $output;    	
+    	return $this->show_on_lightbox("activity_by_time_of_day", $element);     	
+    }
+    
+    /**
+     * Graphic activity last two weeks.(Graph)
+     * @param stdClass $element
+     */
+    public function activity_last_two_weeks($element) {
+    	return $this->show_on_lightbox("activity_last_two_weeks", $element);
+    }  
+    
+    /**
+     * Graphic activity last two weeks BY weekday.(Graph)
+     * @param stdClass $element
+     */
+    public function activity_last_two_weeks_by_weekday($element) {
+    	return $this->show_on_lightbox("activity_last_two_weeks_by_weekday", $element); 	
     }
     
     /************************** End Elements for Report Activity **************************/
