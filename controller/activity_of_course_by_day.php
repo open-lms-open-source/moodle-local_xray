@@ -9,7 +9,7 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  * @author German Vitale
  * @package local_xray
  */
-class local_xray_controller_activity_of_student_by_day extends local_xray_controller_reports {
+class local_xray_controller_activity_of_course_by_day extends local_xray_controller_reports {
 
     /**
      * Require capabilities
@@ -36,7 +36,7 @@ class local_xray_controller_activity_of_student_by_day extends local_xray_contro
         global $OUTPUT, $PAGE, $COURSE;
         
         // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string('report_activity_of_student_by_day', 'local_xray'));
+        $PAGE->navbar->add(get_string('activity_of_course_by_day', 'local_xray'));
         $output = "";
 
         // TODO:: Test example call webservice
@@ -52,7 +52,7 @@ class local_xray_controller_activity_of_student_by_day extends local_xray_contro
         		// TODO:: Evaluate response in error case.
         		$output .= "Error to connect webservice: ".$e->getMessage();
         	} else {
-        		$output .= $this->output->activity_of_student_by_day($response);
+        		$output .= $this->output->activity_of_course_by_day($response);
         	}
  
         } catch(exception $e) {

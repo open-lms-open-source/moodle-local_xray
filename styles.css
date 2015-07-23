@@ -6,15 +6,8 @@
 }
 
 
-/* Report Activity of student by day */
-#page-local-xray-view .activity_of_student_by_day {
+/* Report Activity of course by day */
+#page-local-xray-view .activity_of_course_by_day {
 	width:800px;
 	text-align:center;
-}
-
-
-.glyphicon {
-	width:10px;
-	height:10px;
-	background-color:#fff;
 }

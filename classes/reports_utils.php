@@ -14,7 +14,7 @@ class local_xray_reports_utils {
      * TODO: Example
      */
     static function list_reports() {
-        return array(array("activity_of_student_by_day", get_string("report_activity_of_student_by_day", "local_xray")),
+        return array(array("activity_of_course_by_day", get_string("activity_of_course_by_day", "local_xray")),
 		             array("reportb", get_string("reportb", "local_xray")),
 		             array("discussion_by_user", get_string("report_discussion_by_user", "local_xray")),
 		             array("reportd", get_string("reportd", "local_xray"))

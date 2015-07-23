@@ -52,7 +52,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * Example of report activity of student by day.
      * @param stdClass $response
      */
-    public function activity_of_student_by_day($element) {
+    public function activity_of_course_by_day($element) {
     	
     	global $CFG, $PAGE, $OUTPUT;
 
@@ -65,9 +65,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $baseurl  = get_config("local_xray", 'xrayurl');
 
     	$output = "";
-    	$output .= html_writer::tag('div', get_string("report_activity_of_student_by_day","local_xray"), array("class" => "reportsname"));  
+    	$output .= html_writer::tag('div', get_string("activity_of_course_by_day","local_xray"), array("class" => "reportsname"));  
     	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $baseurl.$element->url));
-    	$output .= html_writer::empty_tag('img', array("class" => "activity_of_student_by_day",
+    	$output .= html_writer::empty_tag('img', array("class" => "activity_of_course_by_day",
     			                                       "title" => $element->tooltip,
     			                                       "src" => $baseurl.$element->url)
     	                                  );

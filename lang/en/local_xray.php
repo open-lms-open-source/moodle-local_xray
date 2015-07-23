@@ -32,7 +32,7 @@ $string['reporta'] = 'Report A';
 $string['reportb'] = 'Report B';
 $string['reportc'] = 'Report C';
 $string['reportd'] = 'Report D';
-$string['report_activity_of_student_by_day'] = 'Activity of student by day';
+$string['activity_of_course_by_day'] = 'Activity of course by day';
 $string['report_discussion_by_user'] = 'Discussion By User';
 
 /* Settings */
