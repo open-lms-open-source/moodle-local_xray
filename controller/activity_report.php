@@ -30,7 +30,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
     		if(!$response) {
     			// Fail response of webservice.
-    			throw new Exception(\local_xray\api\xrayws::geterrormsg());
+    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     			
     		} else {
     			
@@ -46,7 +46,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
 		    	
     		}		 
     	} catch(exception $e) {
-    		print_error('', 'local_xray','',null, $e->getMessage());
+    		print_error('error_xray', 'local_xray','',null, $e->getMessage());
     	}
     	
     	return $output;
@@ -76,7 +76,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
     		if(!$response) {
     			// TODO:: Fail response of webservice.
-    			throw new Exception(\local_xray\api\xrayws::geterrormsg());
+    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     			 
     		} else {
     			if(!empty($response->elements[0]->data)){

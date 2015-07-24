@@ -39,6 +39,9 @@ $string['activity_by_participant2'] = 'Activity by participant 2';
 $string['first_login'] = 'First Login';
 $string['report_discussion_by_user'] = 'Discussion By User';
 
+/* Webservice */
+$string['error_xray'] = 'Error to connect with Xray.';
+
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';
 $string['enabledreports_desc'] = 'Reports enabled for view in moodle.';
