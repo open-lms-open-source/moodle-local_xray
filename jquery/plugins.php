@@ -32,6 +32,13 @@ $plugins = array(
 					'reports/activity_report_students_activity.js'
 			)
 	),
+	'local_xray-firstloginnonstarters' => array(
+			'files' => array(
+					'dataTables/jquery.dataTables.min.js',
+					'dataTables/jquery.dataTables.min.css',
+					'reports/activity_report_first_login_non_starters.js'
+			)
+	),		
     'local_xray-show_on_lightbox' => array(
         'files' => array(
             'reports/show_on_lightbox.js'

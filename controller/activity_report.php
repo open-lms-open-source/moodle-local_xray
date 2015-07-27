@@ -68,30 +68,49 @@ class local_xray_controller_activity_report extends local_xray_controller_report
      */
     public function jsonstudentsactivity_action() {
     	
-    	// TODO:: Review , implement search, sortable, pagination.
-    	$return = array();
+    	// Pager
+    	$count = optional_param('iDisplayLength', 10, PARAM_RAW);
+    	$start  = optional_param('iDisplayStart', 10, PARAM_RAW);
+    	
+    	$return = "";
+
     	try {
     		$report = "activity";
-    		$element = "element1";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+    		$element = "studentList";
+    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_DOMAIN,
+    				                                         parent::XRAY_COURSEID, 
+    				                                         $element, 
+    				                                         $report, 
+    				                                         null, 
+    				                                         '', 
+    				                                         '', 
+    				                                         $start, 
+    				                                         $count);
+
     		if(!$response) {
     			// TODO:: Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-    			 
     		} else {
-    			if(!empty($response->elements[0]->data)){
-    				foreach($response->elements[0]->data as $row) {
+    			
+    			$data = array();
+    			if(!empty($response->data)){
+    				foreach($response->data as $row) {
     					$r = new stdClass();
     					$r->firstname = $row->firstname->value;
     					$r->lastname = $row->lastname->value;
     					$r->lastactivity = $row->last_activity->value;
     					$r->discussionposts = $row->discussion_posts->value;
     					$r->postslastweek = $row->discussion_posts_last_week->value;
-    					$r->timespentincourse = $row->timeOnTask->value;
-    					$r->regularity = $row->regularity->value;
-    					$return[] = $r;
+    					$r->timespentincourse = $row->timeOnTask->value;	
+    					// TODO:: Not exist value for weeklyRegularity on xray webservice. NOTIFY
+    					$r->regularity = "";
+    					$data[] = $r;
     				}
     			}
+    			
+    			// Provide info to table.
+    			$return["recordsFiltered"] = 100; // TODO:: Get from webservice.
+    			$return["data"] = $data;
     			
     		}
     	} catch(exception $e) {
@@ -193,12 +212,6 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     		print_error('error_xray', 'local_xray','',null, $e->getMessage());
     	}
     	 
-    	 
-    	return $output;
-    	
-    	
-
-    	
     	return $output;
     }
     
@@ -208,9 +221,8 @@ class local_xray_controller_activity_report extends local_xray_controller_report
      * 
      */
     private function first_login_non_starters() {
-    	// TODO:: Implement call for table.
     	$output = "";
-    	$output .= $this->output->first_login_non_starters($element);
+    	$output .= $this->output->first_login_non_starters();
     	return $output;
     } 
     
@@ -218,8 +230,53 @@ class local_xray_controller_activity_report extends local_xray_controller_report
      * Json for table non starters.
      *
      */    
-    public function jsonfirstloginnonstartes_action(){
+    public function jsonfirstloginnonstarters_action(){
     	
+    	// Pager
+    	$count = optional_param('iDisplayLength', 10, PARAM_RAW);
+    	$start  = optional_param('iDisplayStart', 10, PARAM_RAW);
+    	
+    	$return = "";
+    	
+    	try {
+    		$report = "firstLogin";
+    		$element = "nonStarters";
+    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_DOMAIN,
+    				                                         parent::XRAY_COURSEID, 
+    				                                         $element, 
+    				                                         $report, 
+    				                                         null, 
+    				                                         '', 
+    				                                         '', 
+    				                                         $start, 
+    				                                         $count);
+    		if(!$response) {
+    			// TODO:: Fail response of webservice.
+    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+    	
+    		} else {
+
+    			if(!empty($response->data)){
+    				$data = array();
+    				foreach($response->data as $row) {
+    					$r = new stdClass();
+    					$r->firstname = $row->firstname->value;
+    					$r->lastname = $row->lastname->value;
+    					$data[] = $r;
+    				}
+    				
+    				// Provide info to table.
+    				$return["recordsFiltered"] = 100; // TODO:: Get from webservice.
+    				$return["data"] = $data;
+    			}
+    		}
+    	} catch(exception $e) {
+    		// TODO:: Send message error to js.
+    		$return = "";
+    	}
+    	 
+    	echo json_encode($return);
+    	exit();    	
     }
     
     /**

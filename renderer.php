@@ -173,7 +173,14 @@ class local_xray_renderer extends plugin_renderer_base {
      */    
     public function first_login_non_starters() {
     	
+    	global $CFG, $PAGE;
     	$output = "";
+    	 
+    	// Load Jquery.
+    	$PAGE->requires->jquery();
+    	$PAGE->requires->jquery_plugin('ui');
+    	$PAGE->requires->jquery_plugin('local_xray-firstloginnonstarters', 'local_xray');
+    	 
     	$output .= html_writer::tag('div', get_string("first_login_non_starters","local_xray"), array("class" => "reportsname"));   	 
     	
     	// Table jquery datatables for show reports.
