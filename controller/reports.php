@@ -35,4 +35,19 @@ class local_xray_controller_reports extends mr_controller {
         echo json_encode(array("data" => local_xray_reports_utils::list_reports()));
         exit();
     }
+    
+    /**
+     * Show data of last request to webservice xray.
+     */
+    public function debugwebservice() {
+    	
+    	echo "<pre>";
+    	var_dump(\local_xray\api\xrayws::instance()->geterrorcode());
+    	var_dump(\local_xray\api\xrayws::instance()->geterrormsg());
+    	var_dump(\local_xray\api\xrayws::instance()->lastresponse());
+    	var_dump(\local_xray\api\xrayws::instance()->lasthttpcode());
+    	var_dump(\local_xray\api\xrayws::instance()->getinfo());
+    	echo "</pre>";
+    	exit();
+    }
 }
