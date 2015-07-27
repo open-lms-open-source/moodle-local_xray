@@ -27,6 +27,7 @@ $string['pluginname'] = 'X-Ray Integration';
 $string['welcome_xray'] = 'Welcome to xray';
 
 /* Reports */
+$string['reports'] = 'Reports';
 $string['reports_list'] = 'Reports';
 $string['activity_report'] = 'Activity Report';
 $string['students_activity'] = 'Students Activity';
@@ -41,6 +42,7 @@ $string['first_login_non_starters'] = 'First Login non starters';
 $string['first_login_to_course'] = 'First Login to Course';
 $string['first_login_date_observed'] = 'First Login Date Observed';
 $string['report_discussion_by_user'] = 'Discussion By User';
+$string['discussion_report'] = 'Discussion Report';
 $string['social_structure_coefficient_of_critical_thinking'] = 'Social structure coefficient of critical thinking';
 $string['social_structure_with_contributions_adjusted'] = 'Social structure with contributions adjusted';
 $string['social_structure_with_words_count'] = 'Social structure with words count';
