@@ -41,6 +41,12 @@ $string['first_login_non_starters'] = 'First Login non starters';
 $string['first_login_to_course'] = 'First Login to Course';
 $string['first_login_date_observed'] = 'First Login Date Observed';
 $string['report_discussion_by_user'] = 'Discussion By User';
+$string['social_structure_coefficient_of_critical_thinking'] = 'Social structure coefficient of critical thinking';
+$string['social_structure_with_contributions_adjusted'] = 'Social structure with contributions adjusted';
+$string['social_structure_with_words_count'] = 'Social structure with words count';
+$string['social_structure'] = 'Social structure';
+$string['average_words_weekly_by_post'] = 'Average words weekly by post';
+
 
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';

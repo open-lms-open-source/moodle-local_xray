@@ -216,6 +216,54 @@ class local_xray_renderer extends plugin_renderer_base {
     
     /************************** End Elements for Report Activity **************************/
     
+    
+    /************************** Elements for Report Discussion **************************/
+    
+    /**
+     * Average words weekly by post. (Graph)
+     * @param stdClass $element
+     */
+    public function average_words_weekly_by_post($element) {
+        return $this->show_on_lightbox("average_words_weekly_by_post", $element);
+    }
+    
+    /**
+     * Social structure.(Graph)
+     * @param stdClass $element
+     */
+    public function social_structure($element) {
+        return $this->show_on_lightbox("social_structure", $element);
+    }
+    
+    /**
+     * Social structure with words count.(Graph)
+     * @param stdClass $element
+     */
+    public function social_structure_with_words_count($element) {
+        return $this->show_on_lightbox("social_structure_with_words_count", $element);
+    }
+    
+    /**
+     * Social structure with contributions adjusted.(Graph)
+     * @param stdClass $element
+     */
+    public function social_structure_with_contributions_adjusted($element) {
+        return $this->show_on_lightbox("social_structure_with_contributions_adjusted", $element);
+    }
+    
+    /**
+     * Social structure coefficient of critical thinking
+     * @param stdClass $element
+     */
+    public function social_structure_coefficient_of_critical_thinking($element) {
+        return $this->show_on_lightbox("social_structure_coefficient_of_critical_thinking", $element);
+    }
+    
+    /************************** End Elements for Report Discussion **************************/
+    
+    
+    
+    
     public function discussion_by_user(){
     
         global $CFG, $PAGE, $OUTPUT;
