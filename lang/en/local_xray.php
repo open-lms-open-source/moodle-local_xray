@@ -48,6 +48,15 @@ $string['social_structure'] = 'Social structure';
 $string['average_words_weekly_by_post'] = 'Average words weekly by post';
 
 
+/* Columns reports */
+$string['firstname'] = 'Firstname';
+$string['lastname'] = 'Lastname';
+$string['lastactivity'] = 'Last Activity';
+$string['discussionposts'] = 'Discussion Posts';
+$string['postslastweek'] = 'Posts Last Week';
+$string['timespentincourse'] = 'Time spent in course';
+$string['regularityweekly'] = 'Regularity (weekly)';
+
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';
 
