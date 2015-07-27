@@ -42,9 +42,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     			$output .= $this->activity_last_two_weeks_by_weekday($response->elements[7]);
     			$output .= $this->activity_by_participant1($response->elements[9]);
     			$output .= $this->activity_by_participant2($response->elements[10]);
-    			//$output .= $this->first_login_non_starters();
-    			//$output .= $this->first_login_to_course();
-    			//$output .= $this->first_login_date_observed();
+    			$output .= $this->first_login();
 		    	
     		}		 
     	} catch(exception $e) {
@@ -169,13 +167,50 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     }
     
     /**
+     * First Login
+     * Here we will show three graphs: 2 images and 1 table.
+     * @throws Exception
+     */
+    private function first_login() {
+    	
+    	$output = "";
+    	 
+    	try {
+    		$report = "firstLogin";
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+    		if(!$response) {
+    			// Fail response of webservice.
+    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+    			 
+    		} else {
+    			 
+    			// Show graphs.
+    			$output .= $this->first_login_non_starters(); // Call to independient call to show in table.
+    			$output .= $this->first_login_to_course($response->elements[3]);
+    			$output .= $this->first_login_date_observed($response->elements[4]);
+    		}
+    	} catch(exception $e) {
+    		print_error('error_xray', 'local_xray','',null, $e->getMessage());
+    	}
+    	 
+    	 
+    	return $output;
+    	
+    	
+
+    	
+    	return $output;
+    }
+    
+    /**
      * Report First login
      * - Element to show: table users not starters in course.
      * 
      */
     private function first_login_non_starters() {
-    
+    	// TODO:: Implement call for table.
     	$output = "";
+    	$output .= $this->output->first_login_non_starters($element);
     	return $output;
     } 
     
@@ -192,29 +227,9 @@ class local_xray_controller_activity_report extends local_xray_controller_report
      * - Element to show: 5 , first login to course.
      *
      */
-    private function first_login_to_course() {
-    
+    private function first_login_to_course($element) {
     	$output = "";
-    	
-    	try {
-    		$report = "first_login";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
-    		if(!$response) {
-    			// Fail response of webservice.
-    			var_dump(\local_xray\api\xrayws::instance()->geterrormsg()); exit();
-    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-    			
-    		} else {
-    	
-    			// Show graphs.
-    			var_dump($response); exit();
-    			 
-    		}
-    	} catch(exception $e) {
-    		print_error('error_xray', 'local_xray','',null, $e->getMessage());
-    	}
-    	
-    	
+    	$output .= $this->output->first_login_to_course($element);
     	return $output;
     }
     
@@ -223,9 +238,9 @@ class local_xray_controller_activity_report extends local_xray_controller_report
      * - Element to show: 9 , first login in date observed.
      *
      */
-    private function first_login_date_observed() {
-    
+    private function first_login_date_observed($element) {
     	$output = "";
+    	$output .= $this->output->first_login_date_observed($element);
     	return $output;
     }
 }

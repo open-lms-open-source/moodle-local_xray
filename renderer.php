@@ -166,6 +166,47 @@ class local_xray_renderer extends plugin_renderer_base {
     public function activity_by_participant2($element) {
     	return $this->show_on_lightbox("activity_by_participant2", $element);
     }    
+    
+    /**
+     * Graphic first login non startes (TABLE)
+     * @param stdClass $element
+     */    
+    public function first_login_non_starters() {
+    	
+    	$output = "";
+    	$output .= html_writer::tag('div', get_string("first_login_non_starters","local_xray"), array("class" => "reportsname"));   	 
+    	
+    	// Table jquery datatables for show reports.
+    	$output .= "<table id='first_login_non_starters' class='display' cellspacing='0' width='100%'>
+                    <thead>
+                        <tr>
+                            <th>Lastname</th>
+    			            <th>Firstname</th>
+                        </tr>
+                    </thead>
+                    </table>";
+    	 
+    	return $output;    	
+    }
+    
+    /**
+     * Graphic frist login to course
+     * @param stdClass $element
+     */    
+    public function first_login_to_course($element) {
+    	return $this->show_on_lightbox("first_login_to_course", $element);    	
+    }
+    
+    /**
+     * Graphic first login date observed
+     * @param stdClass $element
+     */    
+    public function first_login_date_observed($element) {
+    	return $this->show_on_lightbox("first_login_date_observed", $element);
+    }
+    
+    
+    
     /************************** End Elements for Report Activity **************************/
     
     public function discussion_by_user(){

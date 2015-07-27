@@ -37,6 +37,9 @@ $string['activity_last_two_weeks_by_weekday'] = 'Activity Last two weeks by week
 $string['activity_by_participant1'] = 'Activity by participant 1';
 $string['activity_by_participant2'] = 'Activity by participant 2';
 $string['first_login'] = 'First Login';
+$string['first_login_non_starters'] = 'First Login';
+$string['first_login_to_course'] = 'First Login to Course';
+$string['first_login_date_observed'] = 'First Login Date Observed';
 $string['report_discussion_by_user'] = 'Discussion By User';
 
 /* Webservice */
