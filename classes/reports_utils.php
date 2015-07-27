@@ -15,7 +15,8 @@ class local_xray_reports_utils {
      */
     static function list_reports() {
         return array(array("activity_report", get_string("activity_report", "local_xray")),
-		             array("discussion_by_user", get_string("report_discussion_by_user", "local_xray"))
+		             array("discussion_by_user", get_string("report_discussion_by_user", "local_xray")),
+                     array("discussion_report", get_string("discussion_report", "local_xray")),
         );
     }
 }
