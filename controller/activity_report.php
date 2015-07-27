@@ -18,7 +18,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     	// TODO: To determinate.
     }
     
-    public function view_action(){
+    public function view_action() {
     	
     	global $PAGE;
     	// Add title to breadcrumb.
@@ -33,16 +33,18 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     			
     		} else {
-    			
-		    	// Show graphs.
-		    	$output .= $this->students_activity(); // Its a table, I will get info with new call.
-		    	$output .= $this->activity_of_course_by_day($response->elements[1]);
-		    	$output .= $this->activity_by_time_of_day($response->elements[4]);
-		    	$output .= $this->activity_last_two_weeks($response->elements[6]);
-		    	$output .= $this->activity_last_two_weeks_by_weekday($response->elements[7]);	    	
-		    	$output .= $this->activity_by_participant1($response->elements[9]);
-		    	$output .= $this->activity_by_participant2($response->elements[10]); 
-		    	//$output .= $this->first_login();	
+
+    			// Show graphs.
+    			$output .= $this->students_activity(); // Its a table, I will get info with new call.
+    			$output .= $this->activity_of_course_by_day($response->elements[1]);
+    			$output .= $this->activity_by_time_of_day($response->elements[4]);
+    			$output .= $this->activity_last_two_weeks($response->elements[6]);
+    			$output .= $this->activity_last_two_weeks_by_weekday($response->elements[7]);
+    			$output .= $this->activity_by_participant1($response->elements[9]);
+    			$output .= $this->activity_by_participant2($response->elements[10]);
+    			//$output .= $this->first_login_non_starters();
+    			//$output .= $this->first_login_to_course();
+    			//$output .= $this->first_login_date_observed();
 		    	
     		}		 
     	} catch(exception $e) {
@@ -168,12 +170,62 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     
     /**
      * Report First login
-     * TODO:: Pending to determinate what must I show?
+     * - Element to show: table users not starters in course.
+     * 
      */
-    private function first_login() {
+    private function first_login_non_starters() {
     
     	$output = "";
     	return $output;
-    }    
+    } 
     
+    /**
+     * Json for table non starters.
+     *
+     */    
+    public function jsonfirstloginnonstartes_action(){
+    	
+    }
+    
+    /**
+     * Report First login
+     * - Element to show: 5 , first login to course.
+     *
+     */
+    private function first_login_to_course() {
+    
+    	$output = "";
+    	
+    	try {
+    		$report = "first_login";
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+    		if(!$response) {
+    			// Fail response of webservice.
+    			var_dump(\local_xray\api\xrayws::instance()->geterrormsg()); exit();
+    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+    			
+    		} else {
+    	
+    			// Show graphs.
+    			var_dump($response); exit();
+    			 
+    		}
+    	} catch(exception $e) {
+    		print_error('error_xray', 'local_xray','',null, $e->getMessage());
+    	}
+    	
+    	
+    	return $output;
+    }
+    
+    /**
+     * Report First login
+     * - Element to show: 9 , first login in date observed.
+     *
+     */
+    private function first_login_date_observed() {
+    
+    	$output = "";
+    	return $output;
+    }
 }

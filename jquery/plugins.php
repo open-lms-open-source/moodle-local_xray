@@ -22,19 +22,19 @@ $plugins = array(
      ),    
     'local_xray-list_reports' => array(
         'files' => array(
-            'list_reports.js'
+            'reports/reports_list.js'
         )
     ),
 	'local_xray-studentsactivity' => array(
 			'files' => array(
 					'dataTables/jquery.dataTables.min.js',
 					'dataTables/jquery.dataTables.min.css',
-					'students_activity.js'
+					'reports/activity_report_students_activity.js'
 			)
 	),
     'local_xray-show_on_lightbox' => array(
         'files' => array(
-            'show_on_lightbox.js'
+            'reports/show_on_lightbox.js'
         )
     ),
     'local_xray-jssor' => array(
