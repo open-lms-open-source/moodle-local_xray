@@ -23,7 +23,7 @@ class local_xray_controller_reports extends mr_controller {
         
         // Add title to breadcrumb.
         $PAGE->navbar->add(get_string('pluginname', 'local_xray'));
-        $output  = $this->output->list_reports();
+        $output  = $this->output->reports_list();
         return $output;
     }
     

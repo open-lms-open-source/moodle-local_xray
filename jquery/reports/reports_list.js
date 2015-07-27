@@ -5,7 +5,7 @@
  */
 $(document).ready(function() {
 	
-	$('#reportslist').dataTable( {
+	$('#reports_list').dataTable( {
         "bProcessing": true,
         "bServerSide": true,
 	    "paging": false,

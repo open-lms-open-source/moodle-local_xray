@@ -23,32 +23,16 @@ class local_xray_renderer extends plugin_renderer_base {
      * List reports.
      * Example of implementation of table with jquery datatable.
      */
-    public function list_reports() {
-        global $CFG, $PAGE;
-
-        // Load Jquery.
-        $PAGE->requires->jquery();
-        $PAGE->requires->jquery_plugin('ui');
-        $PAGE->requires->jquery_plugin('local_xray-dataTables', 'local_xray');  // Load jquery datatables  
-        $PAGE->requires->jquery_plugin('local_xray-list_reports', 'local_xray');
-
-        // Strings for js.
-        //$PAGE->requires->string_for_js('', 'local_xray');
-
-        $output = "";
-        $output .= html_writer::tag('div', get_string("reports","local_xray"), array("class" => "reportsname"));
-        
-        // Table jquery datatables for show reports.
-        $output .= "<table id='reportslist' class='display' cellspacing='0' width='100%'>
-                    <thead>
-                        <tr>
-                            <th>Fullname</th>
-                        </tr>
-                    </thead>
-                    </table>";
-
-        return $output;
+    public function reports_list() {
+    	
+    	global $PAGE;
+    	// Create standard table.
+    	$output = $this->standard_table(__FUNCTION__,
+						    			array(get_string('fullname', 'local_xray')));
+    	return $output;
     }
+    
+    /************************** General elements for Reports **************************/
     
     /**
      * Generate img with lightbox.
@@ -82,40 +66,63 @@ class local_xray_renderer extends plugin_renderer_base {
     	return $output;
     	 
     }
-
+    
+    /**
+     * Standard table Theme with Jquery datatables.
+     * 
+     * For this use you need:
+     * - Add name of report to lang plugin.
+     * - Add specific js for jquery plugin with this format:  "local_xray-" + %name% 
+     * 
+     * The table will have id equal to name.
+     * 
+     * @param string $name (Name of report, this will be used by strings and id of table).
+     * @param array $columns (Array of columns to show).
+     * @return string
+     */
+    private function standard_table ($name, array $columns) {
+    	
+    	global $CFG, $PAGE;
+    	 
+    	// Load Jquery.
+    	$PAGE->requires->jquery();
+    	$PAGE->requires->jquery_plugin('ui');
+    	$PAGE->requires->jquery_plugin("local_xray-dataTables", "local_xray");
+    	
+    	// Load specific js of table.
+    	$PAGE->requires->jquery_plugin("local_xray-{$name}", "local_xray");    	
+    	
+    	$output = "";
+    	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
+    	 
+    	// Table jquery datatables for show reports.
+    	$output .= "<table id='{$name}' class='display' cellspacing='0' width='100%'> <thead><tr>";
+    	foreach($columns as $c){
+        	$output .= "<th>{$c}</th>";
+        }   			            
+        $output .=" </tr> </thead> </table>";
+    	 
+    	return $output;   	
+    }
+    /************************** End General elements for Reports **************************/
+    
     /************************** Elements for Report Activity **************************/
     
     /**
      * Graphic students activity (TABLE)
-     * @param stdClass $element
      */
     public function students_activity() {
     	
-    	global $CFG, $PAGE;
-    	
-    	// Load Jquery.
-    	$PAGE->requires->jquery();
-    	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin('local_xray-studentsactivity', 'local_xray');
-    	
-    	$output = "";
-    	$output .= html_writer::tag('div', get_string("students_activity","local_xray"), array("class" => "reportsname"));
-    	
-    	// Table jquery datatables for show reports.
-    	$output .= "<table id='students_activity' class='display' cellspacing='0' width='100%'>
-                    <thead>
-                        <tr>
-                            <th>Lastname</th>
-    			            <th>Firstname</th>
-    			            <th>Last Activity</th>
-    			            <th>Discussion Posts</th>
-    			            <th>Posts last week</th>
-    			            <th>Time spent in course</th>
-    			            <th>Regularity (weekly)</th>
-                        </tr>
-                    </thead>
-                    </table>";
-    	
+    	global $PAGE;
+    	// Create standard table.
+    	$output = $this->standard_table(__FUNCTION__, 
+			    			            array(get_string('firstname', 'local_xray'),
+			    			              	  get_string('lastname', 'local_xray'),
+			    			              	  get_string('lastactivity', 'local_xray'),
+			    			              	  get_string('discussionposts', 'local_xray'),
+			    			              	  get_string('postslastweek', 'local_xray'),
+			    			              	  get_string('timespentincourse', 'local_xray'),
+                                              get_string('regularityweekly', 'local_xray')));    			
     	return $output;    	 
     }
     
@@ -169,31 +176,15 @@ class local_xray_renderer extends plugin_renderer_base {
     
     /**
      * Graphic first login non startes (TABLE)
-     * @param stdClass $element
+     * 
      */    
-    public function first_login_non_starters() {
-    	
-    	global $CFG, $PAGE;
-    	$output = "";
-    	 
-    	// Load Jquery.
-    	$PAGE->requires->jquery();
-    	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin('local_xray-firstloginnonstarters', 'local_xray');
-    	 
-    	$output .= html_writer::tag('div', get_string("first_login_non_starters","local_xray"), array("class" => "reportsname"));   	 
-    	
-    	// Table jquery datatables for show reports.
-    	$output .= "<table id='first_login_non_starters' class='display' cellspacing='0' width='100%'>
-                    <thead>
-                        <tr>
-                            <th>Lastname</th>
-    			            <th>Firstname</th>
-                        </tr>
-                    </thead>
-                    </table>";
-    	 
-    	return $output;    	
+    public function first_login_non_starters() {   	
+    	global $PAGE;
+    	// Create standard table.
+    	$output = $this->standard_table(__FUNCTION__, 
+			    			            array(get_string('firstname', 'local_xray'),
+			    			              	  get_string('lastname', 'local_xray')));    			
+    	return $output;	
     }
     
     /**
@@ -215,8 +206,7 @@ class local_xray_renderer extends plugin_renderer_base {
     
     
     /************************** End Elements for Report Activity **************************/
-    
-    
+
     /************************** Elements for Report Discussion **************************/
     
     /**
@@ -224,7 +214,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function average_words_weekly_by_post($element) {
-        return $this->show_on_lightbox("average_words_weekly_by_post", $element);
+    	return $this->show_on_lightbox("average_words_weekly_by_post", $element);
     }
     
     /**
@@ -232,7 +222,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function social_structure($element) {
-        return $this->show_on_lightbox("social_structure", $element);
+    	return $this->show_on_lightbox("social_structure", $element);
     }
     
     /**
@@ -240,7 +230,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function social_structure_with_words_count($element) {
-        return $this->show_on_lightbox("social_structure_with_words_count", $element);
+    	return $this->show_on_lightbox("social_structure_with_words_count", $element);
     }
     
     /**
@@ -248,7 +238,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function social_structure_with_contributions_adjusted($element) {
-        return $this->show_on_lightbox("social_structure_with_contributions_adjusted", $element);
+    	return $this->show_on_lightbox("social_structure_with_contributions_adjusted", $element);
     }
     
     /**
@@ -256,9 +246,8 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function social_structure_coefficient_of_critical_thinking($element) {
-        return $this->show_on_lightbox("social_structure_coefficient_of_critical_thinking", $element);
-    }
-    
+    	return $this->show_on_lightbox("social_structure_coefficient_of_critical_thinking", $element);
+    } 
     /************************** End Elements for Report Discussion **************************/
     
     

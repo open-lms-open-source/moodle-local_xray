@@ -20,22 +20,18 @@ $plugins = array(
             'fancybox2/jquery.fancybox.css'
         )
      ),    
-    'local_xray-list_reports' => array(
+    'local_xray-reports_list' => array(
         'files' => array(
             'reports/reports_list.js'
         )
     ),
-	'local_xray-studentsactivity' => array(
+	'local_xray-students_activity' => array(
 			'files' => array(
-					'dataTables/jquery.dataTables.min.js',
-					'dataTables/jquery.dataTables.min.css',
 					'reports/activity_report_students_activity.js'
 			)
 	),
-	'local_xray-firstloginnonstarters' => array(
+	'local_xray-first_login_non_starters' => array(
 			'files' => array(
-					'dataTables/jquery.dataTables.min.js',
-					'dataTables/jquery.dataTables.min.css',
 					'reports/activity_report_first_login_non_starters.js'
 			)
 	),		

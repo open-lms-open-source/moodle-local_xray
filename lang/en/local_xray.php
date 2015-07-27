@@ -27,7 +27,7 @@ $string['pluginname'] = 'X-Ray Integration';
 $string['welcome_xray'] = 'Welcome to xray';
 
 /* Reports */
-$string['reports'] = 'Reports';
+$string['reports_list'] = 'Reports';
 $string['activity_report'] = 'Activity Report';
 $string['students_activity'] = 'Students Activity';
 $string['activity_of_course_by_day'] = 'Activity of course by day';
@@ -47,8 +47,8 @@ $string['social_structure_with_words_count'] = 'Social structure with words coun
 $string['social_structure'] = 'Social structure';
 $string['average_words_weekly_by_post'] = 'Average words weekly by post';
 
-
 /* Columns reports */
+$string['fullname'] = 'Fullname';
 $string['firstname'] = 'Firstname';
 $string['lastname'] = 'Lastname';
 $string['lastactivity'] = 'Last Activity';
