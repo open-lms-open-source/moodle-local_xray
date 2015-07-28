@@ -58,6 +58,9 @@ $string['social_structure'] = 'Social structure';
 $string['average_words_weekly_by_post'] = 'Average words weekly by post';
 $string['discussionreport_participation_metrics'] = 'Participation Metrics';
 
+/* Discussion report individual*/
+$string['discussionreportindividual'] = 'Discussion Report Individual';
+
 /* Columns reports */
 $string['fullname'] = 'Fullname';
 $string['firstname'] = 'Firstname';

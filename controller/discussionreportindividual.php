@@ -9,7 +9,7 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  * @author German Vitale
  * @package local_xray
  */
-class local_xray_controller_discussionreport extends local_xray_controller_reports {
+class local_xray_controller_discussionreportindividual extends local_xray_controller_reports {
 
     /**
      * Require capabilities
@@ -19,54 +19,49 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     }
     
     public function view_action() {
-    	
-    	global $PAGE;
-    	// Add title to breadcrumb.
-    	$PAGE->navbar->add(get_string('discussionreport', 'local_xray'));
-    	$output = "";
+        
+        global $PAGE;
+        // Add title to breadcrumb.
+        $PAGE->navbar->add(get_string('discussionreportindividual', 'local_xray'));
+        $output = "";
 
-    	try {
-    		$report = "discussion";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
-    		if(!$response) {
-    			// Fail response of webservice.
-    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-    			
-    		} else {
+        try {
+            $report = "discussion";
+            $response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+            if(!$response) {
+                // Fail response of webservice.
+                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                
+            } else {
 
-    			// Show graphs.
-    			$output .= $this->participation_metrics(); // Its a table, I will get info with new call.
-    			$output .= $this->average_words_weekly_by_post($response->elements[5]);
-    			$output .= $this->social_structure($response->elements[9]);
-    			$output .= $this->social_structure_with_words_count($response->elements[10]);
-    			$output .= $this->social_structure_with_contributions_adjusted($response->elements[11]);
-    			$output .= $this->social_structure_coefficient_of_critical_thinking($response->elements[12]);
-    			//$output .= $this->first_login_non_starters();
-    			//$output .= $this->first_login_to_course();
-    			//$output .= $this->first_login_date_observed();
-		    	
-    		}		 
-    	} catch(exception $e) {
-    		print_error('error_xray', 'local_xray','',null, $e->getMessage());
-    	}
-    	
-    	return $output;
+                // Show graphs.
+                //$output .= $this->participation_metrics(); // Its a table, I will get info with new call.
+                $output .= $this->social_structure($response->elements[2]);
+                $output .= $this->main_terms($response->elements[3]);
+                $output .= $this->main_terms_histogram($response->elements[4]);
+        
+            }		 
+        } catch(exception $e) {
+            print_error('error_xray', 'local_xray','',null, $e->getMessage());
+        }
+        
+        return $output;
     }
     
     /**
      * Report "A summary table to be added" (table).
      *
-     */
+     *//*
     private function participation_metrics() {
     
         $output = "";
         $output .= $this->output->discussionreport_participation_metrics();
         return $output;
-    }   
+    }   */
     
     /**
      * Json for provide data to participation_metrics table.
-     */
+     *//*
     public function jsonparticipationdiscussion_action() {
         
         // TODO:: Review , implement search, sortable, pagination.
@@ -102,18 +97,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         
         echo json_encode($return);
         exit();
-    }
+    }*/
     
-    /**
-     * Report Average Words Weekly by Post.
-     *
-     */
-    private function average_words_weekly_by_post($element) {
-        
-        $output = "";
-        $output .= $this->output->discussionreport_average_words_weekly_by_post($element);
-        return $output; 
-    }
     
     /**
      * Report Social Structure.
@@ -122,38 +107,29 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     private function social_structure($element) {
 
     	$output = "";
-    	$output .= $this->output->discussionreport_social_structure($element);
+    	$output .= $this->output->discussionreportindividual_social_structure($element);
     	return $output; 
     }
     
     /**
-     * Report Social Structure With Words Count.
+     * Report Main Terms.
      * @param unknown $element
      */
-    private function social_structure_with_words_count($element) {
+    private function main_terms($element) {
 
     	$output = "";
-    	$output .= $this->output->discussionreport_social_structure_with_words_count($element);
+    	$output .= $this->output->discussionreportindividual_main_terms($element);
     	return $output;
     }
     
     /**
-     * Report Social Structure With Contributions Adjusted
+     * Report Main Terms Histogram.
      */
-    private function social_structure_with_contributions_adjusted($element) {
+    private function main_terms_histogram($element) {
     
     	$output = "";
-    	$output .= $this->output->discussionreport_social_structure_with_contributions_adjusted($element);
+    	$output .= $this->output->discussionreportindividual_main_terms_histogram($element);
     	return $output;
     }   
-    
-    /**
-     * Report Social Structure Coefficient of Critical Thinking
-     */
-    private function social_structure_coefficient_of_critical_thinking($element) {
-    
-    	$output = "";
-    	$output .= $this->output->discussionreport_social_structure_coefficient_of_critical_thinking($element);
-    	return $output;
-    }   
+ 
 }
