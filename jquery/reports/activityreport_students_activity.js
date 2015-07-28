@@ -16,7 +16,7 @@ $(document).ready(function() {
 	      "sProcessing": "Fetching Data, Please wait..."
 	    },*/
 	    //"sAjaxDataProp": "", // With this, you can change format of json.
-	    "sAjaxSource": 'view.php?controller="activity_report"&action="jsonstudentsactivity"',
+	    "sAjaxSource": 'view.php?controller="activityreport"&action="jsonstudentsactivity"',
 	    // Sortable not implemented in webservice xray.
 	    "aoColumns": [
 	                  {"mData": "lastname","bSearchable":false, "bSortable": false},

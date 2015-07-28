@@ -13,7 +13,14 @@ class local_xray_controller_reports extends mr_controller {
 	
 	const XRAY_COURSEID = 7; //TODO:: Example first integration. This is hardcoded for test with xray.
 	const XRAY_DOMAIN = "moodlerooms"; //TODO:: Example first integration. This is hardcoded for test with xray.
-	    
+	
+	/**
+	 * Require capabilities
+	 */
+	public function require_capability() {
+		require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
+	}
+	
     /**
      * List of reports (Example using jquery datatable).
      *
@@ -22,7 +29,7 @@ class local_xray_controller_reports extends mr_controller {
         global $OUTPUT, $PAGE, $COURSE;
         
         // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string('pluginname', 'local_xray'));
+        $PAGE->navbar->add(get_string('pluginname', $this->component));
         $output  = $this->output->reports_list();
         return $output;
     }

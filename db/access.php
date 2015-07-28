@@ -17,7 +17,7 @@ $capabilities = array(
         )
     ),
     // View report activity of course by day.
-	'local/xray:activity_report_view' => array(
+	'local/xray:activityreport_view' => array(
 			'captype' => 'read',
 			'contextlevel' => CONTEXT_COURSE,
 			'archetypes' => array(
@@ -27,7 +27,7 @@ $capabilities = array(
 			)
 	),
     // View report activity of course by day.
-    'local/xray:discussion_report_view' => array(
+    'local/xray:discussionreport_view' => array(
             'captype' => 'read',
             'contextlevel' => CONTEXT_COURSE,
             'archetypes' => array(

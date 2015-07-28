@@ -9,20 +9,13 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  * @author German Vitale
  * @package local_xray
  */
-class local_xray_controller_activity_report extends local_xray_controller_reports {
-
-    /**
-     * Require capabilities
-     */
-    public function require_capability() {
-    	// TODO: To determinate.
-    }
-    
+class local_xray_controller_activityreport extends local_xray_controller_reports {
+ 
     public function view_action() {
     	
     	global $PAGE;
     	// Add title to breadcrumb.
-    	$PAGE->navbar->add(get_string('activity_report', 'local_xray'));
+    	$PAGE->navbar->add(get_string($this->name, $this->component));
     	$output = "";
 
     	try {
@@ -46,7 +39,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
 		    	
     		}		 
     	} catch(exception $e) {
-    		print_error('error_xray', 'local_xray','',null, $e->getMessage());
+    		print_error('error_xray', $this->component,'',null, $e->getMessage());
     	}
     	
     	return $output;
@@ -209,7 +202,7 @@ class local_xray_controller_activity_report extends local_xray_controller_report
     			$output .= $this->first_login_date_observed($response->elements[4]);
     		}
     	} catch(exception $e) {
-    		print_error('error_xray', 'local_xray','',null, $e->getMessage());
+    		print_error('error_xray', $this->component,'',null, $e->getMessage());
     	}
     	 
     	return $output;

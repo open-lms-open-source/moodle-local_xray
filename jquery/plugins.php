@@ -27,12 +27,12 @@ $plugins = array(
     ),
 	'local_xray-students_activity' => array(
 			'files' => array(
-					'reports/activity_report_students_activity.js'
+					'reports/activityreport_students_activity.js'
 			)
 	),
 	'local_xray-first_login_non_starters' => array(
 			'files' => array(
-					'reports/activity_report_first_login_non_starters.js'
+					'reports/activityreport_first_login_non_starters.js'
 			)
 	),		
     'local_xray-show_on_lightbox' => array(
