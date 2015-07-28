@@ -9,7 +9,7 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  * @author German Vitale
  * @package local_xray
  */
-class local_xray_controller_discussion_report extends local_xray_controller_reports {
+class local_xray_controller_discussionreport extends local_xray_controller_reports {
 
     /**
      * Require capabilities
