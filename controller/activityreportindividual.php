@@ -19,17 +19,21 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
 
     	try {
     		$report = "activity";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report, $USER->id);
+    		// TODO:: Courseid and userid hardcoded.
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report, parent::XRAY_USERID);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     			
     		} else {
-
+    			
     			// Show graphs.
+    			$output .= $this->output->inforeport($response->reportdate, 
+    					                             "%Fullname of user%",
+    					                             "%Name of course%");
     			$output .= $this->activity_by_date($response->elements[1]);
-    			$output .= $this->activity_last_two_weeks($response->elements[4]);
-    			$output .= $this->activity_last_two_weeks($response->elements[6]);
+    			$output .= $this->activity_last_two_weeks($response->elements[3]);
+    			$output .= $this->activity_last_two_weeks_byweekday($response->elements[4]);
 		    	
     		}		 
     	} catch(exception $e) {
@@ -46,7 +50,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     private function activity_by_date($element) {
     
     	$output = "";
-    	$output .= $this->output->activity_by_date($element);
+    	$output .= $this->output->activityreportindividual_activity_by_date($element);
     	return $output;
     }   
     
@@ -57,7 +61,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     private function activity_last_two_weeks($element) {
     	
     	$output = "";
-    	$output .= $this->output->activity_last_two_weeks($element);
+    	$output .= $this->output->activityreportindividual_activity_last_two_weeks($element);
     	return $output; 
     }
     
@@ -65,10 +69,10 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
      * Report Activity by time of day.
      *
      */    
-    private function activity_last_two_weeks_byday($element) {
+    private function activity_last_two_weeks_byweekday($element) {
 
     	$output = "";
-    	$output .= $this->output->activity_last_two_weeks_byday($element);
+    	$output .= $this->output->activityreportindividual_activity_last_two_weeks_byday($element);
     	return $output; 
     }
 }

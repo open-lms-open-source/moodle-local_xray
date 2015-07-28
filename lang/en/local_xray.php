@@ -30,7 +30,6 @@ $string['reports_list'] = 'Reports';
 
 /* Report Activity Report*/
 $string['activityreport'] = 'Activity Report';
-$string['activityreportindividual'] = 'Activity Report Individual';
 $string['activityreport_students_activity'] = 'Students Activity';
 $string['activityreport_activity_of_course_by_day'] = 'Activity of course by day';
 $string['activityreport_activity_by_time_of_day'] = 'Activity by time of day';
@@ -42,6 +41,12 @@ $string['activityreport_first_login'] = 'First Login';
 $string['activityreport_first_login_non_starters'] = 'First Login non starters';
 $string['activityreport_first_login_to_course'] = 'First Login to Course';
 $string['activityreport_first_login_date_observed'] = 'First Login Date Observed';
+
+/* Report Activity Report Individual*/
+$string['activityreportindividual'] = 'Activity Report Individual';
+$string['activityreportindividual_activity_by_date'] = 'Activity by Date';
+$string['activityreportindividual_activity_last_two_weeks'] = 'Activity Last Two weeks';
+$string['activityreportindividual_activity_last_two_weeks_byday'] = 'Activity Last Two weeks by weekday';
 
 /* Discussion report*/
 $string['report_discussion_by_user'] = 'Discussion By User';
