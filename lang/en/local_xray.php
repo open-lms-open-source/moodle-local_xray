@@ -51,6 +51,7 @@ $string['social_structure_with_contributions_adjusted'] = 'Social structure with
 $string['social_structure_with_words_count'] = 'Social structure with words count';
 $string['social_structure'] = 'Social structure';
 $string['average_words_weekly_by_post'] = 'Average words weekly by post';
+$string['discussionreport_participation_metrics'] = 'Participation Metrics';
 
 /* Columns reports */
 $string['fullname'] = 'Fullname';
@@ -61,6 +62,11 @@ $string['discussionposts'] = 'Discussion Posts';
 $string['postslastweek'] = 'Posts Last Week';
 $string['timespentincourse'] = 'Time spent in course';
 $string['regularityweekly'] = 'Regularity (weekly)';
+$string['posts'] = 'Posts';
+$string['contribution'] = 'Contribution';
+$string['ctc'] = 'CTC';
+$string['regularityofcontributions'] = 'Regularity of contributions';
+$string['regularityofctc'] = 'Regularity of CTC';
 
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';

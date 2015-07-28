@@ -262,6 +262,25 @@ class local_xray_renderer extends plugin_renderer_base {
     /************************** Elements for Report Discussion **************************/
     
     /**
+     * Graphic Participation Metrics (TABLE)
+     */
+    public function discussionreport_participation_metrics() {
+         
+        global $PAGE;
+        // Create standard table.
+        $output = $this->standard_table(__FUNCTION__,
+                array(get_string('firstname', 'local_xray'),
+                        get_string('lastname', 'local_xray'),
+                        get_string('lastactivity', 'local_xray'),
+                        get_string('posts', 'local_xray'),
+                        get_string('contribution', 'local_xray'),
+                        get_string('ctc', 'local_xray'),
+                        get_string('regularityofcontributions', 'local_xray'),
+                        get_string('regularityofctc', 'local_xray')));
+        return $output;
+    }
+    
+    /**
      * Average words weekly by post. (Graph)
      * @param stdClass $element
      */

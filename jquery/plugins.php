@@ -30,6 +30,11 @@ $plugins = array(
 					'reports/activityreport_students_activity.js'
 			)
 	),
+    'local_xray-discussionreport_participation_metrics' => array(
+            'files' => array(
+                    'reports/discussionreport_participation_metrics.js'
+            )
+    ),
 	'local_xray-activityreport_first_login_non_starters' => array(
 			'files' => array(
 					'reports/activityreport_first_login_non_starters.js'

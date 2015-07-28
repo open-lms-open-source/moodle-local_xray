@@ -35,7 +35,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     		} else {
 
     			// Show graphs.
-    			//$output .= $this->students_activity(); // Its a table, I will get info with new call.
+    			$output .= $this->participation_metrics(); // Its a table, I will get info with new call.
     			$output .= $this->average_words_weekly_by_post($response->elements[5]);
     			$output .= $this->social_structure($response->elements[9]);
     			$output .= $this->social_structure_with_words_count($response->elements[10]);
@@ -56,23 +56,23 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     /**
      * Report "A summary table to be added" (table).
      *
-     *//*
-    private function students_activity() {
+     */
+    private function participation_metrics() {
     
     	$output = "";
-    	$output .= $this->output->students_activity();
+    	$output .= $this->output->discussionreport_participation_metrics();
     	return $output;
-    } */  
+    }   
     
     /**
-     * Json for provide data to students_activity table.
+     * Json for provide data to participation_metrics table.
      */
-    /*public function jsonstudentsactivity_action() {
+    public function jsonparticipationdiscussion_action() {
     	
     	// TODO:: Review , implement search, sortable, pagination.
     	$return = array();
     	try {
-    		$report = "activity";
+    		$report = "discussion";
     		$element = "element1";
     		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
     		if(!$response) {
@@ -85,11 +85,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     					$r = new stdClass();
     					$r->firstname = $row->firstname->value;
     					$r->lastname = $row->lastname->value;
-    					$r->lastactivity = $row->last_activity->value;
-    					$r->discussionposts = $row->discussion_posts->value;
-    					$r->postslastweek = $row->discussion_posts_last_week->value;
-    					$r->timespentincourse = $row->timeOnTask->value;
-    					$r->regularity = $row->regularity->value;
+    					$r->posts = $row->posts->value;
+    					$r->contribution = $row->contribution->value;
+    					$r->ctc = $row->ctc->value;
+    					$r->regularityofcontributions = $row->regularityofcontributions->value;
+    					$r->regularityofctc = $row->regularityofctc->value;
     					$return[] = $r;
     				}
     			}
@@ -102,7 +102,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     	
     	echo json_encode($return);
     	exit();
-    }*/
+    }
     
     /**
      * Report Average Words Weekly by Post.
