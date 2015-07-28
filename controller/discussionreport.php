@@ -22,7 +22,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     	
     	global $PAGE;
     	// Add title to breadcrumb.
-    	$PAGE->navbar->add(get_string('discussion_report', 'local_xray'));
+    	$PAGE->navbar->add(get_string('discussionreport', 'local_xray'));
     	$output = "";
 
     	try {
