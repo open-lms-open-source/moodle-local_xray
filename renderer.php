@@ -40,6 +40,28 @@ class local_xray_renderer extends plugin_renderer_base {
     /************************** General elements for Reports **************************/
     
     /**
+     * Show data about report
+     * @param String   $reportdate 
+     * @param String    $user
+     * @param String  $course
+     */
+    public function inforeport($reportdate, $user = null, $course = null) {
+
+    	$output = "";
+    	$output .=html_writer::start_div('inforeport');
+    	$output .= html_writer::tag("p", get_string(("date")).": ".$reportdate);
+    	if(!empty($user)) {
+    		$output .= html_writer::tag("p", get_string(("username")).": ".$user);
+    	}
+    	if(!empty($course)) {
+    		$output .= html_writer::tag("p", get_string(("course")).": ".$course);
+    	}    	
+    	$output .=html_writer::end_div();    
+    	
+    	return $output;
+    }
+    
+    /**
      * Generate img with lightbox.
      * General template for show graph with lightbox.
      * @param String   $name 
@@ -208,7 +230,35 @@ class local_xray_renderer extends plugin_renderer_base {
     	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     /************************** End Elements for Report Activity **************************/
-
+    
+    /************************** Elements for Report Activity Individual **************************/
+    
+    /**
+     * Graphic activity individual by date
+     * @param stdClass $element
+     */
+    public function activityreportindividual_activity_by_date($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Graphic activity individual last two week
+     * @param stdClass $element
+     */
+    public function activityreportindividual_activity_last_two_weeks($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Graphic activity individual last two week by weekday
+     * @param stdClass $element
+     */
+    public function activityreportindividual_activity_last_two_weeks_byday($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /************************** End Elements for Report Activity Individual **************************/
+    
     /************************** Elements for Report Discussion **************************/
     
     /**
