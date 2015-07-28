@@ -284,45 +284,72 @@ class local_xray_renderer extends plugin_renderer_base {
      * Average words weekly by post. (Graph)
      * @param stdClass $element
      */
-    public function average_words_weekly_by_post($element) {
-    	return $this->show_on_lightbox("average_words_weekly_by_post", $element);
+    public function discussionreport_average_words_weekly_by_post($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     
     /**
      * Social structure.(Graph)
      * @param stdClass $element
      */
-    public function social_structure($element) {
-    	return $this->show_on_lightbox("social_structure", $element);
+    public function discussionreport_social_structure($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     
     /**
      * Social structure with words count.(Graph)
      * @param stdClass $element
      */
-    public function social_structure_with_words_count($element) {
-    	return $this->show_on_lightbox("social_structure_with_words_count", $element);
+    public function discussionreport_social_structure_with_words_count($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     
     /**
      * Social structure with contributions adjusted.(Graph)
      * @param stdClass $element
      */
-    public function social_structure_with_contributions_adjusted($element) {
-    	return $this->show_on_lightbox("social_structure_with_contributions_adjusted", $element);
+    public function discussionreport_social_structure_with_contributions_adjusted($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     
     /**
      * Social structure coefficient of critical thinking
      * @param stdClass $element
      */
-    public function social_structure_coefficient_of_critical_thinking($element) {
-    	return $this->show_on_lightbox("social_structure_coefficient_of_critical_thinking", $element);
+    public function discussionreport_social_structure_coefficient_of_critical_thinking($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     } 
     /************************** End Elements for Report Discussion **************************/
     
     
+    /************************** Elements for Report Discussion for an individual **************************/
     
+   
+    /**
+     * Social structure.(Graph)
+     * @param stdClass $element
+     */
+    public function discussionreportindividual_social_structure($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Main terms.(Graph)
+     * @param stdClass $element
+     */
+    public function discussionreportindividual_main_terms($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Main terms histogram.(Graph)
+     * @param stdClass $element
+     */
+    public function discussionreportindividual_main_terms_histogram($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /************************** End Elements for Report Discussion for an individual **************************/
     
     public function discussion_by_user(){
     
