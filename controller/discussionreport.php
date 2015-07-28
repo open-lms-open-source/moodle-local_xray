@@ -59,49 +59,49 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     private function participation_metrics() {
     
-    	$output = "";
-    	$output .= $this->output->discussionreport_participation_metrics();
-    	return $output;
+        $output = "";
+        $output .= $this->output->discussionreport_participation_metrics();
+        return $output;
     }   
     
     /**
      * Json for provide data to participation_metrics table.
      */
     public function jsonparticipationdiscussion_action() {
-    	
-    	// TODO:: Review , implement search, sortable, pagination.
-    	$return = array();
-    	try {
-    		$report = "discussion";
-    		$element = "element1";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
-    		if(!$response) {
-    			// TODO:: Fail response of webservice.
-    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-    			 
-    		} else {
-    			if(!empty($response->elements[0]->data)){
-    				foreach($response->elements[0]->data as $row) {
-    					$r = new stdClass();
-    					$r->firstname = $row->firstname->value;
-    					$r->lastname = $row->lastname->value;
-    					$r->posts = $row->posts->value;
-    					$r->contribution = $row->contribution->value;
-    					$r->ctc = $row->ctc->value;
-    					$r->regularityofcontributions = $row->regularityofcontributions->value;
-    					$r->regularityofctc = $row->regularityofctc->value;
-    					$return[] = $r;
-    				}
-    			}
-    			
-    		}
-    	} catch(exception $e) {
-    		// TODO:: Send message error to js.
-    		$return = "";
-    	}
-    	
-    	echo json_encode($return);
-    	exit();
+        
+        // TODO:: Review , implement search, sortable, pagination.
+        $return = array();
+        try {
+            $report = "discussion";
+            $element = "element1";
+            $response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+            if(!$response) {
+                // TODO:: Fail response of webservice.
+                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                 
+            } else {
+                if(!empty($response->elements[0]->data)){
+                    foreach($response->elements[0]->data as $row) {
+                        $r = new stdClass();
+                        $r->firstname = $row->firstname->value;
+                        $r->lastname = $row->lastname->value;
+                        $r->posts = $row->posts->value;
+                        $r->contribution = $row->contribution->value;
+                        $r->ctc = $row->ctc->value;
+                        $r->regularityofcontributions = $row->regularityofcontributions->value;
+                        $r->regularityofctc = $row->regularityofctc->value;
+                        $return[] = $r;
+                    }
+                }
+                
+            }
+        } catch(exception $e) {
+            // TODO:: Send message error to js.
+            $return = "";
+        }
+        
+        echo json_encode($return);
+        exit();
     }
     
     /**
@@ -109,10 +109,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      *
      */
     private function average_words_weekly_by_post($element) {
-    	
-    	$output = "";
-    	$output .= $this->output->average_words_weekly_by_post($element);
-    	return $output; 
+        
+        $output = "";
+        $output .= $this->output->average_words_weekly_by_post($element);
+        return $output; 
     }
     
     /**
