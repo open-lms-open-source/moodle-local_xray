@@ -2,6 +2,11 @@
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
 require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 
+
+class local_xray_renderer_activityreport extends local_xray_renderer {
+	
+}
+
 /**
  * Renderer
  *
@@ -111,7 +116,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Graphic students activity (TABLE)
      */
-    public function students_activity() {
+    public function activityreport_students_activity() {
     	
     	global $PAGE;
     	// Create standard table.
@@ -130,55 +135,55 @@ class local_xray_renderer extends plugin_renderer_base {
      * Graphic activity of course by day.(Graph)
      * @param stdClass $element
      */
-    public function activity_of_course_by_day($element) {    	
-    	return $this->show_on_lightbox("activity_of_course_by_day", $element);	    	
+    public function activityreport_activity_of_course_by_day($element) {    	
+    	return $this->show_on_lightbox(__FUNCTION__, $element);	    	
     }
     
     /**
      * Graphic activity by time of day.(Graph)
      * @param stdClass $element
      */    
-    public function activity_by_time_of_day($element) {
-    	return $this->show_on_lightbox("activity_by_time_of_day", $element);     	
+    public function activityreport_activity_by_time_of_day($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);     	
     }
     
     /**
      * Graphic activity last two weeks.(Graph)
      * @param stdClass $element
      */
-    public function activity_last_two_weeks($element) {
-    	return $this->show_on_lightbox("activity_last_two_weeks", $element);
+    public function activityreport_activity_last_two_weeks($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     }  
     
     /**
      * Graphic activity last two weeks BY weekday.(Graph)
      * @param stdClass $element
      */
-    public function activity_last_two_weeks_by_weekday($element) {
-    	return $this->show_on_lightbox("activity_last_two_weeks_by_weekday", $element); 	
+    public function activityreport_activity_last_two_weeks_by_weekday($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element); 	
     }
     
     /**
      * Graphic activity by participant 1
      * @param stdClass $element
      */
-    public function activity_by_participant1($element) {
-    	return $this->show_on_lightbox("activity_by_participant1", $element); 	
+    public function activityreport_activity_by_participant1($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element); 	
     }
     
     /**
      * Graphic activity by participant 2
      * @param stdClass $element
      */
-    public function activity_by_participant2($element) {
-    	return $this->show_on_lightbox("activity_by_participant2", $element);
+    public function activityreport_activity_by_participant2($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     }    
     
     /**
      * Graphic first login non startes (TABLE)
      * 
      */    
-    public function first_login_non_starters() {   	
+    public function activityreport_first_login_non_starters() {   	
     	global $PAGE;
     	// Create standard table.
     	$output = $this->standard_table(__FUNCTION__, 
@@ -191,20 +196,17 @@ class local_xray_renderer extends plugin_renderer_base {
      * Graphic frist login to course
      * @param stdClass $element
      */    
-    public function first_login_to_course($element) {
-    	return $this->show_on_lightbox("first_login_to_course", $element);    	
+    public function activityreport_first_login_to_course($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);    	
     }
     
     /**
      * Graphic first login date observed
      * @param stdClass $element
      */    
-    public function first_login_date_observed($element) {
-    	return $this->show_on_lightbox("first_login_date_observed", $element);
+    public function activityreport_first_login_date_observed($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
-    
-    
-    
     /************************** End Elements for Report Activity **************************/
 
     /************************** Elements for Report Discussion **************************/

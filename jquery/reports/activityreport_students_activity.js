@@ -5,7 +5,7 @@
  */
 $(document).ready(function() {
 	
-	$('#students_activity').dataTable( {
+	$('#activityreport_students_activity').dataTable( {
         "bProcessing": true,
         "bServerSide": true,
 	    "paging": true,

@@ -4,7 +4,7 @@
  * @author Pablo Pagnone
  */
 $(document).ready(function() {
-	$('#first_login_non_starters').dataTable( {
+	$('#activityreport_first_login_non_starters').dataTable( {
         "bProcessing": true,
         "bServerSide": true,
 	    "paging": true,

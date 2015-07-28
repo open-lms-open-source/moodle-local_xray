@@ -52,7 +52,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     private function students_activity() {
     
     	$output = "";
-    	$output .= $this->output->students_activity();
+    	$output .= $this->output->activityreport_students_activity();
     	return $output;
     }   
     
@@ -122,7 +122,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     private function activity_of_course_by_day($element) {
     	
     	$output = "";
-    	$output .= $this->output->activity_of_course_by_day($element);
+    	$output .= $this->output->activityreport_activity_of_course_by_day($element);
     	return $output; 
     }
     
@@ -133,7 +133,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     private function activity_by_time_of_day($element) {
 
     	$output = "";
-    	$output .= $this->output->activity_by_time_of_day($element);
+    	$output .= $this->output->activityreport_activity_by_time_of_day($element);
     	return $output; 
     }
     
@@ -144,7 +144,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     private function activity_last_two_weeks($element) {
 
     	$output = "";
-    	$output .= $this->output->activity_last_two_weeks($element);
+    	$output .= $this->output->activityreport_activity_last_two_weeks($element);
     	return $output;
     }
     
@@ -154,7 +154,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     private function activity_last_two_weeks_by_weekday($element) {
     
     	$output = "";
-    	$output .= $this->output->activity_last_two_weeks_by_weekday($element);
+    	$output .= $this->output->activityreport_activity_last_two_weeks_by_weekday($element);
     	return $output;
     }   
     
@@ -164,7 +164,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     private function activity_by_participant1($element) {
     
     	$output = "";
-    	$output .= $this->output->activity_by_participant1($element);
+    	$output .= $this->output->activityreport_activity_by_participant1($element);
     	return $output;
     }   
     
@@ -174,7 +174,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     private function activity_by_participant2($element) {
     
     	$output = "";
-    	$output .= $this->output->activity_by_participant2($element);
+    	$output .= $this->output->activityreport_activity_by_participant2($element);
     	return $output;
     }
     
@@ -215,7 +215,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      */
     private function first_login_non_starters() {
     	$output = "";
-    	$output .= $this->output->first_login_non_starters();
+    	$output .= $this->output->activityreport_first_login_non_starters();
     	return $output;
     } 
     
@@ -279,7 +279,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      */
     private function first_login_to_course($element) {
     	$output = "";
-    	$output .= $this->output->first_login_to_course($element);
+    	$output .= $this->output->activityreport_first_login_to_course($element);
     	return $output;
     }
     
@@ -290,7 +290,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      */
     private function first_login_date_observed($element) {
     	$output = "";
-    	$output .= $this->output->first_login_date_observed($element);
+    	$output .= $this->output->activityreport_first_login_date_observed($element);
     	return $output;
     }
 }

@@ -25,12 +25,12 @@ $plugins = array(
             'reports/reports_list.js'
         )
     ),
-	'local_xray-students_activity' => array(
+	'local_xray-activityreport_students_activity' => array(
 			'files' => array(
 					'reports/activityreport_students_activity.js'
 			)
 	),
-	'local_xray-first_login_non_starters' => array(
+	'local_xray-activityreport_first_login_non_starters' => array(
 			'files' => array(
 					'reports/activityreport_first_login_non_starters.js'
 			)

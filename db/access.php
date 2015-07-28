@@ -16,7 +16,7 @@ $capabilities = array(
             'student' => CAP_ALLOW
         )
     ),
-    // View report activity of course by day.
+    // View report activity
 	'local/xray:activityreport_view' => array(
 			'captype' => 'read',
 			'contextlevel' => CONTEXT_COURSE,
@@ -35,6 +35,16 @@ $capabilities = array(
                     'editingteacher' => CAP_ALLOW,
                     'manager' => CAP_ALLOW
             )
-    )
-		
+    ),
+	// View report activity individual
+	'local/xray:activityreportindividual_view' => array(
+			'captype' => 'read',
+			'contextlevel' => CONTEXT_COURSE,
+			'archetypes' => array(
+					'student' => CAP_ALLOW,
+					'teacher' => CAP_ALLOW,
+					'editingteacher' => CAP_ALLOW,
+					'manager' => CAP_ALLOW
+			)
+	)	
 );
