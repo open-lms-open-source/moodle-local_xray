@@ -20,7 +20,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     	try {
     		$report = "activity";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -70,8 +70,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	try {
     		$report = "activity";
     		$element = "studentList";
-    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_DOMAIN, // TODO:: Hardcoded.
-    				                                         parent::XRAY_COURSEID, // TODO:: Hardcoded.
+    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
     				                                         $element, 
     				                                         $report, 
     				                                         null, 
@@ -199,7 +198,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	 
     	try {
     		$report = "firstLogin";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -244,8 +243,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	try {
     		$report = "firstLogin";
     		$element = "nonStarters";
-    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_DOMAIN,
-    				                                         parent::XRAY_COURSEID, 
+    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, 
     				                                         $element, 
     				                                         $report, 
     				                                         null, 

@@ -41,7 +41,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
 
     	try {
     		$report = "activity";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, $this->xraycourseid, $report, $this->xrayuserid);
+    		$response = \local_xray\api\wsapi::course($this->xraycourseid, $report, $this->xrayuserid);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
