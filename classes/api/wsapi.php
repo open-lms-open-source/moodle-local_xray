@@ -99,16 +99,17 @@ abstract class wsapi {
     }
 
     /**
-     * @param string $domain
+     *
      * @param null|int $start
      * @param null|int $count
      * @return bool|mixed
      * @throws \Exception
      * @throws \dml_exception
      */
-    public static function domaininfo($domain, $start = null, $count = null) {
+    public static function domaininfo($start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
-        if ($baseurl === false) {
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
             return false;
         }
         $url = sprintf('%s/%s', $baseurl, $domain);
@@ -117,16 +118,17 @@ abstract class wsapi {
 
     /**
      * Returns list of all available courses for specified domain
-     * @param string $domain
+     *
      * @param null|int $start
      * @param null|int $count
      * @return bool|mixed
      * @throws \Exception
      * @throws \dml_exception
      */
-    public static function courses($domain, $start = null, $count = null) {
+    public static function courses($start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
-        if ($baseurl === false) {
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
             return false;
         }
         $url = sprintf('%s/%s/course', $baseurl, $domain);
@@ -135,7 +137,7 @@ abstract class wsapi {
 
     /**
      * Return specific course report
-     * @param string $domain Name of the domain
+     *
      * @param int $courseid numeric id of the course within domain
      * @param string $report name of the report to be used (See wiki documetation for available types)
      * @param int $userid - numerical user id value
@@ -147,9 +149,10 @@ abstract class wsapi {
      * @throws \Exception
      * @throws \dml_exception
      */
-    public static function course($domain, $courseid, $report = '', $userid = null, $date = '', $subtype = '', $start = null, $count = null) {
+    public static function course( $courseid, $report = '', $userid = null, $date = '', $subtype = '', $start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
-        if ($baseurl === false) {
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
             return false;
         }
         $url = sprintf('%s/%s/course/%s', $baseurl, $domain, $courseid);
@@ -169,7 +172,7 @@ abstract class wsapi {
     }
 
     /**
-     * @param string $domain
+     *
      * @param int $courseid
      * @param string $name - element name (element1, etc.)
      * @param string $report
@@ -180,9 +183,10 @@ abstract class wsapi {
      * @param int $count
      * @return bool|mixed
      */
-    public static function courseelement($domain, $courseid, $name, $report = '', $userid = null, $date = '', $subtype = '', $start = null, $count = null) {
+    public static function courseelement($courseid, $name, $report = '', $userid = null, $date = '', $subtype = '', $start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
-        if ($baseurl === false) {
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
             return false;
         }
         $url = sprintf('%s/%s/course/%s', $baseurl, $domain, $courseid);
@@ -204,14 +208,15 @@ abstract class wsapi {
 
     /**
      * Get list of participants for domain
-     * @param string $domain
+     *
      * @param null|int $start
      * @param null|int $count
      * @return bool|mixed
      */
-    public static function participants($domain, $start = null, $count = null) {
+    public static function participants($start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
-        if ($baseurl === false) {
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
             return false;
         }
 
@@ -220,7 +225,7 @@ abstract class wsapi {
     }
 
     /**
-     * @param $domain
+     *
      * @param $userid
      * @param $report
      * @param string $subtype
@@ -229,9 +234,10 @@ abstract class wsapi {
      * @param null $count
      * @return bool|mixed
      */
-    public static function participantreport($domain, $userid, $report, $subtype = '', $date = '', $start = null, $count = null) {
+    public static function participantreport($userid, $report, $subtype = '', $date = '', $start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
-        if ($baseurl === false) {
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
             return false;
         }
 
@@ -246,7 +252,7 @@ abstract class wsapi {
     }
 
     /**
-     * @param string $domain
+     *
      * @param int $userid
      * @param string $report
      * @param string $name - name of the element
@@ -256,9 +262,10 @@ abstract class wsapi {
      * @param int $count
      * @return bool|mixed
      */
-    public static function participantreportelements($domain, $userid, $report, $name, $subtype = '', $date = '', $start = null, $count = null) {
+    public static function participantreportelements($userid, $report, $name, $subtype = '', $date = '', $start = null, $count = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
-        if ($baseurl === false) {
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
             return false;
         }
 
