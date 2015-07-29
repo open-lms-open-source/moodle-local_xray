@@ -49,17 +49,19 @@ $string['activityreportindividual_activity_last_two_weeks'] = 'Activity Last Two
 $string['activityreportindividual_activity_last_two_weeks_byday'] = 'Activity Last Two weeks by weekday';
 
 /* Discussion report*/
-$string['report_discussion_by_user'] = 'Discussion By User';
 $string['discussionreport'] = 'Discussion Report';
-$string['social_structure_coefficient_of_critical_thinking'] = 'Social structure coefficient of critical thinking';
-$string['social_structure_with_contributions_adjusted'] = 'Social structure with contributions adjusted';
-$string['social_structure_with_words_count'] = 'Social structure with words count';
-$string['social_structure'] = 'Social structure';
-$string['average_words_weekly_by_post'] = 'Average words weekly by post';
+$string['discussionreport_social_structure_coefficient_of_critical_thinking'] = 'Social structure coefficient of critical thinking';
+$string['discussionreport_social_structure_with_contributions_adjusted'] = 'Social structure with contributions adjusted';
+$string['discussionreport_social_structure_with_words_count'] = 'Social structure with words count';
+$string['discussionreport_social_structure'] = 'Social structure';
+$string['discussionreport_average_words_weekly_by_post'] = 'Average words weekly by post';
 $string['discussionreport_participation_metrics'] = 'Participation Metrics';
 
 /* Discussion report individual*/
 $string['discussionreportindividual'] = 'Discussion Report Individual';
+$string['discussionreportindividual_social_structure'] = 'Social Structure';
+$string['discussionreportindividual_main_terms'] = 'Main Terms';
+$string['discussionreportindividual_main_terms_histogram'] = 'Main Terms Histogram';
 
 /* Columns reports */
 $string['fullname'] = 'Fullname';
