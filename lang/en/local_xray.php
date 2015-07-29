@@ -21,10 +21,10 @@
  * @author German Vitale
  * @package local_xray
  */
-$string['navigation_xray'] = 'Xray Integration'; 
-$string['navitationcourse_xray'] = 'Xray Integration';
-$string['pluginname'] = 'X-Ray Integration';
-$string['welcome_xray'] = 'Welcome to xray';
+$string['navigation_xray'] = 'X-Ray'; 
+$string['navitationcourse_xray'] = 'X-Ray';
+$string['pluginname'] = 'X-Ray';
+$string['welcome_xray'] = 'Welcome to X-Ray';
 $string['reports'] = 'Reports';
 $string['reports_list'] = 'Reports';
 
@@ -75,7 +75,7 @@ $string['contribution'] = 'Contribution';
 $string['ctc'] = 'CTC';
 $string['regularityofcontributions'] = 'Regularity of contributions';
 $string['regularityofctc'] = 'Regularity of CTC';
-
+$string['reportdate'] = 'Date of report';
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';
 

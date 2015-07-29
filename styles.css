@@ -22,3 +22,12 @@
 	width:800px;
 	text-align:center;
 }
+
+/** Link in table to activity report individual **/
+#page-local-xray-view .icon_activityreportindividual {
+	display:block;
+	width:16px;
+	height:16px;
+	background-color: #BFE3FF;
+	background-image: url([[pix:local_xray|activityindividualreport]]);
+}

@@ -9,28 +9,49 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  * @package local_xray
  */
 class local_xray_controller_activityreportindividual extends local_xray_controller_reports {
- 
+	
+	/**
+	 * Course id
+	 */
+	private $xraycourseid;
+	
+	/**
+	 * User id
+	 * @var unknown
+	 */
+	private $xrayuserid;
+	
+	public function init() {
+		parent::init();
+		$this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
+		$this->xrayuserid = required_param('xrayuserid', PARAM_RAW);	
+	}
+	
     public function view_action() {
     	
-    	global $PAGE, $USER;
+    	global $PAGE, $USER, $DB;
+    	
     	// Add title to breadcrumb.
-    	$PAGE->navbar->add(get_string($this->name, $this->component));
+    	$title = get_string($this->name, $this->component);
+    	$PAGE->set_title($title);
+    	// Add nav to return to activityreport.
+    	$PAGE->navbar->add(get_string("activityreport", $this->component), new moodle_url('/local/xray/view.php', array("controller" => "activityreport")));    	
+    	$PAGE->navbar->add($title);
     	$output = "";
 
     	try {
     		$report = "activity";
-    		// TODO:: Courseid and userid hardcoded.
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report, parent::XRAY_USERID);
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, $this->xraycourseid, $report, $this->xrayuserid);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     			
     		} else {
-    			
+
     			// Show graphs.
     			$output .= $this->output->inforeport($response->reportdate, 
-    					                             "%Fullname of user%",
-    					                             "%Name of course%");
+    					                             $DB->get_field('user', 'username', array("id" => $this->xrayuserid)),
+    					                             $DB->get_field('course', 'fullname', array("id" => $this->xraycourseid)));
     			$output .= $this->activity_by_date($response->elements[1]);
     			$output .= $this->activity_last_two_weeks($response->elements[3]);
     			$output .= $this->activity_last_two_weeks_byweekday($response->elements[4]);

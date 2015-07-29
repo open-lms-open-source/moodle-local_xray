@@ -49,7 +49,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
     	$output = "";
     	$output .=html_writer::start_div('inforeport');
-    	$output .= html_writer::tag("p", get_string(("date")).": ".$reportdate);
+    	$output .= html_writer::tag("p", get_string("reportdate", "local_xray").": ".$reportdate);
     	if(!empty($user)) {
     		$output .= html_writer::tag("p", get_string(("username")).": ".$user);
     	}
@@ -143,7 +143,8 @@ class local_xray_renderer extends plugin_renderer_base {
     	global $PAGE;
     	// Create standard table.
     	$output = $this->standard_table(__FUNCTION__, 
-			    			            array(get_string('firstname', 'local_xray'),
+			    			            array("", // Empty for action column.
+			    			            	  get_string('firstname', 'local_xray'),
 			    			              	  get_string('lastname', 'local_xray'),
 			    			              	  get_string('lastactivity', 'local_xray'),
 			    			              	  get_string('discussionposts', 'local_xray'),
@@ -352,5 +353,4 @@ class local_xray_renderer extends plugin_renderer_base {
     /************************** End Elements for Report Discussion for an individual **************************/
     
     
-    
-}
+    }

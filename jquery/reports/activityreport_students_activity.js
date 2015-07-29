@@ -19,6 +19,7 @@ $(document).ready(function() {
 	    "sAjaxSource": 'view.php?controller="activityreport"&action="jsonstudentsactivity"',
 	    // Sortable not implemented in webservice xray.
 	    "aoColumns": [
+	                  {"mData": "action","bSearchable":false, "bSortable": false},
 	                  {"mData": "lastname","bSearchable":false, "bSortable": false},
 	                  {"mData": "firstname","bSearchable":false, "bSortable": false},
 	                  {"mData": "lastactivity","bSearchable":false, "bSortable": false},

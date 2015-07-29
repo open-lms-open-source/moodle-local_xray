@@ -70,8 +70,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	try {
     		$report = "activity";
     		$element = "studentList";
-    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_DOMAIN,
-    				                                         parent::XRAY_COURSEID, 
+    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_DOMAIN, // TODO:: Hardcoded.
+    				                                         parent::XRAY_COURSEID, // TODO:: Hardcoded.
     				                                         $element, 
     				                                         $report, 
     				                                         null, 
@@ -81,14 +81,25 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     				                                         $count);
 
     		if(!$response) {
-    			// TODO:: Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     		} else {
     			
     			$data = array();
     			if(!empty($response->data)){
+    				$activityreportind = get_string('activityreportindividual', $this->component);
     				foreach($response->data as $row) {
+
+    					// Url for activityreportindividual.
+    					$url = new moodle_url("/local/xray/view.php", 
+    							              array("controller" => "activityreportindividual",
+    							              		"xraycourseid" => $row->courseId->value,
+    							              		"xrayuserid" => $row->participantId->value
+    							              ));
+
     					$r = new stdClass();
+    					$r->action = html_writer::link($url, '', array("class" => "icon_activityreportindividual", 
+    							                                       "title" => $activityreportind,
+    							                                       "target" => "_blank"));
     					$r->firstname = $row->firstname->value;
     					$r->lastname = $row->lastname->value;
     					$r->lastactivity = $row->last_activity->value;
@@ -100,7 +111,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     					$data[] = $r;
     				}
     			}
-    			
     			// Provide info to table.
     			$return["recordsFiltered"] = 100; // TODO:: Get from webservice.
     			$return["data"] = $data;
@@ -244,7 +254,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     				                                         $start, 
     				                                         $count);
     		if(!$response) {
-    			// TODO:: Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     	
     		} else {
