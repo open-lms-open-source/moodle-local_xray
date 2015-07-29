@@ -22,23 +22,23 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         
         global $PAGE;
         // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string('discussionreportindividual', 'local_xray'));
+        $PAGE->navbar->add(get_string($this->name, $this->component));
         $output = "";
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+            $response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report, parent::XRAY_USERID);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
                 
             } else {
-
+                
                 // Show graphs.
                 //$output .= $this->participation_metrics(); // Its a table, I will get info with new call.
-                $output .= $this->social_structure($response->elements[2]);
-                $output .= $this->main_terms($response->elements[3]);
-                $output .= $this->main_terms_histogram($response->elements[4]);
+                $output .= $this->social_structure($response->elements[0]);//TODO number elements are not the same of page
+                $output .= $this->main_terms($response->elements[1]);//TODO number elements are not the same of page
+                $output .= $this->main_terms_histogram($response->elements[2]);//TODO number elements are not the same of page
         
             }		 
         } catch(exception $e) {
