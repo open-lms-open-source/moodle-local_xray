@@ -1,7 +1,8 @@
 /**
- * jQuery scripting for students activity
+ * jQuery scripting for participation metrics
  * 
  * @author Pablo Pagnone
+ * @author Germán Vitale
  */
 $(document).ready(function() {
 	
@@ -19,6 +20,7 @@ $(document).ready(function() {
 	    "sAjaxSource": 'view.php?controller="discussionreport"&action="jsonparticipationdiscussion"',
 	    // Sortable not implemented in webservice xray.
 	    "aoColumns": [
+	                  {"mData": "action","bSearchable":false, "bSortable": false},
 	                  {"mData": "lastname","bSearchable":false, "bSortable": false},
 	                  {"mData": "firstname","bSearchable":false, "bSortable": false},
 	                  {"mData": "posts","bSearchable":false, "bSortable": false},

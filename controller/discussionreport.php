@@ -19,38 +19,34 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     }
     
     public function view_action() {
-    	
-    	global $PAGE;
-    	// Add title to breadcrumb.
-    	$PAGE->navbar->add(get_string('discussionreport', 'local_xray'));
-    	$output = "";
+        
+        global $PAGE;
+        // Add title to breadcrumb.
+        $PAGE->navbar->add(get_string('discussionreport', 'local_xray'));
+        $output = "";
 
-    	try {
-    		$report = "discussion";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
-    		if(!$response) {
-    			// Fail response of webservice.
-    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-    			
-    		} else {
-
-    			// Show graphs.
-    			$output .= $this->participation_metrics(); // Its a table, I will get info with new call.
-    			$output .= $this->average_words_weekly_by_post($response->elements[5]);
-    			$output .= $this->social_structure($response->elements[9]);
-    			$output .= $this->social_structure_with_words_count($response->elements[10]);
-    			$output .= $this->social_structure_with_contributions_adjusted($response->elements[11]);
-    			$output .= $this->social_structure_coefficient_of_critical_thinking($response->elements[12]);
-    			//$output .= $this->first_login_non_starters();
-    			//$output .= $this->first_login_to_course();
-    			//$output .= $this->first_login_date_observed();
-		    	
-    		}		 
-    	} catch(exception $e) {
-    		print_error('error_xray', 'local_xray','',null, $e->getMessage());
-    	}
-    	
-    	return $output;
+        try {
+            $report = "discussion";
+            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+            if(!$response) {
+                // Fail response of webservice.
+                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+            
+            } else {
+                // Show graphs.
+                $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
+                $output .= $this->average_words_weekly_by_post($response->elements[5]);
+                $output .= $this->social_structure($response->elements[9]);
+                $output .= $this->social_structure_with_words_count($response->elements[10]);
+                $output .= $this->social_structure_with_contributions_adjusted($response->elements[11]);
+                $output .= $this->social_structure_coefficient_of_critical_thinking($response->elements[12]);
+            	
+            }
+        } catch(exception $e) {
+            print_error('error_xray', 'local_xray','',null, $e->getMessage());
+        }
+        
+        return $output;
     }
     
     /**
@@ -69,6 +65,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     public function jsonparticipationdiscussion_action() {
         
+        global $PAGE;
+        
         // TODO:: Review , implement search, sortable, pagination.
         $return = array();
         try {
@@ -79,15 +77,14 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             $report = "discussion";
             $element = "element2";
             
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_DOMAIN, // TODO:: Hardcoded.
-                    parent::XRAY_COURSEID, // TODO:: Hardcoded.
-                    $element,
-                    $report,
-                    null,
-                    '',
-                    '',
-                    $start,
-                    $count);
+            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
+                                                                $element,
+                                                                $report,
+                                                                null,
+                                                                '',
+                                                                '',
+                                                                $start,
+                                                                $count);
            
             if(!$response) {
                 // TODO:: Fail response of webservice.
@@ -97,29 +94,31 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 
                 $data = array();
                 if(!empty($response->data)){
-                    //$activityreportind = get_string('activityreportindividual', $this->component);//TODO
-                    $activityreportind = 'algo';
+                    $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
                     
                     foreach($response->data as $row) {
-                
-                        // Url for activityreportindividual.
-                        $url = new moodle_url("/local/xray/view.php",
-                                array("controller" => "activityreportindividual",
-                                        "xraycourseid" => $row->courseId->value,
-                                        "xrayuserid" => $row->participantId->value
-                                ));
-                
                         $r = new stdClass();
-                        /*$r->action = html_writer::link($url, '', array("class" => "icon_activityreportindividual",//TODO
-                                "title" => $activityreportind,
-                                "target" => "_blank"));*/
+                        
+                        $r->action = "";
+                        if(has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
+                            // Url for discussionreportindividual.
+                            $url = new moodle_url("/local/xray/view.php",
+                                    array("controller" => "discussionreportindividual",
+                                            "xraycourseid" => $row->courseId->value,
+                                            "xrayuserid" => $row->participantId->value
+                                    ));
+                            $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
+                                    "title" => $activityreportind,
+                                    "target" => "_blank"));
+                        }
+
                         $r->firstname = $row->firstname->value;
                         $r->lastname = $row->lastname->value;
-                        /*$r->posts = $row->posts->value;
-                        $r->contribution = $row->contribution->value;
+                        $r->posts = $row->posts->value;
+                        $r->contribution = $row->contrib->value;
                         $r->ctc = $row->ctc->value;
-                        $r->regularityofcontributions = $row->regularityofcontributions->value;
-                        $r->regularityofctc = $row->regularityofctc->value;*/
+                        $r->regularityofcontributions = '';//TODO No value in this object, notify Shani - $row->regularityContrib->value
+                        $r->regularityofctc = '';//TODO No value in this object, notify Shani - $row->regularityCTC->value
                         $data[] = $r;
                     }
                 }
