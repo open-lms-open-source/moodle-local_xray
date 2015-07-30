@@ -57,5 +57,15 @@ $capabilities = array(
                     'editingteacher' => CAP_ALLOW,
                     'manager' => CAP_ALLOW
             )
+    ),
+    // View report discussion individual forum
+    'local/xray:discussionreportindividualforum_view' => array(
+            'captype' => 'read',
+            'contextlevel' => CONTEXT_COURSE,
+            'archetypes' => array(
+                    'teacher' => CAP_ALLOW,
+                    'editingteacher' => CAP_ALLOW,
+                    'manager' => CAP_ALLOW
+            )
     )
 );

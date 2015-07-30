@@ -21,28 +21,33 @@ function local_xray_extends_navigation(global_navigation $nav) {
 		//var_dump($COURSE);
 		if($COURSE->id != SITEID && has_capability('local/xray:view', $PAGE->context)) {
 		
+			$plugin = "local_xray";
 			// Add links on block navigation.
-			$extranavigation = $PAGE->navigation->add(get_string('navigation_xray', 'local_xray'),
-					                                  new moodle_url('/local/xray/view.php',
-							                                         array("controller" => "default", 
-							                                         	   "action" => "view")),
-					                                  navigation_node::TYPE_CONTAINER);
+			$extranavigation = $PAGE->navigation->add(get_string('navigation_xray', $plugin));
 		
-			$firstnode = $extranavigation->add(get_string('reports', 'local_xray'),
-					                           new moodle_url('/local/xray/view.php',
-							                                  array("controller" => "reports", 
-							                                  		"action" => "list")));
-		
-			// Add links to reports.
-			$reports = local_xray_reports_utils::list_reports();
-			if(!empty($reports)) {
-				foreach($reports as $report) {
-					$firstnode->add($report[1],
-							new moodle_url('/local/xray/view.php', array("controller" => $report[0],
-									                                     "courseid"   => $COURSE->id
-							)));
-				}
+			// Reports in context course.
+			
+			// Activity report.
+			$url = new moodle_url('/local/xray/view.php', array("controller" => "activityreport",
+									                            "xraycourseid"   => $COURSE->id));
+			
+			$extranavigation->add(get_string('activityreport', $plugin),$url);
+			
+			// Discussion report.
+			$url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreport",
+					                                            "xraycourseid"   => $COURSE->id));			
+			$extranavigation->add(get_string('discussionreport', $plugin),$url);
+
+			// Report for forums.
+			if($PAGE->pagetype == "mod-forum-view") {
+				
+				// Discussion report individual forum.
+				$url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreportindividualforum",
+						                                            "xraycourseid"   => $COURSE->id,
+						                                            "forum" => $PAGE->context->instanceid));
+				$extranavigation->add(get_string('discussionreportindividualforum', $plugin),$url);					
 			}
+
 		}
 
 	}

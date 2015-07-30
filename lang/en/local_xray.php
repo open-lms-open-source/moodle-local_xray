@@ -32,6 +32,7 @@ $string['reports_list'] = 'Reports';
 $string['xray:activityreportindividual_view'] = 'View X-Ray Activity Report Individual';
 $string['xray:activityreport_view'] = 'View X-Ray Activity Report';
 $string['xray:discussionreport_view'] = 'View X-Ray Discussion Report';
+$string['xray:discussionreportindividualforum'] = 'Discussion Report Individual Forum';
 $string['xray:view'] = 'X-ray View';
 
 /* Report Activity Report*/
@@ -68,6 +69,9 @@ $string['discussionreportindividual'] = 'Discussion Report Individual';
 $string['discussionreportindividual_social_structure'] = 'Social Structure';
 $string['discussionreportindividual_main_terms'] = 'Main Terms';
 $string['discussionreportindividual_main_terms_histogram'] = 'Main Terms Histogram';
+
+/* Discussion report individual forum*/
+$string['discussionreportindividualforum'] = 'Discussion Report Individual Forum';
 
 /* Columns reports */
 $string['fullname'] = 'Fullname';
