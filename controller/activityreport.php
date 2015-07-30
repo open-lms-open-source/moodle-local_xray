@@ -61,6 +61,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      */
     public function jsonstudentsactivity_action() {
     	
+    	global $PAGE;
+    	
     	// Pager
     	$count = optional_param('iDisplayLength', 10, PARAM_RAW);
     	$start  = optional_param('iDisplayStart', 10, PARAM_RAW);
@@ -87,18 +89,21 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			if(!empty($response->data)){
     				$activityreportind = get_string('activityreportindividual', $this->component);
     				foreach($response->data as $row) {
-
-    					// Url for activityreportindividual.
-    					$url = new moodle_url("/local/xray/view.php", 
-    							              array("controller" => "activityreportindividual",
-    							              		"xraycourseid" => $row->courseId->value,
-    							              		"xrayuserid" => $row->participantId->value
-    							              ));
-
+    					
     					$r = new stdClass();
-    					$r->action = html_writer::link($url, '', array("class" => "icon_activityreportindividual", 
-    							                                       "title" => $activityreportind,
-    							                                       "target" => "_blank"));
+    					$r->action = "";
+    					if(has_capability('local/xray:activityreportindividual_view', $PAGE->context)) {    						
+	    					// Url for activityreportindividual.
+	    					$url = new moodle_url("/local/xray/view.php", 
+	    							              array("controller" => "activityreportindividual",
+	    							              		"xraycourseid" => $row->courseId->value,
+	    							              		"xrayuserid" => $row->participantId->value
+	    							              ));
+	    					$r->action = html_writer::link($url, '', array("class" => "icon_activityreportindividual",
+	    							                                       "title" => $activityreportind,
+	    							                                       "target" => "_blank"));
+    					}
+    					
     					$r->firstname = $row->firstname->value;
     					$r->lastname = $row->lastname->value;
     					$r->lastactivity = $row->last_activity->value;
