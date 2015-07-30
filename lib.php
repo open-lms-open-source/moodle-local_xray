@@ -15,23 +15,35 @@ defined('MOODLE_INTERNAL') || die();
 function local_xray_extends_navigation(global_navigation $nav) {
 
 	global $PAGE, $COURSE;
-	
-	// Add links on block navigation.
-	$extranavigation = $PAGE->navigation->add(get_string('navigation_xray', 'local_xray'), 
-			                                  new moodle_url('/local/xray/view.php', 
-			                                  		        array("controller" => "default", "action" => "view")), 
-			                                  navigation_node::TYPE_CONTAINER);
-	
-	$firstnode = $extranavigation->add(get_string('reports', 'local_xray'), 
-												  new moodle_url('/local/xray/view.php', 
-															     array("controller" => "reports", "action" => "list")));
-	
-	// Add links to reports.
-	$reports = local_xray_reports_utils::list_reports();
-	if(!empty($reports)) {
-		foreach($reports as $report) {
-			$firstnode->add($report[1],
-					        new moodle_url('/local/xray/view.php', array("controller" => $report[0])));			
+
+	if(is_callable('mr_on') && mr_on("xray", "_MR_LOCAL")) {
+		
+		//var_dump($COURSE);
+		if($COURSE->id != SITEID && has_capability('local/xray:view', $PAGE->context)) {
+		
+			// Add links on block navigation.
+			$extranavigation = $PAGE->navigation->add(get_string('navigation_xray', 'local_xray'),
+					                                  new moodle_url('/local/xray/view.php',
+							                                         array("controller" => "default", 
+							                                         	   "action" => "view")),
+					                                  navigation_node::TYPE_CONTAINER);
+		
+			$firstnode = $extranavigation->add(get_string('reports', 'local_xray'),
+					                           new moodle_url('/local/xray/view.php',
+							                                  array("controller" => "reports", 
+							                                  		"action" => "list")));
+		
+			// Add links to reports.
+			$reports = local_xray_reports_utils::list_reports();
+			if(!empty($reports)) {
+				foreach($reports as $report) {
+					$firstnode->add($report[1],
+							new moodle_url('/local/xray/view.php', array("controller" => $report[0],
+									                                     "courseid"   => $COURSE->id
+							)));
+				}
+			}
 		}
+
 	}
 }

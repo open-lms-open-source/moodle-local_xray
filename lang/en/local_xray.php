@@ -28,6 +28,12 @@ $string['welcome_xray'] = 'Welcome to X-Ray';
 $string['reports'] = 'Reports';
 $string['reports_list'] = 'Reports';
 
+/* Capabilities */
+$string['xray:activityreportindividual_view'] = 'View X-Ray Activity Report Individual';
+$string['xray:activityreport_view'] = 'View X-Ray Activity Report';
+$string['xray:discussionreport_view'] = 'View X-Ray Discussion Report';
+$string['xray:view'] = 'X-ray View';
+
 /* Report Activity Report*/
 $string['activityreport'] = 'Activity Report';
 $string['activityreport_students_activity'] = 'Students Activity';
