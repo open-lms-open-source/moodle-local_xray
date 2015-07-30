@@ -11,12 +11,6 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  */
 class local_xray_controller_activityreport extends local_xray_controller_reports {
  
-	/**
-	 * Courseid
-	 * @var integer
-	 */
-	private $xraycourseid;
-	
 	public function init() {
 		// This report will get data by courseid.
 		// TODO:: I am using xraycourseid for prevent validation of if exist course with courseid param.
