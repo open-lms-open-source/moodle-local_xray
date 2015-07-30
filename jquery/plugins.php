@@ -25,7 +25,7 @@ $plugins = array(
 					'reports/activityreport_students_activity.js'
 			)
 	),
-    'local_xray-discussionreport_participation_metrics' => array(
+    'local_xray_discussionreport_participation_metrics' => array(
             'files' => array(
                     'reports/discussionreport_participation_metrics.js'
             )
