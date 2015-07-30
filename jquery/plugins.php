@@ -20,12 +20,7 @@ $plugins = array(
             'fancybox2/jquery.fancybox.css'
         )
      ),    
-    'local_xray-reports_list' => array(
-        'files' => array(
-            'reports/reports_list.js'
-        )
-    ),
-	'local_xray-activityreport_students_activity' => array(
+	'local_xray_activityreport_students_activity' => array(
 			'files' => array(
 					'reports/activityreport_students_activity.js'
 			)
@@ -35,7 +30,7 @@ $plugins = array(
                     'reports/discussionreport_participation_metrics.js'
             )
     ),
-	'local_xray-activityreport_first_login_non_starters' => array(
+	'local_xray_activityreport_first_login_non_starters' => array(
 			'files' => array(
 					'reports/activityreport_first_login_non_starters.js'
 			)
@@ -43,19 +38,6 @@ $plugins = array(
     'local_xray-show_on_lightbox' => array(
         'files' => array(
             'reports/show_on_lightbox.js'
-        )
-    ),
-    'local_xray-jssor' => array(
-        'files' => array(
-            'jssor/jssor.js',
-            'jssor/jssor.slider.js',
-            'jssor/jssor.slider.min.js',
-        )
-    ),
-    'local_xray-image_gallery_with_vertical_thumbnail' => array(
-        'files' => array(
-            'image_gallery_with_vertical_thumbnail.js',
-            'image_gallery_with_vertical_thumbnail.css',
         )
     )
 );

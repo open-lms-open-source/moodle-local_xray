@@ -11,6 +11,21 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  */
 class local_xray_controller_activityreport extends local_xray_controller_reports {
  
+	/**
+	 * Courseid
+	 * @var integer
+	 */
+	private $xraycourseid;
+	
+	public function init() {
+		// This report will get data by courseid.
+		// TODO:: I am using xraycourseid for prevent validation of if exist course with courseid param.
+		$this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
+		
+		// TODO:: Hardcoded to get of specific course in xray.
+		$this->xraycourseid = parent::XRAY_COURSEID; 
+	}
+	
     public function view_action() {
     	
     	global $PAGE;
@@ -20,7 +35,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     	try {
     		$report = "activity";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+    		$response = \local_xray\api\wsapi::course($this->xraycourseid, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -52,7 +67,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     private function students_activity() {
     
     	$output = "";
-    	$output .= $this->output->activityreport_students_activity();
+    	$output .= $this->output->activityreport_students_activity($this->xraycourseid);
     	return $output;
     }   
     
@@ -72,7 +87,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	try {
     		$report = "activity";
     		$element = "studentList";
-    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
+    		$response = \local_xray\api\wsapi::courseelement($this->xraycourseid,
     				                                         $element, 
     				                                         $report, 
     				                                         null, 
@@ -203,7 +218,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	 
     	try {
     		$report = "firstLogin";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+    		$response = \local_xray\api\wsapi::course($this->xraycourseid, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -229,7 +244,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      */
     private function first_login_non_starters() {
     	$output = "";
-    	$output .= $this->output->activityreport_first_login_non_starters();
+    	$output .= $this->output->activityreport_first_login_non_starters($this->xraycourseid);
     	return $output;
     } 
     
@@ -248,7 +263,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	try {
     		$report = "firstLogin";
     		$element = "nonStarters";
-    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, 
+    		$response = \local_xray\api\wsapi::courseelement($this->xraycourseid, 
     				                                         $element, 
     				                                         $report, 
     				                                         null, 

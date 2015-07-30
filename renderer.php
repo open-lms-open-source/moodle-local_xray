@@ -14,29 +14,7 @@ class local_xray_renderer_activityreport extends local_xray_renderer {
  * @package local_xray
  */
 class local_xray_renderer extends plugin_renderer_base {
-
-    /**
-     * Welcome page.
-     */
-    public function welcome() {
-        global $CFG, $PAGE;
-        $output = get_string("welcome_xray","local_xray");
-        return html_writer::tag('div', $output, array());
-    }
-    
-    /**
-     * List reports.
-     * Example of implementation of table with jquery datatable.
-     */
-    public function reports_list() {
-    	
-    	global $PAGE;
-    	// Create standard table.
-    	$output = $this->standard_table(__FUNCTION__,
-						    			array(get_string('fullname', 'local_xray')));
-    	return $output;
-    }
-    
+   
     /************************** General elements for Reports **************************/
     
     /**
@@ -77,9 +55,8 @@ class local_xray_renderer extends plugin_renderer_base {
     	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2
     	$PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
     
-    	$baseurl  = get_config("local_xray", 'xrayurl');
-    	$domain = local_xray_controller_reports::XRAY_DOMAIN;
-    	$img_url = sprintf('%s/%s/%s', $baseurl, $domain, $element->uuid);
+    	$cfg_xray = get_config('local_xray');
+    	$img_url = sprintf('%s/%s/%s', $cfg_xray->xrayurl, $cfg_xray->xrayclientid, $element->uuid);
     
     	$output = "";
     	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
@@ -99,25 +76,27 @@ class local_xray_renderer extends plugin_renderer_base {
      * 
      * For this use you need:
      * - Add name of report to lang plugin.
-     * - Add specific js for jquery plugin with this format:  "local_xray-" + %name% 
+     * - Add specific js for jquery plugin with this format:  "local_xray_" + %name% 
+     * - Add function "local_xray_" + %name% in js "local_xray_" + %name%
      * 
      * The table will have id equal to name.
      * 
      * @param string $name (Name of report, this will be used by strings and id of table).
      * @param array $columns (Array of columns to show).
+     * @param array $jsdata (Data for js).
      * @return string
      */
-    private function standard_table ($name, array $columns) {
+    private function standard_table ($name, array $columns, array $jsdata = array()) {
     	
     	global $CFG, $PAGE;
     	 
     	// Load Jquery.
     	$PAGE->requires->jquery();
     	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin("local_xray-dataTables", "local_xray");
+    	$PAGE->requires->jquery_plugin("local_xray-dataTables", "local_xray", true);
     	
     	// Load specific js of table.
-    	$PAGE->requires->jquery_plugin("local_xray-{$name}", "local_xray");    	
+    	$PAGE->requires->jquery_plugin("local_xray_{$name}", "local_xray", true);    	
     	
     	$output = "";
     	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
@@ -128,7 +107,10 @@ class local_xray_renderer extends plugin_renderer_base {
         	$output .= "<th>{$c}</th>";
         }   			            
         $output .=" </tr> </thead> </table>";
-    	 
+        
+        // Load table with data.
+        $PAGE->requires->js_init_call("local_xray_{$name}", array($jsdata));		 
+        
     	return $output;   	
     }
     /************************** End General elements for Reports **************************/
@@ -138,7 +120,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Graphic students activity (TABLE)
      */
-    public function activityreport_students_activity() {
+    public function activityreport_students_activity($courseid) {
     	
     	global $PAGE;
     	// Create standard table.
@@ -150,7 +132,8 @@ class local_xray_renderer extends plugin_renderer_base {
 			    			              	  get_string('discussionposts', 'local_xray'),
 			    			              	  get_string('postslastweek', 'local_xray'),
 			    			              	  get_string('timespentincourse', 'local_xray'),
-                                              get_string('regularityweekly', 'local_xray')));    			
+                                              get_string('regularityweekly', 'local_xray')),
+    			                        array("courseid" => $courseid));    			
     	return $output;    	 
     }
     
@@ -206,12 +189,14 @@ class local_xray_renderer extends plugin_renderer_base {
      * Graphic first login non startes (TABLE)
      * 
      */    
-    public function activityreport_first_login_non_starters() {   	
+    public function activityreport_first_login_non_starters($courseid) {   	
     	global $PAGE;
     	// Create standard table.
     	$output = $this->standard_table(__FUNCTION__, 
 			    			            array(get_string('firstname', 'local_xray'),
-			    			              	  get_string('lastname', 'local_xray')));    			
+			    			              	  get_string('lastname', 'local_xray')),
+    			                        array("courseid" => $courseid));
+    	
     	return $output;	
     }
     

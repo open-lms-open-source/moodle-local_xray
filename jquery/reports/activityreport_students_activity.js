@@ -3,8 +3,10 @@
  * 
  * @author Pablo Pagnone
  */
-$(document).ready(function() {
-	
+function local_xray_activityreport_students_activity(YUI, data) {
+
+	$(document).ready(function() {
+		
 	$('#activityreport_students_activity').dataTable( {
         "bProcessing": true,
         "bServerSide": true,
@@ -16,7 +18,7 @@ $(document).ready(function() {
 	      "sProcessing": "Fetching Data, Please wait..."
 	    },*/
 	    //"sAjaxDataProp": "", // With this, you can change format of json.
-	    "sAjaxSource": 'view.php?controller="activityreport"&action="jsonstudentsactivity"',
+	    "sAjaxSource": 'view.php?controller="activityreport"&action="jsonstudentsactivity"&courseid='+data.courseid,
 	    // Sortable not implemented in webservice xray.
 	    "aoColumns": [
 	                  {"mData": "action","bSearchable":false, "bSortable": false},
@@ -28,6 +30,6 @@ $(document).ready(function() {
 	                  {"mData": "timespentincourse","bSearchable":false, "bSortable": false},	
 	                  {"mData": "regularity","bSearchable":false, "bSortable": false},
 	                 ]
-	} );
-	
-});
+	});
+	});   	
+}
