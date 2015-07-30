@@ -62,12 +62,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     /**
      * Report "Discussion Activity by Week" (table).
      *
-     */
+     *//*
     private function discussion_activity_by_week() {
         $output = "";
         $output .= $this->output->discussionreport_discussion_activity_by_week();
         return $output;
-    }
+    }*/
 
     /**
      * Json for provide data to participation_metrics table.
@@ -139,6 +139,81 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         echo json_encode($return);
         exit();
     }
+    
+    /**
+     * Json for provide data to discussion_activity_by_week table.
+     *//*
+    public function jsonweekdiscussion_action() {
+    
+        global $PAGE;
+    
+        // TODO:: Review , implement search, sortable, pagination.
+        $return = array();
+        try {
+            // Pager
+            $count = optional_param('iDisplayLength', 10, PARAM_RAW);
+            $start  = optional_param('iDisplayStart', 10, PARAM_RAW);
+    
+            $report = "discussion";
+            $element = "element3";
+    
+            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
+                    $element,
+                    $report,
+                    null,
+                    '',
+                    '',
+                    $start,
+                    $count);
+             
+            if(!$response) {
+                // TODO:: Fail response of webservice.
+                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+            } else {
+                $data = array();
+                /*if(!empty($response->data)){
+                    $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
+    
+                    foreach($response->data as $row) {
+                        $r = new stdClass();
+    
+                        $r->action = "";
+                        if(has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
+                            // Url for discussionreportindividual.
+                            $url = new moodle_url("/local/xray/view.php",
+                                    array("controller" => "discussionreportindividual",
+                                            "xraycourseid" => $row->courseId->value,
+                                            "xrayuserid" => $row->participantId->value
+                                    ));
+                            $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
+                                    "title" => $discussionreportind,
+                                    "target" => "_blank"));
+                        }
+                        $r->firstname = $row->firstname->value;
+                        $r->lastname = $row->lastname->value;
+                        $r->posts = $row->posts->value;
+                        $r->contribution = $row->contrib->value;
+                        $r->ctc = $row->ctc->value;
+                        $r->regularityofcontributions = '';//TODO No value in this object, notify Shani - $row->regularityContrib->value
+                        $r->regularityofctc = '';//TODO No value in this object, notify Shani - $row->regularityCTC->value
+                        $data[] = $r;
+                    
+                    }
+                    
+                }*//*
+
+                
+                // Provide info to table.
+                $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
+                $return["data"] = $data;
+            }
+        } catch(exception $e) {
+            // TODO:: Send message error to js.
+            $return = "";
+        }
+        echo json_encode($return);
+        exit();
+    }*/
     
     /**
      * Report Average Words Weekly by Post.

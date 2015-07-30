@@ -264,7 +264,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Graphic Discussion Activity by Week (TABLE)
      */
-    public function discussionreport_discussion_activity_by_week() {
+    /*public function discussionreport_discussion_activity_by_week() {
          
         //TODO Can we have more than 15 weeks?
         global $PAGE;
@@ -282,7 +282,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = $this->standard_table(__FUNCTION__,
                                         $weeks);
         return $output;
-    }
+    }*/
     
     /**
      * Average words weekly by post. (Graph)
