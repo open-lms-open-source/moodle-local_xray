@@ -19,7 +19,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     }
     
     public function view_action() {
-        
         global $PAGE;
         // Add title to breadcrumb.
         $PAGE->navbar->add(get_string('discussionreport', 'local_xray'));
@@ -45,7 +44,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         } catch(exception $e) {
             print_error('error_xray', 'local_xray','',null, $e->getMessage());
         }
-        
         return $output;
     }
     
@@ -54,7 +52,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      *
      */
     private function participation_metrics() {
-    
         $output = "";
         $output .= $this->output->discussionreport_participation_metrics();
         return $output;
@@ -64,9 +61,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      * Json for provide data to participation_metrics table.
      */
     public function jsonparticipationdiscussion_action() {
-        
+
         global $PAGE;
-        
+
         // TODO:: Review , implement search, sortable, pagination.
         $return = array();
         try {
@@ -89,9 +86,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             if(!$response) {
                 // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-                 
             } else {
-                
                 $data = array();
                 if(!empty($response->data)){
                     $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
@@ -111,7 +106,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                                     "title" => $discussionreportind,
                                     "target" => "_blank"));
                         }
-
                         $r->firstname = $row->firstname->value;
                         $r->lastname = $row->lastname->value;
                         $r->posts = $row->posts->value;
@@ -125,14 +119,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 // Provide info to table.
                 $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
                 $return["data"] = $data;
-
-                
             }
         } catch(exception $e) {
             // TODO:: Send message error to js.
             $return = "";
         }
-        
         echo json_encode($return);
         exit();
     }
@@ -142,7 +133,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      *
      */
     private function average_words_weekly_by_post($element) {
-        
         $output = "";
         $output .= $this->output->discussionreport_average_words_weekly_by_post($element);
         return $output; 
@@ -153,10 +143,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      *
      */    
     private function social_structure($element) {
-
-    	$output = "";
-    	$output .= $this->output->discussionreport_social_structure($element);
-    	return $output; 
+        $output = "";
+        $output .= $this->output->discussionreport_social_structure($element);
+        return $output; 
     }
     
     /**
@@ -165,9 +154,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     private function social_structure_with_words_count($element) {
 
-    	$output = "";
-    	$output .= $this->output->discussionreport_social_structure_with_words_count($element);
-    	return $output;
+        $output = "";
+        $output .= $this->output->discussionreport_social_structure_with_words_count($element);
+        return $output;
     }
     
     /**
@@ -175,9 +164,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     private function social_structure_with_contributions_adjusted($element) {
     
-    	$output = "";
-    	$output .= $this->output->discussionreport_social_structure_with_contributions_adjusted($element);
-    	return $output;
+        $output = "";
+        $output .= $this->output->discussionreport_social_structure_with_contributions_adjusted($element);
+        return $output;
     }   
     
     /**
@@ -185,8 +174,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     private function social_structure_coefficient_of_critical_thinking($element) {
     
-    	$output = "";
-    	$output .= $this->output->discussionreport_social_structure_coefficient_of_critical_thinking($element);
-    	return $output;
-    }   
+        $output = "";
+        $output .= $this->output->discussionreport_social_structure_coefficient_of_critical_thinking($element);
+        return $output;
+    }
 }

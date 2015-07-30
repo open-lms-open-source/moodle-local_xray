@@ -12,22 +12,37 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 class local_xray_controller_discussionreportindividual extends local_xray_controller_reports {
 
     /**
-     * Require capabilities
+     * Course id
      */
-    public function require_capability() {
-    	// TODO: To determinate.
-    }
+    private $xraycourseid;
     
+    /**
+     * User id
+     * @var unknown
+     */
+    private $xrayuserid;
+
+    public function init() {
+        parent::init();
+        $this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
+        $this->xrayuserid = required_param('xrayuserid', PARAM_RAW);	
+    }
+
     public function view_action() {
-        
-        global $PAGE;
+
+        global $PAGE, $USER, $DB;
+
         // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string($this->name, $this->component));
+        $title = get_string($this->name, $this->component);
+        $PAGE->set_title($title);
+        // Add nav to return to discussionreport.
+        $PAGE->navbar->add(get_string("discussionreport", $this->component), new moodle_url('/local/xray/view.php', array("controller" => "discussionreport")));
+        $PAGE->navbar->add($title);
         $output = "";
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report, parent::XRAY_USERID);
+            $response = \local_xray\api\wsapi::course($this->xraycourseid, $report, $this->xrayuserid);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
