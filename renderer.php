@@ -2,11 +2,6 @@
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
 require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 
-
-class local_xray_renderer_activityreport extends local_xray_renderer {
-	
-}
-
 /**
  * Renderer
  *

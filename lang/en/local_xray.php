@@ -24,9 +24,7 @@
 $string['navigation_xray'] = 'X-Ray'; 
 $string['navitationcourse_xray'] = 'X-Ray';
 $string['pluginname'] = 'X-Ray';
-$string['welcome_xray'] = 'Welcome to X-Ray';
 $string['reports'] = 'Reports';
-$string['reports_list'] = 'Reports';
 
 /* Capabilities */
 $string['xray:activityreportindividual_view'] = 'View X-Ray Activity Report Individual';

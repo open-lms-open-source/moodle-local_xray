@@ -21,28 +21,6 @@ class local_xray_controller_reports extends mr_controller {
 	public function require_capability() {
 		require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
 	}
-	
-    /**
-     * List of reports (Example using jquery datatable).
-     *
-     */
-    public function list_action() {
-        global $OUTPUT, $PAGE, $COURSE;
-        
-        // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string('pluginname', $this->component));
-        $output  = $this->output->reports_list();
-        return $output;
-    }
-    
-    /**
-     * Return json with list of reports.
-     */
-    public function jsonlist_action() {
-        
-        echo json_encode(array("data" => local_xray_reports_utils::list_reports()));
-        exit();
-    }
     
     /**
      * Show data of last request to webservice xray.
