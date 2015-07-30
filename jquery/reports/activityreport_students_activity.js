@@ -18,7 +18,7 @@ function local_xray_activityreport_students_activity(YUI, data) {
 	      "sProcessing": "Fetching Data, Please wait..."
 	    },*/
 	    //"sAjaxDataProp": "", // With this, you can change format of json.
-	    "sAjaxSource": 'view.php?controller="activityreport"&action="jsonstudentsactivity"&courseid='+data.courseid,
+	    "sAjaxSource": 'view.php?controller="activityreport"&action="jsonstudentsactivity"&xraycourseid='+data.courseid,
 	    // Sortable not implemented in webservice xray.
 	    "aoColumns": [
 	                  {"mData": "action","bSearchable":false, "bSortable": false},
