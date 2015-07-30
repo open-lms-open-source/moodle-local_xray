@@ -27,7 +27,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     	try {
     		$report = "discussion";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
