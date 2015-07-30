@@ -11,17 +11,6 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  */
 class local_xray_controller_discussionreportindividual extends local_xray_controller_reports {
 
-    /**
-     * Course id
-     */
-    private $xraycourseid;
-    
-    /**
-     * User id
-     * @var unknown
-     */
-    private $xrayuserid;
-
     public function init() {
         parent::init();
         $this->xraycourseid = required_param('xraycourseid', PARAM_RAW);

@@ -264,7 +264,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Graphic Discussion Activity by Week (TABLE)
      */
-    public function discussionreport_participation_metrics() {
+    public function discussionreport_discussion_activity_by_week() {
          
         //TODO Can we have more than 15 weeks?
         global $PAGE;

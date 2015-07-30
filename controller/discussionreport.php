@@ -11,13 +11,15 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  */
 class local_xray_controller_discussionreport extends local_xray_controller_reports {
 
-    /**
-     * Require capabilities
-     */
-    public function require_capability() {
-    	// TODO: To determinate.
+    public function init() {
+        // This report will get data by courseid.
+        // TODO:: I am using xraycourseid for prevent validation of if exist course with courseid param.
+        $this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
+
+        // TODO:: Hardcoded to get of specific course in xray.
+        $this->xraycourseid = parent::XRAY_COURSEID;
     }
-    
+
     public function view_action() {
         global $PAGE;
         // Add title to breadcrumb.
@@ -26,7 +28,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+            $response = \local_xray\api\wsapi::course($this->xraycourseid, $report);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -57,6 +59,16 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         return $output;
     }   
     
+    /**
+     * Report "Discussion Activity by Week" (table).
+     *
+     */
+    private function discussion_activity_by_week() {
+        $output = "";
+        $output .= $this->output->discussionreport_discussion_activity_by_week();
+        return $output;
+    }
+
     /**
      * Json for provide data to participation_metrics table.
      */
