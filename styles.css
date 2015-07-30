@@ -31,3 +31,12 @@
 	background-color: #BFE3FF;
 	background-image: url([[pix:local_xray|activityindividualreport]]);
 }
+
+/** Link in table to discussion report individual **/
+#page-local-xray-view .icon_discussionreportindividual {
+    display:block;
+    width:16px;
+    height:16px;
+    background-color: #BFE3FF;
+    background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
+}
