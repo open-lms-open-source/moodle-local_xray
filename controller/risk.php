@@ -53,9 +53,62 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     private function risk_measures() {
     
     	$output = "";
-    	$output .= $this->output->risk_risk_measures($element);
+    	$output .= $this->output->risk_risk_measures($this->xraycourseid);
     	return $output;
     }   
+    
+    public function jsonriskmeasures_action(){
+
+    	global $PAGE;
+    	 
+    	// Pager
+    	$count = optional_param('iDisplayLength', 10, PARAM_RAW);
+    	$start  = optional_param('iDisplayStart', 10, PARAM_RAW);
+    	 
+    	$return = "";
+    	
+    	try {
+    		$report = "risk";
+    		$element = "element2";
+    		$response = \local_xray\api\wsapi::courseelement($this->xraycourseid,
+										    				$element,
+										    				$report,
+										    				null,
+										    				'',
+										    				'',
+										    				$start,
+										    				$count);
+    		if(!$response) {
+    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+    		} else {
+    			 
+    			$data = array();
+    			if(!empty($response->data)){
+    				foreach($response->data as $row) {
+   						
+    					$r = new stdClass();					
+    					$r->lastname = $row->lastname->value;    						
+    					$r->firstname = $row->firstname->value;
+    					$r->timespentincourse = $row->timeOnTask->value;
+    					$r->academicrisk = $row->fail->value;
+    					$r->socialrisk = $row->DW->value;
+    					$r->totalrisk = $row->DWF->value;
+    					$data[] = $r;
+    				}
+    			}
+    			// Provide count info to table.
+    			$return["recordsFiltered"] = $response->itemCount;
+    			$return["data"] = $data;
+    			
+    		}
+    	} catch(exception $e) {
+    		// TODO:: Send message error to js.
+    		$return = "";
+    	}
+    	 
+    	echo json_encode($return);
+    	exit();    	
+    }
     
     /**
      * Report total risk profile

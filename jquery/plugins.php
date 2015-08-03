@@ -40,6 +40,11 @@ $plugins = array(
 					'reports/activityreport_first_login_non_starters.js'
 			)
 	),		
+	'local_xray_risk_risk_measures' => array(
+			'files' => array(
+					'reports/risk_risk_measures.js'
+			)
+	),
     'local_xray-show_on_lightbox' => array(
         'files' => array(
             'reports/show_on_lightbox.js'

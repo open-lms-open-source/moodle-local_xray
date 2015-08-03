@@ -407,8 +407,18 @@ class local_xray_renderer extends plugin_renderer_base {
      * Risk Measures(TABLE)
      * @param stdClass $element
      */
-    public function risk_risk_measures() {
-
+    public function risk_risk_measures($courseid) {
+    	global $PAGE;
+    	// Create standard table.
+    	$output = $this->standard_table(__FUNCTION__,
+						    			array(get_string('lastname', 'local_xray'),
+						    				  get_string('firstname', 'local_xray'),
+						    				  get_string('timespentincourse', 'local_xray'),
+						    				  get_string('academicrisk', 'local_xray'),
+						    				  get_string('socialrisk', 'local_xray'),
+						    				  get_string('totalrisk', 'local_xray')),
+    			                        array("courseid" => $courseid));
+    	return $output;
     }
     
     /**

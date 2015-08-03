@@ -123,12 +123,10 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     					// TODO:: Not exist value for weeklyRegularity on xray webservice. NOTIFY
     					$r->regularity = "";
     					$data[] = $r;
-    				}
-    				
-    				// Provide count info to table.
-    				$return["recordsFiltered"] = $response->itemCount;		
+    				}	
     			}
-
+    			// Provide count info to table.
+    			$return["recordsFiltered"] = $response->itemCount;
     			$return["data"] = $data;
     			
     		}
