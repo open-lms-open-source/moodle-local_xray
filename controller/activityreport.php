@@ -271,20 +271,20 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     	
     		} else {
-
+    			$data = array();
     			if(!empty($response->data)){
-    				$data = array();
     				foreach($response->data as $row) {
     					$r = new stdClass();
     					$r->firstname = $row->firstname->value;
     					$r->lastname = $row->lastname->value;
     					$data[] = $r;
-    				}
-    				
-    				// Provide info to table.
-    				$return["recordsFiltered"] = 100; // TODO:: Get from webservice.
-    				$return["data"] = $data;
+    				}    				
     			}
+    			
+    			// Provide info to table.
+    			//$return["recordsFiltered"] = $response->itemCount; // is not get from webservice if count is empty.
+    			$return["recordsFiltered"] = 0; // TODO:: BUG INT-8013.
+    			$return["data"] = $data;
     		}
     	} catch(exception $e) {
     		// TODO:: Send message error to js.
