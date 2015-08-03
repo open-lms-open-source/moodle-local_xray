@@ -32,6 +32,7 @@ $string['xray:activityreport_view'] = 'View Activity Report';
 $string['xray:discussionreport_view'] = 'View Discussion Report';
 $string['xray:discussionreportindividualforum_view'] = 'View Discussion Report Individual Forum';
 $string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Endogenic Plagiarism';
+$string['xray:risk_view'] = 'View Risk Report';
 $string['xray:view'] = 'X-ray View';
 
 /* Report Activity Report*/
@@ -78,6 +79,11 @@ $string['discussionendogenicplagiarism'] = 'Discussion Endogenic Plagiarism';
 $string['discussionendogenicplagiarism_heatmap_endogenic_plagiarism_students'] = 'Heatmap Endogenic Plagiarism (Students only)';
 $string['discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors'] = 'Heatmap Endogenic Plagiarism (Including Instructor)';
 
+/* Risk report*/
+$string['risk'] = 'Risk';
+$string['risk_risk_measures'] = 'Risk Measures';
+$string['risk_total_risk_profile'] = 'Total Risk Profile';
+$string['risk_academic_vs_social_risk'] = 'Academic Versus Social Risk';
 
 /* Columns reports */
 $string['fullname'] = 'Fullname';

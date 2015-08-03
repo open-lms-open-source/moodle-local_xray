@@ -399,5 +399,33 @@ class local_xray_renderer extends plugin_renderer_base {
     public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors($element) {
     	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
-    /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/    
+    /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/ 
+    
+    /************************** End Elements for Report Risk **************************/
+    
+    /**
+     * Risk Measures(TABLE)
+     * @param stdClass $element
+     */
+    public function risk_risk_measures() {
+
+    }
+    
+    /**
+     * Total risk profile
+     * @param stdClass $element
+     */
+    public function risk_total_risk_profile($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Academic vs social risk
+     * @param stdClass $element
+     */    
+    public function risk_academic_vs_social_risk($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /************************** End Elements for Report Risk **************************/
 }

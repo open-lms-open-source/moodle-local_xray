@@ -31,7 +31,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
 				
 				// Activity report.
 				$url = new moodle_url('/local/xray/view.php', array("controller" => "activityreport",
-						"xraycourseid"   => $COURSE->id));
+						                                            "xraycourseid"   => $COURSE->id));
 					
 				$extranavigation->add(get_string('activityreport', $plugin),$url);
 					
@@ -43,7 +43,13 @@ function local_xray_extends_navigation(global_navigation $nav) {
 				// Endogenic Plagiarism.
 				$url = new moodle_url('/local/xray/view.php', array("controller" => "discussionendogenicplagiarism",
 						                                            "xraycourseid"   => $COURSE->id));				
-				$extranavigation->add(get_string('discussionendogenicplagiarism', $plugin),$url);				
+				$extranavigation->add(get_string('discussionendogenicplagiarism', $plugin),$url);	
+				
+				// Risk.
+				$url = new moodle_url('/local/xray/view.php', array("controller" => "risk",
+						                                            "xraycourseid"   => $COURSE->id));
+				
+				$extranavigation->add(get_string('risk', $plugin),$url);				
 			}
 			
 
