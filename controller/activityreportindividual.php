@@ -21,10 +21,13 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     	global $PAGE, $USER, $DB;
     	
     	// Add title to breadcrumb.
+    	$PAGE->navbar->add("Link to course"); // TODO:: This will be fixed when we work with same db with x-ray side.
     	$title = get_string($this->name, $this->component);
     	$PAGE->set_title($title);
     	// Add nav to return to activityreport.
-    	$PAGE->navbar->add(get_string("activityreport", $this->component), new moodle_url('/local/xray/view.php', array("controller" => "activityreport")));    	
+    	$PAGE->navbar->add(get_string("activityreport", $this->component), 
+    			           new moodle_url('/local/xray/view.php', 
+    			           		          array("controller" => "activityreport", "xraycourseid" => $this->xraycourseid)));    	
     	$PAGE->navbar->add($title);
     	$output = "";
 

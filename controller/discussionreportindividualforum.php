@@ -29,6 +29,8 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     	global $PAGE, $USER, $DB;
     	
     	// Add title to breadcrumb.
+    	$PAGE->navbar->add("Link to course"); // TODO:: This will be fixed when we work with same db with x-ray side.
+    	$PAGE->navbar->add("Link to actual forum"); // TODO:: This will be fixed when we work with same db with x-ray side.
     	$title = get_string($this->name, $this->component);
     	$PAGE->set_title($title);   	
     	$PAGE->navbar->add($title);

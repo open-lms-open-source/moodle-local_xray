@@ -23,6 +23,7 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
     	
     	global $PAGE;
     	// Add title to breadcrumb.
+        $PAGE->navbar->add("Link to course"); // TODO:: This will be fixed when we work with same db with x-ray side. 	
     	$PAGE->navbar->add(get_string($this->name, $this->component));
     	$output = "";
 
