@@ -13,6 +13,7 @@ function local_xray_activityreport_students_activity(YUI, data) {
 	    "paging": true,
 	    "searching": false, // Search no implemented in webservice xray.
 	    "retrieve": true,
+	    "lengthMenu": [ 5, 10, 50, 100 ],
 	    /*
 	    "oLanguage": {
 	      "sProcessing": "Fetching Data, Please wait..."

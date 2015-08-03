@@ -44,14 +44,15 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     			
     		} else {
+    			// TODO:: We need change in api for this report.
     			// Show graphs.
     			$output .= $this->output->inforeport($response->reportdate, 
     					                             null,
     					                             $DB->get_field('course', 'fullname', array("id" => $this->xraycourseid)));
     			
-    			$output .= $this->wordshistogram($response->elements[1]);
-    			$output .= $this->socialstructure($response->elements[3]);
-    			$output .= $this->wordcloud($response->elements[4]);
+    			//$output .= $this->wordshistogram($response->elements[1]);
+    			//$output .= $this->socialstructure($response->elements[3]);
+    			//$output .= $this->wordcloud($response->elements[4]);
 		    	
     		}		 
     	} catch(exception $e) {

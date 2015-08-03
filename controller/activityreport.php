@@ -123,9 +123,11 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     					$r->regularity = "";
     					$data[] = $r;
     				}
+    				
+    				// Provide count info to table.
+    				$return["recordsFiltered"] = $response->itemCount;		
     			}
-    			// Provide info to table.
-    			$return["recordsFiltered"] = 100; // TODO:: Get from webservice.
+
     			$return["data"] = $data;
     			
     		}

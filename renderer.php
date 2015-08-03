@@ -355,5 +355,32 @@ class local_xray_renderer extends plugin_renderer_base {
     
     /************************** End Elements for Report Discussion for an individual **************************/
     
+    /************************** Elements for Report Discussion individual forum **************************/
     
+      
+    /**
+     * Social structure.(Graph)
+     * @param stdClass $element
+     */
+    public function discussionreportindividualforum_wordshistogram($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
+    
+    /**
+     * Main terms.(Graph)
+     * @param stdClass $element
+     */
+    public function discussionreportindividualforum_socialstructure($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Main terms histogram.(Graph)
+     * @param stdClass $element
+     */
+    public function discussionreportindividualforum_wordcloud($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /************************** End Elements for Report Discussion individual forum **************************/    
+}
