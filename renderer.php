@@ -396,9 +396,8 @@ class local_xray_renderer extends plugin_renderer_base {
      * Heatmap endogenic plagiarism instructor
      * @param stdClass $element
      */
-    public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructor($element) {
+    public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors($element) {
     	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
-    
     /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/    
 }

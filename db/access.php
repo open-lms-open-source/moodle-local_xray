@@ -67,5 +67,15 @@ $capabilities = array(
                     'editingteacher' => CAP_ALLOW,
                     'manager' => CAP_ALLOW
             )
+    ),
+    // View report discussion endogenic plagiarism.
+    'local/xray:discussionendogenicplagiarism_view' => array(
+            'captype' => 'read',
+            'contextlevel' => CONTEXT_COURSE,
+            'archetypes' => array(
+                    'teacher' => CAP_ALLOW,
+                    'editingteacher' => CAP_ALLOW,
+                    'manager' => CAP_ALLOW
+            )
     )
 );

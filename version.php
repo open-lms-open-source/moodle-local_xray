@@ -6,7 +6,7 @@
  * @package local_xray
  */
 
-$plugin->version  = 2015070307;
+$plugin->version  = 2015070308;
 $plugin->requires = 2014111005;//moodle 2.8
 $plugin->cron = 0;
 $plugin->component = 'local_xray';

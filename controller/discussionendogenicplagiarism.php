@@ -27,17 +27,16 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
     	$output = "";
 
     	try {
-    		$report = "activity";
+    		$report = "discussionEndogenicPlagiarism";
     		$response = \local_xray\api\wsapi::course($this->xraycourseid, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     			
     		} else {
-
     			// Show graphs.
-    			$output .= $this->heatmap_endogenic_plagiarism_students($response->elements[1]);
-    			$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements[2]);
+    			$output .= $this->heatmap_endogenic_plagiarism_students($response->elements[0]);
+    			$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements[1]);
 		    	
     		}		 
     	} catch(exception $e) {

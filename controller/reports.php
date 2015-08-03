@@ -23,9 +23,8 @@ class local_xray_controller_reports extends mr_controller {
 	 */
 	protected $xrayuserid;
 	
-	const XRAY_COURSEID = 7; //TODO:: Example first integration. This is hardcoded for test with xray.
-	const XRAY_DOMAIN = "moodlerooms"; //TODO:: Example first integration. This is hardcoded for test with xray.
-	const XRAY_USERID = 3; //TODO:: Example first integration. This is hardcoded for test with xray. User Bob Smith.
+	const XRAY_COURSEID = 314; //TODO:: Example first integration. This is hardcoded for test with xray.
+	const XRAY_USERID = 139; //TODO:: Example first integration. This is hardcoded for test with xray. User Rebecca Kelly.
 	
 	/**
 	 * Require capabilities

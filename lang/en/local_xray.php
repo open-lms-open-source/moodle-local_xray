@@ -75,6 +75,9 @@ $string['discussionreportindividualforum'] = 'Discussion Report Individual Forum
 
 /* Discussion report Endogenic Plagiarism*/
 $string['discussionendogenicplagiarism'] = 'Discussion Endogenic Plagiarism';
+$string['discussionendogenicplagiarism_heatmap_endogenic_plagiarism_students'] = 'Heatmap Endogenic Plagiarism (Students only)';
+$string['discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors'] = 'Heatmap Endogenic Plagiarism (Including Instructor)';
+
 
 /* Columns reports */
 $string['fullname'] = 'Fullname';
