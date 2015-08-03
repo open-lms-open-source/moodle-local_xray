@@ -382,5 +382,23 @@ class local_xray_renderer extends plugin_renderer_base {
     	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     
-    /************************** End Elements for Report Discussion individual forum **************************/    
+    /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/   
+    
+    /** 
+     * Heatmap endogenic plagiarism student
+     * @param stdClass $element
+     */
+    public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_students($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Heatmap endogenic plagiarism instructor
+     * @param stdClass $element
+     */
+    public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructor($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/    
 }
