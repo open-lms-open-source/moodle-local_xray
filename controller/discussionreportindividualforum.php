@@ -1,5 +1,5 @@
 <?php
-defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
+defined('MOODLE_INTERNAL') or die();
 require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 
 /**
@@ -18,10 +18,8 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 	
 	public function init() {
 		parent::init();
-		//$this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
-		$this->forumid = required_param('forum', PARAM_RAW);
-		$this->xraycourseid = parent::XRAY_COURSEID;
-		
+		$this->courseid = required_param('courseid', PARAM_STRINGID);
+		$this->forumid = required_param('forum', PARAM_STRINGID);
 	}
 	
     public function view_action() {
@@ -40,7 +38,8 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     	try {
     		$report = "discussionForum";
-    		$response = \local_xray\api\wsapi::course($this->xraycourseid, $report);
+    		//TODO:: Hardcoded id.
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -50,7 +49,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     			// Show graphs.
     			$output .= $this->output->inforeport($response->reportdate, 
     					                             null,
-    					                             $DB->get_field('course', 'fullname', array("id" => $this->xraycourseid)));
+    					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
     			
     			//$output .= $this->wordshistogram($response->elements[1]);
     			//$output .= $this->socialstructure($response->elements[3]);

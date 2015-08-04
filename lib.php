@@ -31,23 +31,23 @@ function local_xray_extends_navigation(global_navigation $nav) {
 				
 				// Activity report.
 				$url = new moodle_url('/local/xray/view.php', array("controller" => "activityreport",
-						                                            "xraycourseid"   => $COURSE->id));
+						                                            "courseid"   => $COURSE->id));
 					
 				$extranavigation->add(get_string('activityreport', $plugin),$url);
 					
 				// Discussion report.
 				$url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreport",
-						                                            "xraycourseid"   => $COURSE->id));
+						                                            "courseid"   => $COURSE->id));
 				$extranavigation->add(get_string('discussionreport', $plugin),$url);
 				
 				// Endogenic Plagiarism.
 				$url = new moodle_url('/local/xray/view.php', array("controller" => "discussionendogenicplagiarism",
-						                                            "xraycourseid"   => $COURSE->id));				
+						                                            "courseid"   => $COURSE->id));				
 				$extranavigation->add(get_string('discussionendogenicplagiarism', $plugin),$url);	
 				
 				// Risk.
 				$url = new moodle_url('/local/xray/view.php', array("controller" => "risk",
-						                                            "xraycourseid"   => $COURSE->id));
+						                                            "courseid"   => $COURSE->id));
 				
 				$extranavigation->add(get_string('risk', $plugin),$url);				
 			}
@@ -61,7 +61,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
 				
 				// Discussion report individual forum.
 				$url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreportindividualforum",
-						                                            "xraycourseid"   => $COURSE->id,
+						                                            "courseid"   => $COURSE->id,
 						                                            "forum" => $PAGE->context->instanceid));
 				
 				$extranavigation->add(get_string('discussionreportindividualforum', $plugin),$url);					

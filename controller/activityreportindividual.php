@@ -1,5 +1,5 @@
 <?php
-defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
+defined('MOODLE_INTERNAL') or die();
 require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 
 /**
@@ -12,8 +12,8 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
 		
 	public function init() {
 		parent::init();
-		$this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
-		$this->xrayuserid = required_param('xrayuserid', PARAM_RAW);	
+		$this->courseid = required_param('courseid', PARAM_STRINGID);
+		$this->xrayuserid = required_param('xrayuserid', PARAM_STRINGID);	
 	}
 	
     public function view_action() {
@@ -21,19 +21,18 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     	global $PAGE, $USER, $DB;
     	
     	// Add title to breadcrumb.
-    	$PAGE->navbar->add("Link to course"); // TODO:: This will be fixed when we work with same db with x-ray side.
     	$title = get_string($this->name, $this->component);
     	$PAGE->set_title($title);
     	// Add nav to return to activityreport.
     	$PAGE->navbar->add(get_string("activityreport", $this->component), 
     			           new moodle_url('/local/xray/view.php', 
-    			           		          array("controller" => "activityreport", "xraycourseid" => $this->xraycourseid)));    	
+    			           		          array("controller" => "activityreport", "courseid" => $this->courseid)));    	
     	$PAGE->navbar->add($title);
     	$output = "";
 
     	try {
     		$report = "activity";
-    		$response = \local_xray\api\wsapi::course($this->xraycourseid, $report, $this->xrayuserid);
+    		$response = \local_xray\api\wsapi::course($this->courseid, $report, $this->xrayuserid);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -43,7 +42,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     			// Show graphs.
     			$output .= $this->output->inforeport($response->reportdate, 
     					                             $DB->get_field('user', 'username', array("id" => $this->xrayuserid)),
-    					                             $DB->get_field('course', 'fullname', array("id" => $this->xraycourseid)));
+    					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
     			$output .= $this->activity_by_date($response->elements[1]);
     			$output .= $this->activity_last_two_weeks($response->elements[3]);
     			$output .= $this->activity_last_two_weeks_byweekday($response->elements[4]);

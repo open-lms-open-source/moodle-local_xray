@@ -1,5 +1,5 @@
 <?php
-defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
+defined('MOODLE_INTERNAL') or die();
 require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 
 /**
@@ -12,24 +12,19 @@ class local_xray_controller_risk extends local_xray_controller_reports {
  
 	public function init() {
 		// This report will get data by courseid.
-		// TODO:: I am using xraycourseid for prevent validation of if exist course with courseid param.
-		$this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
-		
-		// TODO:: Hardcoded to get of specific course in xray.
-		$this->xraycourseid = parent::XRAY_COURSEID; 
+		$this->courseid = required_param('courseid', PARAM_STRINGID);
 	}
 	
     public function view_action() {
     	
     	global $PAGE;
-    	// Add title to breadcrumb.
-        $PAGE->navbar->add("Link to course"); // TODO:: This will be fixed when we work with same db with x-ray side. 	
+    	// Add title to breadcrumb.	
     	$PAGE->navbar->add(get_string($this->name, $this->component));
     	$output = "";
 
     	try {
     		$report = "risk";
-    		$response = \local_xray\api\wsapi::course($this->xraycourseid, $report);
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -53,7 +48,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     private function risk_measures() {
     
     	$output = "";
-    	$output .= $this->output->risk_risk_measures($this->xraycourseid);
+    	$output .= $this->output->risk_risk_measures($this->courseid);
     	return $output;
     }   
     
@@ -63,14 +58,14 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     	 
     	// Pager
     	$count = optional_param('iDisplayLength', 10, PARAM_RAW);
-    	$start  = optional_param('iDisplayStart', 10, PARAM_RAW);
+    	$start  = optional_param('iDisplayStart', 0, PARAM_RAW);
     	 
     	$return = "";
     	
     	try {
     		$report = "risk";
     		$element = "element2";
-    		$response = \local_xray\api\wsapi::courseelement($this->xraycourseid,
+    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
 										    				$element,
 										    				$report,
 										    				null,

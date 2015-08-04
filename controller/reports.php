@@ -14,7 +14,7 @@ class local_xray_controller_reports extends mr_controller {
 	 * Course id
 	 * @var integer
 	 */
-	protected $xraycourseid;
+	protected $courseid;
 	
 	/**
 	 * User id
@@ -24,6 +24,13 @@ class local_xray_controller_reports extends mr_controller {
 	
 	const XRAY_COURSEID = 314; //TODO:: Example first integration. This is hardcoded for test with xray.
 	const XRAY_USERID = 139; //TODO:: Example first integration. This is hardcoded for test with xray. User Rebecca Kelly.
+	
+	public function setup(){
+		global $PAGE;
+		$PAGE->set_context($this->get_context());
+		parent::setup();
+	}
+	
 	
 	/**
 	 * Require capabilities

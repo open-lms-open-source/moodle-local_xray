@@ -19,7 +19,7 @@ function local_xray_risk_risk_measures(YUI, data) {
 	      "sProcessing": "Fetching Data, Please wait..."
 	    },*/
 	    //"sAjaxDataProp": "", // With this, you can change format of json.
-	    "sAjaxSource": 'view.php?controller="risk"&action="jsonriskmeasures"&xraycourseid='+data.courseid,
+	    "sAjaxSource": 'view.php?controller="risk"&action="jsonriskmeasures"&courseid='+data.courseid,
 	    // Sortable not implemented in webservice xray.
 	    "aoColumns": [
 	                  {"mData": "lastname","bSearchable":false, "bSortable": false},
