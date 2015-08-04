@@ -1,6 +1,5 @@
 <?php
-defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
-require_once($CFG->dirroot.'/local/xray/classes/api/wsapi.php');
+defined('MOODLE_INTERNAL') or die();
 
 /**
  * Xray integration Reports Controller
