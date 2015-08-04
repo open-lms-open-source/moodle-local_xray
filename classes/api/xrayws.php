@@ -47,10 +47,6 @@ class xrayws {
     private $cookie = null;
 
     /**
-     * @var null|resource
-     */
-    private $curl = null;
-    /**
      * @var null|string
      */
     private $error = null;
@@ -75,6 +71,11 @@ class xrayws {
     private $lasthttpcode = null;
 
     /**
+     * @var null|array
+     */
+    private $curlinfo = null;
+
+    /**
      * @throws nocurl_exception
      */
     private function __construct() {
@@ -83,20 +84,11 @@ class xrayws {
             throw new nocurl_exception();
         }
 
-        $this->curl = curl_init();
         $this->memfile = new memfile();
     }
 
     private function __clone() {
         // Prevent cloning.
-    }
-
-    public function __destruct() {
-        // We leave destructor public on purporse. There are some cases when it may be called outside of context.
-        if (is_resource($this->curl)) {
-            curl_close($this->curl);
-            $this->curl = null;
-        }
     }
 
     /**
@@ -112,10 +104,11 @@ class xrayws {
     }
 
     /**
+     *
      * @param array $custopts
-     * @return bool
+     * @return array
      */
-    public function setopts(array $custopts = array()) {
+    public function getopts(array $custopts = array()) {
         $this->memfile->reset();
         $this->rawresponse = null;
         $this->lasthttpcode = null;
@@ -144,8 +137,8 @@ class xrayws {
         }
 
         $options = $standard + $custopts;
-        $result = curl_setopt_array($this->curl, $options);
-        return $result;
+
+        return $options;
     }
 
     /**
@@ -217,7 +210,7 @@ class xrayws {
         if (empty($method)) {
             throw new norequestmethod_exception();
         }
-        $ctype = 'application/json; charset=utf-8';
+        $ctype = 'application/json; charset=UTF-8';
         $standardheader = array("Accept: {$ctype}", "Content-Type: {$ctype}");
         $headers = array_merge($standardheader, $custheaders);
         $useopts = array(
@@ -226,17 +219,18 @@ class xrayws {
             CURLOPT_HTTPHEADER    => $headers,
         );
         $fullopts = $options + $useopts;
-        curl_reset($this->curl);
-        if (!$this->setopts($fullopts)) {
-            throw new curlerror_exception($this->curl);
+        $curl = new nethold();
+        if (!$curl->setopts($this->getopts($fullopts))) {
+            throw new curlerror_exception($curl);
         }
-        $response = curl_exec($this->curl);
-        $this->error = curl_error($this->curl);
-        $this->errorno = curl_errno($this->curl);
+        $response = $curl->exec();
+        $this->error = $curl->geterror();
+        $this->errorno = $curl->geterrno();
+        $this->curlinfo = $curl->getinfo();
         $this->rawresponse = $this->memfile->get_content();
         $this->memfile->close();
         if ($response) {
-            $httpcode = $this->getinfo(CURLINFO_HTTP_CODE);
+            $httpcode = isset($this->curlinfo['http_code']) ? $this->curlinfo['http_code'] : false;
             if ($httpcode !== false) {
                 $this->lasthttpcode = $httpcode;
                 if ($httpcode >= 400) {
@@ -372,7 +366,7 @@ class xrayws {
      * @return mixed
      */
     public function getinfo($opt = null) {
-        $result = ($opt === null) ? curl_getinfo($this->curl) : curl_getinfo($this->curl, $opt);
+        $result = ($opt === null) ? $this->curlinfo : $this->curlinfo[$opt];
         return $result;
     }
 

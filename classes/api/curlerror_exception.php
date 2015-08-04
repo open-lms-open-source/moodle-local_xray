@@ -27,18 +27,9 @@ namespace local_xray\api;
 
 class curlerror_exception extends \Exception {
     /**
-     * @param resource $ch
+     * @param nethold $ch
      */
-    public function __construct($ch) {
-        $error = 'No error.';
-        $errornr = 0;
-        if (is_resource($ch)) {
-            $errmsg = curl_error($ch);
-            if (!empty($errmsg)) {
-                $error = $errmsg;
-                $errornr = curl_errno($ch);
-            }
-        }
-        parent::__construct($error, $errornr);
+    public function __construct(nethold $ch) {
+        parent::__construct($ch->geterror(), $ch->geterrno());
     }
 }

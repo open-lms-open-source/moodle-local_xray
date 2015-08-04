@@ -78,7 +78,7 @@ abstract class wsapi {
             if ($count === null) {
                 $count = 20;
             }
-            $query = http_build_query(array('start' => $start, 'count' => $count));
+            $query = http_build_query(array('start' => $start, 'count' => $count), null,'&');
             $url .= '?' . $query;
         }
         if (!xrayws::instance()->hascookie()) {
