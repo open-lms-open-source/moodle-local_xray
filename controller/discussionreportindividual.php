@@ -1,5 +1,5 @@
 <?php
-defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
+defined('MOODLE_INTERNAL') or die();
 require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 
 /**
@@ -13,8 +13,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
     public function init() {
         parent::init();
-        $this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
-        $this->xrayuserid = required_param('xrayuserid', PARAM_RAW);	
+        $this->courseid = required_param('courseid', PARAM_STRINGID);
+        $this->xrayuserid = required_param('xrayuserid', PARAM_STRINGID);
     }
 
     public function view_action() {
@@ -25,13 +25,13 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         $title = get_string($this->name, $this->component);
         $PAGE->set_title($title);
         // Add nav to return to discussionreport.
-        $PAGE->navbar->add(get_string("discussionreport", $this->component), new moodle_url('/local/xray/view.php', array("controller" => "discussionreport")));
+        $PAGE->navbar->add(get_string("discussionreport", $this->component), new moodle_url('/local/xray/view.php', array("controller" => "discussionreport", "courseid" => $this->courseid)));
         $PAGE->navbar->add($title);
         $output = "";
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course($this->xraycourseid, $report, $this->xrayuserid);
+            $response = \local_xray\api\wsapi::course($this->courseid, $report, $this->xrayuserid);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());

@@ -12,12 +12,9 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 class local_xray_controller_discussionreport extends local_xray_controller_reports {
 
     public function init() {
+        parent::init();
         // This report will get data by courseid.
-        // TODO:: I am using xraycourseid for prevent validation of if exist course with courseid param.
-        $this->xraycourseid = required_param('xraycourseid', PARAM_RAW);
-
-        // TODO:: Hardcoded to get of specific course in xray.
-        $this->xraycourseid = parent::XRAY_COURSEID;
+        $this->courseid = required_param('courseid', PARAM_STRINGID);	
     }
 
     public function view_action() {
@@ -28,11 +25,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course($this->xraycourseid, $report);
+            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-            
             } else {
                 // Show graphs.
                 $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
@@ -77,7 +73,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
 
         // TODO:: Review , implement search, sortable, pagination.
-        $return = array();
+        $return = "";
+        
         try {
             // Pager
             $count = optional_param('iDisplayLength', 10, PARAM_RAW);
@@ -86,26 +83,27 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             $report = "discussion";
             $element = "element2";
             
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
-                                                                $element,
-                                                                $report,
-                                                                null,
-                                                                '',
-                                                                '',
-                                                                $start,
-                                                                $count);
+            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
+    				                                         $element, 
+    				                                         $report, 
+    				                                         null, 
+    				                                         '', 
+    				                                         '', 
+    				                                         $start, 
+    				                                         $count);
            
             if(!$response) {
                 // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
+                
                 $data = array();
                 if(!empty($response->data)){
                     $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
                     
                     foreach($response->data as $row) {
-                        $r = new stdClass();
                         
+                        $r = new stdClass();
                         $r->action = "";
                         if(has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
                             // Url for discussionreportindividual.

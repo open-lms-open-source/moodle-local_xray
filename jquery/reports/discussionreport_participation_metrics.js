@@ -19,7 +19,7 @@ function local_xray_discussionreport_participation_metrics(YUI, data) {
               "sProcessing": "Fetching Data, Please wait..."
             },*/
             //"sAjaxDataProp": "", // With this, you can change format of json.
-            "sAjaxSource": 'view.php?controller="discussionreport"&action="jsonparticipationdiscussion"&xraycourseid='+data.courseid,
+            "sAjaxSource": 'view.php?controller="discussionreport"&action="jsonparticipationdiscussion"&courseid='+data.courseid,
             // Sortable not implemented in webservice xray.
             "aoColumns": [
                           {"mData": "action","bSearchable":false, "bSortable": false},
