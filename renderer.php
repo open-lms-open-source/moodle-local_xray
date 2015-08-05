@@ -253,15 +253,23 @@ class local_xray_renderer extends plugin_renderer_base {
          
         global $PAGE;
         // Create standard table.
-        $output = $this->standard_table(__FUNCTION__,
-                array("", // Empty for action column.
-                        get_string('firstname', 'local_xray'),
-                        get_string('lastname', 'local_xray'),
-                        get_string('posts', 'local_xray'),
-                        get_string('contribution', 'local_xray'),
-                        get_string('ctc', 'local_xray'),
-                        get_string('regularityofcontributions', 'local_xray'),
-                        get_string('regularityofctc', 'local_xray')));
+        $columns = array(new local_xray_datatableColumn('action'),
+                new local_xray_datatableColumn('firstname'),
+                new local_xray_datatableColumn('lastname'),
+                new local_xray_datatableColumn('posts'),
+                new local_xray_datatableColumn('contribution'),
+                new local_xray_datatableColumn('ctc'),
+                new local_xray_datatableColumn('regularityofcontributions'),
+                new local_xray_datatableColumn('regularityofctc')
+        );
+         
+        $datatable = new local_xray_datatable(__FUNCTION__,
+                "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=".$courseid,
+                $columns);
+         
+        // Create standard table.
+        $output = $this->standard_table((array) $datatable);
+         
         return $output;
     }
     
