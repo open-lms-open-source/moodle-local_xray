@@ -276,8 +276,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			}
     			
     			// Provide info to table.
-    			//$return["recordsFiltered"] = $response->itemCount; // is not get from webservice if count is empty.
-    			$return["recordsFiltered"] = 0; // TODO:: BUG INT-8013.
+    			$return["recordsFiltered"] = $response->itemCount;
     			$return["data"] = $data;
     		}
     	} catch(exception $e) {
