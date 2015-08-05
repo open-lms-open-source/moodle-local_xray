@@ -128,7 +128,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     }
                 }
                 
-                file_put_contents('data2.txt', print_r($data, true));//TODO delete me
                 // Provide info to table.
                 $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
                 $return["data"] = $data;
