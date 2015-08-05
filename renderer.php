@@ -1,6 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
 require_once($CFG->dirroot.'/local/xray/controller/reports.php');
+require_once($CFG->dirroot.'/local/xray/classes/local_xray_utils.php');
 
 /**
  * Renderer
@@ -81,30 +82,28 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param array $jsdata (Data for js).
      * @return string
      */
-    private function standard_table ($name, array $columns, array $jsdata = array()) {
+    private function standard_table ($data) {
     	
     	global $CFG, $PAGE;
-    	 
+    	
     	// Load Jquery.
     	$PAGE->requires->jquery();
     	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin("local_xray-dataTables", "local_xray", true);
-    	
-    	// Load specific js of table.
-    	$PAGE->requires->jquery_plugin("local_xray_{$name}", "local_xray", true);    	
+    	// Load specific js for tables.
+    	$PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray", true);    	
     	
     	$output = "";
-    	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
+    	$output .= html_writer::tag('div', get_string($data['id'],"local_xray"), array("class" => "reportsname"));
     	 
     	// Table jquery datatables for show reports.
-    	$output .= "<table id='{$name}' class='display' cellspacing='0' width='100%'> <thead><tr>";
-    	foreach($columns as $c){
-        	$output .= "<th>{$c}</th>";
+    	$output .= "<table id='{$data['id']}' class='display' cellspacing='0' width='100%'> <thead><tr>";
+    	foreach($data['columns'] as $c){
+        	$output .= "<th>".get_string($c->mData,"local_xray")."</th>";
         }   			            
         $output .=" </tr> </thead> </table>";
         
         // Load table with data.
-        $PAGE->requires->js_init_call("local_xray_{$name}", array($jsdata));		 
+        $PAGE->requires->js_init_call("local_xray_show_on_table", array($data));		 
         
     	return $output;   	
     }
@@ -117,18 +116,23 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function activityreport_students_activity($courseid) {
     	
-    	global $PAGE;
+    	$columns = array(new local_xray_datatableColumn('action'),
+    			         new local_xray_datatableColumn('firstname'),
+    			         new local_xray_datatableColumn('lastname'),
+		    			 new local_xray_datatableColumn('lastactivity'),    			
+		    			 new local_xray_datatableColumn('discussionposts'),    			
+		    			 new local_xray_datatableColumn('postslastweek'), 
+		    			 new local_xray_datatableColumn('timespentincourse'),
+		    			 new local_xray_datatableColumn('regularityweekly')
+    	);
+    	
+    	$datatable = new local_xray_datatable(__FUNCTION__, 
+    			                              "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=".$courseid, 
+    			                              $columns);
+    	
     	// Create standard table.
-    	$output = $this->standard_table(__FUNCTION__, 
-			    			            array("", // Empty for action column.
-			    			            	  get_string('firstname', 'local_xray'),
-			    			              	  get_string('lastname', 'local_xray'),
-			    			              	  get_string('lastactivity', 'local_xray'),
-			    			              	  get_string('discussionposts', 'local_xray'),
-			    			              	  get_string('postslastweek', 'local_xray'),
-			    			              	  get_string('timespentincourse', 'local_xray'),
-                                              get_string('regularityweekly', 'local_xray')),
-    			                        array("courseid" => $courseid));    			
+    	$output = $this->standard_table((array) $datatable);    	
+    	
     	return $output;    	 
     }
     
