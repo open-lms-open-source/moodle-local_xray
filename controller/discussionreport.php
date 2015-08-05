@@ -32,6 +32,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             } else {
                 // Show graphs.
                 $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
+                $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
                 $output .= $this->average_words_weekly_by_post($response->elements[5]);
                 $output .= $this->social_structure($response->elements[9]);
                 $output .= $this->social_structure_with_words_count($response->elements[10]);
@@ -58,12 +59,15 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     /**
      * Report "Discussion Activity by Week" (table).
      *
-     *//*
-    private function discussion_activity_by_week() {
+     */
+    private function discussion_activity_by_week($element) {
+        
+        file_put_contents('element.txt', print_r($element, true));
+        
         $output = "";
-        $output .= $this->output->discussionreport_discussion_activity_by_week();
+        $output .= $this->output->discussionreport_discussion_activity_by_week($element);
         return $output;
-    }*/
+    }
 
     /**
      * Json for provide data to participation_metrics table.
@@ -140,7 +144,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     
     /**
      * Json for provide data to discussion_activity_by_week table.
-     *//*
+     */
     public function jsonweekdiscussion_action() {
     
         global $PAGE;
@@ -154,7 +158,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     
             $report = "discussion";
             $element = "element3";
-    
+            
             $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
                     $element,
                     $report,
@@ -169,37 +173,18 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
-                /*if(!empty($response->data)){
-                    $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
-    
+                if(!empty($response->data)){
                     foreach($response->data as $row) {
                         $r = new stdClass();
-    
-                        $r->action = "";
-                        if(has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
-                            // Url for discussionreportindividual.
-                            $url = new moodle_url("/local/xray/view.php",
-                                    array("controller" => "discussionreportindividual",
-                                            "xraycourseid" => $row->courseId->value,
-                                            "xrayuserid" => $row->participantId->value
-                                    ));
-                            $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
-                                    "title" => $discussionreportind,
-                                    "target" => "_blank"));
-                        }
-                        $r->firstname = $row->firstname->value;
-                        $r->lastname = $row->lastname->value;
-                        $r->posts = $row->posts->value;
-                        $r->contribution = $row->contrib->value;
-                        $r->ctc = $row->ctc->value;
-                        $r->regularityofcontributions = '';//TODO No value in this object, notify Shani - $row->regularityContrib->value
-                        $r->regularityofctc = '';//TODO No value in this object, notify Shani - $row->regularityCTC->value
+                        $r->weeks = $row->week->value;
+                        //$r->posts = $row->posts->value;
+                        $r->averagereslag = $row->avgLag->value;
+                        $r->averagewords = $row->avgWordCount->value;
                         $data[] = $r;
-                    
                     }
-                    
-                }*//*
+                }
 
+                file_put_contents('data.txt', print_r($data, true));
                 
                 // Provide info to table.
                 $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
@@ -211,7 +196,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         }
         echo json_encode($return);
         exit();
-    }*/
+    }
     
     /**
      * Report Average Words Weekly by Post.

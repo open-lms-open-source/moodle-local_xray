@@ -2,7 +2,7 @@
  * jQuery scripting for discussion activity by week
  * 
  * @author Pablo Pagnone
- * @author Germán Vitale
+ * @author German Vitale
  */
 
 function local_xray_discussionreport_discussion_activity_by_week(YUI, data) {
@@ -28,15 +28,7 @@ function local_xray_discussionreport_discussion_activity_by_week(YUI, data) {
                           {"mData": "4","bSearchable":false, "bSortable": false},
                           {"mData": "5","bSearchable":false, "bSortable": false},
                           {"mData": "6","bSearchable":false, "bSortable": false},
-                          {"mData": "7","bSearchable":false, "bSortable": false},	
-                          {"mData": "8","bSearchable":false, "bSortable": false},
-                          {"mData": "9","bSearchable":false, "bSortable": false},
-                          {"mData": "10","bSearchable":false, "bSortable": false},
-                          {"mData": "11","bSearchable":false, "bSortable": false},
-                          {"mData": "12","bSearchable":false, "bSortable": false},
-                          {"mData": "13","bSearchable":false, "bSortable": false},
-                          {"mData": "14","bSearchable":false, "bSortable": false},
-                          {"mData": "15","bSearchable":false, "bSortable": false},
+                          {"mData": "7","bSearchable":false, "bSortable": false},
                           ]
         });
     });
