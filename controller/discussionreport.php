@@ -61,9 +61,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      *
      */
     private function discussion_activity_by_week($element) {
-        
-        file_put_contents('element.txt', print_r($element, true));
-        
         $output = "";
         $output .= $this->output->discussionreport_discussion_activity_by_week($element);
         return $output;
@@ -184,7 +181,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     }
                 }
 
-                file_put_contents('data.txt', print_r($data, true));
+                //file_put_contents('data.txt', print_r($data, true));//TODO delete me
                 
                 // Provide info to table.
                 $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
