@@ -12,27 +12,32 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
 		
 	public function init() {
 		parent::init();
-		$this->courseid = required_param('courseid', PARAM_STRINGID);
-		$this->xrayuserid = required_param('xrayuserid', PARAM_STRINGID);	
+		//$this->courseid = required_param('courseid', PARAM_STRINGID);
+		// TODO:: Hardcodeid by test.
+		$this->courseid = required_param('xraycourseid', PARAM_RAW);		
+		$this->xrayuserid = required_param('xrayuserid', PARAM_RAW);	
 	}
 	
     public function view_action() {
     	
     	global $PAGE, $USER, $DB;
     	
-    	// Add title to breadcrumb.
     	$title = get_string($this->name, $this->component);
     	$PAGE->set_title($title);
+    	$this->heading->text = $title;
+
     	// Add nav to return to activityreport.
     	$PAGE->navbar->add(get_string("activityreport", $this->component), 
     			           new moodle_url('/local/xray/view.php', 
-    			           		          array("controller" => "activityreport", "courseid" => $this->courseid)));    	
+    			           		          array("controller" => "activityreport", 
+    			           		          		"courseid" => $this->courseid)));    	
     	$PAGE->navbar->add($title);
     	$output = "";
 
     	try {
     		$report = "activity";
-    		$response = \local_xray\api\wsapi::course($this->courseid, $report, $this->xrayuserid);
+    		// TODO: Hardcoded id for test.
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report, $this->xrayuserid);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());

@@ -14,7 +14,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 	public function init() {
 		parent::init();
 		// This report will get data by courseid.
-		$this->courseid = required_param('courseid', PARAM_STRINGID);	
+		$this->courseid = required_param('courseid', PARAM_RAW);	
 	}
 	
     public function view_action() {
@@ -75,7 +75,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	// Pager
     	$count = optional_param('iDisplayLength', 10, PARAM_RAW);
     	$start  = optional_param('iDisplayStart', 0, PARAM_RAW);
-    	
+
     	$return = "";
 
     	try {
@@ -105,7 +105,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 	    					// Url for activityreportindividual.
 	    					$url = new moodle_url("/local/xray/view.php", 
 	    							              array("controller" => "activityreportindividual",
-	    							              		"courseid" => $row->courseId->value,
+	    							              		//"courseid" => $this->courseid, // TODO:: HArdcoded id for test.
+	    							              		"xraycourseid" => $this->courseid,
 	    							              		"xrayuserid" => $row->participantId->value
 	    							              ));
 	    					$r->action = html_writer::link($url, '', array("class" => "icon_activityreportindividual",
