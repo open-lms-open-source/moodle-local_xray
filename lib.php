@@ -72,7 +72,8 @@ function local_xray_extends_settings_navigation($settings, $context) {
 				if(has_capability('local/xray:discussionreportindividualforum_view', $context)){
 					$url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreportindividualforum",
 							                                            "courseid"   => $COURSE->id,
-							                                            "forum"      => $context->instanceid));
+							                                            "cmid"   => $context->instanceid,
+							                                            "forum"      => $PAGE->cm->instance));
 					
 					$extranavigation->add(get_string('discussionreportindividualforum', $plugin),$url);		
 				}

@@ -16,10 +16,18 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 	 */
 	private $forumid;
 	
+	/**
+	 * Course module id.
+	 * @var integer
+	 */
+	private $id;
+	
 	public function init() {
 		parent::init();
+		global $DB;
 		$this->courseid = required_param('courseid', PARAM_STRINGID);
-		$this->forumid = required_param('forum', PARAM_STRINGID);
+		$this->cmid = required_param('cmid', PARAM_RAW); // Cmid of forum.
+		$this->forumid = required_param('forum', PARAM_RAW);
 	}
 	
     public function view_action() {
@@ -27,33 +35,31 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     	global $PAGE, $USER, $DB;
     	
     	// Add title to breadcrumb.
-    	$PAGE->navbar->add("Link to course"); // TODO:: This will be fixed when we work with same db with x-ray side.
-    	$PAGE->navbar->add("Link to actual forum"); // TODO:: This will be fixed when we work with same db with x-ray side.
+    	$forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
+    	$PAGE->navbar->add($forumname, new moodle_url("/mod/forum/view.php", 
+    			                                      array("id" => $this->cmid))); 
     	$title = get_string($this->name, $this->component);
     	$PAGE->set_title($title);   	
     	$PAGE->navbar->add($title);
     	$output = "";
     	
-    	// TODO:: This report is returning bad. Check in x-ray side.
-
     	try {
-    		$report = "discussionForum";
-    		//TODO:: Hardcoded id.
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+    		$report = "discussion";
+    		//TODO:: Temp Hardcoded id.
+    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report, "forum/".parent::XRAY_FORUMID);
     		if(!$response) {
     			// Fail response of webservice.
     			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
     			
     		} else {
-    			// TODO:: We need change in api for this report.
     			// Show graphs.
     			$output .= $this->output->inforeport($response->reportdate, 
     					                             null,
     					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
     			
-    			//$output .= $this->wordshistogram($response->elements[1]);
-    			//$output .= $this->socialstructure($response->elements[3]);
-    			//$output .= $this->wordcloud($response->elements[4]);
+    			$output .= $this->wordshistogram($response->elements[2]);
+    			$output .= $this->socialstructure($response->elements[0]);
+    			$output .= $this->wordcloud($response->elements[1]);
 		    	
     		}		 
     	} catch(exception $e) {

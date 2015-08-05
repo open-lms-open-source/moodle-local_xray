@@ -73,6 +73,9 @@ $string['discussionreportindividual_main_terms_histogram'] = 'Main Terms Histogr
 
 /* Discussion report individual forum*/
 $string['discussionreportindividualforum'] = 'Discussion Report Individual Forum';
+$string['discussionreportindividualforum_wordshistogram'] = 'Words Histogram';
+$string['discussionreportindividualforum_socialstructure'] = 'Social Structure';
+$string['discussionreportindividualforum_wordcloud'] = 'Word Cloud';
 
 /* Discussion report Endogenic Plagiarism*/
 $string['discussionendogenicplagiarism'] = 'Discussion Endogenic Plagiarism';
