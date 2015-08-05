@@ -412,15 +412,22 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function risk_risk_measures($courseid) {
     	global $PAGE;
+    	
+    	$columns = array(new local_xray_datatableColumn('lastname'),
+		    			 new local_xray_datatableColumn('firstname'),
+		    			 new local_xray_datatableColumn('timespentincourse'),
+		    			 new local_xray_datatableColumn('academicrisk'),
+		    			 new local_xray_datatableColumn('socialrisk'),
+		    			 new local_xray_datatableColumn('totalrisk')
+    	);
+    	 
+    	$datatable = new local_xray_datatable(__FUNCTION__,
+    			                             "view.php?controller='risk'&action='jsonriskmeasures'&courseid=".$courseid,
+    			                             $columns);
+    	 
     	// Create standard table.
-    	$output = $this->standard_table(__FUNCTION__,
-						    			array(get_string('lastname', 'local_xray'),
-						    				  get_string('firstname', 'local_xray'),
-						    				  get_string('timespentincourse', 'local_xray'),
-						    				  get_string('academicrisk', 'local_xray'),
-						    				  get_string('socialrisk', 'local_xray'),
-						    				  get_string('totalrisk', 'local_xray')),
-    			                        array("courseid" => $courseid));
+    	$output = $this->standard_table((array) $datatable);
+    	 
     	return $output;
     }
     
