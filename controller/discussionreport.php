@@ -127,6 +127,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         $data[] = $r;
                     }
                 }
+                
+                file_put_contents('data2.txt', print_r($data, true));//TODO delete me
                 // Provide info to table.
                 $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
                 $return["data"] = $data;
@@ -152,10 +154,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             // Pager
             $count = optional_param('iDisplayLength', 10, PARAM_RAW);
             $start  = optional_param('iDisplayStart', 10, PARAM_RAW);
-    
+
             $report = "discussion";
             $element = "element3";
-            
+
             $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
                     $element,
                     $report,
@@ -170,18 +172,23 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
+                
+                //$posts = array();
+                $avglag = array();
+                $avgwordcount = array();
+                
                 if(!empty($response->data)){
-                    foreach($response->data as $row) {
-                        $r = new stdClass();
-                        $r->weeks = $row->week->value;
-                        //$r->posts = $row->posts->value;
-                        $r->averagereslag = $row->avgLag->value;
-                        $r->averagewords = $row->avgWordCount->value;
-                        $data[] = $r;
-                    }
-                }
+                    foreach($response->data as $col) {
+                        //$posts[$col->week->value] = $col->posts->value;
+                        $avglag[$col->week->value] = $col->avgLag->value;
+                        $avgwordcount[$col->week->value] = $col->avgWordCount->value;
 
-                //file_put_contents('data.txt', print_r($data, true));//TODO delete me
+                    }
+                    //$data[] = $posts;
+                    $data[] = $avglag;
+                    $data[] = $avgwordcount;
+                    
+                }
                 
                 // Provide info to table.
                 $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
