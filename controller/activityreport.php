@@ -20,6 +20,10 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     public function view_action() {
     	
     	global $PAGE;
+    	$title = get_string($this->name, $this->component);
+    	$PAGE->set_title($title);
+    	$this->heading->text = $title;	
+    	
     	// Add title to breadcrumb.
     	$PAGE->navbar->add(get_string($this->name, $this->component));
     	$output = "";

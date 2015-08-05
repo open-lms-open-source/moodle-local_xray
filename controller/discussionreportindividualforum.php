@@ -34,12 +34,15 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     	
     	global $PAGE, $USER, $DB;
     	
+    	$title = get_string($this->name, $this->component);
+    	$PAGE->set_title($title);
+    	$this->heading->text = $title;
+    	
     	// Add title to breadcrumb.
     	$forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
     	$PAGE->navbar->add($forumname, new moodle_url("/mod/forum/view.php", 
     			                                      array("id" => $this->cmid))); 
-    	$title = get_string($this->name, $this->component);
-    	$PAGE->set_title($title);   	
+    	
     	$PAGE->navbar->add($title);
     	$output = "";
     	

@@ -18,8 +18,13 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
     public function view_action() {
     	
     	global $PAGE;
+    	
+    	$title = get_string($this->name, $this->component);
+    	$PAGE->set_title($title);
+    	$this->heading->text = $title;
+    	
     	// Add title to breadcrumb.
-    	$PAGE->navbar->add(get_string($this->name, $this->component));
+    	$PAGE->navbar->add($title);
     	$output = "";
 
     	try {
