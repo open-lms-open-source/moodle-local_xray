@@ -121,7 +121,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     					$r->postslastweek = $row->discussion_posts_last_week->value;
     					$r->timespentincourse = $row->timeOnTask->value;	
     					// TODO:: Not exist value for weeklyRegularity on xray webservice. NOTIFY
-    					$r->regularity = "";
+    					$r->regularityweekly = "";
     					$data[] = $r;
     				}	
     			}
