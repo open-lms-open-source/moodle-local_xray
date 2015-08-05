@@ -263,26 +263,25 @@ class local_xray_renderer extends plugin_renderer_base {
     
     /**
      * Graphic Discussion Activity by Week (TABLE)
+     * @param stdClass $element
      */
-    /*public function discussionreport_discussion_activity_by_week() {
+    public function discussionreport_discussion_activity_by_week($element) {
          
-        //TODO Can we have more than 15 weeks?
         global $PAGE;
         // Create standard table.
         
-        $weeks = array();
-        $count_weeks = 15;//TODO harcoded
-        $week = 1;
-        while($week <= $count_weeks){
-            $weeks[]= $week;
-            $week++;
+        //Get columns
+        $columns = array();
+        
+        $element->data[0]->week;
+        foreach($element->data as $column){
+            $columns[] = $column->week->value;
         }
-        
-        
+
         $output = $this->standard_table(__FUNCTION__,
-                                        $weeks);
+                                        $columns);
         return $output;
-    }*/
+    }
     
     /**
      * Average words weekly by post. (Graph)
