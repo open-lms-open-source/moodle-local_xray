@@ -190,12 +190,17 @@ class local_xray_renderer extends plugin_renderer_base {
      */    
     public function activityreport_first_login_non_starters($courseid) {   	
     	global $PAGE;
-    	// Create standard table.
-    	$output = $this->standard_table(__FUNCTION__, 
-			    			            array(get_string('firstname', 'local_xray'),
-			    			              	  get_string('lastname', 'local_xray')),
-    			                        array("courseid" => $courseid));
     	
+    	$columns = array(new local_xray_datatableColumn('firstname'),
+    			         new local_xray_datatableColumn('lastname')
+    	);
+    	 
+    	$datatable = new local_xray_datatable(__FUNCTION__,
+    			                              "view.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=".$courseid,
+    			                               $columns);
+    	 
+    	// Create standard table.
+    	$output = $this->standard_table((array) $datatable);
     	return $output;	
     }
     
