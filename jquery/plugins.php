@@ -20,8 +20,8 @@ $plugins = array(
         )
     ),
     'local_xray-show_on_table' => array(
-        'files' => array('dataTables/jquery.dataTables.min.js',
-        		         'dataTables/jquery.dataTables.min.css',
+        'files' => array('dataTables/js/jquery.dataTables.min.js',
+        		         'dataTables/css/jquery.dataTables.min.css',
                          'reports/show_on_table.js'
         )
     )
