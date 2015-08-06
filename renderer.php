@@ -98,7 +98,11 @@ class local_xray_renderer extends plugin_renderer_base {
     	// Table jquery datatables for show reports.
     	$output .= "<table id='{$data['id']}' class='display' cellspacing='0' width='100%'> <thead><tr>";
     	foreach($data['columns'] as $c){
-        	$output .= "<th>".get_string($c->mData,"local_xray")."</th>";
+    	    if(is_int($c->mData)){//TODO delete this, it is only to see discussion by week columns
+    	        $output .= "<th>".$c->mData."</th>";
+    	    }else{
+    	        $output .= "<th>".get_string($c->mData,"local_xray")."</th>";
+    	    }
         }   			            
         $output .=" </tr> </thead> </table>";
         
@@ -254,19 +258,27 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Graphic Participation Metrics (TABLE)
      */
-    public function discussionreport_participation_metrics() {
+    public function discussionreport_participation_metrics($courseid) {
          
         global $PAGE;
         // Create standard table.
-        $output = $this->standard_table(__FUNCTION__,
-                array("", // Empty for action column.
-                        get_string('firstname', 'local_xray'),
-                        get_string('lastname', 'local_xray'),
-                        get_string('posts', 'local_xray'),
-                        get_string('contribution', 'local_xray'),
-                        get_string('ctc', 'local_xray'),
-                        get_string('regularityofcontributions', 'local_xray'),
-                        get_string('regularityofctc', 'local_xray')));
+        $columns = array(new local_xray_datatableColumn('action'),
+                new local_xray_datatableColumn('firstname'),
+                new local_xray_datatableColumn('lastname'),
+                new local_xray_datatableColumn('posts'),
+                new local_xray_datatableColumn('contribution'),
+                new local_xray_datatableColumn('ctc'),
+                new local_xray_datatableColumn('regularityofcontributions'),
+                new local_xray_datatableColumn('regularityofctc')
+        );
+         
+        $datatable = new local_xray_datatable(__FUNCTION__,
+                "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=".$courseid,
+                $columns);
+         
+        // Create standard table.
+        $output = $this->standard_table((array) $datatable);
+         
         return $output;
     }
     
@@ -274,21 +286,23 @@ class local_xray_renderer extends plugin_renderer_base {
      * Graphic Discussion Activity by Week (TABLE)
      * @param stdClass $element
      */
-    public function discussionreport_discussion_activity_by_week($element) {
-         
+    public function discussionreport_discussion_activity_by_week($courseid, $element) {
+
         global $PAGE;
         // Create standard table.
-        
-        //Get columns
+
         $columns = array();
-        
-        $element->data[0]->week;
         foreach($element->data as $column){
-            $columns[] = $column->week->value;
+            $columns[] = new local_xray_datatableColumn($column->week->value);
         }
 
-        $output = $this->standard_table(__FUNCTION__,
-                                        $columns);
+        $datatable = new local_xray_datatable(__FUNCTION__,
+                "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=".$courseid,
+                $columns);
+
+        // Create standard table.
+        $output = $this->standard_table((array) $datatable);
+
         return $output;
     }
     

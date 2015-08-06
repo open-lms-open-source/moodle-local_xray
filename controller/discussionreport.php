@@ -52,7 +52,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     private function participation_metrics() {
         $output = "";
-        $output .= $this->output->discussionreport_participation_metrics();
+        $output .= $this->output->discussionreport_participation_metrics($this->courseid);
         return $output;
     }   
     
@@ -62,7 +62,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     private function discussion_activity_by_week($element) {
         $output = "";
-        $output .= $this->output->discussionreport_discussion_activity_by_week($element);
+        $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid, $element);
         return $output;
     }
 
@@ -127,6 +127,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         $data[] = $r;
                     }
                 }
+                
                 // Provide info to table.
                 $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
                 $return["data"] = $data;
@@ -152,10 +153,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             // Pager
             $count = optional_param('iDisplayLength', 10, PARAM_RAW);
             $start  = optional_param('iDisplayStart', 10, PARAM_RAW);
-    
+
             $report = "discussion";
             $element = "element3";
-            
+
             $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
                     $element,
                     $report,
@@ -164,24 +165,27 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     '',
                     $start,
                     $count);
-             
+
             if(!$response) {
                 // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
-                if(!empty($response->data)){
-                    foreach($response->data as $row) {
-                        $r = new stdClass();
-                        $r->weeks = $row->week->value;
-                        //$r->posts = $row->posts->value;
-                        $r->averagereslag = $row->avgLag->value;
-                        $r->averagewords = $row->avgWordCount->value;
-                        $data[] = $r;
-                    }
-                }
 
-                //file_put_contents('data.txt', print_r($data, true));//TODO delete me
+                //$posts = array();
+                $avglag = array();
+                $avgwordcount = array();
+
+                if(!empty($response->data)){
+                    foreach($response->data as $col) {
+                        //$posts[$col->week->value] = $col->posts->value;
+                        $avglag[$col->week->value] = $col->avgLag->value;
+                        $avgwordcount[$col->week->value] = $col->avgWordCount->value;
+                    }
+                    //$data[] = $posts;
+                    $data[] = $avglag;
+                    $data[] = $avgwordcount;
+                }
                 
                 // Provide info to table.
                 $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
