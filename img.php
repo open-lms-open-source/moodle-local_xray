@@ -15,7 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Serving web service images
+ * Serving web service images from XRay
+ * To use call the script as follows: <moodle url>/local/xray/img.php?src=<imagefilename>
+ * Imagefilename is from element web service call with prepend GUID
+ * for example: 40ee0842-9fc6-11e4-920f-89fc399c3afadefecto4.png
  *
  * @package local_xray
  * @author Darko Miletic
