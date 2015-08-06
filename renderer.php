@@ -1,7 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
 require_once($CFG->dirroot.'/local/xray/controller/reports.php');
-require_once($CFG->dirroot.'/local/xray/classes/local_xray_utils.php');
+require_once($CFG->dirroot.'/local/xray/classes/local_xray_datatables.php');
 
 /**
  * Renderer

@@ -44,17 +44,31 @@ class local_xray_datatableColumn {
 	 * @var boolean
 	 */
 	public $bSortable;
+	
+	/**
+	 * Show column
+	 * @var boolean
+	 */
+	public $bVisible;
+	
+	/**
+	 * Width column
+	 * @var string
+	 */
+	public $sWidth;
 
 	/**
 	 * Construct
 	 * @param string $mdata - Id of column
 	 * @param string $string - Text to show
 	 */
-	public function __construct($mdata, $text = '', $search = false, $sortable = false) {
+	public function __construct($mdata, $text = '', $search = false, $sortable = false, $visible = true, $width = '') {
 		$this->mData = $mdata;
 		$this->text = $text;
 		$this->bSearchable = $search;
 		$this->bSortable = $sortable;
+		$this->bVisible = $visible;
+		$this->sWidth = $width;
 	}
 }
 
