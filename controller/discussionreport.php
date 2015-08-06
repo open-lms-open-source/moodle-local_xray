@@ -14,7 +14,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     public function init() {
         parent::init();
         // This report will get data by courseid.
-        $this->courseid = required_param('courseid', PARAM_STRINGID);	
+        $this->courseid = required_param('courseid', PARAM_RAW);	
     }
 
     public function view_action() {
@@ -110,7 +110,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                             // Url for discussionreportindividual.
                             $url = new moodle_url("/local/xray/view.php",
                                     array("controller" => "discussionreportindividual",
-                                            "xraycourseid" => $row->courseId->value,
+                                            "xraycourseid" => $this->courseid,
                                             "xrayuserid" => $row->participantId->value
                                     ));
                             $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
