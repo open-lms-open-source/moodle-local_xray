@@ -101,7 +101,7 @@ class local_xray_renderer extends plugin_renderer_base {
     	    if(is_int($c->mData)){//TODO delete this, it is only to see discussion by week columns
     	        $output .= "<th>".$c->mData."</th>";
     	    }else{
-    	        $output .= "<th>".get_string($c->mData,"local_xray")."</th>";
+    	        $output .= "<th>".$c->text."</th>";
     	    }
         }   			            
         $output .=" </tr> </thead> </table>";
@@ -120,14 +120,14 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function activityreport_students_activity($courseid) {
     	
-    	$columns = array(new local_xray_datatableColumn('action'),
-    			         new local_xray_datatableColumn('firstname'),
-    			         new local_xray_datatableColumn('lastname'),
-		    			 new local_xray_datatableColumn('lastactivity'),    			
-		    			 new local_xray_datatableColumn('discussionposts'),    			
-		    			 new local_xray_datatableColumn('postslastweek'), 
-		    			 new local_xray_datatableColumn('timespentincourse'),
-		    			 new local_xray_datatableColumn('regularityweekly')
+    	$columns = array(new local_xray_datatableColumn('action', ''),
+    			         new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
+    			         new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
+		    			 new local_xray_datatableColumn('lastactivity', get_string('lastactivity', 'local_xray')),    			
+		    			 new local_xray_datatableColumn('discussionposts', get_string('discussionposts', 'local_xray')),    			
+		    			 new local_xray_datatableColumn('postslastweek', get_string('postslastweek', 'local_xray')), 
+		    			 new local_xray_datatableColumn('timespentincourse', get_string('timespentincourse', 'local_xray')),
+		    			 new local_xray_datatableColumn('regularityweekly', get_string('regularityweekly', 'local_xray'))
     	);
     	
     	$datatable = new local_xray_datatable(__FUNCTION__, 
@@ -195,8 +195,8 @@ class local_xray_renderer extends plugin_renderer_base {
     public function activityreport_first_login_non_starters($courseid) {   	
     	global $PAGE;
     	
-    	$columns = array(new local_xray_datatableColumn('firstname'),
-    			         new local_xray_datatableColumn('lastname')
+    	$columns = array(new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
+    			         new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray'))
     	);
     	 
     	$datatable = new local_xray_datatable(__FUNCTION__,
@@ -432,12 +432,12 @@ class local_xray_renderer extends plugin_renderer_base {
     public function risk_risk_measures($courseid) {
     	global $PAGE;
     	
-    	$columns = array(new local_xray_datatableColumn('lastname'),
-		    			 new local_xray_datatableColumn('firstname'),
-		    			 new local_xray_datatableColumn('timespentincourse'),
-		    			 new local_xray_datatableColumn('academicrisk'),
-		    			 new local_xray_datatableColumn('socialrisk'),
-		    			 new local_xray_datatableColumn('totalrisk')
+    	$columns = array(new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
+		    			 new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
+		    			 new local_xray_datatableColumn('timespentincourse', get_string('timespentincourse', 'local_xray')),
+		    			 new local_xray_datatableColumn('academicrisk', get_string('academicrisk', 'local_xray')),
+		    			 new local_xray_datatableColumn('socialrisk', get_string('socialrisk', 'local_xray')),
+		    			 new local_xray_datatableColumn('totalrisk', get_string('totalrisk', 'local_xray'))
     	);
     	 
     	$datatable = new local_xray_datatable(__FUNCTION__,

@@ -20,14 +20,41 @@
  * @author Pablo Pagnone
  */
 class local_xray_datatableColumn {
+	
+	/**
+	 * Id of column
+	 * @var string
+	 */
 	public $mdata;
+	
+	/**
+	 * Is searchable
+	 * @var boolean
+	 */
 	public $bSearchable;
+	
+	/**
+	 * Text to show
+	 * @var string
+	 */
+	public $text;	
+	
+	/**
+	 * Is sortable
+	 * @var boolean
+	 */
 	public $bSortable;
 
-	public function __construct($mdata) {
+	/**
+	 * Constructor
+	 * @param string $mdata - Id of column
+	 * @param string $string - Text to show
+	 */
+	public function __construct($mdata, $text = '', $search = false, $sortable = false) {
 		$this->mData = $mdata;
-		$this->bSearchable = false;
-		$this->bSortable = false;
+		$this->text = $text;
+		$this->bSearchable = $search;
+		$this->bSortable = $sortable;
 	}
 }
 
