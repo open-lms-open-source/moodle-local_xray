@@ -52,7 +52,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     private function participation_metrics() {
         $output = "";
-        $output .= $this->output->discussionreport_participation_metrics();
+        $output .= $this->output->discussionreport_participation_metrics($this->courseid);
         return $output;
     }   
     
@@ -62,7 +62,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     private function discussion_activity_by_week($element) {
         $output = "";
-        $output .= $this->output->discussionreport_discussion_activity_by_week($element);
+        $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid, $element);
         return $output;
     }
 
@@ -165,28 +165,26 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     '',
                     $start,
                     $count);
-             
+
             if(!$response) {
                 // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
-                
+
                 //$posts = array();
                 $avglag = array();
                 $avgwordcount = array();
-                
+
                 if(!empty($response->data)){
                     foreach($response->data as $col) {
                         //$posts[$col->week->value] = $col->posts->value;
                         $avglag[$col->week->value] = $col->avgLag->value;
                         $avgwordcount[$col->week->value] = $col->avgWordCount->value;
-
                     }
                     //$data[] = $posts;
                     $data[] = $avglag;
                     $data[] = $avgwordcount;
-                    
                 }
                 
                 // Provide info to table.
