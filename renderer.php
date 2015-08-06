@@ -75,33 +75,29 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     private function standard_table ($data, $classes = '', $width = '100%') {
-    	
-    	global $CFG, $PAGE;
-    	
-    	// Load Jquery.
-    	$PAGE->requires->jquery();
-    	$PAGE->requires->jquery_plugin('ui');
-    	// Load specific js for tables.
-    	$PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray", true);    	
-    	
-    	$output = "";
-    	$output .= html_writer::tag('div', get_string($data['id'],"local_xray"), array("class" => "reportsname"));
-    	 
-    	// Table jquery datatables for show reports.
-    	$output .= "<table id='{$data['id']}' class='display {$classes}' cellspacing='0' width='{$width}'> <thead><tr>";
-    	foreach($data['columns'] as $c){
-    	    if(is_int($c->mData)){//TODO delete this, it is only to see discussion by week columns
-    	        $output .= "<th>".$c->mData."</th>";
-    	    }else{
-    	        $output .= "<th>".$c->text."</th>";
-    	    }
-        }   			            
+
+        global $CFG, $PAGE;
+
+        // Load Jquery.
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        // Load specific js for tables.
+        $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray", true);    	
+    
+        $output = "";
+        $output .= html_writer::tag('div', get_string($data['id'],"local_xray"), array("class" => "reportsname"));
+
+        // Table jquery datatables for show reports.
+        $output .= "<table id='{$data['id']}' class='display {$classes}' cellspacing='0' width='{$width}'> <thead><tr>";
+        foreach($data['columns'] as $c){
+            $output .= "<th>".$c->text."</th>";
+        }
         $output .=" </tr> </thead> </table>";
-        
+
         // Load table with data.
         $PAGE->requires->js_init_call("local_xray_show_on_table", array($data));		 
-        
-    	return $output;   	
+
+        return $output;   	
     }
     /************************** End General elements for Reports **************************/
     
