@@ -70,19 +70,11 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Standard table Theme with Jquery datatables.
      * 
-     * For this use you need:
-     * - Add name of report to lang plugin.
-     * - Add specific js for jquery plugin with this format:  "local_xray_" + %name% 
-     * - Add function "local_xray_" + %name% in js "local_xray_" + %name%
-     * 
-     * The table will have id equal to name.
-     * 
-     * @param string $name (Name of report, this will be used by strings and id of table).
-     * @param array $columns (Array of columns to show).
-     * @param array $jsdata (Data for js).
+     * @param Array $data - Array containing object DataTable.
+     * @param String $classes - Classes for table.
      * @return string
      */
-    private function standard_table ($data) {
+    private function standard_table ($data, $classes = '', $width = '100%') {
     	
     	global $CFG, $PAGE;
     	
@@ -96,7 +88,7 @@ class local_xray_renderer extends plugin_renderer_base {
     	$output .= html_writer::tag('div', get_string($data['id'],"local_xray"), array("class" => "reportsname"));
     	 
     	// Table jquery datatables for show reports.
-    	$output .= "<table id='{$data['id']}' class='display' cellspacing='0' width='100%'> <thead><tr>";
+    	$output .= "<table id='{$data['id']}' class='display {$classes}' cellspacing='0' width='{$width}'> <thead><tr>";
     	foreach($data['columns'] as $c){
     	    if(is_int($c->mData)){//TODO delete this, it is only to see discussion by week columns
     	        $output .= "<th>".$c->mData."</th>";
