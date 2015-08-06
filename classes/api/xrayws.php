@@ -199,7 +199,7 @@ class xrayws {
      * @param array $custheaders
      * @param array $options
      * @return mixed
-     * @throws curlerror_exception
+     * @throws \Exception
      * @throws norequestmethod_exception
      * @throws nourl_exception
      */
@@ -219,10 +219,7 @@ class xrayws {
             CURLOPT_HTTPHEADER    => $headers,
         );
         $fullopts = $options + $useopts;
-        $curl = new nethold();
-        if (!$curl->setopts($this->getopts($fullopts))) {
-            throw new curlerror_exception($curl);
-        }
+        $curl = new nethold($this->getopts($fullopts));
         $response = $curl->exec();
         $this->error = $curl->geterror();
         $this->errorno = $curl->geterrno();

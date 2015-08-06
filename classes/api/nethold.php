@@ -31,19 +31,28 @@ class nethold {
      */
     private $ch = null;
 
-    public function __construct() {
+    /**
+     * @param null|array $options
+     * @throws \Exception
+     */
+    public function __construct($options = null) {
         $ch = curl_init();
         if (!is_resource($ch)) {
             throw new \Exception('Unable to initialize cURL!');
         }
         $this->ch = $ch;
+        if (is_array($options)) {
+            if (!$this->setopts($options)) {
+                $emsg = $this->geterror();
+                $eno = $this->geterrno();
+                $this->reset();
+                throw new \Exception($emsg, $eno);
+            }
+        }
     }
 
     public function __destruct() {
-        if (is_resource($this->ch)) {
-            curl_close($this->ch);
-            $this->ch = null;
-        }
+        $this->reset();
     }
 
     /**
@@ -87,5 +96,15 @@ class nethold {
      */
     public function geterrno() {
         return curl_errno($this->ch);
+    }
+
+    /**
+     * Resets the curl object
+     */
+    protected function reset() {
+        if (is_resource($this->ch)) {
+            curl_close($this->ch);
+            $this->ch = null;
+        }
     }
 }
