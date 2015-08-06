@@ -284,6 +284,7 @@ class local_xray_renderer extends plugin_renderer_base {
         // Create standard table.
 
         $columns = array();
+        $columns[] = new local_xray_datatableColumn('weeks');
         foreach($element->data as $column){
             $columns[] = new local_xray_datatableColumn($column->week->value);
         }
