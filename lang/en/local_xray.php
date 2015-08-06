@@ -89,6 +89,7 @@ $string['risk_total_risk_profile'] = 'Total Risk Profile';
 $string['risk_academic_vs_social_risk'] = 'Academic Versus Social Risk';
 
 /* Columns reports */
+$string['table_fetchingdata'] = 'Fetching Data, Please wait...';
 $string['fullname'] = 'Fullname';
 $string['firstname'] = 'Firstname';
 $string['lastname'] = 'Lastname';
