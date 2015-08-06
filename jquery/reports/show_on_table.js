@@ -9,6 +9,7 @@
 function local_xray_show_on_table(YUI, data) {
 	$(document).ready(function() {
 		$("#"+data.id).dataTable( {
+			"jQueryUI": true,
 	        "bProcessing": true,
 	        "bServerSide": true,
 		    "retrieve": true,
