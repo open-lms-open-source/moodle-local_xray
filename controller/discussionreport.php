@@ -172,9 +172,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             } else {
                 $data = array();
 
-                //$posts = array('weeks' => 'posts');
-                $avglag = array('weeks' => 'avglag');
-                $avgwordcount = array('weeks' => 'avgwordcount');
+                //$posts = array('weeks' => get_string('posts', 'local_xray'));
+                $avglag = array('weeks' => get_string('averageresponselag', 'local_xray'));
+                $avgwordcount = array('weeks' => get_string('averagenoofwords', 'local_xray'));
 
                 if(!empty($response->data)){
                     foreach($response->data as $col) {

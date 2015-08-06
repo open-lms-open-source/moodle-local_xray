@@ -254,14 +254,14 @@ class local_xray_renderer extends plugin_renderer_base {
          
         global $PAGE;
         // Create standard table.
-        $columns = array(new local_xray_datatableColumn('action'),
-                new local_xray_datatableColumn('firstname'),
-                new local_xray_datatableColumn('lastname'),
-                new local_xray_datatableColumn('posts'),
-                new local_xray_datatableColumn('contribution'),
-                new local_xray_datatableColumn('ctc'),
-                new local_xray_datatableColumn('regularityofcontributions'),
-                new local_xray_datatableColumn('regularityofctc')
+        $columns = array(new local_xray_datatableColumn('action', ''),
+                new local_xray_datatableColumn('firstname', get_string('lastname', 'local_xray')),
+                new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
+                new local_xray_datatableColumn('posts', get_string('posts', 'local_xray')),
+                new local_xray_datatableColumn('contribution', get_string('contribution', 'local_xray')),
+                new local_xray_datatableColumn('ctc', get_string('ctc', 'local_xray')),
+                new local_xray_datatableColumn('regularityofcontributions', get_string('regularityofcontributions', 'local_xray')),
+                new local_xray_datatableColumn('regularityofctc', get_string('regularityofctc', 'local_xray'))
         );
          
         $datatable = new local_xray_datatable(__FUNCTION__,
@@ -284,9 +284,9 @@ class local_xray_renderer extends plugin_renderer_base {
         // Create standard table.
 
         $columns = array();
-        $columns[] = new local_xray_datatableColumn('weeks');
+        $columns[] = new local_xray_datatableColumn('weeks', get_string('weeks', 'local_xray'));
         foreach($element->data as $column){
-            $columns[] = new local_xray_datatableColumn($column->week->value);
+            $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value);
         }
 
         $datatable = new local_xray_datatable(__FUNCTION__,

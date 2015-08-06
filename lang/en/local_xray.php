@@ -107,6 +107,9 @@ $string['reportdate'] = 'Date of report';
 $string['academicrisk'] = 'Academic Risk';
 $string['socialrisk'] = 'Social Risk';
 $string['totalrisk'] = 'Total Risk';
+$string['averageresponselag'] = 'Average Response Lag';
+$string['averagenoofwords'] = 'Average No of Words';
+$string['weeks'] = 'Weeks';
 
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';
