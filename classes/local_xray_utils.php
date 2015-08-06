@@ -46,7 +46,7 @@ class local_xray_datatableColumn {
 	public $bSortable;
 
 	/**
-	 * Constructor
+	 * Construct
 	 * @param string $mdata - Id of column
 	 * @param string $string - Text to show
 	 */
@@ -65,17 +65,67 @@ class local_xray_datatableColumn {
  */
 class local_xray_datatable {
 	
+	/**
+	 * id for table
+	 * @var string
+	 */
 	public $id;
+	
+	/**
+	 * Url to get data with json format.
+	 * @var string
+	 */
 	public $jsonurl;
-	public $paging = true;
-	public $lengthMenu = array(5, 10, 50, 100);
-	public $search = false;
-	public $sProcessingMessage =  "Fetching Data, Please wait..."; // TODO:: Implement get_string()
-	public $columns = array();
+	
+	/**
+	 * Show pager
+	 * @var boolean
+	 */
+	public $paging;
+	
+	/**
+	 * Length menu
+	 * @var array
+	 */
+	public $lengthMenu;
+	
+	/**
+	 * Show search
+	 * @var boolean
+	 */
+	public $search;
+	
+	/**
+	 * Message to process data
+	 * @var string
+	 */
+	public $sProcessingMessage;
+	
+	/**
+	 * Array with objects local_xray_datatableColumn
+	 * @var array
+	 */
+	public $columns;
 
-	public function __construct($id, $jsonurl, $columns) {
+	/**
+	 * Construct
+	 * 
+	 * @param integer $id
+	 * @param string $jsonurl
+	 * @param array $columns
+	 * @param string $search
+	 * @param string $paging
+	 * @param array $lengthMenu
+	 */
+	public function __construct($id, $jsonurl, array $columns, $search = false, $paging=true, $lengthMenu = array(10, 50, 100)) {
+		
 		$this->id = $id;
 		$this->jsonurl = $jsonurl;
 		$this->columns = $columns;
+		$this->search = $search;
+		$this->paging = $paging;
+		$this->lengthMenu = $lengthMenu;
+		$this->sProcessingMessage = get_string('table_fetchingdata', 'local_xray');
+		
 	}
 }
