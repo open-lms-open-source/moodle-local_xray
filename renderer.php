@@ -412,7 +412,7 @@ class local_xray_renderer extends plugin_renderer_base {
     }
     /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/ 
     
-    /************************** End Elements for Report Risk **************************/
+    /************************** Elements for Report Risk **************************/
     
     /**
      * Risk Measures(TABLE)
@@ -456,4 +456,42 @@ class local_xray_renderer extends plugin_renderer_base {
     }
     
     /************************** End Elements for Report Risk **************************/
+    /**************************  Elements for Report Discussion grading **************************/
+    
+    /**
+     * Discussion grading students grades (TABLE)
+     * @param integer $courseid
+     */
+    public function discussiongrading_students_grades_based_on_discussions($courseid) {
+    	
+    	global $PAGE;
+    	 
+    	$columns = array(new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
+		    			 new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
+		    			 new local_xray_datatableColumn('numposts', get_string('numposts', 'local_xray')),
+		    			 new local_xray_datatableColumn('wordcount', get_string('wordcount', 'local_xray')),
+		    			 new local_xray_datatableColumn('regularity_contributions', get_string('regularity_contributions', 'local_xray')),
+		    			 new local_xray_datatableColumn('critical_thinking_coefficient', get_string('critical_thinking_coefficient', 'local_xray')),
+		    			 new local_xray_datatableColumn('grade', get_string('grade', 'local_xray'))
+    	);
+    
+    	$datatable = new local_xray_datatable(__FUNCTION__,
+    			                              "view.php?controller='discussiongrading'&action='jsonstudentsgrades'&courseid=".$courseid,
+    			                              $columns);
+    
+    	// Create standard table.
+    	$output = $this->standard_table((array) $datatable);
+    
+    	return $output;
+    }
+    
+    /**
+     * Discussion grading barplot
+     * @param stdClass $element
+     */
+    public function discussiongrading_barplot_of_suggested_grades($element) {
+    	return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /************************** End Elements for Report Discussion grading **************************/    
 }

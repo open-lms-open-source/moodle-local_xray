@@ -32,6 +32,7 @@ $string['xray:activityreport_view'] = 'View Activity Report';
 $string['xray:discussionreport_view'] = 'View Discussion Report';
 $string['xray:discussionreportindividualforum_view'] = 'View Discussion Report Individual Forum';
 $string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Endogenic Plagiarism';
+$string['xray:discussiongrading_view'] = 'View Discussion Grading';
 $string['xray:risk_view'] = 'View Risk Report';
 $string['xray:view'] = 'X-ray View';
 
@@ -88,6 +89,11 @@ $string['risk_risk_measures'] = 'Risk Measures';
 $string['risk_total_risk_profile'] = 'Total Risk Profile';
 $string['risk_academic_vs_social_risk'] = 'Academic Versus Social Risk';
 
+/* Discussiongrading report*/
+$string['discussiongrading'] = 'Risk';
+$string['discussiongrading_students_grades_based_on_discussions'] = 'Students Grades based on discussions';
+$string['discussiongrading_barplot_of_suggested_grades'] = 'Barplot of suggested grades';
+
 /* Columns reports */
 $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
 $string['fullname'] = 'Fullname';
@@ -110,6 +116,11 @@ $string['totalrisk'] = 'Total Risk';
 $string['averageresponselag'] = 'Average Response Lag';
 $string['averagenoofwords'] = 'Average No of Words';
 $string['weeks'] = 'Weeks';
+$string['numposts'] = 'Number of posts';
+$string['wordcount'] = 'Word coutn';
+$string['regularity_contributions'] = 'Regularity contributions';
+$string['critical_thinking_coefficient'] = 'Critical thinking coefficient';
+$string['grade'] = 'Grade';	
 
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';

@@ -43,6 +43,14 @@ function local_xray_extends_settings_navigation($settings, $context) {
 							                                            "courseid"   => $COURSE->id));
 					$extranavigation->add(get_string('discussionreport', $plugin),$url);
 				}
+
+				// Discussion grading.
+				if(has_capability('local/xray:discussiongrading_view', $context)){
+					$url = new moodle_url('/local/xray/view.php', array("controller" => "discussiongrading",
+							                                            "courseid"   => $COURSE->id));
+				
+					$extranavigation->add(get_string('discussiongrading', $plugin),$url);
+				}	
 				
 				// Endogenic Plagiarism.
 				if(has_capability('local/xray:discussionendogenicplagiarism_view', $context)){
@@ -57,7 +65,7 @@ function local_xray_extends_settings_navigation($settings, $context) {
 							                                            "courseid"   => $COURSE->id));
 					
 					$extranavigation->add(get_string('risk', $plugin),$url);	
-				}
+				}				
 			}
 			
 

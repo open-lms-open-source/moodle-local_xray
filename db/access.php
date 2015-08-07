@@ -87,5 +87,15 @@ $capabilities = array(
                     'editingteacher' => CAP_ALLOW,
                     'manager' => CAP_ALLOW
             )
-    )
+    ),
+	// View report discussiongrading.
+	'local/xray:discussiongrading_view' => array (
+			'captype' => 'read',
+			'contextlevel' => CONTEXT_COURSE,
+			'archetypes' => array (
+					'teacher' => CAP_ALLOW,
+					'editingteacher' => CAP_ALLOW,
+					'manager' => CAP_ALLOW 
+			) 
+	) 
 );
