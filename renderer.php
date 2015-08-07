@@ -333,7 +333,16 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function discussionreport_social_structure_coefficient_of_critical_thinking($element) {
     	return $this->show_on_lightbox(__FUNCTION__, $element);
-    } 
+    }
+
+    /**
+     * Main Terms
+     * @param stdClass $element
+     */
+    public function discussionreport_main_terms($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
     /************************** End Elements for Report Discussion **************************/
     
     

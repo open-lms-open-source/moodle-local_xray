@@ -34,11 +34,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
                 $output .= $this->average_words_weekly_by_post($response->elements[5]);
-                $output .= $this->social_structure($response->elements[9]);
-                $output .= $this->social_structure_with_words_count($response->elements[10]);
-                $output .= $this->social_structure_with_contributions_adjusted($response->elements[11]);
-                $output .= $this->social_structure_coefficient_of_critical_thinking($response->elements[12]);
-            	
+                $output .= $this->social_structure($response->elements[7]);
+                $output .= $this->social_structure_with_words_count($response->elements[8]);
+                $output .= $this->social_structure_with_contributions_adjusted($response->elements[9]);
+                $output .= $this->social_structure_coefficient_of_critical_thinking($response->elements[10]);
+                $output .= $this->main_terms($response->elements[11]);
             }
         } catch(exception $e) {
             print_error('error_xray', 'local_xray','',null, $e->getMessage());
@@ -247,6 +247,16 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     
         $output = "";
         $output .= $this->output->discussionreport_social_structure_coefficient_of_critical_thinking($element);
+        return $output;
+    }
+    
+    /**
+     * Report Main Terms 
+     */
+    private function main_terms($element) {
+    
+        $output = "";
+        $output .= $this->output->discussionreport_main_terms($element);
         return $output;
     }
 }

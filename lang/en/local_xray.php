@@ -60,6 +60,7 @@ $string['activityreportindividual_activity_last_two_weeks_byday'] = 'Activity La
 $string['discussionreport'] = 'Discussion Report';
 $string['discussionreport_average_words_weekly_by_post'] = 'Average words weekly by post';
 $string['discussionreport_discussion_activity_by_week'] = 'Discussion Activity by Week ';
+$string['discussionreport_main_terms'] = 'Main Terms';
 $string['discussionreport_social_structure_coefficient_of_critical_thinking'] = 'Social structure coefficient of critical thinking';
 $string['discussionreport_social_structure_with_contributions_adjusted'] = 'Social structure with contributions adjusted';
 $string['discussionreport_social_structure_with_words_count'] = 'Social structure with words count';
