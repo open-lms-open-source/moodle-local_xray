@@ -33,7 +33,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 // Show graphs.
                 $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
-                $output .= $this->average_words_weekly_by_post($response->elements[5]);
+                $output .= $this->average_words_weekly_by_post($response->elements[3]);
                 $output .= $this->social_structure($response->elements[7]);
                 $output .= $this->social_structure_with_words_count($response->elements[8]);
                 $output .= $this->social_structure_with_contributions_adjusted($response->elements[9]);
