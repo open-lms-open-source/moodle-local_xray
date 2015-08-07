@@ -38,7 +38,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 
             } else {
                 // Show graphs.
-                //$output .= $this->participation_metrics(); // Its a table, I will get info with new call.
+                $output .= $this->output->inforeport($response->reportdate,
+                                                     $DB->get_field('user', 'username', array("id" => $this->xrayuserid)),
+                                                     $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
                 $output .= $this->social_structure($response->elements[0]);//TODO number elements are not the same of page
                 $output .= $this->main_terms($response->elements[1]);//TODO number elements are not the same of page
                 $output .= $this->main_terms_histogram($response->elements[2]);//TODO number elements are not the same of page
@@ -51,61 +53,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
     }
     
     /**
-     * Report "A summary table to be added" (table).
-     *
-     *//*
-    private function participation_metrics() {
-    
-        $output = "";
-        $output .= $this->output->discussionreport_participation_metrics();
-        return $output;
-    }   */
-    
-    /**
-     * Json for provide data to participation_metrics table.
-     *//*
-    public function jsonparticipationdiscussion_action() {
-        
-        // TODO:: Review , implement search, sortable, pagination.
-        $return = array();
-        try {
-            $report = "discussion";
-            $element = "element2";//"element1";
-            $response = \local_xray\api\wsapi::course(parent::XRAY_DOMAIN, parent::XRAY_COURSEID, $report);
-            if(!$response) {
-                // TODO:: Fail response of webservice.
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-                 
-            } else {
-                if(!empty($response->elements[0]->data)){
-                    foreach($response->elements[0]->data as $row) {
-                        $r = new stdClass();
-                        $r->firstname = $row->firstname->value;
-                        $r->lastname = $row->lastname->value;
-                        $r->posts = $row->posts->value;
-                        $r->contribution = $row->contribution->value;
-                        $r->ctc = $row->ctc->value;
-                        $r->regularityofcontributions = $row->regularityofcontributions->value;
-                        $r->regularityofctc = $row->regularityofctc->value;
-                        $return[] = $r;
-                    }
-                }
-                
-            }
-        } catch(exception $e) {
-            // TODO:: Send message error to js.
-            $return = "";
-        }
-        
-        echo json_encode($return);
-        exit();
-    }*/
-    
-    
-    /**
      * Report Social Structure.
      *
-     */    
+     */
     private function social_structure($element) {
 
     	$output = "";
