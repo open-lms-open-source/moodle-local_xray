@@ -58,9 +58,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     private function social_structure($element) {
 
-    	$output = "";
-    	$output .= $this->output->discussionreportindividual_social_structure($element);
-    	return $output; 
+        $output = "";
+        $output .= $this->output->discussionreportindividual_social_structure($element);
+        return $output; 
     }
     
     /**
@@ -69,9 +69,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     private function main_terms($element) {
 
-    	$output = "";
-    	$output .= $this->output->discussionreportindividual_main_terms($element);
-    	return $output;
+        $output = "";
+        $output .= $this->output->discussionreportindividual_main_terms($element);
+        return $output;
     }
     
     /**
@@ -79,9 +79,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     private function main_terms_histogram($element) {
     
-    	$output = "";
-    	$output .= $this->output->discussionreportindividual_main_terms_histogram($element);
-    	return $output;
+        $output = "";
+        $output .= $this->output->discussionreportindividual_main_terms_histogram($element);
+        return $output;
     }   
  
 }
