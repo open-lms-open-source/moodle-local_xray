@@ -65,9 +65,15 @@ function local_xray_extends_settings_navigation($settings, $context) {
 							                                            "courseid"   => $COURSE->id));
 					
 					$extranavigation->add(get_string('risk', $plugin),$url);	
-				}				
-			}
-			
+				}
+                // Gradebook report.
+                if(has_capability('local/xray:gradebookreport_view', $context)){
+                    $url = new moodle_url('/local/xray/view.php', array("controller" => "gradebookreport",
+                            "courseid"   => $COURSE->id));
+                
+                    $extranavigation->add(get_string('gradebookreport', $plugin),$url);
+                }
+            }
 
 			// Report to show in forum-view.
 			if($PAGE->pagetype == "mod-forum-view") {
