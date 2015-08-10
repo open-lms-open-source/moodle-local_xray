@@ -32,9 +32,9 @@ require_once('../../config.php');
 
 require_login(null, false, null, true, true);
 
-$filename = required_param('src', PARAM_FILE);
-
 core\session\manager::write_close(); // Unlock session during file serving.
+
+$filename = required_param('src', PARAM_FILE);
 
 if (!local_xray\api\wsapi::login()) {
     return;
