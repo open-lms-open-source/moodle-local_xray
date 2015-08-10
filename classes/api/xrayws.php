@@ -37,6 +37,8 @@ class xrayws {
     const HTTP_HEAD    = 'HEAD';
     const HTTP_DELETE  = 'DELETE';
 
+    const ERR_UNKNOWN  = 1010;
+
     /**
      * @var null|xrayws
      */
@@ -101,6 +103,34 @@ class xrayws {
             self::$instance = new $c();
         }
         return self::$instance;
+    }
+
+    /**
+     * Maps error returned from web service into more readable error and error code.
+     * return array in format - array(errcode, errmessage)
+     * @param string $error
+     * @return array
+     *
+     */
+    protected function errormap($error) {
+        static $errors = array(
+            'invalid user credentials' => array(101, 'xrayws_error_invalid_credentials'),
+            'unauthorised' => array(102, 'xrayws_error_unauthorised'),
+            'not_found' => array(103, 'xrayws_error_not_found'),
+        );
+
+        $errormsg = $error;
+        $errornr = self::ERR_UNKNOWN;
+        if (isset($errors[$error])) {
+            if (get_string_manager()->string_exists($errors[$error][1], 'local_xray')) {
+                $errormsg = get_string($errors[$error][1], 'local_xray');
+            }
+            $errornr = $errors[$error][0];
+        }
+
+        $result = array($errornr, $errormsg);
+
+        return $result;
     }
 
     /**
@@ -232,6 +262,15 @@ class xrayws {
                 $this->lasthttpcode = $httpcode;
                 if ($httpcode >= 400) {
                     $response = false;
+                    $contentype = isset($this->curlinfo['content_type']) ? $this->curlinfo['content_type'] : false;
+                    if ($contentype && (stripos($contentype, 'application/json') !== false)) {
+                        $decode = json_decode($this->rawresponse);
+                        if (property_exists($decode, 'error')) {
+                            $res = $this->errormap($decode->error);
+                            $this->errorno = $res[0];
+                            $this->error   = $res[1];
+                        }
+                    }
                 }
             }
         }

@@ -146,3 +146,8 @@ $string['xrayusername_desc'] = '';
 $string['xrayws_error_nocurl'   ] = 'cURL module must be present and enabled!';
 $string['xrayws_error_nourl'    ] = 'You must specify URL!';
 $string['xrayws_error_nomethod' ] = 'You must specify request method!';
+
+/* Web service errors returned from XRay*/
+$string['xrayws_error_invalid_credentials' ] = 'Web service credentials are not valid!';
+$string['xrayws_error_unauthorised' ] = 'Not authorised to access web service!';
+$string['xrayws_error_not_found' ] = 'Requested report not found!';
