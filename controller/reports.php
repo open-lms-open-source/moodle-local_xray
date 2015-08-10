@@ -28,7 +28,7 @@ class local_xray_controller_reports extends mr_controller {
 	
 	public function init() {
 		parent::init();
-		if(is_callable('mr_on') && mr_on("xray", "_MR_LOCAL")) {
+		if(is_callable('mr_on') && !mr_on("xray", "_MR_LOCAL")) {
 			exit();
 		}
 	}
