@@ -38,6 +38,7 @@ class xrayws {
     const HTTP_DELETE  = 'DELETE';
 
     const ERR_UNKNOWN  = 1010;
+    const PLUGIN       = 'local_xray';
 
     /**
      * @var null|xrayws
@@ -58,6 +59,11 @@ class xrayws {
     private $errorno = 0;
 
     /**
+     * @var null|string
+     */
+    private $errorstring = null;
+
+    /**
      * @var null|memfile
      */
     private $memfile = null;
@@ -66,6 +72,11 @@ class xrayws {
      * @var null|string
      */
     private $rawresponse = null;
+
+    /**
+     * @var null|string
+     */
+    private $respheaders = null;
 
     /**
      * @var null|int
@@ -121,14 +132,16 @@ class xrayws {
 
         $errormsg = $error;
         $errornr = self::ERR_UNKNOWN;
+        $errorstring = '';
         if (isset($errors[$error])) {
-            if (get_string_manager()->string_exists($errors[$error][1], 'local_xray')) {
-                $errormsg = get_string($errors[$error][1], 'local_xray');
+            if (get_string_manager()->string_exists($errors[$error][1], self::PLUGIN)) {
+                $errormsg = get_string($errors[$error][1], self::PLUGIN);
+                $errorstring = $errors[$error][1];
             }
             $errornr = $errors[$error][0];
         }
 
-        $result = array($errornr, $errormsg);
+        $result = array($errornr, $errormsg, $errorstring);
 
         return $result;
     }
@@ -142,6 +155,7 @@ class xrayws {
         $this->memfile->reset();
         $this->rawresponse = null;
         $this->lasthttpcode = null;
+        $this->respheaders = null;
 
         $standard = array(
             CURLOPT_FOLLOWLOCATION => false,
@@ -154,7 +168,7 @@ class xrayws {
             CURLOPT_USERAGENT      => 'MoodleXRayClient/1.0',
             CURLINFO_HEADER_OUT    => true,
             CURLOPT_ENCODING       => '',
-            CURLOPT_HEADER         => false,
+            CURLOPT_HEADER         => true,
             CURLOPT_NOPROGRESS     => true,
             CURLOPT_FAILONERROR    => false,
         );
@@ -254,8 +268,9 @@ class xrayws {
         $this->error = $curl->geterror();
         $this->errorno = $curl->geterrno();
         $this->curlinfo = $curl->getinfo();
-        $this->rawresponse = $this->memfile->get_content();
+        $rawresponse = $this->memfile->get_content();
         $this->memfile->close();
+        list($this->respheaders, $this->rawresponse) = explode("\r\n\r\n", $rawresponse, 2);
         if ($response) {
             $httpcode = isset($this->curlinfo['http_code']) ? $this->curlinfo['http_code'] : false;
             if ($httpcode !== false) {
@@ -267,8 +282,9 @@ class xrayws {
                         $decode = json_decode($this->rawresponse);
                         if (property_exists($decode, 'error')) {
                             $res = $this->errormap($decode->error);
-                            $this->errorno = $res[0];
-                            $this->error   = $res[1];
+                            $this->errorno     = $res[0];
+                            $this->error       = $res[1];
+                            $this->errorstring = $res[2];
                         }
                     }
                 }
@@ -284,6 +300,68 @@ class xrayws {
     public function lastresponse() {
         return $this->rawresponse;
     }
+
+    /**
+     * @return null|string
+     */
+    public function response_headers() {
+        return $this->respheaders;
+    }
+
+    /**
+     * @return string
+     */
+    public function request_headers() {
+        return isset($this->curlinfo['request_header']) ? $this->curlinfo['request_header'] : '';
+    }
+
+    /**
+     * Method should be used for printing Exception based error status.
+     * @param bool $extrainfoondebug
+     * @return string
+     */
+    public function errorinfo($extrainfoondebug = true) {
+        $last_error_msg = '';
+        // In case debug mode is on show extra debug information.
+        if ($extrainfoondebug) {
+            $last_error_msg = sprintf('Error code: %s', $this->geterrorcode());
+            if (get_config('core', 'debug') == DEBUG_DEVELOPER) {
+                if (CLI_SCRIPT) {
+                    $last_error_msg .= "\n";
+                    $last_error_msg .= "Web Service request time: ";
+                    $last_error_msg .= $this->curlinfo['total_time']." s \n";
+                    $last_error_msg .= "Request headers:\n";
+                    $last_error_msg .= $this->request_headers();
+                    $last_error_msg .= "\n\n";
+                    $last_error_msg .= "Response headers:\n";
+                    $last_error_msg .= $this->response_headers()."\n";
+                } else {
+                    $last_error_msg = \html_writer::empty_tag('br') . $last_error_msg . \html_writer::empty_tag('br');
+                    $calltitle = \html_writer::tag('span', 'Web Service request time:');
+                    $calltime = \html_writer::tag('div', $this->curlinfo['total_time']." s");
+                    $last_error_msg .= \html_writer::tag('div', $calltitle . $calltime);
+                    $last_error_msg .= \html_writer::empty_tag('br');
+                    $rtitle = \html_writer::tag('span', 'Request headers:');
+                    $request = \html_writer::tag('pre', s($this->request_headers()), array('title' => 'Request headers'));
+                    $last_error_msg .= \html_writer::tag('div', $rtitle . $request);
+                    $last_error_msg .= \html_writer::empty_tag('br');
+                    $rstitle = \html_writer::tag('span', 'Response headers:');
+                    $response = \html_writer::tag('pre', s($this->response_headers()), array('title' => 'Response headers'));
+                    $last_error_msg .= \html_writer::tag('div', $rstitle . $response);
+                }
+            }
+        }
+        return $last_error_msg;
+    }
+
+    /**
+     * Throws an exception with all data
+     * @throws \moodle_exception
+     */
+    public function print_error() {
+        print_error($this->errorstring.'_dbg', self::PLUGIN, '', $this->errorinfo());
+    }
+
 
     /**
      * @param $url
