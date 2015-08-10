@@ -33,6 +33,7 @@ $string['xray:discussionreport_view'] = 'View Discussion Report';
 $string['xray:discussionreportindividualforum_view'] = 'View Discussion Report Individual Forum';
 $string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Endogenic Plagiarism';
 $string['xray:discussiongrading_view'] = 'View Discussion Grading';
+$string['xray:gradebookreport_view'] = 'View Gradebook Report';
 $string['xray:risk_view'] = 'View Risk Report';
 $string['xray:view'] = 'X-ray View';
 
