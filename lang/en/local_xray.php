@@ -150,4 +150,4 @@ $string['xrayws_error_nomethod' ] = 'You must specify request method!';
 /* Web service errors returned from XRay*/
 $string['xrayws_error_invalid_credentials' ] = 'Web service credentials are not valid!';
 $string['xrayws_error_unauthorised' ] = 'Not authorised to access web service!';
-$string['xrayws_error_not_found' ] = 'Requested report not found!';
+$string['xrayws_error_not_found' ] = 'Requested course and/or report not found!';
