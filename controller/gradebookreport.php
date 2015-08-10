@@ -22,7 +22,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         global $PAGE;
         $title = get_string($this->name, $this->component);
         $PAGE->set_title($title);
-        $this->heading->text = $title;	
+        $this->heading->text = $title;
         
         // Add title to breadcrumb.
         $PAGE->navbar->add(get_string($this->name, $this->component));
@@ -30,14 +30,15 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
         try {
             $report = "grades";
-            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID_HISTORY_II, $report);//TODO we use other course id to test this
+            
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
-
+                
                 // Show graphs.
-                $output .= $this->distribution_of_grades_in_course($response->elements[3]);
+                $output .= $this->distribution_of_grades_in_course($response->elements[1]);
                 $output .= $this->distribution_of_grades_completed_items($response->elements[4]);
             }
         } catch(exception $e) {
