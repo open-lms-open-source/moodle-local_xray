@@ -25,6 +25,14 @@ class local_xray_controller_reports extends mr_controller {
 	const XRAY_COURSEID = 314; //TODO:: Example first integration. This is hardcoded for test with xray.
 	const XRAY_USERID = 139; //TODO:: Example first integration. This is hardcoded for test with xray. User Rebecca Kelly.
 	const XRAY_FORUMID = 3480; //TODO:: Example first integration. This is hardcoded for test with xray. Forum 3480.
+	
+	public function init() {
+		parent::init();
+		if(is_callable('mr_on') && mr_on("xray", "_MR_LOCAL")) {
+			exit();
+		}
+	}
+	
 	public function setup(){
 		global $PAGE;
 		$PAGE->set_context($this->get_context());
