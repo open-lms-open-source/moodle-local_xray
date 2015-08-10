@@ -95,6 +95,9 @@ $string['discussiongrading'] = 'Risk';
 $string['discussiongrading_students_grades_based_on_discussions'] = 'Students Grades based on discussions';
 $string['discussiongrading_barplot_of_suggested_grades'] = 'Barplot of suggested grades';
 
+/* Gradebook report*/
+$string['gradebookreport'] = 'Gradebook Report';
+
 /* Columns reports */
 $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
 $string['fullname'] = 'Fullname';
