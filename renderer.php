@@ -502,5 +502,25 @@ class local_xray_renderer extends plugin_renderer_base {
     	return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     
-    /************************** End Elements for Report Discussion grading **************************/    
+    /************************** End Elements for Report Discussion grading **************************/   
+    /**************************  Elements for Gradebook Report **************************/
+    
+    /**
+     * Distribution of grades in course
+     * @param stdClass $element
+     */
+    public function gradebookreport_distribution_of_grades_in_course($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Distribution of grades completed items.
+     * @param stdClass $element
+     */
+    public function gradebookreport_distribution_of_grades_completed_items($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /************************** End Elements for Gradebook Report **************************/
+
 }

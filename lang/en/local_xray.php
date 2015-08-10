@@ -33,6 +33,7 @@ $string['xray:discussionreport_view'] = 'View Discussion Report';
 $string['xray:discussionreportindividualforum_view'] = 'View Discussion Report Individual Forum';
 $string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Endogenic Plagiarism';
 $string['xray:discussiongrading_view'] = 'View Discussion Grading';
+$string['xray:gradebookreport_view'] = 'View Gradebook Report';
 $string['xray:risk_view'] = 'View Risk Report';
 $string['xray:view'] = 'X-ray View';
 
@@ -94,6 +95,9 @@ $string['risk_academic_vs_social_risk'] = 'Academic Versus Social Risk';
 $string['discussiongrading'] = 'Risk';
 $string['discussiongrading_students_grades_based_on_discussions'] = 'Students Grades based on discussions';
 $string['discussiongrading_barplot_of_suggested_grades'] = 'Barplot of suggested grades';
+
+/* Gradebook report*/
+$string['gradebookreport'] = 'Gradebook Report';
 
 /* Columns reports */
 $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
