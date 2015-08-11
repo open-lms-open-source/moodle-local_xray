@@ -506,6 +506,28 @@ class local_xray_renderer extends plugin_renderer_base {
     /**************************  Elements for Gradebook Report **************************/
     
     /**
+     * Students' Grades for course (TABLE)
+     */
+    public function gradebookreport_students_grades_for_course($courseid) {
+         
+        $columns = array(new local_xray_datatableColumn('action', ''),
+                new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
+                new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
+                new local_xray_datatableColumn('grade', get_string('grade', 'local_xray')),
+                new local_xray_datatableColumn('percentage', get_string('percentage', 'local_xray'))
+        );
+         
+        $datatable = new local_xray_datatable(__FUNCTION__,
+                "view.php?controller='gradebookreport'&action='jsonstudentsgradesforcourse'&courseid=".$courseid,
+                $columns);
+         
+        // Create standard table.
+        $output = $this->standard_table((array) $datatable);
+         
+        return $output;
+    }
+    
+    /**
      * Distribution of grades in course
      * @param stdClass $element
      */

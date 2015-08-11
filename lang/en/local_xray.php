@@ -127,7 +127,8 @@ $string['numposts'] = 'Number of posts';
 $string['wordcount'] = 'Word coutn';
 $string['regularity_contributions'] = 'Regularity contributions';
 $string['critical_thinking_coefficient'] = 'Critical thinking coefficient';
-$string['grade'] = 'Grade';	
+$string['grade'] = 'Grade';
+$string['percentage'] = 'Percentage';
 
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';
