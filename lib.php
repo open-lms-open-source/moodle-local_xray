@@ -100,18 +100,16 @@ function local_xray_extends_settings_navigation($settings, $context) {
 			    $coursenode = $settings->get('modulesettings');
 			    $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
 			
-			    // Discussion report individual forum.
-			    if(has_capability('local/xray:discussionreportindividualforum_view', $context)){
-			        $url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreportindividualforum",
-			                "courseid"   => $COURSE->id,
-			                "cmid"   => $context->instanceid,
-			                "forum"      => $PAGE->cm->instance));
-			        	
-			        $extranavigation->add(get_string('discussionreportindividualforum', $plugin),$url);
-			    }
-			}
-
-		}
-
-	}
+                // Discussion report individual forum.
+                if(has_capability('local/xray:discussionreportindividualforum_view', $context)){
+                    $url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreportindividualforum",
+                            "courseid"   => $COURSE->id,
+                            "cmid"   => $context->instanceid,
+                            "forum"      => $PAGE->cm->instance));
+                    	
+                    $extranavigation->add(get_string('discussionreportindividualforum', $plugin),$url);
+                }
+            }
+        }
+    }
 }
