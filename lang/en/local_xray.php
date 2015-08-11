@@ -100,6 +100,7 @@ $string['discussiongrading_barplot_of_suggested_grades'] = 'Barplot of suggested
 $string['gradebookreport'] = 'Gradebook Report';
 $string['gradebookreport_distribution_of_grades_completed_items'] = 'Distribution of Grades Completed Items';
 $string['gradebookreport_distribution_of_grades_in_course'] = 'Distribution of Grades in Course';
+$string['gradebookreport_students_grades_for_course'] = "Students' Grades for course";
 
 /* Columns reports */
 $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
