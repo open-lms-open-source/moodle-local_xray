@@ -104,6 +104,8 @@ $string['gradebookreport_students_grades_for_course'] = "Students' Grades for co
 $string['gradebookreport_students_grades_on_completed_items_course'] = "Students' Grades on completed items course";
 $string['gradebookreport_density_plot_all_items'] = "Density plot: all items";
 $string['gradebookreport_density_plot_completed_items'] = "Density plot: completed items";
+$string['gradebookreport_heat_map_of_grade_distribution'] = "Heat map of grade distribution";
+$string['gradebookreport_test_for_normality_on_course_grades'] = "Test for normality on course grades";
 
 /* Columns reports */
 $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
