@@ -92,6 +92,24 @@ function local_xray_extends_settings_navigation($settings, $context) {
 					$extranavigation->add(get_string('discussionreportindividualforum', $plugin),$url);		
 				}
 			}
+			
+			// Report to show in forum-view.
+			if($PAGE->pagetype == "mod-quiz-view") {
+			
+			    //Show nav x-ray in module setting node.
+			    $coursenode = $settings->get('modulesettings');
+			    $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
+			
+			    // Discussion report individual forum.
+			    if(has_capability('local/xray:discussionreportindividualforum_view', $context)){
+			        $url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreportindividualforum",
+			                "courseid"   => $COURSE->id,
+			                "cmid"   => $context->instanceid,
+			                "forum"      => $PAGE->cm->instance));
+			        	
+			        $extranavigation->add(get_string('discussionreportindividualforum', $plugin),$url);
+			    }
+			}
 
 		}
 
