@@ -101,6 +101,7 @@ $string['gradebookreport'] = 'Gradebook Report';
 $string['gradebookreport_distribution_of_grades_completed_items'] = 'Distribution of Grades Completed Items';
 $string['gradebookreport_distribution_of_grades_in_course'] = 'Distribution of Grades in Course';
 $string['gradebookreport_students_grades_for_course'] = "Students' Grades for course";
+$string['gradebookreport_students_grades_on_completed_items_course'] = "Students' Grades on completed items course";
 $string['gradebookreport_density_plot_all_items'] = "Density plot: all items";
 $string['gradebookreport_density_plot_completed_items'] = "Density plot: completed items";
 

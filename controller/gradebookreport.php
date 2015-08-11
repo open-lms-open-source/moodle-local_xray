@@ -38,6 +38,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
             } else {
                 // Show graphs.
                 $output .= $this->students_grades_for_course();// Its a table, I will get info with new call.
+                $output .= $this->students_grades_on_completed_items_course();// Its a table, I will get info with new call.
                 $output .= $this->distribution_of_grades_in_course($response->elements[2]);
                 $output .= $this->distribution_of_grades_completed_items($response->elements[3]);
                 $output .= $this->density_plot_all_items($response->elements[5]);
