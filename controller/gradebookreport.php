@@ -36,9 +36,8 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
-
                 // Show graphs.
-                //$output .= $this->students_grades_for_course();// Its a table, I will get info with new call.
+                $output .= $this->students_grades_for_course();// Its a table, I will get info with new call.
                 $output .= $this->distribution_of_grades_in_course($response->elements[2]);
                 $output .= $this->distribution_of_grades_completed_items($response->elements[3]);
             }
@@ -75,7 +74,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         try {
             $report = "grades";
             $element = "grades1";
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
+            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID_HISTORY_II,
                     $element,
                     $report,
                     null,
@@ -83,19 +82,18 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                     '',
                     $start,
                     $count);
-    
+            
             if(!$response) {
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
-                 
                 $data = array();
                 if(!empty($response->data)){
                     foreach($response->data as $row) {
                         $r = new stdClass();
                         $r->lastname = $row->lastname->value;
                         $r->firstname = $row->firstname->value;
-                        $r->grade = $row->grade->value;
-                        $r->percentage  = $row->percentage->value;
+                        $r->grade = $row->letterGradeCourse->value;
+                        $r->percentage  = $row->course_grade_percent->value;
                         $data[] = $r;
                     }
                 }
@@ -134,5 +132,27 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         $output = "";
         $output .= $this->output->gradebookreport_distribution_of_grades_completed_items($element);
         return $output; 
+    }
+    
+    /**
+     * Report Density plot: all items.
+     *
+     */
+    private function density_plot_all_items($element) {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_density_plot_all_items($element);
+        return $output;
+    }
+    
+    /**
+     * Report Density plot: completed items.
+     *
+     */
+    private function density_plot_completed_items($element) {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_density_plot_completed_items($element);
+        return $output;
     }
 }

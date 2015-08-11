@@ -543,6 +543,22 @@ class local_xray_renderer extends plugin_renderer_base {
         return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     
+    /**
+     * Density plot: all items.
+     * @param stdClass $element
+     */
+    public function gradebookreport_density_plot_all_items($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Density plot: completed items.
+     * @param stdClass $element
+     */
+    public function gradebookreport_density_plot_completed_items($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
     /************************** End Elements for Gradebook Report **************************/
 
 }
