@@ -36,10 +36,9 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
-                
-                
-                file_put_contents('elements.txt', print_r($response->elements, true));
+
                 // Show graphs.
+                //$output .= $this->students_grades_for_course();// Its a table, I will get info with new call.
                 $output .= $this->distribution_of_grades_in_course($response->elements[2]);
                 $output .= $this->distribution_of_grades_completed_items($response->elements[3]);
             }
