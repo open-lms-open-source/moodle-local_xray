@@ -132,6 +132,8 @@ $string['regularity_contributions'] = 'Regularity contributions';
 $string['critical_thinking_coefficient'] = 'Critical thinking coefficient';
 $string['grade'] = 'Grade';
 $string['percentage'] = 'Percentage';
+$string['completed'] = 'Completed';
+
 
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';

@@ -40,6 +40,8 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 $output .= $this->students_grades_for_course();// Its a table, I will get info with new call.
                 $output .= $this->distribution_of_grades_in_course($response->elements[2]);
                 $output .= $this->distribution_of_grades_completed_items($response->elements[3]);
+                $output .= $this->density_plot_all_items($response->elements[5]);
+                $output .= $this->density_plot_completed_items($response->elements[6]);
             }
         } catch(exception $e) {
             print_error('error_xray', $this->component,'',null, $e->getMessage());
@@ -110,6 +112,72 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         echo json_encode($return);
         exit();
     }
+    
+    
+    /**
+     * Report Students' Grades on completed items course (table).
+     *
+     */
+    private function students_grades_on_completed_items_course() {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_students_grades_on_completed_items_course($this->courseid);
+        return $output;
+    }
+    
+    /**
+     * Json for provide data to Students' Grades on completed items course table.
+     */
+    public function jsonstudentsgradesoncompleteditemscourse_action() {
+         
+        global $PAGE;
+        // Pager
+        $count = optional_param('iDisplayLength', 10, PARAM_RAW);
+        $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
+    
+        $return = "";
+    
+        try {
+            $report = "grades";
+            $element = "grades2";
+            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID_HISTORY_II,
+                    $element,
+                    $report,
+                    null,
+                    '',
+                    '',
+                    $start,
+                    $count);
+    
+            if(!$response) {
+                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+            } else {
+                $data = array();
+                if(!empty($response->data)){
+                    foreach($response->data as $row) {
+                        $r = new stdClass();
+                        $r->lastname = $row->lastname->value;
+                        $r->firstname = $row->firstname->value;
+                        /*$r->completed = $row->letterGradeCourse->value;
+                        $r->percentage  = $row->course_grade_percent->value;
+                        $r->grade  = $row->course_grade_percent->value;*/
+                        $data[] = $r;
+                    }
+                }
+                // Provide count info to table.
+                $return["recordsFiltered"] = $response->itemCount;
+                $return["data"] = $data;
+                 
+            }
+        } catch(exception $e) {
+            // TODO:: Send message error to js.
+            $return = "";
+        }
+         
+        echo json_encode($return);
+        exit();
+    }
+    
     
     
     /**
