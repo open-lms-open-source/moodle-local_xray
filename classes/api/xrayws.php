@@ -240,7 +240,9 @@ class xrayws {
         $this->curlinfo = $curl->getinfo();
         $rawresponse = $this->memfile->get_content();
         $this->memfile->close();
-        list($this->respheaders, $this->rawresponse) = explode("\r\n\r\n", $rawresponse, 2);
+        if (!empty($rawresponse)) {
+            list($this->respheaders, $this->rawresponse) = explode("\r\n\r\n", $rawresponse, 2);
+        }
         if ($response) {
             $httpcode = isset($this->curlinfo['http_code']) ? $this->curlinfo['http_code'] : false;
             if ($httpcode !== false) {
@@ -309,18 +311,19 @@ class xrayws {
                     $last_error_msg .= "Response headers:\n";
                     $last_error_msg .= $this->response_headers()."\n";
                 } else {
-                    $last_error_msg = \html_writer::span($this->geterrormsg()) . \html_writer::empty_tag('br') . \html_writer::span($last_error_code) . \html_writer::empty_tag('br');
-                    $calltitle = \html_writer::tag('span', 'Web Service request time:');
-                    $calltime = \html_writer::tag('div', $this->curlinfo['total_time']." s");
-                    $last_error_msg .= \html_writer::tag('div', $calltitle . $calltime);
+                    $last_error_msg  = \html_writer::span($this->geterrormsg()) . \html_writer::empty_tag('br');
+                    $last_error_msg .= \html_writer::span($last_error_code) . \html_writer::empty_tag('br');
+                    $calltitle = \html_writer::span('Web Service request time:');
+                    $calltime = \html_writer::span(" ".$this->curlinfo['total_time']." s");
+                    $last_error_msg .= \html_writer::div($calltitle . $calltime);
                     $last_error_msg .= \html_writer::empty_tag('br');
-                    $rtitle = \html_writer::tag('span', 'Request headers:');
+                    $rtitle = \html_writer::span('Request headers:');
                     $request = \html_writer::tag('pre', s($this->request_headers()), array('title' => 'Request headers'));
-                    $last_error_msg .= \html_writer::tag('div', $rtitle . $request);
+                    $last_error_msg .= \html_writer::div($rtitle . $request);
                     $last_error_msg .= \html_writer::empty_tag('br');
-                    $rstitle = \html_writer::tag('span', 'Response headers:');
+                    $rstitle = \html_writer::span('Response headers:');
                     $response = \html_writer::tag('pre', s($this->response_headers()), array('title' => 'Response headers'));
-                    $last_error_msg .= \html_writer::tag('div', $rstitle . $response);
+                    $last_error_msg .= \html_writer::div($rstitle . $response);
                 }
             }
         }

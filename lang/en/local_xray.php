@@ -159,5 +159,5 @@ $string['xrayws_error_nourl'    ] = 'You must specify URL!';
 $string['xrayws_error_nomethod' ] = 'You must specify request method!';
 
 /* Web service errors returned from XRay*/
-$string['xrayws_error_server'] = 'Web service error: {$a}';
-$string['xrayws_error_curl'] = 'cURL error: {$a}';
+$string['xrayws_error_server'] = '{$a}';
+$string['xrayws_error_curl'] = '{$a}';
