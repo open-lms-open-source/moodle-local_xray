@@ -159,9 +159,5 @@ $string['xrayws_error_nourl'    ] = 'You must specify URL!';
 $string['xrayws_error_nomethod' ] = 'You must specify request method!';
 
 /* Web service errors returned from XRay*/
-$string['xrayws_error_invalid_credentials'] = 'Web service credentials are not valid!';
-$string['xrayws_error_unauthorised'] = 'Not authorised to access web service!';
-$string['xrayws_error_not_found' ] = 'Requested course and/or report not found!';
-$string['xrayws_error_invalid_credentials_dbg' ] = $string['xrayws_error_invalid_credentials'].' {$a}';
-$string['xrayws_error_unauthorised_dbg' ] = $string['xrayws_error_unauthorised'].' {$a}';
-$string['xrayws_error_not_found_dbg' ] = $string['xrayws_error_not_found' ].' {$a}';
+$string['xrayws_error_server'] = 'Web service error: {$a}';
+$string['xrayws_error_curl'] = 'cURL error: {$a}';

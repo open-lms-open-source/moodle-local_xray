@@ -117,36 +117,6 @@ class xrayws {
     }
 
     /**
-     * Maps error returned from web service into more readable error and error code.
-     * return array in format - array(errcode, errmessage)
-     * @param string $error
-     * @return array
-     *
-     */
-    protected function errormap($error) {
-        static $errors = array(
-            'invalid user credentials' => array(101, 'xrayws_error_invalid_credentials'),
-            'unauthorised' => array(102, 'xrayws_error_unauthorised'),
-            'not_found' => array(103, 'xrayws_error_not_found'),
-        );
-
-        $errormsg = $error;
-        $errornr = self::ERR_UNKNOWN;
-        $errorstring = '';
-        if (isset($errors[$error])) {
-            if (get_string_manager()->string_exists($errors[$error][1], self::PLUGIN)) {
-                $errormsg = get_string($errors[$error][1], self::PLUGIN);
-                $errorstring = $errors[$error][1];
-            }
-            $errornr = $errors[$error][0];
-        }
-
-        $result = array($errornr, $errormsg, $errorstring);
-
-        return $result;
-    }
-
-    /**
      *
      * @param array $custopts
      * @return array
@@ -281,13 +251,16 @@ class xrayws {
                     if ($contentype && (stripos($contentype, 'application/json') !== false)) {
                         $decode = json_decode($this->rawresponse);
                         if (property_exists($decode, 'error')) {
-                            $res = $this->errormap($decode->error);
-                            $this->errorno     = $res[0];
-                            $this->error       = $res[1];
-                            $this->errorstring = $res[2];
+                            $this->errorno     = self::ERR_UNKNOWN;
+                            $this->error       = $decode->error;
+                            $this->errorstring = 'xrayws_error_server';
                         }
                     }
                 }
+            }
+        } else {
+            if ($this->errorno) {
+                $this->errorstring = 'xrayws_error_curl';
             }
         }
 
@@ -321,13 +294,13 @@ class xrayws {
      * @return string
      */
     public function errorinfo($extrainfoondebug = true) {
-        $last_error_msg = '';
+        $last_error_msg = $this->geterrormsg();
         // In case debug mode is on show extra debug information.
         if ($extrainfoondebug) {
-            $last_error_msg = sprintf('Error code: %s', $this->geterrorcode());
+            $last_error_code = sprintf("Error code: %s", $this->geterrorcode());
             if (get_config('core', 'debug') == DEBUG_DEVELOPER) {
                 if (CLI_SCRIPT) {
-                    $last_error_msg .= "\n";
+                    $last_error_msg .= $last_error_code. "\n";
                     $last_error_msg .= "Web Service request time: ";
                     $last_error_msg .= $this->curlinfo['total_time']." s \n";
                     $last_error_msg .= "Request headers:\n";
@@ -336,7 +309,7 @@ class xrayws {
                     $last_error_msg .= "Response headers:\n";
                     $last_error_msg .= $this->response_headers()."\n";
                 } else {
-                    $last_error_msg = \html_writer::empty_tag('br') . $last_error_msg . \html_writer::empty_tag('br');
+                    $last_error_msg = \html_writer::span($this->geterrormsg()) . \html_writer::empty_tag('br') . \html_writer::span($last_error_code) . \html_writer::empty_tag('br');
                     $calltitle = \html_writer::tag('span', 'Web Service request time:');
                     $calltime = \html_writer::tag('div', $this->curlinfo['total_time']." s");
                     $last_error_msg .= \html_writer::tag('div', $calltitle . $calltime);
@@ -359,7 +332,7 @@ class xrayws {
      * @throws \moodle_exception
      */
     public function print_error() {
-        print_error($this->errorstring.'_dbg', self::PLUGIN, '', $this->errorinfo());
+        print_error($this->errorstring, self::PLUGIN, '', $this->errorinfo());
     }
 
 
