@@ -43,6 +43,9 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 $output .= $this->distribution_of_grades_completed_items($response->elements[3]);
                 $output .= $this->density_plot_all_items($response->elements[5]);
                 $output .= $this->density_plot_completed_items($response->elements[6]);
+                $output .= $this->test_for_normality_on_course_grades($response->elements[7]);
+                //$output .= $this->test_for_normality_on_course_grades($response->elements[8]);//TODO repeated - waiting instructions
+                $output .= $this->heat_map_of_grade_distribution($response->elements[9]);
             }
         } catch(exception $e) {
             print_error('error_xray', $this->component,'',null, $e->getMessage());
@@ -222,6 +225,39 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
     
         $output = "";
         $output .= $this->output->gradebookreport_density_plot_completed_items($element);
+        return $output;
+    }
+    
+    /**
+     * Report Test for normality on course grades.
+     *
+     */
+    private function test_for_normality_on_course_grades($element) {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_test_for_normality_on_course_grades($element);
+        return $output;
+    }
+    
+    /**
+     * Report Test for normality on course grades.
+     *
+     *//*
+    private function test_for_normality_on_course_grades($element) {//TODO repeated - waiting instructions
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_test_for_normality_on_course_grades($element);
+        return $output;
+    }*/
+    
+    /**
+     * Report Heat map of grade distribution.
+     *
+     */
+    private function heat_map_of_grade_distribution($element) {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_heat_map_of_grade_distribution($element);
         return $output;
     }
 }

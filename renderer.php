@@ -582,6 +582,30 @@ class local_xray_renderer extends plugin_renderer_base {
         return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     
+    /**
+     * Test for normality on course grades.
+     * @param stdClass $element
+     */
+    public function gradebookreport_test_for_normality_on_course_grades($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Test for normality on course grades.
+     * @param stdClass $element
+     *//*
+    public function gradebookreport_test_for_normality_on_course_grades($element) {//TODO repeated - waiting instructions
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }*/
+    
+    /**
+     * Heat map of grade distribution.
+     * @param stdClass $element
+     */
+    public function gradebookreport_heat_map_of_grade_distribution($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
     /************************** End Elements for Gradebook Report **************************/
 
 }
