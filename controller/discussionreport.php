@@ -85,13 +85,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             $element = "element2";
             
             $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
-    				                                         $element, 
-    				                                         $report, 
-    				                                         null, 
-    				                                         '', 
-    				                                         '', 
-    				                                         $start, 
-    				                                         $count);
+                                                             $element, 
+                                                             $report, 
+                                                             null, 
+                                                             '', 
+                                                             '', 
+                                                             $start, 
+                                                             $count);
            
             if(!$response) {
                 // TODO:: Fail response of webservice.
