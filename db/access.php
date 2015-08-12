@@ -13,21 +13,21 @@ $capabilities = array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
-	            'teacher' => CAP_ALLOW,
-	            'editingteacher' => CAP_ALLOW,
-	            'manager' => CAP_ALLOW
+                'teacher' => CAP_ALLOW,
+                'editingteacher' => CAP_ALLOW,
+                'manager' => CAP_ALLOW
         )
     ),
     // View report activity
-	'local/xray:activityreport_view' => array(
-			'captype' => 'read',
-			'contextlevel' => CONTEXT_COURSE,
-			'archetypes' => array(
-	            'teacher' => CAP_ALLOW,
-	            'editingteacher' => CAP_ALLOW,
-	            'manager' => CAP_ALLOW
-			)
-	),
+    'local/xray:activityreport_view' => array(
+            'captype' => 'read',
+            'contextlevel' => CONTEXT_COURSE,
+            'archetypes' => array(
+                'teacher' => CAP_ALLOW,
+                'editingteacher' => CAP_ALLOW,
+                'manager' => CAP_ALLOW
+            )
+    ),
     // View report activity of course by day.
     'local/xray:discussionreport_view' => array(
             'captype' => 'read',
@@ -38,17 +38,17 @@ $capabilities = array(
                     'manager' => CAP_ALLOW
             )
     ),
-	// View report activity individual
-	'local/xray:activityreportindividual_view' => array(
-			'captype' => 'read',
-			'contextlevel' => CONTEXT_COURSE,
-			'archetypes' => array(
-					'student' => CAP_ALLOW,
-					'teacher' => CAP_ALLOW,
-					'editingteacher' => CAP_ALLOW,
-					'manager' => CAP_ALLOW
-			)
-	),
+    // View report activity individual
+    'local/xray:activityreportindividual_view' => array(
+            'captype' => 'read',
+            'contextlevel' => CONTEXT_COURSE,
+            'archetypes' => array(
+                    'student' => CAP_ALLOW,
+                    'teacher' => CAP_ALLOW,
+                    'editingteacher' => CAP_ALLOW,
+                    'manager' => CAP_ALLOW
+            )
+    ),
     // View report discussion individual
     'local/xray:discussionreportindividual_view' => array(
             'captype' => 'read',
