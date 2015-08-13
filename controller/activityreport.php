@@ -128,11 +128,12 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			// Provide count info to table.
     			$return["recordsFiltered"] = $response->itemCount;
     			$return["data"] = $data;
+
     			
     		}
     	} catch(exception $e) {
-    		// TODO:: Send message error to js.
-    		$return = "";
+    		// Error, return invalid data, and pluginjs will show error in table.
+    		$return["data"] = "-";
     	}
     	
     	echo json_encode($return);
@@ -285,8 +286,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			$return["data"] = $data;
     		}
     	} catch(exception $e) {
-    		// TODO:: Send message error to js.
-    		$return = "";
+    		// Error, return invalid data, and pluginjs will show error in table.
+    		$return["data"] = "-";
     	}
     	 
     	echo json_encode($return);

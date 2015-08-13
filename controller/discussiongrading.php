@@ -95,8 +95,8 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 				$return ["data"] = $data;
 			}
 		} catch ( exception $e ) {
-			// TODO:: Send message error to js.
-			$return = "";
+    		// Error, return invalid data, and pluginjs will show error in table.
+    		$return["data"] = "-";
 		}
 		
 		echo json_encode ( $return );
