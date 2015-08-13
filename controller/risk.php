@@ -88,12 +88,12 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     				foreach($response->data as $row) {
    						
     					$r = new stdClass();					
-    					$r->lastname = $row->lastname->value;    						
-    					$r->firstname = $row->firstname->value;
-    					$r->timespentincourse = $row->timeOnTask->value;
-    					$r->academicrisk = $row->fail->value;
-    					$r->socialrisk = $row->DW->value;
-    					$r->totalrisk = $row->DWF->value;
+    					$r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');    						
+    					$r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
+    					$r->timespentincourse = (isset($row->timeOnTask->value) ? $row->timeOnTask->value : '');
+    					$r->academicrisk = (isset($row->fail->value) ? $row->fail->value : '');
+    					$r->socialrisk = (isset($row->DW->value) ? $row->DW->value : '');
+    					$r->totalrisk = (isset($row->DWF->value) ? $row->DWF->value : '');
     					$data[] = $r;
     				}
     			}

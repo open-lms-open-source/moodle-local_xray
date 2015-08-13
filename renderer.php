@@ -38,6 +38,14 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Generate img with lightbox.
      * General template for show graph with lightbox.
+     * 
+     * Structure:
+     * <div id=$name">
+     * <div class='reportsname'>$name</div>
+     * <a><img class='xray_graph'></a>
+     * <div class='xray_graph_legend'>legend element</div>
+     * </div>
+     * 
      * @param String   $name 
      * @param stdClass $element
      */
@@ -54,18 +62,23 @@ class local_xray_renderer extends plugin_renderer_base {
     	$cfg_xray = get_config('local_xray');
     	$img_url = sprintf('%s/%s/%s', $cfg_xray->xrayurl, $cfg_xray->xrayclientid, $element->uuid);
     	$tooltip = '';
-    	if(isset($element->tooltip)){
+    	if(isset($element->tooltip) && !empty($element->tooltip)){
     		$tooltip = $element->tooltip;
     	}
-    
+
     	$output = "";
+    	$output .= html_writer::start_tag('div', array("id" => $name, "class" => "xray_element"));
     	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
     	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $img_url));
-    	$output .= html_writer::empty_tag('img', array("class" => "{$name} xray_graph",
+    	$output .= html_writer::empty_tag('img', array("class" => "xray_graph_img",
 										    		   "title" => $tooltip,
 										    		   "src" => $img_url)
     	                                  );
     	$output .= html_writer::end_tag('a');
+    	if(isset($element->legend) && !empty($element->legend)) {
+    		$output .= html_writer::tag("div", $element->legend, array("class" => "xray_graph_legend"));
+    	}
+    	$output .= html_writer::end_tag('div');
     	 
     	return $output;
     	 
@@ -89,6 +102,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray", true);    	
     
         $output = "";
+        //$output .= html_writer::start_tag('div', array("id" => $data['id'], "class" => "xray_element"));
         $output .= html_writer::tag('div', get_string($data['id'],"local_xray"), array("class" => "reportsname"));
 
         // Table jquery datatables for show reports.
@@ -97,7 +111,8 @@ class local_xray_renderer extends plugin_renderer_base {
             $output .= "<th>".$c->text."</th>";
         }
         $output .=" </tr> </thead> </table>";
-
+        //$output .= html_writer::end_tag('div');
+        
         // Load table with data.
         $PAGE->requires->js_init_call("local_xray_show_on_table", array($data));		 
 

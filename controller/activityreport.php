@@ -72,6 +72,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     public function jsonstudentsactivity_action() {
     	
     	global $PAGE;
+
     	// Pager
     	$count = optional_param('iDisplayLength', 10, PARAM_RAW);
     	$start  = optional_param('iDisplayStart', 0, PARAM_RAW);
@@ -115,14 +116,13 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 	    							                                       "target" => "_blank"));
     					}
     					
-    					$r->firstname = $row->firstname->value;
-    					$r->lastname = $row->lastname->value;
-    					$r->lastactivity = $row->last_activity->value;
-    					$r->discussionposts = $row->discussion_posts->value;
-    					$r->postslastweek = $row->discussion_posts_last_week->value;
-    					$r->timespentincourse = $row->timeOnTask->value;	
-    					// TODO:: Not exist value for weeklyRegularity on xray webservice. NOTIFY
-    					$r->regularityweekly = "";
+    					$r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
+    					$r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');
+    					$r->lastactivity = (isset($row->last_activity->value) ? $row->last_activity->value : '');
+    					$r->discussionposts = (isset($row->discussion_posts->value) ? $row->discussion_posts->value : '');
+    					$r->postslastweek = (isset($row->discussion_posts_last_week->value) ? $row->discussion_posts_last_week->value : '');
+    					$r->timespentincourse = (isset($row->timeOnTask->value) ? $row->timeOnTask->value : '');
+    					$r->regularityweekly = (isset($row->weeklyRegularity->value) ? $row->weeklyRegularity->value : '');
     					$data[] = $r;
     				}	
     			}
@@ -277,8 +277,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			if(!empty($response->data)){
     				foreach($response->data as $row) {
     					$r = new stdClass();
-    					$r->firstname = $row->firstname->value;
-    					$r->lastname = $row->lastname->value;
+    					$r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
+    					$r->lastname  = (isset($row->lastname->value) ? $row->lastname->value : '');
     					$data[] = $r;
     				}    				
     			}

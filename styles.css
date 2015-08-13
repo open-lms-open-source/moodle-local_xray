@@ -1,6 +1,6 @@
-/* General plugin styles */
+/**************** General styles for all reports****************/
 
-/* Report Activity of course by day */
+/* General info report */
 #page-local-xray-view .inforeport {
     background-color: #BFE3FF;
     color: #051272;
@@ -16,12 +16,34 @@
     padding: 5px 0 5px 3px;
 }
 
+/* General xray element */
+#page-local-xray-view .xray_element {
+	margin-bottom:20px;
+}
 
-/* Report Activity of course by day */
-#page-local-xray-view img.xray_graph {
+/* General xray image graph */
+#page-local-xray-view img.xray_graph_img {
 	width:800px;
 }
 
+/* General xray legend of graph */
+#page-local-xray-view .xray_graph_legend {
+	font-size:11px;
+}
+
+/** Error Datatables**/
+#page-local-xray-view .error_datatables {
+    background-color: #CE2F2F;
+    color:#fff;
+    text-align:center;
+    display:block;
+    margin:3px 0px;
+    padding:5px;
+}
+
+/**************** End General styles for all reports****************/
+
+/**************** Styles for specific reports****************/
 /** Link in table to activity report individual **/
 #page-local-xray-view .icon_activityreportindividual {
 	display:block;
@@ -39,13 +61,4 @@
     background-color: #BFE3FF;
     background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
 }
-
-/** Error Datatables**/
-#page-local-xray-view .error_datatables {
-    background-color: #CE2F2F;
-    color:#fff;
-    text-align:center;
-    display:block;
-    margin:3px 0px;
-    padding:5px;
-}
+/**************** End Styles for specific reports****************/
