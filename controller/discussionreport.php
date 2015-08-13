@@ -123,13 +123,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                                     "title" => $discussionreportind,
                                     "target" => "_blank"));
                         }
-                        $r->firstname = $row->firstname->value;
-                        $r->lastname = $row->lastname->value;
-                        $r->posts = $row->posts->value;
-                        $r->contribution = $row->contrib->value;
-                        $r->ctc = $row->ctc->value;
-                        $r->regularityofcontributions = '';//TODO No value in this object, notify Shani - $row->regularityContrib->value
-                        $r->regularityofctc = '';//TODO No value in this object, notify Shani - $row->regularityCTC->value
+                        $r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
+                        $r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');
+                        $r->posts = (isset($row->posts->value) ? $row->posts->value : '');
+                        $r->contribution = (isset($row->contrib->value) ? $row->contrib->value : '');
+                        $r->ctc = (isset($row->ctc->value) ? $row->ctc->value : '');
+                        $r->regularityofcontributions = (isset($row->regularityContrib->value) ? $row->regularityContrib->value : '');//TODO No value in this object, notify Shani - $row->regularityContrib->value
+                        $r->regularityofctc = (isset($row->regularityCTC->value) ? $row->regularityCTC->value : '');//TODO No value in this object, notify Shani - $row->regularityCTC->value
                         $data[] = $r;
                     }
                 }
@@ -184,9 +184,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
                 if(!empty($response->data)){
                     foreach($response->data as $col) {
-                        //$posts[$col->week->value] = $col->posts->value;
-                        $avglag[$col->week->value] = $col->avgLag->value;
-                        $avgwordcount[$col->week->value] = $col->avgWordCount->value;
+                        //$posts[$col->week->value] = $col->posts->value;//TODO validate after speaking with Shani
+                        $avglag[$col->week->value] = $col->avgLag->value;//TODO validate after speaking with Shani
+                        $avgwordcount[$col->week->value] = $col->avgWordCount->value;//TODO validate after speaking with Shani
                     }
                     //$data[] = $posts;
                     $data[] = $avglag;
