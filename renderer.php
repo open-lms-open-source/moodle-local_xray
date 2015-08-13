@@ -53,12 +53,16 @@ class local_xray_renderer extends plugin_renderer_base {
     
     	$cfg_xray = get_config('local_xray');
     	$img_url = sprintf('%s/%s/%s', $cfg_xray->xrayurl, $cfg_xray->xrayclientid, $element->uuid);
+    	$tooltip = '';
+    	if(isset($element->tooltip)){
+    		$tooltip = $element->tooltip;
+    	}
     
     	$output = "";
     	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
     	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $img_url));
     	$output .= html_writer::empty_tag('img', array("class" => $name,
-										    		   "title" => $element->tooltip,
+										    		   "title" => $tooltip,
 										    		   "src" => $img_url)
     	                                  );
     	$output .= html_writer::end_tag('a');
