@@ -32,7 +32,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
     		if(!$response) {
     			// Fail response of webservice.
-    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+    			\local_xray\api\xrayws::instance()->print_error();
     			
     		} else {
     			// Show graphs.
@@ -69,7 +69,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     	
     	try {
     		$report = "risk";
-    		$element = "element2";
+    		$element = "riskMeasures";
     		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
 										    				$element,
 										    				$report,
@@ -79,7 +79,8 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 										    				$start,
 										    				$count);
     		if(!$response) {
-    			throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+    			// Fail response of webservice.
+    			\local_xray\api\xrayws::instance()->print_error();
     		} else {
     			 
     			$data = array();

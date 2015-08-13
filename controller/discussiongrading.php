@@ -31,7 +31,7 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 			$response = \local_xray\api\wsapi::course ( parent::XRAY_COURSEID, $report );
 			if (! $response) {
 				// Fail response of webservice.
-				throw new Exception ( \local_xray\api\xrayws::instance ()->geterrormsg () );
+    			\local_xray\api\xrayws::instance()->print_error();
 			} else {
 				
 				// Show graphs.
@@ -67,7 +67,7 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 		
 		try {
 			$report = "discussionGrading";
-			$element = "element2";
+			$element = "studentDiscussionGrades";
 			$response = \local_xray\api\wsapi::courseelement ( parent::XRAY_COURSEID, $element, $report, null, '', '', $start, $count );
 			
 			if (! $response) {

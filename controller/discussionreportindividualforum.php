@@ -52,7 +52,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
             $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report, "forum/".parent::XRAY_FORUMID);
             if(!$response) {
                 // Fail response of webservice.
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+    			\local_xray\api\xrayws::instance()->print_error();
 
             } else {
                 // Show graphs.
@@ -60,9 +60,9 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                                                      null,
                                                      $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
 
-                $output .= $this->wordshistogram($response->elements[2]);
-                $output .= $this->socialstructure($response->elements[0]);
-                $output .= $this->wordcloud($response->elements[1]);
+                $output .= $this->wordshistogram($response->elements[3]);
+                $output .= $this->socialstructure($response->elements[1]);
+                $output .= $this->wordcloud($response->elements[2]);
 
             }
         } catch(exception $e) {
