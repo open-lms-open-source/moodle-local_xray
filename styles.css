@@ -18,9 +18,8 @@
 
 
 /* Report Activity of course by day */
-#page-local-xray-view .activity_of_course_by_day {
+#page-local-xray-view img.xray_graph {
 	width:800px;
-	text-align:center;
 }
 
 /** Link in table to activity report individual **/
