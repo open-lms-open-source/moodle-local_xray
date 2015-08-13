@@ -13,12 +13,12 @@ function local_xray_show_on_table(YUI, data) {
 		$.fn.dataTable.ext.errMode = 'none';
 		
 		// Error to load data in datatables. Show message error and hide table.
-		$("#"+data.id).on( 'error.dt', function ( e, settings, techNote, message ) {
-            $("#"+data.id+"_wrapper").html("<p class='error_datatables'>"+data.errorMessage+"</p>");
+		$("#table_"+data.id).on( 'error.dt', function ( e, settings, techNote, message ) {
+            $("#table_"+data.id+"_wrapper").html("<p class='error_datatables'>"+data.errorMessage+"</p>");
 		});
 		
 		
-		$("#"+data.id).dataTable( {
+		$("#table_"+data.id).dataTable( {
 			"jQueryUI": true,
 	        "bProcessing": true,
 	        "bServerSide": true,
