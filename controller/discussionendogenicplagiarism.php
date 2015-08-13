@@ -36,8 +36,8 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
     			
     		} else {
     			// Show graphs.
-    			$output .= $this->heatmap_endogenic_plagiarism_students($response->elements[0]);
-    			$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements[1]);
+    			$output .= $this->heatmap_endogenic_plagiarism_students($response->elements[1]);
+    			$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements[2]);
 		    	
     		}		 
     	} catch(exception $e) {
