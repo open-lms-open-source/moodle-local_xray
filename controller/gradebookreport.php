@@ -109,8 +109,8 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                  
             }
         } catch(exception $e) {
-            // TODO:: Send message error to js.
-            $return = "";
+            // Error, return invalid data, and pluginjs will show error in table.
+            $return["data"] = "-";
         }
          
         echo json_encode($return);
@@ -174,8 +174,8 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                  
             }
         } catch(exception $e) {
-            // TODO:: Send message error to js.
-            $return = "";
+            // Error, return invalid data, and pluginjs will show error in table.
+            $return["data"] = "-";
         }
          
         echo json_encode($return);
