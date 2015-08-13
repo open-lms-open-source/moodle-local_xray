@@ -61,7 +61,7 @@ class local_xray_renderer extends plugin_renderer_base {
     	$output = "";
     	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
     	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $img_url));
-    	$output .= html_writer::empty_tag('img', array("class" => $name,
+    	$output .= html_writer::empty_tag('img', array("class" => "{$name} xray_graph",
 										    		   "title" => $tooltip,
 										    		   "src" => $img_url)
     	                                  );
