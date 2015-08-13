@@ -8,6 +8,16 @@
  */
 function local_xray_show_on_table(YUI, data) {
 	$(document).ready(function() {
+		
+		// Disable warning native.
+		$.fn.dataTable.ext.errMode = 'none';
+		
+		// Error to load data in datatables. Show message error and hide table.
+		$("#"+data.id).on( 'error.dt', function ( e, settings, techNote, message ) {
+            $("#"+data.id+"_wrapper").html("<p class='error_datatables'>"+data.errorMessage+"</p>");
+		});
+		
+		
 		$("#"+data.id).dataTable( {
 			"jQueryUI": true,
 	        "bProcessing": true,
@@ -21,7 +31,16 @@ function local_xray_show_on_table(YUI, data) {
 		    },
 		  //"sAjaxDataProp": "", // With this, you can change format of json.
 		    "sAjaxSource": data.jsonurl,
-		    "aoColumns": data.columns	
+		    "aoColumns": data.columns,	
+		    "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+			    oSettings.jqXHR = $.ajax( {
+			        "dataType": 'json',
+			        "type": "POST",
+			        "url": sSource,
+			        "data": aoData,
+			        "success": fnCallback
+			    })
+		    }
 		} );
 	});
 }

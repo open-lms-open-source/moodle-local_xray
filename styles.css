@@ -40,3 +40,13 @@
     background-color: #BFE3FF;
     background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
 }
+
+/** Error Datatables**/
+#page-local-xray-view .error_datatables {
+    background-color: #CE2F2F;
+    color:#fff;
+    text-align:center;
+    display:block;
+    margin:3px 0px;
+    padding:5px;
+}

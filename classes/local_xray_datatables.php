@@ -116,6 +116,12 @@ class local_xray_datatable {
 	public $sProcessingMessage;
 	
 	/**
+	 * Message to show in error case.
+	 * @var string
+	 */
+	public $errorMessage;
+	
+	/**
 	 * Array with objects local_xray_datatableColumn
 	 * @var array
 	 */
@@ -140,6 +146,7 @@ class local_xray_datatable {
 		$this->paging = $paging;
 		$this->lengthMenu = $lengthMenu;
 		$this->sProcessingMessage = get_string('table_fetchingdata', 'local_xray');
+		$this->errorMessage = get_string('error_datatables','local_xray');
 		
 	}
 }
