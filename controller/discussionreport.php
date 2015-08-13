@@ -35,7 +35,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
-
+                
                 // Show graphs.
                 $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
@@ -88,7 +88,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             $start  = optional_param('iDisplayStart', 10, PARAM_RAW);
             
             $report = "discussion";
-            $element = "element2";
+            $element = "discussionMetrics";
             
             $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
                                                              $element, 
@@ -161,7 +161,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             $start  = optional_param('iDisplayStart', 10, PARAM_RAW);
 
             $report = "discussion";
-            $element = "element3";
+            $element = "discussionActivityByWeek";
 
             $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
                     $element,
@@ -171,7 +171,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     '',
                     $start,
                     $count);
-
+            
             if(!$response) {
                 // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
