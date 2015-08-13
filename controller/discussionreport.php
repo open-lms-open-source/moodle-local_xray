@@ -18,7 +18,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     }
 
     public function view_action() {
+
         global $PAGE;
+        $title = get_string($this->name, $this->component);
+        $PAGE->set_title($title);
+        $this->heading->text = $title;	
+
         // Add title to breadcrumb.
         $PAGE->navbar->add(get_string($this->name, $this->component));
         $output = "";
@@ -30,6 +35,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
+
                 // Show graphs.
                 $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
