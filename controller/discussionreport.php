@@ -135,12 +135,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 }
                 
                 // Provide info to table.
-                $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
+                $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
         } catch(exception $e) {
-            // TODO:: Send message error to js.
-            $return = "";
+            // Error, return invalid data, and pluginjs will show error in table.
+            $return["data"] = "-";
         }
         echo json_encode($return);
         exit();
@@ -194,12 +194,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 }
                 
                 // Provide info to table.
-                $return["recordsFiltered"] = 100; // TODO:: Get from webservice.
+                $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
         } catch(exception $e) {
-            // TODO:: Send message error to js.
-            $return = "";
+            // Error, return invalid data, and pluginjs will show error in table.
+            $return["data"] = "-";
         }
         echo json_encode($return);
         exit();
