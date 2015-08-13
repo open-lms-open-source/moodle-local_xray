@@ -92,7 +92,7 @@ $string['risk_total_risk_profile'] = 'Total Risk Profile';
 $string['risk_academic_vs_social_risk'] = 'Academic Versus Social Risk';
 
 /* Discussiongrading report*/
-$string['discussiongrading'] = 'Risk';
+$string['discussiongrading'] = 'Discussion Grading';
 $string['discussiongrading_students_grades_based_on_discussions'] = 'Students Grades based on discussions';
 $string['discussiongrading_barplot_of_suggested_grades'] = 'Barplot of suggested grades';
 
