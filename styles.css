@@ -10,25 +10,46 @@
     padding: 5px;
 }
 
+/* Name elements (tables and graphs) */
 #page-local-xray-view .reportsname {
     background-color: #BFE3FF;
     color: #f89829;
     padding: 5px 0 5px 3px;
 }
 
-/* General xray element */
+/* General xray element (graphs and tables elements) */
 #page-local-xray-view .xray_element {
-	margin-bottom:20px;
+}
+
+/* General xray element (specific for graphs) */
+#page-local-xray-view .xray_element_graph {
+	background-color: #fff;
+    display: inline-block;
+    float: left;
+    margin: 5px;
+    overflow: hidden;
+    width: 450px;
+}
+/* General xray element (specific for tables) */
+#page-local-xray-view .xray_element_table {
+	clear:both;
 }
 
 /* General xray image graph */
-#page-local-xray-view img.xray_graph_img {
-	width:800px;
+#page-local-xray-view .xray_element_img{
+	width:450px;
+	height:450px;
+	overflow:hidden;
+}
+#page-local-xray-view .xray_element_img img{
+	width:450px;
 }
 
 /* General xray legend of graph */
 #page-local-xray-view .xray_graph_legend {
 	font-size:11px;
+	height:55px;
+	padding:5px;
 }
 
 /** Error Datatables**/
@@ -40,7 +61,6 @@
     margin:3px 0px;
     padding:5px;
 }
-
 /**************** End General styles for all reports****************/
 
 /**************** Styles for specific reports****************/
