@@ -12,9 +12,14 @@
 
 /* Name elements (tables and graphs) */
 #page-local-xray-view .reportsname {
-    background-color: #BFE3FF;
+    background-color: #e0e0e0;
     color: #f89829;
     padding: 5px 0 5px 3px;
+}
+
+#page-local-xray-view .eventtoogletable {
+	cursor:pointer;
+	margin: 5px 10px 0 5px;
 }
 
 /* General xray element (graphs and tables elements) */
@@ -23,7 +28,6 @@
 
 /* General xray element (specific for graphs) */
 #page-local-xray-view .xray_element_graph {
-	background-color: #fff;
     display: inline-block;
     float: left;
     margin: 5px;
@@ -40,6 +44,8 @@
 	width:450px;
 	height:450px;
 	overflow:hidden;
+	background-color: #fff;
+	margin-top: 5px;
 }
 #page-local-xray-view .xray_element_img img{
 	width:450px;
@@ -47,9 +53,10 @@
 
 /* General xray legend of graph */
 #page-local-xray-view .xray_graph_legend {
-	font-size:11px;
-	height:55px;
-	padding:5px;
+    font-size: 11px;
+    height: 55px;
+    margin-top: 5px;
+    padding: 5px;
 }
 
 /** Error Datatables**/

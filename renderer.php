@@ -120,7 +120,7 @@ class local_xray_renderer extends plugin_renderer_base {
     
         $output = "";
         $output .= html_writer::start_tag('div', array("id" => $data['id'], "class" => "xray_element xray_element_table"));
-        $output .= html_writer::tag('div', get_string($data['id'],"local_xray"), array("class" => "reportsname"));
+        $output .= html_writer::tag('div', get_string($data['id'],"local_xray"), array("class" => "reportsname eventtoogletable"));
 
         // Table jquery datatables for show reports.
         $output .= "<table id='table_{$data['id']}' class='display {$classes}' cellspacing='0' width='{$width}'> <thead><tr>";
