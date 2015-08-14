@@ -79,14 +79,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
         global $PAGE;
 
-        // TODO:: Review , implement search, sortable, pagination.
+        // Pager
+        $count = optional_param('iDisplayLength', 10, PARAM_RAW);
+        $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
+        
         $return = "";
         
         try {
-            // Pager
-            $count = optional_param('iDisplayLength', 10, PARAM_RAW);
-            $start  = optional_param('iDisplayStart', 10, PARAM_RAW);
-            
             $report = "discussion";
             $element = "discussionMetrics";
             
@@ -153,13 +152,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     
         global $PAGE;
     
-        // TODO:: Review , implement search, sortable, pagination.
-        $return = array();
-        try {
-            // Pager
-            $count = optional_param('iDisplayLength', 10, PARAM_RAW);
-            $start  = optional_param('iDisplayStart', 10, PARAM_RAW);
+        // Pager
+        $count = optional_param('iDisplayLength', 10, PARAM_RAW);
+        $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
 
+        $return = "";
+
+        try {
             $report = "discussion";
             $element = "discussionActivityByWeek";
 
@@ -184,9 +183,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
                 if(!empty($response->data)){
                     foreach($response->data as $col) {
-                        //$posts[$col->week->value] = $col->posts->value;//TODO validate after speaking with Shani
-                        $avglag[$col->week->value] = $col->avgLag->value;//TODO validate after speaking with Shani
-                        $avgwordcount[$col->week->value] = $col->avgWordCount->value;//TODO validate after speaking with Shani
+                        //$posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
+                        $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
+                        $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
                     }
                     //$data[] = $posts;
                     $data[] = $avglag;
