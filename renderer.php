@@ -46,6 +46,8 @@ class local_xray_renderer extends plugin_renderer_base {
      * <div class='xray_graph_legend'>legend element</div>
      * </div>
      * 
+     * Important: Link to image will have id fancybox + "name of report".
+     * 
      * @param String   $name 
      * @param stdClass $element
      */
@@ -56,7 +58,6 @@ class local_xray_renderer extends plugin_renderer_base {
     	// Load Jquery.
     	$PAGE->requires->jquery();
     	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin('local_xray-fancybox2', 'local_xray');  // Load jquery fancybox2
     	$PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
     
     	$cfg_xray = get_config('local_xray');
@@ -75,7 +76,8 @@ class local_xray_renderer extends plugin_renderer_base {
     		$tooltip = $element->tooltip;
     	}
     	$output .= html_writer::start_tag('div', array("class" => "xray_element_img"));
-    	$output .= html_writer::start_tag('a', array("class" => "fancybox", "href" => $img_url));
+    	$id_img = "fancybox_" + $name;
+    	$output .= html_writer::start_tag('a', array("id" => $id_img, "href" => $img_url));
     	$output .= html_writer::empty_tag('img', array("title" => $tooltip,
 										    		   "src" => $img_url)
     	                                  );
@@ -92,6 +94,9 @@ class local_xray_renderer extends plugin_renderer_base {
     	/* End legend */
     	
     	$output .= html_writer::end_tag('div');
+    	
+    	// Send data to js.
+    	$PAGE->requires->js_init_call("local_xray_show_on_lightbox", array($id_img, $element));
     	 
     	return $output; 
     }
@@ -111,7 +116,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         // Load specific js for tables.
-        $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray", true);    	
+        $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray");    	
     
         $output = "";
         $output .= html_writer::start_tag('div', array("id" => $data['id'], "class" => "xray_element xray_element_table"));

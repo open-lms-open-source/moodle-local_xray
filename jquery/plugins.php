@@ -8,15 +8,11 @@
  */
 
 $plugins = array(
-    'local_xray-fancybox2' => array(
-        'files' => array(
-            'fancybox2/jquery.fancybox.js', 
-            'fancybox2/jquery.fancybox.css'
-        )
-     ),    
     'local_xray-show_on_lightbox' => array(
         'files' => array(
-            'reports/show_on_lightbox.js'
+        		'fancybox2/jquery.fancybox.js',
+        		'fancybox2/jquery.fancybox.css',
+                'reports/show_on_lightbox.js'
         )
     ),
     'local_xray-show_on_table' => array(
