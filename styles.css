@@ -15,6 +15,8 @@
     background-color: #e0e0e0;
     color: #f89829;
     padding: 5px 0 5px 3px;
+    height: 20px;
+    overflow: hidden;
 }
 
 #page-local-xray-view .eventtoogletable {
@@ -37,7 +39,7 @@
     float: left;
     margin: 5px;
     overflow: hidden;
-    width: 450px;
+    width: 267px;
 }
 /* General xray element (specific for tables) */
 #page-local-xray-view .xray_element_table {
@@ -46,14 +48,14 @@
 
 /* General xray image graph */
 #page-local-xray-view .xray_element_img{
-	width:450px;
-	height:450px;
+	width:267px;
+	height:267px;
 	overflow:hidden;
 	background-color: #fff;
 	margin-top: 5px;
 }
 #page-local-xray-view .xray_element_img img{
-	width:450px;
+	width:267px;
 }
 
 /* General xray legend of graph */
