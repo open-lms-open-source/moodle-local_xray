@@ -83,14 +83,13 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 					foreach ( $response->data as $row ) {
 						
 						$r = new stdClass ();
-						$r->lastname = $row->lastname->value;
-						$r->firstname = $row->firstname->value;
-						$r->numposts = $row->posts->value;
-						$r->wordcount = $row->wc->value;
-						$r->regularity_contributions = 0; // $row->regularityContrib->value;
-						                                  // TODO: Bug in webservice, sometimes not return value property.
-						$r->critical_thinking_coefficient = $row->ctc->value;
-						$r->grade = $row->letterGrade->value;
+						$r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');
+						$r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
+						$r->numposts = (isset($row->posts->value) ? $row->posts->value : '');
+						$r->wordcount = (isset($row->wc->value) ? $row->wc->value : '');
+						$r->regularity_contributions = (isset($row->regularityContrib->value) ? $row->regularityContrib->value : '');
+						$r->critical_thinking_coefficient = (isset($row->ctc->value) ? $row->ctc->value : '');
+						$r->grade = (isset($row->letterGrade->value) ? $row->letterGrade->value : '');
 						$data [] = $r;
 					}
 				}
