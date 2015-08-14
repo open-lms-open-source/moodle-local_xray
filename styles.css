@@ -20,6 +20,11 @@
 #page-local-xray-view .eventtoogletable {
 	cursor:pointer;
 	margin: 5px 10px 0 5px;
+    padding-left: 18px;
+    background: #e0e0e0 url([[pix:t/collapsed]]) 2px center no-repeat;
+}
+#page-local-xray-view .expanded {
+    background: #e0e0e0 url([[pix:t/expanded]]) 2px center no-repeat;
 }
 
 /* General xray element (graphs and tables elements) */
