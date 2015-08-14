@@ -9,107 +9,91 @@ defined('MOODLE_INTERNAL') || die();
  */
 
 /**
+ * Generate list of report links according to the current page
+ * Result is returned as associative array ($reportname => $reporturl)
+ *
+ * @param moodle_page $page
+ * @param context $context
+ * @return array
+ * @throws coding_exception
+ */
+function local_xray_navigationlinks(moodle_page $page, context $context) {
+    // Small caching to prevent double calculation call since we need the same information in both calls.
+    static $reports = null;
+    if ($reports !== null) {
+        return $reports;
+    }
+
+    if (!is_callable('mr_on') or mr_on('xray', 'local')) {
+        if (($context->contextlevel > CONTEXT_SYSTEM) and has_capability('local/xray:view', $context)) {
+            $baseurl = new moodle_url('/local/xray/view.php', array('courseid' => $page->course->id));
+            $reportlist = array();
+            $reports = array();
+
+            if (stripos($page->pagetype, 'course-view') === 0) {
+
+                $reportlist = array(
+                    'activityreport' => 'local/xray:activityreport_view',
+                    'discussionreport' => 'local/xray:discussionreport_view',
+                    'discussiongrading' => 'local/xray:discussiongrading_view',
+                    'discussionendogenicplagiarism' => 'local/xray:discussionendogenicplagiarism_view',
+                    'risk' => 'local/xray:risk_view',
+                    'gradebookreport' => 'local/xray:gradebookreport_view',
+                );
+
+            } else {
+                if (in_array($page->pagetype, array('mod-quiz-view', 'mod-forum-view'))) {
+                    $baseurl->param('cmid', $context->instanceid);
+                    $baseurl->param('forum', $page->cm->instance);
+                    $reportlist = array(
+                        'discussionreportindividualforum' => 'local/xray:discussionreportindividualforum_view',
+                    );
+
+                }
+            }
+
+            if (!empty($reportlist)) {
+                foreach ($reportlist as $report => $capability) {
+                    if (has_capability($capability, $context)) {
+                        $reports[$report] = $baseurl->out(true, array('controller' => $report));
+                    }
+                }
+            }
+
+        }
+    }
+
+    return $reports;
+}
+
+/**
  * Extend navigations block.
  * @param settings_navigation $settings
  * @param context $context
  * @throws coding_exception
  */
 function local_xray_extends_settings_navigation(settings_navigation $settings, context $context) {
-    global $PAGE, $COURSE;
+    global $PAGE;
 
-    if (is_callable('mr_on') && mr_on('xray', 'local')) {
-        if (($context->contextlevel > CONTEXT_SYSTEM) && has_capability('local/xray:view', $context)) {
-            $plugin = "local_xray";
+    $reports = local_xray_navigationlinks($PAGE, $context);
+    if (empty($reports)) {
+        return;
+    }
 
-            // Reports to show in course-view.
-            if ($PAGE->pagetype == "course-view-" . $COURSE->format) {
+    $plugin   = 'local_xray';
+    $nodename = 'modulesettings';
 
-                //Show nav x-ray in courseadmin node.
-                $coursenode = $settings->get('courseadmin');
-                $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
+    // Reports to show in course-view.
+    if (stripos($PAGE->pagetype,'course-view') === 0) {
+        //Show nav x-ray in courseadmin node.
+        $nodename = 'courseadmin';
+    }
 
-                // Activity report.
-                if (has_capability('local/xray:activityreport_view', $context)) {
-                    $url = new moodle_url('/local/xray/view.php', array("controller" => "activityreport",
-                        "courseid" => $COURSE->id));
+    $coursenode = $settings->get($nodename);
+    $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
 
-                    $extranavigation->add(get_string('activityreport', $plugin), $url);
-                }
-
-                // Discussion report.
-                if (has_capability('local/xray:discussionreport_view', $context)) {
-                    $url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreport",
-                        "courseid" => $COURSE->id));
-                    $extranavigation->add(get_string('discussionreport', $plugin), $url);
-                }
-
-                // Discussion grading.
-                if (has_capability('local/xray:discussiongrading_view', $context)) {
-                    $url = new moodle_url('/local/xray/view.php', array("controller" => "discussiongrading",
-                        "courseid" => $COURSE->id));
-
-                    $extranavigation->add(get_string('discussiongrading', $plugin), $url);
-                }
-
-                // Endogenic Plagiarism.
-                if (has_capability('local/xray:discussionendogenicplagiarism_view', $context)) {
-                    $url = new moodle_url('/local/xray/view.php', array("controller" => "discussionendogenicplagiarism",
-                        "courseid" => $COURSE->id));
-                    $extranavigation->add(get_string('discussionendogenicplagiarism', $plugin), $url);
-                }
-
-                // Risk.
-                if (has_capability('local/xray:risk_view', $context)) {
-                    $url = new moodle_url('/local/xray/view.php', array("controller" => "risk",
-                        "courseid" => $COURSE->id));
-
-                    $extranavigation->add(get_string('risk', $plugin), $url);
-                }
-                // Gradebook report.
-                if (has_capability('local/xray:gradebookreport_view', $context)) {
-                    $url = new moodle_url('/local/xray/view.php', array("controller" => "gradebookreport",
-                        "courseid" => $COURSE->id));
-
-                    $extranavigation->add(get_string('gradebookreport', $plugin), $url);
-                }
-            }
-
-            // Report to show in forum-view.
-            if ($PAGE->pagetype == "mod-forum-view") {
-
-                //Show nav x-ray in module setting node.
-                $coursenode = $settings->get('modulesettings');
-                $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
-
-                // Discussion report individual forum.
-                if (has_capability('local/xray:discussionreportindividualforum_view', $context)) {
-                    $url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreportindividualforum",
-                                                                        "courseid"   => $COURSE->id,
-                                                                        "cmid"       => $context->instanceid,
-                                                                        "forum"      => $PAGE->cm->instance));
-
-                    $extranavigation->add(get_string('discussionreportindividualforum', $plugin), $url);
-                }
-            }
-
-            // Report to show in forum-view.
-            if ($PAGE->pagetype == "mod-quiz-view") {
-
-                //Show nav x-ray in module setting node.
-                $coursenode = $settings->get('modulesettings');
-                $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
-
-                // Discussion report individual forum.
-                if (has_capability('local/xray:discussionreportindividualforum_view', $context)) {
-                    $url = new moodle_url('/local/xray/view.php', array("controller" => "discussionreportindividualforum",
-                                                                        "courseid"   => $COURSE->id,
-                                                                        "cmid"       => $context->instanceid,
-                                                                        "forum"      => $PAGE->cm->instance));
-
-                    $extranavigation->add(get_string('discussionreportindividualforum', $plugin), $url);
-                }
-            }
-        }
+    foreach ($reports as $reportstring => $url) {
+        $extranavigation->add(get_string($reportstring, $plugin), $url);
     }
 }
 
@@ -123,13 +107,19 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
 function local_xray_extends_navigation(global_navigation $nav) {
     ($nav); // Just to remove unused param warning.
 
-    if (is_callable('mr_on') && mr_on('xray', 'local')) {
-        // TODO: This is a placeholder code for adding custom links on the Moodle page. For now disabled.
-        /*
-        global $PAGE;
+    // TODO: This is a placeholder code for adding custom links on the Moodle page. For now disabled.
+    /*
+    global $PAGE;
+    $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+    if (empty($reports)) {
+        return;
+    }
 
-        $items = array('itema', 'itemb', 'itemc');
-        $menu = \html_writer::alist($items);
+    $items = array('itema', 'itemb', 'itemc');
+    $menu = \html_writer::alist($items);
+
+    if (stripos($PAGE->pagetype,'course-view') === 0) {
+        $menu = \html_writer::alist();
 
         // Easy way to force include on every page (provided that navigation block is present).
         $PAGE->requires->yui_module(array('moodle-local_xray-custmenu'),
@@ -138,6 +128,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
             null,
             true
         );
-        */
+
     }
+    */
 }
