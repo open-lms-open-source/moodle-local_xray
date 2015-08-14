@@ -2,12 +2,13 @@
 
 /* General info report */
 #page-local-xray-view .inforeport {
-    background-color: #BFE3FF;
     color: #051272;
-    display: inline-block;
+    display: block;
     font-size: 11px;
-    margin-bottom: 10px;
     padding: 5px;
+}
+#page-local-xray-view .inforeport p{
+    margin-bottom:0px;
 }
 
 /* Name elements (tables and graphs) */
