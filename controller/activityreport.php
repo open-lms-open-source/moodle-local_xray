@@ -48,7 +48,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			$output .= $this->activity_last_two_weeks_by_weekday($response->elements[7]);
     			$output .= $this->activity_by_participant1($response->elements[9]);
     			$output .= $this->activity_by_participant2($response->elements[10]);
-    			$output .= $this->first_login();
+    			$output .= $this->first_login(); // This show 3 reports about login
 		    	
     		}		 
     	} catch(exception $e) {

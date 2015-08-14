@@ -76,7 +76,7 @@ class local_xray_renderer extends plugin_renderer_base {
     		$tooltip = $element->tooltip;
     	}
     	$output .= html_writer::start_tag('div', array("class" => "xray_element_img"));
-    	$id_img = "fancybox_" + $name;
+    	$id_img = "fancybox_".$name;
     	$output .= html_writer::start_tag('a', array("id" => $id_img, "href" => $img_url));
     	$output .= html_writer::empty_tag('img', array("title" => $tooltip,
 										    		   "src" => $img_url)
@@ -86,11 +86,12 @@ class local_xray_renderer extends plugin_renderer_base {
     	/* End Img */
     	
     	/* Legend */
+    	/*
     	$legend = "";
     	if(isset($element->legend) && !empty($element->legend)) {
     		$legend = $element->legend;
     	}
-    	$output .= html_writer::tag("div", $legend, array("class" => "xray_graph_legend"));
+    	$output .= html_writer::tag("div", $legend, array("class" => "xray_graph_legend"));*/
     	/* End legend */
     	
     	$output .= html_writer::end_tag('div');

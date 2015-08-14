@@ -11,13 +11,12 @@
  * 
  */
 function local_xray_show_on_lightbox(YUI, id, data) {
-	
 	$(document).ready(function() {	
 	    $("#"+id).fancybox({
 			prevEffect		: 'none',
 			nextEffect		: 'none',
 			closeBtn		: true,
-			title           : data.title	
+			title           : data.legend	
 	    });	    
 	});
 }
