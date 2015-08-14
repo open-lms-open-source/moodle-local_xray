@@ -17,7 +17,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     
     public function view_action() {
         
-        global $PAGE;
+        global $PAGE, $DB;
        
         $title = get_string($this->name, $this->component);
         $PAGE->set_title($title);
@@ -36,6 +36,9 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
             } else {
                 // Show graphs.
+            	$output .= $this->output->inforeport($response->reportdate,
+            			                             null,
+            			                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
                 $output .= $this->risk_measures();
                 $output .= $this->total_risk_profile($response->elements[1]);
                 $output .= $this->academic_vs_social_risk($response->elements[2]);		    	

@@ -17,7 +17,7 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
 	
     public function view_action() {
     	
-    	global $PAGE;
+    	global $PAGE, $DB;
     	
     	$title = get_string($this->name, $this->component);
     	$PAGE->set_title($title);
@@ -36,6 +36,9 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
     			
     		} else {
     			// Show graphs.
+    			$output .= $this->output->inforeport($response->reportdate,
+    					                             null,
+    					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
     			$output .= $this->heatmap_endogenic_plagiarism_students($response->elements[1]);
     			$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements[2]);
 		    	

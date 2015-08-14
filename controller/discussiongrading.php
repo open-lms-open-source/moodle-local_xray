@@ -17,7 +17,8 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 	}
 	
 	public function view_action() {
-		global $PAGE;
+		
+		global $PAGE, $DB;
 		$title = get_string ( $this->name, $this->component );
 		$PAGE->set_title ( $title );
 		$this->heading->text = $title;
@@ -35,6 +36,9 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 			} else {
 				
 				// Show graphs.
+				$output .= $this->output->inforeport($response->reportdate,
+						                             null,
+						                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
 				$output .= $this->students_grades_based_on_discussions (); // Its a table, I will get info with new call.
 				$output .= $this->barplot_of_suggested_grades ( $response->elements [1] );
 			}

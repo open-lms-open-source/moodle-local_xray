@@ -19,7 +19,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 	
     public function view_action() {
     	
-    	global $PAGE;
+    	global $PAGE, $DB;
     	$title = get_string($this->name, $this->component);
     	$PAGE->set_title($title);
     	$this->heading->text = $title;	
@@ -38,6 +38,9 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     		} else {
 
     			// Show graphs.
+    			$output .= $this->output->inforeport($response->reportdate,
+    					                             null,
+    					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
     			$output .= $this->students_activity(); // Its a table, I will get info with new call.
     			$output .= $this->activity_of_course_by_day($response->elements[1]);
     			$output .= $this->activity_by_time_of_day($response->elements[4]);
