@@ -155,6 +155,16 @@ $string['xrayurl'] = 'Xray Url';
 $string['xrayurl_desc'] = '';
 $string['xrayusername'] = 'Xray Username';
 $string['xrayusername_desc'] = '';
+$string['xrayawsheading'] = 'Data Synchronization';
+$string['xrayawsheading_desc'] = 'In this section you can configure automated data synchronization with XRay.';
+$string['enablesync'] = 'Data Sync';
+$string['enablesync_desc'] = 'Enable automated data synchronization with XRay.';
+$string['awskey'] = 'AWS Key';
+$string['awskey_desc'] = 'Access key for AWS web services';
+$string['awssecret'] = 'AWS Secret';
+$string['awssecret_desc'] = 'Access key for AWS web services';
+$string['s3bucket'] = 'S3 bucket';
+$string['s3bucket_desc'] = 'Name of the bucket to use for storing data uploads.';
 
 /* webservice api */
 $string['xrayws_error_nocurl'   ] = 'cURL module must be present and enabled!';

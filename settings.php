@@ -26,36 +26,57 @@ defined('MOODLE_INTERNAL') || die;
 
 /* @var $ADMIN admin_root */
 if ($hassiteconfig) { // needs this condition or there is error on login page
+    $plugin = 'local_xray';
+    $settings = new admin_settingpage($plugin, new lang_string('pluginname', $plugin));
 
-    $settings = new admin_settingpage('local_xray', new lang_string('pluginname', 'local_xray'));
-    $configs = array();
-    
     // Xray url webservice
-    $configs[] = new admin_setting_configtext("xrayurl",
-										      new lang_string("xrayurl", "local_xray"),
-										      new lang_string("xrayurl_desc", "local_xray"),
-										      "");
+    $settings->add( new admin_setting_configtext("{$plugin}/xrayurl",
+                                              new lang_string("xrayurl", $plugin),
+                                              new lang_string("xrayurl_desc", $plugin),
+                                              ""));
 
     // Xray user webservice
-    $configs[] = new admin_setting_configtext("xrayusername",
-										      new lang_string("xrayusername", "local_xray"),
-										      new lang_string("xrayusername_desc", "local_xray"),
-										      "");
+    $settings->add( new admin_setting_configtext("{$plugin}/xrayusername",
+                                              new lang_string("xrayusername", $plugin),
+                                              new lang_string("xrayusername_desc", $plugin),
+                                              ""));
     // Xray password webservice
-    $configs[] = new admin_setting_configtext("xraypassword",
-											  new lang_string("xraypassword", "local_xray"),
-											  new lang_string("xraypassword_desc", "local_xray"),
-											  "");
+    $settings->add( new admin_setting_configpasswordunmask("{$plugin}/xraypassword",
+                                              new lang_string("xraypassword", $plugin),
+                                              new lang_string("xraypassword_desc", $plugin),
+                                              ""));
 
     // Xray client identifier webservice
-    $configs[] = new admin_setting_configtext("xrayclientid",
-										      new lang_string("xrayclientid", "local_xray"),
-										      new lang_string("xrayclientid_desc", "local_xray"),
-										      "");
-    
+    $settings->add( new admin_setting_configtext("{$plugin}/xrayclientid",
+                                              new lang_string("xrayclientid", $plugin),
+                                              new lang_string("xrayclientid_desc", $plugin),
+                                              ""));
+
+    // Configuration and credentials for accessing Xray S3 bucket
+    $settings->add( new admin_setting_heading("{$plugin}/xrayawsheading",
+                                              new lang_string("xrayawsheading", $plugin),
+                                              new lang_string("xrayawsheading_desc", $plugin),
+                                              ""));
+
+    $settings->add( new admin_setting_configcheckbox("{$plugin}/enablesync",
+                                                new lang_string("enablesync", $plugin),
+                                                new lang_string("enablesync_desc", $plugin),
+                                                '0'));
+
+    $settings->add( new admin_setting_configtext("{$plugin}/awskey",
+                                                 new lang_string("awskey", $plugin),
+                                                 new lang_string("awskey_desc", $plugin),
+                                                 ""));
+
+    $settings->add( new admin_setting_configtext("{$plugin}/awssecret",
+                                                 new lang_string("awssecret", $plugin),
+                                                 new lang_string("awssecret_desc", $plugin),
+                                                 ""));
+
+    $settings->add( new admin_setting_configtext("{$plugin}/s3bucket",
+                                                 new lang_string("s3bucket", $plugin),
+                                                 new lang_string("s3bucket_desc", $plugin),
+                                                 ""));
+
     $ADMIN->add('localplugins', $settings);
-    foreach($configs as $config) {
-    	$config->plugin = 'local_xray';
-    	$settings->add($config);
-    }
 }
