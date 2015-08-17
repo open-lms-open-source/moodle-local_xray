@@ -33,30 +33,29 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
     $settings->add( new admin_setting_configtext("{$plugin}/xrayurl",
                                               new lang_string("xrayurl", $plugin),
                                               new lang_string("xrayurl_desc", $plugin),
-                                              ""));
+                                              '', PARAM_URL));
 
     // Xray user webservice
     $settings->add( new admin_setting_configtext("{$plugin}/xrayusername",
                                               new lang_string("xrayusername", $plugin),
                                               new lang_string("xrayusername_desc", $plugin),
-                                              ""));
+                                              '', PARAM_TEXT));
     // Xray password webservice
-    $settings->add( new admin_setting_configpasswordunmask("{$plugin}/xraypassword",
+    $settings->add( new admin_setting_configtext("{$plugin}/xraypassword",
                                               new lang_string("xraypassword", $plugin),
                                               new lang_string("xraypassword_desc", $plugin),
-                                              ""));
+                                              '', PARAM_TEXT));
 
     // Xray client identifier webservice
     $settings->add( new admin_setting_configtext("{$plugin}/xrayclientid",
                                               new lang_string("xrayclientid", $plugin),
                                               new lang_string("xrayclientid_desc", $plugin),
-                                              ""));
+                                              '', PARAM_TEXT));
 
     // Configuration and credentials for accessing Xray S3 bucket
     $settings->add( new admin_setting_heading("{$plugin}/xrayawsheading",
                                               new lang_string("xrayawsheading", $plugin),
-                                              new lang_string("xrayawsheading_desc", $plugin),
-                                              ""));
+                                              new lang_string("xrayawsheading_desc", $plugin)));
 
     $settings->add( new admin_setting_configcheckbox("{$plugin}/enablesync",
                                                 new lang_string("enablesync", $plugin),
@@ -66,17 +65,17 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
     $settings->add( new admin_setting_configtext("{$plugin}/awskey",
                                                  new lang_string("awskey", $plugin),
                                                  new lang_string("awskey_desc", $plugin),
-                                                 ""));
+                                                 '', PARAM_TEXT));
 
     $settings->add( new admin_setting_configtext("{$plugin}/awssecret",
                                                  new lang_string("awssecret", $plugin),
                                                  new lang_string("awssecret_desc", $plugin),
-                                                 ""));
+                                                 '', PARAM_TEXT));
 
     $settings->add( new admin_setting_configtext("{$plugin}/s3bucket",
                                                  new lang_string("s3bucket", $plugin),
                                                  new lang_string("s3bucket_desc", $plugin),
-                                                 ""));
+                                                 '', PARAM_TEXT));
 
     $ADMIN->add('localplugins', $settings);
 }
