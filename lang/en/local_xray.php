@@ -167,6 +167,11 @@ $string['s3bucket'] = 'S3 bucket';
 $string['s3bucket_desc'] = 'Name of the bucket to use for storing data uploads.';
 $string['s3bucketregion'] = 'S3 region';
 $string['s3bucketregion_desc'] = 'Region of the destination bucket.';
+$string['packertar'] = 'GNU tar executable';
+$string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/software/tar/" target="_blank">GNU tar</a> executable on your server.';
+$string['packerzip'] = 'ZIP executable';
+$string['packerzip_desc'] = 'Configure location of ZIP executable on your server. We expect <a href="http://www.info-zip.org/" target="_blank">Info-ZIP</a> executables.';
+
 $string['useast1'] = 'US Standard (N. Virginia)';
 $string['uswest2'] = 'US West (Oregon)';
 $string['uswest1'] = 'US West (N. California)';

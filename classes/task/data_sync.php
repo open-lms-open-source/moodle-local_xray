@@ -49,8 +49,45 @@ class data_sync extends scheduled_task {
      * Throw exceptions on errors (the job will be retried).
      */
     public function execute() {
+        global $CFG;
         try {
-            // TODO: implement the code.
+
+            if (is_callable('mr_off') and mr_off('xray', 'local')) {
+                \local_xray\event\sync_failed::create(array('other' => 'Not enabled in control panel!'));
+                return;
+            }
+
+            $config = get_config('local_xray');
+
+            // Check if it is enabled?
+            if (empty($config) or !$config->enablesync) {
+                \local_xray\event\sync_failed::create(array('other' => 'Not configured or not enabled!'));
+                return;
+            }
+
+            require_once($CFG->dirroot.'/local/xray/lib/vendor/aws/aws-autoloader.php');
+
+            $s3 = new \Aws\S3\S3Client([
+                'version' => 'latest',
+                'region'  => $config->s3bucketregion,
+                'credentials' => [
+                    'key'    => $config->awskey,
+                    'secret' => $config->awssecret,
+                ],
+            ]);
+
+            if (!$s3->doesBucketExist($config->s3bucket)) {
+                \local_xray\event\sync_failed::create(array('other' => "S3 bucket does not exist!"));
+                return;
+            }
+
+            // TODO: do export and package files.
+
+            // TODO: prepare source and prefix correctly.
+            $source = '';
+            $prefix = '';
+            $s3->uploadDirectory($source, $config->s3bucket, $prefix, array('debug' => true));
+
         } catch (\Exception $e) {
             \local_xray\event\sync_failed::create_from_exception($e)->trigger();
         }

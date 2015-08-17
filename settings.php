@@ -96,5 +96,16 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
                                                    'us-east-1', $choices));
 
 
+    $settings->add( new admin_setting_configexecutable("{$plugin}/packertar",
+                                                       new lang_string("packertar", $plugin),
+                                                       new lang_string("packertar_desc", $plugin),
+                                                       ''));
+
+    $settings->add( new admin_setting_configexecutable("{$plugin}/packerzip",
+                                                       new lang_string("packerzip", $plugin),
+                                                       new lang_string("packerzip_desc", $plugin),
+                                                       ''));
+
+
     $ADMIN->add('localplugins', $settings);
 }
