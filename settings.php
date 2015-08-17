@@ -77,5 +77,24 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
                                                  new lang_string("s3bucket_desc", $plugin),
                                                  '', PARAM_TEXT));
 
+    // List of regions taken from http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+    $choices = array(
+        'us-east-1'      => new lang_string('useast1'     , $plugin),
+        'us-west-2'      => new lang_string('uswest2'     , $plugin),
+        'us-west-1'      => new lang_string('uswest1'     , $plugin),
+        'eu-west-1'      => new lang_string('euwest1'     , $plugin),
+        'eu-central-1'   => new lang_string('eucentral1'  , $plugin),
+        'ap-southeast-1' => new lang_string('apsoutheast1', $plugin),
+        'ap-southeast-2' => new lang_string('apsoutheast2', $plugin),
+        'ap-northeast-1' => new lang_string('apnortheast1', $plugin),
+        'sa-east-1'      => new lang_string('saeast1'     , $plugin),
+    );
+
+    $settings->add( new admin_setting_configselect("{$plugin}/s3bucketregion",
+                                                   new lang_string("s3bucketregion", $plugin),
+                                                   new lang_string("s3bucketregion_desc", $plugin),
+                                                   'us-east-1', $choices));
+
+
     $ADMIN->add('localplugins', $settings);
 }

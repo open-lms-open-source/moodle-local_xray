@@ -165,6 +165,17 @@ $string['awssecret'] = 'AWS Secret';
 $string['awssecret_desc'] = 'Access key for AWS web services';
 $string['s3bucket'] = 'S3 bucket';
 $string['s3bucket_desc'] = 'Name of the bucket to use for storing data uploads.';
+$string['s3bucketregion'] = 'S3 region';
+$string['s3bucketregion_desc'] = 'Region of the destination bucket.';
+$string['useast1'] = 'US Standard (N. Virginia)';
+$string['uswest2'] = 'US West (Oregon)';
+$string['uswest1'] = 'US West (N. California)';
+$string['euwest1'] = 'EU (Ireland)';
+$string['eucentral1'] = 'EU (Frankfurt)';
+$string['apsoutheast1'] = 'Asia Pacific (Singapore)';
+$string['apsoutheast2'] = 'Asia Pacific (Sydney)';
+$string['apnortheast1'] = 'Asia Pacific (Tokyo)';
+$string['saeast1'] = 'South America (Sao Paulo)';
 
 /* webservice api */
 $string['xrayws_error_nocurl'   ] = 'cURL module must be present and enabled!';
