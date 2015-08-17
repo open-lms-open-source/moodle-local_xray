@@ -174,3 +174,9 @@ $string['xrayws_error_nomethod' ] = 'You must specify request method!';
 /* Web service errors returned from XRay*/
 $string['xrayws_error_server'] = '{$a}';
 $string['xrayws_error_curl'] = '{$a}';
+
+/* Scheduled task */
+$string['datasync'] = 'Data Synchronization';
+$string['syncfailed'] = 'XRay data sync failed';
+$string['unexperror'] = 'Unexpected error';
+$string['syncfailedexplanation'] = 'Failed to synchronize data with XRay.';

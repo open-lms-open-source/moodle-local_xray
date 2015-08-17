@@ -15,21 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Xray integration version file
- * @author Pablo Pagnone
- * @author German Vitale
+ * Scheduled task declaration.
+ *
  * @package local_xray
+ * @author Darko Miletic
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright Moodlerooms
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $plugin */
-$plugin->version  = 2015070313;
-$plugin->requires = 2014111005;//moodle 2.8
-$plugin->cron = 0;
-$plugin->component = 'local_xray';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0 (Build: 2012123101)';
-$plugin->dependencies = array(
-        'local_mr'       => ANY_VERSION
-);
+$tasks = [
+    [
+        'classname' => 'local_xray\task\data_sync',
+        'blocking'  => 0,
+        'minute'    => '*',
+        'hour'      => '*/12',
+        'day'       => '*',
+        'dayofweek' => '*',
+        'month'     => '*'
+    ],
+];
