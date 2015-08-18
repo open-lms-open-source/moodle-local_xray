@@ -71,6 +71,7 @@ $string['discussionreport_participation_metrics'] = 'Participation Metrics';
 
 /* Discussion report individual*/
 $string['discussionreportindividual'] = 'Discussion Report Individual';
+$string['discussionreportindividual_participation_metrics'] = 'Participation Metrics';
 $string['discussionreportindividual_social_structure'] = 'Social Structure';
 $string['discussionreportindividual_main_terms'] = 'Main Terms';
 $string['discussionreportindividual_main_terms_histogram'] = 'Main Terms Histogram';
