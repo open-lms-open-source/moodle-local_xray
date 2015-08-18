@@ -41,9 +41,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $output .= $this->output->inforeport($response->reportdate,
                                                      $DB->get_field('user', 'username', array("id" => $this->xrayuserid)),
                                                      $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-                $output .= $this->social_structure($response->elements[0]);//TODO number elements are not the same of page
-                $output .= $this->main_terms($response->elements[1]);//TODO number elements are not the same of page
-                $output .= $this->main_terms_histogram($response->elements[2]);//TODO number elements are not the same of page
+                $output .= $this->social_structure($response->elements[2]);//TODO number elements are not the same of page
+                $output .= $this->main_terms($response->elements[3]);//TODO number elements are not the same of page
+                $output .= $this->main_terms_histogram($response->elements[4]);//TODO number elements are not the same of page
             }
         } catch(exception $e) {
             print_error('error_xray', 'local_xray','',null, $e->getMessage());
