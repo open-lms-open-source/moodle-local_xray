@@ -335,8 +335,10 @@ class local_xray_renderer extends plugin_renderer_base {
             $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value);
         }
 
+        $number_of_weeks = count($columns)-1;//get number of weeks - we need to rest the "week" title column
+        
         $datatable = new local_xray_datatable(__FUNCTION__,
-                "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=".$courseid,
+                "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=".$courseid.'&count='.$number_of_weeks,
                 $columns);
 
         // Create standard table.

@@ -151,9 +151,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     public function jsonweekdiscussion_action() {
     
         global $PAGE;
-    
+
         // Pager
-        $count = 100;//TODO harcoded because we the rows will turn the columns//optional_param('iDisplayLength', 10, PARAM_RAW);
+        $count  = optional_param('count', 10, PARAM_RAW);//count param with number of weeks
         $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
 
         $return = "";
@@ -170,24 +170,24 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     '',
                     $start,
                     $count);
-            
+
             if(!$response) {
                 // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
 
-                //$posts = array('weeks' => get_string('posts', 'local_xray'));
+                $posts = array('weeks' => get_string('posts', 'local_xray'));
                 $avglag = array('weeks' => get_string('averageresponselag', 'local_xray'));
                 $avgwordcount = array('weeks' => get_string('averagenoofwords', 'local_xray'));
 
                 if(!empty($response->data)){
                     foreach($response->data as $col) {
-                        //$posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
+                        $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
                         $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
                         $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
                     }
-                    //$data[] = $posts;
+                    $data[] = $posts;
                     $data[] = $avglag;
                     $data[] = $avgwordcount;
                 }
