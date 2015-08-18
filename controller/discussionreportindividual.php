@@ -101,8 +101,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                     foreach($response->data as $row) {
     
                         $r = new stdClass();
-                        $r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
                         $r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');
+                        $r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
                         $r->posts = (isset($row->posts->value) ? $row->posts->value : '');
                         $r->contribution = (isset($row->contrib->value) ? $row->contrib->value : '');
                         $r->ctc = (isset($row->ctc->value) ? $row->ctc->value : '');
