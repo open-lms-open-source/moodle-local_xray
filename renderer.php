@@ -59,7 +59,8 @@ class local_xray_renderer extends plugin_renderer_base {
     	$PAGE->requires->jquery();
     	$PAGE->requires->jquery_plugin('ui');
     	$PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
-    
+    	$PAGE->requires->jquery_plugin('local_xray-create_thumb', 'local_xray'); // Js for dynamic thumbnails.
+    	
     	$cfg_xray = get_config('local_xray');
     	$img_url = sprintf('%s/%s/%s', $cfg_xray->xrayurl, $cfg_xray->xrayclientid, $element->uuid);
     	
@@ -79,7 +80,8 @@ class local_xray_renderer extends plugin_renderer_base {
     	$id_img = "fancybox_".$name;
     	$output .= html_writer::start_tag('a', array("id" => $id_img, "href" => $img_url));
     	$output .= html_writer::empty_tag('img', array("title" => $tooltip,
-										    		   "src" => $img_url)
+										    		   "src" => $img_url, 
+    			                                       "class" => "thumb") // Used by dynamic thumbnails.
     	                                  );
     	$output .= html_writer::end_tag('a');
     	$output .= html_writer::end_tag('div');

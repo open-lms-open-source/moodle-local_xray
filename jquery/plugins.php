@@ -22,5 +22,10 @@ $plugins = array(
         		         'dataTables-jqueryui-1.10.7/dataTables.jqueryui.js',
                          'reports/show_on_table.js'
         )
-    )
+    ),
+	'local_xray-create_thumb' => array(
+			'files' => array('jqthumb/jqthumb.js',
+					         'reports/report_thumbnails.js'
+			)
+	)		
 );
