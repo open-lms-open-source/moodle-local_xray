@@ -153,7 +153,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
     
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_RAW);
+        $count = 100;//TODO harcoded because we the rows will turn the columns//optional_param('iDisplayLength', 10, PARAM_RAW);
         $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
 
         $return = "";
