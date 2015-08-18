@@ -55,9 +55,6 @@
 	background-color: #fff;
 	margin-top: 5px;
 }
-#page-local-xray-view .xray_element_img img{
-	width:267px;
-}
 
 /* General xray legend of graph */
 #page-local-xray-view .xray_graph_legend {
