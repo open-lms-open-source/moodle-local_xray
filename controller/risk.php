@@ -12,7 +12,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
  
     public function init() {
         // This report will get data by courseid.
-        $this->courseid = required_param('courseid', PARAM_STRINGID);
+        $this->courseid = required_param('courseid', PARAM_RAW);
     }
     
     public function view_action() {
@@ -35,7 +35,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 \local_xray\api\xrayws::instance()->print_error();
 
             } else {
-                // Show graphs.
+                // Show graphs.z
             	$output .= $this->output->inforeport($response->reportdate,
             			                             null,
             			                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
