@@ -2,9 +2,10 @@
 
 /* General info report */
 #page-local-xray-view .inforeport {
-    color: #051272;
+    color: #0d4463;
     display: block;
     font-size: 11px;
+    margin-bottom: 5px;
     padding: 5px;
 }
 #page-local-xray-view .inforeport p{
@@ -22,7 +23,6 @@
 
 #page-local-xray-view .eventtoogletable {
 	cursor:pointer;
-	margin: 5px 10px 0 5px;
     padding-left: 18px;
     background: #e0e0e0 url([[pix:t/collapsed]]) 2px center no-repeat;
 }
@@ -38,7 +38,7 @@
 #page-local-xray-view .xray_element_graph {
     display: inline-block;
     float: left;
-    margin: 5px;
+    margin: 5px 5px 0 0;
     overflow: hidden;
     width: 270px;
 }
