@@ -175,6 +175,8 @@ $string['packertar'] = 'GNU tar executable';
 $string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/software/tar/" target="_blank">GNU tar</a> executable on your server.';
 $string['packerzip'] = 'ZIP executable';
 $string['packerzip_desc'] = 'Configure location of ZIP executable on your server. We expect <a href="http://www.info-zip.org/" target="_blank">Info-ZIP</a> executables.';
+$string['exportlocation'] = 'Export location';
+$string['exportlocation_desc'] = 'Configure local directory for temporary storage of exported data. If left empty Moodle tempdir is used.';
 
 $string['useast1'] = 'US Standard (N. Virginia)';
 $string['uswest2'] = 'US West (Oregon)';

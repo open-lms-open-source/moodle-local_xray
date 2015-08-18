@@ -53,16 +53,18 @@ class data_sync extends scheduled_task {
         try {
 
             if (is_callable('mr_off') and mr_off('xray', 'local')) {
-                \local_xray\event\sync_failed::create(array('other' => 'Not enabled in control panel!'));
-                return;
+                throw new \Exception('Plugin is not enabled in control panel!');
             }
 
             $config = get_config('local_xray');
 
             // Check if it is enabled?
-            if (empty($config) or !$config->enablesync) {
-                \local_xray\event\sync_failed::create(array('other' => 'Not configured or not enabled!'));
-                return;
+            if ($config === false) {
+                throw new \Exception('Plugin is not configured!');
+            }
+
+            if (!$config->enablesync) {
+                throw new \Exception('Data Synchronization is not enabled!');
             }
 
             require_once($CFG->dirroot.'/local/xray/lib/vendor/aws/aws-autoloader.php');
@@ -77,8 +79,7 @@ class data_sync extends scheduled_task {
             ]);
 
             if (!$s3->doesBucketExist($config->s3bucket)) {
-                \local_xray\event\sync_failed::create(array('other' => "S3 bucket does not exist!"));
-                return;
+                throw new \Exception("S3 bucket {$config->s3bucket} does not exist!");
             }
 
             // TODO: do export and package files.

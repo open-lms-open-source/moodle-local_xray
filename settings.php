@@ -106,6 +106,10 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
                                                        new lang_string("packerzip_desc", $plugin),
                                                        ''));
 
+    $settings->add( new admin_setting_configtext("{$plugin}/exportlocation",
+                                                 new lang_string("exportlocation", $plugin),
+                                                 new lang_string("exportlocation_desc", $plugin),
+                                                 '', PARAM_SAFEDIR));
 
     $ADMIN->add('localplugins', $settings);
 }
