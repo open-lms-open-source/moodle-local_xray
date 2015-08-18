@@ -390,11 +390,11 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Graphic Participation Metrics (TABLE)
      */
-    public function discussionindividualreport_participation_metrics($courseid) {
+    public function discussionreportindividual_participation_metrics($courseid) {
          
         global $PAGE;
         // Create standard table.
-        $columns = array(new local_xray_datatableColumn('action', ''),
+        $columns = array(
                 new local_xray_datatableColumn('firstname', get_string('lastname', 'local_xray')),
                 new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
                 new local_xray_datatableColumn('posts', get_string('posts', 'local_xray')),
@@ -405,7 +405,7 @@ class local_xray_renderer extends plugin_renderer_base {
         );
          
         $datatable = new local_xray_datatable(__FUNCTION__,
-                "view.php?controller='discussionindividualreport'&action='jsonparticipationdiscussionindividual'&courseid=".$courseid,
+                "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=".$courseid,
                 $columns);
          
         // Create standard table.
