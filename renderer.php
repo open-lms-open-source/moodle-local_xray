@@ -385,7 +385,33 @@ class local_xray_renderer extends plugin_renderer_base {
     
     /************************** Elements for Report Discussion for an individual **************************/
     
-   
+    /**
+     * Graphic Participation Metrics (TABLE)
+     */
+    public function discussionindividualreport_participation_metrics($courseid) {
+         
+        global $PAGE;
+        // Create standard table.
+        $columns = array(new local_xray_datatableColumn('action', ''),
+                new local_xray_datatableColumn('firstname', get_string('lastname', 'local_xray')),
+                new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
+                new local_xray_datatableColumn('posts', get_string('posts', 'local_xray')),
+                new local_xray_datatableColumn('contribution', get_string('contribution', 'local_xray')),
+                new local_xray_datatableColumn('ctc', get_string('ctc', 'local_xray')),
+                new local_xray_datatableColumn('regularityofcontributions', get_string('regularityofcontributions', 'local_xray')),
+                new local_xray_datatableColumn('regularityofctc', get_string('regularityofctc', 'local_xray'))
+        );
+         
+        $datatable = new local_xray_datatable(__FUNCTION__,
+                "view.php?controller='discussionindividualreport'&action='jsonparticipationdiscussionindividual'&courseid=".$courseid,
+                $columns);
+         
+        // Create standard table.
+        $output = $this->standard_table((array) $datatable);
+         
+        return $output;
+    }
+    
     /**
      * Social structure.(Graph)
      * @param stdClass $element
