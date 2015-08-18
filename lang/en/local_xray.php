@@ -142,6 +142,9 @@ $string['completed'] = 'Completed';
 /* Datatables Error */
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. If error persist, contact with the administrator please.';
 
+/* Error reports */
+$string['error_loadimg'] = 'Error to load image, please try again reloading the page. If error persist, contact with the administrator please.';
+
 /* Webservice */
 $string['error_xray'] = 'Error to connect with Xray.';
 

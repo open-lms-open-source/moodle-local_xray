@@ -73,6 +73,14 @@
     margin:3px 0px;
     padding:5px;
 }
+
+/** Error load img report**/
+#page-local-xray-view .error_loadmsg {
+    color: #ce2f2f;
+    font-size: 11px;
+    margin: auto;
+    padding: 100px 10px;
+}
 /**************** End General styles for all reports****************/
 
 /**************** Styles for specific reports****************/

@@ -54,12 +54,13 @@ class local_xray_renderer extends plugin_renderer_base {
     private function show_on_lightbox($name, $element) {
     	 
     	global $PAGE;
+    	$plugin = "local_xray";
     
     	// Load Jquery.
     	$PAGE->requires->jquery();
     	$PAGE->requires->jquery_plugin('ui');
-    	$PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', 'local_xray'); // Js for show on lightbox.
-    	$PAGE->requires->jquery_plugin('local_xray-create_thumb', 'local_xray'); // Js for dynamic thumbnails.
+    	$PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', $plugin); // Js for show on lightbox.
+    	$PAGE->requires->jquery_plugin('local_xray-create_thumb', $plugin); // Js for dynamic thumbnails.
     	
     	$cfg_xray = get_config('local_xray');
     	$img_url = sprintf('%s/%s/%s', $cfg_xray->xrayurl, $cfg_xray->xrayclientid, $element->uuid);
@@ -68,7 +69,7 @@ class local_xray_renderer extends plugin_renderer_base {
     	$output .= html_writer::start_tag('div', array("id" => $name, "class" => "xray_element xray_element_graph"));
     	
     	/* Graph Name */
-    	$output .= html_writer::tag('div', get_string($name,"local_xray"), array("class" => "reportsname"));
+    	$output .= html_writer::tag('div', get_string($name,$plugin), array("class" => "reportsname"));
     	/* End Graph Name */
     	
     	/* Img */
@@ -77,30 +78,40 @@ class local_xray_renderer extends plugin_renderer_base {
     		$tooltip = $element->tooltip;
     	}
     	$output .= html_writer::start_tag('div', array("class" => "xray_element_img"));
-    	$id_img = "fancybox_".$name;
-    	$output .= html_writer::start_tag('a', array("id" => $id_img, "href" => $img_url));
-    	$output .= html_writer::empty_tag('img', array("title" => $tooltip,
-										    		   "src" => $img_url, 
-    			                                       "class" => "thumb") // Used by dynamic thumbnails.
-    	                                  );
-    	$output .= html_writer::end_tag('a');
-    	$output .= html_writer::end_tag('div');
-    	/* End Img */
     	
-    	/* Legend */
-    	/*
-    	$legend = "";
-    	if(isset($element->legend) && !empty($element->legend)) {
-    		$legend = $element->legend;
+        // Validate if url of image is valid.
+    	if (@fopen($img_url, "r")) {
+    		$id_img = "fancybox_".$name;
+    		$output .= html_writer::start_tag('a', array("id" => $id_img, "href" => $img_url));
+    		$output .= html_writer::empty_tag('img', array("title" => $tooltip,
+    				"src" => $img_url,
+    				"class" => "thumb") // Used by dynamic thumbnails.
+    		);
+    		 
+    		$output .= html_writer::end_tag('a');  
+    		
+    		/* End Img */
+    		  
+    		/* Legend */
+    		/*
+    		 $legend = "";
+    		 if(isset($element->legend) && !empty($element->legend)) {
+    		 $legend = $element->legend;
+    		 }
+    		 $output .= html_writer::tag("div", $legend, array("class" => "xray_graph_legend"));*/
+    		/* End legend */
+    		
+    		// Send data to js.
+    		$PAGE->requires->js_init_call("local_xray_show_on_lightbox", array($id_img, $element));
+    		
+    	} else{
+    		// Incorrect url img. Show error message.
+    		$output .= html_writer::tag("div", get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
     	}
-    	$output .= html_writer::tag("div", $legend, array("class" => "xray_graph_legend"));*/
-    	/* End legend */
     	
+    	$output .= html_writer::end_tag('div');	
     	$output .= html_writer::end_tag('div');
     	
-    	// Send data to js.
-    	$PAGE->requires->js_init_call("local_xray_show_on_lightbox", array($id_img, $element));
-    	 
     	return $output; 
     }
     
