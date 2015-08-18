@@ -54,10 +54,10 @@ class csvfile {
     }
 
     /**
-     * @param stdClass $fields
+     * @param \stdClass $fields
      * @return int|bool
      */
-    public function writecsv(stdClass $fields) {
+    public function writecsv($fields) {
         $result = fputcsv($this->resource, (array)$fields);
         return $result;
     }

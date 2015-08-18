@@ -109,7 +109,7 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
     $settings->add( new admin_setting_configtext("{$plugin}/exportlocation",
                                                  new lang_string("exportlocation", $plugin),
                                                  new lang_string("exportlocation_desc", $plugin),
-                                                 '', PARAM_SAFEDIR));
+                                                 '', PARAM_TEXT));
 
     $ADMIN->add('localplugins', $settings);
 }
