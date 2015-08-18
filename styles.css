@@ -40,7 +40,7 @@
     float: left;
     margin: 5px;
     overflow: hidden;
-    width: 267px;
+    width: 270px;
 }
 /* General xray element (specific for tables) */
 #page-local-xray-view .xray_element_table {
@@ -49,8 +49,8 @@
 
 /* General xray image graph */
 #page-local-xray-view .xray_element_img{
-	width:267px;
-	height:267px;
+	width:270px;
+	height:270px;
 	overflow:hidden;
 	background-color: #fff;
 	margin-top: 5px;
