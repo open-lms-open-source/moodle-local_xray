@@ -394,9 +394,8 @@ class local_xray_renderer extends plugin_renderer_base {
          
         global $PAGE;
         // Create standard table.
-        $columns = array(
+        $columns = array(new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
                 new local_xray_datatableColumn('firstname', get_string('lastname', 'local_xray')),
-                new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
                 new local_xray_datatableColumn('posts', get_string('posts', 'local_xray')),
                 new local_xray_datatableColumn('contribution', get_string('contribution', 'local_xray')),
                 new local_xray_datatableColumn('ctc', get_string('ctc', 'local_xray')),
