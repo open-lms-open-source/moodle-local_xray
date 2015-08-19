@@ -61,6 +61,7 @@
 /* General xray element (specific for tables) */
 #page-local-xray-view .xray_element_table {
 	clear:both;
+	margin-top: 5px;
 }
 
 /* General xray image graph */
