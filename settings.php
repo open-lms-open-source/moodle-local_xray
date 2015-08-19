@@ -72,9 +72,9 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
                                                  new lang_string("xrayadmin_desc", $plugin),
                                                  '', PARAM_TEXT));
 
-    $settings->add( new admin_setting_configtext("{$plugin}/xrayadminpass",
-                                                 new lang_string("xrayadminpass", $plugin),
-                                                 new lang_string("xrayadminpass_desc", $plugin),
+    $settings->add( new admin_setting_configtext("{$plugin}/xrayadminkey",
+                                                 new lang_string("xrayadminkey", $plugin),
+                                                 new lang_string("xrayadminkey_desc", $plugin),
                                                  '', PARAM_TEXT));
 
     $settings->add( new admin_setting_configtext("{$plugin}/awskey",

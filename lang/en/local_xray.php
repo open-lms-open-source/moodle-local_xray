@@ -182,9 +182,8 @@ $string['xrayadminserver'] = 'XRay Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';
 $string['xrayadmin'] = 'Admin user';
 $string['xrayadmin_desc'] = 'User for logging into admin server.';
-$string['xrayadminpass'] = 'Admin password';
-$string['xrayadminpass_desc'] = 'Password for logging into admin server.';
-
+$string['xrayadminkey'] = 'Admin key';
+$string['xrayadminkey_desc'] = 'Access key for logging into admin server.';
 
 $string['useast1'] = 'US Standard (N. Virginia)';
 $string['uswest2'] = 'US West (Oregon)';

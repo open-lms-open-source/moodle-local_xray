@@ -63,6 +63,55 @@ abstract class wsapi {
         return $result;
     }
 
+    public static function adminlogin() {
+        $username = get_config(self::PLUGIN, 'xrayadmin');
+        $pass     = get_config(self::PLUGIN, 'xrayadminkey');
+        $baseurl  = get_config(self::PLUGIN, 'xrayadminserver');
+        if (($username === false) || ($pass === false) || ($baseurl === false)) {
+            return false;
+        }
+        $data = array('username' => $username, 'accesskey' => $pass);
+        $url = sprintf('%s/user/keylogin', $baseurl);
+        $result = xrayws::instance()->post_hook($url, $data);
+        if ($result) {
+            $data = json_decode(xrayws::instance()->lastresponse());
+            $result = (!is_null($data) && isset($data->ok) && $data->ok && xrayws::instance()->hascookie());
+            if (!$result) {
+                // Should check this some more?
+                xrayws::instance()->resetcookie();
+            }
+        }
+
+        /** @var bool $result */
+        return $result;
+    }
+
+    /**
+     * @param $url
+     * @return bool|mixed
+     */
+    protected static function generic_admingetcall($url) {
+        if (empty($url)) {
+            return false;
+        }
+
+        if (!xrayws::instance()->hascookie()) {
+            if (!self::adminlogin()) {
+                return false;
+            }
+        }
+        $result = xrayws::instance()->get_withcookie($url);
+        if ($result) {
+            $data = json_decode(xrayws::instance()->lastresponse());
+            if ($data === false) {
+                return false;
+            }
+            $result = $data;
+        }
+
+        return $result;
+    }
+
     /**
      * @param string $url
      * @param null|int $start
@@ -284,12 +333,12 @@ abstract class wsapi {
      * @return bool|mixed
      */
     public static function datalist() {
-        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        $baseurl = get_config(self::PLUGIN, 'xrayadminserver');
         if (empty($baseurl)) {
             return false;
         }
 
         $url = sprintf('%s/data/list', $baseurl);
-        return self::generic_getcall($url);
+        return self::generic_admingetcall($url);
     }
 }
