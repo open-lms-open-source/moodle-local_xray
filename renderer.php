@@ -338,7 +338,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $number_of_weeks = count($columns)-1;//get number of weeks - we need to rest the "week" title column
         
         $datatable = new local_xray_datatable(__FUNCTION__,
-                "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=".$courseid.'&count='.$number_of_weeks,
+                "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=".$courseid."&count=".$number_of_weeks,
                 $columns);
 
         // Create standard table.
@@ -403,7 +403,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Graphic Participation Metrics (TABLE)
      */
-    public function discussionreportindividual_participation_metrics($courseid) {
+    public function discussionreportindividual_participation_metrics($courseid, $userid) {
          
         global $PAGE;
         // Create standard table.
@@ -417,12 +417,39 @@ class local_xray_renderer extends plugin_renderer_base {
         );
          
         $datatable = new local_xray_datatable(__FUNCTION__,
-                "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=".$courseid,
-                $columns);
+                "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&xraycourseid=".$courseid."&xrayuserid=".$userid,
+                $columns);//TODO xraycourseid added
          
         // Create standard table.
         $output = $this->standard_table((array) $datatable);
          
+        return $output;
+    }
+    
+    /**
+     * Graphic Discussion Activity by Week (TABLE)//TODO params
+     * @param stdClass $element
+     */
+    public function discussionreportindividual_discussion_activity_by_week($courseid, $userid, $element) {
+    
+        global $PAGE;
+        // Create standard table.
+    
+        $columns = array();
+        $columns[] = new local_xray_datatableColumn('weeks', get_string('weeks', 'local_xray'));
+        foreach($element->data as $column){
+            $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value);
+        }
+    
+        $number_of_weeks = count($columns)-1;//get number of weeks - we need to rest the "week" title column
+    
+        $datatable = new local_xray_datatable(__FUNCTION__,
+                "view.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&xraycourseid=".$courseid."&xrayuserid=".$userid."&count=".$number_of_weeks,
+                $columns);
+    
+        // Create standard table.
+        $output = $this->standard_table((array) $datatable);
+    
         return $output;
     }
     

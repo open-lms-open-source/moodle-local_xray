@@ -13,6 +13,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
     public function init() {
         parent::init();
+        //$this->courseid = required_param('courseid', PARAM_RAW);
+        // TODO:: Hardcodeid by test.
         $this->courseid = required_param('xraycourseid', PARAM_RAW);
         $this->xrayuserid = required_param('xrayuserid', PARAM_RAW);
     }
@@ -42,6 +44,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                                                      $DB->get_field('user', 'username', array("id" => $this->xrayuserid)),
                                                      $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
                 $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
+                $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
                 $output .= $this->social_structure($response->elements[2]);//TODO number elements are not the same of page
                 $output .= $this->main_terms($response->elements[3]);//TODO number elements are not the same of page
                 $output .= $this->main_terms_histogram($response->elements[4]);//TODO number elements are not the same of page
@@ -59,7 +62,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     private function participation_metrics() {
         $output = "";
-        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid);
+        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, $this->xrayuserid);
         return $output;
     }
     
@@ -83,7 +86,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
                     $element,
                     $report,
-                    null,
+                    parent::XRAY_USERID,
                     '',
                     '',
                     $start,
@@ -124,6 +127,73 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         exit();
     }
     
+    /**
+     * Report "Discussion Activity by Week" (table).
+     *
+     */
+    private function discussion_activity_by_week($element) {
+        $output = "";
+        $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid, $this->xrayuserid, $element);
+        return $output;
+    }
+    
+    /**
+     * Json for provide data to discussion_activity_by_week table.
+     */
+    public function jsonweekdiscussionindividual_action() {
+    
+        global $PAGE;
+    
+        // Pager
+        $count  = optional_param('count', 10, PARAM_RAW);//count param with number of weeks
+        $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
+    
+        $return = "";
+    
+        try {
+            $report = "discussion";
+            $element = "discussionActivityByWeek";
+    
+            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
+                    $element,
+                    $report,
+                    parent::XRAY_USERID,
+                    '',
+                    '',
+                    $start,
+                    $count);
+    
+            if(!$response) {
+                // TODO:: Fail response of webservice.
+                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+            } else {
+                $data = array();
+    
+                $posts = array('weeks' => get_string('posts', 'local_xray'));
+                //$avglag = array('weeks' => get_string('averageresponselag', 'local_xray'));
+                $avgwordcount = array('weeks' => get_string('averagenoofwords', 'local_xray'));
+    
+                if(!empty($response->data)){
+                    foreach($response->data as $col) {
+                        $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
+                        //$avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
+                        $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                    }
+                    $data[] = $posts;
+                    $data[] = $avgwordcount;
+                }
+    
+                // Provide info to table.
+                $return["recordsFiltered"] = $response->itemCount;
+                $return["data"] = $data;
+            }
+        } catch(exception $e) {
+            // Error, return invalid data, and pluginjs will show error in table.
+            $return["data"] = "-";
+        }
+        echo json_encode($return);
+        exit();
+    }
     
     /**
      * Report Social Structure.

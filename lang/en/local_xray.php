@@ -71,10 +71,11 @@ $string['discussionreport_participation_metrics'] = 'Participation Metrics';
 
 /* Discussion report individual*/
 $string['discussionreportindividual'] = 'Discussion Report Individual';
-$string['discussionreportindividual_participation_metrics'] = 'Participation Metrics';
-$string['discussionreportindividual_social_structure'] = 'Social Structure';
+$string['discussionreportindividual_discussion_activity_by_week'] = 'Discussion Activity by Week';
 $string['discussionreportindividual_main_terms'] = 'Main Terms';
 $string['discussionreportindividual_main_terms_histogram'] = 'Main Terms Histogram';
+$string['discussionreportindividual_participation_metrics'] = 'Participation Metrics';
+$string['discussionreportindividual_social_structure'] = 'Social Structure';
 
 /* Discussion report individual forum*/
 $string['discussionreportindividualforum'] = 'Discussion Report Individual Forum';
