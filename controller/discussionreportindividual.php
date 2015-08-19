@@ -13,6 +13,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
     public function init() {
         parent::init();
+        //$this->courseid = required_param('courseid', PARAM_RAW);
+        // TODO:: Hardcodeid by test.
         $this->courseid = required_param('xraycourseid', PARAM_RAW);
         $this->xrayuserid = required_param('xrayuserid', PARAM_RAW);
     }
@@ -59,7 +61,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     private function participation_metrics() {
         $output = "";
-        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid);
+        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, $this->xrayuserid);
         return $output;
     }
     
@@ -83,7 +85,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
                     $element,
                     $report,
-                    null,
+                    parent::XRAY_USERID,
                     '',
                     '',
                     $start,
