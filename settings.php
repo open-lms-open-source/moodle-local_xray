@@ -24,33 +24,37 @@ defined('MOODLE_INTERNAL') || die;
  * @package local_xray
  */
 
-/* @var $ADMIN admin_root */
-if ($hassiteconfig) { // needs this condition or there is error on login page
+// For the time being only mrsupport user can see the configuration settings for xray.
+// We do not want any client to poke these items.
+
+/* @var object $USER
+ * @var $ADMIN admin_root */
+if ($hassiteconfig and ($USER->username == 'mrsupport')) {
     $plugin = 'local_xray';
     $settings = new admin_settingpage($plugin, new lang_string('pluginname', $plugin));
 
     // Xray url webservice
     $settings->add( new admin_setting_configtext("{$plugin}/xrayurl",
-                                              new lang_string("xrayurl", $plugin),
-                                              new lang_string("xrayurl_desc", $plugin),
-                                              '', PARAM_URL));
+                                                 new lang_string("xrayurl", $plugin),
+                                                 new lang_string("xrayurl_desc", $plugin),
+                                                 '', PARAM_URL));
 
     // Xray user webservice
     $settings->add( new admin_setting_configtext("{$plugin}/xrayusername",
-                                              new lang_string("xrayusername", $plugin),
-                                              new lang_string("xrayusername_desc", $plugin),
-                                              '', PARAM_TEXT));
+                                                 new lang_string("xrayusername", $plugin),
+                                                 new lang_string("xrayusername_desc", $plugin),
+                                                 '', PARAM_TEXT));
     // Xray password webservice
     $settings->add( new admin_setting_configtext("{$plugin}/xraypassword",
-                                              new lang_string("xraypassword", $plugin),
-                                              new lang_string("xraypassword_desc", $plugin),
-                                              '', PARAM_TEXT));
+                                                 new lang_string("xraypassword", $plugin),
+                                                 new lang_string("xraypassword_desc", $plugin),
+                                                 '', PARAM_TEXT));
 
     // Xray client identifier webservice
     $settings->add( new admin_setting_configtext("{$plugin}/xrayclientid",
-                                              new lang_string("xrayclientid", $plugin),
-                                              new lang_string("xrayclientid_desc", $plugin),
-                                              '', PARAM_TEXT));
+                                                 new lang_string("xrayclientid", $plugin),
+                                                 new lang_string("xrayclientid_desc", $plugin),
+                                                 '', PARAM_TEXT));
 
     // Configuration and credentials for accessing Xray S3 bucket
     $settings->add( new admin_setting_heading("{$plugin}/xrayawsheading",
@@ -58,9 +62,9 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
                                               new lang_string("xrayawsheading_desc", $plugin)));
 
     $settings->add( new admin_setting_configcheckbox("{$plugin}/enablesync",
-                                                new lang_string("enablesync", $plugin),
-                                                new lang_string("enablesync_desc", $plugin),
-                                                '0'));
+                                                    new lang_string("enablesync", $plugin),
+                                                    new lang_string("enablesync_desc", $plugin),
+                                                    '0'));
 
     $settings->add( new admin_setting_configtext("{$plugin}/xrayadminserver",
                                                  new lang_string("xrayadminserver", $plugin),
