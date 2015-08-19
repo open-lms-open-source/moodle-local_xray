@@ -84,7 +84,15 @@
 }
 
 /** Wrapper Datatables**/
-#page-local-xray-view .dataTables_wrapper {
+
+/* Table content */
+#page-local-xray-view .dataTables_wrapper table{
+	font-family: Roboto;
+}
+
+/* Table content */
+#page-local-xray-view .dataTables_wrapper table tr td{
+	font-size:14px;
 }
 #page-local-xray-view .error_datatables {
     background-color: #CE2F2F;
@@ -102,6 +110,9 @@
     margin: auto;
     padding: 100px 10px;
 }
+/** End Wrapper Datatables**/
+
+
 /**************** End General styles for all reports****************/
 
 /**************** Styles for specific reports****************/
