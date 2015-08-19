@@ -87,6 +87,37 @@ abstract class wsapi {
     }
 
     /**
+     * @return bool|mixed
+     * @throws jsonerror_exception
+     */
+    public static function accesstoken() {
+        $baseurl  = get_config(self::PLUGIN, 'xrayurl');
+        $domain   = get_config(self::PLUGIN, 'xrayclientid');
+        if (($domain === false) or ($baseurl === false)) {
+            return false;
+        }
+        $result = false;
+        $data = array('domain' => $domain, 'ip' => getHostByName(getHostName()), 'validhours' => 1);
+        $url = sprintf('%s/user/accesstoken', $baseurl);
+        if (!xrayws::instance()->hascookie()) {
+            if (!self::adminlogin()) {
+                return false;
+            }
+        }
+        $options[CURLOPT_COOKIE] = xrayws::instance()->getcookie();
+        $result = xrayws::instance()->post($url, $data, array(), $options);
+        if ($result) {
+            $data = json_decode(xrayws::instance()->lastresponse());
+            $result = (($data !== null) and isset($data->ok) and $data->ok and isset($data->token));
+            if ($result) {
+                $result = $data->token;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @param $url
      * @return bool|mixed
      */
