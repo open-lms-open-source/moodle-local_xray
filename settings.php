@@ -62,6 +62,21 @@ if ($hassiteconfig) { // needs this condition or there is error on login page
                                                 new lang_string("enablesync_desc", $plugin),
                                                 '0'));
 
+    $settings->add( new admin_setting_configtext("{$plugin}/xrayadminserver",
+                                                 new lang_string("xrayadminserver", $plugin),
+                                                 new lang_string("xrayadminserver_desc", $plugin),
+                                                 '', PARAM_URL));
+
+    $settings->add( new admin_setting_configtext("{$plugin}/xrayadmin",
+                                                 new lang_string("xrayadmin", $plugin),
+                                                 new lang_string("xrayadmin_desc", $plugin),
+                                                 '', PARAM_TEXT));
+
+    $settings->add( new admin_setting_configtext("{$plugin}/xrayadminpass",
+                                                 new lang_string("xrayadminpass", $plugin),
+                                                 new lang_string("xrayadminpass_desc", $plugin),
+                                                 '', PARAM_TEXT));
+
     $settings->add( new admin_setting_configtext("{$plugin}/awskey",
                                                  new lang_string("awskey", $plugin),
                                                  new lang_string("awskey_desc", $plugin),

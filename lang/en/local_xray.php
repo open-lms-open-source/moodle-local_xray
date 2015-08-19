@@ -178,6 +178,14 @@ $string['packerzip_desc'] = 'Configure location of ZIP executable on your server
 $string['exportlocation'] = 'Export location';
 $string['exportlocation_desc'] = 'Configure local directory for temporary storage of exported data. If left empty (or if path not valid) Moodle tempdir is used.';
 
+$string['xrayadminserver'] = 'XRay Administration server';
+$string['xrayadminserver_desc'] = 'Server location.';
+$string['xrayadmin'] = 'Admin user';
+$string['xrayadmin_desc'] = 'User for logging into admin server.';
+$string['xrayadminpass'] = 'Admin password';
+$string['xrayadminpass_desc'] = 'Password for logging into admin server.';
+
+
 $string['useast1'] = 'US Standard (N. Virginia)';
 $string['uswest2'] = 'US West (Oregon)';
 $string['uswest1'] = 'US West (N. California)';

@@ -280,4 +280,16 @@ abstract class wsapi {
         return self::generic_getcall($url, $start, $count);
     }
 
+    /**
+     * @return bool|mixed
+     */
+    public static function datalist() {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        if (empty($baseurl)) {
+            return false;
+        }
+
+        $url = sprintf('%s/data/list', $baseurl);
+        return self::generic_getcall($url);
+    }
 }
