@@ -1,19 +1,25 @@
 /**************** General styles for all reports****************/
 
 /* Region main for all reports */
+#page-local-xray-view {
+		background-color: #E0E0E0;
+}
+
 #page-local-xray-view #page-content #region-main {
     max-width: 968px; /* snap theme limit to 60.5 em */
 	margin: 0 auto;
 	box-sizing: content-box;
+	background-color: #fff;
 }
 
 /* General info report */
 #page-local-xray-view .inforeport {
-    color: #0d4463;
     display: block;
-    font-size: 11px;
     margin-bottom: 5px;
     padding: 5px;
+    color: #666;
+    font-family: Roboto;
+    font-size: 13px;
 }
 #page-local-xray-view .inforeport p{
     margin-bottom:0px;
@@ -21,10 +27,11 @@
 
 /* Name elements (tables and graphs) */
 #page-local-xray-view .reportsname {
-    background-color: #e0e0e0;
-    color: #f89829;
-    font-size: 14px;
-    height: 24px;
+    background-color: #3bcedb;
+    color: #fff;
+    font-family: Roboto;
+    font-weight: 500;
+    height: 30px;
     overflow: hidden;
     padding: 5px 0 5px 3px;
 }
@@ -32,10 +39,10 @@
 #page-local-xray-view .eventtoogletable {
 	cursor:pointer;
     padding-left: 18px;
-    background: #e0e0e0 url([[pix:t/collapsed]]) 2px center no-repeat;
+    background: #3bcedb url([[pix:t/collapsed]]) 2px center no-repeat;
 }
 #page-local-xray-view .expanded {
-    background: #e0e0e0 url([[pix:t/expanded]]) 2px center no-repeat;
+    background: #3bcedb url([[pix:t/expanded]]) 2px center no-repeat;
 }
 /* End Toogle tables */
 
@@ -46,16 +53,11 @@
 /* General xray element (specific for graphs) */
 #page-local-xray-view .xray_element_graph {
     display: inline-block;
-    float: left;
     overflow: hidden;
-    width: 320px;
+    width: 316px;
     margin-top:4px;
     box-sizing: content-box;
-}
-
-#page-local-xray-view .xray_element_graph:nth-child(3n+2),
-#page-local-xray-view .xray_element_graph:nth-child(3n+3) {  
-	margin-right:4px;
+    margin-right:6px;
 }
 
 /* General xray element (specific for tables) */
@@ -67,10 +69,10 @@
 /* General xray image graph */
 #page-local-xray-view .xray_element_img{
     background-color: #fff;
-    height: 320px;
+    height: 316px;
     margin-top: 5px;
     overflow: hidden;
-    width: 320px;
+    width: 316px;
 }
 
 /* General xray legend of graph */
