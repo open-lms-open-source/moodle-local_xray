@@ -113,6 +113,10 @@
 /** End Wrapper Datatables**/
 
 
+#page-local-xray-view .fancybox-title-float-wrap .child {
+	background-color: #3bcedb;
+}
+
 /**************** End General styles for all reports****************/
 
 /**************** Styles for specific reports****************/
