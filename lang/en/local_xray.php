@@ -173,9 +173,7 @@ $string['s3bucket_desc'] = 'Name of the bucket to use for storing data uploads.'
 $string['s3bucketregion'] = 'S3 region';
 $string['s3bucketregion_desc'] = 'Region of the destination bucket.';
 $string['packertar'] = 'GNU tar executable';
-$string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/software/tar/" target="_blank">GNU tar</a> executable on your server.';
-$string['packerzip'] = 'ZIP executable';
-$string['packerzip_desc'] = 'Configure location of ZIP executable on your server. We expect <a href="http://www.info-zip.org/" target="_blank">Info-ZIP</a> executables.';
+$string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/software/tar/" target="_blank">GNU tar</a> executable on your server. Make sure to install <a href="http://www.gnu.org/software/gzip/" target="_blank">GNU Gzip</a> as well.';
 $string['exportlocation'] = 'Export location';
 $string['exportlocation_desc'] = 'Configure local directory for temporary storage of exported data. If left empty (or if path not valid) Moodle tempdir is used.';
 
