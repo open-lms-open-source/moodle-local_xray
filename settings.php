@@ -120,11 +120,6 @@ if ($hassiteconfig and ($USER->username == 'mrsupport')) {
                                                        new lang_string("packertar_desc", $plugin),
                                                        ''));
 
-    $settings->add( new admin_setting_configexecutable("{$plugin}/packerzip",
-                                                       new lang_string("packerzip", $plugin),
-                                                       new lang_string("packerzip_desc", $plugin),
-                                                       ''));
-
     $settings->add( new admin_setting_configtext("{$plugin}/exportlocation",
                                                  new lang_string("exportlocation", $plugin),
                                                  new lang_string("exportlocation_desc", $plugin),

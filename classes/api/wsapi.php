@@ -112,7 +112,7 @@ abstract class wsapi {
             return false;
         }
         $result = false;
-        $data = array('domain' => $domain, 'ip' => self::mypublicip(), 'validhours' => 1);
+        $data = array('domain' => $domain, 'validhours' => 1);
         $url = sprintf('%s/user/accesstoken', $baseurl);
         if (!xrayws::instance()->hascookie()) {
             if (!self::adminlogin()) {
