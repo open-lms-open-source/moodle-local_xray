@@ -94,6 +94,9 @@ abstract class wsapi {
         if (!$ip) {
             $ip = file_get_contents('http://myexternalip.com/raw');
         }
+        if (!empty($ip)) {
+            $ip = trim($ip);
+        }
         return $ip;
     }
 
