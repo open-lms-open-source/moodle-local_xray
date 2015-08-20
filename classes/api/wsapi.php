@@ -87,6 +87,18 @@ abstract class wsapi {
     }
 
     /**
+     * @return string
+     */
+    public static function mypublicip() {
+        $ip = file_get_contents('https://api.ipify.org/');
+        if (!$ip) {
+            $ip = file_get_contents('http://myexternalip.com/raw');
+        }
+        return $ip;
+    }
+
+
+    /**
      * @return bool|mixed
      * @throws jsonerror_exception
      */
@@ -97,11 +109,11 @@ abstract class wsapi {
             return false;
         }
         $result = false;
-        $data = array('domain' => $domain, 'ip' => getHostByName(getHostName()), 'validhours' => 1);
+        $data = array('domain' => $domain, 'ip' => self::mypublicip(), 'validhours' => 1);
         $url = sprintf('%s/user/accesstoken', $baseurl);
         if (!xrayws::instance()->hascookie()) {
             if (!self::adminlogin()) {
-                return false;
+                return $result;
             }
         }
         $options[CURLOPT_COOKIE] = xrayws::instance()->getcookie();

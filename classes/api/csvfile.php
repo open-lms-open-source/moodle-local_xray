@@ -61,4 +61,10 @@ class csvfile {
         $result = fputcsv($this->resource, (array)$fields);
         return $result;
     }
+
+    public function writecsvheader($fields) {
+        $result = fputcsv($this->resource, array_keys((array)$fields));
+        return $result;
+    }
+
 }
