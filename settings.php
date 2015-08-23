@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die;
 
 /* @var object $USER
  * @var $ADMIN admin_root */
-if ($hassiteconfig and ($USER->username == 'mrsupport')) {
+if ($hassiteconfig) {
     $plugin = 'local_xray';
     $settings = new admin_settingpage($plugin, new lang_string('pluginname', $plugin));
 

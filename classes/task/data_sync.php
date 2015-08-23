@@ -26,6 +26,7 @@
 namespace local_xray\task;
 
 use core\task\scheduled_task;
+use local_xray\api\dataexport;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -70,7 +71,7 @@ class data_sync extends scheduled_task {
             require_once($CFG->dirroot.'/local/xray/lib/vendor/aws/aws-autoloader.php');
 
             $s3 = new \Aws\S3\S3Client([
-                'version' => 'latest',
+                'version' => '2006-03-01',
                 'region'  => $config->s3bucketregion,
                 'credentials' => [
                     'key'    => $config->awskey,
@@ -82,12 +83,27 @@ class data_sync extends scheduled_task {
                 throw new \Exception("S3 bucket {$config->s3bucket} does not exist!");
             }
 
-            // TODO: do export and package files.
+            // TODO: obtain last export timestamp. If none use 0.
+            $timest = 0;
 
-            // TODO: prepare source and prefix correctly.
-            $source = '';
-            $prefix = '';
-            $s3->uploadDirectory($source, $config->s3bucket, $prefix, array('debug' => true));
+            // TODO: do export and package files.
+            $dirbase  = dataexport::getdir();
+            $dirname  = uniqid('export_', true);
+            $transdir = $dirbase.DIRECTORY_SEPARATOR.$dirname;
+            $dir      = make_writable_directory($transdir);
+
+            dataexport::exportcsv($timest, $dir);
+
+            list($compfile, $destfile) = dataexport::compresstargz($dirbase, $dirname);
+            $uploadresult = $s3->upload($config->s3bucket,
+                                        $destfile,
+                                        fopen($compfile, 'rb'),
+                                        'private',
+                                        array('debug' => true));
+            $metadata = $uploadresult->get('@metadata');
+            if ($metadata['statusCode'] != 200) {
+                throw new \Exception("Upload to S3 bucket failed!");
+            }
 
         } catch (\Exception $e) {
             \local_xray\event\sync_failed::create_from_exception($e)->trigger();
