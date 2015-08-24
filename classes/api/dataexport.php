@@ -315,6 +315,14 @@ class dataexport {
     }
 
     /**
+     * @param string $prefix
+     * @return string
+     */
+    protected static function generatefilename($prefix) {
+        return $prefix.'_'.(string)(int)(microtime(true)*1000.0).'.tar.gz';
+    }
+
+    /**
      * @param string $dirbase
      * @param string $dirname
      * @return mixed
@@ -327,7 +335,8 @@ class dataexport {
         $tarpath = get_config('local_xray', 'packertar');
         $bintar  = empty($tarpath) ? 'tar' : $tarpath;
         $escdir  = escapeshellarg($transdir);
-        $basefile = $admin.'_'.(string)time().'.tar.gz';
+        // We have to use microseconds timestamp because of nodejs...
+        $basefile = self::generatefilename($admin);
         $compfile = $dirbase.DIRECTORY_SEPARATOR.$basefile;
         $escfile = escapeshellarg($compfile);
         $esctar  = escapeshellarg($bintar);
