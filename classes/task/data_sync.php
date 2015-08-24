@@ -32,6 +32,12 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Class data_sync - implementation of the task
+ *
+ * IMPORTANT NOTICE: Due to a bug https://tracker.moodle.org/browse/MDL-48156
+ * this scheduled task will work ONLY in Moodle 2.8.1+
+ * In order to backport this for earlier versions of Moodle a classic cron implementation
+ * should be used.
+ *
  * @package local_xray
  */
 class data_sync extends scheduled_task {

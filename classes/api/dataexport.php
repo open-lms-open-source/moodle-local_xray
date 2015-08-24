@@ -233,12 +233,12 @@ class dataexport {
                      cm.instance AS quizid,
                      gg.rawgrade,
                      gg.finalgrade
-          FROM       {grade_grades} gg
-          INNER JOIN {course_modules} cm ON cm.id = gg.itemid
-          INNER JOIN {modules} mo ON cm.module = mo.id AND mo.name='quiz'
+          FROM       {grade_grades}   gg
+          INNER JOIN {course_modules} cm ON cm.id     = gg.itemid
+          INNER JOIN {modules}        mo ON cm.module = mo.id     AND mo.name = :module
           WHERE      cm.added > :added";
 
-        $params = array('added' => $timest);
+        $params = array('added' => $timest, 'module' => 'quiz');
 
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
@@ -265,10 +265,10 @@ class dataexport {
     public static function doexport($sql, array $params, $filename, $dir) {
         global $DB;
 
-        $count     = 10000;
+        $count     = 250000;
         $pos       = 0;
         $counter   = 0;
-        $file      = new csvfile($dir . DIRECTORY_SEPARATOR. "{$filename}.csv");
+        $fcount    = 1;
         $recordset = null;
         $header    = false;
 
@@ -277,8 +277,15 @@ class dataexport {
             $recordset = $DB->get_recordset_sql($sql, $params, $pos, $count);
             $recordset->rewind();
             if (!$recordset->valid()) {
+                $recordset->close();
+                $recordset = null;
                 break;
             }
+
+            $filename = sprintf('%s_%s.csv', $filename, $fcount);
+            $exportf  = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filename);
+            $file     = new csvfile($exportf);
+
             foreach ($recordset as $record) {
                 if (!$header) {
                     $write = $file->writecsvheader($record);
@@ -294,15 +301,17 @@ class dataexport {
                 $counter++;
             }
 
+            $file->close();
+            $recordset->close();
+
+            $file      = null;
             $recordset = null;
 
-            $pos += $count;
+            $pos    += $count;
+            $fcount += 1;
 
         } while($counter >= $pos);
 
-        $file->close();
-
-        $file = null;
     }
 
     /**
