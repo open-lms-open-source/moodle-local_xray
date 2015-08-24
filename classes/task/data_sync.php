@@ -92,13 +92,12 @@ class data_sync extends scheduled_task {
             // TODO: obtain last export timestamp. If none use 0.
             $timest = 0;
 
-            // TODO: do export and package files.
             $dirbase  = dataexport::getdir();
             $dirname  = uniqid('export_', true);
             $transdir = $dirbase.DIRECTORY_SEPARATOR.$dirname;
-            $dir      = make_writable_directory($transdir);
+            make_writable_directory($transdir);
 
-            dataexport::exportcsv($timest, $dir);
+            dataexport::exportcsv($timest, $transdir);
 
             list($compfile, $destfile) = dataexport::compresstargz($dirbase, $dirname);
             $uploadresult = $s3->upload($config->s3bucket,
@@ -110,6 +109,9 @@ class data_sync extends scheduled_task {
             if ($metadata['statusCode'] != 200) {
                 throw new \Exception("Upload to S3 bucket failed!");
             }
+
+            unlink($compfile);
+            dataexport::deletedir($transdir);
 
         } catch (\Exception $e) {
             \local_xray\event\sync_failed::create_from_exception($e)->trigger();

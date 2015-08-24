@@ -343,6 +343,31 @@ class dataexport {
         return array($compfile, $destfile);
     }
 
+    public static function exportmetadata($dir) {
+        $exportf  = sprintf('%s%smetadata.json', $dir, DIRECTORY_SEPARATOR);
+
+        $exportfiles = array_diff(scandir($dir), array('..', '.'));
+        $json = array();
+        foreach ($exportfiles as $file) {
+            $pos = strrpos($file, '_');
+            if ($pos !== false) {
+                $json[] = (object)array('name' => $file, 'table' => substr($file, 0, $pos));
+            }
+        }
+
+        $jsexport = json_encode($json);
+        file_put_contents($exportf, $jsexport);
+    }
+
+    public static function deletedir($dir) {
+        $exportfiles = array_diff(scandir($dir), array('..', '.'));
+        foreach ($exportfiles as $file) {
+            unlink($dir.DIRECTORY_SEPARATOR.$file);
+        }
+
+        rmdir($dir);
+    }
+
     public static function exportcsv($timest, $dir) {
         self::accesslog($timest, $dir);
         self::coursecategories($timest, $dir);
@@ -354,7 +379,6 @@ class dataexport {
         self::userlist($timest, $dir);
         self::threads($timest, $dir);
         self::quiz($timest, $dir);
-
-        // TODO: prepare metadata json file.
+        self::exportmetadata($dir);
     }
 }
