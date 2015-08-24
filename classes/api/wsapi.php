@@ -87,6 +87,32 @@ abstract class wsapi {
     }
 
     /**
+     * Returns result in this format:
+     * array(
+     *   (object)array('id' => someid,
+     *                 'filename' => 'uploaded filename',
+     *                 'added' => 'date when added in ISO8601 format',
+     *                 'analysed' => true|false,
+     *                 'uploadstatus' => 0|1,
+     *                 'datasize' => filesize,
+     *                 'users_id' => someuserid
+     *                 )
+     *  // various objects go on
+     * )
+     *
+     * @return bool|mixed
+     */
+    public static function getdatalist() {
+        $baseurl  = get_config(self::PLUGIN, 'xrayadminserver');
+        if ($baseurl === false) {
+            return false;
+        }
+
+        $url = sprintf('%s/data/list', $baseurl);
+        return self::generic_admingetcall($url);
+    }
+
+    /**
      * @return string
      */
     public static function mypublicip() {
