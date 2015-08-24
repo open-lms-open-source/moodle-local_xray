@@ -129,26 +129,25 @@ class dataexport {
                    l.info,
                    l.module,
                    l.url
-            FROM   {log} l,
-                   {user} u,
-                   {course} c,
-                   {role_assignments} ra,
-                   {context} ctx
-            WHERE  l.course = c.id
-                   AND
-                   l.userid = u.id
-                   AND
-                   l.time > :time
-                   AND
-                   ctx.contextlevel = :ctxt
-                   AND
-                   ctx.instanceid = c.id
-                   AND
-                   ra.userid = u.id
-                   AND
-                   ra.contextid = ctx.id
-                   AND
-                   u.deleted = :deleted";
+            FROM   {log} l
+            INNER JOIN
+              (
+                   SELECT DISTINCT ra.userid, c.id AS courseid
+                   FROM   {role_assignments} ra,
+                          {context} ctx,
+                          {course} c,
+                          {user} u
+                   WHERE  ctx.contextlevel = :ctxt
+                          AND
+                          ra.contextid = ctx.id
+                          AND
+                          ctx.instanceid = c.id
+                          AND
+                          ra.userid = u.id
+                          AND
+                          u.deleted = :deleted
+              ) rx ON rx.courseid = l.course AND rx.userid = l.userid
+            WHERE l.time > :time";
 
         $params = array('time' => $timest, 'ctxt' => CONTEXT_COURSE, 'deleted' => false);
 
@@ -348,77 +347,5 @@ class dataexport {
         self::quiz($timest, $dir);
 
         // TODO: prepare metadata json file.
-    }
-
-    public static function export() {
-        global $CFG;
-
-        $dirbase  = self::getdir();
-        $dirname  = uniqid('export_', true);
-        $transdir = $dirbase.DIRECTORY_SEPARATOR.$dirname;
-        $dir      = make_writable_directory($transdir);
-
-        // Testing value.
-        $timest = 0;
-
-        self::accesslog($timest, $dir);
-        self::coursecategories($timest, $dir);
-        self::courseinfo($timest, $dir);
-        self::enrolment($timest, $dir);
-        self::forums($timest, $dir);
-        self::grades($timest, $dir);
-        self::posts($timest, $dir);
-        self::userlist($timest, $dir);
-        self::threads($timest, $dir);
-        self::quiz($timest, $dir);
-
-        // TODO: prepare metadata json file.
-
-        // Compressed data file is in format <username>/<username>_<timeinseconds>.tar.gz
-        // username is the xrayadmin configuration setting
-        // Final location on S3 bucket is s3://<bucketname>/<username>/<username>_<timestamp>.tar.gz
-
-        $admin = get_config('local_xray', 'xrayadmin');
-        $tarpath = get_config('local_xray', 'packertar');
-        $bintar  = empty($tarpath) ? 'tar' : $tarpath;
-        $escdir  = escapeshellarg($transdir);
-        $basefile = $admin.'_'.(string)time().'.tar.gz';
-        $compfile = $dirbase.DIRECTORY_SEPARATOR.$basefile;
-        $escfile = escapeshellarg($compfile);
-        $esctar  = escapeshellarg($bintar);
-        $destfile = $admin.'/'.$basefile;
-        $command = escapeshellcmd("{$esctar} -C {$escdir} -zcf {$escfile} .");
-        $ret = 0;
-        $lastmsg = system($command, $ret);
-        if ($ret != 0) {
-            // We have error code should not upload...
-            throw new \Exception($lastmsg, $ret);
-        }
-
-        require_once($CFG->dirroot.'/local/xray/lib/vendor/aws/aws-autoloader.php');
-
-        $s3 = new \Aws\S3\S3Client([
-            'version' => '2006-03-01',
-            'region'  => get_config('local_xray', 's3bucketregion'),
-            'credentials' => [
-                'key'    => get_config('local_xray', 'awskey'),
-                'secret' => get_config('local_xray', 'awssecret'),
-            ],
-        ]);
-
-        $bucket = get_config('local_xray', 's3bucket');
-        if ($s3->doesBucketExist($bucket)) {
-            $uploadresult = $s3->upload($bucket,
-                                        $destfile,
-                                        fopen($compfile, 'rb'),
-                                        'private',
-                                        array('debug' => true));
-            $metadata = $uploadresult->get('@metadata');
-            if ($metadata['statusCode'] == 200) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
