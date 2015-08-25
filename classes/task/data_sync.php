@@ -89,8 +89,26 @@ class data_sync extends scheduled_task {
                 throw new \Exception("S3 bucket {$config->s3bucket} does not exist!");
             }
 
-            // TODO: obtain last export timestamp. If none use 0.
+            // Get last export timestamp. If none use 0.
+            $data = \local_xray\api\wsapi::datalist();
+            if ($data === false) {
+                \local_xray\api\xrayws::instance()->print_error();
+            }
+
             $timest = 0;
+            $dates = array();
+            foreach ($data as $item) {
+                try {
+                    $dt = new \DateTime($item->added);
+                    $dates[] = $dt->getTimestamp();
+                } catch (\Exception $e) {
+                    // Silence it.
+                }
+            }
+            if (!empty($dates)) {
+                arsort($dates);
+                $timest = $dates[0];
+            }
 
             $dirbase  = dataexport::getdir();
             $dirname  = uniqid('export_', true);
