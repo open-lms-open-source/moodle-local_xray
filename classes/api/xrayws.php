@@ -311,7 +311,11 @@ class xrayws {
                         $last_error_msg .= $this->request_headers();
                         $last_error_msg .= "\n\n";
                         $last_error_msg .= "Response headers:\n";
-                        $last_error_msg .= $this->response_headers() . "\n";
+                        $last_error_msg .= $this->response_headers();
+                        $last_error_msg .= "\n\n";
+                        $last_error_msg .= "Response body:\n";
+                        $last_error_msg .= $this->lastresponse();
+                        $last_error_msg .= "\n";
                     }
                 } else {
                     $last_error_msg  = \html_writer::span($this->geterrormsg()) . \html_writer::empty_tag('br');
@@ -329,6 +333,10 @@ class xrayws {
                         $rstitle = \html_writer::span('Response headers:');
                         $response = \html_writer::tag('pre', s($this->response_headers()), array('title' => 'Response headers'));
                         $last_error_msg .= \html_writer::div($rstitle . $response);
+                        $last_error_msg .= \html_writer::empty_tag('br');
+                        $response_body = \html_writer::tag('pre', s($this->lastresponse()), array('title' => 'Response body'));
+                        $rsbodytitle = \html_writer::span('Response body:');
+                        $last_error_msg .= \html_writer::div($rsbodytitle . $response_body);
                     }
                 }
             }
