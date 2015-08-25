@@ -25,6 +25,7 @@ function local_xray_show_on_table(YUI, data) {
 		    "retrieve": true,
 		    "paging": data.paging,
 		    "searching": data.search,
+		    "dom" : data.dom,
 		    "lengthMenu": data.lengthMenu,
 		    "oLanguage": {
 		      "sProcessing": data.sProcessingMessage

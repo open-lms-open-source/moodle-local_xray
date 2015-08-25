@@ -98,6 +98,12 @@ class local_xray_datatable {
 	public $paging;
 	
 	/**
+	 * Change Dom
+	 * @var string
+	 */
+	public $dom;
+	
+	/**
 	 * Length menu
 	 * @var array
 	 */
@@ -137,13 +143,13 @@ class local_xray_datatable {
 	 * @param string $paging
 	 * @param array $lengthMenu
 	 */
-	public function __construct($id, $jsonurl, array $columns, $search = false, $paging=true, $lengthMenu = array(10, 50, 100)) {
-		
+	public function __construct($id, $jsonurl, array $columns, $search = false, $paging=true, $dom = 'lftipr', $lengthMenu = array(10, 50, 100)) {
 		$this->id = $id;
 		$this->jsonurl = $jsonurl;
 		$this->columns = $columns;
 		$this->search = $search;
 		$this->paging = $paging;
+		$this->dom = $dom;
 		$this->lengthMenu = $lengthMenu;
 		$this->sProcessingMessage = get_string('table_fetchingdata', 'local_xray');
 		$this->errorMessage = get_string('error_datatables','local_xray');

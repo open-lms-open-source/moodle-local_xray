@@ -138,9 +138,9 @@
     background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
 }
 
-/** Horizontal Scrool to Discussion Activity by Week (Table) **/
+/** Horizontal Scrool to tables (Table) **/
 
-#table_discussionreport_discussion_activity_by_week_wrapper, #table_discussionreportindividual_discussion_activity_by_week_wrapper{
+.xray_table_scrool{
     overflow: auto;
 }
 
