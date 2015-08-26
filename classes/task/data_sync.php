@@ -38,6 +38,10 @@ defined('MOODLE_INTERNAL') || die();
  * In order to backport this for earlier versions of Moodle a classic cron implementation
  * should be used.
  *
+ * To manually execute run:
+ *
+ * php admin/tool/task/cli/schedule_task.php --execute=\\local_xray\\task\\data_sync
+ *
  * @package local_xray
  */
 class data_sync extends scheduled_task {
