@@ -30,7 +30,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+            $response = \local_xray\api\wsapi::course($this->courseid, $report);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -89,7 +89,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             $report = "discussion";
             $element = "discussionMetrics";
             
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
+            $response = \local_xray\api\wsapi::courseelement($this->courseid,
                                                              $element, 
                                                              $report, 
                                                              null, 
@@ -115,8 +115,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                             // Url for discussionreportindividual.
                             $url = new moodle_url("/local/xray/view.php",
                                     array("controller" => "discussionreportindividual",
-                                            "xraycourseid" => $this->courseid,
-                                            "xrayuserid" => $row->participantId->value
+                                          "courseid" => $this->courseid,
+                                          "userid" => $row->participantId->value
                                     ));
                             $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
                                     "title" => $discussionreportind,
@@ -162,7 +162,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             $report = "discussion";
             $element = "discussionActivityByWeek";
 
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
+            $response = \local_xray\api\wsapi::courseelement($this->courseid,
                     $element,
                     $report,
                     null,
