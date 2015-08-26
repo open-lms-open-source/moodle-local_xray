@@ -30,7 +30,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
         try {
             $report = "grades";
-            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID_HISTORY_II, $report);//TODO we use other course id to test this
+            $response = \local_xray\api\wsapi::course($this->courseid, $report);//TODO we use other course id to test this
             
             if(!$response) {
                 // Fail response of webservice.
@@ -80,7 +80,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         try {
             $report = "grades";
             $element = "grades1";
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID_HISTORY_II,
+            $response = \local_xray\api\wsapi::courseelement($this->courseid,
                     $element,
                     $report,
                     null,
@@ -144,7 +144,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         try {
             $report = "grades";
             $element = "grades2";
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID_HISTORY_II,
+            $response = \local_xray\api\wsapi::courseelement($this->courseid,
                     $element,
                     $report,
                     null,

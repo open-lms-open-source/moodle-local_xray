@@ -49,7 +49,7 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
         try {
             $report = "grades";
             //TODO:: Temp Hardcoded id.
-            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID_HISTORY_II, $report, "forum/".parent::XRAY_QUIZID);
+            $response = \local_xray\api\wsapi::course($this->courseid, $report, "forum/".parent::XRAY_QUIZID);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());

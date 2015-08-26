@@ -13,10 +13,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
     public function init() {
         parent::init();
-        //$this->courseid = required_param('courseid', PARAM_RAW);
-        // TODO:: Hardcodeid by test.
-        $this->courseid = required_param('xraycourseid', PARAM_RAW);
-        $this->xrayuserid = required_param('xrayuserid', PARAM_RAW);
+        $this->courseid = required_param('courseid', PARAM_RAW);
+        $this->userid = required_param('userid', PARAM_RAW);
     }
 
     public function view_action() {
@@ -33,7 +31,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report, $this->xrayuserid);
+            $response = \local_xray\api\wsapi::course($this->courseid, $report, $this->userid);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
@@ -41,7 +39,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             } else {
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate,
-                                                     $DB->get_field('user', 'username', array("id" => $this->xrayuserid)),
+                                                     $DB->get_field('user', 'username', array("id" => $this->userid)),
                                                      $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
                 $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
@@ -62,7 +60,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     private function participation_metrics() {
         $output = "";
-        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, $this->xrayuserid);
+        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, $this->userid);
         return $output;
     }
     
@@ -83,10 +81,10 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             $report = "discussion";
             $element = "discussionMetrics";
     
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
+            $response = \local_xray\api\wsapi::courseelement($this->courseid,
                     $element,
                     $report,
-                    parent::XRAY_USERID,
+                    $this->userid,
                     '',
                     '',
                     $start,
@@ -133,7 +131,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     private function discussion_activity_by_week($element) {
         $output = "";
-        $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid, $this->xrayuserid, $element);
+        $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid, $this->userid, $element);
         return $output;
     }
     
@@ -154,10 +152,10 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             $report = "discussion";
             $element = "discussionActivityByWeek";
     
-            $response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, // TODO:: Hardcoded.
+            $response = \local_xray\api\wsapi::courseelement($this->courseid, // TODO:: Hardcoded.
                     $element,
                     $report,
-                    parent::XRAY_USERID,
+                    $this->userid,
                     '',
                     '',
                     $start,
