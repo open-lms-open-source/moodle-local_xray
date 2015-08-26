@@ -74,6 +74,8 @@ class data_sync extends scheduled_task {
                 throw new \Exception('Data Synchronization is not enabled!');
             }
 
+            \local_xray\event\sync_log::create_msg("Start data sync.")->trigger();
+
             require_once($CFG->dirroot.'/local/xray/lib/vendor/aws/aws-autoloader.php');
 
             $s3 = new \Aws\S3\S3Client([
@@ -118,18 +120,28 @@ class data_sync extends scheduled_task {
             dataexport::exportcsv($timest, $transdir);
 
             list($compfile, $destfile) = dataexport::compresstargz($dirbase, $dirname);
-            $uploadresult = $s3->upload($config->s3bucket,
-                                        $destfile,
-                                        fopen($compfile, 'rb'),
-                                        'private',
-                                        array('debug' => true));
-            $metadata = $uploadresult->get('@metadata');
-            if ($metadata['statusCode'] != 200) {
-                throw new \Exception("Upload to S3 bucket failed!");
+            if ($compfile !== null) {
+                $uploadresult = $s3->upload($config->s3bucket,
+                    $destfile,
+                    fopen($compfile, 'rb'),
+                    'private',
+                    array('debug' => true));
+                $metadata = $uploadresult->get('@metadata');
+                if ($metadata['statusCode'] != 200) {
+                    throw new \Exception("Upload to S3 bucket failed!");
+                }
+
+                \local_xray\event\sync_log::create_msg("Uploaded {$destfile}.")->trigger();
+
+                unlink($compfile);
+            } else {
+                \local_xray\event\sync_log::create_msg("No data to upload.")->trigger();
             }
 
-            unlink($compfile);
+            // Remove the directory.
             dataexport::deletedir($transdir);
+
+            \local_xray\event\sync_log::create_msg("Completed data sync.")->trigger();
 
         } catch (\Exception $e) {
             \local_xray\event\sync_failed::create_from_exception($e)->trigger();

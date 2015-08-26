@@ -208,3 +208,5 @@ $string['datasync'] = 'Data Synchronization';
 $string['syncfailed'] = 'XRay data sync failed';
 $string['unexperror'] = 'Unexpected error';
 $string['syncfailedexplanation'] = 'Failed to synchronize data with XRay.';
+$string['synclog'] = 'XRay data sync info message';
+$string['synclogexplanation'] = 'Regular log entry for data sync.';

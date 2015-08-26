@@ -331,22 +331,28 @@ class dataexport {
     public static function compresstargz($dirbase, $dirname) {
         $transdir = $dirbase.DIRECTORY_SEPARATOR.$dirname;
 
-        $admin = get_config('local_xray', 'xrayadmin');
-        $tarpath = get_config('local_xray', 'packertar');
-        $bintar  = empty($tarpath) ? 'tar' : $tarpath;
-        $escdir  = escapeshellarg($transdir);
-        // We have to use microseconds timestamp because of nodejs...
-        $basefile = self::generatefilename($admin);
-        $compfile = $dirbase.DIRECTORY_SEPARATOR.$basefile;
-        $escfile = escapeshellarg($compfile);
-        $esctar  = escapeshellarg($bintar);
-        $destfile = $admin.'/'.$basefile;
-        $command = escapeshellcmd("{$esctar} -C {$escdir} -zcf {$escfile} .");
-        $ret = 0;
-        $lastmsg = system($command, $ret);
-        if ($ret != 0) {
-            // We have error code should not upload...
-            throw new \Exception($lastmsg, $ret);
+        $exportfiles = array_diff(scandir($transdir), array('..', '.'));
+        $compfile = null;
+        $destfile = null;
+
+        if (!empty($exportfiles)) {
+            $admin = get_config('local_xray', 'xrayadmin');
+            $tarpath = get_config('local_xray', 'packertar');
+            $bintar = empty($tarpath) ? 'tar' : $tarpath;
+            $escdir = escapeshellarg($transdir);
+            // We have to use microseconds timestamp because of nodejs...
+            $basefile = self::generatefilename($admin);
+            $compfile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
+            $escfile = escapeshellarg($compfile);
+            $esctar = escapeshellarg($bintar);
+            $destfile = $admin . '/' . $basefile;
+            $command = escapeshellcmd("{$esctar} -C {$escdir} -zcf {$escfile} .");
+            $ret = 0;
+            $lastmsg = system($command, $ret);
+            if ($ret != 0) {
+                // We have error code should not upload...
+                throw new \Exception($lastmsg, $ret);
+            }
         }
 
         return array($compfile, $destfile);
@@ -364,8 +370,10 @@ class dataexport {
             }
         }
 
-        $jsexport = json_encode($json);
-        file_put_contents($exportf, $jsexport);
+        if (!empty($json)) {
+            $jsexport = json_encode($json);
+            file_put_contents($exportf, $jsexport);
+        }
     }
 
     public static function deletedir($dir) {
