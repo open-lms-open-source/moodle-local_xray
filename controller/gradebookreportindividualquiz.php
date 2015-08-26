@@ -11,10 +11,10 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
 class local_xray_controller_gradebookreportindividualquiz extends local_xray_controller_reports {
 
     /**
-     * Forum id
+     * Quiz id
      * @var integer
      */
-    private $forumid;
+    private $quizid;
     
     /**
      * Course module id.
@@ -25,9 +25,9 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
     public function init() {
         parent::init();
         global $DB;
-        $this->courseid = required_param('courseid', PARAM_STRINGID);
-        $this->cmid = required_param('cmid', PARAM_RAW); // Cmid of forum.
-        $this->quizid = required_param('forum', PARAM_RAW);
+        $this->courseid = required_param('courseid', PARAM_RAW);
+        $this->cmid = required_param('cmid', PARAM_RAW); // Cmid of quiz.
+        $this->quizid = required_param('quiz', PARAM_RAW);
     }
     
     public function view_action() {
@@ -49,7 +49,7 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
         try {
             $report = "grades";
             //TODO:: Temp Hardcoded id.
-            $response = \local_xray\api\wsapi::course($this->courseid, $report, "forum/".parent::XRAY_QUIZID);
+            $response = \local_xray\api\wsapi::course($this->courseid, $report, "quiz/".$this->quizid);
             if(!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
