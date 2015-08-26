@@ -29,7 +29,7 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
 
     	try {
     		$report = "discussionEndogenicPlagiarism";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+    		$response = \local_xray\api\wsapi::course($this->courseid, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			\local_xray\api\xrayws::instance()->print_error();

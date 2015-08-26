@@ -424,8 +424,8 @@ class local_xray_renderer extends plugin_renderer_base {
         );
          
         $datatable = new local_xray_datatable(__FUNCTION__,
-                "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&xraycourseid=".$courseid."&xrayuserid=".$userid,
-                $columns);//TODO xraycourseid added
+                "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=".$courseid."&userid=".$userid,
+                $columns);
          
         // Create standard table.
         $output = $this->standard_table((array) $datatable);
@@ -434,7 +434,7 @@ class local_xray_renderer extends plugin_renderer_base {
     }
     
     /**
-     * Graphic Discussion Activity by Week (TABLE)//TODO params
+     * Graphic Discussion Activity by Week (TABLE)
      * @param stdClass $element
      */
     public function discussionreportindividual_discussion_activity_by_week($courseid, $userid, $element) {
@@ -451,7 +451,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $number_of_weeks = count($columns)-1;//get number of weeks - we need to rest the "week" title column
     
         $datatable = new local_xray_datatable(__FUNCTION__,
-                "view.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&xraycourseid=".$courseid."&xrayuserid=".$userid."&count=".$number_of_weeks,
+                "view.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&courseid=".$courseid."&userid=".$userid."&count=".$number_of_weeks,
                 $columns, 
                 false, 
                 false,// We don't need pagination because we have only four rows

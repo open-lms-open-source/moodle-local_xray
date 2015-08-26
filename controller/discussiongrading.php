@@ -29,7 +29,7 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 		
 		try {
 			$report = "discussionGrading";
-			$response = \local_xray\api\wsapi::course ( parent::XRAY_COURSEID, $report );
+			$response = \local_xray\api\wsapi::course ($this->courseid, $report );
 			if (! $response) {
 				// Fail response of webservice.
     			\local_xray\api\xrayws::instance()->print_error();
@@ -72,7 +72,7 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 		try {
 			$report = "discussionGrading";
 			$element = "studentDiscussionGrades";
-			$response = \local_xray\api\wsapi::courseelement ( parent::XRAY_COURSEID, $element, $report, null, '', '', $start, $count );
+			$response = \local_xray\api\wsapi::courseelement ($this->courseid, $element, $report, null, '', '', $start, $count );
 			
 			if (! $response) {
 				throw new Exception ( \local_xray\api\xrayws::instance ()->geterrormsg () );

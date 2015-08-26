@@ -30,7 +30,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     	try {
     		$report = "activity";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+    		$response = \local_xray\api\wsapi::course($this->courseid, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			\local_xray\api\xrayws::instance()->print_error();
@@ -85,7 +85,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	try {
     		$report = "activity";
     		$element = "studentList";
-    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID,
+    		$response = \local_xray\api\wsapi::courseelement($this->courseid,
     				                                         $element, 
     				                                         $report, 
     				                                         null, 
@@ -110,9 +110,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 	    					// Url for activityreportindividual.
 	    					$url = new moodle_url("/local/xray/view.php", 
 	    							              array("controller" => "activityreportindividual",
-	    							              		//"courseid" => $this->courseid, // TODO:: HArdcoded id for test.
-	    							              		"xraycourseid" => $this->courseid,
-	    							              		"xrayuserid" => $row->participantId->value
+	    							              		"courseid" => $this->courseid,
+	    							              		"userid" => $row->participantId->value
 	    							              ));
 	    					$r->action = html_writer::link($url, '', array("class" => "icon_activityreportindividual",
 	    							                                       "title" => $activityreportind,
@@ -218,7 +217,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	 
     	try {
     		$report = "firstLogin";
-    		$response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report);
+    		$response = \local_xray\api\wsapi::course($this->courseid, $report);
     		if(!$response) {
     			// Fail response of webservice.
     			\local_xray\api\xrayws::instance()->print_error();
@@ -263,7 +262,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     	try {
     		$report = "firstLogin";
     		$element = "nonStarters";
-    		$response = \local_xray\api\wsapi::courseelement(parent::XRAY_COURSEID, 
+    		$response = \local_xray\api\wsapi::courseelement($this->courseid, 
     				                                         $element, 
     				                                         $report, 
     				                                         null, 

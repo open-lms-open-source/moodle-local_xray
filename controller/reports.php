@@ -20,12 +20,7 @@ class local_xray_controller_reports extends mr_controller {
 	 * User id
 	 * @var integer
 	 */
-	protected $xrayuserid;
-	
-	const XRAY_COURSEID = 317; //TODO:: Example first integration. This is hardcoded for test with xray.
-	const XRAY_COURSEID_HISTORY_II = 2444; //TODO:: Example first integration. This is hardcoded for test Gradebook Report.
-	const XRAY_USERID = 136; //TODO:: Example first integration. This is hardcoded for test with xray. User Stephen Bell.
-	const XRAY_FORUMID = 3255; //TODO:: Example first integration. This is hardcoded for test with xray. Forum 3480.
+	protected $userid;
 	
 	public function init() {
 		parent::init();

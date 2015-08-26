@@ -49,7 +49,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
         try {
             $report = "discussion";
             //TODO:: Temp Hardcoded id.
-            $response = \local_xray\api\wsapi::course(parent::XRAY_COURSEID, $report, "forum/".parent::XRAY_FORUMID);
+            $response = \local_xray\api\wsapi::course($this->courseid, $report, "forum/".$this->forumid);
             if(!$response) {
                 // Fail response of webservice.
     			\local_xray\api\xrayws::instance()->print_error();
