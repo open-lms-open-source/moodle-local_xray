@@ -25,7 +25,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     public function init() {
         parent::init();
         global $DB;
-        $this->courseid = required_param('courseid', PARAM_STRINGID);
+        $this->courseid = required_param('courseid', PARAM_RAW);
         $this->cmid = required_param('cmid', PARAM_RAW); // Cmid of forum.
         $this->forumid = required_param('forum', PARAM_RAW);
     }
@@ -48,7 +48,6 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
         try {
             $report = "discussion";
-            //TODO:: Temp Hardcoded id.
             $response = \local_xray\api\wsapi::course($this->courseid, $report, "forum/".$this->forumid);
             if(!$response) {
                 // Fail response of webservice.

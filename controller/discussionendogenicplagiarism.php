@@ -12,7 +12,7 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
  
 	public function init() {
 		// This report will get data by courseid.
-		$this->courseid = required_param('courseid', PARAM_STRINGID);
+		$this->courseid = required_param('courseid', PARAM_RAW);
 	}
 	
     public function view_action() {
@@ -31,6 +31,7 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
     		$report = "discussionEndogenicPlagiarism";
     		$response = \local_xray\api\wsapi::course($this->courseid, $report);
     		if(!$response) {
+    			$this->debugwebservice();
     			// Fail response of webservice.
     			\local_xray\api\xrayws::instance()->print_error();
     			
