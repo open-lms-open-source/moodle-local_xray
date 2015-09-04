@@ -306,6 +306,7 @@ class dataexport {
 
             $file      = null;
             $recordset = null;
+            $header    = false;
 
             $pos    += $count;
             $fcount += 1;
