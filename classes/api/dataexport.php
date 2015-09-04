@@ -282,9 +282,9 @@ class dataexport {
                 break;
             }
 
-            $filename = sprintf('%s_%s.csv', $filename, $fcount);
-            $exportf  = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filename);
-            $file     = new csvfile($exportf);
+            $filenamep = sprintf('%s_%s.csv', $filename, $fcount);
+            $exportf   = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filenamep);
+            $file      = new csvfile($exportf);
 
             foreach ($recordset as $record) {
                 if (!$header) {
