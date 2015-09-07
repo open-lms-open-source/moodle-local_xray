@@ -270,7 +270,6 @@ class dataexport {
         $counter   = 0;
         $fcount    = 1;
         $recordset = null;
-        $header    = false;
 
         do {
 
@@ -282,18 +281,10 @@ class dataexport {
                 break;
             }
 
-            $filenamep = sprintf('%s_%s.csv', $filename, $fcount);
-            $exportf   = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filenamep);
+            $exportf   = sprintf('%s%s%s_%08d.csv', $dir, DIRECTORY_SEPARATOR, $filename, $fcount);
             $file      = new csvfile($exportf);
 
             foreach ($recordset as $record) {
-                if (!$header) {
-                    $write = $file->writecsvheader($record);
-                    if ($write === false) {
-                        break;
-                    }
-                    $header = true;
-                }
                 $write = $file->writecsv($record);
                 if ($write === false) {
                     break;
@@ -306,7 +297,6 @@ class dataexport {
 
             $file      = null;
             $recordset = null;
-            $header    = false;
 
             $pos    += $count;
             $fcount += 1;

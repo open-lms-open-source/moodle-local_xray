@@ -25,11 +25,20 @@
 
 namespace local_xray\api;
 
+/**
+ * Class csvfile - for exporting data into CSV file
+ * @package local_xray\api
+ */
 class csvfile {
     /**
      * @var null|resource
      */
     private $resource = null;
+
+    /**
+     * @var bool
+     */
+    private $header = false;
 
     /**
      * @param string $path
@@ -46,10 +55,14 @@ class csvfile {
         $this->close();
     }
 
+    /**
+     * @return void
+     */
     public function close() {
         if (is_resource($this->resource)) {
             fclose($this->resource);
             $this->resource = null;
+            $this->header = false;
         }
     }
 
@@ -58,13 +71,25 @@ class csvfile {
      * @return int|bool
      */
     public function writecsv($fields) {
-        $result = fputcsv($this->resource, (array)$fields);
+        $data = (array)$fields;
+        if (!$this->header) {
+            $result = fputcsv($this->resource, array_keys($data));
+            if ($result === false) {
+                return false;
+            }
+            $this->header = true;
+        }
+        $result = fputcsv($this->resource, $data);
+        $data = null;
         return $result;
     }
 
-    public function writecsvheader($fields) {
-        $result = fputcsv($this->resource, array_keys((array)$fields));
-        return $result;
+    /**
+     * @return void
+     */
+    public function flush() {
+        if (is_resource($this->resource)) {
+            fflush($this->resource);
+        }
     }
-
 }
