@@ -148,6 +148,7 @@ class data_sync extends scheduled_task {
             \local_xray\event\sync_log::create_msg("Completed data sync.")->trigger();
 
         } catch (\Exception $e) {
+            mtrace($e->getMessage());
             \local_xray\event\sync_failed::create_from_exception($e)->trigger();
         }
     }
