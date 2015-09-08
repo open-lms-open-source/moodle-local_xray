@@ -721,5 +721,36 @@ class local_xray_renderer extends plugin_renderer_base {
     }
     
     /************************** End Elements for Gradebook Report **************************/
+    
+    /************************** Course Header **************************/
+    
+    /**
+     * Course Header
+     */
+    public function course_header() {
+        
+        //TODO harcoded
+        $students_total = 150;
+        $students_risk = 6;
+        $students_visitors = 20;
+        
+        //Students at risk
+        $atrisk = html_writer::tag('h3', get_string('atrisk', 'local_xray'));
+        $students_atrisk = html_writer::div($students_risk.get_string('of', 'local_xray'). $students_total);
+        $atriskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray'));
+        
+        $atrisk_column = html_writer::div($atrisk.$students_atrisk.$atriskfromlastweek, 'local_xray_course_atrisk');
+        
+        //Students Visitors
+        $visitors = html_writer::tag('h3', get_string('visitors', 'local_xray'));
+        $students_visitors = html_writer::div($students_visitors.get_string('of', 'local_xray'). $students_total);
+        $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray'));
+        
+        $visitors_column = html_writer::div($visitors.$students_visitors.$visitorsfromlastweek, 'local_xray_course_visitors');
+        
+        return html_writer::div($atrisk_column.$visitors_column);
+    }
+    
+    /************************** End Course Header **************************/
 
 }

@@ -210,3 +210,11 @@ $string['unexperror'] = 'Unexpected error';
 $string['syncfailedexplanation'] = 'Failed to synchronize data with XRay.';
 $string['synclog'] = 'XRay data sync info message';
 $string['synclogexplanation'] = 'Regular log entry for data sync.';
+
+/* Course Header */
+$string['atrisk'] = 'At risk';
+$string['fromlastweek'] = 'from last week';
+$string['of'] = ' of ';
+$string['studentatrisk'] = 'student at risk';
+$string['studentvisitslastdays'] = 'student visits in the last 7 days';
+$string['visitors'] = 'Visitors';
