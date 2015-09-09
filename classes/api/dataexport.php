@@ -350,7 +350,7 @@ class dataexport {
     }
 
     public static function exportmetadata($dir) {
-        $exportf  = sprintf('%s%smetadata.json', $dir, DIRECTORY_SEPARATOR);
+        $exportf  = sprintf('%s%smeta.json', $dir, DIRECTORY_SEPARATOR);
 
         $exportfiles = array_diff(scandir($dir), array('..', '.'));
         $json = array();
