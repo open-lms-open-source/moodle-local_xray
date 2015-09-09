@@ -733,25 +733,30 @@ class local_xray_renderer extends plugin_renderer_base {
         $students_total = 150;
         $students_risk = 6;
         $students_visitors = 20;
+        $percentaje_risk_flw = 4;
+        $percentaje_visitors_flw = 4; 
+        
         
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
         
         //Students at risk
         $atrisk = html_writer::tag('h3', get_string('atrisk', 'local_xray'));
         $students_atrisk = html_writer::div($students_risk.$of.$students_total, 'h1');
-        $atriskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray'));
         $studentatrisk = html_writer::div(get_string('studentatrisk', 'local_xray'));
+        $atriskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $percentaje_risk_flw), 'xray-comparitor text-danger');
         
+        //TODO shall we use col-sm-6 class?
         $atrisk_column = html_writer::div($atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek, 'local_xray_course_atrisk');
         
         //Students Visitors
         $visitors = html_writer::tag('h3', get_string('visitors', 'local_xray'));
         $students_visitors = html_writer::div($students_visitors.$of.$students_total, 'h1');
-        $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray'));
         $studentvisitslastdays = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
+        $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $percentaje_visitors_flw), 'xray-comparitor text-danger');
         
+        //TODO shall we use col-sm-6 class?
         $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek, 'local_xray_course_visitors');
-            
+        
         return html_writer::div($atrisk_column.$visitors_column);
     
     }
