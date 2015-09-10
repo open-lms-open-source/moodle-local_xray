@@ -32,6 +32,10 @@ defined('MOODLE_INTERNAL') || die();
  * @package local_xray
  */
 class dataexport {
+    /**
+     * @var mixed
+     */
+    protected static $meta = null;
 
     public static function coursecategories($timest, $dir) {
 
@@ -281,7 +285,8 @@ class dataexport {
                 break;
             }
 
-            $exportf   = sprintf('%s%s%s_%08d.csv', $dir, DIRECTORY_SEPARATOR, $filename, $fcount);
+            $filenamer = sprintf('%s_%08d.csv', $filename, $fcount);
+            $exportf   = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filenamer);
             $file      = new csvfile($exportf);
 
             foreach ($recordset as $record) {
@@ -297,6 +302,9 @@ class dataexport {
 
             $file      = null;
             $recordset = null;
+
+            // Store metadata for later.
+            self::$meta[] = (object)array('name' => $filenamer, 'table' => $filename);
 
             $pos    += $count;
             $fcount += 1;
@@ -352,17 +360,8 @@ class dataexport {
     public static function exportmetadata($dir) {
         $exportf  = sprintf('%s%smeta.json', $dir, DIRECTORY_SEPARATOR);
 
-        $exportfiles = array_diff(scandir($dir), array('..', '.'));
-        $json = array();
-        foreach ($exportfiles as $file) {
-            $pos = strrpos($file, '_');
-            if ($pos !== false) {
-                $json[] = (object)array('name' => $file, 'table' => substr($file, 0, $pos));
-            }
-        }
-
-        if (!empty($json)) {
-            $jsexport = json_encode($json);
+        if (!empty(self::$meta)) {
+            $jsexport = json_encode(self::$meta, JSON_PRETTY_PRINT);
             file_put_contents($exportf, $jsexport);
         }
     }
@@ -377,16 +376,20 @@ class dataexport {
     }
 
     public static function exportcsv($timest, $dir) {
-        self::accesslog($timest, $dir);
+        self::$meta = array();
+
+        // Order of export matters. Do not change unless sure.
         self::coursecategories($timest, $dir);
         self::courseinfo($timest, $dir);
-        self::enrolment($timest, $dir);
-        self::forums($timest, $dir);
-        self::grades($timest, $dir);
-        self::posts($timest, $dir);
         self::userlist($timest, $dir);
+        self::enrolment($timest, $dir);
+        self::accesslog($timest, $dir);
+        self::forums($timest, $dir);
         self::threads($timest, $dir);
+        self::posts($timest, $dir);
         self::quiz($timest, $dir);
+        self::grades($timest, $dir);
+
         self::exportmetadata($dir);
     }
 }
