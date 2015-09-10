@@ -727,7 +727,6 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Snap Dashboard Xray
      */
-    
     public function snap_dashboard_xray() {
         global $COURSE;
         
@@ -740,14 +739,14 @@ class local_xray_renderer extends plugin_renderer_base {
             if(!$response) {
                 // Fail response of webservice.
                 \local_xray\api\xrayws::instance()->print_error();
-                 
+                
             } else {
                 
                 // Get users in risk.
                 $users_in_risk = array();
                 if(isset($response->elements[1]->data) && !empty($response->elements[1]->data)) {
                     foreach($response->elements[1]->data as $key => $obj) {
-                        if($obj->severity->value == "low") {
+                        if($obj->severity->value == "low" || $obj->severity->value == "high") {
                             $users_in_risk[] = $obj->participantId->value;
                         }
                     }
@@ -757,36 +756,25 @@ class local_xray_renderer extends plugin_renderer_base {
                 $count_students_enrolled = (isset($response->elements[4]->items[2]->value) ? $response->elements[4]->items[2]->value : "-");
                 $count_students_visits_lastsevendays = (isset($response->elements[4]->items[0]->value) ? $response->elements[4]->items[0]->value : "-");
                 
-                //TODO no available yet
-                //$students_visits_lastweek = '';
-                //$students_risk_lastweek = '';
-                
-                // TODO:: Get list of students in risk (Pending in webservice).
-                
                 $output .= $this->snap_dashboard_xray_output($users_in_risk, $count_students_enrolled, $count_students_risk, $count_students_visits_lastsevendays);
-               //var_dump($output);
             }
         } catch(exception $e) {
-            print_error('error_xray', $this->component,'',null, $e->getMessage());
+        	// TODO: Show message, throw exception or nothing ?? 
+        	$output .= get_string('error_xray', 'local_xray');
         }
         
         return $output;
-        
     }
     
     /**
-     * 
-     * TODO
+     * Snap Dashboard Xray
      * 
      * @param Int $users_in_risk
      * @param Int $students_enrolled
      * @param Int $students_risk
      * @param Int $students_visits_lastsevendays
-     * @return string*/
-    
-    //TODO snap_dashboard_xray
-    //TODO high and low
-    // 
+     * @return string
+     * */
     public function snap_dashboard_xray_output($users_in_risk, $students_enrolled, $students_risk, $students_visits_lastsevendays/*, $students_risk_lastweek, $students_risk_lastweek*/){
         
         global $DB, $OUTPUT;
@@ -799,13 +787,21 @@ class local_xray_renderer extends plugin_renderer_base {
         $studentatrisk = html_writer::div(get_string('studentatrisk', 'local_xray'));
         $atriskfromlastweek = '';//html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');//TODO we do not have this data now
         
+        /*
         $users_li_one = $this->snap_dashboard_xray_users_li(array_slice($users_in_risk, 0, 3));
         $users_li_two = $this->snap_dashboard_xray_users_li(array_slice($users_in_risk, 3, 6));
         
         $list = html_writer::alist(array($users_li_one, $users_li_two));
         $users_profile = html_writer::div($list);
+        */
         
-        //TODO shall we use col-sm-6 class?
+        $users_profile = "";
+        if(!empty($users_in_risk)) {
+        	foreach($users_in_risk as $key => $id) {
+        		$users_profile .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
+        	}
+        }
+        
         $atrisk_column = html_writer::div($atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek.$users_profile, 'col-sm-6');
         
         //Students Visitors
@@ -814,7 +810,6 @@ class local_xray_renderer extends plugin_renderer_base {
         $studentvisitslastdays = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
         $visitorsfromlastweek = '';//html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');//TODO we do not have this data now
         
-        //TODO shall we use col-sm-6 class?
         $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek, 'col-sm-6');
         
         return html_writer::div($atrisk_column.$visitors_column);
@@ -824,8 +819,8 @@ class local_xray_renderer extends plugin_renderer_base {
      * 
      * @param array $users
      * @return string
-     * */
-    
+     * 
+     */
     public function snap_dashboard_xray_users_li($users){
         global $DB, $OUTPUT;
 
@@ -838,7 +833,34 @@ class local_xray_renderer extends plugin_renderer_base {
         }
         
         return $li;
-        
+    }
+    
+    /**
+     * Renderer (copy of print_teacher_profile in renderer.php of snap theme).
+     * @param stdClass $user
+     */
+    public function print_student_profile($user) {
+    	global $CFG, $COURSE;
+    
+    	$userpicture = new user_picture($user);
+    	$userpicture->link = false;
+    	$userpicture->alttext = false;
+    	$userpicture->size = 100;
+    	$picture = $this->render($userpicture);
+    
+    	$fullname = '<a href="'.$CFG->wwwroot.'/user/profile.php?id='.$user->id.'">'.format_string(fullname($user)).'</a>';
+    	$coursecontext = context_course::instance($COURSE->id);
+    	$user->description = file_rewrite_pluginfile_urls($user->description,
+    			                                          'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
+    	$description = format_text($user->description, $user->descriptionformat);
+    
+    	return "<div class=snap-media-object>
+		    	$picture
+		    	<div class=snap-media-body>
+		    	$fullname
+		    	$description
+		    	</div>
+		    	</div>";
     }
     
     /************************** End Course Header **************************/
