@@ -27,7 +27,7 @@ public function view_action() {
         // Add title to breadcrumb.
         $PAGE->navbar->add(get_string($this->name, $this->component));
         
-        $output = $this->output->course_header($this->courseid);
+        $output = $this->output->snap_dashboard_xray();
         
         return $output;
     }

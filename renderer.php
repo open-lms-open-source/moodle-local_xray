@@ -725,15 +725,17 @@ class local_xray_renderer extends plugin_renderer_base {
     /************************** Course Header **************************/
     
     /**
-     * Course Header
+     * Snap Dashboard Xray
      */
-    public function course_header($courseid) {
+    
+    public function snap_dashboard_xray() {
+        global $COURSE;
         
         $output = "";
         
         try {
             $report = "dashboard";
-            $response = \local_xray\api\wsapi::course($courseid, $report);
+            $response = \local_xray\api\wsapi::course($COURSE->id, $report);
         
             if(!$response) {
                 // Fail response of webservice.
@@ -745,12 +747,12 @@ class local_xray_renderer extends plugin_renderer_base {
                 $users_in_risk = array();
                 if(isset($response->elements[1]->data) && !empty($response->elements[1]->data)) {
                     foreach($response->elements[1]->data as $key => $obj) {
-                        if($obj->severity->value == "high") {
+                        if($obj->severity->value == "low") {
                             $users_in_risk[] = $obj->participantId->value;
                         }
                     }
                 }
-                 
+                
                 $count_students_risk = (isset($response->elements[4]->items[5]->value) ? $response->elements[4]->items[5]->value : "-");
                 $count_students_enrolled = (isset($response->elements[4]->items[2]->value) ? $response->elements[4]->items[2]->value : "-");
                 $count_students_visits_lastsevendays = (isset($response->elements[4]->items[0]->value) ? $response->elements[4]->items[0]->value : "-");
@@ -761,7 +763,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 
                 // TODO:: Get list of students in risk (Pending in webservice).
                 
-                $output .= $this->course_header_output($count_students_enrolled, $count_students_risk, $count_students_visits_lastsevendays);
+                $output .= $this->snap_dashboard_xray_output($users_in_risk, $count_students_enrolled, $count_students_risk, $count_students_visits_lastsevendays);
                //var_dump($output);
             }
         } catch(exception $e) {
@@ -772,8 +774,22 @@ class local_xray_renderer extends plugin_renderer_base {
         
     }
     
+    /**
+     * 
+     * TODO
+     * 
+     * @param Int $users_in_risk
+     * @param Int $students_enrolled
+     * @param Int $students_risk
+     * @param Int $students_visits_lastsevendays
+     * @return string*/
     
-    public function course_header_output($students_enrolled, $students_risk, $students_visits_lastsevendays/*, $students_risk_lastweek, $students_risk_lastweek*/){
+    //TODO snap_dashboard_xray
+    //TODO high and low
+    // 
+    public function snap_dashboard_xray_output($users_in_risk, $students_enrolled, $students_risk, $students_visits_lastsevendays/*, $students_risk_lastweek, $students_risk_lastweek*/){
+        
+        global $DB, $OUTPUT;
         
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
         
@@ -783,8 +799,14 @@ class local_xray_renderer extends plugin_renderer_base {
         $studentatrisk = html_writer::div(get_string('studentatrisk', 'local_xray'));
         $atriskfromlastweek = '';//html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');//TODO we do not have this data now
         
+        $users_li_one = $this->snap_dashboard_xray_users_li(array_slice($users_in_risk, 0, 3));
+        $users_li_two = $this->snap_dashboard_xray_users_li(array_slice($users_in_risk, 3, 6));
+        
+        $list = html_writer::alist(array($users_li_one, $users_li_two));
+        $users_profile = html_writer::div($list);
+        
         //TODO shall we use col-sm-6 class?
-        $atrisk_column = html_writer::div($atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek, 'local_xray_course_atrisk');
+        $atrisk_column = html_writer::div($atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek.$users_profile, 'col-sm-6');
         
         //Students Visitors
         $visitors = html_writer::tag('h3', get_string('visitors', 'local_xray'));
@@ -793,9 +815,30 @@ class local_xray_renderer extends plugin_renderer_base {
         $visitorsfromlastweek = '';//html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');//TODO we do not have this data now
         
         //TODO shall we use col-sm-6 class?
-        $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek, 'local_xray_course_visitors');
+        $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek, 'col-sm-6');
         
         return html_writer::div($atrisk_column.$visitors_column);
+    }
+    
+    /**
+     * 
+     * @param array $users
+     * @return string
+     * */
+    
+    public function snap_dashboard_xray_users_li($users){
+        global $DB, $OUTPUT;
+
+        $li = '';
+        foreach($users as $key => $value){
+            $user = $DB->get_record('user', array('id' => $value));
+            $pic = html_writer::span($OUTPUT->user_picture($user, array('size'=>50)));
+            $name = html_writer::span($user->firstname.' '.$user->lastname);
+            $li .= html_writer::span($pic.$name);
+        }
+        
+        return $li;
+        
     }
     
     /************************** End Course Header **************************/
