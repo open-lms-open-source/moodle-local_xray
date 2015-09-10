@@ -727,37 +727,75 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Course Header
      */
-    public function course_header($students_total, $students_risk, $students_visitors, $risk_fromlastweek, $visitors_fromlastweek) {
+    public function course_header($courseid) {
         
-        //TODO harcoded
-        $students_total = 150;
-        $students_risk = 6;
-        $students_visitors = 20;
-        $risk_fromlastweek = 4;
-        $visitors_fromlastweek = 4; 
+        $output = "";
+        
+        try {
+            $report = "dashboard";
+            $response = \local_xray\api\wsapi::course($courseid, $report);
+        
+            if(!$response) {
+                // Fail response of webservice.
+                \local_xray\api\xrayws::instance()->print_error();
+                 
+            } else {
+                
+                // Get users in risk.
+                $users_in_risk = array();
+                if(isset($response->elements[1]->data) && !empty($response->elements[1]->data)) {
+                    foreach($response->elements[1]->data as $key => $obj) {
+                        if($obj->severity->value == "high") {
+                            $users_in_risk[] = $obj->participantId->value;
+                        }
+                    }
+                }
+                 
+                $count_students_risk = (isset($response->elements[4]->items[5]->value) ? $response->elements[4]->items[5]->value : "-");
+                $count_students_enrolled = (isset($response->elements[4]->items[2]->value) ? $response->elements[4]->items[2]->value : "-");
+                $count_students_visits_lastsevendays = (isset($response->elements[4]->items[0]->value) ? $response->elements[4]->items[0]->value : "-");
+                
+                //TODO no available yet
+                //$students_visits_lastweek = '';
+                //$students_risk_lastweek = '';
+                
+                // TODO:: Get list of students in risk (Pending in webservice).
+                
+                $output .= $this->course_header_output($count_students_enrolled, $count_students_risk, $count_students_visits_lastsevendays);
+               //var_dump($output);
+            }
+        } catch(exception $e) {
+            print_error('error_xray', $this->component,'',null, $e->getMessage());
+        }
+        
+        return $output;
+        
+    }
+    
+    
+    public function course_header_output($students_enrolled, $students_risk, $students_visits_lastsevendays/*, $students_risk_lastweek, $students_risk_lastweek*/){
         
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
         
         //Students at risk
         $atrisk = html_writer::tag('h3', get_string('atrisk', 'local_xray'));
-        $students_atrisk = html_writer::div($students_risk.$of.$students_total, 'h1');
+        $students_atrisk = html_writer::div($students_risk.$of.$students_enrolled, 'h1');
         $studentatrisk = html_writer::div(get_string('studentatrisk', 'local_xray'));
-        $atriskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');//TODO we do not have this data now
+        $atriskfromlastweek = '';//html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');//TODO we do not have this data now
         
         //TODO shall we use col-sm-6 class?
         $atrisk_column = html_writer::div($atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek, 'local_xray_course_atrisk');
         
         //Students Visitors
         $visitors = html_writer::tag('h3', get_string('visitors', 'local_xray'));
-        $students_visitors = html_writer::div($students_visitors.$of.$students_total, 'h1');
+        $students_visitors = html_writer::div($students_visits_lastsevendays.$of.$students_enrolled, 'h1');
         $studentvisitslastdays = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
-        $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');//TODO we do not have this data now
+        $visitorsfromlastweek = '';//html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');//TODO we do not have this data now
         
         //TODO shall we use col-sm-6 class?
         $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek, 'local_xray_course_visitors');
         
         return html_writer::div($atrisk_column.$visitors_column);
-    
     }
     
     /************************** End Course Header **************************/
