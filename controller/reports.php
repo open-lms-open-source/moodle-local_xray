@@ -1,5 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') or die();
+require_once($CFG->dirroot.'/local/mr/framework/controller.php');
 
 /**
  * Xray integration Reports Controller
