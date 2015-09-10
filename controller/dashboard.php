@@ -32,6 +32,16 @@ class local_xray_controller_dashboard extends local_xray_controller_reports {
     			
     		} else {
     			
+    			// Get users in risk.
+    			$users_in_risk = array();
+    			if(isset($response->elements[1]->data) && !empty($response->elements[1]->data)) {
+    				foreach($response->elements[1]->data as $key => $obj) {
+    					if($obj->severity->value == "high") {
+    						$users_in_risk[] = $obj->participantId->value;
+    					}
+    				}    				
+    			}
+    			
     			$count_students_risk = (isset($response->elements[4]->items[5]->value) ? $response->elements[4]->items[5]->value : "-");
     			$count_students_enrolled = (isset($response->elements[4]->items[2]->value) ? $response->elements[4]->items[2]->value : "-");
     			$count_students_visits_lastsevendays = (isset($response->elements[4]->items[0]->value) ? $response->elements[4]->items[0]->value : "-");
