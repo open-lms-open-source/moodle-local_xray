@@ -149,11 +149,17 @@
 
 /**************** Course Header *********************************/
 
+#local_xray_course_header{
+    padding:0 4%;
+}
+
 .local_xray_course_atrisk{
-    
+    float:left;
+    width:50%;
 }
 .local_xray_course_visitors{
-    
+    float:left;
+    width:50%;
 }
 
 /**************** End Styles for Course Header ******************/
