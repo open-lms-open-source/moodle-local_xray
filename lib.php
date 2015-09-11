@@ -127,27 +127,37 @@ function local_xray_extends_navigation(global_navigation $nav) {
     ($nav); // Just to remove unused param warning.
 
     // TODO: This is a placeholder code for adding custom links on the Moodle page. For now disabled.
-    /*
+
     global $PAGE;
-    $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+    /*$reports = local_xray_navigationlinks($PAGE, $PAGE->context);
     if (empty($reports)) {
         return;
-    }
+    }*/
 
-    $items = array('itema', 'itemb', 'itemc');
-    $menu = \html_writer::alist($items);
 
-    if (stripos($PAGE->pagetype,'course-view') === 0) {
-        $menu = \html_writer::alist();
+//    if (stripos($PAGE->pagetype,'course-view') === 0) {
+//        $items = array('itema', 'itemb', 'itemc');
+//        $menu = \html_writer::alist($items);
+//
+//        /* @var local_xray_renderer $renderer */
+//        $renderer = $PAGE->get_renderer('local_xray');
+//        $headerdata = $renderer->snap_dashboard_xray();
+//
+//        // TODO: prepare adequate menu and header css identifiers for all course formats.
+//
+//        // Easy way to force include on every page (provided that navigation block is present).
+//        $PAGE->requires->yui_module(array('moodle-local_xray-custmenu'),
+//            'M.local_xray.custmenu.init',
+//            array(array('menusearch' => 'nav.section_footer',
+//                        'items' => $menu,
+//                        'hdrsearch' => 'nav.section_footer',
+//                        'header' => $headerdata
+//            )),
+//            null,
+//            true
+//        );
+//
+//    }
 
-        // Easy way to force include on every page (provided that navigation block is present).
-        $PAGE->requires->yui_module(array('moodle-local_xray-custmenu'),
-            'M.local_xray.custmenu.init',
-            array(array('items' => $menu)),
-            null,
-            true
-        );
 
-    }
-    */
 }

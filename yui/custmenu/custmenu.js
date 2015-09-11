@@ -4,13 +4,27 @@ YUI.add('moodle-local_xray-custmenu', function(Y) {
 
         M.local_xray.custmenu = {
             init: function(config) {
-                // TODO: Implement proper placement of custom menu items.
                 if (M.cfg.developerdebug) {
-                    Y.log(config.items);
+                    Y.log("Entered local_xray.custmenu!");
                 }
-                //var menunode = Y.Node.create('ul');
+                var menu = Y.one(config.menusearch);
+                if (menu) {
+                    menu.prepend(Y.Escape.html(config.header));
+                } else {
+                    if (M.cfg.developerdebug) {
+                        Y.log("Unable to locate element " + config.menusearch);
+                    }
+                }
+                var header = Y.one(config.hdrsearch);
+                if (header) {
+                    header.prepend(Y.Escape.html(config.header));
+                } else {
+                    if (M.cfg.developerdebug) {
+                        Y.log("Unable to locate element " + config.header);
+                    }
+                }
             } // end init
         }; // end custmenu
 
-    }, '@VERSION@', {requires: ['node', 'console']}
+    }, '@VERSION@', {requires: ['node', 'console', 'escape']}
 );
