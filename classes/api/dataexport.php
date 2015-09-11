@@ -121,7 +121,81 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * Export accesslog
+     * @param int $timest
+     * @param string $dir
+     * @throws \ddl_exception
+     */
     public static function accesslog($timest, $dir) {
+        global $DB;
+
+        $dbmanager = $DB->get_manager();
+        $tablename = 'usercoursetmp';
+        $table     = new \xmldb_table($tablename);
+        $userid    = $table->add_field('userid'  , XMLDB_TYPE_INTEGER, '10', false, XMLDB_NOTNULL, false, null, null);
+        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', false, XMLDB_NOTNULL, false, null, $userid);
+        $table->add_index('tmpckey' , XMLDB_INDEX_NOTUNIQUE, array('userid', 'courseid'));
+
+        if (!$dbmanager->table_exists($table)) {
+            $dbmanager->create_table($table);
+        } else {
+            // Do cleanup.
+            $DB->delete_records($table->getName());
+        }
+
+        $sqli = "
+            INSERT INTO {usercoursetmp} (userid, courseid)
+            (
+                SELECT DISTINCT ra.userid, c.id AS courseid
+                FROM   {role_assignments} ra,
+                       {context} ctx,
+                       {course} c,
+                       {user} u
+                WHERE  ctx.contextlevel = :ctxt
+                       AND
+                       ra.contextid = ctx.id
+                       AND
+                       ctx.instanceid = c.id
+                       AND
+                       ra.userid = u.id
+                       AND
+                       u.deleted = :deleted
+            )
+        ";
+        // Update fresh recordset.
+        $DB->execute($sqli, array('ctxt' => CONTEXT_COURSE, 'deleted' => false));
+
+        // Now export.
+        $sql = "
+            SELECT l.id,
+                   l.userid AS participantid,
+                   l.course AS courseid,
+                   FROM_UNIXTIME(l.time) AS time,
+                   l.ip,
+                   l.action,
+                   l.info,
+                   l.module,
+                   l.url
+            FROM   {log} l,
+                   {usercoursetmp} rx
+            WHERE rx.courseid = l.course
+                  AND
+                  rx.userid = l.userid
+                  AND
+                  l.time > :time";
+
+        $params = array('time' => $timest, 'ctxt' => CONTEXT_COURSE, 'deleted' => false);
+
+        self::doexport($sql, $params, __FUNCTION__, $dir);
+    }
+
+    /**
+     * Keeping this for historical reasons only. Should not be used.
+     * @param int $timest
+     * @param string $dir
+     */
+    public static function accesslog_old($timest, $dir) {
 
         $sql = "
             SELECT l.id,
@@ -155,7 +229,7 @@ class dataexport {
 
         $params = array('time' => $timest, 'ctxt' => CONTEXT_COURSE, 'deleted' => false);
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, 'accesslog_old', $dir);
     }
 
     public static function forums($timest, $dir) {
