@@ -160,5 +160,17 @@
     float:left;
     width:50%;
 }
+.dashboard_xray_users_profile{
+    float:left;
+    min-width:235px;
+    min-height:70px;
+}
 
+.xray_dashboard_users_risk{
+    
+}
+
+.xray_dashboard_users_risk_hidden{
+    display:none; 
+}
 /**************** End Styles for Course Header ******************/

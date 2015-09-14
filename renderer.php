@@ -772,6 +772,20 @@ class local_xray_renderer extends plugin_renderer_base {
         
         global $DB, $OUTPUT;
         
+        //JQuery to show all students
+        $jscode = "$(function(){
+            $('.xray_dashboard_seeall').click(function()
+                {
+                    var div = $('.xray_dashboard_users_risk_hidden');
+                    startAnimation();
+                    function startAnimation(){
+                        div.slideToggle('slow');
+                    }
+                });
+            });";
+        
+        $xray_dashboard_jquery = html_writer::script($jscode);
+        
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
         
         //Students at risk
@@ -789,13 +803,25 @@ class local_xray_renderer extends plugin_renderer_base {
         */
         
         $users_profile = "";
+        $count_users = 1;
+        $hide = false;
         if(!empty($users_in_risk)) {
         	foreach($users_in_risk as $key => $id) {
-        		$users_profile .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
+        	    if($count_users > 6){
+        	        $users_profile_hidden .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
+        	    }else{
+        	        $users_profile .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
+        	    }
+        		
+        		$count_users++;
         	}
         }
         
-        $atrisk_column = html_writer::div($atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek.$users_profile, 'col-sm-6');
+        $users_profile_box = html_writer::div($users_profile);
+        $users_profile_box_hidden = html_writer::div($users_profile_hidden, 'xray_dashboard_users_risk_hidden');
+        $seeallstudents = html_writer::div('See all', 'xray_dashboard_seeall');
+        
+        $atrisk_column = html_writer::div($xray_dashboard_jquery.$atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek.$users_profile_box.$users_profile_box_hidden.$seeallstudents, 'col-sm-6');
         
         //Students Visitors
         $visitors = html_writer::tag('h3', get_string('visitors', 'local_xray'));
@@ -847,7 +873,7 @@ class local_xray_renderer extends plugin_renderer_base {
     			                                          'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
     	$description = format_text($user->description, $user->descriptionformat);
     
-    	return "<div class=snap-media-object>
+    	return "<div class='snap-media-object dashboard_xray_users_profile'>
 		    	$picture
 		    	<div class=snap-media-body>
 		    	$fullname
