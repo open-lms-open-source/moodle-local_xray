@@ -100,16 +100,15 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                     $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
     
                     foreach($response->data as $row) {
-    
-                        $r = new stdClass();
-                        $r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');
-                        $r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
-                        $r->posts = (isset($row->posts->value) ? $row->posts->value : '');
-                        $r->contribution = (isset($row->contrib->value) ? $row->contrib->value : '');
-                        $r->ctc = (isset($row->ctc->value) ? $row->ctc->value : '');
-                        $r->regularityofcontributions = (isset($row->regularityContrib->value) ? $row->regularityContrib->value : '');//TODO No value in this object, notify Shani - $row->regularityContrib->value
-                        $r->regularityofctc = (isset($row->regularityCTC->value) ? $row->regularityCTC->value : '');//TODO No value in this object, notify Shani - $row->regularityCTC->value
-                        $data[] = $r;
+                    	
+                    	// Format of response for columns.
+                    	if(!empty($response->columnOrder)) {
+                    		$r = new stdClass();
+                    		foreach($response->columnOrder as $column) {
+                    			$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                    		}
+                    		$data[] = $r;
+                    	}
                     }
                 }
     

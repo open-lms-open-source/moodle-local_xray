@@ -94,13 +94,15 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
             } else {
                 $data = array();
                 if(!empty($response->data)){
-                    foreach($response->data as $row) {
-                        $r = new stdClass();
-                        $r->lastname = $row->lastname->value;
-                        $r->firstname = $row->firstname->value;
-                        $r->grade = $row->letterGradeCourse->value;
-                        $r->percentage  = $row->course_grade_percent->value;
-                        $data[] = $r;
+                    foreach($response->data as $row) {             	
+                    	// Format of response for columns.
+                    	if(!empty($response->columnOrder)) {
+                    		$r = new stdClass();
+                    		foreach($response->columnOrder as $column) {
+                    			$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                    		}
+                    		$data[] = $r;
+                    	}
                     }
                 }
                 // Provide count info to table.
@@ -159,13 +161,15 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 $data = array();
                 if(!empty($response->data)){
                     foreach($response->data as $row) {
-                        $r = new stdClass();
-                        $r->lastname = $row->lastname->value;
-                        $r->firstname = $row->firstname->value;
-                        /*$r->completed = $row->letterGradeCourse->value;
-                        $r->percentage  = $row->course_grade_percent->value;
-                        $r->grade  = $row->course_grade_percent->value;*/
-                        $data[] = $r;
+                    	
+                    	// Format of response for columns.
+                    	if(!empty($response->columnOrder)) {
+                    		$r = new stdClass();
+                    		foreach($response->columnOrder as $column) {
+                    			$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                    		}
+                    		$data[] = $r;
+                    	}
                     }
                 }
                 // Provide count info to table.

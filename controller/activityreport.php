@@ -102,8 +102,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			$data = array();
     			if(!empty($response->data)){
     				$activityreportind = get_string('activityreportindividual', $this->component);
-    				foreach($response->data as $row) {
-    					
+    				foreach($response->data as $row) {					
+    	
     					$r = new stdClass();
     					$r->action = "";
     					if(has_capability('local/xray:activityreportindividual_view', $PAGE->context)) {    						
@@ -117,14 +117,12 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 	    							                                       "title" => $activityreportind,
 	    							                                       "target" => "_blank"));
     					}
-    					
-    					$r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
-    					$r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');
-    					$r->lastactivity = (isset($row->last_activity->value) ? $row->last_activity->value : '');
-    					$r->discussionposts = (isset($row->discussion_posts->value) ? $row->discussion_posts->value : '');
-    					$r->postslastweek = (isset($row->discussion_posts_last_week->value) ? $row->discussion_posts_last_week->value : '');
-    					$r->timespentincourse = (isset($row->timeOnTask->value) ? $row->timeOnTask->value : '');
-    					$r->regularityweekly = (isset($row->weeklyRegularity->value) ? $row->weeklyRegularity->value : '');
+    					// Format of response for columns.
+    					if(!empty($response->columnOrder)) {
+    						foreach($response->columnOrder as $column) {
+    							$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+    						}
+    					}		
     					$data[] = $r;
     				}	
     			}
@@ -225,7 +223,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     		} else {
     			 
     			// Show graphs.
-    			$output .= $this->first_login_non_starters($response->elements[2]); // Call to independient call to show in table.
+    			$output .= $this->first_login_non_starters($response->elements[1]); // Call to independient call to show in table.
     			$output .= $this->first_login_to_course($response->elements[3]);
     			$output .= $this->first_login_date_observed($response->elements[4]);
     		}
@@ -277,12 +275,14 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     		} else {
     			$data = array();
     			if(!empty($response->data)){
-    				foreach($response->data as $row) {
+  					// Format of response for columns.
+    				if(!empty($response->columnOrder)) {
     					$r = new stdClass();
-    					$r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
-    					$r->lastname  = (isset($row->lastname->value) ? $row->lastname->value : '');
+    					foreach($response->columnOrder as $column) {
+    						$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+    					}
     					$data[] = $r;
-    				}    				
+    				}				
     			}
     			
     			// Provide info to table.

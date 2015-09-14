@@ -90,14 +90,14 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 if(!empty($response->data)){
                     foreach($response->data as $row) {
 
-                        $r = new stdClass();					
-                        $r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');    						
-                        $r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
-                        $r->timespentincourse = (isset($row->timeOnTask->value) ? $row->timeOnTask->value : '');
-                        $r->academicrisk = (isset($row->fail->value) ? $row->fail->value : '');
-                        $r->socialrisk = (isset($row->DW->value) ? $row->DW->value : '');
-                        $r->totalrisk = (isset($row->DWF->value) ? $row->DWF->value : '');
-                        $data[] = $r;
+                        // Format of response for columns.
+                        if(!empty($response->columnOrder)) {
+                        	$r = new stdClass();
+                        	foreach($response->columnOrder as $column) {
+                        		$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                        	}
+                        	$data[] = $r;
+                        }
                     }
                 }
                 // Provide count info to table.
