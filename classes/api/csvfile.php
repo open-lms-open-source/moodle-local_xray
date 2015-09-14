@@ -30,6 +30,9 @@ namespace local_xray\api;
  * @package local_xray\api
  */
 class csvfile {
+    const ESCAPE = '\\';
+    const DBLESCAPE = '\\\\';
+
     /**
      * @var null|resource
      */
@@ -67,6 +70,28 @@ class csvfile {
     }
 
     /**
+     * @param string $value
+     * @param string $needle
+     * @return bool
+     */
+    protected function endswith($value, $needle) {
+        return (substr($value, -strlen($needle))===$needle);
+    }
+
+    /**
+     * @param mixed $value
+     * @return void
+     */
+    protected function fixstring(&$value) {
+        if (!empty($value) and
+            is_string($value) and
+            !$this->endswith($value, self::DBLESCAPE) and
+            $this->endswith($value, self::ESCAPE)) {
+            $value .= self::ESCAPE;
+        }
+    }
+
+    /**
      * @param \stdClass $fields
      * @return int|bool
      */
@@ -79,6 +104,10 @@ class csvfile {
             }
             $this->header = true;
         }
+
+        // Fix unfortunate fputcsv behavior...
+        array_walk($data, array($this, 'fixstring'));
+
         $result = fputcsv($this->resource, $data);
         $data = null;
         return $result;
