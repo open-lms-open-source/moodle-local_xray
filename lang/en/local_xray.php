@@ -63,14 +63,12 @@ $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
 $string['reportdate'] = 'Date of report';
 $string['weeks'] = 'Weeks';
 
-/* Datatables Error */
+/* Error to load tables and images */
+$string['error_loadimg'] = 'Error to load image, please try again reloading the page. If error persist, contact with the administrator please.';
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. If error persist, contact with the administrator please.';
 
-/* Error reports */
-$string['error_loadimg'] = 'Error to load image, please try again reloading the page. If error persist, contact with the administrator please.';
-
-/* Webservice */
-$string['error_xray'] = 'Error to connect with Xray.';
+/* Error Webservice */
+$string['error_xray'] = 'Error to connect with Xray, please try again reloading the page. If error persist, contact with the administrator please.';
 
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';
