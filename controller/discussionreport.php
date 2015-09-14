@@ -99,7 +99,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                                                              $count);
            
             if(!$response) {
-                // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 
@@ -122,14 +121,15 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                                     "title" => $discussionreportind,
                                     "target" => "_blank"));
                         }
-                        $r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
-                        $r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');
-                        $r->posts = (isset($row->posts->value) ? $row->posts->value : '');
-                        $r->contribution = (isset($row->contrib->value) ? $row->contrib->value : '');
-                        $r->ctc = (isset($row->ctc->value) ? $row->ctc->value : '');
-                        $r->regularityofcontributions = (isset($row->regularityContrib->value) ? $row->regularityContrib->value : '');//TODO No value in this object, notify Shani - $row->regularityContrib->value
-                        $r->regularityofctc = (isset($row->regularityCTC->value) ? $row->regularityCTC->value : '');//TODO No value in this object, notify Shani - $row->regularityCTC->value
-                        $data[] = $r;
+                        
+                        
+                        // Format of response for columns.
+                        if(!empty($response->columnOrder)) {
+                        	foreach($response->columnOrder as $column) {
+                        		$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                        	}
+                        	$data[] = $r;
+                        }
                     }
                 }
                 
@@ -172,24 +172,32 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $count);
 
             if(!$response) {
-                // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
 
-                $posts = array('weeks' => get_string('posts', 'local_xray'));
-                $avglag = array('weeks' => get_string('averageresponselag', 'local_xray'));
-                $avgwordcount = array('weeks' => get_string('averagenoofwords', 'local_xray'));
-
                 if(!empty($response->data)){
                     foreach($response->data as $col) {
+                    	/*
                         $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
                         $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
                         $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                    */
+                    
+	                    // Format of response for columns.
+	                    if(!empty($response->columnOrder)) {
+	                    	$r = new stdClass();
+	                    	foreach($response->columnOrder as $column) {
+	                    		$r->{$column} = (isset($col->{$column}->value) ? $col->{$column}->value : '');
+	                    	}
+	                    	$data[] = $r;
+	                    }
                     }
+                    
+                    /*
                     $data[] = $posts;
                     $data[] = $avglag;
-                    $data[] = $avgwordcount;
+                    $data[] = $avgwordcount;*/
                 }
                 
                 // Provide info to table.

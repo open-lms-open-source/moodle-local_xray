@@ -60,33 +60,8 @@ $string['gradebookreport'] = 'Gradebook Report';
 
 /* Columns reports */
 $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
-$string['fullname'] = 'Fullname';
-$string['firstname'] = 'Firstname';
-$string['lastname'] = 'Lastname';
-$string['lastactivity'] = 'Last Activity';
-$string['discussionposts'] = 'Discussion Posts';
-$string['postslastweek'] = 'Posts Last Week';
-$string['timespentincourse'] = 'Time spent in course';
-$string['regularityweekly'] = 'Regularity (weekly)';
-$string['posts'] = 'Posts';
-$string['contribution'] = 'Contribution';
-$string['ctc'] = 'CTC';
-$string['regularityofcontributions'] = 'Regularity of contributions';
-$string['regularityofctc'] = 'Regularity of CTC';
 $string['reportdate'] = 'Date of report';
-$string['academicrisk'] = 'Academic Risk';
-$string['socialrisk'] = 'Social Risk';
-$string['totalrisk'] = 'Total Risk';
-$string['averageresponselag'] = 'Average Response Lag';
-$string['averagenoofwords'] = 'Average No of Words';
 $string['weeks'] = 'Weeks';
-$string['numposts'] = 'Number of posts';
-$string['wordcount'] = 'Word coutn';
-$string['regularity_contributions'] = 'Regularity contributions';
-$string['critical_thinking_coefficient'] = 'Critical thinking coefficient';
-$string['grade'] = 'Grade';
-$string['percentage'] = 'Percentage';
-$string['completed'] = 'Completed';
 
 /* Datatables Error */
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. If error persist, contact with the administrator please.';

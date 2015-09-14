@@ -81,16 +81,14 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 				$data = array ();
 				if (! empty ( $response->data )) {
 					foreach ( $response->data as $row ) {
-						
-						$r = new stdClass ();
-						$r->lastname = (isset($row->lastname->value) ? $row->lastname->value : '');
-						$r->firstname = (isset($row->firstname->value) ? $row->firstname->value : '');
-						$r->numposts = (isset($row->posts->value) ? $row->posts->value : '');
-						$r->wordcount = (isset($row->wc->value) ? $row->wc->value : '');
-						$r->regularity_contributions = (isset($row->regularityContrib->value) ? $row->regularityContrib->value : '');
-						$r->critical_thinking_coefficient = (isset($row->ctc->value) ? $row->ctc->value : '');
-						$r->grade = (isset($row->letterGrade->value) ? $row->letterGrade->value : '');
-						$data [] = $r;
+						// Format of response for columns.
+						if(!empty($response->columnOrder)) {
+							$r = new stdClass();
+							foreach($response->columnOrder as $column) {
+								$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+							}
+							$data[] = $r;
+						}
 					}
 				}
 				// Provide count info to table.

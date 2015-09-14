@@ -155,17 +155,8 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function activityreport_students_activity($courseid, $element) {
     	
-    	$columns = array(new local_xray_datatableColumn('action', '')/*,
-    			         new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
-    			         new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
-		    			 new local_xray_datatableColumn('lastactivity', get_string('lastactivity', 'local_xray')),    			
-		    			 new local_xray_datatableColumn('discussionposts', get_string('discussionposts', 'local_xray')),    			
-		    			 new local_xray_datatableColumn('postslastweek', get_string('postslastweek', 'local_xray')), 
-		    			 new local_xray_datatableColumn('timespentincourse', get_string('timespentincourse', 'local_xray')),
-		    			 new local_xray_datatableColumn('regularityweekly', get_string('regularityweekly', 'local_xray'))*/
-    	);
-    	
-    	if(!empty($element->columnOrder)) {
+    	$columns = array(new local_xray_datatableColumn('action', ''));  	
+    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
     		foreach($element->columnOrder as $c) {
     			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
     		}
@@ -237,9 +228,28 @@ class local_xray_renderer extends plugin_renderer_base {
     public function activityreport_first_login_non_starters($courseid, $element) {   	
     	global $PAGE;
     	
-    	$columns = array(new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
-    			         new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray'))
-    	);
+    	// TODO:: Bug in answer of xray.
+    	/*
+    	 *  ["columnOrder"]=>
+  object(stdClass)#2742 (3) {
+    ["class"]=>
+    string(18) "uninitializedField"
+    ["field"]=>
+    string(11) "columnOrder"
+    ["className"]=>
+    string(3) "ANY"
+  }
+    	 * 
+    	 * 
+    	 * 
+    	 */
+    	
+    	$columns = array();
+    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
+    		foreach($element->columnOrder as $c) {
+    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+    		}
+    	}
     	 
     	$datatable = new local_xray_datatable(__FUNCTION__,
     			                              $element->title,
@@ -304,16 +314,13 @@ class local_xray_renderer extends plugin_renderer_base {
     public function discussionreport_participation_metrics($courseid, $element) {
          
         global $PAGE;
-        // Create standard table.
-        $columns = array(new local_xray_datatableColumn('action', ''),
-                new local_xray_datatableColumn('firstname', get_string('lastname', 'local_xray')),
-                new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
-                new local_xray_datatableColumn('posts', get_string('posts', 'local_xray')),
-                new local_xray_datatableColumn('contribution', get_string('contribution', 'local_xray')),
-                new local_xray_datatableColumn('ctc', get_string('ctc', 'local_xray')),
-                new local_xray_datatableColumn('regularityofcontributions', get_string('regularityofcontributions', 'local_xray')),
-                new local_xray_datatableColumn('regularityofctc', get_string('regularityofctc', 'local_xray'))
-        );
+        
+        $columns = array(new local_xray_datatableColumn('action', ''));
+        if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
+        	foreach($element->columnOrder as $c) {
+        		$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+        	}
+        }
          
         $datatable = new local_xray_datatable(__FUNCTION__,
 								        		$element->title,
@@ -415,16 +422,12 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function discussionreportindividual_participation_metrics($courseid, $element, $userid) {
          
-        global $PAGE;
-        // Create standard table.
-        $columns = array(new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
-                new local_xray_datatableColumn('firstname', get_string('lastname', 'local_xray')),
-                new local_xray_datatableColumn('posts', get_string('posts', 'local_xray')),
-                new local_xray_datatableColumn('contribution', get_string('contribution', 'local_xray')),
-                new local_xray_datatableColumn('ctc', get_string('ctc', 'local_xray')),
-                new local_xray_datatableColumn('regularityofcontributions', get_string('regularityofcontributions', 'local_xray')),
-                new local_xray_datatableColumn('regularityofctc', get_string('regularityofctc', 'local_xray'))
-        );
+        $columns = array();
+    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
+    		foreach($element->columnOrder as $c) {
+    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+    		}
+    	}
          
         $datatable = new local_xray_datatable(__FUNCTION__,
         		$element->title,
@@ -549,14 +552,13 @@ class local_xray_renderer extends plugin_renderer_base {
     public function risk_risk_measures($courseid, $element) {
     	global $PAGE;
     	
-    	$columns = array(new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
-		    			 new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
-		    			 new local_xray_datatableColumn('timespentincourse', get_string('timespentincourse', 'local_xray')),
-		    			 new local_xray_datatableColumn('academicrisk', get_string('academicrisk', 'local_xray')),
-		    			 new local_xray_datatableColumn('socialrisk', get_string('socialrisk', 'local_xray')),
-		    			 new local_xray_datatableColumn('totalrisk', get_string('totalrisk', 'local_xray'))
-    	);
-    	 
+    	$columns = array();
+    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
+    		foreach($element->columnOrder as $c) {
+    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+    		}
+    	}
+    	
     	$datatable = new local_xray_datatable(__FUNCTION__,
     			                             $element->title,
     			                             "view.php?controller='risk'&action='jsonriskmeasures'&courseid=".$courseid,
@@ -594,16 +596,13 @@ class local_xray_renderer extends plugin_renderer_base {
     public function discussiongrading_students_grades_based_on_discussions($courseid, $element) {
     	
     	global $PAGE;
-    	 
-    	$columns = array(new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
-		    			 new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
-		    			 new local_xray_datatableColumn('numposts', get_string('numposts', 'local_xray')),
-		    			 new local_xray_datatableColumn('wordcount', get_string('wordcount', 'local_xray')),
-		    			 new local_xray_datatableColumn('regularity_contributions', get_string('regularity_contributions', 'local_xray')),
-		    			 new local_xray_datatableColumn('critical_thinking_coefficient', get_string('critical_thinking_coefficient', 'local_xray')),
-		    			 new local_xray_datatableColumn('grade', get_string('grade', 'local_xray'))
-    	);
-    
+    	
+    	$columns = array();
+    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
+    		foreach($element->columnOrder as $c) {
+    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+    		}
+    	}
     	$datatable = new local_xray_datatable(__FUNCTION__,
     			                              $element->title,
     			                              "view.php?controller='discussiongrading'&action='jsonstudentsgrades'&courseid=".$courseid,
@@ -631,13 +630,14 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function gradebookreport_students_grades_for_course($courseid, $element) {
          
-        $columns = array(new local_xray_datatableColumn('action', ''),
-                new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
-                new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
-                new local_xray_datatableColumn('grade', get_string('grade', 'local_xray')),
-                new local_xray_datatableColumn('percentage', get_string('percentage', 'local_xray'))
-        );
-         
+    	
+    	$columns = array(new local_xray_datatableColumn('action', ''));
+    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
+    		foreach($element->columnOrder as $c) {
+    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+    		}
+    	}
+
         $datatable = new local_xray_datatable(__FUNCTION__,
         		$element->title,
                 "view.php?controller='gradebookreport'&action='jsonstudentsgradesforcourse'&courseid=".$courseid,
@@ -654,13 +654,12 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function gradebookreport_students_grades_on_completed_items_course($courseid, $element) {
          
-        $columns = array(new local_xray_datatableColumn('action', ''),
-                new local_xray_datatableColumn('lastname', get_string('lastname', 'local_xray')),
-                new local_xray_datatableColumn('firstname', get_string('firstname', 'local_xray')),
-                new local_xray_datatableColumn('completed', get_string('completed', 'local_xray')),
-                new local_xray_datatableColumn('percentage', get_string('percentage', 'local_xray')),
-                new local_xray_datatableColumn('grade', get_string('grade', 'local_xray'))
-        );
+        $columns = array(new local_xray_datatableColumn('action', ''));
+    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
+    		foreach($element->columnOrder as $c) {
+    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+    		}
+    	}
          
         $datatable = new local_xray_datatable(__FUNCTION__,
         		$element->title,
