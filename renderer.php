@@ -228,26 +228,12 @@ class local_xray_renderer extends plugin_renderer_base {
     public function activityreport_first_login_non_starters($courseid, $element) {   	
     	global $PAGE;
     	
-    	// TODO:: Bug in answer of xray.
-    	/*
-    	 *  ["columnOrder"]=>
-  object(stdClass)#2742 (3) {
-    ["class"]=>
-    string(18) "uninitializedField"
-    ["field"]=>
-    string(11) "columnOrder"
-    ["className"]=>
-    string(3) "ANY"
-  }
-    	 * 
-    	 * 
-    	 * 
-    	 */
-    	
     	$columns = array();
-    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-    		foreach($element->columnOrder as $c) {
-    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+    	// This report has not specified columnOrder.
+    	if(!empty($element->columnHeaders) && is_object($element->columnHeaders)) {
+    		$c = get_object_vars($element->columnHeaders);
+    		foreach($c as $id => $name) {
+    			$columns[] = new local_xray_datatableColumn($id, $name);
     		}
     	}
     	 
@@ -341,7 +327,6 @@ class local_xray_renderer extends plugin_renderer_base {
 
         global $PAGE;
         // Create standard table.
-
         $columns = array();
         $columns[] = new local_xray_datatableColumn('weeks', get_string('weeks', 'local_xray'));
         foreach($element->data as $column){
@@ -351,12 +336,12 @@ class local_xray_renderer extends plugin_renderer_base {
         $number_of_weeks = count($columns)-1;//get number of weeks - we need to rest the "week" title column
         
         $datatable = new local_xray_datatable(__FUNCTION__,
-        		$element->title,
-                "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=".$courseid."&count=".$number_of_weeks,
-                $columns, 
-                false, 
-                false,// We don't need pagination because we have only four rows
-                '<"xray_table_scrool"t>');//Only the table
+							        		$element->title,
+							                "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=".$courseid."&count=".$number_of_weeks,
+							                $columns, 
+							                false, 
+							                false,// We don't need pagination because we have only four rows
+							                '<"xray_table_scrool"t>');//Only the table
 
         // Create standard table.
         $output = $this->standard_table((array) $datatable);

@@ -276,13 +276,18 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			$data = array();
     			if(!empty($response->data)){
   					// Format of response for columns.
-    				if(!empty($response->columnOrder)) {
-    					$r = new stdClass();
-    					foreach($response->columnOrder as $column) {
-    						$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
-    					}
-    					$data[] = $r;
-    				}				
+  					foreach($response->data as $row) {
+
+  						// This report has not specified columnOrder. 
+	    				if(!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+	    					$r = new stdClass();
+	    					$c = get_object_vars($response->columnHeaders);
+	    					foreach($c as $id => $name) {
+	    						$r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');
+	    					}
+	    					$data[] = $r;
+	    				}
+  					}
     			}
     			
     			// Provide info to table.

@@ -175,31 +175,28 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
-
                 if(!empty($response->data)){
-                    foreach($response->data as $col) {
-                    	/*
-                        $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
-                        $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
-                        $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
-                    */
-                    
-	                    // Format of response for columns.
-	                    if(!empty($response->columnOrder)) {
-	                    	$r = new stdClass();
-	                    	foreach($response->columnOrder as $column) {
-	                    		$r->{$column} = (isset($col->{$column}->value) ? $col->{$column}->value : '');
-	                    	}
-	                    	$data[] = $r;
-	                    }
-                    }
-                    
-                    /*
-                    $data[] = $posts;
-                    $data[] = $avglag;
-                    $data[] = $avgwordcount;*/
+                	// This report has not specified columnOrder.
+                	if(!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+                		$r = new stdClass();
+                	
+                		$posts = array('weeks' => $response->columnHeaders->posts);
+                		$avglag = array('weeks' => $response->columnHeaders->avgLag);
+                		$avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
+                		
+                		foreach($response->data as $col) {
+                			$posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
+                			$avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
+                			$avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                		}
+                		$data[] = $posts;
+                		$data[] = $avglag;
+                		$data[] = $avgwordcount;
+                		 
+                	}
+                	
                 }
-                
+
                 // Provide info to table.
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
