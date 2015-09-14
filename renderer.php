@@ -803,6 +803,7 @@ class local_xray_renderer extends plugin_renderer_base {
         */
         
         $users_profile = "";
+        $users_profile_hidden = "";
         $count_users = 1;
         $hide = false;
         if(!empty($users_in_risk)) {
@@ -819,7 +820,7 @@ class local_xray_renderer extends plugin_renderer_base {
         
         $users_profile_box = html_writer::div($users_profile);
         $users_profile_box_hidden = html_writer::div($users_profile_hidden, 'xray_dashboard_users_risk_hidden');
-        $seeallstudents = html_writer::div('See all', 'xray_dashboard_seeall');
+        $seeallstudents = html_writer::div('Show all', 'btn btn-default btn-sm xray_dashboard_seeall');
         
         $atrisk_column = html_writer::div($xray_dashboard_jquery.$atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek.$users_profile_box.$users_profile_box_hidden.$seeallstudents, 'col-sm-6');
         
