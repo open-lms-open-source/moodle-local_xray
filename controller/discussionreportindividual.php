@@ -41,7 +41,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $output .= $this->output->inforeport($response->reportdate,
                                                      $DB->get_field('user', 'username', array("id" => $this->userid)),
                                                      $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-                $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
+                $output .= $this->participation_metrics($response->elements[0]); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
                 $output .= $this->social_structure($response->elements[2]);//TODO number elements are not the same of page
                 $output .= $this->main_terms($response->elements[3]);//TODO number elements are not the same of page
@@ -58,9 +58,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      * Report "A summary table to be added" (table).
      *
      */
-    private function participation_metrics() {
+    private function participation_metrics($element) {
         $output = "";
-        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, $this->userid);
+        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, $element, $this->userid);
         return $output;
     }
     

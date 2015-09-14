@@ -39,7 +39,7 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 				$output .= $this->output->inforeport($response->reportdate,
 						                             null,
 						                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-				$output .= $this->students_grades_based_on_discussions (); // Its a table, I will get info with new call.
+				$output .= $this->students_grades_based_on_discussions ($response->elements [0]); // Its a table, I will get info with new call.
 				$output .= $this->barplot_of_suggested_grades ( $response->elements [1] );
 			}
 		} catch ( exception $e ) {
@@ -52,9 +52,9 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 	/**
 	 * Report Student Grades Based on Discussions(table)
 	 */
-	private function students_grades_based_on_discussions() {
+	private function students_grades_based_on_discussions($element) {
 		$output = "";
-		$output .= $this->output->discussiongrading_students_grades_based_on_discussions ( $this->courseid );
+		$output .= $this->output->discussiongrading_students_grades_based_on_discussions ( $this->courseid, $element);
 		return $output;
 	}
 	

@@ -37,8 +37,8 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 // Show graphs.
-                $output .= $this->students_grades_for_course();// Its a table, I will get info with new call.
-                $output .= $this->students_grades_on_completed_items_course();// Its a table, I will get info with new call.
+                $output .= $this->students_grades_for_course($response->elements[0]);// Its a table, I will get info with new call.
+                $output .= $this->students_grades_on_completed_items_course($response->elements[1]);// Its a table, I will get info with new call.
                 $output .= $this->distribution_of_grades_in_course($response->elements[2]);
                 $output .= $this->distribution_of_grades_completed_items($response->elements[3]);
                 $output .= $this->density_plot_all_items($response->elements[5]);
@@ -58,10 +58,10 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
     * Report Students' Grades for course (table).
     *
     */
-    private function students_grades_for_course() {
+    private function students_grades_for_course($element) {
     
         $output = "";
-        $output .= $this->output->gradebookreport_students_grades_for_course($this->courseid);
+        $output .= $this->output->gradebookreport_students_grades_for_course($this->courseid, $element);
         return $output;
     }
     
@@ -122,10 +122,10 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
      * Report Students' Grades on completed items course (table).
      *
      */
-    private function students_grades_on_completed_items_course() {
+    private function students_grades_on_completed_items_course($element) {
     
         $output = "";
-        $output .= $this->output->gradebookreport_students_grades_on_completed_items_course($this->courseid);
+        $output .= $this->output->gradebookreport_students_grades_on_completed_items_course($this->courseid, $element);
         return $output;
     }
     

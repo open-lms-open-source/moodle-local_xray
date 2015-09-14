@@ -41,7 +41,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			$output .= $this->output->inforeport($response->reportdate,
     					                             null,
     					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-    			$output .= $this->students_activity(); // Its a table, I will get info with new call.
+    			$output .= $this->students_activity($response->elements[0]); // Its a table, I will get info with new call.
     			$output .= $this->activity_of_course_by_day($response->elements[1]);
     			$output .= $this->activity_by_time_of_day($response->elements[4]);
     			$output .= $this->activity_last_two_weeks($response->elements[6]);
@@ -62,10 +62,10 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      * Report Students activity (table).
      *
      */
-    private function students_activity() {
+    private function students_activity($element) {
     
     	$output = "";
-    	$output .= $this->output->activityreport_students_activity($this->courseid);
+    	$output .= $this->output->activityreport_students_activity($this->courseid, $element);
     	return $output;
     }   
     
@@ -225,7 +225,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     		} else {
     			 
     			// Show graphs.
-    			$output .= $this->first_login_non_starters(); // Call to independient call to show in table.
+    			$output .= $this->first_login_non_starters($response->elements[2]); // Call to independient call to show in table.
     			$output .= $this->first_login_to_course($response->elements[3]);
     			$output .= $this->first_login_date_observed($response->elements[4]);
     		}
@@ -241,9 +241,9 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      * - Element to show: table users not starters in course.
      * 
      */
-    private function first_login_non_starters() {
+    private function first_login_non_starters($element) {
     	$output = "";
-    	$output .= $this->output->activityreport_first_login_non_starters($this->courseid);
+    	$output .= $this->output->activityreport_first_login_non_starters($this->courseid, $element);
     	return $output;
     } 
     

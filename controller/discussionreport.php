@@ -37,7 +37,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             } else {
                 
                 // Show graphs.
-                $output .= $this->participation_metrics(); // Its a table, I will get info with new call.
+                $output .= $this->participation_metrics($response->elements[0]); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
                 $output .= $this->average_words_weekly_by_post($response->elements[3]);
                 $output .= $this->social_structure($response->elements[7]);
@@ -56,9 +56,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      * Report "A summary table to be added" (table).
      *
      */
-    private function participation_metrics() {
+    private function participation_metrics($element) {
         $output = "";
-        $output .= $this->output->discussionreport_participation_metrics($this->courseid);
+        $output .= $this->output->discussionreport_participation_metrics($this->courseid, $element);
         return $output;
     }   
     

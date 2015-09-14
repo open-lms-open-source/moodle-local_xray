@@ -39,7 +39,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
             	$output .= $this->output->inforeport($response->reportdate,
             			                             null,
             			                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-                $output .= $this->risk_measures();
+                $output .= $this->risk_measures($response->elements[0]); //TABLE.
                 $output .= $this->total_risk_profile($response->elements[1]);
                 $output .= $this->academic_vs_social_risk($response->elements[2]);		    	
             }
@@ -53,10 +53,10 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     /**
      * Report Risk measures.(TABLE)
      */
-    private function risk_measures() {
+    private function risk_measures($element) {
     
         $output = "";
-        $output .= $this->output->risk_risk_measures($this->courseid);
+        $output .= $this->output->risk_risk_measures($this->courseid, $element);
         return $output;
     }
     

@@ -25,7 +25,7 @@ class local_xray_datatableColumn {
      * Id of column
      * @var string
      */
-    public $mdata;
+    public $mData;
     
     /**
      * Is searchable
@@ -86,6 +86,12 @@ class local_xray_datatable {
     public $id;
     
     /**
+     * title for table
+     * @var string
+     */
+    public $title;
+    
+    /**
      * Url to get data with json format.
      * @var string
      */
@@ -143,8 +149,9 @@ class local_xray_datatable {
      * @param string $paging
      * @param array $lengthMenu
      */
-    public function __construct($id, $jsonurl, array $columns, $search = false, $paging=true, $dom = 'lftipr', $lengthMenu = array(10, 50, 100)) {
+    public function __construct($id, $title, $jsonurl, $columns, $search = false, $paging=true, $dom = 'lftipr', $lengthMenu = array(10, 50, 100)) {
         $this->id = $id;
+        $this->title = $title;
         $this->jsonurl = $jsonurl;
         $this->columns = $columns;
         $this->search = $search;
