@@ -44,7 +44,7 @@ class dataexport {
                        name,
                        description
                 FROM   {course_categories}
-                WHERE  timemodified > :timemodified";
+                WHERE  timemodified >= :timemodified";
 
         $params = array('timemodified' => $timest);
 
@@ -63,7 +63,7 @@ class dataexport {
                    FROM_UNIXTIME(timecreated)  AS timecreated,
                    FROM_UNIXTIME(timemodified) AS timemodified
            FROM    {course}
-           WHERE   timecreated > :timecreated";
+           WHERE   timecreated >= :timecreated";
 
         $params = array('timecreated' => $timest);
 
@@ -86,7 +86,7 @@ class dataexport {
                 FROM   {user}
                 WHERE  deleted = :deleted
                        AND
-                       timecreated > :timecreated";
+                       timecreated >= :timecreated";
 
         $params = array('timecreated' => $timest, 'deleted' => false);
 
@@ -113,7 +113,7 @@ class dataexport {
                        AND
                        u.deleted = :deleted
                        AND
-                       l.timemodified > :timemodified
+                       l.timemodified >= :timemodified
                        ";
 
         $params = array('ctxt' => CONTEXT_COURSE, 'deleted' => false, 'timemodified' => $timest);
@@ -183,7 +183,7 @@ class dataexport {
                   AND
                   rx.userid = l.userid
                   AND
-                  l.time > :time";
+                  l.time >= :time";
 
         $params = array('time' => $timest, 'ctxt' => CONTEXT_COURSE, 'deleted' => false);
 
@@ -225,7 +225,7 @@ class dataexport {
                           AND
                           u.deleted = :deleted
               ) rx ON rx.courseid = l.course AND rx.userid = l.userid
-            WHERE l.time > :time";
+            WHERE l.time >= :time";
 
         $params = array('time' => $timest, 'ctxt' => CONTEXT_COURSE, 'deleted' => false);
 
@@ -242,7 +242,7 @@ class dataexport {
                    intro,
                    FROM_UNIXTIME(timemodified) AS timemodified
             FROM   {forum}
-            WHERE  timemodified > :time";
+            WHERE  timemodified >= :time";
 
         $params = array('time' => $timest);
 
@@ -259,7 +259,7 @@ class dataexport {
                    groupid,
                    FROM_UNIXTIME(timemodified) AS timemodified
             FROM   {forum_discussions}
-            WHERE  timemodified > :time";
+            WHERE  timemodified >= :time";
 
         $params = array('time' => $timest);
 
@@ -278,7 +278,7 @@ class dataexport {
                    subject,
                    message
             FROM {forum_posts}
-            WHERE created > :created
+            WHERE created >= :created
         ";
 
         $params = array('created' => $timest);
@@ -294,7 +294,7 @@ class dataexport {
                    attempts,
                    grade
             FROM {quiz}
-            WHERE timecreated > :created
+            WHERE timecreated >= :created
         ";
 
         $params = array('created' => $timest);
@@ -314,7 +314,7 @@ class dataexport {
           FROM       {grade_grades}   gg
           INNER JOIN {course_modules} cm ON cm.id     = gg.itemid
           INNER JOIN {modules}        mo ON cm.module = mo.id     AND mo.name = :module
-          WHERE      cm.added > :added";
+          WHERE      cm.added >= :added";
 
         $params = array('added' => $timest, 'module' => 'quiz');
 
