@@ -457,6 +457,14 @@ class local_xray_renderer extends plugin_renderer_base {
     }
     
     /**
+     * Social structure with word count.(Graph)
+     * @param stdClass $element
+     */
+    public function discussionreport_social_structure_with_word_count($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
      * Main terms.(Graph)
      * @param stdClass $element
      */
