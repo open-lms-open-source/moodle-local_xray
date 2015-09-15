@@ -91,10 +91,6 @@ class data_sync extends scheduled_task {
                 ],
             ]);
 
-            if (!$s3->doesBucketExist($config->s3bucket)) {
-                throw new \Exception("S3 bucket {$config->s3bucket} does not exist!");
-            }
-
             // Get last export timestamp. If none use 0.
             $data = \local_xray\api\wsapi::datalist();
             if ($data === false) {
