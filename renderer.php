@@ -813,14 +813,6 @@ class local_xray_renderer extends plugin_renderer_base {
         $studentatrisk = html_writer::div(get_string('studentatrisk', 'local_xray'));
         $atriskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');
         
-        /*
-        $users_li_one = $this->snap_dashboard_xray_users_li(array_slice($users_in_risk, 0, 3));
-        $users_li_two = $this->snap_dashboard_xray_users_li(array_slice($users_in_risk, 3, 6));
-        
-        $list = html_writer::alist(array($users_li_one, $users_li_two));
-        $users_profile = html_writer::div($list);
-        */
-        
         $users_profile = "";
         $users_profile_hidden = "";
         $count_users = 1;
@@ -844,9 +836,7 @@ class local_xray_renderer extends plugin_renderer_base {
         if(count($users_in_risk) > 6){
             $showall = html_writer::div('Show all', 'btn btn-default btn-sm xray_dashboard_seeall');
         }
-        
-        
-        
+
         $atrisk_column = html_writer::div($xray_dashboard_jquery.$atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek.$users_profile_box.$users_profile_box_hidden.$showall, 'col-sm-6');
         
         //Students Visitors

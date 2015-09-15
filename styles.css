@@ -148,26 +148,10 @@
 
 /**************** Course Header *********************************/
 
-#local_xray_course_header{
-    padding:0 4%;
-}
-
-.local_xray_course_atrisk{
-    float:left;
-    width:50%;
-}
-.local_xray_course_visitors{
-    float:left;
-    width:50%;
-}
 .dashboard_xray_users_profile{
     float:left;
     min-width:235px;
     min-height:70px;
-}
-
-.xray_dashboard_users_risk{
-    
 }
 
 .xray_dashboard_users_risk_hidden{
