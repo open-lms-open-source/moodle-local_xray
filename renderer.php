@@ -762,11 +762,11 @@ class local_xray_renderer extends plugin_renderer_base {
                 $students_visits_by_weekday = (isset($response->elements[3]->data) ? $response->elements[3]->data : "-");
                 
                 $output .= $this->snap_dashboard_xray_output($users_in_risk, 
-                		                                     $count_students_enrolled, 
-                		                                     $count_students_risk, 
-                		                                     $count_students_visits_lastsevendays,
-                		                                     $diff_risk,
-                		                                     $diff_visits,
+                                                             $count_students_enrolled, 
+                                                             $count_students_risk, 
+                                                             $count_students_visits_lastsevendays,
+                                                             $diff_risk,
+                                                             $diff_visits,
                                                              $students_visits_by_weekday);
             }
         } catch(exception $e) {
@@ -863,26 +863,6 @@ class local_xray_renderer extends plugin_renderer_base {
         $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek.$students_visits_weekday, 'col-sm-6');
         
         return html_writer::div($atrisk_column.$visitors_column);
-    }
-    
-    /**
-     * 
-     * @param array $users
-     * @return string
-     * 
-     */
-    public function snap_dashboard_xray_users_li($users){
-        global $DB, $OUTPUT;
-
-        $li = '';
-        foreach($users as $key => $value){
-            $user = $DB->get_record('user', array('id' => $value));
-            $pic = html_writer::span($OUTPUT->user_picture($user, array('size'=>50)));
-            $name = html_writer::span($user->firstname.' '.$user->lastname);
-            $li .= html_writer::span($pic.$name);
-        }
-        
-        return $li;
     }
     
     /**
