@@ -734,7 +734,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 \local_xray\api\xrayws::instance()->print_error();
                 
             } else {
-            	 
+                
                 // Get users in risk.
                 $users_in_risk = array();
                 if(isset($response->elements[1]->data) && !empty($response->elements[1]->data)) {
@@ -758,13 +758,16 @@ class local_xray_renderer extends plugin_renderer_base {
                 $diff_risk = round((($count_students_risk - $count_students_risk_prev) / $count_students_risk_prev) * 100, 2);
                 // Diff visits.
                 $diff_visits = round((($count_students_visits_lastsevendays - $count_students_visits_prev) / $count_students_visits_prev) * 100, 2);
-
+                //Students visits by week day
+                $students_visits_by_weekday = (isset($response->elements[3]->data) ? $response->elements[3]->data : "-");
+                
                 $output .= $this->snap_dashboard_xray_output($users_in_risk, 
                 		                                     $count_students_enrolled, 
                 		                                     $count_students_risk, 
                 		                                     $count_students_visits_lastsevendays,
                 		                                     $diff_risk,
-                		                                     $diff_visits);
+                		                                     $diff_visits,
+                                                             $students_visits_by_weekday);
             }
         } catch(exception $e) {
         	$output .= get_string('error_xray', 'local_xray');
@@ -783,11 +786,12 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      * */
     public function snap_dashboard_xray_output($users_in_risk, 
-    		                                   $students_enrolled, 
-									    	   $students_risk, 
-									    	   $students_visits_lastsevendays, 
-    		                                   $risk_fromlastweek, 
-    		                                   $visitors_fromlastweek){
+                                               $students_enrolled, 
+                                               $students_risk, 
+                                               $students_visits_lastsevendays, 
+                                               $risk_fromlastweek, 
+                                               $visitors_fromlastweek,
+                                               $students_visits_by_weekday){
         
         global $DB, $OUTPUT;
         
@@ -818,15 +822,15 @@ class local_xray_renderer extends plugin_renderer_base {
         $count_users = 1;
         $hide = false;
         if(!empty($users_in_risk)) {
-        	foreach($users_in_risk as $key => $id) {
-        	    if($count_users > 6){
-        	        $users_profile_hidden .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
-        	    }else{
-        	        $users_profile .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
-        	    }
-        		
-        		$count_users++;
-        	}
+            foreach($users_in_risk as $key => $id) {
+                if($count_users > 6){
+                    $users_profile_hidden .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
+                }else{
+                    $users_profile .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
+                }
+                
+                $count_users++;
+            }
         }
         
         $users_profile_box = html_writer::div($users_profile);
@@ -845,7 +849,18 @@ class local_xray_renderer extends plugin_renderer_base {
         $studentvisitslastdays = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
         $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');
         
-        $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek, 'col-sm-6');
+        //Create table for Students visits by Week Day
+        $students_visits_weekday_htmltable = new html_table();
+        $row = array();
+        foreach($students_visits_by_weekday as $key => $value){
+            $students_visits_weekday_htmltable->head[] = $value->day_of_week->value;
+            $row[] = $value->number_of_visits->value;
+        }
+        
+        $students_visits_weekday_htmltable->data[] = $row;
+        $students_visits_weekday = html_writer::table($students_visits_weekday_htmltable);
+        
+        $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek.$students_visits_weekday, 'col-sm-6');
         
         return html_writer::div($atrisk_column.$visitors_column);
     }
@@ -875,27 +890,27 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $user
      */
     public function print_student_profile($user) {
-    	global $CFG, $COURSE;
+        global $CFG, $COURSE;
     
-    	$userpicture = new user_picture($user);
-    	$userpicture->link = false;
-    	$userpicture->alttext = false;
-    	$userpicture->size = 100;
-    	$picture = $this->render($userpicture);
+        $userpicture = new user_picture($user);
+        $userpicture->link = false;
+        $userpicture->alttext = false;
+        $userpicture->size = 100;
+        $picture = $this->render($userpicture);
     
-    	$fullname = '<a href="'.$CFG->wwwroot.'/user/profile.php?id='.$user->id.'">'.format_string(fullname($user)).'</a>';
-    	$coursecontext = context_course::instance($COURSE->id);
-    	$user->description = file_rewrite_pluginfile_urls($user->description,
-    			                                          'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
-    	$description = format_text($user->description, $user->descriptionformat);
+        $fullname = '<a href="'.$CFG->wwwroot.'/user/profile.php?id='.$user->id.'">'.format_string(fullname($user)).'</a>';
+        $coursecontext = context_course::instance($COURSE->id);
+        $user->description = file_rewrite_pluginfile_urls($user->description,
+                                                          'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
+        $description = format_text($user->description, $user->descriptionformat);
     
-    	return "<div class='snap-media-object dashboard_xray_users_profile'>
-		    	$picture
-		    	<div class=snap-media-body>
-		    	$fullname
-		    	$description
-		    	</div>
-		    	</div>";
+        return "<div class='snap-media-object dashboard_xray_users_profile'>
+                $picture
+                <div class=snap-media-body>
+                $fullname
+                $description
+                </div>
+                </div>";
     }
     
     /************************** End Course Header **************************/
