@@ -400,14 +400,14 @@ class local_xray_renderer extends plugin_renderer_base {
     public function discussionreportindividual_participation_metrics($courseid, $element, $userid) {
          
         $columns = array();
-    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-    		foreach($element->columnOrder as $c) {
-    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-    		}
-    	}
+        if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
+        }
          
         $datatable = new local_xray_datatable(__FUNCTION__,
-        		$element->title,
+                $element->title,
                 "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=".$courseid."&userid=".$userid,
                 $columns);
          
@@ -721,56 +721,58 @@ class local_xray_renderer extends plugin_renderer_base {
      * Snap Dashboard Xray
      */
     public function snap_dashboard_xray() {
-        global $COURSE;
+        global $PAGE, $COURSE;
         
         $output = "";
         
-        try {
-            $report = "dashboard";
-            $response = \local_xray\api\wsapi::course($COURSE->id, $report);
-        
-            if(!$response) {
-                // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
-                
-            } else {
-                
-                // Get users in risk.
-                $users_in_risk = array();
-                if(isset($response->elements[1]->data) && !empty($response->elements[1]->data)) {
-                    foreach($response->elements[1]->data as $key => $obj) {
-                        if($obj->severity->value == "high") {
-                            $users_in_risk[] = $obj->participantId->value;
+        if(has_capability('local/xray:dashboard_view', $PAGE->context)) {
+            try {
+                $report = "dashboard";
+                $response = \local_xray\api\wsapi::course($COURSE->id, $report);
+            
+                if(!$response) {
+                    // Fail response of webservice.
+                    \local_xray\api\xrayws::instance()->print_error();
+            
+                } else {
+            
+                    // Get users in risk.
+                    $users_in_risk = array();
+                    if(isset($response->elements[1]->data) && !empty($response->elements[1]->data)) {
+                        foreach($response->elements[1]->data as $key => $obj) {
+                            if($obj->severity->value == "high") {
+                                $users_in_risk[] = $obj->participantId->value;
+                            }
                         }
                     }
+                    // Student ins risk.
+                    $count_students_risk = (isset($response->elements[4]->items[5]->value) ? $response->elements[4]->items[5]->value : "-");
+                    // Students enrolled.
+                    $count_students_enrolled = (isset($response->elements[4]->items[2]->value) ? $response->elements[4]->items[2]->value : "-");
+                    // Visits last 7 days.
+                    $count_students_visits_lastsevendays = (isset($response->elements[4]->items[0]->value) ? $response->elements[4]->items[0]->value : "-");
+                    // Risk previous 7 days.
+                    $count_students_risk_prev = (isset($response->elements[4]->items[6]->value) ? $response->elements[4]->items[6]->value : "-");
+                    // Visits previous 7 days.
+                    $count_students_visits_prev = (isset($response->elements[4]->items[1]->value) ? $response->elements[4]->items[1]->value : "-");
+                    // Diff risk.
+                    $diff_risk = round((($count_students_risk - $count_students_risk_prev) / $count_students_risk_prev) * 100, 2);
+                    // Diff visits.
+                    $diff_visits = round((($count_students_visits_lastsevendays - $count_students_visits_prev) / $count_students_visits_prev) * 100, 2);
+                    //Students visits by week day
+                    $students_visits_by_weekday = (isset($response->elements[3]->data) ? $response->elements[3]->data : "-");
+            
+                    $output .= $this->snap_dashboard_xray_output($users_in_risk,
+                            $count_students_enrolled,
+                            $count_students_risk,
+                            $count_students_visits_lastsevendays,
+                            $diff_risk,
+                            $diff_visits,
+                            $students_visits_by_weekday);
                 }
-                // Student ins risk.
-                $count_students_risk = (isset($response->elements[4]->items[5]->value) ? $response->elements[4]->items[5]->value : "-");
-                // Students enrolled.
-                $count_students_enrolled = (isset($response->elements[4]->items[2]->value) ? $response->elements[4]->items[2]->value : "-");
-                // Visits last 7 days.
-                $count_students_visits_lastsevendays = (isset($response->elements[4]->items[0]->value) ? $response->elements[4]->items[0]->value : "-");              
-                // Risk previous 7 days.
-                $count_students_risk_prev = (isset($response->elements[4]->items[6]->value) ? $response->elements[4]->items[6]->value : "-");         
-                // Visits previous 7 days.
-                $count_students_visits_prev = (isset($response->elements[4]->items[1]->value) ? $response->elements[4]->items[1]->value : "-");
-                // Diff risk.
-                $diff_risk = round((($count_students_risk - $count_students_risk_prev) / $count_students_risk_prev) * 100, 2);
-                // Diff visits.
-                $diff_visits = round((($count_students_visits_lastsevendays - $count_students_visits_prev) / $count_students_visits_prev) * 100, 2);
-                //Students visits by week day
-                $students_visits_by_weekday = (isset($response->elements[3]->data) ? $response->elements[3]->data : "-");
-                
-                $output .= $this->snap_dashboard_xray_output($users_in_risk, 
-                                                             $count_students_enrolled, 
-                                                             $count_students_risk, 
-                                                             $count_students_visits_lastsevendays,
-                                                             $diff_risk,
-                                                             $diff_visits,
-                                                             $students_visits_by_weekday);
+            } catch(exception $e) {
+                $output .= get_string('error_xray', 'local_xray');
             }
-        } catch(exception $e) {
-        	$output .= get_string('error_xray', 'local_xray');
         }
         
         return $output;
@@ -779,10 +781,13 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Snap Dashboard Xray
      * 
-     * @param Int $users_in_risk
-     * @param Int $students_enrolled
-     * @param Int $students_risk
-     * @param Int $students_visits_lastsevendays
+     * @param int $users_in_risk
+     * @param int $students_enrolled
+     * @param int $students_risk
+     * @param int $students_visits_lastsevendays
+     * @param float $risk_fromlastweek
+     * @param float $visitors_fromlastweek
+     * @param Array $students_visits_by_weekday
      * @return string
      * */
     public function snap_dashboard_xray_output($users_in_risk, 
@@ -812,13 +817,13 @@ class local_xray_renderer extends plugin_renderer_base {
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
         
         //Students at risk
-        $atrisk = html_writer::tag('h3', get_string('atrisk', 'local_xray'));
-        $students_atrisk = html_writer::div($students_risk.$of.$students_enrolled, 'h1');
-        $studentatrisk = html_writer::div(get_string('studentatrisk', 'local_xray'));
-        $atriskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');
+        $risk_title = html_writer::tag('h3', get_string('atrisk', 'local_xray'));
+        $students_risk = html_writer::div($students_risk.$of.$students_enrolled, 'h1');
+        $studentatrisk_text = html_writer::div(get_string('studentatrisk', 'local_xray'));
+        $riskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');
         
-        $users_profile = "";
-        $users_profile_hidden = "";
+        $users_profile = "";//Six firsts users
+        $users_profile_hidden = "";//Rest of users will be hidden
         $count_users = 1;
         $hide = false;
         if(!empty($users_in_risk)) {
@@ -841,12 +846,12 @@ class local_xray_renderer extends plugin_renderer_base {
             $showall = html_writer::div('Show all', 'btn btn-default btn-sm xray_dashboard_seeall');
         }
 
-        $atrisk_column = html_writer::div($xray_dashboard_jquery.$atrisk.$students_atrisk.$studentatrisk.$atriskfromlastweek.$users_profile_box.$users_profile_box_hidden.$showall, 'col-sm-6');
+        $risk_column = html_writer::div($xray_dashboard_jquery.$risk_title.$students_risk.$studentatrisk_text.$riskfromlastweek.$users_profile_box.$users_profile_box_hidden.$showall, 'col-sm-6');
         
         //Students Visitors
-        $visitors = html_writer::tag('h3', get_string('visitors', 'local_xray'));
+        $visitors_title = html_writer::tag('h3', get_string('visitors', 'local_xray'));
         $students_visitors = html_writer::div($students_visits_lastsevendays.$of.$students_enrolled, 'h1');
-        $studentvisitslastdays = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
+        $studentvisitslastdays_text = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
         $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');
         
         //Create table for Students visits by Week Day
@@ -860,9 +865,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $students_visits_weekday_htmltable->data[] = $row;
         $students_visits_weekday = html_writer::table($students_visits_weekday_htmltable);
         
-        $visitors_column = html_writer::div($visitors.$students_visitors.$studentvisitslastdays.$visitorsfromlastweek.$students_visits_weekday, 'col-sm-6');
+        $visitors_column = html_writer::div($visitors_title.$students_visitors.$studentvisitslastdays.$studentvisitslastdays_text.$students_visits_weekday, 'col-sm-6');
         
-        return html_writer::div($atrisk_column.$visitors_column);
+        return html_writer::div($risk_column.$visitors_column);
     }
     
     /**
@@ -883,7 +888,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $user->description = file_rewrite_pluginfile_urls($user->description,
                                                           'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
         $description = format_text($user->description, $user->descriptionformat);
-    
+        
         return "<div class='snap-media-object dashboard_xray_users_profile'>
                 $picture
                 <div class=snap-media-body>
