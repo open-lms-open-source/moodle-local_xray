@@ -62,6 +62,7 @@ $string['gradebookreport'] = 'Gradebook Report';
 $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
 $string['reportdate'] = 'Date of report';
 $string['weeks'] = 'Weeks';
+$string['week'] = 'Week';
 
 /* Error to load tables and images */
 $string['error_loadimg'] = 'Error to load image, please try again reloading the page. If error persist, contact with the administrator please.';
