@@ -36,12 +36,13 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
     			\local_xray\api\xrayws::instance()->print_error();
     			
     		} else {
+
     			// Show graphs.
     			$output .= $this->output->inforeport($response->reportdate,
     					                             null,
     					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-    			$output .= $this->heatmap_endogenic_plagiarism_students($response->elements[1]);
-    			$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements[2]);
+    			$output .= $this->heatmap_endogenic_plagiarism_students($response->elements->endogenicPlagiarismStudentsHeatmap);
+    			$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements->endogenicPlagiarismHeatmap);
 		    	
     		}		 
     	} catch(exception $e) {

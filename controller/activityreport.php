@@ -36,18 +36,18 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			\local_xray\api\xrayws::instance()->print_error();
     			
     		} else {
-
+    			
     			// Show graphs.
     			$output .= $this->output->inforeport($response->reportdate,
     					                             null,
     					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-    			$output .= $this->students_activity($response->elements[0]); // Its a table, I will get info with new call.
-    			$output .= $this->activity_of_course_by_day($response->elements[1]);
-    			$output .= $this->activity_by_time_of_day($response->elements[4]);
-    			$output .= $this->activity_last_two_weeks($response->elements[6]);
-    			$output .= $this->activity_last_two_weeks_by_weekday($response->elements[7]);
-    			$output .= $this->activity_by_participant1($response->elements[9]);
-    			$output .= $this->activity_by_participant2($response->elements[10]);
+    			$output .= $this->students_activity($response->elements->studentList); // Its a table, I will get info with new call.
+    			$output .= $this->activity_of_course_by_day($response->elements->activityLevelTimeline);
+    		    $output .= $this->activity_by_time_of_day($response->elements->compassTimeDiagram);
+    			$output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
+    			$output .= $this->activity_last_two_weeks_by_weekday($response->elements->barplotOfActivityByWeekday);
+    			$output .= $this->activity_by_participant1($response->elements->activityByWeekAsFractionOfTotal);
+    			$output .= $this->activity_by_participant2($response->elements->activityByWeekAsFractionOfOwn);
     			$output .= $this->first_login(); // This show 3 reports about login
 		    	
     		}		 
@@ -221,11 +221,11 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     			\local_xray\api\xrayws::instance()->print_error();
     			 
     		} else {
-    			 
+ 
     			// Show graphs.
-    			$output .= $this->first_login_non_starters($response->elements[1]); // Call to independient call to show in table.
-    			$output .= $this->first_login_to_course($response->elements[3]);
-    			$output .= $this->first_login_date_observed($response->elements[4]);
+    			$output .= $this->first_login_non_starters($response->elements->nonStarters); // Call to independient call to show in table.
+    			$output .= $this->first_login_to_course($response->elements->firstloginPiechartAdjusted);
+    			$output .= $this->first_login_date_observed($response->elements->firstloginBullseyeAdjusted);
     		}
     	} catch(exception $e) {
     		print_error('error_xray', $this->component,'',null, $e->getMessage());

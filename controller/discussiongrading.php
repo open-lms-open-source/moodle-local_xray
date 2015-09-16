@@ -34,13 +34,13 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 				// Fail response of webservice.
     			\local_xray\api\xrayws::instance()->print_error();
 			} else {
-				
+
 				// Show graphs.
 				$output .= $this->output->inforeport($response->reportdate,
 						                             null,
 						                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-				$output .= $this->students_grades_based_on_discussions ($response->elements [0]); // Its a table, I will get info with new call.
-				$output .= $this->barplot_of_suggested_grades ( $response->elements [1] );
+				$output .= $this->students_grades_based_on_discussions ($response->elements->studentDiscussionGrades); // Its a table, I will get info with new call.
+				$output .= $this->barplot_of_suggested_grades ( $response->elements->discussionSuggestedGrades);
 			}
 		} catch ( exception $e ) {
 			print_error ( 'error_xray', $this->component, '', null, $e->getMessage () );
