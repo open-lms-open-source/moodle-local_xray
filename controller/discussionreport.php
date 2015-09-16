@@ -35,16 +35,15 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
-
                 // Show graphs.
-                $output .= $this->participation_metrics($response->elements[0]); // Its a table, I will get info with new call.
-                $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
-                $output .= $this->average_words_weekly_by_post($response->elements[3]);
-                $output .= $this->social_structure($response->elements[7]);
-                $output .= $this->social_structure_with_word_count($response->elements[9]);
-                $output .= $this->social_structure_with_contributions_adjusted($response->elements[10]);
-                $output .= $this->social_structure_coefficient_of_critical_thinking($response->elements[11]);
-                $output .= $this->main_terms($response->elements[12]);
+                $output .= $this->participation_metrics($response->elements->discussionMetrics); // Its a table, I will get info with new call.
+                $output .= $this->discussion_activity_by_week($response->elements->discussionActivityByWeek); // Table with variable columns - Send data to create columns
+                $output .= $this->average_words_weekly_by_post($response->elements->avgWordPerPost);
+                $output .= $this->social_structure($response->elements->socialStructure);
+                $output .= $this->social_structure_with_word_count($response->elements->socialStructureWordCount);
+                $output .= $this->social_structure_with_contributions_adjusted($response->elements->socialStructureWordContribution);
+                $output .= $this->social_structure_coefficient_of_critical_thinking($response->elements->socialStructureWordCTC);
+                $output .= $this->main_terms($response->elements->wordcloud);
             }
         } catch(exception $e) {
             print_error('error_xray', 'local_xray','',null, $e->getMessage());
@@ -176,25 +175,25 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             } else {
                 $data = array();
                 if(!empty($response->data)){
-                	// This report has not specified columnOrder.
-                	if(!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
-                		$r = new stdClass();
-                	
-                		$posts = array('weeks' => $response->columnHeaders->posts);
-                		$avglag = array('weeks' => $response->columnHeaders->avgLag);
-                		$avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
-                		
-                		foreach($response->data as $col) {
-                			$posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
-                			$avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
-                			$avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
-                		}
-                		$data[] = $posts;
-                		$data[] = $avglag;
-                		$data[] = $avgwordcount;
-                		 
-                	}
-                	
+                    // This report has not specified columnOrder.
+                    if(!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+                        $r = new stdClass();
+                    
+                        $posts = array('weeks' => $response->columnHeaders->posts);
+                        $avglag = array('weeks' => $response->columnHeaders->avgLag);
+                        $avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
+                        
+                        foreach($response->data as $col) {
+                            $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
+                            $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
+                            $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                        }
+                        $data[] = $posts;
+                        $data[] = $avglag;
+                        $data[] = $avgwordcount;
+                         
+                    }
+                    
                 }
 
                 // Provide info to table.
