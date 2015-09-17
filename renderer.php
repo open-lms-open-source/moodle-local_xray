@@ -739,8 +739,8 @@ class local_xray_renderer extends plugin_renderer_base {
                     // Get users in risk.
                     $users_in_risk = array();
                     
-                    if(isset($response->element3->data) && !empty($response->element3->data)) {
-                        foreach($response->elements[1]->data as $key => $obj) {
+                    if(isset($response->elements->element3->data) && !empty($response->elements->element3->data)) {
+                        foreach($response->elements->element3->data as $key => $obj) {
                             if($obj->severity->value == "high") {
                                 $users_in_risk[] = $obj->participantId->value;
                             }
