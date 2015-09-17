@@ -45,9 +45,9 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     			$output .= $this->output->inforeport($response->reportdate, 
     					                             $DB->get_field('user', 'username', array("id" => $this->userid)),
     					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-    			$output .= $this->activity_by_date($response->elements[1]);
-    			$output .= $this->activity_last_two_weeks($response->elements[3]);
-    			$output .= $this->activity_last_two_weeks_byweekday($response->elements[4]);
+    			$output .= $this->activity_by_date($response->elements->activityLevelTimeline);
+    			$output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
+    			$output .= $this->activity_last_two_weeks_byweekday($response->elements->barplotOfActivityByWeekday);
 		    	
     		}		 
     	} catch(exception $e) {

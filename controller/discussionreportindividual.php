@@ -37,15 +37,16 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
                 
             } else {
+
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate,
                                                      $DB->get_field('user', 'username', array("id" => $this->userid)),
                                                      $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-                $output .= $this->participation_metrics($response->elements[0]); // Its a table, I will get info with new call.
-                $output .= $this->discussion_activity_by_week($response->elements[1]); // Table with variable columns - Send data to create columns
-                $output .= $this->social_structure($response->elements[2]);//TODO number elements are not the same of page
-                $output .= $this->main_terms($response->elements[3]);//TODO number elements are not the same of page
-                $output .= $this->main_terms_histogram($response->elements[4]);//TODO number elements are not the same of page
+                $output .= $this->participation_metrics($response->elements->discussionMetrics); // Its a table, I will get info with new call.
+                $output .= $this->discussion_activity_by_week($response->elements->discussionActivityByWeek); // Table with variable columns - Send data to create columns
+                $output .= $this->social_structure($response->elements->socialStructure);
+                $output .= $this->main_terms($response->elements->wordcloud);
+                $output .= $this->main_terms_histogram($response->elements->wordHistogram);
             }
         } catch(exception $e) {
             print_error('error_xray', 'local_xray','',null, $e->getMessage());

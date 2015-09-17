@@ -54,14 +54,15 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     			\local_xray\api\xrayws::instance()->print_error();
 
             } else {
+
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate, 
                                                      null,
                                                      $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
 
-                $output .= $this->wordshistogram($response->elements[3]);
-                $output .= $this->socialstructure($response->elements[1]);
-                $output .= $this->wordcloud($response->elements[2]);
+                $output .= $this->wordshistogram($response->elements->wordHistogram);
+                $output .= $this->socialstructure($response->elements->socialStructure);
+                $output .= $this->wordcloud($response->elements->wordcloud);
 
             }
         } catch(exception $e) {
