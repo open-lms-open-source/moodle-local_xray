@@ -738,7 +738,8 @@ class local_xray_renderer extends plugin_renderer_base {
             
                     // Get users in risk.
                     $users_in_risk = array();
-                    if(isset($response->elements[1]->data) && !empty($response->elements[1]->data)) {
+                    
+                    if(isset($response->element3->data) && !empty($response->element3->data)) {
                         foreach($response->elements[1]->data as $key => $obj) {
                             if($obj->severity->value == "high") {
                                 $users_in_risk[] = $obj->participantId->value;
@@ -746,22 +747,22 @@ class local_xray_renderer extends plugin_renderer_base {
                         }
                     }
                     // Student ins risk.
-                    $count_students_risk = (isset($response->elements[4]->items[5]->value) ? $response->elements[4]->items[5]->value : "-");
+                    $count_students_risk = (isset($response->elements->element6->items[5]->value) ? $response->elements->element6->items[5]->value : "-");
                     // Students enrolled.
-                    $count_students_enrolled = (isset($response->elements[4]->items[2]->value) ? $response->elements[4]->items[2]->value : "-");
+                    $count_students_enrolled = (isset($response->elements->element6->items[2]->value) ? $response->elements->element6->items[2]->value : "-");
                     // Visits last 7 days.
-                    $count_students_visits_lastsevendays = (isset($response->elements[4]->items[0]->value) ? $response->elements[4]->items[0]->value : "-");
+                    $count_students_visits_lastsevendays = (isset($response->elements->element6->items[0]->value) ? $response->elements->element6->items[0]->value : "-");
                     // Risk previous 7 days.
-                    $count_students_risk_prev = (isset($response->elements[4]->items[6]->value) ? $response->elements[4]->items[6]->value : "-");
+                    $count_students_risk_prev = (isset($response->elements->element6->items[6]->value) ? $response->elements->element6->items[6]->value : "-");
                     // Visits previous 7 days.
-                    $count_students_visits_prev = (isset($response->elements[4]->items[1]->value) ? $response->elements[4]->items[1]->value : "-");
+                    $count_students_visits_prev = (isset($response->elements->element6->items[1]->value) ? $response->elements->element6->items[1]->value : "-");
                     // Diff risk.
                     $diff_risk = round((($count_students_risk - $count_students_risk_prev) / $count_students_risk_prev) * 100, 2);
                     // Diff visits.
                     $diff_visits = round((($count_students_visits_lastsevendays - $count_students_visits_prev) / $count_students_visits_prev) * 100, 2);
                     //Students visits by week day
-                    $students_visits_by_weekday = (isset($response->elements[3]->data) ? $response->elements[3]->data : "-");
-            
+                    $students_visits_by_weekday = (isset($response->elements->activity_level->data) ? $response->elements->activity_level->data : "-");
+                    
                     $output .= $this->snap_dashboard_xray_output($users_in_risk,
                             $count_students_enrolled,
                             $count_students_risk,
@@ -865,7 +866,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $students_visits_weekday_htmltable->data[] = $row;
         $students_visits_weekday = html_writer::table($students_visits_weekday_htmltable);
         
-        $visitors_column = html_writer::div($visitors_title.$students_visitors.$studentvisitslastdays.$studentvisitslastdays_text.$students_visits_weekday, 'col-sm-6');
+        $visitors_column = html_writer::div($visitors_title.$students_visitors.$visitorsfromlastweek.$studentvisitslastdays_text.$students_visits_weekday, 'col-sm-6');
         
         return html_writer::div($risk_column.$visitors_column);
     }
