@@ -56,6 +56,20 @@ if ($hassiteconfig) {
                                                  new lang_string("xrayclientid_desc", $plugin),
                                                  '', PARAM_TEXT));
 
+    // Settings for displaying content inline course front page
+    $settings->add( new admin_setting_heading("{$plugin}/xraydisplayheading",
+                                              new lang_string("xraydisplayheading", $plugin),
+                                              new lang_string("xraydisplayheading_desc", $plugin)));
+
+    $settings->add( new admin_setting_configcheckbox("{$plugin}/displaymenu",
+                                                     new lang_string("displaymenu", $plugin),
+                                                     new lang_string("displaymenu_desc", $plugin),
+                                                     '0'));
+    $settings->add( new admin_setting_configcheckbox("{$plugin}/displayheaderdata",
+                                                     new lang_string("displayheaderdata", $plugin),
+                                                     new lang_string("displayheaderdata_desc", $plugin),
+                                                     '0'));
+
     // Configuration and credentials for accessing Xray S3 bucket
     $settings->add( new admin_setting_heading("{$plugin}/xrayawsheading",
                                               new lang_string("xrayawsheading", $plugin),

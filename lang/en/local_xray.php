@@ -25,6 +25,13 @@ $string['navigation_xray'] = 'X-Ray';
 $string['navitationcourse_xray'] = 'X-Ray';
 $string['pluginname'] = 'X-Ray';
 $string['reports'] = 'Reports';
+$string['analytics'] = 'Course Analytics';
+$string['xraydisplayheading'] = 'Course Integration';
+$string['xraydisplayheading_desc'] = 'Control the display of information and report links on the course frontpage.';
+$string['displaymenu'] = 'Show reports menu';
+$string['displaymenu_desc'] = 'Control the display reports menu on the course frontpage.';
+$string['displayheaderdata'] = 'Show Analytics';
+$string['displayheaderdata_desc'] = 'Control the display course analytics on the course frontpage.';
 
 /* Capabilities */
 $string['xray:activityreportindividual_view'] = 'View Activity Report Individual';

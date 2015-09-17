@@ -74,7 +74,7 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
             if (!empty($reportlist)) {
                 foreach ($reportlist as $report => $capability) {
                     if (has_capability($capability, $context)) {
-                        $reports[$report] = $baseurl->out(true, array('controller' => $report));
+                        $reports[$report] = $baseurl->out(false, array('controller' => $report));
                     }
                 }
             }
@@ -124,40 +124,65 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
  * @return void
  */
 function local_xray_extends_navigation(global_navigation $nav) {
+    global $PAGE;
     ($nav); // Just to remove unused param warning.
 
-    // TODO: This is a placeholder code for adding custom links on the Moodle page. For now disabled.
+    if (stripos($PAGE->pagetype,'course-view') === 0) {
 
-    global $PAGE;
-    /*$reports = local_xray_navigationlinks($PAGE, $PAGE->context);
-    if (empty($reports)) {
-        return;
-    }*/
+        $displaymenu = get_config('local_xray', 'displaymenu');
+        $displayheaderdata = get_config('local_xray', 'displayheaderdata');
 
+        $menu = '';
+        if ($displaymenu) {
+            $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+            if (!empty($reports)) {
+                $menuitems = array();
+                foreach ($reports as $reportstring => $url) {
+                    $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'));
+                }
+                $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;'));
+                $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray'));
+                $dmenu = \html_writer::div($amenu);
+                $menu = \html_writer::tag('li', $title . $dmenu, array('id'    => 'xraymenu',
+                                                                       'class' => 'section main clearfix',
+                                                                       'role'  => 'region'));
+            }
+        }
 
-//    if (stripos($PAGE->pagetype,'course-view') === 0) {
-//        $items = array('itema', 'itemb', 'itemc');
-//        $menu = \html_writer::alist($items);
-//
-//        /* @var local_xray_renderer $renderer */
-//        $renderer = $PAGE->get_renderer('local_xray');
-//        $headerdata = $renderer->snap_dashboard_xray();
-//
-//        // TODO: prepare adequate menu and header css identifiers for all course formats.
-//
-//        // Easy way to force include on every page (provided that navigation block is present).
-//        $PAGE->requires->yui_module(array('moodle-local_xray-custmenu'),
-//            'M.local_xray.custmenu.init',
-//            array(array('menusearch' => 'nav.section_footer',
-//                        'items' => $menu,
-//                        'hdrsearch' => 'nav.section_footer',
-//                        'header' => $headerdata
-//            )),
-//            null,
-//            true
-//        );
-//
-//    }
+        $headerdata = '';
+        if ($displayheaderdata) {
+            /* @var local_xray_renderer $renderer */
+            $renderer = $PAGE->get_renderer('local_xray');
+            $headerdata = $renderer->snap_dashboard_xray();
+            if (!empty($headerdata)) {
+                $title = \html_writer::tag('h2', get_string('analytics', 'local_xray'));
+                $subc = \html_writer::div($headerdata);
+                $headerdata = \html_writer::tag('li', $title . $subc, array('id'    => 'headerdata',
+                                                                            'class' => 'section main clearfix',
+                                                                            'role'  => 'region'));
+            }
+        }
 
+        // TODO: prepare adequate menu and header css identifiers for all course formats.
+        // Topics course format
+        // ul.topics -- add as last item new <li> with unique id and section main clearfix class
+        // special version
+        // nav.section_footer
+        // End topics course format
 
+        if (!empty($menu) or !empty($headerdata)) {
+            // Easy way to force include on every page (provided that navigation block is present).
+            $PAGE->requires->yui_module(array('moodle-local_xray-custmenu'),
+                'M.local_xray.custmenu.init',
+                array(array('menusearch' => 'ul.topics',
+                    'items' => $menu,
+                    'hdrsearch' => 'ul.topics',
+                    'header' => $headerdata
+                )),
+                null,
+                true
+            );
+        }
+
+    }
 }

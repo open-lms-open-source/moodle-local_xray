@@ -7,20 +7,28 @@ YUI.add('moodle-local_xray-custmenu', function(Y) {
                 if (M.cfg.developerdebug) {
                     Y.log("Entered local_xray.custmenu!");
                 }
-                var menu = Y.one(config.menusearch);
-                if (menu) {
-                    menu.prepend(Y.Escape.html(config.header));
-                } else {
-                    if (M.cfg.developerdebug) {
-                        Y.log("Unable to locate element " + config.menusearch);
+
+                // Header data
+                if (config.header) {
+                    var header = Y.one(config.hdrsearch);
+                    if (header) {
+                        header.append(config.header);
+                    } else {
+                        if (M.cfg.developerdebug) {
+                            Y.log("Unable to locate element " + config.header);
+                        }
                     }
                 }
-                var header = Y.one(config.hdrsearch);
-                if (header) {
-                    header.prepend(Y.Escape.html(config.header));
-                } else {
-                    if (M.cfg.developerdebug) {
-                        Y.log("Unable to locate element " + config.header);
+
+                // Menu
+                if (config.items) {
+                    var menu = Y.one(config.menusearch);
+                    if (menu) {
+                        menu.append(config.items);
+                    } else {
+                        if (M.cfg.developerdebug) {
+                            Y.log("Unable to locate element " + config.menusearch);
+                        }
                     }
                 }
             } // end init
