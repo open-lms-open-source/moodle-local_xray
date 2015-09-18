@@ -127,7 +127,24 @@ function local_xray_extends_navigation(global_navigation $nav) {
     global $PAGE;
     ($nav); // Just to remove unused param warning.
 
+    // TODO: Add CSS search strings for other course formats
+    static $search = array(
+                           'topics'         => 'ul.topics',
+                           'weeks'          => 'ul.weeks' ,
+                           'flexpage'       => '.notexist', // Not sure what to do here?
+                           'folderview'     => 'ul.folderview',
+                           'onetopic'       => 'ul.topics',
+                           'singleactivity' => '.notexist', // Not sure what to do here?
+                           'social'         => '.notexist', // Not sure what to do here?
+                           'tabbedweek'     => 'ul.weeks',
+                           'topcoll'        => 'ul.ctopics.topics.ctlayout'
+                          );
+
     if (stripos($PAGE->pagetype,'course-view') === 0) {
+        $courseformat = $PAGE->course->format;
+        if (!isset($search[$courseformat])) {
+            $search[$courseformat] = '.notexist';
+        }
 
         $displaymenu = get_config('local_xray', 'displaymenu');
         $displayheaderdata = get_config('local_xray', 'displayheaderdata');
@@ -174,10 +191,11 @@ function local_xray_extends_navigation(global_navigation $nav) {
             // Easy way to force include on every page (provided that navigation block is present).
             $PAGE->requires->yui_module(array('moodle-local_xray-custmenu'),
                 'M.local_xray.custmenu.init',
-                array(array('menusearch' => 'ul.topics',
-                    'items' => $menu,
-                    'hdrsearch' => 'ul.topics',
-                    'header' => $headerdata
+                array(array(
+                    'menusearch' => $search[$courseformat],
+                    'items'      => $menu,
+                    'hdrsearch'  => $search[$courseformat],
+                    'header'     => $headerdata
                 )),
                 null,
                 true
