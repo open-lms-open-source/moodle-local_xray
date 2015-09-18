@@ -1,47 +1,40 @@
-/**************** General styles for all reports****************/
+/****************  Styles for Xray reports ****************/
 
 /* Region main for all reports */
 #page-local-xray-view {
-		background-color: #E0E0E0;
 }
 
 #page-local-xray-view #page-content #region-main {
-    max-width: 968px; /* snap theme limit to 60.5 em */
-	margin: 0 auto;
-	box-sizing: content-box;
-	background-color: #fff;
+    max-width: 92%; /* snap theme limit to 60.5 em */
+    margin: 0 auto;
+    box-sizing: content-box;
 }
 
 /* General info report */
 #page-local-xray-view .inforeport {
     display: block;
-    margin-bottom: 5px;
-    padding: 5px;
-    color: #666;
-    font-family: Roboto;
-    font-size: 13px;
+    margin-bottom: 1em;
 }
 #page-local-xray-view .inforeport p{
-    margin-bottom:0px;
+    margin-bottom: 0;
 }
 
 /* Name elements (tables and graphs) */
 #page-local-xray-view .reportsname {
-    background-color: #3bcedb;
-    color: #fff;
-    font-family: Roboto;
-    font-weight: 500;
-    overflow: hidden;
-    padding: 5px 0 5px 3px;
+    /* h3 for screenreaders, but needs to be smaller visually */
+    font-size: 1.1em;
+		line-height: 1.5;
+		/* for express we need to override heading centering */
+		text-align: left;
 }
 /* Toogle tables */
 #page-local-xray-view .eventtoogletable {
-	cursor:pointer;
-    padding-left: 18px;
-    background: #3bcedb url([[pix:t/collapsed]]) 2px center no-repeat;
+    cursor: pointer;
+    padding-left: 1em;
+    background: transparent url([[pix:t/collapsed]]) 0 center no-repeat;
 }
 #page-local-xray-view .expanded {
-    background: #3bcedb url([[pix:t/expanded]]) 2px center no-repeat;
+    background: transparent url([[pix:t/expanded]]) 0 center no-repeat;
 }
 /* End Toogle tables */
 
@@ -52,27 +45,32 @@
 /* General xray element (specific for graphs) */
 #page-local-xray-view .xray_element_graph {
     display: inline-block;
-    overflow: hidden;
-    width: 316px;
-    margin-top:4px;
     box-sizing: content-box;
-    margin-right:6px;
-}
+    overflow: hidden;
+    width: 29%;
+    margin:1em 2%;
 
-/* General xray element (specific for tables) */
-#page-local-xray-view .xray_element_table {
-	clear:both;
-	margin-top: 5px;
 }
 
 /* General xray image graph */
 #page-local-xray-view .xray_element_img{
-    background-color: #fff;
-    height: 316px;
-    margin-top: 5px;
-    overflow: hidden;
-    width: 316px;
+    height: 300px;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
+
+#page-local-xray-view .xray_element_img:hover {
+    transform: scale(1.1);
+}
+
+
+/* General xray element (specific for tables) */
+#page-local-xray-view .xray_element_table {
+    clear: both;
+    margin: 1em 0;
+}
+
+
 
 /* General xray legend of graph */
 #page-local-xray-view .xray_graph_legend {
@@ -86,20 +84,20 @@
 
 /* Table content */
 #page-local-xray-view .dataTables_wrapper table{
-	font-family: Roboto;
+
 }
 
 /* Table content */
 #page-local-xray-view .dataTables_wrapper table tr td{
-	font-size:14px;
+
 }
 #page-local-xray-view .error_datatables {
     background-color: #CE2F2F;
-    color:#fff;
-    text-align:center;
-    display:block;
-    margin:3px 0px;
-    padding:5px;
+    color: #fff;
+    text-align: center;
+    display: block;
+    margin: 3px 0px;
+    padding: 5px;
 }
 
 /** Error load img report**/
@@ -116,7 +114,7 @@
 	background-color: #3bcedb;
 }
 
-/**************** End General styles for all reports****************/
+
 
 /**************** Styles for specific reports****************/
 /** Link in table to activity report individual **/
@@ -155,6 +153,6 @@
 }
 
 .xray_dashboard_users_risk_hidden{
-    display:none; 
+    display:none;
 }
 /**************** End Styles for Course Header ******************/
