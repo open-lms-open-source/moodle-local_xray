@@ -28,6 +28,15 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * @param string $value
+ * @param string $starts
+ * @return bool
+ */
+function local_xray_startswith($value, $starts) {
+    return (stripos($value, $starts) === 0);
+}
+
+/**
  * Generate list of report links according to the current page
  * Result is returned as associative array ($reportname => $reporturl)
  *
@@ -49,7 +58,8 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
             $reportlist = array();
             $reports = array();
 
-            if (stripos($page->pagetype, 'course-view') === 0) {
+            if (local_xray_startswith($page->pagetype, 'course-view') or
+                local_xray_startswith($page->pagetype, 'local-xray-view')) {
 
                 $reportlist = array(
                     'activityreport' => 'local/xray:activityreport_view',
@@ -103,7 +113,8 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
     $nodename = 'modulesettings';
 
     // Reports to show in course-view.
-    if (stripos($PAGE->pagetype,'course-view') === 0) {
+    if (local_xray_startswith($PAGE->pagetype,'course-view') or
+        local_xray_startswith($PAGE->pagetype,'local-xray-view')) {
         //Show nav x-ray in courseadmin node.
         $nodename = 'courseadmin';
     }
@@ -140,7 +151,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
                            'topcoll'        => 'ul.ctopics.topics.ctlayout'
                           );
 
-    if (stripos($PAGE->pagetype,'course-view') === 0) {
+    if (local_xray_startswith($PAGE->pagetype,'course-view')) {
         $courseformat = $PAGE->course->format;
         if (!isset($search[$courseformat])) {
             $search[$courseformat] = '.notexist';

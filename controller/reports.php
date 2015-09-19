@@ -23,19 +23,37 @@ class local_xray_controller_reports extends mr_controller {
      */
     protected $userid;
 
+    /**
+     * @var bool
+     */
+    protected $ajax = false;
+
     public function init() {
+        global $PAGE;
         parent::init();
-        if(is_callable('mr_on') && !mr_on("xray", "_MR_LOCAL")) {
+        if(is_callable('mr_off') and mr_off('xray', 'local')) {
             exit();
         }
+        // Use standard page layout for Moodle reports.
+        $PAGE->set_pagelayout('report');
+        $this->courseid = $PAGE->course->id;
     }
 
-    public function setup(){
+    protected function setajaxoutput() {
         global $PAGE;
-        $PAGE->set_context($this->get_context());
-        parent::setup();
+        // This renders the page correctly using standard Moodle ajax renderer
+        $this->output = $PAGE->get_renderer('core', null, RENDERER_TARGET_AJAX);
+        $this->ajax = true;
     }
 
+    public function print_header() {
+        if ($this->ajax) {
+            echo $this->output->header();
+            return;
+        }
+
+        parent::print_header();
+    }
 
     /**
      * Require capabilities

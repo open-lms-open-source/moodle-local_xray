@@ -25,9 +25,8 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
     public function init() {
         parent::init();
         global $DB;
-        $this->courseid = required_param('courseid', PARAM_RAW);
-        $this->cmid = required_param('cmid', PARAM_RAW); // Cmid of quiz.
-        $this->quizid = required_param('quiz', PARAM_RAW);
+        $this->cmid = required_param('cmid', PARAM_ALPHANUM); // Cmid of quiz.
+        $this->quizid = required_param('quiz', PARAM_ALPHANUM);
     }
     
     public function view_action() {

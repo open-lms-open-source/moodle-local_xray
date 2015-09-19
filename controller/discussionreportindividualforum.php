@@ -1,6 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') or die();
-require_once($CFG->dirroot.'/local/xray/controller/reports.php');
+require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
  * Report Discussion Individual forum.
@@ -25,9 +25,8 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     public function init() {
         parent::init();
         global $DB;
-        $this->courseid = required_param('courseid', PARAM_RAW);
-        $this->cmid = required_param('cmid', PARAM_RAW); // Cmid of forum.
-        $this->forumid = required_param('forum', PARAM_RAW);
+        $this->cmid = required_param('cmid', PARAM_ALPHANUM); // Cmid of forum.
+        $this->forumid = required_param('forum', PARAM_ALPHANUM);
     }
 
     public function view_action() {
@@ -40,38 +39,38 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
         // Add title to breadcrumb.
         $forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
-        $PAGE->navbar->add($forumname, new moodle_url("/mod/forum/view.php", 
-                                                      array("id" => $this->cmid))); 
+        $PAGE->navbar->add($forumname, new moodle_url("/mod/forum/view.php",
+            array("id" => $this->cmid)));
 
         $PAGE->navbar->add($title);
         $output = "";
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report, "forum/".$this->forumid);
-            if(!$response) {
+            $response = \local_xray\api\wsapi::course($this->courseid, $report, "forum/" . $this->forumid);
+            if (!$response) {
                 // Fail response of webservice.
-    			\local_xray\api\xrayws::instance()->print_error();
+                \local_xray\api\xrayws::instance()->print_error();
 
             } else {
 
                 // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate, 
-                                                     null,
-                                                     $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                $output .= $this->output->inforeport($response->reportdate,
+                    null,
+                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
 
                 $output .= $this->wordshistogram($response->elements->wordHistogram);
                 $output .= $this->socialstructure($response->elements->socialStructure);
                 $output .= $this->wordcloud($response->elements->wordcloud);
 
             }
-        } catch(exception $e) {
-            print_error('error_xray', $this->component,'',null, $e->getMessage());
+        } catch (exception $e) {
+            print_error('error_xray', $this->component, '', null, $e->getMessage());
         }
 
         return $output;
     }
-    
+
     /**
      * Words Histogram
      *
@@ -82,7 +81,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
         $output .= $this->output->discussionreportindividualforum_wordshistogram($element);
         return $output;
     }
-    
+
     /**
      * Social Structure
      *
@@ -91,17 +90,17 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
         $output = "";
         $output .= $this->output->discussionreportindividualforum_socialstructure($element);
-        return $output; 
+        return $output;
     }
-    
+
     /**
      * Wordcloud
      *
-     */    
+     */
     private function wordcloud($element) {
 
         $output = "";
         $output .= $this->output->discussionreportindividualforum_wordcloud($element);
-        return $output; 
+        return $output;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
-require_once($CFG->dirroot.'/local/xray/controller/reports.php');
+require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
  * Xray integration Reports Controller
@@ -10,12 +10,6 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  * @package local_xray
  */
 class local_xray_controller_discussionreport extends local_xray_controller_reports {
-
-    public function init() {
-        parent::init();
-        // This report will get data by courseid.
-        $this->courseid = required_param('courseid', PARAM_RAW);
-    }
 
     public function view_action() {
 
@@ -31,7 +25,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         try {
             $report = "discussion";
             $response = \local_xray\api\wsapi::course($this->courseid, $report);
-            if(!$response) {
+            if (!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
@@ -46,8 +40,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $output .= $this->social_structure_coefficient_of_critical_thinking($response->elements->socialStructureWordCTC);
 
             }
-        } catch(exception $e) {
-            print_error('error_xray', 'local_xray','',null, $e->getMessage());
+        } catch (exception $e) {
+            print_error('error_xray', 'local_xray', '', null, $e->getMessage());
         }
         return $output;
     }
@@ -80,55 +74,58 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
 
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_RAW);
-        $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
+        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
+
+        // This renders the page correctly using standard Moodle ajax renderer
+        $this->setajaxoutput();
 
         try {
             $report = "discussion";
             $element = "discussionMetrics";
 
             $response = \local_xray\api\wsapi::courseelement($this->courseid,
-                                                             $element,
-                                                             $report,
-                                                             null,
-                                                             '',
-                                                             '',
-                                                             $start,
-                                                             $count);
+                $element,
+                $report,
+                null,
+                '',
+                '',
+                $start,
+                $count);
 
-            if(!$response) {
+            if (!$response) {
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
 
                 $data = array();
-                if(!empty($response->data)){
+                if (!empty($response->data)) {
                     $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
 
-                    foreach($response->data as $row) {
+                    foreach ($response->data as $row) {
 
                         $r = new stdClass();
                         $r->action = "";
-                        if(has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
+                        if (has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
                             // Url for discussionreportindividual.
                             $url = new moodle_url("/local/xray/view.php",
-                                    array("controller" => "discussionreportindividual",
-                                          "courseid" => $this->courseid,
-                                          "userid" => $row->participantId->value
-                                    ));
+                                array("controller" => "discussionreportindividual",
+                                    "courseid" => $this->courseid,
+                                    "userid" => $row->participantId->value
+                                ));
                             $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
-                                    "title" => $discussionreportind,
-                                    "target" => "_blank"));
+                                "title" => $discussionreportind,
+                                "target" => "_blank"));
                         }
 
 
                         // Format of response for columns.
-                        if(!empty($response->columnOrder)) {
-                        	foreach($response->columnOrder as $column) {
-                        		$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
-                        	}
-                        	$data[] = $r;
+                        if (!empty($response->columnOrder)) {
+                            foreach ($response->columnOrder as $column) {
+                                $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                            }
+                            $data[] = $r;
                         }
                     }
                 }
@@ -137,12 +134,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch(exception $e) {
+        } catch (exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
-        echo json_encode($return);
-        exit();
+
+        return json_encode($return);
     }
 
     /**
@@ -153,38 +150,41 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
 
         // Pager
-        $count  = optional_param('count', 10, PARAM_RAW);//count param with number of weeks
-        $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
+        $count = optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
+        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
+
+        // This renders the page correctly using standard Moodle ajax renderer
+        $this->setajaxoutput();
 
         try {
             $report = "discussion";
             $element = "discussionActivityByWeek";
 
             $response = \local_xray\api\wsapi::courseelement($this->courseid,
-                    $element,
-                    $report,
-                    null,
-                    '',
-                    '',
-                    $start,
-                    $count);
+                $element,
+                $report,
+                null,
+                '',
+                '',
+                $start,
+                $count);
 
-            if(!$response) {
+            if (!$response) {
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
-                if(!empty($response->data)){
+                if (!empty($response->data)) {
                     // This report has not specified columnOrder.
-                    if(!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+                    if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
                         $r = new stdClass();
 
                         $posts = array('weeks' => $response->columnHeaders->posts);
                         $avglag = array('weeks' => $response->columnHeaders->avgLag);
                         $avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
 
-                        foreach($response->data as $col) {
+                        foreach ($response->data as $col) {
                             $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
                             $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
                             $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
@@ -201,12 +201,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch(exception $e) {
+        } catch (exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
-        echo json_encode($return);
-        exit();
+
+        return json_encode($return);
     }
 
     /**
@@ -234,9 +234,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      *
      */
     private function social_structure_with_word_count($element) {
-    	$output = "";
-    	$output .= $this->output->discussionreport_social_structure_with_word_count($element);
-    	return $output;
+        $output = "";
+        $output .= $this->output->discussionreport_social_structure_with_word_count($element);
+        return $output;
     }
 
     /**

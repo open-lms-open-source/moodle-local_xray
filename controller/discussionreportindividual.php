@@ -1,6 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') or die();
-require_once($CFG->dirroot.'/local/xray/controller/reports.php');
+require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
  * Xray integration Reports Controller
@@ -13,8 +13,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
     public function init() {
         parent::init();
-        $this->courseid = required_param('courseid', PARAM_RAW);
-        $this->userid = required_param('userid', PARAM_RAW);
+        $this->userid = required_param('userid', PARAM_INT);
     }
 
     public function view_action() {
@@ -32,29 +31,29 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         try {
             $report = "discussion";
             $response = \local_xray\api\wsapi::course($this->courseid, $report, $this->userid);
-            if(!$response) {
+            if (!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
-                
+
             } else {
 
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate,
-                                                     $DB->get_field('user', 'username', array("id" => $this->userid)),
-                                                     $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                    $DB->get_field('user', 'username', array("id" => $this->userid)),
+                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
                 $output .= $this->participation_metrics($response->elements->discussionMetrics); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements->discussionActivityByWeek); // Table with variable columns - Send data to create columns
                 $output .= $this->social_structure($response->elements->socialStructure);
                 $output .= $this->main_terms($response->elements->wordcloud);
                 $output .= $this->main_terms_histogram($response->elements->wordHistogram);
             }
-        } catch(exception $e) {
-            print_error('error_xray', 'local_xray','',null, $e->getMessage());
+        } catch (exception $e) {
+            print_error('error_xray', 'local_xray', '', null, $e->getMessage());
         }
-        
+
         return $output;
     }
-    
+
     /**
      * Report "A summary table to be added" (table).
      *
@@ -64,67 +63,70 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, $element, $this->userid);
         return $output;
     }
-    
+
     /**
      * Json for provide data to participation_metrics table.
      */
     public function jsonparticipationdiscussionindividual_action() {
-    
+
         global $PAGE;
-    
+
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_RAW);
-        $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
-    
+        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+
         $return = "";
-    
+
+        // This renders the page correctly using standard Moodle ajax renderer
+        $this->setajaxoutput();
+
         try {
             $report = "discussion";
             $element = "discussionMetrics";
-    
+
             $response = \local_xray\api\wsapi::courseelement($this->courseid,
-                    $element,
-                    $report,
-                    $this->userid,
-                    '',
-                    '',
-                    $start,
-                    $count);
-             
-            if(!$response) {
+                $element,
+                $report,
+                $this->userid,
+                '',
+                '',
+                $start,
+                $count);
+
+            if (!$response) {
                 // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
-    
+
                 $data = array();
-                if(!empty($response->data)){
+                if (!empty($response->data)) {
                     $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
-    
-                    foreach($response->data as $row) {
-                    	
-                    	// Format of response for columns.
-                    	if(!empty($response->columnOrder)) {
-                    		$r = new stdClass();
-                    		foreach($response->columnOrder as $column) {
-                    			$r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
-                    		}
-                    		$data[] = $r;
-                    	}
+
+                    foreach ($response->data as $row) {
+
+                        // Format of response for columns.
+                        if (!empty($response->columnOrder)) {
+                            $r = new stdClass();
+                            foreach ($response->columnOrder as $column) {
+                                $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                            }
+                            $data[] = $r;
+                        }
                     }
                 }
-    
+
                 // Provide info to table.
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch(exception $e) {
+        } catch (exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
-        echo json_encode($return);
-        exit();
+
+        return json_encode($return);
     }
-    
+
     /**
      * Report "Discussion Activity by Week" (table).
      *
@@ -134,45 +136,48 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid, $this->userid, $element);
         return $output;
     }
-    
+
     /**
      * Json for provide data to discussion_activity_by_week table.
      */
     public function jsonweekdiscussionindividual_action() {
-    
+
         global $PAGE;
-    
+
         // Pager
-        $count  = optional_param('count', 10, PARAM_RAW);//count param with number of weeks
-        $start  = optional_param('iDisplayStart', 0, PARAM_RAW);
-    
+        $count = optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
+        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+
         $return = "";
-    
+
+        // This renders the page correctly using standard Moodle ajax renderer
+        $this->setajaxoutput();
+
         try {
             $report = "discussion";
             $element = "discussionActivityByWeek";
-    
+
             $response = \local_xray\api\wsapi::courseelement($this->courseid, // TODO:: Hardcoded.
-                    $element,
-                    $report,
-                    $this->userid,
-                    '',
-                    '',
-                    $start,
-                    $count);
-    
-            if(!$response) {
+                $element,
+                $report,
+                $this->userid,
+                '',
+                '',
+                $start,
+                $count);
+
+            if (!$response) {
                 // TODO:: Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
-    
+
                 $posts = array('weeks' => $response->columnHeaders->posts);
                 //$avglag = array('weeks' => get_string('averageresponselag', 'local_xray'));
                 $avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
-    
-                if(!empty($response->data)){
-                    foreach($response->data as $col) {
+
+                if (!empty($response->data)) {
+                    foreach ($response->data as $col) {
                         $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
                         //$avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
                         $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
@@ -180,19 +185,19 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                     $data[] = $posts;
                     $data[] = $avgwordcount;
                 }
-    
+
                 // Provide info to table.
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch(exception $e) {
+        } catch (exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
-        echo json_encode($return);
-        exit();
+
+        return json_encode($return);
     }
-    
+
     /**
      * Report Social Structure.
      *
@@ -201,9 +206,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
         $output = "";
         $output .= $this->output->discussionreportindividual_social_structure($element);
-        return $output; 
+        return $output;
     }
-    
+
     /**
      * Report Main Terms.
      * @param unknown $element
@@ -214,15 +219,15 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         $output .= $this->output->discussionreportindividual_main_terms($element);
         return $output;
     }
-    
+
     /**
      * Report Main Terms Histogram.
      */
     private function main_terms_histogram($element) {
-    
+
         $output = "";
         $output .= $this->output->discussionreportindividual_main_terms_histogram($element);
         return $output;
-    }   
- 
+    }
+
 }

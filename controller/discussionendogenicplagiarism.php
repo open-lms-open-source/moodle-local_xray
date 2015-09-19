@@ -1,6 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') or die();
-require_once($CFG->dirroot.'/local/xray/controller/reports.php');
+require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
  * Discussion Endogenic Plagiarism.
@@ -9,66 +9,61 @@ require_once($CFG->dirroot.'/local/xray/controller/reports.php');
  * @package local_xray
  */
 class local_xray_controller_discussionendogenicplagiarism extends local_xray_controller_reports {
- 
-	public function init() {
-		// This report will get data by courseid.
-		$this->courseid = required_param('courseid', PARAM_RAW);
-	}
-	
+
     public function view_action() {
-    	
-    	global $PAGE, $DB;
-    	
-    	$title = get_string($this->name, $this->component);
-    	$PAGE->set_title($title);
-    	$this->heading->text = $title;
-    	
-    	// Add title to breadcrumb.
-    	$PAGE->navbar->add($title);
-    	$output = "";
 
-    	try {
-    		$report = "discussionEndogenicPlagiarism";
-    		$response = \local_xray\api\wsapi::course($this->courseid, $report);
-    		if(!$response) {
-    			$this->debugwebservice();
-    			// Fail response of webservice.
-    			\local_xray\api\xrayws::instance()->print_error();
-    			
-    		} else {
+        global $PAGE, $DB;
 
-    			// Show graphs.
-    			$output .= $this->output->inforeport($response->reportdate,
-    					                             null,
-    					                             $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-    			$output .= $this->heatmap_endogenic_plagiarism_students($response->elements->endogenicPlagiarismStudentsHeatmap);
-    			$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements->endogenicPlagiarismHeatmap);
-		    	
-    		}		 
-    	} catch(exception $e) {
-    		print_error('error_xray', $this->component,'',null, $e->getMessage());
-    	}
-    	
-    	return $output;
+        $title = get_string($this->name, $this->component);
+        $PAGE->set_title($title);
+        $this->heading->text = $title;
+
+        // Add title to breadcrumb.
+        $PAGE->navbar->add($title);
+        $output = "";
+
+        try {
+            $report = "discussionEndogenicPlagiarism";
+            $response = \local_xray\api\wsapi::course($this->courseid, $report);
+            if (!$response) {
+                $this->debugwebservice();
+                // Fail response of webservice.
+                \local_xray\api\xrayws::instance()->print_error();
+
+            } else {
+
+                // Show graphs.
+                $output .= $this->output->inforeport($response->reportdate,
+                    null,
+                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                $output .= $this->heatmap_endogenic_plagiarism_students($response->elements->endogenicPlagiarismStudentsHeatmap);
+                $output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements->endogenicPlagiarismHeatmap);
+
+            }
+        } catch (exception $e) {
+            print_error('error_xray', $this->component, '', null, $e->getMessage());
+        }
+
+        return $output;
     }
 
     /**
      * Report Heatmap for students.
      */
     private function heatmap_endogenic_plagiarism_students($element) {
-    
-    	$output = "";
-    	$output .= $this->output->discussionendogenicplagiarism_heatmap_endogenic_plagiarism_students($element);
-    	return $output;
-    }   
-    
+
+        $output = "";
+        $output .= $this->output->discussionendogenicplagiarism_heatmap_endogenic_plagiarism_students($element);
+        return $output;
+    }
+
     /**
      * Report Heatmap for instructors.
      */
     private function heatmap_endogenic_plagiarism_instructors($element) {
-    
-    	$output = "";
-    	$output .= $this->output->discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors($element);
-    	return $output;
-    }   
+
+        $output = "";
+        $output .= $this->output->discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors($element);
+        return $output;
+    }
 }
