@@ -36,7 +36,7 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
                 $output .= $this->students_grades_based_on_discussions($response->elements->studentDiscussionGrades); // Its a table, I will get info with new call.
                 $output .= $this->barplot_of_suggested_grades($response->elements->discussionSuggestedGrades);
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
         }
 
@@ -58,8 +58,8 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
     public function jsonstudentsgrades_action() {
         global $PAGE;
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -92,7 +92,7 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
                 $return ["recordsFiltered"] = $response->itemCount;
                 $return ["data"] = $data;
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }

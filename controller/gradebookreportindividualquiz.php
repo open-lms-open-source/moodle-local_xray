@@ -25,15 +25,15 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
     public function init() {
         parent::init();
         global $DB;
-        $this->cmid = required_param('cmid', PARAM_ALPHANUM); // Cmid of quiz.
-        $this->quizid = required_param('quiz', PARAM_ALPHANUM);
+        $this->cmid = (int)required_param('cmid', PARAM_ALPHANUM); // Cmid of quiz.
+        $this->quizid = (int)required_param('quiz', PARAM_ALPHANUM);
     }
     
     public function view_action() {
         
         global $PAGE, $USER, $DB;
         
-        $title = get_string($this->name, $this->component);
+        $title = format_string(get_string($this->name, $this->component));
         $PAGE->set_title($title);
         $this->heading->text = $title;
         
@@ -55,7 +55,7 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
             } else {
                 // Show graphs.
             }
-        } catch(exception $e) {
+        } catch(Exception $e) {
             print_error('error_xray', $this->component,'',null, $e->getMessage());
         }
         

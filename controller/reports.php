@@ -28,21 +28,42 @@ class local_xray_controller_reports extends mr_controller {
      */
     protected $ajax = false;
 
+    public function setup() {
+        global $CFG, $COURSE, $PAGE;
+
+        require_login((int)optional_param('courseid', SITEID, PARAM_ALPHANUM));
+
+        // We want to send relative URL to $PAGE so $PAGE can set it to https or not
+        $moodleurl   = $this->new_url(array('action' => $this->action));
+        $relativeurl = str_replace($CFG->wwwroot, '', $moodleurl->out_omit_querystring());
+
+        $PAGE->set_title(format_string($COURSE->fullname));
+        $PAGE->set_heading(format_string($COURSE->fullname));
+        $PAGE->set_context($this->get_context());
+        $PAGE->set_url($relativeurl, $moodleurl->params());
+        $this->heading->set($this->identifier);
+    }
+
+
     public function init() {
         global $PAGE;
         parent::init();
         if(is_callable('mr_off') and mr_off('xray', 'local')) {
             exit();
         }
+
+
         // Use standard page layout for Moodle reports.
         $PAGE->set_pagelayout('report');
         $this->courseid = $PAGE->course->id;
     }
 
     protected function setajaxoutput() {
-        global $PAGE;
+        global $PAGE, $OUTPUT;
         // This renders the page correctly using standard Moodle ajax renderer
+        define('AJAX_SCRIPT', true);
         $this->output = $PAGE->get_renderer('core', null, RENDERER_TARGET_AJAX);
+        $OUTPUT = $this->output;
         $this->ajax = true;
     }
 

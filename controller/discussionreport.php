@@ -40,7 +40,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $output .= $this->social_structure_coefficient_of_critical_thinking($response->elements->socialStructureWordCTC);
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', 'local_xray', '', null, $e->getMessage());
         }
         return $output;
@@ -74,8 +74,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
 
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -134,7 +134,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
@@ -150,8 +150,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
 
         // Pager
-        $count = optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -201,7 +201,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }

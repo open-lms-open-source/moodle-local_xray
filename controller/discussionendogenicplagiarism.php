@@ -40,7 +40,7 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
                 $output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements->endogenicPlagiarismHeatmap);
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
         }
 

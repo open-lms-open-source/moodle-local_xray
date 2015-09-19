@@ -13,7 +13,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
     public function init() {
         parent::init();
-        $this->userid = required_param('userid', PARAM_INT);
+        $this->userid = (int)required_param('userid', PARAM_ALPHANUM);
     }
 
     public function view_action() {
@@ -47,7 +47,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $output .= $this->main_terms($response->elements->wordcloud);
                 $output .= $this->main_terms_histogram($response->elements->wordHistogram);
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', 'local_xray', '', null, $e->getMessage());
         }
 
@@ -72,8 +72,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         global $PAGE;
 
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -119,7 +119,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
@@ -145,8 +145,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         global $PAGE;
 
         // Pager
-        $count = optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -190,7 +190,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }

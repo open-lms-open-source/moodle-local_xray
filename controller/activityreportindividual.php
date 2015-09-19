@@ -12,7 +12,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
 
     public function init() {
         parent::init();
-        $this->userid = required_param('userid', PARAM_INT);
+        $this->userid = (int)required_param('userid', PARAM_ALPHANUM);
     }
 
     public function view_action() {
@@ -49,7 +49,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 $output .= $this->activity_last_two_weeks_byweekday($response->elements->barplotOfActivityByWeekday);
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
         }
 

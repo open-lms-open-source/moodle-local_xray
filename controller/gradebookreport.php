@@ -41,7 +41,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 //$output .= $this->test_for_normality_on_course_grades($response->elements[8]);//TODO repeated - waiting instructions
                 $output .= $this->heat_map_of_grade_distribution($response->elements[9]);
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
         }
 
@@ -66,8 +66,8 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
         global $PAGE;
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -107,7 +107,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 $return["data"] = $data;
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
@@ -134,8 +134,8 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
         global $PAGE;
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -176,7 +176,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 $return["data"] = $data;
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }

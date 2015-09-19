@@ -25,8 +25,8 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     public function init() {
         parent::init();
         global $DB;
-        $this->cmid = required_param('cmid', PARAM_ALPHANUM); // Cmid of forum.
-        $this->forumid = required_param('forum', PARAM_ALPHANUM);
+        $this->cmid = (int)required_param('cmid', PARAM_ALPHANUM); // Cmid of forum.
+        $this->forumid = (int)required_param('forum', PARAM_ALPHANUM);
     }
 
     public function view_action() {
@@ -64,7 +64,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                 $output .= $this->wordcloud($response->elements->wordcloud);
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
         }
 

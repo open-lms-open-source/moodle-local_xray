@@ -45,7 +45,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                 $output .= $this->first_login(); // This show 3 reports about login
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage().' '.$PAGE->pagetype);
         }
 
@@ -71,8 +71,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         global $PAGE;
 
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -129,7 +129,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
@@ -224,7 +224,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                 $output .= $this->first_login_to_course($response->elements->firstloginPiechartAdjusted);
                 $output .= $this->first_login_date_observed($response->elements->firstloginBullseyeAdjusted);
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
         }
 
@@ -250,8 +250,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         global $PAGE;
 
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 
@@ -295,7 +295,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }

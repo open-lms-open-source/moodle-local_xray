@@ -38,7 +38,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $output .= $this->total_risk_profile($response->elements->riskDensity);
                 $output .= $this->academic_vs_social_risk($response->elements->riskScatterPlot);
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
         }
 
@@ -103,7 +103,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $return["data"] = $data;
 
             }
-        } catch (exception $e) {
+        } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
