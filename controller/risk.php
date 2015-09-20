@@ -11,16 +11,12 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_risk extends local_xray_controller_reports {
 
     public function view_action() {
+        global $PAGE;
 
-        global $PAGE, $DB;
+        // Add title to breadcrumb.
+        $PAGE->navbar->add($PAGE->title);
 
-        $title = get_string($this->name, $this->component);
-        $PAGE->set_title($title);
-        $this->heading->text = $title;
-
-        // Add title to breadcrumb.	
-        $PAGE->navbar->add($title);
-        $output = "";
+        $output = '';
 
         try {
             $report = "risk";
@@ -31,9 +27,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
             } else {
                 // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate,
-                    null,
-                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
                 $output .= $this->risk_measures($response->elements->riskMeasures); //TABLE.
                 $output .= $this->total_risk_profile($response->elements->riskDensity);
                 $output .= $this->academic_vs_social_risk($response->elements->riskScatterPlot);
@@ -47,6 +41,8 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
     /**
      * Report Risk measures.(TABLE)
+     * @param mixed $element
+     * @return string
      */
     private function risk_measures($element) {
 
@@ -57,11 +53,9 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
     public function jsonriskmeasures_action() {
 
-        global $PAGE;
-
         // Pager
-        $count = optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
 

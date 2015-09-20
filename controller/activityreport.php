@@ -12,15 +12,12 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_activityreport extends local_xray_controller_reports {
 
     public function view_action() {
-
-        global $PAGE, $DB;
-        $title = get_string($this->name, $this->component);
-        $PAGE->set_title($title);
-        $this->heading->text = $title;
+        global $PAGE;
 
         // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string($this->name, $this->component));
-        $output = $PAGE->pagetype;
+        $PAGE->navbar->add($PAGE->title);
+
+        $output = '';
 
         try {
             $report = "activity";
@@ -32,9 +29,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
             } else {
 
                 // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate,
-                    null,
-                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
                 $output .= $this->students_activity($response->elements->studentList); // Its a table, I will get info with new call.
                 $output .= $this->activity_of_course_by_day($response->elements->activityLevelTimeline);
                 $output .= $this->activity_by_time_of_day($response->elements->compassTimeDiagram);
@@ -54,7 +49,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     /**
      * Report Students activity (table).
-     *
+     * @param mixed $element
+     * @return string
      */
     private function students_activity($element) {
 
@@ -65,6 +61,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     /**
      * Json for provide data to students_activity table.
+     * @return string
      */
     public function jsonstudentsactivity_action() {
 
@@ -139,7 +136,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     /**
      * Report Activity of course by day.
-     *
+     * @param mixed $element
+     * @return string
      */
     private function activity_of_course_by_day($element) {
 
@@ -173,6 +171,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     /**
      * Report Activity Last Two Weeks by Weekday
+     * @oaram mixed $element
+     * @return string
      */
     private function activity_last_two_weeks_by_weekday($element) {
 
@@ -183,6 +183,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     /**
      * Report Activity by Participant 1
+     * @param mixed $element
+     * @return string
      */
     private function activity_by_participant1($element) {
 
@@ -193,6 +195,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
     /**
      * Report Activity by Participant 2
+     * @param mixed $element
+     * @return string
      */
     private function activity_by_participant2($element) {
 
@@ -247,8 +251,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      *
      */
     public function jsonfirstloginnonstarters_action() {
-        global $PAGE;
-
         // Pager
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);

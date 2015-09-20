@@ -16,19 +16,14 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     }
 
     public function view_action() {
-
-        global $PAGE, $USER, $DB;
-
-        $title = get_string($this->name, $this->component);
-        $PAGE->set_title($title);
-        $this->heading->text = $title;
+        global $PAGE, $DB;
 
         // Add nav to return to activityreport.
         $PAGE->navbar->add(get_string("activityreport", $this->component),
             new moodle_url('/local/xray/view.php',
                 array("controller" => "activityreport",
                     "courseid" => $this->courseid)));
-        $PAGE->navbar->add($title);
+        $PAGE->navbar->add($PAGE->title);
         $output = "";
 
         try {
@@ -43,7 +38,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate,
                     $DB->get_field('user', 'username', array("id" => $this->userid)),
-                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                    $PAGE->course->fullname);
                 $output .= $this->activity_by_date($response->elements->activityLevelTimeline);
                 $output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
                 $output .= $this->activity_last_two_weeks_byweekday($response->elements->barplotOfActivityByWeekday);

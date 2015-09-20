@@ -24,25 +24,19 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     public function init() {
         parent::init();
-        global $DB;
         $this->cmid = (int)required_param('cmid', PARAM_ALPHANUM); // Cmid of forum.
         $this->forumid = (int)required_param('forum', PARAM_ALPHANUM);
     }
 
     public function view_action() {
-
-        global $PAGE, $USER, $DB;
-
-        $title = get_string($this->name, $this->component);
-        $PAGE->set_title($title);
-        $this->heading->text = $title;
+        global $PAGE, $DB;
 
         // Add title to breadcrumb.
         $forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
         $PAGE->navbar->add($forumname, new moodle_url("/mod/forum/view.php",
             array("id" => $this->cmid)));
 
-        $PAGE->navbar->add($title);
+        $PAGE->navbar->add($PAGE->title);
         $output = "";
 
         try {
@@ -55,10 +49,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
             } else {
 
                 // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate,
-                    null,
-                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
-
+                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
                 $output .= $this->wordshistogram($response->elements->wordHistogram);
                 $output .= $this->socialstructure($response->elements->socialStructure);
                 $output .= $this->wordcloud($response->elements->wordcloud);

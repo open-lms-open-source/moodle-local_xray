@@ -24,25 +24,19 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
     
     public function init() {
         parent::init();
-        global $DB;
         $this->cmid = (int)required_param('cmid', PARAM_ALPHANUM); // Cmid of quiz.
         $this->quizid = (int)required_param('quiz', PARAM_ALPHANUM);
     }
     
     public function view_action() {
-        
-        global $PAGE, $USER, $DB;
-        
-        $title = format_string(get_string($this->name, $this->component));
-        $PAGE->set_title($title);
-        $this->heading->text = $title;
+        global $PAGE, $DB;
         
         // Add title to breadcrumb.
         $quizname = $DB->get_field('quiz', 'name', array("id" => $this->quizid));
         $PAGE->navbar->add($quizname, new moodle_url("/mod/quiz/view.php", 
                                                   array("id" => $this->cmid))); 
         
-        $PAGE->navbar->add($title);
+        $PAGE->navbar->add($PAGE->title);
         $output = "";
         
         try {

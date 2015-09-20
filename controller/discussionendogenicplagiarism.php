@@ -11,16 +11,12 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_discussionendogenicplagiarism extends local_xray_controller_reports {
 
     public function view_action() {
-
-        global $PAGE, $DB;
-
-        $title = get_string($this->name, $this->component);
-        $PAGE->set_title($title);
-        $this->heading->text = $title;
+        global $PAGE;
 
         // Add title to breadcrumb.
-        $PAGE->navbar->add($title);
-        $output = "";
+        $PAGE->navbar->add($PAGE->title);
+
+        $output = '';
 
         try {
             $report = "discussionEndogenicPlagiarism";
@@ -33,9 +29,7 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
             } else {
 
                 // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate,
-                    null,
-                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
                 $output .= $this->heatmap_endogenic_plagiarism_students($response->elements->endogenicPlagiarismStudentsHeatmap);
                 $output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements->endogenicPlagiarismHeatmap);
 

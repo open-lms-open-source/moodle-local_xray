@@ -17,15 +17,11 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
     }
 
     public function view_action() {
+        global $PAGE, $DB;
 
-        global $PAGE, $USER, $DB;
-
-        // Add title to breadcrumb.
-        $title = get_string($this->name, $this->component);
-        $PAGE->set_title($title);
         // Add nav to return to discussionreport.
         $PAGE->navbar->add(get_string("discussionreport", $this->component), new moodle_url('/local/xray/view.php', array("controller" => "discussionreport", "courseid" => $this->courseid)));
-        $PAGE->navbar->add($title);
+        $PAGE->navbar->add($PAGE->title);
         $output = "";
 
         try {
@@ -40,7 +36,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate,
                     $DB->get_field('user', 'username', array("id" => $this->userid)),
-                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                    $PAGE->course->fullname);
                 $output .= $this->participation_metrics($response->elements->discussionMetrics); // Its a table, I will get info with new call.
                 $output .= $this->discussion_activity_by_week($response->elements->discussionActivityByWeek); // Table with variable columns - Send data to create columns
                 $output .= $this->social_structure($response->elements->socialStructure);

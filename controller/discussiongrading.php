@@ -11,14 +11,11 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_discussiongrading extends local_xray_controller_reports {
 
     public function view_action() {
-
-        global $PAGE, $DB;
-        $title = get_string($this->name, $this->component);
-        $PAGE->set_title($title);
-        $this->heading->text = $title;
+        global $PAGE;
 
         // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string($this->name, $this->component));
+        $PAGE->navbar->add($PAGE->title);
+
         $output = "";
 
         try {
@@ -30,9 +27,7 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
             } else {
 
                 // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate,
-                    null,
-                    $DB->get_field('course', 'fullname', array("id" => $this->courseid)));
+                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
                 $output .= $this->students_grades_based_on_discussions($response->elements->studentDiscussionGrades); // Its a table, I will get info with new call.
                 $output .= $this->barplot_of_suggested_grades($response->elements->discussionSuggestedGrades);
             }

@@ -37,31 +37,31 @@ class local_xray_controller_reports extends mr_controller {
         $moodleurl   = $this->new_url(array('action' => $this->action));
         $relativeurl = str_replace($CFG->wwwroot, '', $moodleurl->out_omit_querystring());
 
-        $PAGE->set_title(format_string($COURSE->fullname));
-        $PAGE->set_heading(format_string($COURSE->fullname));
+        $title = format_string(get_string($this->name, $this->component));
+        $PAGE->set_title($title);
+        $this->heading->text = $title;
+
+        //$PAGE->set_title(format_string($COURSE->fullname));
+        //$PAGE->set_heading(format_string($COURSE->fullname));
         $PAGE->set_context($this->get_context());
         $PAGE->set_url($relativeurl, $moodleurl->params());
-        $this->heading->set($this->identifier);
+        //$this->heading->set($this->identifier);
+
+        $PAGE->set_pagelayout('report');
+        $this->courseid = $PAGE->course->id;
     }
 
 
     public function init() {
-        global $PAGE;
         parent::init();
         if(is_callable('mr_off') and mr_off('xray', 'local')) {
             exit();
         }
-
-
-        // Use standard page layout for Moodle reports.
-        $PAGE->set_pagelayout('report');
-        $this->courseid = $PAGE->course->id;
     }
 
     protected function setajaxoutput() {
         global $PAGE, $OUTPUT;
         // This renders the page correctly using standard Moodle ajax renderer
-        define('AJAX_SCRIPT', true);
         $this->output = $PAGE->get_renderer('core', null, RENDERER_TARGET_AJAX);
         $OUTPUT = $this->output;
         $this->ajax = true;

@@ -12,15 +12,12 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_discussionreport extends local_xray_controller_reports {
 
     public function view_action() {
-
         global $PAGE;
-        $title = get_string($this->name, $this->component);
-        $PAGE->set_title($title);
-        $this->heading->text = $title;
 
         // Add title to breadcrumb.
-        $PAGE->navbar->add(get_string($this->name, $this->component));
-        $output = "";
+        $PAGE->navbar->add($PAGE->title);
+
+        $output = '';
 
         try {
             $report = "discussion";
@@ -70,7 +67,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      * Json for provide data to participation_metrics table.
      */
     public function jsonparticipationdiscussion_action() {
-
         global $PAGE;
 
         // Pager
@@ -146,8 +142,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      * Json for provide data to discussion_activity_by_week table.
      */
     public function jsonweekdiscussion_action() {
-
-        global $PAGE;
 
         // Pager
         $count = (int)optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
