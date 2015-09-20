@@ -1,7 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
-require_once($CFG->dirroot.'/local/xray/controller/reports.php');
-require_once($CFG->dirroot.'/local/xray/classes/local_xray_datatables.php');
+require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+require_once($CFG->dirroot . '/local/xray/classes/local_xray_datatables.php');
 
 /**
  * Renderer
@@ -15,26 +15,27 @@ class local_xray_renderer extends plugin_renderer_base {
 
     /**
      * Show data about report
-     * @param String   $reportdate
-     * @param String    $user
-     * @param String  $course
+     * @param String $reportdate
+     * @param String $user
+     * @param String $course
+     * @return string
      */
     public function inforeport($reportdate, $user = null, $course = null) {
 
-    	$output = "";
-    	$output .=html_writer::start_div('inforeport');
-    	$output .= html_writer::tag("p", get_string("reportdate", "local_xray").": ".$reportdate);
-    	if(!empty($user)) {
-    		$output .= html_writer::tag("p", get_string(("username")).": ".$user);
-    	}
-    	/*
-    	 * We will show in course in navbar.
-    	if(!empty($course)) {
-    		$output .= html_writer::tag("p", get_string(("course")).": ".$course);
-    	} */
-    	$output .=html_writer::end_div();
+        $output = "";
+        $output .= html_writer::start_div('inforeport');
+        $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $reportdate);
+        if (!empty($user)) {
+            $output .= html_writer::tag("p", get_string(("username")) . ": " . $user);
+        }
+        /*
+         * We will show in course in navbar.
+        if(!empty($course)) {
+            $output .= html_writer::tag("p", get_string(("course")).": ".$course);
+        } */
+        $output .= html_writer::end_div();
 
-    	return $output;
+        return $output;
     }
 
     /**
@@ -50,8 +51,9 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * Important: Link to image will have id fancybox + "name of report".
      *
-     * @param String   $name
-     * @param stdClass $element
+     * @param string $name
+     * @param object $element
+     * @return string
      */
     private function show_on_lightbox($name, $element) {
 
@@ -80,18 +82,18 @@ class local_xray_renderer extends plugin_renderer_base {
 
         /* Img */
         $tooltip = '';
-        if(isset($element->tooltip) && !empty($element->tooltip)){
+        if (isset($element->tooltip) && !empty($element->tooltip)) {
             $tooltip = $element->tooltip;
         }
         $output .= html_writer::start_tag('div', array("class" => "xray_element_img"));
 
         // Validate if url of image is valid.
         if (@fopen($img_url, "r")) {
-            $id_img = "fancybox_".$name;
+            $id_img = "fancybox_" . $name;
             $output .= html_writer::start_tag('a', array("id" => $id_img, "href" => $img_url));
             $output .= html_writer::empty_tag('img', array("title" => $tooltip,
-                    "src" => $img_url,
-                    "class" => "thumb") // Used by dynamic thumbnails.
+                "src" => $img_url,
+                "class" => "thumb") // Used by dynamic thumbnails.
             );
 
             $output .= html_writer::end_tag('a');
@@ -101,7 +103,7 @@ class local_xray_renderer extends plugin_renderer_base {
             // Send data to js.
             $PAGE->requires->js_init_call("local_xray_show_on_lightbox", array($id_img, $element));
 
-        } else{
+        } else {
             // Incorrect url img. Show error message.
             $output .= html_writer::tag("div", get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
         }
@@ -119,9 +121,8 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param String $classes - Classes for table.
      * @return string
      */
-    private function standard_table ($data, $classes = '', $width = '100%') {
-
-        global $CFG, $PAGE;
+    private function standard_table($data, $classes = '', $width = '100%') {
+        global $PAGE;
 
         // Load Jquery.
         $PAGE->requires->jquery();
@@ -135,10 +136,10 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Table jquery datatables for show reports.
         $output .= "<table id='table_{$data['id']}' class='display {$classes}' cellspacing='0' width='{$width}'> <thead><tr>";
-        foreach($data['columns'] as $c){
-            $output .= "<th>".$c->text."</th>";
+        foreach ($data['columns'] as $c) {
+            $output .= "<th>" . $c->text . "</th>";
         }
-        $output .=" </tr> </thead> </table>";
+        $output .= " </tr> </thead> </table>";
         $output .= html_writer::end_tag('div');
 
         // Load table with data.
@@ -155,22 +156,22 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function activityreport_students_activity($courseid, $element) {
 
-    	$columns = array(new local_xray_datatableColumn('action', ''));
-    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-    		foreach($element->columnOrder as $c) {
-    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-    		}
-    	}
+        $columns = array(new local_xray_datatableColumn('action', ''));
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
+        }
 
-    	$datatable = new local_xray_datatable(__FUNCTION__,
-    			                              $element->title,
-    			                              "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=".$courseid,
-    			                              $columns);
+        $datatable = new local_xray_datatable(__FUNCTION__,
+            $element->title,
+            "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $courseid,
+            $columns);
 
-    	// Create standard table.
-    	$output = $this->standard_table((array) $datatable);
+        // Create standard table.
+        $output = $this->standard_table((array)$datatable);
 
-    	return $output;
+        return $output;
     }
 
     /**
@@ -178,7 +179,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreport_activity_of_course_by_day($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -186,7 +187,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreport_activity_by_time_of_day($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -194,7 +195,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreport_activity_last_two_weeks($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -202,7 +203,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreport_activity_last_two_weeks_by_weekday($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -210,7 +211,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreport_activity_by_participant1($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -218,7 +219,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreport_activity_by_participant2($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -226,25 +227,25 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      */
     public function activityreport_first_login_non_starters($courseid, $element) {
-    	global $PAGE;
+        global $PAGE;
 
-    	$columns = array();
-    	// This report has not specified columnOrder.
-    	if(!empty($element->columnHeaders) && is_object($element->columnHeaders)) {
-    		$c = get_object_vars($element->columnHeaders);
-    		foreach($c as $id => $name) {
-    			$columns[] = new local_xray_datatableColumn($id, $name);
-    		}
-    	}
+        $columns = array();
+        // This report has not specified columnOrder.
+        if (!empty($element->columnHeaders) && is_object($element->columnHeaders)) {
+            $c = get_object_vars($element->columnHeaders);
+            foreach ($c as $id => $name) {
+                $columns[] = new local_xray_datatableColumn($id, $name);
+            }
+        }
 
-    	$datatable = new local_xray_datatable(__FUNCTION__,
-    			                              $element->title,
-    			                              "view.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=".$courseid,
-    			                               $columns);
+        $datatable = new local_xray_datatable(__FUNCTION__,
+            $element->title,
+            "view.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $courseid,
+            $columns);
 
-    	// Create standard table.
-    	$output = $this->standard_table((array) $datatable);
-    	return $output;
+        // Create standard table.
+        $output = $this->standard_table((array)$datatable);
+        return $output;
     }
 
     /**
@@ -252,7 +253,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreport_first_login_to_course($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -260,7 +261,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreport_first_login_date_observed($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     /************************** End Elements for Report Activity **************************/
 
@@ -271,7 +272,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreportindividual_activity_by_date($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -279,7 +280,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreportindividual_activity_last_two_weeks($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -287,7 +288,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function activityreportindividual_activity_last_two_weeks_byday($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /************************** End Elements for Report Activity Individual **************************/
@@ -302,19 +303,19 @@ class local_xray_renderer extends plugin_renderer_base {
         global $PAGE;
 
         $columns = array(new local_xray_datatableColumn('action', ''));
-        if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-        	foreach($element->columnOrder as $c) {
-        		$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-        	}
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
         }
 
         $datatable = new local_xray_datatable(__FUNCTION__,
-								        		$element->title,
-								                "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=".$courseid,
-								                $columns);
+            $element->title,
+            "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $courseid,
+            $columns);
 
         // Create standard table.
-        $output = $this->standard_table((array) $datatable);
+        $output = $this->standard_table((array)$datatable);
 
         return $output;
     }
@@ -329,22 +330,22 @@ class local_xray_renderer extends plugin_renderer_base {
         // Create standard table.
         $columns = array();
         $columns[] = new local_xray_datatableColumn('weeks', get_string('weeks', 'local_xray'));
-        foreach($element->data as $column){
+        foreach ($element->data as $column) {
             $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value);
         }
 
-        $number_of_weeks = count($columns)-1;//get number of weeks - we need to rest the "week" title column
+        $number_of_weeks = count($columns) - 1;//get number of weeks - we need to rest the "week" title column
 
         $datatable = new local_xray_datatable(__FUNCTION__,
-							        		$element->title,
-							                "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=".$courseid."&count=".$number_of_weeks,
-							                $columns,
-							                false,
-							                false,// We don't need pagination because we have only four rows
-							                '<"xray_table_scrool"t>');//Only the table
+            $element->title,
+            "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=" . $courseid . "&count=" . $number_of_weeks,
+            $columns,
+            false,
+            false,// We don't need pagination because we have only four rows
+            '<"xray_table_scrool"t>');//Only the table
 
         // Create standard table.
-        $output = $this->standard_table((array) $datatable);
+        $output = $this->standard_table((array)$datatable);
 
         return $output;
     }
@@ -354,7 +355,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionreport_average_words_weekly_by_post($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -362,7 +363,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionreport_social_structure($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -370,7 +371,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionreport_social_structure_with_contributions_adjusted($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -378,7 +379,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionreport_social_structure_coefficient_of_critical_thinking($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -400,19 +401,19 @@ class local_xray_renderer extends plugin_renderer_base {
     public function discussionreportindividual_participation_metrics($courseid, $element, $userid) {
 
         $columns = array();
-        if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach($element->columnOrder as $c) {
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
                 $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
             }
         }
 
         $datatable = new local_xray_datatable(__FUNCTION__,
-                $element->title,
-                "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=".$courseid."&userid=".$userid,
-                $columns);
+            $element->title,
+            "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=" . $courseid . "&userid=" . $userid,
+            $columns);
 
         // Create standard table.
-        $output = $this->standard_table((array) $datatable);
+        $output = $this->standard_table((array)$datatable);
 
         return $output;
     }
@@ -428,22 +429,22 @@ class local_xray_renderer extends plugin_renderer_base {
 
         $columns = array();
         $columns[] = new local_xray_datatableColumn('weeks', get_string('week', 'local_xray'));
-        foreach($element->data as $column){
+        foreach ($element->data as $column) {
             $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value);
         }
 
-        $number_of_weeks = count($columns)-1;//get number of weeks - we need to rest the "week" title column
+        $number_of_weeks = count($columns) - 1;//get number of weeks - we need to rest the "week" title column
 
         $datatable = new local_xray_datatable(__FUNCTION__,
-        		$element->title,
-                "view.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&courseid=".$courseid."&userid=".$userid."&count=".$number_of_weeks,
-                $columns,
-                false,
-                false,// We don't need pagination because we have only four rows
-                '<"xray_table_scrool"t>');//Only the table
+            $element->title,
+            "view.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&courseid=" . $courseid . "&userid=" . $userid . "&count=" . $number_of_weeks,
+            $columns,
+            false,
+            false,// We don't need pagination because we have only four rows
+            '<"xray_table_scrool"t>');//Only the table
 
         // Create standard table.
-        $output = $this->standard_table((array) $datatable);
+        $output = $this->standard_table((array)$datatable);
 
         return $output;
     }
@@ -490,7 +491,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionreportindividualforum_wordshistogram($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -498,7 +499,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionreportindividualforum_socialstructure($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -506,7 +507,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionreportindividualforum_wordcloud($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/
@@ -516,7 +517,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_students($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -524,7 +525,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
     /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/
 
@@ -535,24 +536,24 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function risk_risk_measures($courseid, $element) {
-    	global $PAGE;
+        global $PAGE;
 
-    	$columns = array();
-    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-    		foreach($element->columnOrder as $c) {
-    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-    		}
-    	}
+        $columns = array();
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
+        }
 
-    	$datatable = new local_xray_datatable(__FUNCTION__,
-    			                             $element->title,
-    			                             "view.php?controller='risk'&action='jsonriskmeasures'&courseid=".$courseid,
-    			                             $columns);
+        $datatable = new local_xray_datatable(__FUNCTION__,
+            $element->title,
+            "view.php?controller='risk'&action='jsonriskmeasures'&courseid=" . $courseid,
+            $columns);
 
-    	// Create standard table.
-    	$output = $this->standard_table((array) $datatable);
+        // Create standard table.
+        $output = $this->standard_table((array)$datatable);
 
-    	return $output;
+        return $output;
     }
 
     /**
@@ -560,7 +561,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function risk_total_risk_profile($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /**
@@ -568,7 +569,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function risk_academic_vs_social_risk($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /************************** End Elements for Report Risk **************************/
@@ -580,23 +581,23 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function discussiongrading_students_grades_based_on_discussions($courseid, $element) {
 
-    	global $PAGE;
+        global $PAGE;
 
-    	$columns = array();
-    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-    		foreach($element->columnOrder as $c) {
-    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-    		}
-    	}
-    	$datatable = new local_xray_datatable(__FUNCTION__,
-    			                              $element->title,
-    			                              "view.php?controller='discussiongrading'&action='jsonstudentsgrades'&courseid=".$courseid,
-    			                              $columns);
+        $columns = array();
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
+        }
+        $datatable = new local_xray_datatable(__FUNCTION__,
+            $element->title,
+            "view.php?controller='discussiongrading'&action='jsonstudentsgrades'&courseid=" . $courseid,
+            $columns);
 
-    	// Create standard table.
-    	$output = $this->standard_table((array) $datatable);
+        // Create standard table.
+        $output = $this->standard_table((array)$datatable);
 
-    	return $output;
+        return $output;
     }
 
     /**
@@ -604,7 +605,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $element
      */
     public function discussiongrading_barplot_of_suggested_grades($element) {
-    	return $this->show_on_lightbox(__FUNCTION__, $element);
+        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /************************** End Elements for Report Discussion grading **************************/
@@ -616,20 +617,20 @@ class local_xray_renderer extends plugin_renderer_base {
     public function gradebookreport_students_grades_for_course($courseid, $element) {
 
 
-    	$columns = array(new local_xray_datatableColumn('action', ''));
-    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-    		foreach($element->columnOrder as $c) {
-    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-    		}
-    	}
+        $columns = array(new local_xray_datatableColumn('action', ''));
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
+        }
 
         $datatable = new local_xray_datatable(__FUNCTION__,
-        		$element->title,
-                "view.php?controller='gradebookreport'&action='jsonstudentsgradesforcourse'&courseid=".$courseid,
-                $columns);
+            $element->title,
+            "view.php?controller='gradebookreport'&action='jsonstudentsgradesforcourse'&courseid=" . $courseid,
+            $columns);
 
         // Create standard table.
-        $output = $this->standard_table((array) $datatable);
+        $output = $this->standard_table((array)$datatable);
 
         return $output;
     }
@@ -640,19 +641,19 @@ class local_xray_renderer extends plugin_renderer_base {
     public function gradebookreport_students_grades_on_completed_items_course($courseid, $element) {
 
         $columns = array(new local_xray_datatableColumn('action', ''));
-    	if(!empty($element->columnOrder) && is_array($element->columnOrder)) {
-    		foreach($element->columnOrder as $c) {
-    			$columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-    		}
-    	}
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
+        }
 
         $datatable = new local_xray_datatable(__FUNCTION__,
-        		$element->title,
-                "view.php?controller='gradebookreport'&action='jsonstudentsgradesoncompleteditemscourse'&courseid=".$courseid,
-                $columns);
+            $element->title,
+            "view.php?controller='gradebookreport'&action='jsonstudentsgradesoncompleteditemscourse'&courseid=" . $courseid,
+            $columns);
 
         // Create standard table.
-        $output = $this->standard_table((array) $datatable);
+        $output = $this->standard_table((array)$datatable);
 
         return $output;
     }
@@ -725,12 +726,12 @@ class local_xray_renderer extends plugin_renderer_base {
 
         $output = "";
 
-        if(has_capability('local/xray:dashboard_view', $PAGE->context)) {
+        if (has_capability('local/xray:dashboard_view', $PAGE->context)) {
             try {
                 $report = "dashboard";
                 $response = \local_xray\api\wsapi::course($COURSE->id, $report);
 
-                if(!$response) {
+                if (!$response) {
                     // Fail response of webservice.
                     \local_xray\api\xrayws::instance()->print_error();
 
@@ -739,9 +740,9 @@ class local_xray_renderer extends plugin_renderer_base {
                     // Get users in risk.
                     $users_in_risk = array();
 
-                    if(isset($response->elements->element3->data) && !empty($response->elements->element3->data)) {
-                        foreach($response->elements->element3->data as $key => $obj) {
-                            if($obj->severity->value == "high") {
+                    if (isset($response->elements->element3->data) && !empty($response->elements->element3->data)) {
+                        foreach ($response->elements->element3->data as $key => $obj) {
+                            if ($obj->severity->value == "high") {
                                 $users_in_risk[] = $obj->participantId->value;
                             }
                         }
@@ -764,14 +765,14 @@ class local_xray_renderer extends plugin_renderer_base {
                     $students_visits_by_weekday = (isset($response->elements->activity_level->data) ? $response->elements->activity_level->data : "-");
 
                     $output .= $this->snap_dashboard_xray_output($users_in_risk,
-                            $count_students_enrolled,
-                            $count_students_risk,
-                            $count_students_visits_lastsevendays,
-                            $diff_risk,
-                            $diff_visits,
-                            $students_visits_by_weekday);
+                        $count_students_enrolled,
+                        $count_students_risk,
+                        $count_students_visits_lastsevendays,
+                        $diff_risk,
+                        $diff_visits,
+                        $students_visits_by_weekday);
                 }
-            } catch(exception $e) {
+            } catch (exception $e) {
                 $output .= get_string('error_xray', 'local_xray');
             }
         }
@@ -797,7 +798,7 @@ class local_xray_renderer extends plugin_renderer_base {
                                                $students_visits_lastsevendays,
                                                $risk_fromlastweek,
                                                $visitors_fromlastweek,
-                                               $students_visits_by_weekday){
+                                               $students_visits_by_weekday) {
 
         global $DB, $OUTPUT;
 
@@ -819,7 +820,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         //Students at risk
         $risk_title = html_writer::tag('h3', get_string('atrisk', 'local_xray'));
-        $students_risk = html_writer::div($students_risk.$of.$students_enrolled, 'h1');
+        $students_risk = html_writer::div($students_risk . $of . $students_enrolled, 'h1');
         $studentatrisk_text = html_writer::div(get_string('studentatrisk', 'local_xray'));
         $riskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');
 
@@ -827,11 +828,11 @@ class local_xray_renderer extends plugin_renderer_base {
         $users_profile_hidden = "";//Rest of users will be hidden
         $count_users = 1;
         $hide = false;
-        if(!empty($users_in_risk)) {
-            foreach($users_in_risk as $key => $id) {
-                if($count_users > 6){
+        if (!empty($users_in_risk)) {
+            foreach ($users_in_risk as $key => $id) {
+                if ($count_users > 6) {
                     $users_profile_hidden .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
-                }else{
+                } else {
                     $users_profile .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
                 }
 
@@ -843,22 +844,22 @@ class local_xray_renderer extends plugin_renderer_base {
         $users_profile_box_hidden = html_writer::div($users_profile_hidden, 'xray_dashboard_users_risk_hidden');
 
         $showall = '';
-        if(count($users_in_risk) > 6){
+        if (count($users_in_risk) > 6) {
             $showall = html_writer::div('Show all', 'btn btn-default btn-sm xray_dashboard_seeall');
         }
 
-        $risk_column = html_writer::div($xray_dashboard_jquery.$risk_title.$students_risk.$studentatrisk_text.$riskfromlastweek.$users_profile_box.$users_profile_box_hidden.$showall, 'col-sm-6');
+        $risk_column = html_writer::div($xray_dashboard_jquery . $risk_title . $students_risk . $studentatrisk_text . $riskfromlastweek . $users_profile_box . $users_profile_box_hidden . $showall, 'col-sm-6');
 
         //Students Visitors
         $visitors_title = html_writer::tag('h3', get_string('visitors', 'local_xray'));
-        $students_visitors = html_writer::div($students_visits_lastsevendays.$of.$students_enrolled, 'h1');
+        $students_visitors = html_writer::div($students_visits_lastsevendays . $of . $students_enrolled, 'h1');
         $studentvisitslastdays_text = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
         $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');
 
         //Create table for Students visits by Week Day
         $students_visits_weekday_htmltable = new html_table();
         $row = array();
-        foreach($students_visits_by_weekday as $key => $value){
+        foreach ($students_visits_by_weekday as $key => $value) {
             $students_visits_weekday_htmltable->head[] = $value->day_of_week->value;
             $row[] = $value->number_of_visits->value;
         }
@@ -866,9 +867,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $students_visits_weekday_htmltable->data[] = $row;
         $students_visits_weekday = html_writer::table($students_visits_weekday_htmltable);
 
-        $visitors_column = html_writer::div($visitors_title.$students_visitors.$visitorsfromlastweek.$studentvisitslastdays_text.$students_visits_weekday, 'col-sm-6');
+        $visitors_column = html_writer::div($visitors_title . $students_visitors . $visitorsfromlastweek . $studentvisitslastdays_text . $students_visits_weekday, 'col-sm-6');
 
-        return html_writer::div($risk_column.$visitors_column);
+        return html_writer::div($risk_column . $visitors_column);
     }
 
     /**
@@ -884,10 +885,10 @@ class local_xray_renderer extends plugin_renderer_base {
         $userpicture->size = 100;
         $picture = $this->render($userpicture);
 
-        $fullname = '<a href="'.$CFG->wwwroot.'/user/profile.php?id='.$user->id.'">'.format_string(fullname($user)).'</a>';
+        $fullname = '<a href="' . $CFG->wwwroot . '/user/profile.php?id=' . $user->id . '">' . format_string(fullname($user)) . '</a>';
         $coursecontext = context_course::instance($COURSE->id);
         $user->description = file_rewrite_pluginfile_urls($user->description,
-                                                          'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
+            'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
         $description = format_text($user->description, $user->descriptionformat);
 
         return "<div class='snap-media-object dashboard_xray_users_profile'>
