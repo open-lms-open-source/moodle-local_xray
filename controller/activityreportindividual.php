@@ -24,6 +24,9 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 array("controller" => "activityreport",
                     "courseid" => $this->courseid)));
         $PAGE->navbar->add($PAGE->title);
+        // This is not being added to the list of links??
+        $this->activate_nodelink('activityreportindividual');
+
         $output = "";
 
         try {

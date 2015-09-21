@@ -14,7 +14,8 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         global $PAGE;
 
         // Add title to breadcrumb.
-        $PAGE->navbar->add($PAGE->title);
+        //$PAGE->navbar->add($PAGE->title);
+        $this->activate_nodelink('risk');
 
         $output = '';
 

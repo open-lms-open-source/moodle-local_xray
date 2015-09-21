@@ -37,6 +37,8 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
             array("id" => $this->cmid)));
 
         $PAGE->navbar->add($PAGE->title);
+        $this->activate_nodelink('discussionreportindividualforum');
+
         $output = "";
 
         try {

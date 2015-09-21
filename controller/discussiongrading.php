@@ -14,7 +14,8 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
         global $PAGE;
 
         // Add title to breadcrumb.
-        $PAGE->navbar->add($PAGE->title);
+        //$PAGE->navbar->add($PAGE->title);
+        $this->activate_nodelink('discussiongrading');
 
         $output = "";
 

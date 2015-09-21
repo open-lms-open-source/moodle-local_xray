@@ -22,6 +22,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         // Add nav to return to discussionreport.
         $PAGE->navbar->add(get_string("discussionreport", $this->component), new moodle_url('/local/xray/view.php', array("controller" => "discussionreport", "courseid" => $this->courseid)));
         $PAGE->navbar->add($PAGE->title);
+        // Is this added anywhere?
+        $this->activate_nodelink('discussionreportindividual');
+
         $output = "";
 
         try {

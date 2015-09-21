@@ -15,7 +15,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
 
         // Add title to breadcrumb.
-        $PAGE->navbar->add($PAGE->title);
+        //$PAGE->navbar->add($PAGE->title);
+        $this->activate_nodelink('discussionreport');
 
         $output = '';
 

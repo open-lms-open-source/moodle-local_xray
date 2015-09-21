@@ -112,9 +112,10 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
     $plugin   = 'local_xray';
     $nodename = 'modulesettings';
 
-    // Reports to show in course-view.
-    if (local_xray_startswith($PAGE->pagetype,'course-view') or
-        local_xray_startswith($PAGE->pagetype,'local-xray-view')) {
+    // Reports to show in course-view/report view.
+    $courseview = local_xray_startswith($PAGE->pagetype,'course-view');
+    $reportview = ($PAGE->pagetype == 'local-xray-view');
+    if ($courseview or $reportview) {
         //Show nav x-ray in courseadmin node.
         $nodename = 'courseadmin';
     }
@@ -123,7 +124,7 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
     $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
 
     foreach ($reports as $reportstring => $url) {
-        $extranavigation->add(get_string($reportstring, $plugin), $url);
+        $extranavigation->add(get_string($reportstring, $plugin), $url, navigation_node::TYPE_CUSTOM, null, $reportstring);
     }
 }
 

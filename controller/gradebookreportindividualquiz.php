@@ -37,6 +37,9 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
                                                   array("id" => $this->cmid))); 
         
         $PAGE->navbar->add($PAGE->title);
+        // Is this added??
+        $this->activate_nodelink('gradebookreportindividualquiz');
+
         $output = "";
         
         try {

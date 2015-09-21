@@ -15,7 +15,9 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         global $PAGE;
 
         // Add title to breadcrumb.
-        $PAGE->navbar->add($PAGE->title);
+        //$PAGE->navbar->add($PAGE->title);
+        $this->activate_nodelink('gradebookreport');
+
         $output = '';
 
         try {
