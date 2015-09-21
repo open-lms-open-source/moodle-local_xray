@@ -141,21 +141,21 @@ function local_xray_extends_navigation(global_navigation $nav) {
 
     // TODO: Add CSS search strings for other course formats
     static $search = array(
-                           'topics'         => 'ul.topics',
-                           'weeks'          => 'ul.weeks' ,
-                           'flexpage'       => '.notexist', // Not sure what to do here?
-                           'folderview'     => 'ul.folderview',
-                           'onetopic'       => 'ul.topics',
+                           'topics'         => 'div#region-main', //'ul.topics',
+                           'weeks'          => 'div#region-main',//'ul.weeks' ,
+                           'flexpage'       => 'div#region-main',// '.notexist', // Not sure what to do here?
+                           'folderview'     => 'div#region-main',//'ul.folderview',
+                           'onetopic'       => 'div#region-main',//'ul.topics',
                            'singleactivity' => '.notexist', // Not sure what to do here?
-                           'social'         => '.notexist', // Not sure what to do here?
-                           'tabbedweek'     => 'ul.weeks',
-                           'topcoll'        => 'ul.ctopics.topics.ctlayout'
+                           'social'         => 'div#region-main', //'.notexist', // Not sure what to do here?
+                           'tabbedweek'     => 'div#region-main',//'ul.weeks',
+                           'topcoll'        => 'div#region-main',//'ul.ctopics.topics.ctlayout'
                           );
 
     if (local_xray_startswith($PAGE->pagetype,'course-view')) {
         $courseformat = $PAGE->course->format;
         if (!isset($search[$courseformat])) {
-            $search[$courseformat] = '.notexist';
+            $search[$courseformat] = 'div#region-main';
         }
 
         $displaymenu = get_config('local_xray', 'displaymenu');
@@ -172,9 +172,10 @@ function local_xray_extends_navigation(global_navigation $nav) {
                 $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;'));
                 $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray'));
                 $dmenu = \html_writer::div($amenu);
-                $menu = \html_writer::tag('li', $title . $dmenu, array('id'    => 'xraymenu',
-                                                                       'class' => 'section main clearfix',
-                                                                       'role'  => 'region'));
+                //$menu = \html_writer::tag('li', $title . $dmenu, array('id'    => 'xraymenu',
+                //                                                       'class' => 'section main clearfix',
+                //                                                       'role'  => 'region'));
+                $menu = \html_writer::div($title.$dmenu, '', array('id' => 'xraymenu'));
             }
         }
 
@@ -186,9 +187,10 @@ function local_xray_extends_navigation(global_navigation $nav) {
             if (!empty($headerdata)) {
                 $title = \html_writer::tag('h2', get_string('analytics', 'local_xray'));
                 $subc = \html_writer::div($headerdata);
-                $headerdata = \html_writer::tag('li', $title . $subc, array('id'    => 'headerdata',
-                                                                            'class' => 'section main clearfix',
-                                                                            'role'  => 'region'));
+                //$headerdata = \html_writer::tag('li', $title . $subc, array('id'    => 'headerdata',
+                //                                                            'class' => 'section main clearfix',
+                //                                                            'role'  => 'region'));
+                $headerdata = \html_writer::div($title.$subc, '', array('id' => 'headerdata'));
             }
         }
 
