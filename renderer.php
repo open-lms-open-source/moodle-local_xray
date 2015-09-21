@@ -757,10 +757,20 @@ class local_xray_renderer extends plugin_renderer_base {
                     $count_students_risk_prev = (isset($response->elements->element6->items[6]->value) ? $response->elements->element6->items[6]->value : "-");
                     // Visits previous 7 days.
                     $count_students_visits_prev = (isset($response->elements->element6->items[1]->value) ? $response->elements->element6->items[1]->value : "-");
+                    
+                    //calculate percentajes from last weeks
+                    $precentaje_valueperstudent = 100/$count_students_enrolled;
+                    
                     // Diff risk.
-                    $diff_risk = round((($count_students_risk - $count_students_risk_prev) / $count_students_risk_prev) * 100, 2);
+                    $percentaje_students_risk_prev = $precentaje_valueperstudent * $count_students_risk_prev;
+                    $percentaje_students_risk = $precentaje_valueperstudent * $count_students_risk;
+                    $diff_risk = round($percentaje_students_risk - $percentaje_students_risk_prev);
+
                     // Diff visits.
-                    $diff_visits = round((($count_students_visits_lastsevendays - $count_students_visits_prev) / $count_students_visits_prev) * 100, 2);
+                    $percentaje_students_visits_prev = $precentaje_valueperstudent * $count_students_visits_prev;
+                    $percentaje_students_visits_lastsevendays = $precentaje_valueperstudent * $count_students_visits_lastsevendays;
+                    $diff_visits = round($percentaje_students_visits_lastsevendays - $percentaje_students_visits_prev);
+
                     //Students visits by week day
                     $students_visits_by_weekday = (isset($response->elements->activity_level->data) ? $response->elements->activity_level->data : "-");
 
