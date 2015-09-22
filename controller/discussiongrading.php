@@ -1,5 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') or die ();
+
+/* @var object $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
@@ -13,8 +15,6 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
     public function view_action() {
         global $PAGE;
 
-        // Add title to breadcrumb.
-        //$PAGE->navbar->add($PAGE->title);
         $this->activate_nodelink('discussiongrading');
 
         $output = "";
@@ -41,6 +41,8 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 
     /**
      * Report Student Grades Based on Discussions(table)
+     * @param object $element
+     * @return string
      */
     private function students_grades_based_on_discussions($element) {
         $output = "";
@@ -52,15 +54,11 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
      * Json for provide data to students_grades_based_on_discussions table.
      */
     public function jsonstudentsgrades_action() {
-        global $PAGE;
         // Pager
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "discussionGrading";
@@ -98,6 +96,8 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
 
     /**
      * Report Barplot of Suggested Grades
+     * @param object $element
+     * @return string
      */
     private function barplot_of_suggested_grades($element) {
         $output = "";

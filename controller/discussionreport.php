@@ -12,10 +12,6 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_discussionreport extends local_xray_controller_reports {
 
     public function view_action() {
-        global $PAGE;
-
-        // Add title to breadcrumb.
-        //$PAGE->navbar->add($PAGE->title);
         $this->activate_nodelink('discussionreport');
 
         $output = '';
@@ -75,9 +71,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "discussion";
@@ -143,15 +136,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      * Json for provide data to discussion_activity_by_week table.
      */
     public function jsonweekdiscussion_action() {
-
         // Pager
         $count = (int)optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "discussion";

@@ -1,5 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') or die();
+
+/* @var object $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
@@ -14,8 +16,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     public function view_action() {
         global $PAGE;
 
-        // Add title to breadcrumb.
-        //$PAGE->navbar->add($PAGE->title);
         $this->activate_nodelink('activityreport');
 
         $output = '';
@@ -65,7 +65,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
      * @return string
      */
     public function jsonstudentsactivity_action() {
-
         global $PAGE;
 
         // Pager
@@ -73,9 +72,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "activity";
@@ -257,9 +253,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "firstLogin";

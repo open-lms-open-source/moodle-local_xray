@@ -29,9 +29,20 @@ class local_xray_controller_reports extends mr_controller {
     protected $ajax = false;
 
     public function setup() {
-        global $CFG, $COURSE, $PAGE;
+        global $CFG, $PAGE;
 
-        require_login((int)optional_param('courseid', SITEID, PARAM_ALPHANUM));
+        $setwantsurltome = true;
+        $preventredirect = false;
+        if (stripos($this->action, 'json') === 0) {
+            $setwantsurltome = false;
+            $preventredirect = true;
+            // We have to do this in order to force full ajax support
+            $PAGE->set_context(context_system::instance());
+            $this->setajaxoutput();
+        }
+
+        require_login((int)optional_param('courseid', SITEID, PARAM_ALPHANUM),
+                      false, null, $setwantsurltome, $preventredirect);
 
         // We want to send relative URL to $PAGE so $PAGE can set it to https or not
         $moodleurl   = $this->new_url(array('action' => $this->action));
@@ -41,11 +52,8 @@ class local_xray_controller_reports extends mr_controller {
         $PAGE->set_title($title);
         $this->heading->text = $title;
 
-        //$PAGE->set_title(format_string($COURSE->fullname));
-        //$PAGE->set_heading(format_string($COURSE->fullname));
         $PAGE->set_context($this->get_context());
         $PAGE->set_url($relativeurl, $moodleurl->params());
-        //$this->heading->set($this->identifier);
 
         $PAGE->set_pagelayout('report');
         $this->courseid = $PAGE->course->id;

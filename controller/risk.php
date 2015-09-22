@@ -13,8 +13,6 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     public function view_action() {
         global $PAGE;
 
-        // Add title to breadcrumb.
-        //$PAGE->navbar->add($PAGE->title);
         $this->activate_nodelink('risk');
 
         $output = '';
@@ -59,9 +57,6 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "risk";

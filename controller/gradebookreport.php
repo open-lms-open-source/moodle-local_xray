@@ -12,10 +12,6 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_gradebookreport extends local_xray_controller_reports {
 
     public function view_action() {
-        global $PAGE;
-
-        // Add title to breadcrumb.
-        //$PAGE->navbar->add($PAGE->title);
         $this->activate_nodelink('gradebookreport');
 
         $output = '';
@@ -61,16 +57,11 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
      * Json for provide data to students_grades_for_course table.
      */
     public function jsonstudentsgradesforcourse_action() {
-
-        global $PAGE;
         // Pager
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "grades";
@@ -134,9 +125,6 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "grades";

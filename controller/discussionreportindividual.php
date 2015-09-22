@@ -68,16 +68,11 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     public function jsonparticipationdiscussionindividual_action() {
 
-        global $PAGE;
-
         // Pager
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "discussion";
@@ -141,16 +136,11 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
      */
     public function jsonweekdiscussionindividual_action() {
 
-        global $PAGE;
-
         // Pager
         $count = (int)optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
-
-        // This renders the page correctly using standard Moodle ajax renderer
-        $this->setajaxoutput();
 
         try {
             $report = "discussion";
@@ -210,7 +200,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
     /**
      * Report Main Terms.
-     * @param unknown $element
+     * @param mixed $element
+     * @return string
      */
     private function main_terms($element) {
 
