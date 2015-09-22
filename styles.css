@@ -48,7 +48,7 @@
     box-sizing: content-box;
     overflow: hidden;
     width: 29%;
-    margin:1em 2%;
+    margin: 1em 2%;
 
 }
 
@@ -83,12 +83,12 @@
 /** Wrapper Datatables**/
 
 /* Table content */
-#page-local-xray-view .dataTables_wrapper table{
+#page-local-xray-view .dataTables_wrapper table {
 
 }
 
 /* Table content */
-#page-local-xray-view .dataTables_wrapper table tr td{
+#page-local-xray-view .dataTables_wrapper table tr td {
 
 }
 #page-local-xray-view .error_datatables {
@@ -137,22 +137,55 @@
 
 /** Horizontal Scrool to tables (Table) **/
 
-.xray_table_scrool{
+.xray_table_scrool {
     overflow: auto;
 }
 
 
 /**************** End Styles for specific reports****************/
 
-/**************** Course Header *********************************/
-
-.dashboard_xray_users_profile{
-    float:left;
-    min-width:235px;
-    min-height:70px;
+/**************** Course Headline data  *********************************/
+/* Inpage list of links to reports */
+#headerdata > h3 {
+  background: transparent url([[pix:local_xray|xray-logo]]) 0 0 no-repeat;
+  background-size: contain;
+  padding-left: 2em;
 }
 
-.xray_dashboard_users_risk_hidden{
-    display:none;
+.dashboard_xray_users_profile {
+    float: left;
+    width: 50%;
+    padding: 0.5em 0;
 }
-/**************** End Styles for Course Header ******************/
+.dashboard_xray_users_profile  .userpicture {
+    border-radius:100%;
+}
+.xray-icon {
+    width: 2em;
+    height: auto;
+    margin-right: 0.3em;
+}
+
+/* Links to xray pages */
+.xray-reports-links {
+  margin: 0;
+  padding: 1em 0;
+}
+.xray-reports-links li {
+  display: inline-block;
+  width: 24%;
+  padding: 0;
+  margin: 0;
+}
+.xray-reports-links li a {
+  display:block;
+  height: 150px;
+  background: transparent url([[pix:local_xray|xray-discussions]]) 50% 70% no-repeat;
+  text-align: center;
+  background-size: 61.8% 61.8%;
+}
+
+.xray_dashboard_users_risk_hidden {
+    display: none;
+}
+/**************** End Styles for Course Headline data ******************/

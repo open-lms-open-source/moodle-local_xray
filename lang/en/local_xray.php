@@ -21,7 +21,7 @@
  * @author German Vitale
  * @package local_xray
  */
-$string['navigation_xray'] = 'X-Ray'; 
+$string['navigation_xray'] = 'X-Ray ';
 $string['navitationcourse_xray'] = 'X-Ray';
 $string['pluginname'] = 'X-Ray';
 $string['reports'] = 'Reports';
@@ -39,7 +39,7 @@ $string['xray:activityreport_view'] = 'View Activity Report';
 $string['xray:dashboard_view'] = 'View Dashboard Report';
 $string['xray:discussionreport_view'] = 'View Discussion Report';
 $string['xray:discussionreportindividualforum_view'] = 'View Discussion Report Individual Forum';
-$string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Endogenic Plagiarism';
+$string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Plagiarism';
 $string['xray:discussiongrading_view'] = 'View Discussion Grading';
 $string['xray:gradebookreport_view'] = 'View Gradebook Report';
 $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indivisual Quiz';
@@ -47,23 +47,23 @@ $string['xray:risk_view'] = 'View Risk Report';
 $string['xray:view'] = 'X-ray View';
 
 /* Report Activity Report*/
-$string['activityreport'] = 'Activity Report';
+$string['activityreport'] = 'Activity';
 /* Report Activity Report Individual*/
 $string['activityreportindividual'] = 'Activity Report Individual';
 /* Discussion report*/
-$string['discussionreport'] = 'Discussion Report';
+$string['discussionreport'] = 'Discussions';
 /* Discussion report individual*/
 $string['discussionreportindividual'] = 'Discussion Report Individual';
 /* Discussion report individual forum*/
 $string['discussionreportindividualforum'] = 'Discussion Report Individual Forum';
 /* Discussion report Endogenic Plagiarism*/
-$string['discussionendogenicplagiarism'] = 'Discussion Endogenic Plagiarism';
+$string['discussionendogenicplagiarism'] = 'Discussion Plagiarism';
 /* Risk report*/
-$string['risk'] = 'Risk';
+$string['risk'] = 'Risk Status';
 /* Discussiongrading report*/
 $string['discussiongrading'] = 'Discussion Grading';
 /* Gradebook report*/
-$string['gradebookreport'] = 'Gradebook Report';
+$string['gradebookreport'] = 'Gradebook';
 
 /* Columns reports */
 $string['table_fetchingdata'] = 'Fetching Data, Please wait...';
@@ -148,4 +148,3 @@ $string['of'] = ' of ';
 $string['studentatrisk'] = 'student at risk';
 $string['studentvisitslastdays'] = 'student visits in the last 7 days';
 $string['visitors'] = 'Visitors';
-
