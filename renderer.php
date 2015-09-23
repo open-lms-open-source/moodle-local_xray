@@ -829,9 +829,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
 
         //Students at risk
-        $students_risk = "<h1>$students_risk <small>$of</small> $students_enrolled</h1>";
-        $studentatrisk_text = html_writer::div(get_string('studentatrisk', 'local_xray'));
-        $riskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');
+        $students_risk = "<div class='xray-headline'><span class='xray-headline-number h1'>$students_risk</span> $of $students_enrolled</div>";
+        $studentatrisk_text = html_writer::div(get_string('studentatrisk', 'local_xray'),'xray-headline-description');
+        $riskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor');
 
         $users_profile = "";//Six firsts users
         $users_profile_hidden = "";//Rest of users will be hidden
@@ -859,22 +859,34 @@ class local_xray_renderer extends plugin_renderer_base {
         $risk_column = html_writer::div($xray_dashboard_jquery . $students_risk . $studentatrisk_text . $riskfromlastweek . $users_profile_box . $users_profile_box_hidden . $showall, 'xray-risk col-sm-6 span6');
 
         //Students Visitors
-        $students_visitors = "<h1>$students_visits_lastsevendays <small>$of</small> $students_enrolled</h1>";
-        $studentvisitslastdays_text = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
-        $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');
+        $students_visitors = "<div class='xray-headline'><span class='xray-headline-number h1'>$students_visits_lastsevendays</span> $of $students_enrolled</small></div>";
+        $studentvisitslastdays_text = html_writer::div(get_string('studentvisitslastdays', 'local_xray'), 'xray-headline-description');
+        // TODO - add text-danger etc for positive/negative.
+        $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor');
 
-        //Create table for Students visits by Week Day
-        $students_visits_weekday_htmltable = new html_table();
-        $row = array();
-        foreach ($students_visits_by_weekday as $key => $value) {
-            $students_visits_weekday_htmltable->head[] = $value->day_of_week->value;
-            $row[] = $value->number_of_visits->value;
+        //Students visits by Week Day
+        $students_visits_per_day = "";
+        // TODO - Test data, remove.
+        // $students_visits_lastsevendays = 300;
+        if ($students_visits_lastsevendays) {
+          $students_visits_per_day = "<div class='xray-student-visits-lastsevendays'>";
+          foreach ($students_visits_by_weekday as $key => $value) {
+              // $students_visits_weekday_htmltable->head[] = $value->day_of_week->value;
+              // $row[] = $value->number_of_visits->value;
+              // $percent = ceil(($value->day_of_week->value/$students_visits_lastsevendays)*100);
+              $visitsperday = $value->number_of_visits->value;
+              // TODO - Test data, remove.
+              // $visitsperday = rand(0,$students_visits_lastsevendays);
+              $percent = ceil(($visitsperday/$students_visits_lastsevendays)*100);
+              $day = substr($value->day_of_week->value, 0, 3);
+              $students_visits_per_day .= "<div class='xray-visits-unit'>";
+              $students_visits_per_day .= "<div class='xray-visits-per-day'>$day</div>";
+              $students_visits_per_day .= "<div class='xray-visits-per-day-line' style='height:".$percent."%'>$visitsperday</div>";
+              $students_visits_per_day .= "</div>";
+          }
+          $students_visits_per_day .= "</div>";
         }
-
-        $students_visits_weekday_htmltable->data[] = $row;
-        // $students_visits_weekday = html_writer::table($students_visits_weekday_htmltable);
-
-        $visitors_column = html_writer::div($students_visitors . $studentvisitslastdays_text . $visitorsfromlastweek . $students_visits_weekday, 'xray-visitors col-sm-6 span6');
+        $visitors_column = html_writer::div($students_visitors . $studentvisitslastdays_text . $visitorsfromlastweek . $students_visits_per_day, 'xray-visitors col-sm-6 span6');
 
         return html_writer::div($risk_column . $visitors_column, 'row row-fluid container-fluid');
     }

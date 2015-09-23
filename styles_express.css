@@ -1,0 +1,7 @@
+/* For none bootstrap themes, a minimal grid.
+TODO - make express specific? */
+.xray-risk,
+.xray-visitors {
+  width:50%;
+  float:left;
+}

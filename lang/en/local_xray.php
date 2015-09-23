@@ -143,8 +143,8 @@ $string['synclogexplanation'] = 'Regular log entry for data sync.';
 /* Course Header */
 $string['atrisk'] = 'At risk';
 $string['dashboard'] = 'Dashboard';
-$string['fromlastweek'] = '{$a}% from last week';
+$string['fromlastweek'] = '{$a}% change from last week';
 $string['of'] = ' of ';
-$string['studentatrisk'] = 'student at risk';
+$string['studentatrisk'] = 'students at risk';
 $string['studentvisitslastdays'] = 'student visits in the last 7 days';
 $string['visitors'] = 'Visitors';

@@ -53,7 +53,6 @@
     overflow: hidden;
     width: 29%;
     margin: 1em 2%;
-
 }
 
 /* General xray image graph */
@@ -85,12 +84,10 @@
 
 /* Table content */
 #page-local-xray-view .dataTables_wrapper table {
-
 }
 
 /* Table content */
 #page-local-xray-view .dataTables_wrapper table tr td {
-
 }
 
 #page-local-xray-view .error_datatables {
@@ -145,10 +142,25 @@
 
 /**************** Course Headline data  *********************************/
 /* Inpage list of links to reports */
-#headerdata > h3 {
+#headerdata > h2 {
     background: transparent url([[pix:local_xray|xray-logo]]) 0 0 no-repeat;
     background-size: contain;
     padding-left: 2em;
+}
+
+.xray-headline {
+  padding: 1em 0 0.3em 0;
+}
+
+.xray-headline-number {
+  font-size: 3em;
+  font-weight: bold;
+  padding: 2%;
+}
+
+.xray-comparitor {
+    font-style: oblique;
+    font-size: smaller;
 }
 
 .dashboard_xray_users_profile {
@@ -166,6 +178,41 @@
     height: auto;
     margin-right: 0.3em;
 }
+
+
+/* this is a css graph, so use appropriate typography */
+.xray-student-visits-lastsevendays {
+    padding: 0.5em 0;
+    font-size: small;
+    font-family: Roboto, 'Fira Sans', 'Segoe UI', HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.xray-visits-unit {
+   width: 14%;
+   float: left;
+   height: 150px;
+   position: relative;
+}
+
+.xray-visits-per-day {
+    position: absolute;
+    bottom: -1.5em;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.xray-visits-per-day-line {
+    position: absolute;
+    bottom: 0;
+    width: 61.8%;
+    left: 19.1%;
+    text-align: center;
+    color: white;
+    background-color: #3AA2D8;
+}
+
+
 
 /* Links to xray pages */
 .xray-reports-links {
@@ -193,3 +240,16 @@
 }
 
 /**************** End Styles for Course Headline data ******************/
+
+
+
+/* Some themes center align heading level elements */
+#headerdata h1,
+#headerdata h2,
+#headerdata h3,
+#headerdata h4,
+#headerdata h5,
+#headerdata h6,
+#xraymenu h4 {
+  text-align:left;
+}

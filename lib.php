@@ -64,8 +64,8 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
                 $reportlist = array(
                     'risk' => 'local/xray:risk_view',
                     'activityreport' => 'local/xray:activityreport_view',
-                    'discussionreport' => 'local/xray:discussionreport_view',
                     'gradebookreport' => 'local/xray:gradebookreport_view',
+                    'discussionreport' => 'local/xray:discussionreport_view',
                     'discussiongrading' => 'local/xray:discussiongrading_view',
                     'discussionendogenicplagiarism' => 'local/xray:discussionendogenicplagiarism_view',
                 );
@@ -181,7 +181,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
             $renderer = $PAGE->get_renderer('local_xray');
             $headerdata = $renderer->snap_dashboard_xray();
             if (!empty($headerdata)) {
-                $title = \html_writer::tag('h3', get_string('navigation_xray', 'local_xray') . get_string('analytics', 'local_xray'));
+                $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') . get_string('analytics', 'local_xray'));
                 $subc = $title . $headerdata;
                 $headerdata = \html_writer::div($subc, '', array('id' => 'headerdata', 'class' => 'clearfix'));
             }
