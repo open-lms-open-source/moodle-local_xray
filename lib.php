@@ -141,21 +141,21 @@ function local_xray_extends_navigation(global_navigation $nav) {
 
     // TODO: Add CSS search strings for other course formats
     static $search = array(
-                           'topics'         => 'div#region-main', //'ul.topics',
-                           'weeks'          => 'div#region-main',//'ul.weeks' ,
-                           'flexpage'       => 'div#region-main',// '.notexist', // Not sure what to do here?
-                           'folderview'     => 'div#region-main',//'ul.folderview',
-                           'onetopic'       => 'div#region-main',//'ul.topics',
+                           'topics'         => '#region-main', //'ul.topics',
+                           'weeks'          => '#region-main',//'ul.weeks' ,
+                           'flexpage'       => '#region-main',// '.notexist', // Not sure what to do here?
+                           'folderview'     => '#region-main',//'ul.folderview',
+                           'onetopic'       => '#region-main',//'ul.topics',
                            'singleactivity' => '.notexist', // Not sure what to do here?
-                           'social'         => 'div#region-main', //'.notexist', // Not sure what to do here?
-                           'tabbedweek'     => 'div#region-main',//'ul.weeks',
-                           'topcoll'        => 'div#region-main',//'ul.ctopics.topics.ctlayout'
+                           'social'         => '#region-main', //'.notexist', // Not sure what to do here?
+                           'tabbedweek'     => '#region-main',//'ul.weeks',
+                           'topcoll'        => '#region-main',//'ul.ctopics.topics.ctlayout'
                           );
 
     if (local_xray_startswith($PAGE->pagetype,'course-view')) {
         $courseformat = $PAGE->course->format;
         if (!isset($search[$courseformat])) {
-            $search[$courseformat] = 'div#region-main';
+            $search[$courseformat] = '#region-main';
         }
 
         $displaymenu = get_config('local_xray', 'displaymenu');
@@ -169,13 +169,9 @@ function local_xray_extends_navigation(global_navigation $nav) {
                 foreach ($reports as $reportstring => $url) {
                     $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'));
                 }
-                $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;'));
-                $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray'));
-                $dmenu = \html_writer::div($amenu);
-                //$menu = \html_writer::tag('li', $title . $dmenu, array('id'    => 'xraymenu',
-                //                                                       'class' => 'section main clearfix',
-                //                                                       'role'  => 'region'));
-                $menu = \html_writer::div($title.$dmenu, '', array('id' => 'xraymenu'));
+                $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
+                $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;', 'class' => 'xray-reports-links'));
+                $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'xraymenu', 'role' => 'region'));
             }
         }
 
@@ -185,12 +181,9 @@ function local_xray_extends_navigation(global_navigation $nav) {
             $renderer = $PAGE->get_renderer('local_xray');
             $headerdata = $renderer->snap_dashboard_xray();
             if (!empty($headerdata)) {
-                $title = \html_writer::tag('h2', get_string('analytics', 'local_xray'));
-                $subc = \html_writer::div($headerdata);
-                //$headerdata = \html_writer::tag('li', $title . $subc, array('id'    => 'headerdata',
-                //                                                            'class' => 'section main clearfix',
-                //                                                            'role'  => 'region'));
-                $headerdata = \html_writer::div($title.$subc, '', array('id' => 'headerdata'));
+                $title = \html_writer::tag('h3', get_string('navigation_xray', 'local_xray') . get_string('analytics', 'local_xray'));
+                $subc = $title . $headerdata;
+                $headerdata = \html_writer::div($subc, '', array('id' => 'headerdata', 'class' => 'clearfix'));
             }
         }
 

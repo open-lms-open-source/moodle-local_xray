@@ -829,8 +829,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
 
         //Students at risk
-        $risk_title = html_writer::tag('h3', get_string('atrisk', 'local_xray'));
-        $students_risk = html_writer::div($students_risk . $of . $students_enrolled, 'h1');
+        $students_risk = "<h1>$students_risk <small>$of</small> $students_enrolled</h1>";
         $studentatrisk_text = html_writer::div(get_string('studentatrisk', 'local_xray'));
         $riskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor text-danger');
 
@@ -845,7 +844,6 @@ class local_xray_renderer extends plugin_renderer_base {
                 } else {
                     $users_profile .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
                 }
-
                 $count_users++;
             }
         }
@@ -858,11 +856,10 @@ class local_xray_renderer extends plugin_renderer_base {
             $showall = html_writer::div('Show all', 'btn btn-default btn-sm xray_dashboard_seeall');
         }
 
-        $risk_column = html_writer::div($xray_dashboard_jquery . $risk_title . $students_risk . $studentatrisk_text . $riskfromlastweek . $users_profile_box . $users_profile_box_hidden . $showall, 'col-sm-6');
+        $risk_column = html_writer::div($xray_dashboard_jquery . $students_risk . $studentatrisk_text . $riskfromlastweek . $users_profile_box . $users_profile_box_hidden . $showall, 'xray-risk col-sm-6 span6');
 
         //Students Visitors
-        $visitors_title = html_writer::tag('h3', get_string('visitors', 'local_xray'));
-        $students_visitors = html_writer::div($students_visits_lastsevendays . $of . $students_enrolled, 'h1');
+        $students_visitors = "<h1>$students_visits_lastsevendays <small>$of</small> $students_enrolled</h1>";
         $studentvisitslastdays_text = html_writer::div(get_string('studentvisitslastdays', 'local_xray'));
         $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor text-danger');
 
@@ -875,11 +872,11 @@ class local_xray_renderer extends plugin_renderer_base {
         }
 
         $students_visits_weekday_htmltable->data[] = $row;
-        $students_visits_weekday = html_writer::table($students_visits_weekday_htmltable);
+        // $students_visits_weekday = html_writer::table($students_visits_weekday_htmltable);
 
-        $visitors_column = html_writer::div($visitors_title . $students_visitors . $visitorsfromlastweek . $studentvisitslastdays_text . $students_visits_weekday, 'col-sm-6');
+        $visitors_column = html_writer::div($students_visitors . $studentvisitslastdays_text . $visitorsfromlastweek . $students_visits_weekday, 'xray-visitors col-sm-6 span6');
 
-        return html_writer::div($risk_column . $visitors_column);
+        return html_writer::div($risk_column . $visitors_column, 'row row-fluid container-fluid');
     }
 
     /**
@@ -887,27 +884,16 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $user
      */
     public function print_student_profile($user) {
-        global $CFG, $COURSE;
+        global $CFG;
 
         $userpicture = new user_picture($user);
         $userpicture->link = false;
         $userpicture->alttext = false;
-        $userpicture->size = 100;
+        $userpicture->size = 30;
         $picture = $this->render($userpicture);
-
         $fullname = '<a href="' . $CFG->wwwroot . '/user/profile.php?id=' . $user->id . '">' . format_string(fullname($user)) . '</a>';
-        $coursecontext = context_course::instance($COURSE->id);
-        $user->description = file_rewrite_pluginfile_urls($user->description,
-            'pluginfile.php', $coursecontext->id, 'user', 'profile', $user->id);
-        $description = format_text($user->description, $user->descriptionformat);
-
-        return "<div class='snap-media-object dashboard_xray_users_profile'>
-                $picture
-                <div class=snap-media-body>
-                $fullname
-                $description
-                </div>
-                </div>";
+        return "<div class='dashboard_xray_users_profile'>
+                $picture $fullname </div>";
     }
 
     /************************** End Course Header **************************/
