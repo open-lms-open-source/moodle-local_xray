@@ -15,7 +15,8 @@
     display: block;
     margin-bottom: 1em;
 }
-#page-local-xray-view .inforeport p{
+
+#page-local-xray-view .inforeport p {
     margin-bottom: 0;
 }
 
@@ -23,19 +24,22 @@
 #page-local-xray-view .reportsname {
     /* h3 for screenreaders, but needs to be smaller visually */
     font-size: 1.1em;
-		line-height: 1.5;
-		/* for express we need to override heading centering */
-		text-align: left;
+    line-height: 1.5;
+    /* for express we need to override heading centering */
+    text-align: left;
 }
+
 /* Toogle tables */
 #page-local-xray-view .eventtoogletable {
     cursor: pointer;
     padding-left: 1em;
     background: transparent url([[pix:t/collapsed]]) 0 center no-repeat;
 }
+
 #page-local-xray-view .expanded {
     background: transparent url([[pix:t/expanded]]) 0 center no-repeat;
 }
+
 /* End Toogle tables */
 
 /* General xray element (graphs and tables elements) */
@@ -53,7 +57,7 @@
 }
 
 /* General xray image graph */
-#page-local-xray-view .xray_element_img{
+#page-local-xray-view .xray_element_img {
     height: 300px;
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
@@ -63,14 +67,11 @@
     transform: scale(1.1);
 }
 
-
 /* General xray element (specific for tables) */
 #page-local-xray-view .xray_element_table {
     clear: both;
     margin: 1em 0;
 }
-
-
 
 /* General xray legend of graph */
 #page-local-xray-view .xray_graph_legend {
@@ -91,6 +92,7 @@
 #page-local-xray-view .dataTables_wrapper table tr td {
 
 }
+
 #page-local-xray-view .error_datatables {
     background-color: #CE2F2F;
     color: #fff;
@@ -107,30 +109,28 @@
     margin: auto;
     padding: 100px 10px;
 }
+
 /** End Wrapper Datatables**/
 
-
 #page-local-xray-view .fancybox-title-float-wrap .child {
-	background-color: #3bcedb;
+    background-color: #3bcedb;
 }
-
-
 
 /**************** Styles for specific reports****************/
 /** Link in table to activity report individual **/
 #page-local-xray-view .icon_activityreportindividual {
-	display:block;
-	width:16px;
-	height:16px;
-	background-color: #BFE3FF;
-	background-image: url([[pix:local_xray|activityindividualreport]]);
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-color: #BFE3FF;
+    background-image: url([[pix:local_xray|activityindividualreport]]);
 }
 
 /** Link in table to discussion report individual **/
 #page-local-xray-view .icon_discussionreportindividual {
-    display:block;
-    width:16px;
-    height:16px;
+    display: block;
+    width: 16px;
+    height: 16px;
     background-color: #BFE3FF;
     background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
 }
@@ -141,15 +141,14 @@
     overflow: auto;
 }
 
-
 /**************** End Styles for specific reports****************/
 
 /**************** Course Headline data  *********************************/
 /* Inpage list of links to reports */
 #headerdata > h3 {
-  background: transparent url([[pix:local_xray|xray-logo]]) 0 0 no-repeat;
-  background-size: contain;
-  padding-left: 2em;
+    background: transparent url([[pix:local_xray|xray-logo]]) 0 0 no-repeat;
+    background-size: contain;
+    padding-left: 2em;
 }
 
 .dashboard_xray_users_profile {
@@ -157,9 +156,11 @@
     width: 50%;
     padding: 0.5em 0;
 }
-.dashboard_xray_users_profile  .userpicture {
-    border-radius:100%;
+
+.dashboard_xray_users_profile .userpicture {
+    border-radius: 100%;
 }
+
 .xray-icon {
     width: 2em;
     height: auto;
@@ -168,24 +169,27 @@
 
 /* Links to xray pages */
 .xray-reports-links {
-  margin: 0;
-  padding: 1em 0;
+    margin: 0;
+    padding: 1em 0;
 }
+
 .xray-reports-links li {
-  display: inline-block;
-  width: 24%;
-  padding: 0;
-  margin: 0;
+    display: inline-block;
+    width: 24%;
+    padding: 0;
+    margin: 0;
 }
+
 .xray-reports-links li a {
-  display:block;
-  height: 150px;
-  background: transparent url([[pix:local_xray|xray-discussions]]) 50% 70% no-repeat;
-  text-align: center;
-  background-size: 61.8% 61.8%;
+    display: block;
+    height: 150px;
+    background: transparent url([[pix:local_xray|xray-discussions]]) 50% 70% no-repeat;
+    text-align: center;
+    background-size: 61.8% 61.8%;
 }
 
 .xray_dashboard_users_risk_hidden {
     display: none;
 }
+
 /**************** End Styles for Course Headline data ******************/

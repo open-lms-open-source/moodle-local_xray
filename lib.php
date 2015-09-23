@@ -62,12 +62,12 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
                 local_xray_startswith($page->pagetype, 'local-xray-view')) {
 
                 $reportlist = array(
+                    'risk' => 'local/xray:risk_view',
                     'activityreport' => 'local/xray:activityreport_view',
                     'discussionreport' => 'local/xray:discussionreport_view',
+                    'gradebookreport' => 'local/xray:gradebookreport_view',
                     'discussiongrading' => 'local/xray:discussiongrading_view',
                     'discussionendogenicplagiarism' => 'local/xray:discussionendogenicplagiarism_view',
-                    'risk' => 'local/xray:risk_view',
-                    'gradebookreport' => 'local/xray:gradebookreport_view',
                 );
 
             } else {

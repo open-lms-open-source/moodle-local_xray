@@ -757,10 +757,10 @@ class local_xray_renderer extends plugin_renderer_base {
                     $count_students_risk_prev = (isset($response->elements->element6->items[6]->value) ? $response->elements->element6->items[6]->value : "-");
                     // Visits previous 7 days.
                     $count_students_visits_prev = (isset($response->elements->element6->items[1]->value) ? $response->elements->element6->items[1]->value : "-");
-                    
+
                     //calculate percentajes from last weeks
-                    $precentaje_valueperstudent = 100/$count_students_enrolled;
-                    
+                    $precentaje_valueperstudent = 100 / $count_students_enrolled;
+
                     // Diff risk.
                     $percentaje_students_risk_prev = $precentaje_valueperstudent * $count_students_risk_prev;
                     $percentaje_students_risk = $precentaje_valueperstudent * $count_students_risk;
@@ -882,6 +882,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Renderer (copy of print_teacher_profile in renderer.php of snap theme).
      * @param stdClass $user
+     * @return string
      */
     public function print_student_profile($user) {
         global $CFG;
