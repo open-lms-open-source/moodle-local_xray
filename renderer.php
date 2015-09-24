@@ -831,7 +831,17 @@ class local_xray_renderer extends plugin_renderer_base {
         //Students at risk
         $students_risk = "<div class='xray-headline'><span class='xray-headline-number h1'>$students_risk</span> $of $students_enrolled</div>";
         $studentatrisk_text = html_writer::div(get_string('studentatrisk', 'local_xray'),'xray-headline-description');
-        $riskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), 'xray-comparitor');
+        // Bootstrap classes for positive/negative data.
+        $comparitorclass = "xray-comparitor";
+        $comparitorbsclass = " text-muted";
+        if ($visitors_fromlastweek < 0) {
+          $comparitorbsclass = " text-success";
+        }
+        if ($visitors_fromlastweek > 0) {
+          $comparitorbsclass = " text-danger";
+        }
+        $comparitorclass .= $comparitorbsclass;
+        $riskfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $risk_fromlastweek), $comparitorclass);
 
         $users_profile = "";//Six firsts users
         $users_profile_hidden = "";//Rest of users will be hidden
@@ -861,8 +871,18 @@ class local_xray_renderer extends plugin_renderer_base {
         //Students Visitors
         $students_visitors = "<div class='xray-headline'><span class='xray-headline-number h1'>$students_visits_lastsevendays</span> $of $students_enrolled</small></div>";
         $studentvisitslastdays_text = html_writer::div(get_string('studentvisitslastdays', 'local_xray'), 'xray-headline-description');
-        // TODO - add text-danger etc for positive/negative.
-        $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), 'xray-comparitor');
+        // Bootstrap classes for positive/negative data.
+        $comparitorclass = "xray-comparitor";
+        $comparitorbsclass = " text-muted";
+        if ($visitors_fromlastweek < 0) {
+          $comparitorbsclass = " text-danger";
+        }
+        if ($visitors_fromlastweek > 0) {
+          $comparitorbsclass = " text-success";
+        }
+        $comparitorclass .= $comparitorbsclass;
+
+        $visitorsfromlastweek = html_writer::div(get_string('fromlastweek', 'local_xray', $visitors_fromlastweek), $comparitorclass);
 
         //Students visits by Week Day
         $students_visits_per_day = "";

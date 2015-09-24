@@ -167,7 +167,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
             if (!empty($reports)) {
                 $menuitems = array();
                 foreach ($reports as $reportstring => $url) {
-                    $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'));
+                    $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $reportstring));
                 }
                 $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
                 $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;', 'class' => 'xray-reports-links'));

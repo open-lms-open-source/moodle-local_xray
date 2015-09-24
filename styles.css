@@ -141,7 +141,10 @@
 /**************** End Styles for specific reports****************/
 
 /**************** Course Headline data  *********************************/
-/* Inpage list of links to reports */
+
+
+/* In page headline data and links to reports */
+/* TODO - add a class for this title. */
 #headerdata > h2 {
     background: transparent url([[pix:local_xray|xray-logo]]) 0 0 no-repeat;
     background-size: contain;
@@ -215,6 +218,11 @@
 
 
 /* Links to xray pages */
+#xraymenu {
+    clear: both;
+    padding: 2em 0;
+}
+
 .xray-reports-links {
     margin: 0;
     padding: 1em 0;
@@ -227,13 +235,26 @@
     margin: 0;
 }
 
+.xray-reports-links .risk {
+    background: transparent url([[pix:local_xray|xray-risk]]) 50% 70% no-repeat;
+}
+.xray-reports-links .activityreport {
+    background: transparent url([[pix:local_xray|xray-activity]]) 50% 70% no-repeat;
+}
+.xray-reports-links .gradebookreport {
+    background: transparent url([[pix:local_xray|xray-grade]]) 50% 70% no-repeat;
+}
+.xray-reports-links .discussionreport {
+    background: transparent url([[pix:local_xray|xray-discussions]]) 50% 70% no-repeat;
+}
 .xray-reports-links li a {
     display: block;
     height: 150px;
-    background: transparent url([[pix:local_xray|xray-discussions]]) 50% 70% no-repeat;
     text-align: center;
-    background-size: 61.8% 61.8%;
+    background-size: 61.8% 61.8% !important;
+    background: transparent url([[pix:local_xray|xray-discussions]]) 50% 70% no-repeat;
 }
+
 
 .xray_dashboard_users_risk_hidden {
     display: none;
