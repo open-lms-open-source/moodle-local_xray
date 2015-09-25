@@ -714,6 +714,42 @@ class local_xray_renderer extends plugin_renderer_base {
         return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
+    /* New reports */
+    
+    /**
+     * Heat map of grade distribution.
+     * @param stdClass $element
+     */
+    public function gradebookreport_density_of_standardized_scores($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Heat map of grade distribution.
+     * @param stdClass $element
+     */
+    public function gradebookreport_boxplot_of_standardized_scores_per_quiz($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Heat map of grade distribution.
+     * @param stdClass $element
+     */
+    public function gradebookreport_scores_assigned_by_xray_versus_results_from_quizzes($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /**
+     * Heat map of grade distribution.
+     * @param stdClass $element
+     */
+    public function gradebookreport_comparison_of_scores_in_quizzes($element) {
+        return $this->show_on_lightbox(__FUNCTION__, $element);
+    }
+    
+    /* end of new reports */
+    
     /************************** End Elements for Gradebook Report **************************/
 
     /************************** Course Header **************************/

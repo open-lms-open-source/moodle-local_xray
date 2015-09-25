@@ -17,23 +17,33 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         $output = '';
 
         try {
-            $report = "grades";
+            $report = "gradebook";
             $response = \local_xray\api\wsapi::course($this->courseid, $report);//TODO we use other course id to test this
 
             if (!$response) {
                 // Fail response of webservice.
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
+
+                $output .= $this->density_of_standardized_scores($response->elements->element3);
+                $output .= $this->boxplot_of_standardized_scores_per_quiz($response->elements->element5);
+                $output .= $this->scores_assigned_by_xray_versus_results_from_quizzes($response->elements->element6);
+                $output .= $this->comparison_of_scores_in_quizzes($response->elements->element7);
+
                 // Show graphs.
-                $output .= $this->students_grades_for_course($response->elements[0]);// Its a table, I will get info with new call.
-                $output .= $this->students_grades_on_completed_items_course($response->elements[1]);// Its a table, I will get info with new call.
-                $output .= $this->distribution_of_grades_in_course($response->elements[2]);
-                $output .= $this->distribution_of_grades_completed_items($response->elements[3]);
-                $output .= $this->density_plot_all_items($response->elements[5]);
-                $output .= $this->density_plot_completed_items($response->elements[6]);
+                //$output .= $this->students_grades_for_course($response->elements->element0);// Its a table, I will get info with new call.
+                //$output .= $this->students_grades_on_completed_items_course($response->elements[1]);// Its a table, I will get info with new call.
+                //$output .= $this->distribution_of_grades_in_course($response->elements[2]);
+                //$output .= $this->distribution_of_grades_completed_items($response->elements[3]);
+                //$output .= $this->density_plot_all_items($response->elements[5]);
+                //$output .= $this->density_plot_completed_items($response->elements[6]);
+                
+                
                 //$output .= $this->test_for_normality_on_course_grades($response->elements[7]);
                 //$output .= $this->test_for_normality_on_course_grades($response->elements[8]);//TODO repeated - waiting instructions
-                $output .= $this->heat_map_of_grade_distribution($response->elements[9]);
+                
+                
+                //$output .= $this->heat_map_of_grade_distribution($response->elements[9]);
             }
         } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
@@ -168,6 +178,52 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         return json_encode($return);
     }
 
+    /*New reports*/
+    /**
+     * Report Density of Standardized Scores.
+     *
+     */
+    private function density_of_standardized_scores($element) {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_density_of_standardized_scores($element);
+        return $output;
+    }
+    
+    /**
+     * Report Boxplot of Standardized Scores per Quiz.
+     *
+     */
+    private function boxplot_of_standardized_scores_per_quiz($element) {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_boxplot_of_standardized_scores_per_quiz($element);
+        return $output;
+    }
+    
+    /**
+     * Report Distribution of grades in course.
+     *
+     */
+    private function scores_assigned_by_xray_versus_results_from_quizzes($element) {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_scores_assigned_by_xray_versus_results_from_quizzes($element);
+        return $output;
+    }
+    
+    /**
+     * Report Distribution of grades in course.
+     *
+     */
+    private function comparison_of_scores_in_quizzes($element) {
+    
+        $output = "";
+        $output .= $this->output->gradebookreport_comparison_of_scores_in_quizzes($element);
+        return $output;
+    }
+    
+    /*End of new reports */
 
     /**
      * Report Distribution of grades in course.
