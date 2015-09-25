@@ -611,11 +611,61 @@ class local_xray_renderer extends plugin_renderer_base {
     /************************** End Elements for Report Discussion grading **************************/
     /**************************  Elements for Gradebook Report **************************/
 
+    /* New tables */
+    
+    /**
+     * Students' Grades for course (TABLE)
+     */
+    public function gradebookreport_students_grades($courseid, $element) {
+        
+        $columns = array(new local_xray_datatableColumn('action', ''));
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
+        }
+        
+        $datatable = new local_xray_datatable(__FUNCTION__,
+                $element->title,
+                "view.php?controller='gradebookreport'&action='jsonstudentsgrades'&courseid=" . $courseid,
+                $columns);
+        
+        // Create standard table.
+        $output = $this->standard_table((array)$datatable);
+        
+        return $output;
+    }
+    
+    /**
+     * Summary of Quizzes (TABLE)
+     */
+    public function gradebookreport_summary_of_quizzes($courseid, $element) {
+    
+        $columns = array(new local_xray_datatableColumn('action', ''));
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+            }
+        }
+    
+        $datatable = new local_xray_datatable(__FUNCTION__,
+                $element->title,
+                "view.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=" . $courseid,
+                $columns);
+    
+        // Create standard table.
+        $output = $this->standard_table((array)$datatable);
+    
+        return $output;
+    }
+    
+    /* End of new tables */
+    
+    
     /**
      * Students' Grades for course (TABLE)
      */
     public function gradebookreport_students_grades_for_course($courseid, $element) {
-
 
         $columns = array(new local_xray_datatableColumn('action', ''));
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
