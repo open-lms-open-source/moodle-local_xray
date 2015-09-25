@@ -616,7 +616,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Students' Grades for course (TABLE)
      */
-    public function gradebookreport_students_grades($courseid, $element) {
+    public function gradebookreport_student_grades($courseid, $element) {
         
         $columns = array(new local_xray_datatableColumn('action', ''));
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
@@ -627,7 +627,7 @@ class local_xray_renderer extends plugin_renderer_base {
         
         $datatable = new local_xray_datatable(__FUNCTION__,
                 $element->title,
-                "view.php?controller='gradebookreport'&action='jsonstudentsgrades'&courseid=" . $courseid,
+                "view.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=" . $courseid,
                 $columns);
         
         // Create standard table.

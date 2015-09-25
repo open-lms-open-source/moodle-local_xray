@@ -26,7 +26,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
             } else {
 
                 //var_dump($response->elements->element2);
-                $output .= $this->students_grades($response->elements->element2);// Its a table, I will get info with new call.
+                $output .= $this->student_grades($response->elements->element2);// Its a table, I will get info with new call.
                 $output .= $this->density_of_standardized_scores($response->elements->element3);
                 $output .= $this->summary_of_quizzes($response->elements->element4);// Its a table, I will get info with new call.
                 $output .= $this->boxplot_of_standardized_scores_per_quiz($response->elements->element5);
@@ -61,17 +61,17 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
      * Report Students' Grades for course (table).
      *
      */
-    private function students_grades($element) {
+    private function student_grades($element) {
     
         $output = "";
-        $output .= $this->output->gradebookreport_students_grades($this->courseid, $element);
+        $output .= $this->output->gradebookreport_student_grades($this->courseid, $element);
         return $output;
     }
     
     /**
      * Json for provide data to students_grades_for_course table.
      */
-    public function jsonstudentsgrades_action() {
+    public function jsonstudentgrades_action() {
         // Pager
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
