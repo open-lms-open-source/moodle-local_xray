@@ -23,7 +23,7 @@ class local_xray_renderer extends plugin_renderer_base {
     public function inforeport($reportdate, $user = null, $course = null) {
 
         $date = new DateTime($reportdate);
-        $mreportdate = userdate($date->getTimestamp());
+        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedatetimeshort', 'langconfig'));
 
         $output = "";
         $output .= html_writer::start_div('inforeport');
