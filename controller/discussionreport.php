@@ -12,8 +12,6 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_discussionreport extends local_xray_controller_reports {
 
     public function view_action() {
-        $this->activate_nodelink('discussionreport');
-
         $output = '';
 
         try {

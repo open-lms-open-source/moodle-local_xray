@@ -13,10 +13,6 @@ class local_xray_controller_discussionendogenicplagiarism extends local_xray_con
     public function view_action() {
         global $PAGE;
 
-        // Add title to breadcrumb.
-        //$PAGE->navbar->add($PAGE->title);
-        $this->activate_nodelink('discussionendogenicplagiarism');
-
         $output = '';
 
         try {

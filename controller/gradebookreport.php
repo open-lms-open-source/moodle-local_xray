@@ -12,8 +12,6 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_gradebookreport extends local_xray_controller_reports {
 
     public function view_action() {
-        $this->activate_nodelink('gradebookreport');
-
         $output = '';
 
         try {
@@ -182,15 +180,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
     }
     
     /* End of new tables */ 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * Report Students' Grades for course (table).
      *

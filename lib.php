@@ -122,9 +122,13 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
 
     $coursenode = $settings->get($nodename);
     $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
+    $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
 
     foreach ($reports as $reportstring => $url) {
-        $extranavigation->add(get_string($reportstring, $plugin), $url, navigation_node::TYPE_CUSTOM, null, $reportstring);
+        $node = $extranavigation->add(get_string($reportstring, $plugin), $url, navigation_node::TYPE_CUSTOM, null, $reportstring);
+        if ($reportstring == $reportcontroller) {
+            $node->make_active();
+        }
     }
 }
 

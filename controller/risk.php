@@ -13,8 +13,6 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     public function view_action() {
         global $PAGE;
 
-        $this->activate_nodelink('risk');
-
         $output = '';
 
         try {

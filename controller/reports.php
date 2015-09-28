@@ -111,14 +111,6 @@ class local_xray_controller_reports extends mr_controller {
         parent::print_header();
     }
 
-    protected function activate_nodelink($key) {
-        global $PAGE;
-        $node = $PAGE->settingsnav->find($key, navigation_node::TYPE_CUSTOM);
-        if ($node) {
-            $node->make_active();
-        }
-    }
-
     /**
      * Require capabilities
      */

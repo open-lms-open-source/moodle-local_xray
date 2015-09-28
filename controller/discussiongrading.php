@@ -15,8 +15,6 @@ class local_xray_controller_discussiongrading extends local_xray_controller_repo
     public function view_action() {
         global $PAGE;
 
-        $this->activate_nodelink('discussiongrading');
-
         $output = "";
 
         try {
