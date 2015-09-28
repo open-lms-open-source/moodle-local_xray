@@ -644,7 +644,7 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function gradebookreport_summary_of_quizzes($courseid, $element) {
     
-        $columns = array(new local_xray_datatableColumn('action', ''));
+        $columns = array();
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
                 $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
@@ -670,7 +670,7 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function gradebookreport_students_grades_for_course($courseid, $element) {
 
-        $columns = array(new local_xray_datatableColumn('action', ''));
+        $columns = array();
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
                 $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
