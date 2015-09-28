@@ -22,9 +22,12 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function inforeport($reportdate, $user = null, $course = null) {
 
+        $date = new DateTime($reportdate);
+        $mreportdate = userdate($date->getTimestamp());
+
         $output = "";
         $output .= html_writer::start_div('inforeport');
-        $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $reportdate);
+        $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate);
         if (!empty($user)) {
             $output .= html_writer::tag("p", get_string(("username")) . ": " . $user);
         }
