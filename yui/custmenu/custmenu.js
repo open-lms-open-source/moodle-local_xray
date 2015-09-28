@@ -13,35 +13,33 @@ YUI.add('moodle-local_xray-custmenu', function(Y) {
                 var location = 0;
                 // Header data
                 if (config.header && config.hdrsearch) {
-                    var header = Y.one(config.hdrsearch);
-                    if (header) {
-                        if (config.hdrappend && Boolean(config.hdrappend)) {
-                            location = null;
-                        }
-                        header.insert(config.header, location);
-                    } else {
-                        if (M.cfg.developerdebug) {
-                            Y.log("Unable to locate element " + config.header, "error", this.module);
-                        }
+                    if (config.hdrappend && Boolean(config.hdrappend)) {
+                        location = null;
                     }
+                    this.embed(config.hdrsearch, config.header, location);
                 }
 
                 // Menu
                 if (config.items && config.menusearch) {
-                    var menu = Y.one(config.menusearch);
-                    if (menu) {
-                        location = 0;
-                        if (config.menuappend && Boolean(config.menuappend)){
-                            location = null;
-                        }
-                        menu.insert(config.items, location);
-                    } else {
-                        if (M.cfg.developerdebug) {
-                            Y.log("Unable to locate element " + config.menusearch, "error", this.module);
-                        }
+                    location = 0;
+                    if (config.menuappend && Boolean(config.menuappend)){
+                        location = null;
+                    }
+                    this.embed(config.menusearch, config.items, location);
+                }
+            }, // end init
+
+            embed: function (search, content, location) {
+                var node = Y.one(search);
+                if (node) {
+                    node.insert(content, location);
+                } else {
+                    if (M.cfg.developerdebug) {
+                        Y.log("Unable to locate element " + search, "error", this.module);
                     }
                 }
-            } // end init
+            } // end embed
+
         }; // end custmenu
 
     }, '@VERSION@', {requires: ['node', 'console']}
