@@ -614,8 +614,6 @@ class local_xray_renderer extends plugin_renderer_base {
     /************************** End Elements for Report Discussion grading **************************/
     /**************************  Elements for Gradebook Report **************************/
 
-    /* New tables */
-    
     /**
      * Students' Grades for course (TABLE)
      */
@@ -638,7 +636,7 @@ class local_xray_renderer extends plugin_renderer_base {
         
         return $output;
     }
-    
+
     /**
      * Summary of Quizzes (TABLE)
      */
@@ -661,113 +659,6 @@ class local_xray_renderer extends plugin_renderer_base {
     
         return $output;
     }
-    
-    /* End of new tables */
-    
-    
-    /**
-     * Students' Grades for course (TABLE)
-     */
-    public function gradebookreport_students_grades_for_course($courseid, $element) {
-
-        $columns = array();
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-            }
-        }
-
-        $datatable = new local_xray_datatable(__FUNCTION__,
-            $element->title,
-            "view.php?controller='gradebookreport'&action='jsonstudentsgradesforcourse'&courseid=" . $courseid,
-            $columns);
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-
-    /**
-     * Students' Grades on completed items course (TABLE)
-     */
-    public function gradebookreport_students_grades_on_completed_items_course($courseid, $element) {
-
-        $columns = array(new local_xray_datatableColumn('action', ''));
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
-            }
-        }
-
-        $datatable = new local_xray_datatable(__FUNCTION__,
-            $element->title,
-            "view.php?controller='gradebookreport'&action='jsonstudentsgradesoncompleteditemscourse'&courseid=" . $courseid,
-            $columns);
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-
-    /**
-     * Distribution of grades in course
-     * @param stdClass $element
-     */
-    public function gradebookreport_distribution_of_grades_in_course($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Distribution of grades completed items.
-     * @param stdClass $element
-     */
-    public function gradebookreport_distribution_of_grades_completed_items($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Density plot: all items.
-     * @param stdClass $element
-     */
-    public function gradebookreport_density_plot_all_items($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Density plot: completed items.
-     * @param stdClass $element
-     */
-    public function gradebookreport_density_plot_completed_items($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Test for normality on course grades.
-     * @param stdClass $element
-     */
-    public function gradebookreport_test_for_normality_on_course_grades($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Test for normality on course grades.
-     * @param stdClass $element
-     *//*
-    public function gradebookreport_test_for_normality_on_course_grades($element) {//TODO repeated - waiting instructions
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }*/
-
-    /**
-     * Heat map of grade distribution.
-     * @param stdClass $element
-     */
-    public function gradebookreport_heat_map_of_grade_distribution($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /* New reports */
     
     /**
      * Heat map of grade distribution.
@@ -800,9 +691,7 @@ class local_xray_renderer extends plugin_renderer_base {
     public function gradebookreport_comparison_of_scores_in_quizzes($element) {
         return $this->show_on_lightbox(__FUNCTION__, $element);
     }
-    
-    /* end of new reports */
-    
+
     /************************** End Elements for Gradebook Report **************************/
 
     /************************** Course Header **************************/
