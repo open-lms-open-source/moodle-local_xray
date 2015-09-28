@@ -152,7 +152,9 @@ function local_xray_extends_navigation(global_navigation $nav) {
                            'topcoll'        => '#region-main',//'ul.ctopics.topics.ctlayout'
                           );
 
-    if (local_xray_startswith($PAGE->pagetype,'course-view')) {
+    $reportview = ($PAGE->pagetype == 'local-xray-view');
+    $courseview = local_xray_startswith($PAGE->pagetype,'course-view');
+    if ($courseview or $reportview) {
         $courseformat = $PAGE->course->format;
         if (!isset($search[$courseformat])) {
             $search[$courseformat] = '#region-main';
@@ -166,24 +168,29 @@ function local_xray_extends_navigation(global_navigation $nav) {
             $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
             if (!empty($reports)) {
                 $menuitems = array();
+                $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
                 foreach ($reports as $reportstring => $url) {
-                    $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $reportstring));
+                    $class = $reportstring;
+                    if ($reportstring == $reportcontroller) {
+                        $class .= " xray-menu-item-active";
+                    }
+                    $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $class));
                 }
                 $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
                 $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;', 'class' => 'xray-reports-links'));
-                $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'xraymenu', 'role' => 'region'));
+                $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
             }
         }
 
         $headerdata = '';
-        if ($displayheaderdata) {
+        if ($displayheaderdata and $courseview) {
             /* @var local_xray_renderer $renderer */
             $renderer = $PAGE->get_renderer('local_xray');
             $headerdata = $renderer->snap_dashboard_xray();
             if (!empty($headerdata)) {
                 $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') . get_string('analytics', 'local_xray'));
                 $subc = $title . $headerdata;
-                $headerdata = \html_writer::div($subc, '', array('id' => 'headerdata', 'class' => 'clearfix'));
+                $headerdata = \html_writer::div($subc, '', array('id' => 'js-headerdata', 'class' => 'clearfix'));
             }
         }
 
@@ -195,13 +202,16 @@ function local_xray_extends_navigation(global_navigation $nav) {
         // End topics course format
 
         if (!empty($menu) or !empty($headerdata)) {
+            $menuappend = $reportview ? 0 : 1;
             // Easy way to force include on every page (provided that navigation block is present).
             $PAGE->requires->yui_module(array('moodle-local_xray-custmenu'),
                 'M.local_xray.custmenu.init',
                 array(array(
                     'menusearch' => $search[$courseformat],
+                    'menuappend' => $menuappend,
                     'items'      => $menu,
                     'hdrsearch'  => $search[$courseformat],
+                    'hdrappend'  => 1,
                     'header'     => $headerdata
                 )),
                 null,
