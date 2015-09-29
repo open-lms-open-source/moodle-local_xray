@@ -173,12 +173,20 @@ function local_xray_extends_navigation(global_navigation $nav) {
                 $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
                 foreach ($reports as $reportstring => $url) {
                     $class = $reportstring;
+                    if (!empty($reportcontroller)) {
+                        $class .= " xray-reports-links-bk-image-small";
+                    } else {
+                        $class .= " xray-reports-links-bk-image-large";
+                    }
                     if ($reportstring == $reportcontroller) {
                         $class .= " xray-menu-item-active";
                     }
                     $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $class));
                 }
-                $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
+                $title = '';
+                if (empty($reportcontroller)) {
+                    $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
+                }
                 $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;', 'class' => 'xray-reports-links'));
                 $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
             }
