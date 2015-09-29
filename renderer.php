@@ -594,7 +594,9 @@ class local_xray_renderer extends plugin_renderer_base {
         }
         $datatable = new local_xray_datatable(__FUNCTION__,
             $element->title,
-            "view.php?controller='discussiongrading'&action='jsonstudentsgrades'&courseid=" . $courseid,
+        	// INT-8194 , this report is moved to activityreport.	
+        	"view.php?controller='activityreport'&action='jsonstudentsgrades'&courseid=" . $courseid,
+            //"view.php?controller='discussiongrading'&action='jsonstudentsgrades'&courseid=" . $courseid,
             $columns);
 
         // Create standard table.

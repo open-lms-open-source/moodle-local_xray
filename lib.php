@@ -65,9 +65,7 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
                     'risk' => 'local/xray:risk_view',
                     'activityreport' => 'local/xray:activityreport_view',
                     'gradebookreport' => 'local/xray:gradebookreport_view',
-                    'discussionreport' => 'local/xray:discussionreport_view',
-                    'discussiongrading' => 'local/xray:discussiongrading_view',
-                    'discussionendogenicplagiarism' => 'local/xray:discussionendogenicplagiarism_view',
+                    'discussionreport' => 'local/xray:discussionreport_view'
                 );
 
             } else {
