@@ -16,6 +16,22 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         $output = '';
 
         try {
+        	
+        	// INT-8186 (add non-active students from firstlogin in this report. This is available in activity report too).
+        	$report = "firstLogin";
+        	$response_firstlogin = \local_xray\api\wsapi::course($this->courseid, $report);
+        	if (!$response_firstlogin) {
+        		// Fail response of webservice.
+        		\local_xray\api\xrayws::instance()->print_error();
+        	
+        	} else {
+        		 
+        		$output .= $this->output->inforeport($response_firstlogin->reportdate, null, $PAGE->course->fullname);
+        		// Show graphs. We need show table first in activity report.(INT-8186)
+        		$output .= $this->first_login_non_starters($response_firstlogin->elements->nonStarters); // Call to independient call to show in table.
+        	}
+        	
+        	
             $report = "risk";
             $response = \local_xray\api\wsapi::course($this->courseid, $report);
             if (!$response) {
@@ -23,8 +39,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 \local_xray\api\xrayws::instance()->print_error();
 
             } else {
-                // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
+                // Show graphs.     
                 $output .= $this->risk_measures($response->elements->riskMeasures); //TABLE.
                 $output .= $this->total_risk_profile($response->elements->riskDensity);
                 $output .= $this->academic_vs_social_risk($response->elements->riskScatterPlot);
@@ -118,4 +133,72 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         $output .= $this->output->risk_academic_vs_social_risk($element);
         return $output;
     }
+    
+    /**
+     * Report First login
+     * - Element to show: table users not starters in course.
+     *
+     */
+    private function first_login_non_starters($element) {
+    	$output = "";
+    	$output .= $this->output->risk_first_login_non_starters($this->courseid, $element);
+    	return $output;
+    }
+    
+    /**
+     * Json for table non starters.
+     *
+     */
+    public function jsonfirstloginnonstarters_action() {
+
+    	// Pager
+    	$count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
+    	$start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+    
+    	$return = "";
+    
+    	try {
+    		$report = "firstLogin";
+    		$element = "nonStarters";
+    		$response = \local_xray\api\wsapi::courseelement($this->courseid,
+    				$element,
+    				$report,
+    				null,
+    				'',
+    				'',
+    				$start,
+    				$count);
+    		if (!$response) {
+    			// Fail response of webservice.
+    			\local_xray\api\xrayws::instance()->print_error();
+    
+    		} else {
+    			$data = array();
+    			if (!empty($response->data)) {
+    				// Format of response for columns.
+    				foreach ($response->data as $row) {
+    
+    					// This report has not specified columnOrder.
+    					if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+    						$r = new stdClass();
+    						$c = get_object_vars($response->columnHeaders);
+    						foreach ($c as $id => $name) {
+    							$r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');
+    						}
+    						$data[] = $r;
+    					}
+    				}
+    			}
+    
+    			// Provide info to table.
+    			$return["recordsFiltered"] = $response->itemCount;
+    			$return["data"] = $data;
+    		}
+    	} catch (Exception $e) {
+    		// Error, return invalid data, and pluginjs will show error in table.
+    		$return["data"] = "-";
+    	}
+    
+    	return json_encode($return);
+    }        
 }

@@ -34,72 +34,87 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         $ctx = $this->get_context();
 
         try {
-            $report = "activity";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report);
-            if (!$response) {
-                // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+        	
+        	if (has_capability("local/xray:activityreport_view", $ctx)) {
+        		      		
+        		$report = "firstLogin";
+        		$response_firstlogin = \local_xray\api\wsapi::course($this->courseid, $report);
+        		if (!$response_firstlogin) {
+        			// Fail response of webservice.
+        			\local_xray\api\xrayws::instance()->print_error();
+        		
+        		} else {
+        			
+        			$output .= $this->output->inforeport($response_firstlogin->reportdate, null, $PAGE->course->fullname);
+        			// Show graphs. We need show table first in activity report.(INT-8186)
+        			$output .= $this->first_login_non_starters($response_firstlogin->elements->nonStarters); // Call to independient call to show in table.       			
+        		}	        		
+        		
+	            $report = "activity";
+	            $response = \local_xray\api\wsapi::course($this->courseid, $report);
+	            if (!$response) {
+	                // Fail response of webservice.
+	                \local_xray\api\xrayws::instance()->print_error();
+	
+	            } else {
+	            	
+		                // Show graphs Activity report.		                
+		                $output .= $this->students_activity($response->elements->studentList); // Its a table, I will get info with new call.
+		                $output .= $this->activity_of_course_by_day($response->elements->activityLevelTimeline);
+		                $output .= $this->activity_by_time_of_day($response->elements->compassTimeDiagram);
+		                $output .= $this->activity_last_two_weeks_by_weekday($response->elements->barplotOfActivityByWeekday);
+		                $output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
+		                $output .= $this->activity_by_participant1($response->elements->activityByWeekAsFractionOfTotal);
+		                $output .= $this->activity_by_participant2($response->elements->activityByWeekAsFractionOfOwn);
 
-            } else {
-            	
-            
-            	if (has_capability("local/xray:activityreport_view", $ctx)) {
-
-	                // Show graphs Activity report.
-	                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
-	                $output .= $this->students_activity($response->elements->studentList); // Its a table, I will get info with new call.
-	                $output .= $this->activity_of_course_by_day($response->elements->activityLevelTimeline);
-	                $output .= $this->activity_by_time_of_day($response->elements->compassTimeDiagram);
-	                $output .= $this->activity_last_two_weeks_by_weekday($response->elements->barplotOfActivityByWeekday);
-	                $output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
-	                $output .= $this->activity_by_participant1($response->elements->activityByWeekAsFractionOfTotal);
-	                $output .= $this->activity_by_participant2($response->elements->activityByWeekAsFractionOfOwn);
-	                $output .= $this->first_login(); // This show 3 reports about login
-                }
-                
+		                // We need show graph of firstlogin in last place.(INT-8186)
+		                $output .= $this->first_login_to_course($response_firstlogin->elements->firstloginPiechartAdjusted);
+		                // Not show (INT-8186)
+		                //$output .= $this->first_login_date_observed($response_firstlogin->elements->firstloginBullseyeAdjusted);
+	            }
+        	}               
                 // Show reports Discussion endogenic (INT-8194)
-                if (has_capability("local/xray:discussionendogenicplagiarism_view", $ctx)) {
+            if (has_capability("local/xray:discussionendogenicplagiarism_view", $ctx)) {
                 	
-                	$report = "discussionEndogenicPlagiarism";
-                	$response = \local_xray\api\wsapi::course($this->courseid, $report);
-                	if (!$response) {
-                		$this->debugwebservice();
-                		// Fail response of webservice.
-                		\local_xray\api\xrayws::instance()->print_error();
+                $report = "discussionEndogenicPlagiarism";
+                $response = \local_xray\api\wsapi::course($this->courseid, $report);
+                if (!$response) {
+                	$this->debugwebservice();
+                	// Fail response of webservice.
+                	\local_xray\api\xrayws::instance()->print_error();
                 	
-                	} else {
+                } else {
                 	
-                		// Show graphs.
-	                	$output .= html_writer::tag("div", 
-	                			                   html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component), array("class" => "main")), 
-	                			                   array("class" => "mr_html_heading"));
-	                	$output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
-	                	$output .= $this->heatmap_endogenic_plagiarism_students($response->elements->endogenicPlagiarismStudentsHeatmap);
-	                	$output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements->endogenicPlagiarismHeatmap);                	
-                	}
+                	// show graphs.
+	                $output .= html_writer::tag("div", 
+	                			                html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component), array("class" => "main")), 
+	                			                array("class" => "mr_html_heading"));
+	                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
+	                $output .= $this->heatmap_endogenic_plagiarism_students($response->elements->endogenicPlagiarismStudentsHeatmap);
+	                $output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements->endogenicPlagiarismHeatmap);                	
                 }
+             }
    
-                // Show reports discussion grading. (INT-8194)
-                if (has_capability("local/xray:discussiongrading_view", $ctx)) {
+             // Show reports discussion grading. (INT-8194)
+             if (has_capability("local/xray:discussiongrading_view", $ctx)) {
                 	
-                	$report = "discussionGrading";
-                	$response = \local_xray\api\wsapi::course($this->courseid, $report);
-                	if (!$response) {
-                		// Fail response of webservice.
-                		\local_xray\api\xrayws::instance()->print_error();
-                	} else {
+                $report = "discussionGrading";
+                $response = \local_xray\api\wsapi::course($this->courseid, $report);
+                if (!$response) {
+                	// Fail response of webservice.
+                	\local_xray\api\xrayws::instance()->print_error();
+                } else {
                 	
-                		// Show graphs.
-	                	$output .= html_writer::tag("div", 
-	                			                   html_writer::tag("h2", get_string("discussiongrading", $this->component), array("class" => "main")), 
-	                			                   array("class" => "mr_html_heading"));
-		                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
-		                $output .= $this->students_grades_based_on_discussions($response->elements->studentDiscussionGrades); // Its a table, I will get info with new call.
-		                $output .= $this->barplot_of_suggested_grades($response->elements->discussionSuggestedGrades);
-                	}
+                	// Show graphs.
+	                $output .= html_writer::tag("div", 
+	                			                html_writer::tag("h2", get_string("discussiongrading", $this->component), array("class" => "main")), 
+	                			                array("class" => "mr_html_heading"));
+		            $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
+		            $output .= $this->students_grades_based_on_discussions($response->elements->studentDiscussionGrades); // Its a table, I will get info with new call.
+		            $output .= $this->barplot_of_suggested_grades($response->elements->discussionSuggestedGrades);
                 }
+             }
                 
-            }
         } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage().' '.$PAGE->pagetype);
         }
@@ -258,36 +273,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
         $output = "";
         $output .= $this->output->activityreport_activity_by_participant2($element);
-        return $output;
-    }
-
-    /**
-     * First Login
-     * Here we will show three graphs: 2 images and 1 table.
-     * @throws Exception
-     */
-    private function first_login() {
-
-        $output = "";
-
-        try {
-            $report = "firstLogin";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report);
-            if (!$response) {
-                // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
-
-            } else {
-
-                // Show graphs.
-                $output .= $this->first_login_non_starters($response->elements->nonStarters); // Call to independient call to show in table.
-                $output .= $this->first_login_to_course($response->elements->firstloginPiechartAdjusted);
-                $output .= $this->first_login_date_observed($response->elements->firstloginBullseyeAdjusted);
-            }
-        } catch (Exception $e) {
-            print_error('error_xray', $this->component, '', null, $e->getMessage());
-        }
-
         return $output;
     }
 

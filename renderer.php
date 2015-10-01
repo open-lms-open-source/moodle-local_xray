@@ -533,7 +533,33 @@ class local_xray_renderer extends plugin_renderer_base {
     /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/
 
     /************************** Elements for Report Risk **************************/
-
+    
+    /**
+     * Graphic first login non startes (TABLE)
+     *
+     */
+    public function risk_first_login_non_starters($courseid, $element) {
+    	global $PAGE;
+    
+    	$columns = array();
+    	// This report has not specified columnOrder.
+    	if (!empty($element->columnHeaders) && is_object($element->columnHeaders)) {
+    		$c = get_object_vars($element->columnHeaders);
+    		foreach ($c as $id => $name) {
+    			$columns[] = new local_xray_datatableColumn($id, $name);
+    		}
+    	}
+    
+    	$datatable = new local_xray_datatable(__FUNCTION__,
+								    		  $element->title,
+								    		  "view.php?controller='risk'&action='jsonfirstloginnonstarters'&courseid=" . $courseid,
+								    		  $columns);
+    
+    	// Create standard table.
+    	$output = $this->standard_table((array)$datatable);
+    	return $output;
+    }
+    
     /**
      * Risk Measures(TABLE)
      * @param stdClass $element
