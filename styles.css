@@ -238,26 +238,38 @@
     margin: 0;
 }
 
-.xray-reports-links .risk {
-    background: transparent url([[pix:local_xray|xray-risk]]) 50% 70% no-repeat;
-}
-.xray-reports-links .activityreport {
-    background: transparent url([[pix:local_xray|xray-activity]]) 50% 70% no-repeat;
-}
-.xray-reports-links .gradebookreport {
-    background: transparent url([[pix:local_xray|xray-grade]]) 50% 70% no-repeat;
-}
-.xray-reports-links .discussionreport {
-    background: transparent url([[pix:local_xray|xray-discussions]]) 50% 70% no-repeat;
-}
 .xray-reports-links li a {
     display: block;
-    height: 150px;
     text-align: center;
     background-size: 61.8% 61.8% !important;
-    background: transparent url([[pix:local_xray|xray-discussions]]) 50% 70% no-repeat;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-image: url([[pix:local_xray|xray-discussions]]);
 }
 
+.xray-reports-links-bk-image-small {
+    background-position: 50% 100%;
+    height: 70px;
+}
+
+.xray-reports-links-bk-image-large {
+    background-position: 50% 70%;
+    height: 150px;
+}
+
+.xray-reports-links .risk {
+    background-image: url([[pix:local_xray|xray-risk]]);
+}
+
+.xray-reports-links .activityreport {
+    background-image: url([[pix:local_xray|xray-activity]]);
+}
+.xray-reports-links .gradebookreport {
+    background-image: url([[pix:local_xray|xray-grade]]);
+}
+.xray-reports-links .discussionreport {
+    background-image: url([[pix:local_xray|xray-discussions]]);
+}
 
 .xray_dashboard_users_risk_hidden {
     display: none;
