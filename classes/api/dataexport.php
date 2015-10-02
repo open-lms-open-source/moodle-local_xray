@@ -44,7 +44,7 @@ class dataexport {
                        name,
                        description
                 FROM   {course_categories}
-                WHERE  timemodified >= :timemodified";
+                WHERE  (timemodified = 0) OR (timemodified >= :timemodified)";
 
         $params = array('timemodified' => $timest);
 
