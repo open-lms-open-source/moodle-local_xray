@@ -1,5 +1,22 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 defined('MOODLE_INTERNAL') or die();
+
+/* @var object $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
@@ -35,9 +52,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
         $forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
         $PAGE->navbar->add($forumname, new moodle_url("/mod/forum/view.php",
             array("id" => $this->cmid)));
-
         $PAGE->navbar->add($PAGE->title);
-
         $output = "";
 
         try {
@@ -46,15 +61,12 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
             if (!$response) {
                 // Fail response of webservice.
                 \local_xray\api\xrayws::instance()->print_error();
-
             } else {
-
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
                 $output .= $this->wordshistogram($response->elements->wordHistogram);
                 $output .= $this->socialstructure($response->elements->socialStructure);
                 $output .= $this->wordcloud($response->elements->wordcloud);
-
             }
         } catch (Exception $e) {
             print_error('error_xray', $this->component, '', null, $e->getMessage());
@@ -65,10 +77,10 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     /**
      * Words Histogram
-     *
+     * @param object $element
+     * @return string
      */
     private function wordshistogram($element) {
-
         $output = "";
         $output .= $this->output->discussionreportindividualforum_wordshistogram($element);
         return $output;
@@ -76,10 +88,10 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     /**
      * Social Structure
-     *
+     * @param object $element
+     * @return string
      */
     private function socialstructure($element) {
-
         $output = "";
         $output .= $this->output->discussionreportindividualforum_socialstructure($element);
         return $output;
@@ -87,10 +99,10 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     /**
      * Wordcloud
-     *
+     * @param object $element
+     * @return string
      */
     private function wordcloud($element) {
-
         $output = "";
         $output .= $this->output->discussionreportindividualforum_wordcloud($element);
         return $output;

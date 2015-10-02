@@ -58,9 +58,12 @@ class local_xray_datatableColumn {
     public $sWidth;
 
     /**
-     * Construct
-     * @param string $mdata - Id of column
-     * @param string $string - Text to show
+     * @param $mdata
+     * @param string $text
+     * @param bool|false $search
+     * @param bool|false $sortable
+     * @param bool|true $visible
+     * @param string $width
      */
     public function __construct($mdata, $text = '', $search = false, $sortable = false, $visible = true, $width = '') {
         $this->mData = $mdata;
@@ -145,11 +148,13 @@ class local_xray_datatable {
      * @param integer $id
      * @param string $jsonurl
      * @param array $columns
-     * @param string $search
-     * @param string $paging
+     * @param bool $search
+     * @param bool $paging
+     * @param string $dom
      * @param array $lengthMenu
      */
-    public function __construct($id, $title, $jsonurl, $columns, $search = false, $paging=true, $dom = 'lftipr', $lengthMenu = array(10, 50, 100)) {
+    public function __construct($id, $title, $jsonurl, $columns, $search = false, $paging=true, $dom = 'lftipr',
+                                $lengthMenu = array(10, 50, 100)) {
         $this->id = $id;
         $this->title = $title;
         $this->jsonurl = $jsonurl;
@@ -160,6 +165,5 @@ class local_xray_datatable {
         $this->lengthMenu = $lengthMenu;
         $this->sProcessingMessage = get_string('table_fetchingdata', 'local_xray');
         $this->errorMessage = get_string('error_datatables','local_xray');
-
     }
 }

@@ -14,15 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
- * Local xray settings
+ * X-Ray global settings page
  *
- * @author Pablo Pagnone
- * @author German Vitale
- * @package local_xray
+ * @package    local_xray
+ * @copyright  2015 Moodlerooms inc.
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') or die();
 
 // For the time being only mrsupport user can see the configuration settings for xray.
 // We do not want any client to poke these items.
@@ -33,30 +33,30 @@ if ($hassiteconfig) {
     $plugin = 'local_xray';
     $settings = new admin_settingpage($plugin, new lang_string('pluginname', $plugin));
 
-    // Xray url webservice
+    // Xray url webservice.
     $settings->add( new admin_setting_configtext("{$plugin}/xrayurl",
                                                  new lang_string("xrayurl", $plugin),
                                                  new lang_string("xrayurl_desc", $plugin),
                                                  '', PARAM_URL));
 
-    // Xray user webservice
+    // Xray user webservice.
     $settings->add( new admin_setting_configtext("{$plugin}/xrayusername",
                                                  new lang_string("xrayusername", $plugin),
                                                  new lang_string("xrayusername_desc", $plugin),
                                                  '', PARAM_TEXT));
-    // Xray password webservice
+    // Xray password webservice.
     $settings->add( new admin_setting_configtext("{$plugin}/xraypassword",
                                                  new lang_string("xraypassword", $plugin),
                                                  new lang_string("xraypassword_desc", $plugin),
                                                  '', PARAM_TEXT));
 
-    // Xray client identifier webservice
+    // Xray client identifier webservice.
     $settings->add( new admin_setting_configtext("{$plugin}/xrayclientid",
                                                  new lang_string("xrayclientid", $plugin),
                                                  new lang_string("xrayclientid_desc", $plugin),
                                                  '', PARAM_TEXT));
 
-    // Settings for displaying content inline course front page
+    // Settings for displaying content inline course front page.
     $settings->add( new admin_setting_heading("{$plugin}/xraydisplayheading",
                                               new lang_string("xraydisplayheading", $plugin),
                                               new lang_string("xraydisplayheading_desc", $plugin)));
@@ -70,7 +70,7 @@ if ($hassiteconfig) {
                                                      new lang_string("displayheaderdata_desc", $plugin),
                                                      '0'));
 
-    // Configuration and credentials for accessing Xray S3 bucket
+    // Configuration and credentials for accessing Xray S3 bucket.
     $settings->add( new admin_setting_heading("{$plugin}/xrayawsheading",
                                               new lang_string("xrayawsheading", $plugin),
                                               new lang_string("xrayawsheading_desc", $plugin)));
@@ -110,7 +110,7 @@ if ($hassiteconfig) {
                                                  new lang_string("s3bucket_desc", $plugin),
                                                  '', PARAM_TEXT));
 
-    // List of regions taken from http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+    // List of regions taken from http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region.
     $choices = array(
         'us-east-1'      => new lang_string('useast1'     , $plugin),
         'us-west-2'      => new lang_string('uswest2'     , $plugin),

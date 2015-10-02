@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 defined('MOODLE_INTERNAL') or die();
 
 /* @var object $CFG */
@@ -12,7 +27,6 @@ require_once($CFG->dirroot.'/local/mr/framework/controller.php');
  * @package local_xray
  */
 class local_xray_controller_reports extends mr_controller {
-
     /**
      * Course id
      * @var integer
@@ -57,7 +71,7 @@ class local_xray_controller_reports extends mr_controller {
 
         require_login($courseid, false, null, $setwantsurltome, $preventredirect);
 
-        // We want to send relative URL to $PAGE so $PAGE can set it to https or not
+        // We want to send relative URL to $PAGE so $PAGE can set it to https or not.
         $moodleurl   = $this->new_url(array('action' => $this->action));
         $relativeurl = str_replace($CFG->wwwroot, '', $moodleurl->out_omit_querystring());
 
@@ -76,7 +90,7 @@ class local_xray_controller_reports extends mr_controller {
 
     public function init() {
         parent::init();
-        if(is_callable('mr_off') and mr_off('xray', 'local')) {
+        if (is_callable('mr_off') and mr_off('xray', 'local')) {
             exit();
         }
     }
@@ -97,7 +111,7 @@ class local_xray_controller_reports extends mr_controller {
      */
     protected function setajaxoutput() {
         global $OUTPUT;
-        // This renders the page correctly using standard Moodle ajax renderer
+        // This renders the page correctly using standard Moodle ajax renderer.
         $this->output = $this->getajaxrenderer();
         $OUTPUT = $this->getajaxrenderer();;
     }

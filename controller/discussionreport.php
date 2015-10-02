@@ -1,5 +1,22 @@
 <?php
-defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+defined('MOODLE_INTERNAL') or die();
+
+/* @var object $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
@@ -22,15 +39,18 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
                 // Show graphs.
-                $output .= $this->participation_metrics($response->elements->discussionMetrics); // Its a table, I will get info with new call.
-                $output .= $this->discussion_activity_by_week($response->elements->discussionActivityByWeek); // Table with variable columns - Send data to create columns
+                // Its a table, I will get info with new call.
+                $output .= $this->participation_metrics($response->elements->discussionMetrics);
+                // Table with variable columns - Send data to create columns.
+                $output .= $this->discussion_activity_by_week($response->elements->discussionActivityByWeek);
                 $output .= $this->main_terms($response->elements->wordcloud);
                 $output .= $this->average_words_weekly_by_post($response->elements->avgWordPerPost);
                 $output .= $this->social_structure($response->elements->socialStructure);
                 $output .= $this->social_structure_with_word_count($response->elements->socialStructureWordCount);
-                $output .= $this->social_structure_with_contributions_adjusted($response->elements->socialStructureWordContribution);
+                $output .= $this->social_structure_with_contributions_adjusted(
+                    $response->elements->socialStructureWordContribution
+                );
                 $output .= $this->social_structure_coefficient_of_critical_thinking($response->elements->socialStructureWordCTC);
-
             }
         } catch (Exception $e) {
             print_error('error_xray', 'local_xray', '', null, $e->getMessage());
@@ -40,7 +60,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Report "A summary table to be added" (table).
-     *
+     * @param object $element
+     * @return string
      */
     private function participation_metrics($element) {
         $output = "";
@@ -50,7 +71,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Report "Discussion Activity by Week" (table).
-     *
+     * @param object $element
+     * @return string
      */
     private function discussion_activity_by_week($element) {
         $output = "";
@@ -64,7 +86,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     public function jsonparticipationdiscussion_action() {
         global $PAGE;
 
-        // Pager
+        // Pager.
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
@@ -86,13 +108,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             if (!$response) {
                 throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
             } else {
-
                 $data = array();
                 if (!empty($response->data)) {
-                    $discussionreportind = get_string('discussionreportindividual', $this->component);//TODO
-
+                    $discussionreportind = get_string('discussionreportindividual', $this->component);
                     foreach ($response->data as $row) {
-
                         $r = new stdClass();
                         $r->action = "";
                         if (has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
@@ -106,7 +125,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                                 "title" => $discussionreportind,
                                 "target" => "_blank"));
                         }
-
 
                         // Format of response for columns.
                         if (!empty($response->columnOrder)) {
@@ -134,8 +152,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      * Json for provide data to discussion_activity_by_week table.
      */
     public function jsonweekdiscussion_action() {
-        // Pager
-        $count = (int)optional_param('count', 10, PARAM_ALPHANUM);//count param with number of weeks
+        // Pager.
+        // Count param with number of weeks.
+        $count = (int)optional_param('count', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
 
         $return = "";
@@ -160,8 +179,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 if (!empty($response->data)) {
                     // This report has not specified columnOrder.
                     if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
-                        $r = new stdClass();
-
                         $posts = array('weeks' => $response->columnHeaders->posts);
                         $avglag = array('weeks' => $response->columnHeaders->avgLag);
                         $avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
@@ -193,7 +210,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Report Average Words Weekly by Post.
-     *
+     * @param object $element
+     * @return string
      */
     private function average_words_weekly_by_post($element) {
         $output = "";
@@ -203,7 +221,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Report Social Structure.
-     *
+     * @param object $element
+     * @return string
      */
     private function social_structure($element) {
         $output = "";
@@ -213,6 +232,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Report Social Structure with word count.
+     * @param object $element
+     * @return string
      *
      */
     private function social_structure_with_word_count($element) {
@@ -223,6 +244,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Report Social Structure With Contributions Adjusted
+     * @param object $element
+     * @return string
      */
     private function social_structure_with_contributions_adjusted($element) {
 
@@ -233,6 +256,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Report Social Structure Coefficient of Critical Thinking
+     * @param object $element
+     * @return string
      */
     private function social_structure_coefficient_of_critical_thinking($element) {
 
@@ -243,6 +268,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Report Main Terms
+     * @param object $element
+     * @return string
      */
     private function main_terms($element) {
 

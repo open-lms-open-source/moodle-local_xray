@@ -111,10 +111,10 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
     $nodename = 'modulesettings';
 
     // Reports to show in course-view/report view.
-    $courseview = local_xray_startswith($PAGE->pagetype,'course-view');
+    $courseview = local_xray_startswith($PAGE->pagetype, 'course-view');
     $reportview = ($PAGE->pagetype == 'local-xray-view');
     if ($courseview or $reportview) {
-        //Show nav x-ray in courseadmin node.
+        // Show nav x-ray in courseadmin node.
         $nodename = 'courseadmin';
     }
 
@@ -141,21 +141,20 @@ function local_xray_extends_navigation(global_navigation $nav) {
     global $PAGE;
     ($nav); // Just to remove unused param warning.
 
-    // TODO: Add CSS search strings for other course formats
     static $search = array(
-                           'topics'         => '#region-main', //'ul.topics',
-                           'weeks'          => '#region-main',//'ul.weeks' ,
-                           'flexpage'       => '#region-main',// '.notexist', // Not sure what to do here?
-                           'folderview'     => '#region-main',//'ul.folderview',
-                           'onetopic'       => '#region-main',//'ul.topics',
+                           'topics'         => '#region-main',
+                           'weeks'          => '#region-main',
+                           'flexpage'       => '#region-main',
+                           'folderview'     => '#region-main',
+                           'onetopic'       => '#region-main',
                            'singleactivity' => '.notexist', // Not sure what to do here?
-                           'social'         => '#region-main', //'.notexist', // Not sure what to do here?
-                           'tabbedweek'     => '#region-main',//'ul.weeks',
-                           'topcoll'        => '#region-main',//'ul.ctopics.topics.ctlayout'
+                           'social'         => '#region-main',
+                           'tabbedweek'     => '#region-main',
+                           'topcoll'        => '#region-main',
                           );
 
     $reportview = ($PAGE->pagetype == 'local-xray-view');
-    $courseview = local_xray_startswith($PAGE->pagetype,'course-view');
+    $courseview = local_xray_startswith($PAGE->pagetype, 'course-view');
     if ($courseview or $reportview) {
         $courseformat = $PAGE->course->format;
         if (!isset($search[$courseformat])) {
@@ -187,7 +186,8 @@ function local_xray_extends_navigation(global_navigation $nav) {
                 if (empty($reportcontroller)) {
                     $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
                 }
-                $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;', 'class' => 'xray-reports-links'));
+                $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
+                                             'class' => 'xray-reports-links'));
                 $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
             }
         }
@@ -198,18 +198,12 @@ function local_xray_extends_navigation(global_navigation $nav) {
             $renderer = $PAGE->get_renderer('local_xray');
             $headerdata = $renderer->snap_dashboard_xray();
             if (!empty($headerdata)) {
-                $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') . get_string('analytics', 'local_xray'));
+                $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') .
+                                                 get_string('analytics', 'local_xray'));
                 $subc = $title . $headerdata;
                 $headerdata = \html_writer::div($subc, '', array('id' => 'js-headerdata', 'class' => 'clearfix'));
             }
         }
-
-        // TODO: prepare adequate menu and header css identifiers for all course formats.
-        // Topics course format
-        // ul.topics -- add as last item new <li> with unique id and section main clearfix class
-        // special version
-        // nav.section_footer
-        // End topics course format
 
         if (!empty($menu) or !empty($headerdata)) {
             $menuappend = $reportview ? 0 : 1;
