@@ -157,6 +157,14 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $output;
     }
+    /**
+     * Show minutes in format hours:minutes
+     * @param int $minutes
+     * @return string
+     */
+    public function minutes_to_hours($minutes) {
+        return date('H:i', mktime(0, $minutes));
+    }
     /************************** End General elements for Reports **************************/
 
     /************************** Elements for Report Activity **************************/

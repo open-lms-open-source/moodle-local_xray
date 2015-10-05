@@ -136,7 +136,12 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                         // Format of response for columns.
                         if (!empty($response->columnOrder)) {
                             foreach ($response->columnOrder as $column) {
-                                $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                                if ($column == 'timeOnTask') {
+                                    $localxrayrenderer = $PAGE->get_renderer('local_xray');
+                                    $r->{$column} = (isset($row->{$column}->value) ? $localxrayrenderer->minutes_to_hours($row->{$column}->value) : '');
+                                } else {
+                                    $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                                }
                             }
                         }
                         $data[] = $r;
@@ -145,8 +150,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                 // Provide count info to table.
                 $return["recordsFiltered"] = $response->itemCount;
                 $return["data"] = $data;
-
-
             }
         } catch (Exception $e) {
             // Error, return invalid data, and pluginjs will show error in table.

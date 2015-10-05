@@ -46,6 +46,11 @@ $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indi
 $string['xray:risk_view'] = 'View Risk Report';
 $string['xray:view'] = 'X-ray View';
 
+/* General Reports */
+$string['high'] = 'High';
+$string['low'] = 'Low';
+$string['medium'] = 'Medium';
+
 /* Report Activity Report*/
 $string['activityreport'] = 'Activity';
 /* Report Activity Report Individual*/
