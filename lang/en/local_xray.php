@@ -39,6 +39,7 @@ $string['xray:activityreportindividual_view'] = 'View Activity Report Individual
 $string['xray:activityreport_view'] = 'View Activity Report';
 $string['xray:dashboard_view'] = 'View Dashboard Report';
 $string['xray:discussionreport_view'] = 'View Discussion Report';
+$string['xray:discussionreportindividual_view'] = 'View Discussion Report Individual';
 $string['xray:discussionreportindividualforum_view'] = 'View Discussion Report Individual Forum';
 $string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Plagiarism';
 $string['xray:discussiongrading_view'] = 'View Discussion Grading';
