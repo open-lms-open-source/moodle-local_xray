@@ -137,9 +137,9 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                         if (!empty($response->columnOrder)) {
                             foreach ($response->columnOrder as $column) {
                                 $localxrayrenderer = $PAGE->get_renderer('local_xray');
-                                if ($column == 'timeOnTask') {
+                                if ($column == 'timeOnTask') {//Set minutes to hours
                                     $r->{$column} = (isset($row->{$column}->value) ? $localxrayrenderer->minutes_to_hours($row->{$column}->value) : '');
-                                } elseif ($column == 'weeklyRegularity') {
+                                } elseif ($column == 'weeklyRegularity') {// Add categories 
                                     $r->{$column} = (isset($row->{$column}->value) ? $localxrayrenderer->set_category_regularly($row->{$column}->value) : '');
                                 } else {
                                     $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');

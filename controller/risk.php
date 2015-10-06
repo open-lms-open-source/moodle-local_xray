@@ -106,9 +106,10 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                         if (!empty($response->columnOrder)) {
                             $r = new stdClass();
                             foreach ($response->columnOrder as $column) {
-                                // Add categories low medium high.
-                                if (($column == 'fail') || ($column == 'DW') || ($column == 'DWF')) {
-                                    $localxrayrenderer = $PAGE->get_renderer('local_xray');
+                                $localxrayrenderer = $PAGE->get_renderer('local_xray');
+                                if ($column == 'timeOnTask') {//Set minutes to hours
+                                    $r->{$column} = (isset($row->{$column}->value) ? $localxrayrenderer->minutes_to_hours($row->{$column}->value) : '');
+                                } elseif (($column == 'fail') || ($column == 'DW') || ($column == 'DWF')) {// Add categories low medium high.
                                     $r->{$column} = (isset($row->{$column}->value) ?
                                         $localxrayrenderer->set_category($row->{$column}->value) : '');
                                 } else {
