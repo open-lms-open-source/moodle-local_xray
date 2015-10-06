@@ -47,10 +47,14 @@ $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indi
 $string['xray:risk_view'] = 'View Risk Report';
 $string['xray:view'] = 'X-ray View';
 
-/* General Reports */
+/* Categories for numbers values */
 $string['high'] = 'High';
 $string['low'] = 'Low';
 $string['medium'] = 'Medium';
+
+$string['almostregular'] = 'Almost regular';//TODO change with correct word
+$string['highlyregularity'] = 'Highly regularity';
+$string['irregular'] = 'Irregular';
 
 /* Report Activity Report*/
 $string['activityreport'] = 'Activity';
