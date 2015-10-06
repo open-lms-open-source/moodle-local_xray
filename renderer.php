@@ -33,7 +33,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Show data about report
      * @param String $reportdate
-     * @param String $user
+     * @param User $user
      * @param String $course
      * @return string
      */
@@ -46,7 +46,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::start_div('inforeport');
         $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate);
         if (!empty($user)) {
-            $output .= html_writer::tag("p", get_string(("username")) . ": " . $user);
+            $output .= html_writer::tag("p", get_string(("user")) . ": " . fullname($user));
         }
         $output .= html_writer::end_div();
         return $output;

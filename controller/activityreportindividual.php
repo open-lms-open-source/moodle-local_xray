@@ -53,7 +53,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
 
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate,
-                    $DB->get_field('user', 'username', array("id" => $this->userid)),
+                    $DB->get_record('user', array("id" => $this->userid)),
                     $PAGE->course->fullname);
                 $output .= $this->activity_by_date($response->elements->activityLevelTimeline);
                 $output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
