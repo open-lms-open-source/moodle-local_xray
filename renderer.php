@@ -181,7 +181,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $category = get_string('high', 'local_xray');
         }
         
-        return html_writer::link('#', $category, array('title' => $value/*, 'class' => 'xray-tooltip'*/));//TODO class
+        return $category.' '.$value;
     }
     /************************** End General elements for Reports **************************/
 
