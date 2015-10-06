@@ -166,8 +166,8 @@ class local_xray_renderer extends plugin_renderer_base {
         return date('H:i', mktime(0, $minutes));
     }
     /**
-     * Show minutes in format hours:minutes
-     * @param int $minutes
+     * Set Category
+     * @param int $value
      * @return string
      */
     public function set_category($value) {
@@ -181,6 +181,24 @@ class local_xray_renderer extends plugin_renderer_base {
             $category = get_string('high', 'local_xray');
         }
         
+        return $category.' '.$value;
+    }
+    /**
+     * Set Category Regularly
+     * @param int $value
+     * @return string
+     */
+    public function set_category_regularly($value) {
+    
+        $category = '';
+        if ($value < 1){
+            $category = get_string('highlyregularity', 'local_xray');
+        } elseif ($value < 2) {
+            $category = get_string('somewhatregularity', 'local_xray');
+        }else{
+            $category = get_string('irregular', 'local_xray');
+        }
+    
         return $category.' '.$value;
     }
     /************************** End General elements for Reports **************************/

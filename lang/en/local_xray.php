@@ -53,9 +53,9 @@ $string['high'] = 'High';
 $string['low'] = 'Low';
 $string['medium'] = 'Medium';
 
-$string['almostregular'] = 'Almost regular';//TODO change with correct word
 $string['highlyregularity'] = 'Highly regularity';
 $string['irregular'] = 'Irregular';
+$string['somewhatregularity'] = 'Somewhat regularity';
 
 /* Report Activity Report*/
 $string['activityreport'] = 'Activity';
