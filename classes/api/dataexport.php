@@ -59,6 +59,8 @@ class dataexport {
                    shortname,
                    summary,
                    category,
+                   format,
+                   visible,
                    FROM_UNIXTIME(startdate)    AS startdate,
                    FROM_UNIXTIME(timecreated)  AS timecreated,
                    FROM_UNIXTIME(timemodified) AS timemodified
@@ -310,7 +312,10 @@ class dataexport {
                      gg.userid AS participantid,
                      cm.instance AS quizid,
                      gg.rawgrade,
-                     gg.finalgrade
+                     gg.finalgrade,
+                     gg.locktime,
+                     gg.timecreated,
+                     gg.timemodified
           FROM       {grade_grades}   gg
           INNER JOIN {course_modules} cm ON cm.id     = gg.itemid
           INNER JOIN {modules}        mo ON cm.module = mo.id     AND mo.name = :module
