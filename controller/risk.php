@@ -57,7 +57,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $output .= $this->academic_vs_social_risk($response->elements->riskScatterPlot);
             }
         } catch (Exception $e) {
-            print_error('error_xray', $this->component, '', null, $e->getMessage());
+            $output = $this->print_error('error_xray', $e->getMessage());
         }
 
         return $output;
@@ -76,7 +76,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
     public function jsonriskmeasures_action() {
         global $PAGE;
-        
+
         // Pager.
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
@@ -106,11 +106,12 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                         if (!empty($response->columnOrder)) {
                             $r = new stdClass();
                             foreach ($response->columnOrder as $column) {
-                                
-                                if ($column == 'fail' || $column == 'DW' || $column == 'DWF') {//Add categories low medium high
+                                // Add categories low medium high.
+                                if (($column == 'fail') || ($column == 'DW') || ($column == 'DWF')) {
                                     $localxrayrenderer = $PAGE->get_renderer('local_xray');
-                                    $r->{$column} = (isset($row->{$column}->value) ? $localxrayrenderer->set_category($row->{$column}->value) : '');
-                                }else{
+                                    $r->{$column} = (isset($row->{$column}->value) ?
+                                        $localxrayrenderer->set_category($row->{$column}->value) : '');
+                                } else {
                                     $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
                                 }
                             }

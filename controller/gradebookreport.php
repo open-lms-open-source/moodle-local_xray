@@ -35,7 +35,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
             $response = \local_xray\api\wsapi::course($this->courseid, $report);
             if (!$response) {
                 // Fail response of webservice.
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                \local_xray\api\xrayws::instance()->print_error();
             } else {
                 // Its a table, I will get info with new call.
                 $output .= $this->student_grades($response->elements->element2);
@@ -47,7 +47,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 $output .= $this->comparison_of_scores_in_quizzes($response->elements->element7);
             }
         } catch (Exception $e) {
-            print_error('error_xray', $this->component, '', null, $e->getMessage());
+            $output = $this->print_error('error_xray', $e->getMessage());
         }
 
         return $output;

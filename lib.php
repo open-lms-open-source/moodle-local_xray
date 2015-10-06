@@ -37,6 +37,19 @@ function local_xray_startswith($value, $starts) {
 }
 
 /**
+ * @param moodle_page $page
+ * @return bool
+ */
+function local_xray_permittedpage(moodle_page $page) {
+    // We have to use course url instead of pagetype since some pages force course pagetype...
+    // Have in mind that ANY UNHANDLED EXCEPTION resets $PAGE->url to '/' ...
+    $courseurl = new moodle_url('/course/view.php');
+    $result = $page->url->compare($courseurl, URL_MATCH_BASE) ||
+              in_array($page->pagetype, ['local-xray-view', 'mod-quiz-view', 'mod-forum-view', 'mod-hsuforum-view']);
+    return $result;
+}
+
+/**
  * Generate list of report links according to the current page
  * Result is returned as associative array ($reportname => $reporturl)
  *
@@ -52,24 +65,22 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
         return $reports;
     }
 
-    if (!is_callable('mr_on') or mr_on('xray', 'local')) {
-        if (($context->contextlevel > CONTEXT_SYSTEM) and has_capability('local/xray:view', $context)) {
-            $baseurl = new moodle_url('/local/xray/view.php', array('courseid' => $page->course->id));
+    if (!is_callable('mr_on') || mr_on('xray', 'local')) {
+        if (($context->contextlevel > CONTEXT_SYSTEM) && has_capability('local/xray:view', $context)) {
+            $baseurl = new moodle_url('/local/xray/view.php', ['courseid' => $page->course->id]);
+            $courseurl = new moodle_url('/course/view.php', ['id' => $page->course->id]);
             $reportlist = array();
             $reports = array();
 
-            if (local_xray_startswith($page->pagetype, 'course-view') or
-                local_xray_startswith($page->pagetype, 'local-xray-view')) {
-
+            if ($page->url->compare($courseurl, URL_MATCH_BASE) || ($page->pagetype == 'local-xray-view')) {
                 $reportlist = array(
                     'risk' => 'local/xray:risk_view',
                     'activityreport' => 'local/xray:activityreport_view',
                     'gradebookreport' => 'local/xray:gradebookreport_view',
                     'discussionreport' => 'local/xray:discussionreport_view'
                 );
-
             } else {
-                if (in_array($page->pagetype, array('mod-quiz-view', 'mod-forum-view'))) {
+                if (in_array($page->pagetype, array('mod-quiz-view', 'mod-forum-view', 'mod-hsuforum-view'))) {
                     $baseurl->param('cmid', $context->instanceid);
                     $baseurl->param('forum', $page->cm->instance);
                     $reportlist = array(
@@ -140,6 +151,10 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
 function local_xray_extends_navigation(global_navigation $nav) {
     global $PAGE;
     ($nav); // Just to remove unused param warning.
+
+    if (!local_xray_permittedpage($PAGE)) {
+        return;
+    }
 
     static $search = array(
                            'topics'         => '#region-main',

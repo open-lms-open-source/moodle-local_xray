@@ -69,7 +69,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                 $output .= $this->wordcloud($response->elements->wordcloud);
             }
         } catch (Exception $e) {
-            print_error('error_xray', $this->component, '', null, $e->getMessage());
+            $output = $this->print_error('error_xray', $e->getMessage());
         }
 
         return $output;

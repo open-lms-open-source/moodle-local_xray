@@ -63,10 +63,10 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
             $response = \local_xray\api\wsapi::course($this->courseid, $report, "quiz/".$this->quizid);
             if (!$response) {
                 // Fail response of webservice.
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                \local_xray\api\xrayws::instance()->print_error();
             }
         } catch (Exception $e) {
-            print_error('error_xray', $this->component, '', null, $e->getMessage());
+            $output = $this->print_error('error_xray', $e->getMessage());
         }
 
         return $output;

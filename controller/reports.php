@@ -78,7 +78,6 @@ class local_xray_controller_reports extends mr_controller {
         $PAGE->set_context($this->get_context());
         $PAGE->set_url($relativeurl, $moodleurl->params());
         $this->courseid = $PAGE->course->id;
-
         if (!$this->ajax) {
             $title = format_string(get_string($this->name, $this->component));
             $PAGE->set_title($title);
@@ -145,5 +144,21 @@ class local_xray_controller_reports extends mr_controller {
         var_dump(\local_xray\api\xrayws::instance()->getinfo());
         echo "</pre>";
         exit();
+    }
+
+    /**
+     * @param string $errorstring
+     * @param null|string $debuginfo
+     * @return string
+     */
+    public function print_error($errorstring, $debuginfo = null) {
+        global $CFG;
+        $baserr = get_string($errorstring, $this->component);
+        if (!empty($debuginfo) && isset($CFG->debugdisplay) && $CFG->debugdisplay && ($CFG->debug == DEBUG_DEVELOPER)) {
+            $baserr .= print_collapsible_region($debuginfo, '', 'error_xray',
+                                                get_string('debuginfo', $this->component), '', true, true);
+        }
+        $output = $this->output->error_text($baserr);
+        return $output;
     }
 }

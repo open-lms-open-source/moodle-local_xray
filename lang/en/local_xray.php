@@ -32,6 +32,7 @@ $string['displaymenu'] = 'Show reports menu';
 $string['displaymenu_desc'] = 'Control the display reports menu on the course frontpage.';
 $string['displayheaderdata'] = 'Show Analytics';
 $string['displayheaderdata_desc'] = 'Control the display course analytics on the course frontpage.';
+$string['debuginfo'] = 'Debug information';
 
 /* Capabilities */
 $string['xray:activityreportindividual_view'] = 'View Activity Report Individual';

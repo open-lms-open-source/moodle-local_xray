@@ -61,7 +61,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
 
             }
         } catch (Exception $e) {
-            print_error('error_xray', $this->component, '', null, $e->getMessage());
+            $output = $this->print_error('error_xray', $e->getMessage());
         }
 
         return $output;

@@ -47,7 +47,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             $response = \local_xray\api\wsapi::course($this->courseid, $report, $this->userid);
             if (!$response) {
                 // Fail response of webservice.
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                \local_xray\api\xrayws::instance()->print_error();
             } else {
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate,
@@ -62,7 +62,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $output .= $this->main_terms_histogram($response->elements->wordHistogram);
             }
         } catch (Exception $e) {
-            print_error('error_xray', 'local_xray', '', null, $e->getMessage());
+            $output = $this->print_error('error_xray', $e->getMessage());
         }
 
         return $output;
