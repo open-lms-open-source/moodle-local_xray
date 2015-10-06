@@ -170,17 +170,15 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param int $value
      * @return string
      */
-    public function set_category($value) {
-        
+     public function set_category($value) {
         $category = '';
-        if ($value < 0.2){
+        if ($value < 0.2) {
             $category = get_string('low', 'local_xray');
-        }elseif($value > 0.2 && $value < 0.3){
+        } else if ($value > 0.2 && $value < 0.3) {
             $category = get_string('medium', 'local_xray');
-        }else{
+        } else {
             $category = get_string('high', 'local_xray');
         }
-        
         return $category.' '.$value;
     }
     /**
@@ -189,16 +187,14 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function set_category_regularly($value) {
-    
         $category = '';
-        if ($value < 1){
+        if ($value < 1) {
             $category = get_string('highlyregularity', 'local_xray');
-        } elseif ($value < 2) {
+        } else if ($value < 2) {
             $category = get_string('somewhatregularity', 'local_xray');
-        }else{
+        } else {
             $category = get_string('irregular', 'local_xray');
         }
-    
         return $category.' '.$value;
     }
     /************************** End General elements for Reports **************************/
