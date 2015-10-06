@@ -165,6 +165,30 @@ class local_xray_renderer extends plugin_renderer_base {
     public function minutes_to_hours($minutes) {
         return date('H:i', mktime(0, $minutes));
     }
+    /**
+     * Show minutes in format hours:minutes
+     * @param int $minutes
+     * @return string
+     */
+    public function set_category($value) {
+        
+        $category = '';
+        switch ($value){
+            case ($value < 0.2):
+            $category = get_string('low', 'local_xray');
+            break;
+            
+            case ($value >0.2 && $value < 0.3):
+            $category = get_string('medium', 'local_xray');
+            break;
+            
+            case ($value > 0.3):
+            $category = get_string('high', 'local_xray');
+            break;
+        }
+        
+        return html_writer::link('#', $category, array('title' => $value/*, 'class' => 'xray-tooltip'*/));//TODO class
+    }
     /************************** End General elements for Reports **************************/
 
     /************************** Elements for Report Activity **************************/

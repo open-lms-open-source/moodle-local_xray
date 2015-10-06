@@ -75,6 +75,8 @@ class local_xray_controller_risk extends local_xray_controller_reports {
     }
 
     public function jsonriskmeasures_action() {
+        global $PAGE;
+        
         // Pager.
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
@@ -104,7 +106,13 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                         if (!empty($response->columnOrder)) {
                             $r = new stdClass();
                             foreach ($response->columnOrder as $column) {
-                                $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                                
+                                if ($column == 'fail' || $column == 'DW' || $column == 'DWF') {//Add categories low medium high
+                                    $localxrayrenderer = $PAGE->get_renderer('local_xray');
+                                    $r->{$column} = (isset($row->{$column}->value) ? $localxrayrenderer->set_category($row->{$column}->value) : '');
+                                }else{
+                                    $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                                }
                             }
                             $data[] = $r;
                         }
