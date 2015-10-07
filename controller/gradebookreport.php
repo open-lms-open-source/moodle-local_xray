@@ -29,22 +29,36 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_gradebookreport extends local_xray_controller_reports {
 
     public function view_action() {
+        global $PAGE;
+        
         $output = '';
         try {
-            $report = "gradebook";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report);
-            if (!$response) {
-                // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
-            } else {
-                // Its a table, I will get info with new call.
-                $output .= $this->student_grades($response->elements->element2);
-                $output .= $this->density_of_standardized_scores($response->elements->element3);
-                // Its a table, I will get info with new call.
-                $output .= $this->summary_of_quizzes($response->elements->element4);
-                $output .= $this->boxplot_of_standardized_scores_per_quiz($response->elements->element5);
-                $output .= $this->scores_assigned_by_xray_versus_results_from_quizzes($response->elements->element6);
-                $output .= $this->comparison_of_scores_in_quizzes($response->elements->element7);
+            if (has_capability("local/xray:gradebookreport_view", $this->get_context())) {
+                
+                $report = "firstLogin";
+                $responsefirstlogin = \local_xray\api\wsapi::course($this->courseid, $report);
+                if (!$responsefirstlogin) {
+                    // Fail response of webservice.
+                    \local_xray\api\xrayws::instance()->print_error();
+                } else {
+                    $output .= $this->output->inforeport($responsefirstlogin->reportdate, null, $PAGE->course->fullname);
+                }
+                
+                $report = "gradebook";
+                $response = \local_xray\api\wsapi::course($this->courseid, $report);
+                if (!$response) {
+                    // Fail response of webservice.
+                    \local_xray\api\xrayws::instance()->print_error();
+                } else {
+                    // Its a table, I will get info with new call.
+                    $output .= $this->student_grades($response->elements->element2);
+                    $output .= $this->density_of_standardized_scores($response->elements->element3);
+                    // Its a table, I will get info with new call.
+                    $output .= $this->summary_of_quizzes($response->elements->element4);
+                    $output .= $this->boxplot_of_standardized_scores_per_quiz($response->elements->element5);
+                    $output .= $this->scores_assigned_by_xray_versus_results_from_quizzes($response->elements->element6);
+                    $output .= $this->comparison_of_scores_in_quizzes($response->elements->element7);
+                }
             }
         } catch (Exception $e) {
             $output = $this->print_error('error_xray', $e->getMessage());
