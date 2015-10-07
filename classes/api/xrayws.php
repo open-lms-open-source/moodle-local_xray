@@ -170,13 +170,13 @@ class xrayws {
             return realpath($cacert);
         }
 
-        // Next comes the default from php.ini
+        // Next comes the default from php.ini.
         $cacert = ini_get('curl.cainfo');
         if (!empty($cacert) and is_readable($cacert)) {
             return realpath($cacert);
         }
 
-        /**
+        /*
          * This is a standard set of certificates that ships with Moodle
          * Should work for any standard issue certificate.
          * For self-signed certificates make sure to set xrayca.pem or curl.cainfo properly
@@ -296,52 +296,52 @@ class xrayws {
      * @return string
      */
     public function errorinfo($extrainfoondebug = true) {
-        $last_error_msg = $this->geterrormsg();
+        $lasterrormsg = $this->geterrormsg();
         // In case debug mode is on show extra debug information.
         if ($extrainfoondebug) {
-            $last_error_code = sprintf("Error code: %s", $this->geterrorcode());
+            $lasterrorcode = sprintf("Error code: %s", $this->geterrorcode());
             if (get_config('core', 'debug') == DEBUG_DEVELOPER) {
                 if (CLI_SCRIPT) {
-                    $last_error_msg .= $last_error_code. "\n";
-                    $last_error_msg .= "Web Service request time: ";
-                    $last_error_msg .= $this->curlinfo['total_time']." s \n";
-                    $request_headers = $this->request_headers();
-                    if (!empty($request_headers)) {
-                        $last_error_msg .= "Request headers:\n";
-                        $last_error_msg .= $this->request_headers();
-                        $last_error_msg .= "\n\n";
-                        $last_error_msg .= "Response headers:\n";
-                        $last_error_msg .= $this->response_headers();
-                        $last_error_msg .= "\n\n";
-                        $last_error_msg .= "Response body:\n";
-                        $last_error_msg .= $this->lastresponse();
-                        $last_error_msg .= "\n";
+                    $lasterrormsg .= $lasterrorcode. "\n";
+                    $lasterrormsg .= "Web Service request time: ";
+                    $lasterrormsg .= $this->curlinfo['total_time']." s \n";
+                    $requestheaders = $this->request_headers();
+                    if (!empty($requestheaders)) {
+                        $lasterrormsg .= "Request headers:\n";
+                        $lasterrormsg .= $this->request_headers();
+                        $lasterrormsg .= "\n\n";
+                        $lasterrormsg .= "Response headers:\n";
+                        $lasterrormsg .= $this->response_headers();
+                        $lasterrormsg .= "\n\n";
+                        $lasterrormsg .= "Response body:\n";
+                        $lasterrormsg .= $this->lastresponse();
+                        $lasterrormsg .= "\n";
                     }
                 } else {
-                    $last_error_msg  = \html_writer::span($this->geterrormsg()) . \html_writer::empty_tag('br');
-                    $last_error_msg .= \html_writer::span($last_error_code) . \html_writer::empty_tag('br');
+                    $lasterrormsg  = \html_writer::span($this->geterrormsg()) . \html_writer::empty_tag('br');
+                    $lasterrormsg .= \html_writer::span($lasterrorcode) . \html_writer::empty_tag('br');
                     $calltitle = \html_writer::span('Web Service request time:');
                     $calltime = \html_writer::span(" ".$this->curlinfo['total_time']." s");
-                    $last_error_msg .= \html_writer::div($calltitle . $calltime);
-                    $request_headers = $this->request_headers();
-                    if (!empty($request_headers)) {
-                        $last_error_msg .= \html_writer::empty_tag('br');
+                    $lasterrormsg .= \html_writer::div($calltitle . $calltime);
+                    $requestheaders = $this->request_headers();
+                    if (!empty($requestheaders)) {
+                        $lasterrormsg .= \html_writer::empty_tag('br');
                         $rtitle = \html_writer::span('Request headers:');
                         $request = \html_writer::tag('pre', s($this->request_headers()), array('title' => 'Request headers'));
-                        $last_error_msg .= \html_writer::div($rtitle . $request);
-                        $last_error_msg .= \html_writer::empty_tag('br');
+                        $lasterrormsg .= \html_writer::div($rtitle . $request);
+                        $lasterrormsg .= \html_writer::empty_tag('br');
                         $rstitle = \html_writer::span('Response headers:');
                         $response = \html_writer::tag('pre', s($this->response_headers()), array('title' => 'Response headers'));
-                        $last_error_msg .= \html_writer::div($rstitle . $response);
-                        $last_error_msg .= \html_writer::empty_tag('br');
-                        $response_body = \html_writer::tag('pre', s($this->lastresponse()), array('title' => 'Response body'));
+                        $lasterrormsg .= \html_writer::div($rstitle . $response);
+                        $lasterrormsg .= \html_writer::empty_tag('br');
+                        $responsebody = \html_writer::tag('pre', s($this->lastresponse()), array('title' => 'Response body'));
                         $rsbodytitle = \html_writer::span('Response body:');
-                        $last_error_msg .= \html_writer::div($rsbodytitle . $response_body);
+                        $lasterrormsg .= \html_writer::div($rsbodytitle . $responsebody);
                     }
                 }
             }
         }
-        return $last_error_msg;
+        return $lasterrormsg;
     }
 
     /**

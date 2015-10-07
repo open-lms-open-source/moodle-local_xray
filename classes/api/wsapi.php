@@ -59,7 +59,7 @@ abstract class wsapi {
             }
         }
 
-        /** @var bool $result */
+        /* @var bool $result */
         return $result;
     }
 
@@ -82,7 +82,7 @@ abstract class wsapi {
             }
         }
 
-        /** @var bool $result */
+        /* @var bool $result */
         return $result;
     }
 
@@ -188,20 +188,35 @@ abstract class wsapi {
      * @param string $url
      * @param null|int $start
      * @param null|int $count
+     * @param null|string $sortfield
+     * @param null|
      * @return bool|mixed
      */
-    protected static function generic_getcall($url, $start = null, $count = null) {
+    protected static function generic_getcall($url, $start = null, $count = null, $sortfield = null, $sortorder = null) {
         if (empty($url)) {
             return false;
         }
 
+        $params = [];
         if ($start !== null) {
             if ($count === null) {
                 $count = 20;
             }
-            $query = http_build_query(array('start' => $start, 'count' => $count), null,'&');
+            $params['start'] = $start;
+            $params['count'] = $count;
+        }
+        if ($sortfield !== null) {
+            if ($sortorder == null) {
+                $sortorder = 'asc';
+            }
+            $params['sort'] = $sortfield;
+            $params['order'] = $sortorder;
+        }
+        if (!empty($params)) {
+            $query = http_build_query($params, null, '&');
             $url .= '?' . $query;
         }
+
         if (!xrayws::instance()->hascookie()) {
             if (!self::login()) {
                 return false;
@@ -266,11 +281,14 @@ abstract class wsapi {
      * @param string $subtype - optional report type (usually empty)
      * @param null|int $start pagination start (default null)
      * @param null|int $count pagination element count (default null)
+     * @param null|string $sortfield field to sort on
+     * @param null|string $sortorder sort order (asc|desc)
      * @return bool|mixed
      * @throws \Exception
      * @throws \dml_exception
      */
-    public static function course( $courseid, $report = '', $userid = null, $date = '', $subtype = '', $start = null, $count = null) {
+    public static function course( $courseid, $report = '', $userid = null, $date = '', $subtype = '',
+                                   $start = null, $count = null, $sortfield = null, $sortorder = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
         $domain = get_config(self::PLUGIN, 'xrayclientid');
         if (empty($baseurl) || empty($domain)) {
@@ -289,7 +307,7 @@ abstract class wsapi {
         if (!empty($date)) {
             $url .= "/{$date}";
         }
-        return self::generic_getcall($url, $start, $count);
+        return self::generic_getcall($url, $start, $count, $sortfield, $sortorder);
     }
 
     /**
@@ -302,9 +320,12 @@ abstract class wsapi {
      * @param string $subtype
      * @param int $start
      * @param int $count
+     * @param null|string $sortfield field to sort on
+     * @param null|string $sortorder sort order (asc|desc)
      * @return bool|mixed
      */
-    public static function courseelement($courseid, $name, $report = '', $userid = null, $date = '', $subtype = '', $start = null, $count = null) {
+    public static function courseelement($courseid, $name, $report = '', $userid = null, $date = '', $subtype = '',
+                                         $start = null, $count = null, $sortfield = null, $sortorder = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
         $domain = get_config(self::PLUGIN, 'xrayclientid');
         if (empty($baseurl) || empty($domain)) {
@@ -324,7 +345,7 @@ abstract class wsapi {
             $url .= "/{$date}";
         }
         $url .= "/elements/{$name}";
-        return self::generic_getcall($url, $start, $count);
+        return self::generic_getcall($url, $start, $count, $sortfield, $sortorder);
     }
 
     /**
@@ -332,9 +353,11 @@ abstract class wsapi {
      *
      * @param null|int $start
      * @param null|int $count
+     * @param null|string $sortfield field to sort on
+     * @param null|string $sortorder sort order (asc|desc)
      * @return bool|mixed
      */
-    public static function participants($start = null, $count = null) {
+    public static function participants($start = null, $count = null, $sortfield = null, $sortorder = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
         $domain = get_config(self::PLUGIN, 'xrayclientid');
         if (empty($baseurl) || empty($domain)) {
@@ -342,7 +365,7 @@ abstract class wsapi {
         }
 
         $url = sprintf('%s/participant', $baseurl, $domain);
-        return self::generic_getcall($url, $start, $count);
+        return self::generic_getcall($url, $start, $count, $sortfield, $sortorder);
     }
 
     /**
@@ -353,9 +376,12 @@ abstract class wsapi {
      * @param string $date
      * @param null $start
      * @param null $count
+     * @param null|string $sortfield field to sort on
+     * @param null|string $sortorder sort order (asc|desc)
      * @return bool|mixed
      */
-    public static function participantreport($userid, $report, $subtype = '', $date = '', $start = null, $count = null) {
+    public static function participantreport($userid, $report, $subtype = '', $date = '', $start = null, $count = null,
+                                             $sortfield = null, $sortorder = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
         $domain = get_config(self::PLUGIN, 'xrayclientid');
         if (empty($baseurl) || empty($domain)) {
@@ -369,7 +395,7 @@ abstract class wsapi {
         if (!empty($date)) {
             $url .= "/{$date}";
         }
-        return self::generic_getcall($url, $start, $count);
+        return self::generic_getcall($url, $start, $count, $sortfield, $sortorder);
     }
 
     /**
@@ -381,9 +407,12 @@ abstract class wsapi {
      * @param string $date
      * @param int $start
      * @param int $count
+     * @param null|string $sortfield field to sort on
+     * @param null|string $sortorder sort order (asc|desc)
      * @return bool|mixed
      */
-    public static function participantreportelements($userid, $report, $name, $subtype = '', $date = '', $start = null, $count = null) {
+    public static function participantreportelements($userid, $report, $name, $subtype = '', $date = '',
+                                                     $start = null, $count = null, $sortfield = null, $sortorder = null) {
         $baseurl = get_config(self::PLUGIN, 'xrayurl');
         $domain = get_config(self::PLUGIN, 'xrayclientid');
         if (empty($baseurl) || empty($domain)) {
@@ -398,7 +427,7 @@ abstract class wsapi {
             $url .= "/{$date}";
         }
         $url .= "/elements/{$name}";
-        return self::generic_getcall($url, $start, $count);
+        return self::generic_getcall($url, $start, $count, $sortfield, $sortorder);
     }
 
     /**
