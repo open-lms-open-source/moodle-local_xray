@@ -143,6 +143,12 @@ class local_xray_datatable {
     public $columns;
     
     /**
+     * Enable/Disable sortable.
+     * @var boolean
+     */
+    public $sort;
+    
+    /**
      * Default field sort(number of column).
      * The default is 0 , the first column.
      * @var integer
@@ -170,7 +176,7 @@ class local_xray_datatable {
      * @param string $sort_order
      */
     public function __construct($id, $title, $jsonurl, $columns, $search = false, $paging=true, $dom = 'lftipr',
-                                $lengthMenu = array(10, 50, 100), $default_field_sort = 0, $sort_order = "desc") {
+                                $lengthMenu = array(10, 50, 100), $sort = true, $default_field_sort = 0, $sort_order = "desc") {
         $this->id = $id;
         $this->title = $title;
         $this->jsonurl = $jsonurl;
@@ -179,6 +185,7 @@ class local_xray_datatable {
         $this->paging = $paging;
         $this->dom = $dom;
         $this->lengthMenu = $lengthMenu;
+        $this->sort = $sort;
         $this->default_field_sort = $default_field_sort;
         $this->sort_order = $sort_order;
         $this->sProcessingMessage = get_string('table_fetchingdata', 'local_xray');

@@ -224,6 +224,7 @@ class local_xray_renderer extends plugin_renderer_base {
         	true,
         	"lftipr",
         	array(10, 50, 100),
+        	true,
         	1); // Sort by first column "Lastname".
 
         // Create standard table.
@@ -381,8 +382,14 @@ class local_xray_renderer extends plugin_renderer_base {
         $datatable = new local_xray_datatable(__FUNCTION__,
             $element->title,
             "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $courseid,
-            $columns);
-
+            $columns,
+        	false,
+        	true,
+        	"lftipr",
+        	array(10, 50, 100),
+        	true,
+        	1); // Sort by first column "Lastname".
+        
         // Create standard table.
         $output = $this->standard_table((array)$datatable);
 
@@ -398,9 +405,9 @@ class local_xray_renderer extends plugin_renderer_base {
     public function discussionreport_discussion_activity_by_week($courseid, $element) {
         // Create standard table.
         $columns = array();
-        $columns[] = new local_xray_datatableColumn('weeks', get_string('weeks', 'local_xray'));
+        $columns[] = new local_xray_datatableColumn('weeks', get_string('weeks', 'local_xray'), false, false);
         foreach ($element->data as $column) {
-            $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value);
+            $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value, false, false);
         }
 
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
@@ -411,7 +418,9 @@ class local_xray_renderer extends plugin_renderer_base {
             $columns,
             false,
             false, // We don't need pagination because we have only four rows.
-            '<"xray_table_scrool"t>'); // Only the table.
+            '<"xray_table_scrool"t>',// Only the table.
+        	array(10, 50, 100),
+        	false); // This table has not sortable.
 
         // Create standard table.
         $output = $this->standard_table((array)$datatable);

@@ -23,6 +23,7 @@ function local_xray_show_on_table(YUI, data) {
             "bProcessing": true,
             "bServerSide": true,
             "retrieve": true,
+            "bSort": data.sort,
             "order": [[ data.default_field_sort, data.sort_order ]],
             "paging": data.paging,
             "searching": data.search,
