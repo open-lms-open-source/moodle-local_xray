@@ -50,6 +50,16 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         try {
 
             if (has_capability("local/xray:discussionreport_view", $ctx)) {
+                
+                $report = "firstLogin";
+                $responsefirstlogin = \local_xray\api\wsapi::course($this->courseid, $report);
+                if (!$responsefirstlogin) {
+                    // Fail response of webservice.
+                    \local_xray\api\xrayws::instance()->print_error();
+                } else {
+                    $output .= $this->output->inforeport($responsefirstlogin->reportdate, null, $PAGE->course->fullname);
+                }
+                
                 $report = "discussion";
                 $response = \local_xray\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
