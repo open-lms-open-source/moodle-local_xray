@@ -209,7 +209,7 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function activityreport_students_activity($courseid, $element) {
 
-        $columns = array(new local_xray_datatableColumn('action', ''));
+        $columns = array(new local_xray_datatableColumn('action', '', false, false));
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
                 $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
@@ -219,7 +219,12 @@ class local_xray_renderer extends plugin_renderer_base {
         $datatable = new local_xray_datatable(__FUNCTION__,
             $element->title,
             "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $courseid,
-            $columns);
+            $columns,
+        	false,
+        	true,
+        	"lftipr",
+        	array(10, 50, 100),
+        	1); // Sort by first column "Lastname".
 
         // Create standard table.
         $output = $this->standard_table((array)$datatable);
@@ -366,7 +371,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function discussionreport_participation_metrics($courseid, $element) {
-        $columns = array(new local_xray_datatableColumn('action', ''));
+        $columns = array(new local_xray_datatableColumn('action', '', false, false));
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
                 $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});

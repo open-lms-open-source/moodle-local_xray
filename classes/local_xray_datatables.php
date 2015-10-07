@@ -61,11 +61,11 @@ class local_xray_datatableColumn {
      * @param $mdata
      * @param string $text
      * @param bool|false $search
-     * @param bool|false $sortable
+     * @param bool|true $sortable
      * @param bool|true $visible
      * @param string $width
      */
-    public function __construct($mdata, $text = '', $search = false, $sortable = false, $visible = true, $width = '') {
+    public function __construct($mdata, $text = '', $search = false, $sortable = true, $visible = true, $width = '') {
         $this->mData = $mdata;
         $this->text = $text;
         $this->bSearchable = $search;
@@ -141,7 +141,21 @@ class local_xray_datatable {
      * @var array
      */
     public $columns;
-
+    
+    /**
+     * Default field sort(number of column).
+     * The default is 0 , the first column.
+     * @var integer
+     */
+    public $default_field_sort;
+    
+    /**
+     * Default sort order
+     * Values required: "desc" or "asc"
+     * @var string
+     */
+    public $sort_order;    
+    
     /**
      * Construct
      * 
@@ -152,9 +166,11 @@ class local_xray_datatable {
      * @param bool $paging
      * @param string $dom
      * @param array $lengthMenu
+     * @param integer $default_field_sort
+     * @param string $sort_order
      */
     public function __construct($id, $title, $jsonurl, $columns, $search = false, $paging=true, $dom = 'lftipr',
-                                $lengthMenu = array(10, 50, 100)) {
+                                $lengthMenu = array(10, 50, 100), $default_field_sort = 0, $sort_order = "desc") {
         $this->id = $id;
         $this->title = $title;
         $this->jsonurl = $jsonurl;
@@ -163,6 +179,8 @@ class local_xray_datatable {
         $this->paging = $paging;
         $this->dom = $dom;
         $this->lengthMenu = $lengthMenu;
+        $this->default_field_sort = $default_field_sort;
+        $this->sort_order = $sort_order;
         $this->sProcessingMessage = get_string('table_fetchingdata', 'local_xray');
         $this->errorMessage = get_string('error_datatables','local_xray');
     }
