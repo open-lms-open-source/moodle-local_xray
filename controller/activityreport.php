@@ -97,7 +97,11 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         // Pager.
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
-
+        // Sortable
+        $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
+        $sortorder = (int)optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name 
+        
         $return = "";
         try {
             $report = "activity";
@@ -109,7 +113,9 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                 '',
                 '',
                 $start,
-                $count);
+                $count, 
+            	$sortfield, 
+            	$sortorder);
 
             if (!$response) {
                 // Fail response of webservice.
@@ -260,6 +266,10 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         // Pager.
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        // Sortable
+        $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
+        $sortorder = (int)optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name
 
         $return = "";
 
@@ -273,7 +283,9 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                 '',
                 '',
                 $start,
-                $count);
+                $count,
+            	$sortfield,
+            	$sortorder);
             if (!$response) {
                 // Fail response of webservice.
                 \local_xray\api\xrayws::instance()->print_error();
