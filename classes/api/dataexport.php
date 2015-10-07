@@ -37,6 +37,45 @@ class dataexport {
      */
     protected static $meta = null;
 
+    /**
+     * @param $fieldname
+     * @param bool|true $doalias
+     * @param null $alias - If alias is null original fieldname is used
+     * @return string
+     */
+    public static function to_timestamp($fieldname, $doalias = true, $alias = null) {
+        global $DB;
+        $format = '';
+        switch($DB->get_dbfamily()) {
+            case 'mysql':
+                $format = 'FROM_UNIXTIME(%s)';
+                break;
+            case 'postgres':
+                $format = "TO_CHAR(TO_TIMESTAMP(%s), 'YYYY-MM-DD HH24:MI:SS')";
+                break;
+            case 'mssql':
+                $format = "CONVERT(VARCHAR, DATEADD(S, %s, '1970-01-01'), 120)";
+                break;
+            case 'oracle':
+                $format = "TO_CHAR(TO_DATE('1970-01-01', 'YYYY-MM-DD')".
+                          " + NUMTODSINTERVAL(%s, 'SECOND'), 'YYYY-MM-DD HH24:MI:SS')";
+                break;
+            case 'sqlite':
+                $format = "DATETIME(%s, 'unixepoch', 'localtime')";
+                break;
+        }
+
+        if ($doalias) {
+            if (empty($alias)) {
+                $alias = $fieldname;
+            }
+            $format .= ' AS %s';
+        }
+
+        return sprintf($format, $fieldname, $alias);
+    }
+
+
     public static function coursecategories($timest, $dir) {
 
         $sql = "
@@ -52,7 +91,9 @@ class dataexport {
     }
 
     public static function courseinfo($timest, $dir) {
-
+        $startdate = self::to_timestamp('startdate');
+        $timecreated = self::to_timestamp('timecreated');
+        $timemodified = self::to_timestamp('timemodified');
         $sql = "
             SELECT id,
                    fullname,
@@ -61,9 +102,9 @@ class dataexport {
                    category,
                    format,
                    visible,
-                   FROM_UNIXTIME(startdate)    AS startdate,
-                   FROM_UNIXTIME(timecreated)  AS timecreated,
-                   FROM_UNIXTIME(timemodified) AS timemodified
+                   {$startdate},
+                   {$timecreated},
+                   {$timemodified}
            FROM    {course}
            WHERE   timecreated >= :timecreated";
 
@@ -73,6 +114,10 @@ class dataexport {
     }
 
     public static function userlist($timest, $dir) {
+        $timecreated = self::to_timestamp('timecreated');
+        $timemodified = self::to_timestamp('timemodified');
+        $firstaccess = self::to_timestamp('firstaccess');
+        $lastaccess = self::to_timestamp('lastaccess');
 
         $sql = "SELECT id,
                        firstname,
@@ -81,10 +126,10 @@ class dataexport {
                        email,
                        suspended,
                        deleted,
-                       FROM_UNIXTIME(timecreated)  AS timecreated,
-                       FROM_UNIXTIME(timemodified) AS timemodified,
-                       FROM_UNIXTIME(firstaccess)  AS firstaccess,
-                       FROM_UNIXTIME(lastaccess)   AS lastaccess
+                       {$timecreated},
+                       {$timemodified},
+                       {$firstaccess},
+                       {$lastaccess}
                 FROM   {user}
                 WHERE  deleted = :deleted
                        AND
@@ -167,13 +212,13 @@ class dataexport {
         ";
         // Update fresh recordset.
         $DB->execute($sqli, array('ctxt' => CONTEXT_COURSE, 'deleted' => false));
-
+        $time = self::to_timestamp('l.time', true, 'time');
         // Now export.
         $sql = "
             SELECT l.id,
                    l.userid AS participantid,
                    l.course AS courseid,
-                   FROM_UNIXTIME(l.time) AS time,
+                   {$time},
                    l.ip,
                    l.action,
                    l.info,
@@ -198,12 +243,12 @@ class dataexport {
      * @param string $dir
      */
     public static function accesslog_old($timest, $dir) {
-
+        $time = self::to_timestamp('l.time', true, 'time');
         $sql = "
             SELECT l.id,
                    l.userid AS participantid,
                    l.course AS courseid,
-                   FROM_UNIXTIME(l.time) AS time,
+                   {$time},
                    l.ip,
                    l.action,
                    l.info,
@@ -235,14 +280,14 @@ class dataexport {
     }
 
     public static function forums($timest, $dir) {
-
+        $timemodified = self::to_timestamp('timemodified');
         $sql = "
             SELECT id,
                    course AS courseid,
                    type,
                    name,
                    intro,
-                   FROM_UNIXTIME(timemodified) AS timemodified
+                   {$timemodified}
             FROM   {forum}
             WHERE  timemodified >= :time";
 
@@ -252,14 +297,14 @@ class dataexport {
     }
 
     public static function threads($timest, $dir) {
-
+        $timemodified = self::to_timestamp('timemodified');
         $sql = "
             SELECT id,
                    forum AS forumid,
                    name,
                    userid AS participantid,
                    groupid,
-                   FROM_UNIXTIME(timemodified) AS timemodified
+                   {$timemodified}
             FROM   {forum_discussions}
             WHERE  timemodified >= :time";
 
@@ -269,14 +314,15 @@ class dataexport {
     }
 
     public static function posts($timest, $dir) {
-
+        $created = self::to_timestamp('created');
+        $modified = self::to_timestamp('modified');
         $sql = "
             SELECT id,
                    parent,
                    discussion as threadid,
                    userid as participantid,
-                   FROM_UNIXTIME(created)  AS created,
-                   FROM_UNIXTIME(modified) AS modified,
+                   {$created},
+                   {$modified},
                    subject,
                    message
             FROM {forum_posts}
@@ -317,8 +363,9 @@ class dataexport {
                      gg.timecreated,
                      gg.timemodified
           FROM       {grade_grades}   gg
-          INNER JOIN {course_modules} cm ON cm.id     = gg.itemid
-          INNER JOIN {modules}        mo ON cm.module = mo.id     AND mo.name = :module
+          INNER JOIN {grade_items}    gi ON gi.id = gg.itemid AND gi.itemmodule = :module
+          INNER JOIN {modules}        mo ON mo.name = :module
+          INNER JOIN {course_modules} cm ON cm.module = mo.id AND cm.course = gi.courseid AND cm.id = gi.iteminstance
           WHERE      cm.added >= :added";
 
         $params = array('added' => $timest, 'module' => 'quiz');
@@ -355,7 +402,6 @@ class dataexport {
         $recordset = null;
 
         do {
-
             $recordset = $DB->get_recordset_sql($sql, $params, $pos, $count);
             $recordset->rewind();
             if (!$recordset->valid()) {
@@ -388,7 +434,7 @@ class dataexport {
             $pos    += $count;
             $fcount += 1;
 
-        } while($counter >= $pos);
+        } while ($counter >= $pos);
 
     }
 
@@ -397,7 +443,7 @@ class dataexport {
      * @return string
      */
     protected static function generatefilename($prefix) {
-        return $prefix.'_'.(string)(int)(microtime(true)*1000.0).'.tar.gz';
+        return $prefix.'_'.(string)(int)(microtime(true) * 1000.0).'.tar.gz';
     }
 
     /**
