@@ -121,6 +121,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 }
                 // Provide info to table.
                 $return["recordsFiltered"] = $response->itemCount;
+                $return["recordsTotal"] = $response->itemCount;
                 $return["data"] = $data;
             }
         } catch (Exception $e) {
@@ -185,6 +186,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
                 // Provide info to table.
                 $return["recordsFiltered"] = $response->itemCount;
+                $return["recordsTotal"] = $response->itemCount;
                 $return["data"] = $data;
             }
         } catch (Exception $e) {

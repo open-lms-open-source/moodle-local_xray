@@ -106,6 +106,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 }
                 // Provide count info to table.
                 $return["recordsFiltered"] = $response->itemCount;
+                $return["recordsTotal"] = $response->itemCount;
                 $return["data"] = $data;
             }
         } catch (Exception $e) {
@@ -164,6 +165,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 }
                 // Provide count info to table.
                 $return["recordsFiltered"] = $response->itemCount;
+                $return["recordsTotal"] = $response->itemCount;
                 $return["data"] = $data;
             }
         } catch (Exception $e) {
