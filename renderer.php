@@ -40,7 +40,7 @@ class local_xray_renderer extends plugin_renderer_base {
     public function inforeport($reportdate, $user = null, $course = null) {
         ($course); // Disable unused param warning.
         $date = new DateTime($reportdate);
-        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedatetimeshort', 'langconfig'));
+        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
 
         $output = "";
         $output .= html_writer::start_div('inforeport');
