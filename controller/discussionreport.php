@@ -51,15 +51,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
             if (has_capability("local/xray:discussionreport_view", $ctx)) {
                 
-                $report = "firstLogin";
-                $responsefirstlogin = \local_xray\api\wsapi::course($this->courseid, $report);
-                if (!$responsefirstlogin) {
-                    // Fail response of webservice.
-                    \local_xray\api\xrayws::instance()->print_error();
-                } else {
-                    $output .= $this->output->inforeport($responsefirstlogin->reportdate, null, $PAGE->course->fullname);
-                }
-                
                 $report = "discussion";
                 $response = \local_xray\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
@@ -67,6 +58,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
                 } else {
                     // Show graphs.
+                    // Report date.
+                    $output .= $this->output->inforeport($response->elements->element1->date, null, $PAGE->course->fullname);
                     // Its a table, I will get info with new call.
                     $output .= $this->participation_metrics($response->elements->discussionMetrics);
                     // Table with variable columns - Send data to create columns.

@@ -35,21 +35,15 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         try {
             if (has_capability("local/xray:gradebookreport_view", $this->get_context())) {
                 
-                $report = "firstLogin";
-                $responsefirstlogin = \local_xray\api\wsapi::course($this->courseid, $report);
-                if (!$responsefirstlogin) {
-                    // Fail response of webservice.
-                    \local_xray\api\xrayws::instance()->print_error();
-                } else {
-                    $output .= $this->output->inforeport($responsefirstlogin->reportdate, null, $PAGE->course->fullname);
-                }
-                
                 $report = "gradebook";
                 $response = \local_xray\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
                     // Fail response of webservice.
                     \local_xray\api\xrayws::instance()->print_error();
                 } else {
+                    // Show graphs.
+                    // Report date.
+                    $output .= $this->output->inforeport($response->elements->element1->date, null, $PAGE->course->fullname);
                     // Its a table, I will get info with new call.
                     $output .= $this->student_grades($response->elements->element2);
                     $output .= $this->density_of_standardized_scores($response->elements->element3);
