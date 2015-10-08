@@ -75,7 +75,7 @@ class csvfile {
      * @return bool
      */
     protected function endswith($value, $needle) {
-        return (substr($value, -strlen($needle))===$needle);
+        return (substr($value, -strlen($needle)) === $needle);
     }
 
     /**
