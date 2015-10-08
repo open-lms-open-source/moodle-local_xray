@@ -129,7 +129,25 @@ class local_xray_datatable {
      * @var string
      */
     public $sProcessingMessage;
-
+    
+    /**
+     * Texts of datatables
+     * @var string
+     */
+    public $sFirst;   
+    public $sLast;
+    public $sNext;    
+    public $sPrevious;
+    public $sProcessing;
+    public $sLengthMenu;
+    public $sZeroRecords; 
+    public $sEmptyTable;
+    public $sInfo;
+    public $sInfoEmpty;
+    public $sLoadingRecords;
+    public $sSortAscending;
+    public $sSortDescending;
+    
     /**
      * Message to show in error case.
      * @var string
@@ -188,7 +206,23 @@ class local_xray_datatable {
         $this->sort = $sort;
         $this->default_field_sort = $default_field_sort;
         $this->sort_order = $sort_order;
-        $this->sProcessingMessage = get_string('table_fetchingdata', 'local_xray');
+        
+        // Support lang with moodle lang.
+        $this->sProcessingMessage = get_string('sProcessingMessage', 'local_xray');
+        $this->sFirst = get_string('sFirst', 'local_xray');
+        $this->sLast = get_string('sLast', 'local_xray');
+        $this->sNext = get_string('sNext', 'local_xray');
+        $this->sPrevious = get_string('sPrevious', 'local_xray');
+        $this->sEmptyTable = get_string('sEmptyTable', 'local_xray');
+        $this->sInfo = get_string('sInfo', 'local_xray');
+        $this->sInfoEmpty = get_string('sInfoEmpty', 'local_xray');
+        $this->sLengthMenu = get_string('sLengthMenu', 'local_xray');
+        $this->sLoadingRecords = get_string('sLoadingRecords', 'local_xray');
+        $this->sSortAscending = get_string('sSortAscending', 'local_xray');
+        $this->sSortDescending = get_string('sSortDescending', 'local_xray'); 
+        $this->sProcessing = get_string('sProcessing', 'local_xray');
+        $this->sZeroRecords = get_string('sZeroRecords', 'local_xray');
+             
         $this->errorMessage = get_string('error_datatables','local_xray');
     }
 }

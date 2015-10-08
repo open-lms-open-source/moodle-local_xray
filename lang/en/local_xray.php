@@ -77,14 +77,12 @@ $string['discussiongrading'] = 'Discussion Grading';
 $string['gradebookreport'] = 'Gradebook';
 
 /* Columns reports */
-$string['table_fetchingdata'] = 'Fetching Data, Please wait...';
 $string['reportdate'] = 'Date of report';
 $string['weeks'] = 'Weeks';
 $string['week'] = 'Week';
 
 /* Error to load tables and images */
 $string['error_loadimg'] = 'Error to load image, please try again reloading the page. If error persist, contact with the administrator please.';
-$string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. If error persist, contact with the administrator please.';
 
 /* Error Webservice */
 $string['error_xray'] = 'Error to connect with Xray, please try again reloading the page. If error persist, contact with the administrator please.';
@@ -159,3 +157,20 @@ $string['of'] = ' of ';
 $string['studentatrisk'] = 'students at risk';
 $string['studentvisitslastdays'] = 'student visits in the last 7 days';
 $string['visitors'] = 'Visitors';
+
+/* Jquery Tables (with plugin datatables) */
+$string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. If error persist, contact with the administrator please.';
+$string['sProcessingMessage'] = 'Fetching Data, Please wait...';
+$string['sFirst'] = 'First';
+$string['sLast'] = 'Last';
+$string['sNext'] = 'Next';
+$string['sPrevious'] = 'Previous';
+$string['sProcessing'] = 'Processing...';
+$string['sLengthMenu'] = 'Show _MENU_ entries';
+$string['sZeroRecords'] = 'No matching records found';
+$string['sEmptyTable'] = 'No data available in table';
+$string['sInfo'] = 'Showing _START_ to _END_ of _TOTAL_ entries';
+$string['sInfoEmpty'] = 'Showing 0 to 0 of 0 entries';
+$string['sLoadingRecords'] = 'Loading...';
+$string['sSortAscending'] = ': activate to sort column ascending';
+$string['sSortDescending'] = ': activate to sort column descending';

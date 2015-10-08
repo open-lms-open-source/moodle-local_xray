@@ -17,7 +17,6 @@ function local_xray_show_on_table(YUI, data) {
             $("#table_" + data.id + "_wrapper").html("<p class='error_datatables'>" + data.errorMessage + "</p>");
         });
 
-
         $("#table_" + data.id).dataTable({
             "jQueryUI": true,
             "bProcessing": true,
@@ -29,8 +28,25 @@ function local_xray_show_on_table(YUI, data) {
             "searching": data.search,
             "dom": data.dom,
             "lengthMenu": data.lengthMenu,
-            "oLanguage": {
-                "sProcessing": data.sProcessingMessage
+            // We load language from lang of moodle.
+            "language": {
+                "sProcessing": data.sProcessingMessage,
+                "sInfo": data.sInfo,
+                "sInfoEmpty": data.sInfoEmpty,
+                "sLengthMenu": data.sLengthMenu,
+                "sLoadingRecords": data.sLoadingRecords,
+                "sProcessing": data.sProcessing,
+                "sZeroRecords": data.sZeroRecords,
+                "Paginate": {
+                    "sFirst": data.sFirst,
+                    "sLast": data.sLast,
+                    "sNext": data.sNext,
+                    "sPrevious": data.sPrevious,
+                },
+                "Aria": {
+                    "sSortAscending":  data.sSortAscending,
+                    "sSortDescending": data.sSortDescending
+                }
             },
             //"sAjaxDataProp": "", // With this, you can change format of json.
             "sAjaxSource": data.jsonurl,
