@@ -88,6 +88,11 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         // Pager.
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        // Sortable
+        $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
+        $sortorder = (int)optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name
+                
         $return = "";
         try {
             $report = "discussion";
@@ -100,7 +105,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 '',
                 '',
                 $start,
-                $count);
+                $count,
+            	$sortfield,
+            	$sortorder);
 
             if (!$response) {
                 // TODO:: Fail response of webservice.
@@ -152,7 +159,11 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         // Pager
         $count = (int)optional_param('count', 10, PARAM_ALPHANUM); // Count param with number of weeks.
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
-
+        // Sortable
+        $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
+        $sortorder = (int)optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name
+        
         $return = "";
 
         try {
@@ -166,7 +177,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 '',
                 '',
                 $start,
-                $count);
+                $count,
+            	$sortfield,
+            	$sortorder);
 
             if (!$response) {
                 // TODO:: Fail response of webservice.
