@@ -17,18 +17,14 @@
 /**
  * X-Ray global settings page
  *
- * @package    local_xray
- * @copyright  2015 Moodlerooms inc.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') or die();
 
-// For the time being only mrsupport user can see the configuration settings for xray.
-// We do not want any client to poke these items.
-
-/* @var object $USER
- * @var $ADMIN admin_root */
+/* @var admin_root $ADMIN */
 if ($hassiteconfig) {
     $plugin = 'local_xray';
     $settings = new admin_settingpage($plugin, new lang_string('pluginname', $plugin));
