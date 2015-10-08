@@ -17,16 +17,20 @@
 /**
  * Scheduled task for data sync with XRay.
  *
- * @package local_xray
- * @author Darko Miletic
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Moodlerooms
+ * @package   local_xray
+ * @author    Darko Miletic
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_xray\task;
 
 use core\task\scheduled_task;
+use local_xray\api\wsapi;
+use local_xray\api\xrayws;
 use local_xray\api\dataexport;
+use local_xray\event\sync_log;
+use local_xray\event\sync_failed;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -42,7 +46,9 @@ defined('MOODLE_INTERNAL') || die();
  *
  * php admin/tool/task/cli/schedule_task.php --execute=\\local_xray\\task\\data_sync
  *
- * @package local_xray
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class data_sync extends scheduled_task {
 
@@ -78,7 +84,7 @@ class data_sync extends scheduled_task {
                 throw new \Exception('Data Synchronization is not enabled!');
             }
 
-            \local_xray\event\sync_log::create_msg("Start data sync.")->trigger();
+            sync_log::create_msg("Start data sync.")->trigger();
 
             require_once($CFG->dirroot.'/local/xray/lib/vendor/aws/aws-autoloader.php');
 
@@ -92,9 +98,9 @@ class data_sync extends scheduled_task {
             ]);
 
             // Get last export timestamp. If none use 0.
-            $data = \local_xray\api\wsapi::datalist();
+            $data = wsapi::datalist();
             if ($data === false) {
-                \local_xray\api\xrayws::instance()->print_error();
+                xrayws::instance()->print_error();
             }
 
             $timest = 0;
@@ -114,7 +120,7 @@ class data_sync extends scheduled_task {
 
             $dirbase  = dataexport::getdir();
             $dirname  = uniqid('export_', true);
-            $transdir = $dirbase.DIRECTORY_SEPARATOR.$dirname;
+            $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
             make_writable_directory($transdir);
 
             dataexport::exportcsv($timest, $transdir);
@@ -131,21 +137,21 @@ class data_sync extends scheduled_task {
                     throw new \Exception("Upload to S3 bucket failed!");
                 }
 
-                \local_xray\event\sync_log::create_msg("Uploaded {$destfile}.")->trigger();
+                sync_log::create_msg("Uploaded {$destfile}.")->trigger();
 
                 unlink($compfile);
             } else {
-                \local_xray\event\sync_log::create_msg("No data to upload.")->trigger();
+                sync_log::create_msg("No data to upload.")->trigger();
             }
 
             // Remove the directory.
             dataexport::deletedir($transdir);
 
-            \local_xray\event\sync_log::create_msg("Completed data sync.")->trigger();
+            sync_log::create_msg("Completed data sync.")->trigger();
 
         } catch (\Exception $e) {
             mtrace($e->getMessage());
-            \local_xray\event\sync_failed::create_from_exception($e)->trigger();
+            sync_failed::create_from_exception($e)->trigger();
         }
     }
 }

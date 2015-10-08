@@ -17,10 +17,10 @@
 /**
  * Scheduled task declaration.
  *
- * @package local_xray
- * @author Darko Miletic
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Moodlerooms
+ * @package   local_xray
+ * @author    Darko Miletic
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

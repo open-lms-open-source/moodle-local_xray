@@ -17,14 +17,23 @@
 /**
  * Convenient wrappers and helper for using the X-Ray web service API.
  *
- * @package local_xray
- * @author Darko Miletic
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Moodlerooms
+ * @package   local_xray
+ * @author    Darko Miletic
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_xray\api;
 
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Class wsapi
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 abstract class wsapi {
     const PLUGIN = 'local_xray';
 
@@ -111,21 +120,6 @@ abstract class wsapi {
         $url = sprintf('%s/data/list', $baseurl);
         return self::generic_admingetcall($url);
     }
-
-    /**
-     * @return string
-     */
-    public static function mypublicip() {
-        $ip = file_get_contents('https://api.ipify.org/');
-        if (!$ip) {
-            $ip = file_get_contents('http://myexternalip.com/raw');
-        }
-        if (!empty($ip)) {
-            $ip = trim($ip);
-        }
-        return $ip;
-    }
-
 
     /**
      * @return bool|mixed

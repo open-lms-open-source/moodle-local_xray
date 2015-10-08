@@ -17,15 +17,30 @@
 /**
  * Convenient wrappers and helper for using the X-Ray web service API.
  *
- * @package local_xray
- * @author Darko Miletic
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Moodlerooms
+ * @package   local_xray
+ * @author    Darko Miletic
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_xray\api;
 
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Class nourl_exception
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ */
 class nourl_exception extends errors {
+    /**
+     * @param string $link
+     * @param mixed  $a
+     * @param mixed  $debuginfo
+     */
     public function __construct($link='', $a=null, $debuginfo=null) {
         parent::__construct('xrayws_error_nourl', $link, $a, $debuginfo);
     }
