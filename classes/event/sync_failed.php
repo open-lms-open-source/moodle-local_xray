@@ -17,21 +17,25 @@
 /**
  * Event implementation.
  *
- * @package local_xray
- * @author Darko Miletic
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Moodlerooms
+ * @package   local_xray
+ * @author    Darko Miletic
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_xray\event;
+use core;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
  * Class sync_failed
- * @package local_xray
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class sync_failed extends \core\event\base {
+class sync_failed extends core\event\base {
 
     /**
      * Override in subclass.

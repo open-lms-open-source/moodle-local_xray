@@ -16,15 +16,16 @@
 
 /**
  * Xray view renderer
- * @author Pablo Pagnone
- * @author German Vitale
- * @package local_xray
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once('../../config.php');
-/* @var object $CFG */
-require($CFG->dirroot.'/local/mr/bootstrap.php');
-require($CFG->dirroot.'/local/xray/lib/ehandler.php');
+/* @var stdClass $CFG */
+require_once($CFG->dirroot.'/local/mr/bootstrap.php');
+require_once($CFG->dirroot.'/local/xray/lib/ehandler.php');
 
 if (!PHPUNIT_TEST or PHPUNIT_UTIL) {
     set_exception_handler('local_xray_default_exception_handler');

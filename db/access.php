@@ -1,13 +1,31 @@
 <?php
-defined('MOODLE_INTERNAL') or die();
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Local xray capability definitions
  *
- * @author Pablo Pagnone
- * @author German Vitale
- * @package local_xray
+ * @package   local_xray
+ * @author    Pablo Pagnone
+ * @author    German Vitale
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
+defined('MOODLE_INTERNAL') or die();
+
 $capabilities = array(
     'local/xray:view' => array(
         'captype' => 'read',
@@ -18,7 +36,7 @@ $capabilities = array(
                 'manager' => CAP_ALLOW
         )
     ),
-    // View report activity
+    // View report activity.
     'local/xray:activityreport_view' => array(
             'captype' => 'read',
             'contextlevel' => CONTEXT_COURSE,
@@ -38,7 +56,7 @@ $capabilities = array(
                     'manager' => CAP_ALLOW
             )
     ),
-    // View report activity individual
+    // View report activity individual.
     'local/xray:activityreportindividual_view' => array(
             'captype' => 'read',
             'contextlevel' => CONTEXT_COURSE,
@@ -48,7 +66,7 @@ $capabilities = array(
                     'manager' => CAP_ALLOW
             )
     ),
-    // View report discussion individual
+    // View report discussion individual.
     'local/xray:discussionreportindividual_view' => array(
             'captype' => 'read',
             'contextlevel' => CONTEXT_COURSE,
@@ -58,7 +76,7 @@ $capabilities = array(
                     'manager' => CAP_ALLOW
             )
     ),
-    // View report discussion individual forum
+    // View report discussion individual forum.
     'local/xray:discussionreportindividualforum_view' => array(
             'captype' => 'read',
             'contextlevel' => CONTEXT_MODULE,
@@ -95,10 +113,10 @@ $capabilities = array(
             'archetypes' => array (
                     'teacher' => CAP_ALLOW,
                     'editingteacher' => CAP_ALLOW,
-                    'manager' => CAP_ALLOW 
-            ) 
+                    'manager' => CAP_ALLOW
+            )
     ),
-    // View Gradebook report 
+    // View Gradebook report.
     'local/xray:gradebookreport_view' => array(
             'captype' => 'read',
             'contextlevel' => CONTEXT_COURSE,
@@ -108,7 +126,7 @@ $capabilities = array(
                 'manager' => CAP_ALLOW
             )
     ),
-    // View Gradebook report individual quiz 
+    // View Gradebook report individual quiz.
     'local/xray:gradebookreportindividualquiz_view' => array(
             'captype' => 'read',
             'contextlevel' => CONTEXT_COURSE,
@@ -118,7 +136,7 @@ $capabilities = array(
                 'manager' => CAP_ALLOW
             )
     ),
-    // View Dashboard report
+    // View Dashboard report.
     'local/xray:dashboard_view' => array(
             'captype' => 'read',
             'contextlevel' => CONTEXT_COURSE,

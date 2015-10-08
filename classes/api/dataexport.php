@@ -19,8 +19,8 @@
  *
  * @package local_xray
  * @author Darko Miletic
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Moodlerooms
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_xray\api;
@@ -29,7 +29,10 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Class dataexport for exporting raw data for xray processing
+ *
  * @package local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class dataexport {
     /**
@@ -75,7 +78,10 @@ class dataexport {
         return sprintf($format, $fieldname, $alias);
     }
 
-
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function coursecategories($timest, $dir) {
 
         $sql = "
@@ -90,6 +96,10 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function courseinfo($timest, $dir) {
         $startdate = self::to_timestamp('startdate');
         $timecreated = self::to_timestamp('timecreated');
@@ -113,6 +123,10 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function userlist($timest, $dir) {
         $timecreated = self::to_timestamp('timecreated');
         $timemodified = self::to_timestamp('timemodified');
@@ -140,6 +154,10 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function enrolment($timest, $dir) {
 
         $sql = "SELECT l.id AS id,
@@ -170,6 +188,7 @@ class dataexport {
 
     /**
      * Export accesslog
+     *
      * @param int $timest
      * @param string $dir
      * @throws \ddl_exception
@@ -239,6 +258,7 @@ class dataexport {
 
     /**
      * Keeping this for historical reasons only. Should not be used.
+     *
      * @param int $timest
      * @param string $dir
      */
@@ -279,6 +299,10 @@ class dataexport {
         self::doexport($sql, $params, 'accesslog_old', $dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function forums($timest, $dir) {
         $timemodified = self::to_timestamp('timemodified');
         $sql = "
@@ -296,6 +320,10 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function threads($timest, $dir) {
         $timemodified = self::to_timestamp('timemodified');
         $sql = "
@@ -313,6 +341,10 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function posts($timest, $dir) {
         $created = self::to_timestamp('created');
         $modified = self::to_timestamp('modified');
@@ -334,6 +366,10 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function quiz($timest, $dir) {
         $sql = "
             SELECT id,
@@ -350,6 +386,10 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function grades($timest, $dir) {
         ($timest);
 
@@ -373,6 +413,9 @@ class dataexport {
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
 
+    /**
+     * @return mixed|string
+     */
     public static function getdir() {
         $dir = get_config('local_xray', 'exportlocation');
         if (empty($dir) or !is_dir($dir) or !is_writable($dir)) {
@@ -482,6 +525,9 @@ class dataexport {
         return array($compfile, $destfile);
     }
 
+    /**
+     * @param string $dir
+     */
     public static function exportmetadata($dir) {
         $exportf  = sprintf('%s%smeta.json', $dir, DIRECTORY_SEPARATOR);
 
@@ -491,6 +537,9 @@ class dataexport {
         }
     }
 
+    /**
+     * @param string $dir
+     */
     public static function deletedir($dir) {
         $exportfiles = array_diff(scandir($dir), array('..', '.'));
         foreach ($exportfiles as $file) {
@@ -500,6 +549,10 @@ class dataexport {
         rmdir($dir);
     }
 
+    /**
+     * @param int $timest
+     * @param string $dir
+     */
     public static function exportcsv($timest, $dir) {
         self::$meta = array();
 

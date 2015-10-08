@@ -16,16 +16,19 @@
 
 /**
  * Xray integration version file
+ *
+ * @package local_xray
  * @author Pablo Pagnone
  * @author German Vitale
- * @package local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 // Because of the MDL-48156 we require Moodle 2.8.1.
 
-/* @var object $plugin */
+/* @var stdClass $plugin */
 $plugin->version  = 2015070320;
 $plugin->requires = 2014111001; // Moodle 2.8.1 .
 $plugin->cron = 0;

@@ -15,16 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
-* Convenient wrapper for curl resource handle.
-*
-* @package local_xray
-* @author Darko Miletic
-* @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-* @copyright Moodlerooms
-*/
+ * Convenient wrapper for curl resource handle.
+ *
+ * @package   local_xray
+ * @author    Darko Miletic
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace local_xray\api;
 
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Class nethold
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class nethold {
     /**
      * @var null|resource
