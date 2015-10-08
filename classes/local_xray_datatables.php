@@ -176,7 +176,7 @@ class local_xray_datatable {
      * @param string $sort_order
      */
     public function __construct($id, $title, $jsonurl, $columns, $search = false, $paging=true, $dom = 'lftipr',
-                                $lengthMenu = array(10, 50, 100), $sort = true, $default_field_sort = 0, $sort_order = "desc") {
+                                $lengthMenu = array(10, 50, 100), $sort = true, $default_field_sort = 0, $sort_order = "asc") {
         $this->id = $id;
         $this->title = $title;
         $this->jsonurl = $jsonurl;
