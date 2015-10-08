@@ -100,7 +100,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name 
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name 
         
         $return = "";
         try {
@@ -269,7 +269,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name
 
         $return = "";
 
