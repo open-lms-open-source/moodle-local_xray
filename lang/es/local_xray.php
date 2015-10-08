@@ -41,8 +41,8 @@ $string['xray:dashboard_view'] = 'Ver interfaz de reportes';
 $string['xray:discussionreport_view'] = 'Ver reporte de discusiones';
 $string['xray:discussionreportindividual_view'] = 'Ver reporte individual de discusiones';
 $string['xray:discussionreportindividualforum_view'] = 'Ver reporte individual de discusiones en foros';
-$string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Plagiarism'; // TODO::
-$string['xray:discussiongrading_view'] = 'View Discussion Grading';// TODO::
+$string['xray:discussionendogenicplagiarism_view'] = 'Ver reporte de plagio en foros de discusión'; 
+$string['xray:discussiongrading_view'] = 'Ver calificaciones en foros de discusión';
 $string['xray:gradebookreport_view'] = 'Ver reporte de calificaciones';
 $string['xray:gradebookreportindividualquiz_view'] = 'Ver reporte individual de calificaciones para quiz';
 $string['xray:risk_view'] = 'Ver reporte de riesgo';
@@ -62,17 +62,17 @@ $string['activityreport'] = 'Reporte de actividad';
 /* Report Activity Report Individual*/
 $string['activityreportindividual'] = 'Reporte individual de actividad';
 /* Discussion report*/
-$string['discussionreport'] = 'Report de discusiones';
+$string['discussionreport'] = 'Reporte de discusiones';
 /* Discussion report individual*/
 $string['discussionreportindividual'] = 'Reporte individual de discusiones';
 /* Discussion report individual forum*/
 $string['discussionreportindividualforum'] = 'Reporte individual de discusiones en foros';
 /* Discussion report Endogenic Plagiarism*/
-$string['discussionendogenicplagiarism'] = 'Reporte de plagio en foros de discusión';// TODO::
+$string['discussionendogenicplagiarism'] = 'Reporte de plagio en foros de discusión';
 /* Risk report*/
 $string['risk'] = 'Reporte de riesgo';
 /* Discussiongrading report*/
-$string['discussiongrading'] = 'Calificaciones en foros de discusión';// TODO::
+$string['discussiongrading'] = 'Calificaciones en foros de discusión';
 /* Gradebook report*/
 $string['gradebookreport'] = 'Reporte de calificaciones';
 
@@ -162,12 +162,12 @@ $string['sProcessingMessage'] = 'Trayendo datos, Por favor espera...';
 $string['sFirst'] = 'Primero';
 $string['sLast'] = 'Último';
 $string['sNext'] = 'Siguiente';
-$string['sPrevious'] = 'Previos';
+$string['sPrevious'] = 'Anterior';
 $string['sProcessing'] = 'Procesando...';
 $string['sLengthMenu'] = 'Mostrar _MENU_ entradas';
 $string['sZeroRecords'] = 'No se encontraron registros';
 $string['sEmptyTable'] = 'No hay datos disponibles para esta tabla';
-$string['sInfo'] = 'Mostrando _START_ a _END_ de _TOTAL_ entries';
+$string['sInfo'] = 'Mostrando _START_ a _END_ de _TOTAL_ entradas';
 $string['sInfoEmpty'] = 'Mostrando 0 a 0 de 0 entradas';
 $string['sLoadingRecords'] = 'Cargando...';
 $string['sSortAscending'] = ': activar para ordenar columna ascendentemente';
