@@ -160,7 +160,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
-        $sortorder = (int)optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name
         
         $return = "";
@@ -234,7 +234,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
-        $sortorder = (int)optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name
         
         $return = "";
@@ -405,7 +405,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
-        $sortorder = (int)optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_ALPHANUM); // Get column name
         
         $return = "";
