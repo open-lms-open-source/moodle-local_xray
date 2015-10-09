@@ -94,7 +94,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $imgurl = sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $element->uuid);
 
         // Access Token.
-        $accesstoken = local_xray\api\wsapi::accesstoken();
+        $accesstoken = local_xray\local\api\wsapi::accesstoken();
         $imgurl = new moodle_url($imgurl, array('accesstoken' => $accesstoken));
 
         $output = "";
@@ -854,11 +854,11 @@ class local_xray_renderer extends plugin_renderer_base {
         if (has_capability('local/xray:dashboard_view', $PAGE->context)) {
             try {
                 $report = "dashboard";
-                $response = \local_xray\api\wsapi::course($COURSE->id, $report);
+                $response = \local_xray\local\api\wsapi::course($COURSE->id, $report);
 
                 if (!$response) {
                     // Fail response of webservice.
-                    \local_xray\api\xrayws::instance()->print_error();
+                    \local_xray\local\api\xrayws::instance()->print_error();
 
                 } else {
 
