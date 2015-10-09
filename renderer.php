@@ -43,9 +43,9 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Show data about report
      *
-     * @param  string   $reportdate - Report date in ISO8601 format
-     * @param  stdClass $user       - User object
-     * @param  string   $course     - Course title
+     * @param  string $reportdate - Report date in ISO8601 format
+     * @param  stdClass $user - User object
+     * @param  string $course - Course title
      * @return string
      */
     public function inforeport($reportdate, $user = null, $course = null) {
@@ -76,7 +76,7 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * Important: Link to image will have id fancybox + "name of report".
      *
-     * @param  string   $name
+     * @param  string $name
      * @param  stdClass $element
      * @return string
      */
@@ -167,6 +167,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $output;
     }
+
     /**
      * Show minutes in format hours:minutes
      * @param int $minutes
@@ -191,7 +192,7 @@ class local_xray_renderer extends plugin_renderer_base {
         } else {
             $category = get_string('high', 'local_xray');
         }
-        return $category.' '.$value;
+        return $category . ' ' . $value;
     }
 
     /**
@@ -209,7 +210,7 @@ class local_xray_renderer extends plugin_renderer_base {
         } else {
             $category = get_string('irregular', 'local_xray');
         }
-        return $category.' '.$value;
+        return $category . ' ' . $value;
     }
     /************************** End General elements for Reports **************************/
 
@@ -234,12 +235,12 @@ class local_xray_renderer extends plugin_renderer_base {
             $element->title,
             "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $courseid,
             $columns,
-        	false,
-        	true,
-        	"lftipr",
-        	array(10, 50, 100),
-        	true,
-        	1); // Sort by first column "Lastname".
+            false,
+            true,
+            "lftipr",
+            array(10, 50, 100),
+            true,
+            1); // Sort by first column "Lastname".
 
         // Create standard table.
         $output = $this->standard_table((array)$datatable);
@@ -397,12 +398,12 @@ class local_xray_renderer extends plugin_renderer_base {
             $element->title,
             "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $courseid,
             $columns,
-        	false,
-        	true,
-        	"lftipr",
-        	array(10, 50, 100),
-        	true,
-        	1); // Sort by first column "Lastname".
+            false,
+            true,
+            "lftipr",
+            array(10, 50, 100),
+            true,
+            1); // Sort by first column "Lastname".
 
         // Create standard table.
         $output = $this->standard_table((array)$datatable);
@@ -432,9 +433,9 @@ class local_xray_renderer extends plugin_renderer_base {
             $columns,
             false,
             false, // We don't need pagination because we have only four rows.
-            '<"xray_table_scrool"t>',// Only the table.
-        	array(10, 50, 100),
-        	false); // This table has not sortable.
+            '<"xray_table_scrool"t>', // Only the table.
+            array(10, 50, 100),
+            false); // This table has not sortable.
 
         // Create standard table.
         $output = $this->standard_table((array)$datatable);
@@ -874,19 +875,19 @@ class local_xray_renderer extends plugin_renderer_base {
                     }
                     // Student ins risk.
                     $countstudentsrisk = (isset($response->elements->element6->items[5]->value) ?
-                                                $response->elements->element6->items[5]->value : "-");
+                        $response->elements->element6->items[5]->value : "-");
                     // Students enrolled.
                     $countstudentsenrolled = (isset($response->elements->element6->items[2]->value) ?
-                                                    $response->elements->element6->items[2]->value : "-");
+                        $response->elements->element6->items[2]->value : "-");
                     // Visits last 7 days.
                     $countstudentsvisitslastsevendays = (isset($response->elements->element6->items[0]->value) ?
-                                                               $response->elements->element6->items[0]->value : "-");
+                        $response->elements->element6->items[0]->value : "-");
                     // Risk previous 7 days.
                     $countstudentsriskprev = (isset($response->elements->element6->items[6]->value) ?
-                                                    $response->elements->element6->items[6]->value : "-");
+                        $response->elements->element6->items[6]->value : "-");
                     // Visits previous 7 days.
                     $countstudentsvisitsprev = (isset($response->elements->element6->items[1]->value) ?
-                                                      $response->elements->element6->items[1]->value : "-");
+                        $response->elements->element6->items[1]->value : "-");
 
                     // Calculate percentajes from last weeks.
                     $precentajevalueperstudent = 100 / $countstudentsenrolled;
@@ -903,7 +904,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
                     // Students visits by week day.
                     $studentsvisitsbyweekday = (isset($response->elements->activity_level->data) ?
-                                                      $response->elements->activity_level->data : "-");
+                        $response->elements->activity_level->data : "-");
 
                     $output .= $this->snap_dashboard_xray_output($usersinrisk,
                         $countstudentsenrolled,
@@ -960,8 +961,8 @@ class local_xray_renderer extends plugin_renderer_base {
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
 
         // Students at risk.
-        $studentsrisk = "<div class='xray-headline'><span class='xray-headline-number h1'>$studentsrisk</span>".
-                        "$of $studentsenrolled</div>";
+        $studentsrisk = "<div class='xray-headline'><span class='xray-headline-number h1'>$studentsrisk</span>" .
+            "$of $studentsenrolled</div>";
         $studentatrisktext = html_writer::div(get_string('studentatrisk', 'local_xray'), 'xray-headline-description');
         // Bootstrap classes for positive/negative data.
         $comparitorclass = "xray-comparitor";
@@ -998,14 +999,14 @@ class local_xray_renderer extends plugin_renderer_base {
         }
 
         $riskcolumn = html_writer::div($xraydashboardjquery . $studentsrisk . $studentatrisktext .
-                                        $riskfromlastweekth . $usersprofilebox . $usersprofileboxhidden .
-                                        $showall, 'xray-risk col-sm-6 span6');
+            $riskfromlastweekth . $usersprofilebox . $usersprofileboxhidden .
+            $showall, 'xray-risk col-sm-6 span6');
 
         // Students Visitors.
-        $studentsvisitors = "<div class='xray-headline'><span class='xray-headline-number h1'>$studentsvisitslastsevendays</span>".
-                            "$of $studentsenrolled</small></div>";
+        $studentsvisitors = "<div class='xray-headline'><span class='xray-headline-number h1'>$studentsvisitslastsevendays</span>" .
+            "$of $studentsenrolled</small></div>";
         $studentvisitslastdaystext = html_writer::div(get_string('studentvisitslastdays', 'local_xray'),
-                                                      'xray-headline-description');
+            'xray-headline-description');
         // Bootstrap classes for positive/negative data.
         $comparitorclass = "xray-comparitor";
         $comparitorbsclass = " text-muted";
@@ -1018,7 +1019,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $comparitorclass .= $comparitorbsclass;
 
         $visitorsfromlastweektr = html_writer::div(get_string('fromlastweek', 'local_xray', $visitorsfromlastweek),
-                                                   $comparitorclass);
+            $comparitorclass);
 
         // Students visits by Week Day.
         $studentsvisitsperday = "";
@@ -1031,13 +1032,14 @@ class local_xray_renderer extends plugin_renderer_base {
                 $day = substr($value->day_of_week->value, 0, 3);
                 $studentsvisitsperday .= "<div class='xray-visits-unit'>";
                 $studentsvisitsperday .= "<div class='xray-visits-per-day'>$day</div>";
-                $studentsvisitsperday .= "<div class='xray-visits-per-day-line' style='height:".$percent."%'>$visitsperday</div>";
+                $studentsvisitsperday .= "<div class='xray-visits-per-day-line' style='height:" .
+                                         $percent . "%'>$visitsperday</div>";
                 $studentsvisitsperday .= "</div>";
             }
             $studentsvisitsperday .= "</div>";
         }
         $visitorscolumn = html_writer::div($studentsvisitors . $studentvisitslastdaystext . $visitorsfromlastweektr .
-                                           $studentsvisitsperday, 'xray-visitors col-sm-6 span6');
+            $studentsvisitsperday, 'xray-visitors col-sm-6 span6');
 
         return html_writer::div($riskcolumn . $visitorscolumn, 'row row-fluid container-fluid');
     }
@@ -1055,7 +1057,8 @@ class local_xray_renderer extends plugin_renderer_base {
         $userpicture->alttext = false;
         $userpicture->size = 30;
         $picture = $this->render($userpicture);
-        $fullname = '<a href="' . $CFG->wwwroot . '/user/profile.php?id='.$user->id.'">' . format_string(fullname($user)) . '</a>';
+        $fullname = '<a href="' . $CFG->wwwroot . '/user/profile.php?id=' . $user->id . '">'
+                    . format_string(fullname($user)) . '</a>';
         return "<div class='dashboard_xray_users_profile'>
                 $picture $fullname </div>";
     }
