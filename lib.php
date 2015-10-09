@@ -65,40 +65,41 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
         return $reports;
     }
 
-    if (!is_callable('mr_on') || mr_on('xray', 'local')) {
-        if (($context->contextlevel > CONTEXT_SYSTEM) && has_capability('local/xray:view', $context)) {
-            $baseurl = new moodle_url('/local/xray/view.php', ['courseid' => $page->course->id]);
-            $courseurl = new moodle_url('/course/view.php', ['id' => $page->course->id]);
-            $reportlist = array();
-            $reports = array();
+    if (($context->contextlevel > CONTEXT_SYSTEM) && has_capability('local/xray:view', $context)) {
+        $baseurl = new moodle_url('/local/xray/view.php');
+        $courseurl = new moodle_url('/course/view.php', ['id' => $page->course->id]);
+        $reportlist = [];
+        $reports = [];
 
-            if ($page->url->compare($courseurl, URL_MATCH_BASE) || ($page->pagetype == 'local-xray-view')) {
-                $reportlist = array(
-                    'risk' => 'local/xray:risk_view',
-                    'activityreport' => 'local/xray:activityreport_view',
-                    'gradebookreport' => 'local/xray:gradebookreport_view',
-                    'discussionreport' => 'local/xray:discussionreport_view'
-                );
-            } else {
-                if (in_array($page->pagetype, array('mod-quiz-view', 'mod-forum-view', 'mod-hsuforum-view'))) {
-                    $baseurl->param('cmid', $context->instanceid);
-                    $baseurl->param('forum', $page->cm->instance);
-                    $reportlist = array(
-                        'discussionreportindividualforum' => 'local/xray:discussionreportindividualforum_view',
-                    );
+        $extraparams = [];
+        if ($page->url->compare($courseurl, URL_MATCH_BASE) || ($page->pagetype == 'local-xray-view')) {
+            $reportlist = [
+                'risk' => 'local/xray:risk_view',
+                'activityreport' => 'local/xray:activityreport_view',
+                'gradebookreport' => 'local/xray:gradebookreport_view',
+                'discussionreport' => 'local/xray:discussionreport_view'
+            ];
+        } else {
+            if (in_array($page->pagetype, ['mod-quiz-view', 'mod-forum-view', 'mod-hsuforum-view'])) {
+                $extraparams['cmid' ] = $context->instanceid;
+                $extraparams['forum'] = $page->cm->instance;
+                $reportlist = [
+                    'discussionreportindividualforum' => 'local/xray:discussionreportindividualforum_view',
+                ];
 
-                }
             }
-
-            if (!empty($reportlist)) {
-                foreach ($reportlist as $report => $capability) {
-                    if (has_capability($capability, $context)) {
-                        $reports[$report] = $baseurl->out(false, array('controller' => $report));
-                    }
-                }
-            }
-
         }
+
+        if (!empty($reportlist)) {
+            foreach ($reportlist as $report => $capability) {
+                if (has_capability($capability, $context)) {
+                    $reports[$report] = $baseurl->out(false, ['controller' => $report,
+                                                              'courseid'   => $page->course->id,
+                                                              'action'     => 'view'] + $extraparams);
+                }
+            }
+        }
+
     }
 
     return $reports;
@@ -131,13 +132,9 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
 
     $coursenode = $settings->get($nodename);
     $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
-    $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
 
     foreach ($reports as $reportstring => $url) {
-        $node = $extranavigation->add(get_string($reportstring, $plugin), $url, navigation_node::TYPE_CUSTOM, null, $reportstring);
-        if ($reportstring == $reportcontroller) {
-            $node->make_active();
-        }
+        $extranavigation->add(get_string($reportstring, $plugin), $url);
     }
 }
 
@@ -156,17 +153,17 @@ function local_xray_extends_navigation(global_navigation $nav) {
         return;
     }
 
-    static $search = array(
-                           'topics'         => '#region-main',
-                           'weeks'          => '#region-main',
-                           'flexpage'       => '#region-main',
-                           'folderview'     => '#region-main',
-                           'onetopic'       => '#region-main',
-                           'singleactivity' => '.notexist', // Not sure what to do here?
-                           'social'         => '#region-main',
-                           'tabbedweek'     => '#region-main',
-                           'topcoll'        => '#region-main',
-                          );
+    static $search = [
+                       'topics'         => '#region-main',
+                       'weeks'          => '#region-main',
+                       'flexpage'       => '#region-main',
+                       'folderview'     => '#region-main',
+                       'onetopic'       => '#region-main',
+                       'singleactivity' => '.notexist', // Not sure what to do here?
+                       'social'         => '#region-main',
+                       'tabbedweek'     => '#region-main',
+                       'topcoll'        => '#region-main',
+                     ];
 
     $reportview = ($PAGE->pagetype == 'local-xray-view');
     $courseview = local_xray_startswith($PAGE->pagetype, 'course-view');
@@ -183,7 +180,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
         if ($displaymenu) {
             $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
             if (!empty($reports)) {
-                $menuitems = array();
+                $menuitems = [];
                 $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
                 foreach ($reports as $reportstring => $url) {
                     $class = $reportstring;
@@ -216,23 +213,23 @@ function local_xray_extends_navigation(global_navigation $nav) {
                 $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') .
                                                  get_string('analytics', 'local_xray'));
                 $subc = $title . $headerdata;
-                $headerdata = \html_writer::div($subc, '', array('id' => 'js-headerdata', 'class' => 'clearfix'));
+                $headerdata = \html_writer::div($subc, '', ['id' => 'js-headerdata', 'class' => 'clearfix']);
             }
         }
 
         if (!empty($menu) or !empty($headerdata)) {
             $menuappend = $reportview ? 0 : 1;
             // Easy way to force include on every page (provided that navigation block is present).
-            $PAGE->requires->yui_module(array('moodle-local_xray-custmenu'),
+            $PAGE->requires->yui_module(['moodle-local_xray-custmenu'],
                 'M.local_xray.custmenu.init',
-                array(array(
+                [[
                     'menusearch' => $search[$courseformat],
                     'menuappend' => $menuappend,
                     'items'      => $menu,
                     'hdrsearch'  => $search[$courseformat],
                     'hdrappend'  => 1,
                     'header'     => $headerdata
-                )),
+                ]],
                 null,
                 true
             );
