@@ -17,10 +17,16 @@
 /**
  * Local xray lang file
  *
- * @author Pablo Pagnone
- * @author German Vitale
- * @package local_xray
+ * @package   local_xray
+ * @author    Pablo Pagnone
+ * @author    German Vitale
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') or die();
+
+/* @var string[] $string */
 $string['navigation_xray'] = 'X-Ray ';
 $string['navitationcourse_xray'] = 'X-Ray';
 $string['pluginname'] = 'X-Ray';
@@ -82,10 +88,12 @@ $string['weeks'] = 'Weeks';
 $string['week'] = 'Week';
 
 /* Error to load tables and images */
-$string['error_loadimg'] = 'Error to load image, please try again reloading the page. If error persist, contact with the administrator please.';
+$string['error_loadimg'] = 'Error to load image, please try again reloading the page. If error persist, contact '.
+                           'with the administrator please.';
 
 /* Error Webservice */
-$string['error_xray'] = 'Error to connect with Xray, please try again reloading the page. If error persist, contact with the administrator please.';
+$string['error_xray'] = 'Error to connect with Xray, please try again reloading the page. If error persist, '.
+                        'contact with the administrator please.';
 
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';
@@ -111,9 +119,12 @@ $string['s3bucket_desc'] = 'Name of the bucket to use for storing data uploads.'
 $string['s3bucketregion'] = 'S3 region';
 $string['s3bucketregion_desc'] = 'Region of the destination bucket.';
 $string['packertar'] = 'GNU tar executable';
-$string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/software/tar/" target="_blank" title="GNU tar">GNU tar</a> executable on your server. Make sure to install <a href="http://www.gnu.org/software/gzip/" target="_blank" title="GNU Gzip">GNU Gzip</a> as well.';
+$string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/software/tar/" target="_blank" '.
+                            'title="GNU tar">GNU tar</a> executable on your server. Make sure to install '.
+                            '<a href="http://www.gnu.org/software/gzip/" target="_blank" title="GNU Gzip">GNU Gzip</a> as well.';
 $string['exportlocation'] = 'Export location';
-$string['exportlocation_desc'] = 'Configure local directory for temporary storage of exported data. If left empty (or if path not valid) Moodle tempdir is used.';
+$string['exportlocation_desc'] = 'Configure local directory for temporary storage of exported data. If left empty '.
+                                 '(or if path not valid) Moodle tempdir is used.';
 
 $string['xrayadminserver'] = 'XRay Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';
@@ -159,7 +170,8 @@ $string['studentvisitslastdays'] = 'student visits in the last 7 days';
 $string['visitors'] = 'Visitors';
 
 /* Jquery Tables (with plugin datatables) */
-$string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. If error persist, contact with the administrator please.';
+$string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. '.
+                              'If error persist, contact with the administrator please.';
 $string['sProcessingMessage'] = 'Fetching Data, Please wait...';
 $string['sFirst'] = 'First';
 $string['sLast'] = 'Last';

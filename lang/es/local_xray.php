@@ -17,10 +17,16 @@
 /**
  * Local xray lang file Spanish
  *
- * @author Pablo Pagnone
- * @author German Vitale
- * @package local_xray
+ * @package   local_xray
+ * @author    Pablo Pagnone
+ * @author    German Vitale
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') or die();
+
+/* @var string[] $string */
 $string['navigation_xray'] = 'X-Ray ';
 $string['navitationcourse_xray'] = 'X-Ray';
 $string['pluginname'] = 'X-Ray';
@@ -41,7 +47,7 @@ $string['xray:dashboard_view'] = 'Ver interfaz de reportes';
 $string['xray:discussionreport_view'] = 'Ver reporte de discusiones';
 $string['xray:discussionreportindividual_view'] = 'Ver reporte individual de discusiones';
 $string['xray:discussionreportindividualforum_view'] = 'Ver reporte individual de discusiones en foros';
-$string['xray:discussionendogenicplagiarism_view'] = 'Ver reporte de plagio en foros de discusión'; 
+$string['xray:discussionendogenicplagiarism_view'] = 'Ver reporte de plagio en foros de discusión';
 $string['xray:discussiongrading_view'] = 'Ver calificaciones en foros de discusión';
 $string['xray:gradebookreport_view'] = 'Ver reporte de calificaciones';
 $string['xray:gradebookreportindividualquiz_view'] = 'Ver reporte individual de calificaciones para quiz';
@@ -82,10 +88,12 @@ $string['weeks'] = 'Semanas';
 $string['week'] = 'Semana';
 
 /* Error to load tables and images */
-$string['error_loadimg'] = 'Error al cargar imagen, por favor intenta nuevamente recargando la página. Si el error persiste, por favor contacta con el administrador del sitio.';
+$string['error_loadimg'] = 'Error al cargar imagen, por favor intenta nuevamente recargando la página. Si el '.
+                           'error persiste, por favor contacta con el administrador del sitio.';
 
 /* Error Webservice */
-$string['error_xray'] = 'Error al conectar con Xray, por favor intenta nuevamente recargando la página. Si el error persiste, por favor contacta con el administrador del sitio.';
+$string['error_xray'] = 'Error al conectar con Xray, por favor intenta nuevamente recargando la página. Si el error '.
+                        'persiste, por favor contacta con el administrador del sitio.';
 
 /* Settings */
 $string['xrayclientid'] = 'Identificador de cliente';
@@ -109,9 +117,12 @@ $string['s3bucket_desc'] = 'Nombre del bucket a usar para guardar datos subidos.
 $string['s3bucketregion'] = 'S3 region';
 $string['s3bucketregion_desc'] = 'Región de destino del bucket.';
 $string['packertar'] = 'Ejecutable GNU tar';
-$string['packertar_desc'] = 'Configurar locación de <a href="http://www.gnu.org/software/tar/" target="_blank" title="GNU tar">GNU tar</a> ejecutable en tu servidor. Asegurate de instalar <a href="http://www.gnu.org/software/gzip/" target="_blank" title="GNU Gzip">GNU Gzip</a>.';
+$string['packertar_desc'] = 'Configurar locación de <a href="http://www.gnu.org/software/tar/" '.
+                            'target="_blank" title="GNU tar">GNU tar</a> ejecutable en tu servidor. Asegurate de '.
+                            'instalar <a href="http://www.gnu.org/software/gzip/" target="_blank" title="GNU Gzip">GNU Gzip</a>.';
 $string['exportlocation'] = 'Locacion de export';
-$string['exportlocation_desc'] = 'Configura directorio local para almacenamiento temporario de data exportada. Si lo dejas vacio (o ruta es invalida), Moodle tempdir es usado.';
+$string['exportlocation_desc'] = 'Configura directorio local para almacenamiento temporario de data exportada. '.
+                                 'Si lo dejas vacio (o ruta es invalida), Moodle tempdir es usado.';
 
 $string['xrayadminserver'] = 'Servidor de administración XRay';
 $string['xrayadminserver_desc'] = 'Locación del servidor.';
@@ -147,7 +158,7 @@ $string['syncfailedexplanation'] = 'Fallo al sincronizar datos con Xray.';
 $string['synclog'] = 'Mensaje de información de sincronización de datos con XRay';
 $string['synclogexplanation'] = 'Entrada de registro regular para sincronizar datos.';
 
-/* Course Header */
+// Course Header.
 $string['atrisk'] = 'En riesgo';
 $string['dashboard'] = 'Interfaz';
 $string['fromlastweek'] = '{$a}% de cambio desde la ultima semana';
@@ -156,8 +167,9 @@ $string['studentatrisk'] = 'estudiantes en riesgo';
 $string['studentvisitslastdays'] = 'visitas de estudiantes en los últimos 7 dias';
 $string['visitors'] = 'Visitantes';
 
-/* Jquery Tables (with plugin datatables) */
-$string['error_datatables'] = 'Error al traer datos para esta tabla. Por favor intenta nuevamente recargando la página. Si el error persiste, por favor contacta con el administrador del sitio.';
+// Jquery Tables (with plugin datatables).
+$string['error_datatables'] = 'Error al traer datos para esta tabla. Por favor intenta nuevamente recargando la '.
+                              'página. Si el error persiste, por favor contacta con el administrador del sitio.';
 $string['sProcessingMessage'] = 'Trayendo datos, Por favor espera...';
 $string['sFirst'] = 'Primero';
 $string['sLast'] = 'Último';
