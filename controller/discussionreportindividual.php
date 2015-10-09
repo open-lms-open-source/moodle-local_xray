@@ -39,7 +39,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         // Add nav to return to discussionreport.
         $PAGE->navbar->add(get_string("discussionreport", $this->component),
             new moodle_url('/local/xray/view.php',
-                ["controller" => "discussionreport", "courseid" => $this->courseid]));
+                array("controller" => "discussionreport", "courseid" => $this->courseid)));
         $PAGE->navbar->add($PAGE->title);
         $output = "";
         try {
@@ -185,15 +185,21 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
-                $posts = array('weeks' => $response->columnHeaders->posts);
-                $avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
                 if (!empty($response->data)) {
-                    foreach ($response->data as $col) {
-                        $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
-                        $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                    if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+                        // Inverted table.
+                        // Add column names to the first column.
+                        $posts = array('weeks' => $response->columnHeaders->posts);
+                        $avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
+
+                        // Add the remaining data. The number of each week will be the column name.
+                        foreach ($response->data as $col) {
+                            $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
+                            $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                        }
+                        $data[] = $posts;
+                        $data[] = $avgwordcount;
                     }
-                    $data[] = $posts;
-                    $data[] = $avgwordcount;
                 }
 
                 // Provide info to table.

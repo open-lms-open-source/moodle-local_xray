@@ -260,10 +260,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 if (!empty($response->data)) {
                     // This report has not specified columnOrder.
                     if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+                        // Inverted table.
+                        // Add column names to the first column.
                         $posts = array('weeks' => $response->columnHeaders->posts);
                         $avglag = array('weeks' => $response->columnHeaders->avgLag);
                         $avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
 
+                        // Add the remaining data. The number of each week will be the column name.
                         foreach ($response->data as $col) {
                             $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
                             $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
@@ -272,9 +275,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         $data[] = $posts;
                         $data[] = $avglag;
                         $data[] = $avgwordcount;
-
                     }
-
                 }
 
                 // Provide info to table.
