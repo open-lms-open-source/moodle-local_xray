@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>lib/vendor/aws</location>
+        <name>aws-sdk-php</name>
+        <version>3.2.6</version>
+        <license>Apache</license>
+        <licenseversion>2.0</licenseversion>
+    </library>
+    <library>
+        <location>jquery/dataTables</location>
+        <name>DataTables</name>
+        <version>1.10.7</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>jquery/dataTables-jqueryui-1.10.7</location>
+        <name>DataTables-jqueryui</name>
+        <version>1.10.7</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>jquery/fancybox2</location>
+        <name>DataTables</name>
+        <version>1.10.7</version>
+        <license>CC BY-NC</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
+    <library>
+        <location>jquery/jqthumb</location>
+        <name>jQThumb</name>
+        <version>2.1.7</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+</libraries>

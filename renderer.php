@@ -14,17 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * X-Ray plugin renderer
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') or die();
 
-/* @var object $CFG */
+/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 require_once($CFG->dirroot . '/local/xray/classes/local_xray_datatables.php');
 
 /**
  * Renderer
  *
- * @author Pablo Pagnone
- * @package local_xray
+ * @package   local_xray
+ * @author    Pablo Pagnone
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_renderer extends plugin_renderer_base {
 
@@ -32,9 +42,10 @@ class local_xray_renderer extends plugin_renderer_base {
 
     /**
      * Show data about report
-     * @param String $reportdate
-     * @param User $user
-     * @param String $course
+     *
+     * @param  string   $reportdate - Report date in ISO8601 format
+     * @param  stdClass $user       - User object
+     * @param  string   $course     - Course title
      * @return string
      */
     public function inforeport($reportdate, $user = null, $course = null) {
@@ -46,7 +57,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::start_div('inforeport');
         $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate);
         if (!empty($user)) {
-            $output .= html_writer::tag("p", get_string(("user")) . ": " . fullname($user));
+            $output .= html_writer::tag("p", get_string(("user")) . ": " . format_string(fullname($user)));
         }
         $output .= html_writer::end_div();
         return $output;
@@ -65,12 +76,11 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * Important: Link to image will have id fancybox + "name of report".
      *
-     * @param string $name
-     * @param object $element
+     * @param  string   $name
+     * @param  stdClass $element
      * @return string
      */
     private function show_on_lightbox($name, $element) {
-
         global $PAGE;
         $plugin = "local_xray";
 
@@ -165,12 +175,14 @@ class local_xray_renderer extends plugin_renderer_base {
     public function minutes_to_hours($minutes) {
         return date('H:i', mktime(0, $minutes));
     }
+
     /**
      * Set Category
+     *
      * @param int $value
      * @return string
      */
-     public function set_category($value) {
+    public function set_category($value) {
         $category = '';
         if ($value < 0.2) {
             $category = get_string('low', 'local_xray');
@@ -181,8 +193,10 @@ class local_xray_renderer extends plugin_renderer_base {
         }
         return $category.' '.$value;
     }
+
     /**
      * Set Category Regularly
+     *
      * @param int $value
      * @return string
      */
@@ -389,7 +403,7 @@ class local_xray_renderer extends plugin_renderer_base {
         	array(10, 50, 100),
         	true,
         	1); // Sort by first column "Lastname".
-        
+
         // Create standard table.
         $output = $this->standard_table((array)$datatable);
 
