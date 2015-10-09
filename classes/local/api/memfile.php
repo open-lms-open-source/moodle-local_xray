@@ -23,19 +23,69 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_xray\api;
+namespace local_xray\local\api;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class norequestmethod_exception
+ * Class memfile
  *
  * @package   local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class norequestmethod_exception extends errors {
-    public function __construct($link='', $a=null, $debuginfo=null) {
-        parent::__construct('xrayws_error_nomethod', $link, $a, $debuginfo);
+class memfile {
+    /**
+     * @var null|resource
+     */
+    private $fp = null;
+
+    public function __construct() {
+        $this->open();
+    }
+
+    protected function open() {
+        $fp = fopen('php://temp', 'wb+');
+        if (is_resource($fp)) {
+            $this->fp = $fp;
+        }
+    }
+
+    public function __destruct() {
+        $this->close();
+    }
+
+    /**
+     * @return null|resource
+     */
+    public function get() {
+        return $this->fp;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function get_content() {
+        $content = null;
+        if (is_resource($this->fp)) {
+            rewind($this->fp);
+            $content = stream_get_contents($this->fp);
+        }
+        return $content;
+    }
+
+    /**
+     * reset
+     */
+    public function close() {
+        if (is_resource($this->fp)) {
+            fclose($this->fp);
+            $this->fp = null;
+        }
+    }
+
+    public function reset() {
+        $this->close();
+        $this->open();
     }
 }

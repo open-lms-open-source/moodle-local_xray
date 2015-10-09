@@ -16,7 +16,7 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var object $CFG */
+/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
@@ -38,21 +38,21 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
         // Add nav to return to discussionreport.
         $PAGE->navbar->add(get_string("discussionreport", $this->component),
-                           new moodle_url('/local/xray/view.php',
-                                          ["controller" => "discussionreport", "courseid" => $this->courseid]));
+            new moodle_url('/local/xray/view.php',
+                ["controller" => "discussionreport", "courseid" => $this->courseid]));
         $PAGE->navbar->add($PAGE->title);
         $output = "";
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report, $this->userid);
+            $response = \local_xray\local\api\wsapi::course($this->courseid, $report, $this->userid);
             if (!$response) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate,
-                                                     $DB->get_record('user', array("id" => $this->userid)),
-                                                     $PAGE->course->fullname);
+                    $DB->get_record('user', array("id" => $this->userid)),
+                    $PAGE->course->fullname);
                 // Its a table, I will get info with new call.
                 $output .= $this->participation_metrics($response->elements->discussionMetrics);
                 // Table with variable columns - Send data to create columns.
@@ -98,7 +98,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             $report = "discussion";
             $element = "discussionMetrics";
 
-            $response = \local_xray\api\wsapi::courseelement($this->courseid,
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $element,
                 $report,
                 $this->userid,
@@ -110,8 +110,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $sortorder);
 
             if (!$response) {
-                // TODO:: Fail response of webservice.
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
                 if (!empty($response->data)) {
@@ -170,7 +169,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             $report = "discussion";
             $element = "discussionActivityByWeek";
 
-            $response = \local_xray\api\wsapi::courseelement($this->courseid, // TODO:: Hardcoded.
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $element,
                 $report,
                 $this->userid,
@@ -183,7 +182,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
             if (!$response) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
                 $posts = array('weeks' => $response->columnHeaders->posts);

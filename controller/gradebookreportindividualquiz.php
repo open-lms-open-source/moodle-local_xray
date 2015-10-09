@@ -16,8 +16,8 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var object $CFG */
-require_once($CFG->dirroot.'/local/xray/controller/reports.php');
+/* @var stdClass $CFG */
+require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
  * Report Gradebook Individual Quiz
@@ -55,15 +55,15 @@ class local_xray_controller_gradebookreportindividualquiz extends local_xray_con
         // Add title to breadcrumb.
         $quizname = $DB->get_field('quiz', 'name', array("id" => $this->quizid));
         $PAGE->navbar->add($quizname, new moodle_url("/mod/quiz/view.php",
-                                                  array("id" => $this->cmid)));
+            array("id" => $this->cmid)));
         $PAGE->navbar->add($PAGE->title);
         $output = "";
         try {
             $report = "grades";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report, "quiz/".$this->quizid);
+            $response = \local_xray\local\api\wsapi::course($this->courseid, $report, "quiz/" . $this->quizid);
             if (!$response) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
             }
         } catch (Exception $e) {
             $output = $this->print_error('error_xray', $e->getMessage());

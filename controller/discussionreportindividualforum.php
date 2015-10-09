@@ -16,7 +16,7 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var object $CFG */
+/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
@@ -37,7 +37,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
      * Course module id.
      * @var integer
      */
-    private $id;
+    private $cmid;
 
     public function init() {
         parent::init();
@@ -57,10 +57,10 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
         try {
             $report = "discussion";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report, "forum/" . $this->forumid);
+            $response = \local_xray\local\api\wsapi::course($this->courseid, $report, "forum/" . $this->forumid);
             if (!$response) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 // Show graphs.
                 $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);

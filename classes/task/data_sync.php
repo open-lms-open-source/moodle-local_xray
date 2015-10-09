@@ -26,9 +26,9 @@
 namespace local_xray\task;
 
 use core\task\scheduled_task;
-use local_xray\api\wsapi;
-use local_xray\api\xrayws;
-use local_xray\api\dataexport;
+use local_xray\local\api\wsapi;
+use local_xray\local\api\xrayws;
+use local_xray\local\api\dataexport;
 use local_xray\event\sync_log;
 use local_xray\event\sync_failed;
 

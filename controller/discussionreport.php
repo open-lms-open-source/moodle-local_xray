@@ -50,12 +50,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         try {
 
             if (has_capability("local/xray:discussionreport_view", $ctx)) {
-                
+
                 $report = "discussion";
-                $response = \local_xray\api\wsapi::course($this->courseid, $report);
+                $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
                     // Fail response of webservice.
-                    throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                    throw new Exception(\local_xray\local\api\xrayws::instance()->geterrormsg());
                 } else {
                     // Show graphs.
                     // Report date.
@@ -80,11 +80,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             // Show reports Discussion endogenic (INT-8194).
             if (has_capability("local/xray:discussionendogenicplagiarism_view", $ctx)) {
                 $report = "discussionEndogenicPlagiarism";
-                $response = \local_xray\api\wsapi::course($this->courseid, $report);
+                $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
                     $this->debugwebservice();
                     // Fail response of webservice.
-                    \local_xray\api\xrayws::instance()->print_error();
+                    \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
                     // Show graphs.
                     $output .= html_writer::tag("div",
@@ -103,10 +103,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             if (has_capability("local/xray:discussiongrading_view", $ctx)) {
 
                 $report = "discussionGrading";
-                $response = \local_xray\api\wsapi::course($this->courseid, $report);
+                $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
                     // Fail response of webservice.
-                    \local_xray\api\xrayws::instance()->print_error();
+                    \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
 
                     // Show graphs.
@@ -119,7 +119,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $output .= $this->barplot_of_suggested_grades($response->elements->discussionSuggestedGrades);
                 }
             }
-
 
         } catch (Exception $e) {
             $output = $this->print_error('error_xray', $e->getMessage());
@@ -161,15 +160,15 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name
-        
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
+
         $return = "";
 
         try {
             $report = "discussion";
             $element = "discussionMetrics";
 
-            $response = \local_xray\api\wsapi::courseelement($this->courseid,
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $element,
                 $report,
                 null,
@@ -177,11 +176,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 '',
                 $start,
                 $count,
-            	$sortfield,
-            	$sortorder);
+                $sortfield,
+                $sortorder);
 
             if (!$response) {
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                throw new Exception(\local_xray\local\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
                 if (!empty($response->data)) {
@@ -235,15 +234,15 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name
-        
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
+
         $return = "";
 
         try {
             $report = "discussion";
             $element = "discussionActivityByWeek";
 
-            $response = \local_xray\api\wsapi::courseelement($this->courseid,
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $element,
                 $report,
                 null,
@@ -251,11 +250,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 '',
                 $start,
                 $count,
-            	$sortfield,
-            	$sortorder);
+                $sortfield,
+                $sortorder);
 
             if (!$response) {
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
                 if (!empty($response->data)) {
@@ -406,26 +405,26 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name
-        
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
+
         $return = "";
 
         try {
             $report = "discussionGrading";
             $element = "studentDiscussionGrades";
-            $response = \local_xray\api\wsapi::courseelement($this->courseid, 
-            		$element, 
-            		$report, 
-            		null, 
-            		'', 
-            		'', 
-            		$start, 
-            		$count, 
-            		$sortfield, 
-            		$sortorder);
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
+                $element,
+                $report,
+                null,
+                '',
+                '',
+                $start,
+                $count,
+                $sortfield,
+                $sortorder);
 
             if (!$response) {
-                throw new Exception (\local_xray\api\xrayws::instance()->geterrormsg());
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
 
                 $data = array();

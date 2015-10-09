@@ -16,7 +16,7 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var object $CFG */
+/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
@@ -30,16 +30,16 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     public function view_action() {
         global $PAGE;
-        
+
         $output = '';
         try {
             if (has_capability("local/xray:gradebookreport_view", $this->get_context())) {
-                
+
                 $report = "gradebook";
-                $response = \local_xray\api\wsapi::course($this->courseid, $report);
+                $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
                     // Fail response of webservice.
-                    \local_xray\api\xrayws::instance()->print_error();
+                    \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
                     // Show graphs.
                     // Report date.
@@ -63,7 +63,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     /**
      * Report Students' Grades for course (table).
-     * @param object $element
+     * @param stdClass $element
      * @return string
      *
      */
@@ -82,17 +82,17 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         // Pager.
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
-        // Sortable
+        // Sortable.
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name
-        
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
+
         $return = "";
 
         try {
             $report = "gradebook";
             $element = "element2";
-            $response = \local_xray\api\wsapi::courseelement($this->courseid,
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $element,
                 $report,
                 null,
@@ -100,11 +100,11 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 '',
                 $start,
                 $count,
-            	$sortfield,
-            	$sortorder);
-            
+                $sortfield,
+                $sortorder);
+
             if (!$response) {
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                throw new Exception(\local_xray\local\api\xrayws::instance()->geterrormsg());
             } else {
                 $data = array();
                 if (!empty($response->data)) {
@@ -133,7 +133,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     /**
      * Report Students' Grades for course (table).
-     * @param object $element
+     * @param stdClass $element
      * @return string
      */
     private function summary_of_quizzes($element) {
@@ -153,13 +153,13 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name
-                
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
+
         $return = "";
         try {
             $report = "gradebook";
             $element = "element4";
-            $response = \local_xray\api\wsapi::courseelement($this->courseid,
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $element,
                 $report,
                 null,
@@ -167,11 +167,11 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 '',
                 $start,
                 $count,
-            	$sortfield,
-            	$sortorder);
-            
+                $sortfield,
+                $sortorder);
+
             if (!$response) {
-                throw new Exception(\local_xray\api\xrayws::instance()->geterrormsg());
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
                 if (!empty($response->data)) {
@@ -201,7 +201,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     /**
      * Report Density of Standardized Scores.
-     * @param object $element
+     * @param stdClass $element
      * @return string
      */
     private function density_of_standardized_scores($element) {
@@ -212,7 +212,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     /**
      * Report Boxplot of Standardized Scores per Quiz.
-     * @param object $element
+     * @param stdClass $element
      * @return string
      */
     private function boxplot_of_standardized_scores_per_quiz($element) {
@@ -223,7 +223,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     /**
      * Report Distribution of grades in course.
-     * @param object $element
+     * @param stdClass $element
      * @return string
      */
     private function scores_assigned_by_xray_versus_results_from_quizzes($element) {
@@ -234,7 +234,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     /**
      * Report Distribution of grades in course.
-     * @param object $element
+     * @param stdClass $element
      * @return string
      */
     private function comparison_of_scores_in_quizzes($element) {

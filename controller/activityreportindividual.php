@@ -44,10 +44,10 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
         $output = '';
         try {
             $report = "activity";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report, $this->userid);
+            $response = \local_xray\local\api\wsapi::course($this->courseid, $report, $this->userid);
             if (!$response) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
 
             } else {
 
@@ -69,7 +69,8 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
 
     /**
      * Report Students activity (table).
-     * @param object $element
+     *
+     * @param stdClass $element
      * @return string
      */
     private function activity_by_date($element) {
@@ -82,6 +83,8 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     /**
      * Report Activity of course by day.
      *
+     * @param stdClass $element
+     * @return string
      */
     private function activity_last_two_weeks($element) {
 
@@ -93,6 +96,8 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
     /**
      * Report Activity by time of day.
      *
+     * @param stdClass $element
+     * @return string
      */
     private function activity_last_two_weeks_byweekday($element) {
 

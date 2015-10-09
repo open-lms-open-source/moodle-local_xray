@@ -23,26 +23,22 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_xray\api;
+namespace local_xray\local\api;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class nourl_exception
+ * Class curlerror_exception
  *
  * @package   local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
  */
-class nourl_exception extends errors {
+class curlerror_exception extends \Exception {
     /**
-     * @param string $link
-     * @param mixed  $a
-     * @param mixed  $debuginfo
+     * @param nethold $ch
      */
-    public function __construct($link='', $a=null, $debuginfo=null) {
-        parent::__construct('xrayws_error_nourl', $link, $a, $debuginfo);
+    public function __construct(nethold $ch) {
+        parent::__construct($ch->geterror(), $ch->geterrno());
     }
 }
-

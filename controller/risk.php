@@ -16,7 +16,7 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var object $CFG */
+/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
@@ -34,10 +34,10 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         try {
             // INT-8186 (add non-active students from firstlogin in this report. This is available in activity report too).
             $report = "firstLogin";
-            $responsefirstlogin = \local_xray\api\wsapi::course($this->courseid, $report);
+            $responsefirstlogin = \local_xray\local\api\wsapi::course($this->courseid, $report);
             if (!$responsefirstlogin) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $output .= $this->output->inforeport($responsefirstlogin->reportdate, null, $PAGE->course->fullname);
                 // Show graphs. We need show table first in activity report.(INT-8186)
@@ -46,10 +46,10 @@ class local_xray_controller_risk extends local_xray_controller_reports {
             }
 
             $report = "risk";
-            $response = \local_xray\api\wsapi::course($this->courseid, $report);
+            $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
             if (!$response) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 // Show graphs.
                 $output .= $this->risk_measures($response->elements->riskMeasures); // TABLE.
@@ -83,14 +83,14 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         // Sortable
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name
-        
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
+
         $return = "";
 
         try {
             $report = "risk";
             $element = "riskMeasures";
-            $response = \local_xray\api\wsapi::courseelement($this->courseid,
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $element,
                 $report,
                 null,
@@ -98,11 +98,11 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 '',
                 $start,
                 $count,
-            	$sortfield,
-            	$sortorder);
+                $sortfield,
+                $sortorder);
             if (!$response) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
                 if (!empty($response->data)) {
@@ -114,6 +114,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                             foreach ($response->columnOrder as $column) {
                                 $r->{$column} = '';
                                 if (isset($row->{$column}->value)) {
+                                    /* @var local_xray_renderer $localxrayrenderer */
                                     $localxrayrenderer = $PAGE->get_renderer('local_xray');
                                     switch ($column) {
                                         case 'timeOnTask':
@@ -189,16 +190,16 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         // Pager.
         $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
         $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
-        // Sortable
+        // Sortable.
         $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name
-        
+        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
+
         $return = "";
         try {
             $report = "firstLogin";
             $element = "nonStarters";
-            $response = \local_xray\api\wsapi::courseelement($this->courseid,
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $element,
                 $report,
                 null,
@@ -206,12 +207,12 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 '',
                 $start,
                 $count,
-            	$sortfield,
-            	$sortorder);
-            
+                $sortfield,
+                $sortorder);
+
             if (!$response) {
                 // Fail response of webservice.
-                \local_xray\api\xrayws::instance()->print_error();
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
                 if (!empty($response->data)) {

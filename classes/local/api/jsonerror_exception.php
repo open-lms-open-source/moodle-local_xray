@@ -23,25 +23,25 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_xray\api;
+namespace local_xray\local\api;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class errors
+ * Class jsonerror_exception
  *
- * @package   local_xray
+ * @package local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class errors extends \moodle_exception {
-    /**
-     * @param string $errorcode
-     * @param string $link
-     * @param null $a
-     * @param null $debuginfo
-     */
-    public function __construct($errorcode, $link='', $a=null, $debuginfo=null) {
-        parent::__construct($errorcode, 'local_xray', $link, $a, $debuginfo);
+class jsonerror_exception extends \Exception {
+    public function __construct() {
+        $error = 'No Error!';
+        $errornr = 0;
+        if (json_last_error()) {
+            $error = json_last_error_msg();
+            $errornr = json_last_error();
+        }
+        parent::__construct($error, $errornr);
     }
 }
