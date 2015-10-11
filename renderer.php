@@ -45,15 +45,15 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * @param  string $reportdate - Report date in ISO8601 format
      * @param  stdClass $user - User object
-     * @param  string $course - Course title
+     * @param  string $reportcontroller - controller name
+     * @param  array $reports - list of links
      * @return string
      */
-    public function inforeport($reportdate, $user = null, $course = null) {
-        ($course); // Disable unused param warning.
+    public function inforeport($reportdate, $reportcontroller, $reports, $user = null) {
         $date = new DateTime($reportdate);
         $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
 
-        $output = "";
+        $output = $this->print_course_menu($reportcontroller, $reports);
         $output .= html_writer::start_div('inforeport');
         $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate);
         if (!empty($user)) {
@@ -180,19 +180,18 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Set Category
      *
-     * @param int $value
+     * @param  float $value
      * @return string
      */
     public function set_category($value) {
-        $category = '';
+        $size = 'high';
         if ($value < 0.2) {
-            $category = get_string('low', 'local_xray');
-        } else if ($value > 0.2 && $value < 0.3) {
-            $category = get_string('medium', 'local_xray');
-        } else {
-            $category = get_string('high', 'local_xray');
+            $size = 'low';
+        } else if (($value > 0.2) && ($value < 0.3)) {
+            $size = 'medium';
         }
-        return $category . ' ' . $value;
+
+        return get_string($size, 'local_xray') . ' ' . $value;
     }
 
     /**
@@ -202,15 +201,14 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function set_category_regularly($value) {
-        $category = '';
+        $string = 'irregular';
         if ($value < 1) {
-            $category = get_string('highlyregularity', 'local_xray');
+            $string = 'highlyregularity';
         } else if ($value < 2) {
-            $category = get_string('somewhatregularity', 'local_xray');
-        } else {
-            $category = get_string('irregular', 'local_xray');
+            $string = 'somewhatregularity';
         }
-        return $category . ' ' . $value;
+
+        return get_string($string, 'local_xray') . ' ' . $value;
     }
     /************************** End General elements for Reports **************************/
 
@@ -1033,7 +1031,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 $studentsvisitsperday .= "<div class='xray-visits-unit'>";
                 $studentsvisitsperday .= "<div class='xray-visits-per-day'>$day</div>";
                 $studentsvisitsperday .= "<div class='xray-visits-per-day-line' style='height:" .
-                                         $percent . "%'>$visitsperday</div>";
+                    $percent . "%'>$visitsperday</div>";
                 $studentsvisitsperday .= "</div>";
             }
             $studentsvisitsperday .= "</div>";
@@ -1058,11 +1056,73 @@ class local_xray_renderer extends plugin_renderer_base {
         $userpicture->size = 30;
         $picture = $this->render($userpicture);
         $fullname = '<a href="' . $CFG->wwwroot . '/user/profile.php?id=' . $user->id . '">'
-                    . format_string(fullname($user)) . '</a>';
+            . format_string(fullname($user)) . '</a>';
         return "<div class='dashboard_xray_users_profile'>
                 $picture $fullname </div>";
     }
 
     /************************** End Course Header **************************/
+
+    /**
+     * Print menu html
+     *
+     * @param  string $reportcontroller
+     * @param  array  $reports
+     * @return string
+     */
+    public function print_course_menu($reportcontroller, $reports) {
+        $displaymenu = get_config('local_xray', 'displaymenu');
+        $menu = '';
+        if ($displaymenu) {
+            if (!empty($reports)) {
+                $menuitems = [];
+                foreach ($reports as $nodename => $reportsublist) {
+                    foreach ($reportsublist as $reportstring => $url) {
+                        $class = $reportstring;
+                        if (!empty($reportcontroller)) {
+                            $class .= " xray-reports-links-bk-image-small";
+                        } else {
+                            $class .= " xray-reports-links-bk-image-large";
+                        }
+                        if ($reportstring == $reportcontroller) {
+                            $class .= " xray-menu-item-active";
+                        }
+                        $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $class));
+                    }
+                }
+                $title = '';
+                if (empty($reportcontroller)) {
+                    $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
+                }
+                $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
+                                                               'class' => 'xray-reports-links'));
+                $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
+            }
+        }
+
+        return $menu;
+    } // End print_course_header_menu.
+
+    /**
+     * Print course header data html
+     *
+     * @return string
+     */
+    public function print_course_header_data() {
+        $displayheaderdata = get_config('local_xray', 'displayheaderdata');
+
+        $headerdata = '';
+        if ($displayheaderdata) {
+            $headerdata = $this->snap_dashboard_xray();
+            if (!empty($headerdata)) {
+                $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') .
+                                           get_string('analytics', 'local_xray'));
+                $subc = $title . $headerdata;
+                $headerdata = \html_writer::div($subc, '', ['id' => 'js-headerdata', 'class' => 'clearfix']);
+            }
+        }
+
+        return $headerdata;
+    } // End print_course_header_data.
 
 }

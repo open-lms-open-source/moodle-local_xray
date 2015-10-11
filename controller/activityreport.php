@@ -42,10 +42,10 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                 if (!$responsefirstlogin) {
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
-
                 } else {
-
-                    $output .= $this->output->inforeport($responsefirstlogin->reportdate, null, $PAGE->course->fullname);
+                    $reportcontroller = $this->url->get_param('controller');
+                    $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+                    $output = $this->output->inforeport($responsefirstlogin->reportdate, $reportcontroller, $reports);
                     // Show graphs. We need show table first in activity report.(INT-8186).
                     $output .= $this->first_login_non_starters($responsefirstlogin->elements->nonStarters);
                 }
@@ -69,7 +69,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
             }
 
         } catch (Exception $e) {
-            $output = $this->print_error('error_xray', $e->getMessage() . ' ' . $PAGE->pagetype);
+            $output = $this->print_error('error_xray', $e->getMessage());
         }
 
         return $output;

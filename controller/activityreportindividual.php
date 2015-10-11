@@ -50,11 +50,10 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 \local_xray\local\api\xrayws::instance()->print_error();
 
             } else {
-
-                // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate,
-                    $DB->get_record('user', array("id" => $this->userid)),
-                    $PAGE->course->fullname);
+                $reportcontroller = $this->url->get_param('controller');
+                $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+                $output .= $this->output->inforeport($response->reportdate, $reportcontroller, $reports,
+                                                    $DB->get_record('user', array('id' => $this->userid)));
                 $output .= $this->activity_by_date($response->elements->activityLevelTimeline);
                 $output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
                 $output .= $this->activity_last_two_weeks_byweekday($response->elements->barplotOfActivityByWeekday);

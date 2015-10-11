@@ -28,78 +28,52 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * @param string $value
- * @param string $starts
- * @return bool
- */
-function local_xray_startswith($value, $starts) {
-    return (stripos($value, $starts) === 0);
-}
-
-/**
- * @param moodle_page $page
- * @return bool
- */
-function local_xray_permittedpage(moodle_page $page) {
-    // We have to use course url instead of pagetype since some pages force course pagetype...
-    // Have in mind that ANY UNHANDLED EXCEPTION resets $PAGE->url to '/' ...
-    $courseurl = new moodle_url('/course/view.php');
-    $result = $page->url->compare($courseurl, URL_MATCH_BASE) ||
-              in_array($page->pagetype, ['local-xray-view', 'mod-quiz-view', 'mod-forum-view', 'mod-hsuforum-view']);
-    return $result;
-}
-
-/**
  * Generate list of report links according to the current page
  * Result is returned as associative array ($reportname => $reporturl)
  *
- * @param moodle_page $page
- * @param context $context
+ * @param  moodle_page $page
+ * @param  context $context
  * @return array
  * @throws coding_exception
  */
 function local_xray_navigationlinks(moodle_page $page, context $context) {
     // Small caching to prevent double calculation call since we need the same information in both calls.
     static $reports = null;
-    if ($reports !== null) {
+    if (($reports !== null) || ($context->contextlevel < CONTEXT_COURSE) || !has_capability('local/xray:view', $context)) {
         return $reports;
     }
 
-    if (($context->contextlevel > CONTEXT_SYSTEM) && has_capability('local/xray:view', $context)) {
-        $baseurl = new moodle_url('/local/xray/view.php');
-        $courseurl = new moodle_url('/course/view.php', ['id' => $page->course->id]);
-        $reportlist = [];
-        $reports = [];
+    $reports     = [];
+    $extraparams = [];
 
-        $extraparams = [];
-        if ($page->url->compare($courseurl, URL_MATCH_BASE) || ($page->pagetype == 'local-xray-view')) {
-            $reportlist = [
-                'risk' => 'local/xray:risk_view',
-                'activityreport' => 'local/xray:activityreport_view',
-                'gradebookreport' => 'local/xray:gradebookreport_view',
-                'discussionreport' => 'local/xray:discussionreport_view'
-            ];
-        } else {
-            if (in_array($page->pagetype, ['mod-quiz-view', 'mod-forum-view', 'mod-hsuforum-view'])) {
-                $extraparams['cmid' ] = $context->instanceid;
-                $extraparams['forum'] = $page->cm->instance;
-                $reportlist = [
-                    'discussionreportindividualforum' => 'local/xray:discussionreportindividualforum_view',
-                ];
+    $reportlist  = [
+        'courseadmin' => [
+            'risk'             => 'local/xray:risk_view',
+            'activityreport'   => 'local/xray:activityreport_view',
+            'gradebookreport'  => 'local/xray:gradebookreport_view',
+            'discussionreport' => 'local/xray:discussionreport_view'
+        ]
+    ];
 
+    if (in_array($page->pagetype, ['mod-quiz-view', 'mod-forum-view', 'mod-hsuforum-view'])) {
+        $extraparams['cmid' ] = $context->instanceid;
+        $extraparams['forum'] = $page->cm->instance;
+        $reportlist = [
+            'modulesettings' => [
+                'discussionreportindividualforum' => 'local/xray:discussionreportindividualforum_view',
+            ]
+        ];
+    }
+
+    $baseurl = new moodle_url('/local/xray/view.php');
+    foreach ($reportlist as $nodename => $reportsublist) {
+        foreach ($reportsublist as $report => $capability) {
+            if (has_capability($capability, $context)) {
+                $reports[$nodename][$report] = $baseurl->out(false, ['controller' => $report,
+                                                                     'courseid'   => $page->course->id,
+                                                                     'action'     => 'view'] + $extraparams);
             }
         }
-
-        if (!empty($reportlist)) {
-            foreach ($reportlist as $report => $capability) {
-                if (has_capability($capability, $context)) {
-                    $reports[$report] = $baseurl->out(false, ['controller' => $report,
-                                                              'courseid'   => $page->course->id,
-                                                              'action'     => 'view'] + $extraparams);
-                }
-            }
-        }
-
     }
 
     return $reports;
@@ -107,8 +81,10 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
 
 /**
  * Extend navigations block.
- * @param settings_navigation $settings
- * @param context $context
+ *
+ * @param  settings_navigation $settings
+ * @param  context $context
+ * @return void
  * @throws coding_exception
  */
 function local_xray_extends_settings_navigation(settings_navigation $settings, context $context) {
@@ -119,22 +95,17 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
         return;
     }
 
-    $plugin   = 'local_xray';
-    $nodename = 'modulesettings';
-
-    // Reports to show in course-view/report view.
-    $courseview = local_xray_startswith($PAGE->pagetype, 'course-view');
-    $reportview = ($PAGE->pagetype == 'local-xray-view');
-    if ($courseview or $reportview) {
-        // Show nav x-ray in courseadmin node.
-        $nodename = 'courseadmin';
-    }
-
-    $coursenode = $settings->get($nodename);
-    $extranavigation = $coursenode->add(get_string('navigation_xray', $plugin));
-
-    foreach ($reports as $reportstring => $url) {
-        $extranavigation->add(get_string($reportstring, $plugin), $url);
+    foreach ($reports as $nodename => $reportsublist) {
+        $coursenode = $settings->get($nodename);
+        if ($coursenode === false) {
+            continue;
+        }
+        $extranavigation = $coursenode->add(get_string('navigation_xray', 'local_xray'));
+        foreach ($reportsublist as $reportstring => $url) {
+            $extranavigation->add(get_string($reportstring, 'local_xray'), $url);
+        }
+        $extranavigation = null;
+        $coursenode = null;
     }
 }
 
@@ -142,98 +113,63 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
  * This is the version of the JS that should be used up to Moodle 2.8
  * New one will be required for Moodle 2.9+
  *
- * @param global_navigation $nav
+ * @param  global_navigation $nav
  * @return void
  */
 function local_xray_extends_navigation(global_navigation $nav) {
     global $PAGE;
     ($nav); // Just to remove unused param warning.
 
-    if (!local_xray_permittedpage($PAGE)) {
+    static $search = [
+        'topics' => '#region-main',
+        'weeks' => '#region-main',
+        'flexpage' => '#region-main',
+        'folderview' => '#region-main',
+        'onetopic' => '#region-main',
+        'singleactivity' => '.notexist', // Not sure what to do here?
+        'social' => '#region-main',
+        'tabbedweek' => '#region-main',
+        'topcoll' => '#region-main',
+    ];
+
+    $courseformat = $PAGE->course->format;
+    if (!isset($search[$courseformat])) {
+        $search[$courseformat] = '#region-main';
+    }
+
+    $reportview = ($PAGE->pagetype == 'local-xray-view');
+    $courseview = $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE);
+    if (!$reportview && !$courseview) {
         return;
     }
 
-    static $search = [
-                       'topics'         => '#region-main',
-                       'weeks'          => '#region-main',
-                       'flexpage'       => '#region-main',
-                       'folderview'     => '#region-main',
-                       'onetopic'       => '#region-main',
-                       'singleactivity' => '.notexist', // Not sure what to do here?
-                       'social'         => '#region-main',
-                       'tabbedweek'     => '#region-main',
-                       'topcoll'        => '#region-main',
-                     ];
-
-    $reportview = ($PAGE->pagetype == 'local-xray-view');
-    $courseview = local_xray_startswith($PAGE->pagetype, 'course-view');
-    if ($courseview or $reportview) {
-        $courseformat = $PAGE->course->format;
-        if (!isset($search[$courseformat])) {
-            $search[$courseformat] = '#region-main';
-        }
-
-        $displaymenu = get_config('local_xray', 'displaymenu');
-        $displayheaderdata = get_config('local_xray', 'displayheaderdata');
-
-        $menu = '';
-        if ($displaymenu) {
-            $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
-            if (!empty($reports)) {
-                $menuitems = [];
-                $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
-                foreach ($reports as $reportstring => $url) {
-                    $class = $reportstring;
-                    if (!empty($reportcontroller)) {
-                        $class .= " xray-reports-links-bk-image-small";
-                    } else {
-                        $class .= " xray-reports-links-bk-image-large";
-                    }
-                    if ($reportstring == $reportcontroller) {
-                        $class .= " xray-menu-item-active";
-                    }
-                    $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $class));
-                }
-                $title = '';
-                if (empty($reportcontroller)) {
-                    $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
-                }
-                $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
-                                             'class' => 'xray-reports-links'));
-                $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
-            }
-        }
-
-        $headerdata = '';
-        if ($displayheaderdata and $courseview) {
-            /* @var local_xray_renderer $renderer */
-            $renderer = $PAGE->get_renderer('local_xray');
-            $headerdata = $renderer->snap_dashboard_xray();
-            if (!empty($headerdata)) {
-                $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') .
-                                                 get_string('analytics', 'local_xray'));
-                $subc = $title . $headerdata;
-                $headerdata = \html_writer::div($subc, '', ['id' => 'js-headerdata', 'class' => 'clearfix']);
-            }
-        }
-
-        if (!empty($menu) or !empty($headerdata)) {
-            $menuappend = $reportview ? 0 : 1;
-            // Easy way to force include on every page (provided that navigation block is present).
-            $PAGE->requires->yui_module(['moodle-local_xray-custmenu'],
-                'M.local_xray.custmenu.init',
-                [[
-                    'menusearch' => $search[$courseformat],
-                    'menuappend' => $menuappend,
-                    'items'      => $menu,
-                    'hdrsearch'  => $search[$courseformat],
-                    'hdrappend'  => 1,
-                    'header'     => $headerdata
-                ]],
-                null,
-                true
-            );
-        }
-
+    $headerdata = '';
+    $menu = '';
+    if (!$reportview) {
+        $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
+        $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+        /* @var local_xray_renderer $renderer */
+        $renderer = $PAGE->get_renderer('local_xray');
+        $menu = $renderer->print_course_menu($reportcontroller, $reports);
+        $headerdata = $renderer->print_course_header_data();
     }
+
+    if (!empty($menu) or !empty($headerdata)) {
+        $menuappend = $reportview ? 0 : 1;
+        // Easy way to force include on every page (provided that navigation block is present).
+        $PAGE->requires->yui_module(['moodle-local_xray-custmenu'],
+            'M.local_xray.custmenu.init',
+            [[
+                'menusearch' => $search[$courseformat],
+                'menuappend' => $menuappend,
+                'items'      => $menu,
+                'hdrsearch'  => $search[$courseformat],
+                'hdrappend'  => 1,
+                'header'     => $headerdata
+            ]],
+            null,
+            true
+        );
+    }
+
 }

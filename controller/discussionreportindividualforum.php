@@ -63,7 +63,9 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
+                $reportcontroller = $this->url->get_param('controller');
+                $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+                $output .= $this->output->inforeport($response->reportdate, $reportcontroller, $reports);
                 $output .= $this->wordshistogram($response->elements->wordHistogram);
                 $output .= $this->socialstructure($response->elements->socialStructure);
                 $output .= $this->wordcloud($response->elements->wordcloud);

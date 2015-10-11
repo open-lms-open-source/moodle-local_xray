@@ -55,11 +55,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
                     // Fail response of webservice.
-                    throw new Exception(\local_xray\local\api\xrayws::instance()->geterrormsg());
+                    \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
                     // Show graphs.
                     // Report date.
-                    $output .= $this->output->inforeport($response->elements->element1->date, null, $PAGE->course->fullname);
+                    $reportcontroller = $this->url->get_param('controller');
+                    $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+                    $output = $this->output->inforeport($response->elements->element1->date, $reportcontroller, $reports);
                     // Its a table, I will get info with new call.
                     $output .= $this->participation_metrics($response->elements->discussionMetrics);
                     // Table with variable columns - Send data to create columns.

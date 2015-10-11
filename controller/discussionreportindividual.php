@@ -50,9 +50,10 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 // Show graphs.
-                $output .= $this->output->inforeport($response->reportdate,
-                    $DB->get_record('user', array("id" => $this->userid)),
-                    $PAGE->course->fullname);
+                $reportcontroller = $this->url->get_param('controller');
+                $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+                $output .= $this->output->inforeport($response->reportdate, $reportcontroller, $reports,
+                                                     $DB->get_record('user', array("id" => $this->userid)));
                 // Its a table, I will get info with new call.
                 $output .= $this->participation_metrics($response->elements->discussionMetrics);
                 // Table with variable columns - Send data to create columns.
