@@ -173,7 +173,8 @@ class local_xray_controller_reports extends mr_controller {
      * @return string
      */
     public function print_menu() {
-        global $PAGE;
+        global $PAGE, $CFG;
+        require_once($CFG->dirroot.'/local/xray/lib.php');
         $reportcontroller = $this->url->get_param('controller');
         $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
         return $this->output->print_course_menu($reportcontroller, $reports);
