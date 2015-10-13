@@ -141,7 +141,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param string $width
      * @return string
      */
-    private function standard_table($data, $classes = '', $width = '100%') {
+    private function standard_table($data, $classes = '') {
         global $PAGE;
         // Load Jquery.
         $PAGE->requires->jquery();
@@ -155,9 +155,7 @@ class local_xray_renderer extends plugin_renderer_base {
         // Table jquery datatables for show reports.
         $output .= html_writer::start_tag("table", 
         		array("id" => "table_{$data['id']}",
-        		"class" => "display {$classes}",
-        		"cellspacing" => 0, 
-        		"width" => "{$width}"));
+        		"class" => "xraydatatable display {$classes}"));
         
         $output .= html_writer::start_tag("thead");
         $output .= html_writer::start_tag("tr");        

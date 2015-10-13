@@ -72,6 +72,12 @@
     margin: 1em 0;
 }
 
+/* Xray datatables style */
+#page-local-xray-view table.xraydatatable {
+	width:100%;
+	border-spacing: 0;
+}
+
 /* General xray legend of graph */
 #page-local-xray-view .xray_graph_legend {
     font-size: 11px;
