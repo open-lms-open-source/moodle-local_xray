@@ -151,12 +151,25 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = "";
         $output .= html_writer::start_tag('div', array("id" => $data['id'], "class" => "xray_element xray_element_table"));
         $output .= html_writer::tag('h3', $data['title'], array("class" => "reportsname eventtoogletable"));
+        
         // Table jquery datatables for show reports.
-        $output .= "<table id='table_{$data['id']}' class='display {$classes}' cellspacing='0' width='{$width}'> <thead><tr>";
+        $output .= html_writer::start_tag("table", 
+        		array("id" => "table_{$data['id']}",
+        		"class" => "display {$classes}",
+        		"cellspacing" => 0, 
+        		"width" => "{$width}"));
+        
+        $output .= html_writer::start_tag("thead");
+        $output .= html_writer::start_tag("tr");        
+        		
+        
         foreach ($data['columns'] as $c) {
-            $output .= "<th>" . $c->text . "</th>";
+            $output .= html_writer::tag("th", $c->text);
         }
-        $output .= " </tr> </thead> </table>";
+        
+        $output .= html_writer::end_tag("tr");
+        $output .= html_writer::end_tag("thead");
+        $output .= html_writer::end_tag("table");
         $output .= html_writer::end_tag('div');
 
         // Load table with data.
@@ -956,8 +969,10 @@ class local_xray_renderer extends plugin_renderer_base {
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
 
         // Students at risk.
-        $studentsrisk = "<div class='xray-headline'><span class='xray-headline-number h1'>$studentsrisk</span>" .
-            "$of $studentsenrolled</div>";
+        $studentsrisk = html_writer::tag("div", 
+        		html_writer::tag("span", $studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$studentsenrolled}", 
+        		array("class" => "xray-headline"));
+        		
         $studentatrisktext = html_writer::div(get_string('studentatrisk', 'local_xray'), 'xray-headline-description');
         // Bootstrap classes for positive/negative data.
         $comparitorclass = "xray-comparitor";
@@ -997,9 +1012,12 @@ class local_xray_renderer extends plugin_renderer_base {
             $riskfromlastweekth . $usersprofilebox . $usersprofileboxhidden .
             $showall, 'xray-risk col-sm-6 span6');
 
-        // Students Visitors.
-        $studentsvisitors = "<div class='xray-headline'><span class='xray-headline-number h1'>$studentsvisitslastsevendays</span>" .
-            "$of $studentsenrolled</small></div>";
+        // Students Visitors.  
+        $studentsvisitors = html_writer::div(html_writer::tag("span", 
+							        		$studentsvisitslastsevendays, 
+							        		array("class" => "xray-headline-number h1"))."{$of} {$studentsenrolled}", 
+        		array("class" => "xray-headline"));
+        
         $studentvisitslastdaystext = html_writer::div(get_string('studentvisitslastdays', 'local_xray'),
             'xray-headline-description');
         // Bootstrap classes for positive/negative data.
@@ -1020,18 +1038,19 @@ class local_xray_renderer extends plugin_renderer_base {
         $studentsvisitsperday = "";
         // TODO - Test data, remove.
         if ($studentsvisitslastsevendays) {
-            $studentsvisitsperday = "<div class='xray-student-visits-lastsevendays'>";
+            $studentsvisitsperday = html_writer::start_div("xray-student-visits-lastsevendays");
             foreach ($studentsvisitsbyweekday as $key => $value) {
                 $visitsperday = $value->number_of_visits->value;
                 $percent = ceil(($visitsperday / $studentsvisitslastsevendays) * 100);
                 $day = substr($value->day_of_week->value, 0, 3);
-                $studentsvisitsperday .= "<div class='xray-visits-unit'>";
-                $studentsvisitsperday .= "<div class='xray-visits-per-day'>$day</div>";
-                $studentsvisitsperday .= "<div class='xray-visits-per-day-line' style='height:" .
-                    $percent . "%'>$visitsperday</div>";
-                $studentsvisitsperday .= "</div>";
+                $studentsvisitsperday .= html_writer::start_div("xray-visits-unit");
+                $studentsvisitsperday .= html_writer::div($day, array("class" => "xray-visits-per-day"));             
+                $studentsvisitsperday .= html_writer::div($visitsperday, 
+                		array("class" => "xray-visits-per-day-line", "style" => "height:{$percent}%"));             
+                    
+                $studentsvisitsperday .= html_writer::end_div();
             }
-            $studentsvisitsperday .= "</div>";
+            $studentsvisitsperday .= html_writer::end_div();
         }
         $visitorscolumn = html_writer::div($studentsvisitors . $studentvisitslastdaystext . $visitorsfromlastweektr .
             $studentsvisitsperday, 'xray-visitors col-sm-6 span6');
@@ -1052,10 +1071,10 @@ class local_xray_renderer extends plugin_renderer_base {
         $userpicture->alttext = false;
         $userpicture->size = 30;
         $picture = $this->render($userpicture);
-        $fullname = '<a href="' . $CFG->wwwroot . '/user/profile.php?id=' . $user->id . '">'
-            . format_string(fullname($user)) . '</a>';
-        return "<div class='dashboard_xray_users_profile'>
-                $picture $fullname </div>";
+        $fullname = html_writer::tag("a", 
+        		format_string(fullname($user)), 
+        		array("href" => $CFG->wwwroot . '/user/profile.php?id=' . $user->id));
+        return html_writer::div("{$picture} {$fullname}", array("class" => "dashboard_xray_users_profile"));
     }
 
     /************************** End Course Header **************************/
