@@ -14,7 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') or die();
+/**
+ * Report controller.
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
@@ -22,8 +30,10 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 /**
  * Report Discussion Individual forum.
  *
- * @author Pablo Pagnone
- * @package local_xray
+ * @package   local_xray
+ * @author    Pablo Pagnone
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_controller_discussionreportindividualforum extends local_xray_controller_reports {
 
@@ -41,8 +51,8 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     public function init() {
         parent::init();
-        $this->cmid = (int)required_param('cmid', PARAM_ALPHANUM); // Cmid of forum.
-        $this->forumid = (int)required_param('forum', PARAM_ALPHANUM);
+        $this->cmid = required_param('cmid', PARAM_INT); // Cmid of forum.
+        $this->forumid = required_param('forum', PARAM_INT);
     }
 
     public function view_action() {

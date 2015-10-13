@@ -14,22 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') or die();
+/**
+ * Report controller.
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
-/* @var object $CFG */
+defined('MOODLE_INTERNAL') || die();
+
+/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
  * Activity Report Individual
  *
- * @author Pablo Pagnone
- * @package local_xray
+ * @package   local_xray
+ * @author    Pablo Pagnone
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_controller_activityreportindividual extends local_xray_controller_reports {
 
     public function init() {
         parent::init();
-        $this->userid = (int)required_param('userid', PARAM_ALPHANUM);
+        $this->userid = required_param('userid', PARAM_INT);
     }
 
     public function view_action() {

@@ -14,17 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') or die();
+/**
+ * Report controller.
+ *
+ * @package   local_xray
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
-/* @var object $CFG */
+defined('MOODLE_INTERNAL') || die();
+
+/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 /**
  * Xray integration Reports Controller
  *
- * @author Pablo Pagnone
- * @author German Vitale
- * @package local_xray
+ * @package   local_xray
+ * @author    Pablo Pagnone
+ * @author    German Vitale
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_controller_discussionreport extends local_xray_controller_reports {
 
@@ -157,11 +167,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
 
         // Pager.
-        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = optional_param('iDisplayLength', 10, PARAM_INT);
+        $start = optional_param('iDisplayStart', 0, PARAM_INT);
         // Sortable
-        $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
+        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
 
         $return = "";
@@ -182,7 +192,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $sortorder);
 
             if (!$response) {
-                throw new Exception(\local_xray\local\api\xrayws::instance()->geterrormsg());
+                \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
                 if (!empty($response->data)) {
@@ -231,11 +241,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     public function jsonweekdiscussion_action() {
         // Pager.
         // Count param with number of weeks.
-        $count = (int)optional_param('count', 10, PARAM_ALPHANUM);
-        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = optional_param('count', 10, PARAM_INT);
+        $start = optional_param('iDisplayStart', 0, PARAM_INT);
         // Sortable
-        $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
+        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
 
         $return = "";
@@ -403,11 +413,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      */
     public function jsonstudentsgrades_action() {
         // Pager.
-        $count = (int)optional_param('iDisplayLength', 10, PARAM_ALPHANUM);
-        $start = (int)optional_param('iDisplayStart', 0, PARAM_ALPHANUM);
+        $count = optional_param('iDisplayLength', 10, PARAM_INT);
+        $start = optional_param('iDisplayStart', 0, PARAM_INT);
         // Sortable
-        $sortcol = (int)optional_param('iSortCol_0', 0, PARAM_ALPHANUM); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHANUM); // Direction of sort.
+        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
+        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
 
         $return = "";

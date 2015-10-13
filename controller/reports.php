@@ -22,9 +22,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') or die();
+defined('MOODLE_INTERNAL') || die();
 
-/* @var object $CFG */
+/* @var stdClass $CFG */
 require_once($CFG->dirroot.'/local/mr/framework/controller.php');
 
 /**
@@ -74,7 +74,7 @@ class local_xray_controller_reports extends mr_controller {
     public function setup() {
         global $CFG, $PAGE;
 
-        $courseid = (int)optional_param('courseid', SITEID, PARAM_ALPHANUM);
+        $courseid = optional_param('courseid', SITEID, PARAM_INT);
         $this->ajax = (stripos($this->action, 'json') === 0);
         $setwantsurltome = true;
         $preventredirect = false;
@@ -98,14 +98,6 @@ class local_xray_controller_reports extends mr_controller {
             $PAGE->set_title($title);
             $this->heading->text = $title;
             $PAGE->set_pagelayout('report');
-        }
-    }
-
-
-    public function init() {
-        parent::init();
-        if (is_callable('mr_off') and mr_off('xray', 'local')) {
-            exit();
         }
     }
 
