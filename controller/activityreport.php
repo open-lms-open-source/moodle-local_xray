@@ -56,7 +56,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     $output .= $this->print_top();
                     $output .= $this->output->inforeport($responsefirstlogin->reportdate);
                     // Show graphs. We need show table first in activity report.(INT-8186).
-                    $output .= $this->first_login_non_starters($responsefirstlogin->elements->nonStarters);
+                    $output .= $this->output->activityreport_first_login_non_starters($this->courseid, $responsefirstlogin->elements->nonStarters);
                 }
 
                 $report = "activity";
@@ -66,14 +66,14 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
                     // Show graphs Activity report.
-                    $output .= $this->students_activity($response->elements->studentList);
-                    $output .= $this->activity_of_course_by_day($response->elements->activityLevelTimeline);
-                    $output .= $this->activity_by_time_of_day($response->elements->compassTimeDiagram);
-                    $output .= $this->activity_last_two_weeks_by_weekday($response->elements->barplotOfActivityByWeekday);
-                    $output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
-                    $output .= $this->activity_by_participant1($response->elements->activityByWeekAsFractionOfTotal);
-                    $output .= $this->activity_by_participant2($response->elements->activityByWeekAsFractionOfOwn);
-                    $output .= $this->first_login_to_course($responsefirstlogin->elements->firstloginPiechartAdjusted);
+                    $output .= $this->output->activityreport_students_activity($this->courseid, $response->elements->studentList);
+                    $output .= $this->output->show_on_lightbox("activityLevelTimeline", $response->elements->activityLevelTimeline);
+                    $output .= $this->output->show_on_lightbox("compassTimeDiagram", $response->elements->compassTimeDiagram);             
+                    $output .= $this->output->show_on_lightbox("barplotOfActivityByWeekday", $response->elements->barplotOfActivityByWeekday);
+                    $output .= $this->output->show_on_lightbox("barplotOfActivityWholeWeek", $response->elements->barplotOfActivityWholeWeek);
+                    $output .= $this->output->show_on_lightbox("activityByWeekAsFractionOfTotal", $response->elements->activityByWeekAsFractionOfTotal);
+                    $output .= $this->output->show_on_lightbox("activityByWeekAsFractionOfOwn", $response->elements->activityByWeekAsFractionOfOwn);
+                    $output .= $this->output->show_on_lightbox("firstloginPiechartAdjusted", $responsefirstlogin->elements->firstloginPiechartAdjusted);
                 }
             }
 
@@ -81,18 +81,6 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 
-        return $output;
-    }
-
-    /**
-     * Report Students activity (table).
-     * @param mixed $element
-     * @return string
-     */
-    private function students_activity($element) {
-
-        $output = "";
-        $output .= $this->output->activityreport_students_activity($this->courseid, $element);
         return $output;
     }
 
@@ -185,91 +173,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
     }
 
     /**
-     * Report Activity of course by day.
-     * @param mixed $element
-     * @return string
-     */
-    private function activity_of_course_by_day($element) {
-
-        $output = "";
-        $output .= $this->output->activityreport_activity_of_course_by_day($element);
-        return $output;
-    }
-
-    /**
-     * Report Activity by time of day.
-     * @param object $element
-     * @return string
-     */
-    private function activity_by_time_of_day($element) {
-
-        $output = "";
-        $output .= $this->output->activityreport_activity_by_time_of_day($element);
-        return $output;
-    }
-
-    /**
-     * Report Activity last two weeks.
-     * @param mixed $element
-     * @return string
-     */
-    private function activity_last_two_weeks($element) {
-
-        $output = "";
-        $output .= $this->output->activityreport_activity_last_two_weeks($element);
-        return $output;
-    }
-
-    /**
-     * Report Activity Last Two Weeks by Weekday
-     * @param mixed $element
-     * @return string
-     */
-    private function activity_last_two_weeks_by_weekday($element) {
-
-        $output = "";
-        $output .= $this->output->activityreport_activity_last_two_weeks_by_weekday($element);
-        return $output;
-    }
-
-    /**
-     * Report Activity by Participant 1
-     * @param mixed $element
-     * @return string
-     */
-    private function activity_by_participant1($element) {
-
-        $output = "";
-        $output .= $this->output->activityreport_activity_by_participant1($element);
-        return $output;
-    }
-
-    /**
-     * Report Activity by Participant 2
-     * @param mixed $element
-     * @return string
-     */
-    private function activity_by_participant2($element) {
-
-        $output = "";
-        $output .= $this->output->activityreport_activity_by_participant2($element);
-        return $output;
-    }
-
-    /**
-     * Report First login
-     * - Element to show: table users not starters in course.
-     * @param object $element
-     * @return string
-     */
-    private function first_login_non_starters($element) {
-        $output = "";
-        $output .= $this->output->activityreport_first_login_non_starters($this->courseid, $element);
-        return $output;
-    }
-
-    /**
-     * Json for table non starters.
+     * Json for table first login non starters.
      *
      */
     public function jsonfirstloginnonstarters_action() {
@@ -330,29 +234,4 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
         return json_encode($return);
     }
-
-    /**
-     * Report First login
-     * - Element to show: 5 , first login to course.
-     * @param object $element
-     * @return string
-     */
-    private function first_login_to_course($element) {
-        $output = "";
-        $output .= $this->output->activityreport_first_login_to_course($element);
-        return $output;
-    }
-
-    /**
-     * Report First login
-     * - Element to show: 9 , first login in date observed.
-     * @param object $element
-     * @return string
-     */
-    private function first_login_date_observed($element) {
-        $output = "";
-        $output .= $this->output->activityreport_first_login_date_observed($element);
-        return $output;
-    }
-
 }

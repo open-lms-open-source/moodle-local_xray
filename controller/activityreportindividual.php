@@ -63,54 +63,16 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate,
                                                     $DB->get_record('user', array('id' => $this->userid)));
-                $output .= $this->activity_by_date($response->elements->activityLevelTimeline);
-                $output .= $this->activity_last_two_weeks($response->elements->barplotOfActivityWholeWeek);
-                $output .= $this->activity_last_two_weeks_byweekday($response->elements->barplotOfActivityByWeekday);
-
+                
+                
+                $output .= $this->output->show_on_lightbox("activityLevelTimeline", $response->elements->activityLevelTimeline);
+                $output .= $this->output->show_on_lightbox("barplotOfActivityWholeWeek", $response->elements->barplotOfActivityWholeWeek);
+                $output .= $this->output->show_on_lightbox("barplotOfActivityByWeekday", $response->elements->barplotOfActivityByWeekday);               
             }
         } catch (Exception $e) {
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 
-        return $output;
-    }
-
-    /**
-     * Report Students activity (table).
-     *
-     * @param stdClass $element
-     * @return string
-     */
-    private function activity_by_date($element) {
-
-        $output = "";
-        $output .= $this->output->activityreportindividual_activity_by_date($element);
-        return $output;
-    }
-
-    /**
-     * Report Activity of course by day.
-     *
-     * @param stdClass $element
-     * @return string
-     */
-    private function activity_last_two_weeks($element) {
-
-        $output = "";
-        $output .= $this->output->activityreportindividual_activity_last_two_weeks($element);
-        return $output;
-    }
-
-    /**
-     * Report Activity by time of day.
-     *
-     * @param stdClass $element
-     * @return string
-     */
-    private function activity_last_two_weeks_byweekday($element) {
-
-        $output = "";
-        $output .= $this->output->activityreportindividual_activity_last_two_weeks_byday($element);
         return $output;
     }
 }

@@ -53,7 +53,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $output .= $this->output->inforeport($responsefirstlogin->reportdate);
                 // Show graphs. We need show table first in activity report.(INT-8186)
                 // Call to independient call to show in table.
-                $output .= $this->first_login_non_starters($responsefirstlogin->elements->nonStarters);
+                $output .= $this->output->risk_first_login_non_starters($this->courseid, $responsefirstlogin->elements->nonStarters);
             }
 
             $report = "risk";
@@ -62,10 +62,11 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 // Fail response of webservice.
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
-                // Show graphs.
-                $output .= $this->risk_measures($response->elements->riskMeasures); // TABLE.
-                $output .= $this->total_risk_profile($response->elements->riskDensity);
-                $output .= $this->academic_vs_social_risk($response->elements->riskScatterPlot);
+                // Show table.
+                $output .= $this->output->risk_risk_measures($this->courseid, $response->elements->riskMeasures);
+                // Graphs.
+                $output .= $this->output->show_on_lightbox("riskDensity", $response->elements->riskDensity);
+                $output .= $this->output->show_on_lightbox("riskScatterPlot", $response->elements->riskScatterPlot);
             }
         } catch (Exception $e) {
             $output = $this->print_error('error_xray', $e->getMessage());
@@ -73,18 +74,11 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
         return $output;
     }
-
+    
     /**
-     * Report Risk measures.(TABLE)
-     * @param mixed $element
+     * Json response for table risk measures.
      * @return string
      */
-    private function risk_measures($element) {
-        $output = "";
-        $output .= $this->output->risk_risk_measures($this->courseid, $element);
-        return $output;
-    }
-
     public function jsonriskmeasures_action() {
         global $PAGE;
 
@@ -156,41 +150,6 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         }
 
         return json_encode($return);
-    }
-
-    /**
-     * Report total risk profile
-     * @param object $element
-     * @return string
-     */
-    private function total_risk_profile($element) {
-        $output = "";
-        $output .= $this->output->risk_total_risk_profile($element);
-        return $output;
-    }
-
-    /**
-     * Report total risk profile
-     * @param object $element
-     * @return string
-     */
-    private function academic_vs_social_risk($element) {
-
-        $output = "";
-        $output .= $this->output->risk_academic_vs_social_risk($element);
-        return $output;
-    }
-
-    /**
-     * Report First login
-     * - Element to show: table users not starters in course.
-     * @param object $element
-     * @return string
-     */
-    private function first_login_non_starters($element) {
-        $output = "";
-        $output .= $this->output->risk_first_login_non_starters($this->courseid, $element);
-        return $output;
     }
 
     /**

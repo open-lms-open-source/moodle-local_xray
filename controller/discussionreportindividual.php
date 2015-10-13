@@ -64,28 +64,23 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $output .= $this->output->inforeport($response->reportdate,
                                                      $DB->get_record('user', array("id" => $this->userid)));
                 // Its a table, I will get info with new call.
-                $output .= $this->participation_metrics($response->elements->discussionMetrics);
+                $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, 
+                		$response->elements->discussionMetrics, 
+                		$this->userid);
                 // Table with variable columns - Send data to create columns.
-                $output .= $this->discussion_activity_by_week($response->elements->discussionActivityByWeek);
-                $output .= $this->social_structure($response->elements->socialStructure);
-                $output .= $this->main_terms($response->elements->wordcloud);
-                $output .= $this->main_terms_histogram($response->elements->wordHistogram);
+                $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid, 
+                		$this->userid, 
+                		$response->elements->discussionActivityByWeek);
+                
+                // Graphs.
+                $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
+                $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
+                $output .= $this->output->show_on_lightbox("wordHistogram", $response->elements->wordHistogram);
             }
         } catch (Exception $e) {
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 
-        return $output;
-    }
-
-    /**
-     * Report "A summary table to be added" (table).
-     * @param object $element
-     * @return string
-     */
-    private function participation_metrics($element) {
-        $output = "";
-        $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, $element, $this->userid);
         return $output;
     }
 
@@ -147,18 +142,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
         return json_encode($return);
     }
-
-    /**
-     * Report "Discussion Activity by Week" (table).
-     * @param object $element
-     * @return string
-     */
-    private function discussion_activity_by_week($element) {
-        $output = "";
-        $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid, $this->userid, $element);
-        return $output;
-    }
-
+    
     /**
      * Json for provide data to discussion_activity_by_week table.
      *
@@ -222,38 +206,4 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
         return json_encode($return);
     }
-
-    /**
-     * Report Social Structure.
-     * @param object $element
-     * @return string
-     */
-    private function social_structure($element) {
-        $output = "";
-        $output .= $this->output->discussionreportindividual_social_structure($element);
-        return $output;
-    }
-
-    /**
-     * Report Main Terms.
-     * @param mixed $element
-     * @return string
-     */
-    private function main_terms($element) {
-        $output = "";
-        $output .= $this->output->discussionreportindividual_main_terms($element);
-        return $output;
-    }
-
-    /**
-     * Report Main Terms Histogram.
-     * @param object $element
-     * @return string
-     */
-    private function main_terms_histogram($element) {
-        $output = "";
-        $output .= $this->output->discussionreportindividual_main_terms_histogram($element);
-        return $output;
-    }
-
 }

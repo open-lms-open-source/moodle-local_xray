@@ -67,24 +67,22 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-                    // Show graphs.
+                    // Show graphs.               	
                     // Report date.
                     $output  = $this->print_top();
                     $output .= $this->output->inforeport($response->elements->element1->date);
+                    
                     // Its a table, I will get info with new call.
-                    $output .= $this->participation_metrics($response->elements->discussionMetrics);
+                    $output .= $this->output->discussionreport_participation_metrics($this->courseid, $response->elements->discussionMetrics);
                     // Table with variable columns - Send data to create columns.
-                    $output .= $this->discussion_activity_by_week($response->elements->discussionActivityByWeek);
-                    $output .= $this->main_terms($response->elements->wordcloud);
-                    $output .= $this->average_words_weekly_by_post($response->elements->avgWordPerPost);
-                    $output .= $this->social_structure($response->elements->socialStructure);
-                    $output .= $this->social_structure_with_word_count($response->elements->socialStructureWordCount);
-                    $output .= $this->social_structure_with_contributions_adjusted(
-                        $response->elements->socialStructureWordContribution
-                    );
-                    $output .= $this->social_structure_coefficient_of_critical_thinking(
-                        $response->elements->socialStructureWordCTC
-                    );
+                    $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid, $response->elements->discussionActivityByWeek);
+                    
+                    $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
+                    $output .= $this->output->show_on_lightbox("avgWordPerPost", $response->elements->avgWordPerPost);
+                    $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
+                    $output .= $this->output->show_on_lightbox("socialStructureWordCount", $response->elements->socialStructureWordCount);
+                    $output .= $this->output->show_on_lightbox("socialStructureWordContribution", $response->elements->socialStructureWordContribution);
+                    $output .= $this->output->show_on_lightbox("socialStructureWordCTC", $response->elements->socialStructureWordCTC);
                 }
             }
 
@@ -103,10 +101,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                             array("class" => "main")),
                         array("class" => "mr_html_heading"));
                     $output .= $this->output->inforeport($response->reportdate);
-                    $output .= $this->heatmap_endogenic_plagiarism_students(
-                        $response->elements->endogenicPlagiarismStudentsHeatmap
-                    );
-                    $output .= $this->heatmap_endogenic_plagiarism_instructors($response->elements->endogenicPlagiarismHeatmap);
+                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismStudentsHeatmap", $response->elements->endogenicPlagiarismStudentsHeatmap);
+                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismHeatmap", $response->elements->endogenicPlagiarismHeatmap);
                 }
             }
 
@@ -126,36 +122,16 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         array("class" => "mr_html_heading"));
                     $output .= $this->output->inforeport($response->reportdate);
                     // Its a table, I will get info with new call.
-                    $output .= $this->students_grades_based_on_discussions($response->elements->studentDiscussionGrades);
-                    $output .= $this->barplot_of_suggested_grades($response->elements->discussionSuggestedGrades);
+                    $output .= $this->output->discussiongrading_students_grades_based_on_discussions($this->courseid, 
+                    		$response->elements->studentDiscussionGrades);
+                    
+                    $output .= $this->output->show_on_lightbox("discussionSuggestedGrades", $response->elements->discussionSuggestedGrades);;
                 }
             }
 
         } catch (Exception $e) {
             $output = $this->print_error('error_xray', $e->getMessage());
         }
-        return $output;
-    }
-
-    /**
-     * Report "A summary table to be added" (table).
-     * @param object $element
-     * @return string
-     */
-    private function participation_metrics($element) {
-        $output = "";
-        $output .= $this->output->discussionreport_participation_metrics($this->courseid, $element);
-        return $output;
-    }
-
-    /**
-     * Report "Discussion Activity by Week" (table).
-     * @param object $element
-     * @return string
-     */
-    private function discussion_activity_by_week($element) {
-        $output = "";
-        $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid, $element);
         return $output;
     }
 
@@ -303,111 +279,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     }
 
     /**
-     * Report Average Words Weekly by Post.
-     * @param object $element
-     * @return string
-     */
-    private function average_words_weekly_by_post($element) {
-        $output = "";
-        $output .= $this->output->discussionreport_average_words_weekly_by_post($element);
-        return $output;
-    }
-
-    /**
-     * Report Social Structure.
-     * @param object $element
-     * @return string
-     */
-    private function social_structure($element) {
-        $output = "";
-        $output .= $this->output->discussionreport_social_structure($element);
-        return $output;
-    }
-
-    /**
-     * Report Social Structure with word count.
-     * @param object $element
-     * @return string
-     *
-     */
-    private function social_structure_with_word_count($element) {
-        $output = "";
-        $output .= $this->output->discussionreport_social_structure_with_word_count($element);
-        return $output;
-    }
-
-    /**
-     * Report Social Structure With Contributions Adjusted
-     * @param object $element
-     * @return string
-     */
-    private function social_structure_with_contributions_adjusted($element) {
-
-        $output = "";
-        $output .= $this->output->discussionreport_social_structure_with_contributions_adjusted($element);
-        return $output;
-    }
-
-    /**
-     * Report Social Structure Coefficient of Critical Thinking
-     * @param object $element
-     * @return string
-     */
-    private function social_structure_coefficient_of_critical_thinking($element) {
-
-        $output = "";
-        $output .= $this->output->discussionreport_social_structure_coefficient_of_critical_thinking($element);
-        return $output;
-    }
-
-    /**
-     * Report Main Terms
-     * @param object $element
-     * @return string
-     */
-    private function main_terms($element) {
-
-        $output = "";
-        $output .= $this->output->discussionreport_main_terms($element);
-        return $output;
-    }
-
-    /**
-     * Report Heatmap for students.
-     * @param object $element
-     * @return string
-     */
-    private function heatmap_endogenic_plagiarism_students($element) {
-
-        $output = "";
-        $output .= $this->output->discussionendogenicplagiarism_heatmap_endogenic_plagiarism_students($element);
-        return $output;
-    }
-
-    /**
-     * Report Heatmap for instructors.
-     * @param $element
-     * @return string
-     */
-    private function heatmap_endogenic_plagiarism_instructors($element) {
-
-        $output = "";
-        $output .= $this->output->discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors($element);
-        return $output;
-    }
-
-    /**
-     * Report Student Grades Based on Discussions(table)
-     * @param object $element
-     * @return string
-     */
-    private function students_grades_based_on_discussions($element) {
-        $output = "";
-        $output .= $this->output->discussiongrading_students_grades_based_on_discussions($this->courseid, $element);
-        return $output;
-    }
-
-    /**
      * Json for provide data to students_grades_based_on_discussions table.
      */
     public function jsonstudentsgrades_action() {
@@ -463,16 +334,5 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         }
 
         return json_encode($return);
-    }
-
-    /**
-     * Report Barplot of Suggested Grades
-     * @param object $element
-     * @return string
-     */
-    private function barplot_of_suggested_grades($element) {
-        $output = "";
-        $output .= $this->output->discussiongrading_barplot_of_suggested_grades($element);
-        return $output;
     }
 }

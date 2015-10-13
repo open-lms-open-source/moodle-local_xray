@@ -77,7 +77,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param  stdClass $element
      * @return string
      */
-    private function show_on_lightbox($name, $element) {
+    public function show_on_lightbox($name, $element) {
         global $PAGE;
         $plugin = "local_xray";
 
@@ -255,60 +255,6 @@ class local_xray_renderer extends plugin_renderer_base {
     }
 
     /**
-     * Graphic activity of course by day.(Graph)
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_activity_of_course_by_day($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Graphic activity by time of day.(Graph)
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_activity_by_time_of_day($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Graphic activity last two weeks.(Graph)
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_activity_last_two_weeks($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Graphic activity last two weeks BY weekday.(Graph)
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_activity_last_two_weeks_by_weekday($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Graphic activity by participant 1
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_activity_by_participant1($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Graphic activity by participant 2
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_activity_by_participant2($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
      * Graphic first login non startes (TABLE)
      * @param int $courseid
      * @param object $element
@@ -333,56 +279,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = $this->standard_table((array)$datatable);
         return $output;
     }
-
-    /**
-     * Graphic frist login to course
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_first_login_to_course($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Graphic first login date observed
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_first_login_date_observed($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
     /************************** End Elements for Report Activity **************************/
-
-    /************************** Elements for Report Activity Individual **************************/
-
-    /**
-     * Graphic activity individual by date
-     * @param stdClass $element
-     * @return string
-     */
-    public function activityreportindividual_activity_by_date($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Graphic activity individual last two week
-     * @param stdClass $element
-     * @return string
-     */
-    public function activityreportindividual_activity_last_two_weeks($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Graphic activity individual last two week by weekday
-     * @param stdClass $element
-     * @return string
-     */
-    public function activityreportindividual_activity_last_two_weeks_byday($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /************************** End Elements for Report Activity Individual **************************/
 
     /************************** Elements for Report Discussion **************************/
 
@@ -449,51 +346,6 @@ class local_xray_renderer extends plugin_renderer_base {
         return $output;
     }
 
-    /**
-     * Average words weekly by post. (Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreport_average_words_weekly_by_post($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Social structure.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreport_social_structure($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Social structure with contributions adjusted.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreport_social_structure_with_contributions_adjusted($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Social structure coefficient of critical thinking
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreport_social_structure_coefficient_of_critical_thinking($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Main Terms
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreport_main_terms($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
     /************************** End Elements for Report Discussion **************************/
 
 
@@ -558,95 +410,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $output;
     }
-
-    /**
-     * Social structure.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreportindividual_social_structure($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Social structure with word count.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreport_social_structure_with_word_count($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Main terms.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreportindividual_main_terms($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Main terms histogram.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreportindividual_main_terms_histogram($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
     /************************** End Elements for Report Discussion for an individual **************************/
-
-    /************************** Elements for Report Discussion individual forum **************************/
-
-
-    /**
-     * Social structure.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreportindividualforum_wordshistogram($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Main terms.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreportindividualforum_socialstructure($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Main terms histogram.(Graph)
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreportindividualforum_wordcloud($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/
-
-    /**
-     * Heatmap endogenic plagiarism student
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_students($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Heatmap endogenic plagiarism instructor
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionendogenicplagiarism_heatmap_endogenic_plagiarism_instructors($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-    /************************** End Elements for Report Discussion Endogenic Plagiarism **************************/
 
     /************************** Elements for Report Risk **************************/
 
@@ -700,25 +464,6 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $output;
     }
-
-    /**
-     * Total risk profile
-     * @param stdClass $element
-     * @return string
-     */
-    public function risk_total_risk_profile($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Academic vs social risk
-     * @param stdClass $element
-     * @return string
-     */
-    public function risk_academic_vs_social_risk($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
     /************************** End Elements for Report Risk **************************/
     /**************************  Elements for Report Discussion grading **************************/
 
@@ -744,15 +489,6 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = $this->standard_table((array)$datatable);
 
         return $output;
-    }
-
-    /**
-     * Discussion grading barplot
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussiongrading_barplot_of_suggested_grades($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
     }
 
     /************************** End Elements for Report Discussion grading **************************/
@@ -809,43 +545,6 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $output;
     }
-
-    /**
-     * Heat map of grade distribution.
-     * @param stdClass $element
-     * @return string
-     */
-    public function gradebookreport_density_of_standardized_scores($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Heat map of grade distribution.
-     * @param stdClass $element
-     * @return string
-     */
-    public function gradebookreport_boxplot_of_standardized_scores_per_quiz($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Heat map of grade distribution.
-     * @param stdClass $element
-     * @return string
-     */
-    public function gradebookreport_scores_assigned_by_xray_versus_results_from_quizzes($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
-    /**
-     * Heat map of grade distribution.
-     * @param stdClass $element
-     * @return string
-     */
-    public function gradebookreport_comparison_of_scores_in_quizzes($element) {
-        return $this->show_on_lightbox(__FUNCTION__, $element);
-    }
-
     /************************** End Elements for Gradebook Report **************************/
 
     /************************** Course Header **************************/
@@ -1034,7 +733,6 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Students visits by Week Day.
         $studentsvisitsperday = "";
-        // TODO - Test data, remove.
         if ($studentsvisitslastsevendays) {
             $studentsvisitsperday = html_writer::start_div("xray-student-visits-lastsevendays");
             foreach ($studentsvisitsbyweekday as $key => $value) {

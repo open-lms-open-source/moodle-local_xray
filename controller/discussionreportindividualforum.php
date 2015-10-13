@@ -75,47 +75,15 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                 // Show graphs.
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate);
-                $output .= $this->wordshistogram($response->elements->wordHistogram);
-                $output .= $this->socialstructure($response->elements->socialStructure);
-                $output .= $this->wordcloud($response->elements->wordcloud);
+                
+                $output .= $this->output->show_on_lightbox("wordHistogram", $response->elements->wordHistogram);
+                $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
+                $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
             }
         } catch (Exception $e) {
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 
-        return $output;
-    }
-
-    /**
-     * Words Histogram
-     * @param object $element
-     * @return string
-     */
-    private function wordshistogram($element) {
-        $output = "";
-        $output .= $this->output->discussionreportindividualforum_wordshistogram($element);
-        return $output;
-    }
-
-    /**
-     * Social Structure
-     * @param object $element
-     * @return string
-     */
-    private function socialstructure($element) {
-        $output = "";
-        $output .= $this->output->discussionreportindividualforum_socialstructure($element);
-        return $output;
-    }
-
-    /**
-     * Wordcloud
-     * @param object $element
-     * @return string
-     */
-    private function wordcloud($element) {
-        $output = "";
-        $output .= $this->output->discussionreportindividualforum_wordcloud($element);
         return $output;
     }
 }
