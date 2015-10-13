@@ -53,9 +53,8 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 } else {
                     // Show graphs.
                     // Report date.
-                    $reportcontroller = $this->url->get_param('controller');
-                    $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
-                    $output .= $this->output->inforeport($response->elements->element1->date, $reportcontroller, $reports);
+                    $output .= $this->print_top();
+                    $output .= $this->output->inforeport($response->elements->element1->date);
                     // Its a table, I will get info with new call.
                     $output .= $this->student_grades($response->elements->element2);
                     $output .= $this->density_of_standardized_scores($response->elements->element3);

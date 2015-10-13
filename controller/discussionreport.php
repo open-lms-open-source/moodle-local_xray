@@ -69,9 +69,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 } else {
                     // Show graphs.
                     // Report date.
-                    $reportcontroller = $this->url->get_param('controller');
-                    $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
-                    $output = $this->output->inforeport($response->elements->element1->date, $reportcontroller, $reports);
+                    $output  = $this->print_top();
+                    $output .= $this->output->inforeport($response->elements->element1->date);
                     // Its a table, I will get info with new call.
                     $output .= $this->participation_metrics($response->elements->discussionMetrics);
                     // Table with variable columns - Send data to create columns.
@@ -103,7 +102,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
                             array("class" => "main")),
                         array("class" => "mr_html_heading"));
-                    $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
+                    $output .= $this->output->inforeport($response->reportdate);
                     $output .= $this->heatmap_endogenic_plagiarism_students(
                         $response->elements->endogenicPlagiarismStudentsHeatmap
                     );
@@ -125,7 +124,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $output .= html_writer::tag("div",
                         html_writer::tag("h2", get_string("discussiongrading", $this->component), array("class" => "main")),
                         array("class" => "mr_html_heading"));
-                    $output .= $this->output->inforeport($response->reportdate, null, $PAGE->course->fullname);
+                    $output .= $this->output->inforeport($response->reportdate);
                     // Its a table, I will get info with new call.
                     $output .= $this->students_grades_based_on_discussions($response->elements->studentDiscussionGrades);
                     $output .= $this->barplot_of_suggested_grades($response->elements->discussionSuggestedGrades);

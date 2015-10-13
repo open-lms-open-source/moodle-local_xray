@@ -43,18 +43,15 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Show data about report
      *
-     * @param  string $reportdate - Report date in ISO8601 format
+     * @param  string   $reportdate - Report date in ISO8601 format
      * @param  stdClass $user - User object
-     * @param  string $reportcontroller - controller name
-     * @param  array $reports - list of links
      * @return string
      */
-    public function inforeport($reportdate, $reportcontroller, $reports, $user = null) {
+    public function inforeport($reportdate, $user = null) {
         $date = new DateTime($reportdate);
         $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
 
-        $output = $this->print_course_menu($reportcontroller, $reports);
-        $output .= html_writer::start_div('inforeport');
+        $output  = html_writer::start_div('inforeport');
         $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate);
         if (!empty($user)) {
             $output .= html_writer::tag("p", get_string(("user")) . ": " . format_string(fullname($user)));

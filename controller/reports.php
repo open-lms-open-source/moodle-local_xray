@@ -168,4 +168,24 @@ class local_xray_controller_reports extends mr_controller {
         $output = $this->output->error_text($baserr);
         return $output;
     }
+
+    /**
+     * @return string
+     */
+    public function print_menu() {
+        global $PAGE;
+        $reportcontroller = $this->url->get_param('controller');
+        $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
+        return $this->output->print_course_menu($reportcontroller, $reports);
+    }
+
+    /**
+     * @return string
+     */
+    public function print_top() {
+        $result  = $this->print_menu();
+        $result .= $this->mroutput->render($this->heading);
+        $this->heading->text = '';
+        return $result;
+    }
 }
