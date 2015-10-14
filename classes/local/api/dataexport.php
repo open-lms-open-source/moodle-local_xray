@@ -396,7 +396,7 @@ class dataexport {
         $sql = "
           SELECT     gg.id,
                      gg.userid AS participantid,
-                     cm.instance AS quizid,
+                     gi.iteminstance AS quizid,
                      gg.rawgrade,
                      gg.finalgrade,
                      gg.locktime,
@@ -404,9 +404,7 @@ class dataexport {
                      gg.timemodified
           FROM       {grade_grades}   gg
           INNER JOIN {grade_items}    gi ON gi.id = gg.itemid AND gi.itemmodule = :module
-          INNER JOIN {modules}        mo ON mo.name = :module
-          INNER JOIN {course_modules} cm ON cm.module = mo.id AND cm.course = gi.courseid AND cm.id = gi.iteminstance
-          WHERE      cm.added >= :added";
+          WHERE      gg.timecreated >= :added";
 
         $params = array('added' => $timest, 'module' => 'quiz');
 
