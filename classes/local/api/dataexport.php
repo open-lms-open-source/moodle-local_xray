@@ -196,22 +196,10 @@ class dataexport {
     public static function accesslog($timest, $dir) {
         global $DB;
 
-        $dbmanager = $DB->get_manager();
-        $tablename = 'usercoursetmp';
-        $table     = new \xmldb_table($tablename);
-        $userid    = $table->add_field('userid'  , XMLDB_TYPE_INTEGER, '10', false, XMLDB_NOTNULL, false, null, null);
-        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', false, XMLDB_NOTNULL, false, null, $userid);
-        $table->add_index('tmpckey' , XMLDB_INDEX_NOTUNIQUE, array('userid', 'courseid'));
-
-        if (!$dbmanager->table_exists($table)) {
-            $dbmanager->create_table($table);
-        } else {
-            // Do cleanup.
-            $DB->delete_records($table->getName());
-        }
+        $DB->delete_records('local_xray_uctmp');
 
         $sqli = "
-            INSERT INTO {usercoursetmp} (userid, courseid)
+            INSERT INTO {local_xray_uctmp} (userid, courseid)
             (
                 SELECT DISTINCT ra.userid, c.id AS courseid
                 FROM   {role_assignments} ra,
@@ -244,7 +232,7 @@ class dataexport {
                    l.module,
                    l.url
             FROM   {log} l,
-                   {usercoursetmp} rx
+                   {local_xray_uctmp} rx
             WHERE rx.courseid = l.course
                   AND
                   rx.userid = l.userid
@@ -254,49 +242,6 @@ class dataexport {
         $params = array('time' => $timest, 'ctxt' => CONTEXT_COURSE, 'deleted' => false);
 
         self::doexport($sql, $params, __FUNCTION__, $dir);
-    }
-
-    /**
-     * Keeping this for historical reasons only. Should not be used.
-     *
-     * @param int $timest
-     * @param string $dir
-     */
-    public static function accesslog_old($timest, $dir) {
-        $time = self::to_timestamp('l.time', true, 'time');
-        $sql = "
-            SELECT l.id,
-                   l.userid AS participantid,
-                   l.course AS courseid,
-                   {$time},
-                   l.ip,
-                   l.action,
-                   l.info,
-                   l.module,
-                   l.url
-            FROM   {log} l
-            INNER JOIN
-              (
-                   SELECT DISTINCT ra.userid, c.id AS courseid
-                   FROM   {role_assignments} ra,
-                          {context} ctx,
-                          {course} c,
-                          {user} u
-                   WHERE  ctx.contextlevel = :ctxt
-                          AND
-                          ra.contextid = ctx.id
-                          AND
-                          ctx.instanceid = c.id
-                          AND
-                          ra.userid = u.id
-                          AND
-                          u.deleted = :deleted
-              ) rx ON rx.courseid = l.course AND rx.userid = l.userid
-            WHERE l.time >= :time";
-
-        $params = array('time' => $timest, 'ctxt' => CONTEXT_COURSE, 'deleted' => false);
-
-        self::doexport($sql, $params, 'accesslog_old', $dir);
     }
 
     /**
