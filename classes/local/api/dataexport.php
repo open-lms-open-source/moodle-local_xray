@@ -404,7 +404,7 @@ class dataexport {
                      gg.timemodified
           FROM       {grade_grades}   gg
           INNER JOIN {grade_items}    gi ON gi.id = gg.itemid AND gi.itemmodule = :module
-          WHERE      gg.timecreated >= :added";
+          WHERE      gg.timemodified >= :added";
 
         $params = array('added' => $timest, 'module' => 'quiz');
 
