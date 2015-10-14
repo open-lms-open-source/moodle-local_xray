@@ -391,7 +391,10 @@ class dataexport {
      * @param string $dir
      */
     public static function grades($timest, $dir) {
-        ($timest);
+        $wherecond = '(gg.timemodified >= :added)';
+        if ($timest == 0) {
+            $wherecond .= ' OR (gg.timemodified IS NULL)';
+        }
 
         $sql = "
           SELECT     gg.id,
@@ -404,7 +407,7 @@ class dataexport {
                      gg.timemodified
           FROM       {grade_grades}   gg
           INNER JOIN {grade_items}    gi ON gi.id = gg.itemid AND gi.itemmodule = :module
-          WHERE      gg.timemodified >= :added";
+          WHERE      {$wherecond}";
 
         $params = array('added' => $timest, 'module' => 'quiz');
 
