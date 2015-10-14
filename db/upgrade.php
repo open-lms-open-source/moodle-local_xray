@@ -36,6 +36,12 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2015070321) {
+        // Delete old table if present.
+        $oldtable = new xmldb_table('usercoursetmp');
+        if ($dbman->table_exists($oldtable)) {
+            $dbman->drop_table($oldtable);
+        }
+
         // Define table local_xray_uctmp to be created.
         $table = new xmldb_table('local_xray_uctmp');
 
