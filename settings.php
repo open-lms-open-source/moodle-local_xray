@@ -41,10 +41,10 @@ if ($hassiteconfig) {
                                                  new lang_string("xrayusername_desc", $plugin),
                                                  '', PARAM_TEXT));
     // Xray password webservice.
-    $settings->add( new admin_setting_configtext("{$plugin}/xraypassword",
+    $settings->add( new admin_setting_configpasswordunmask("{$plugin}/xraypassword",
                                                  new lang_string("xraypassword", $plugin),
                                                  new lang_string("xraypassword_desc", $plugin),
-                                                 '', PARAM_TEXT));
+                                                 ''));
 
     // Xray client identifier webservice.
     $settings->add( new admin_setting_configtext("{$plugin}/xrayclientid",
@@ -86,20 +86,20 @@ if ($hassiteconfig) {
                                                  new lang_string("xrayadmin_desc", $plugin),
                                                  '', PARAM_TEXT));
 
-    $settings->add( new admin_setting_configtext("{$plugin}/xrayadminkey",
+    $settings->add( new admin_setting_configpasswordunmask("{$plugin}/xrayadminkey",
                                                  new lang_string("xrayadminkey", $plugin),
                                                  new lang_string("xrayadminkey_desc", $plugin),
-                                                 '', PARAM_TEXT));
+                                                 ''));
 
-    $settings->add( new admin_setting_configtext("{$plugin}/awskey",
+    $settings->add( new admin_setting_configpasswordunmask("{$plugin}/awskey",
                                                  new lang_string("awskey", $plugin),
                                                  new lang_string("awskey_desc", $plugin),
-                                                 '', PARAM_TEXT));
+                                                 ''));
 
-    $settings->add( new admin_setting_configtext("{$plugin}/awssecret",
+    $settings->add( new admin_setting_configpasswordunmask("{$plugin}/awssecret",
                                                  new lang_string("awssecret", $plugin),
                                                  new lang_string("awssecret_desc", $plugin),
-                                                 '', PARAM_TEXT));
+                                                 ''));
 
     $settings->add( new admin_setting_configtext("{$plugin}/s3bucket",
                                                  new lang_string("s3bucket", $plugin),
