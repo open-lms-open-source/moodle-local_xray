@@ -136,12 +136,10 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Standard table Theme with Jquery datatables.
      *
-     * @param array $data - Array containing object DataTable.
-     * @param string $classes - Classes for table.
-     * @param string $width
+     * @param array $datatable - Array containing object DataTable.
      * @return string
      */
-    private function standard_table($data, $classes = '') {
+    public function standard_table(array $datatable) {
         global $PAGE;
         // Load Jquery.
         $PAGE->requires->jquery();
@@ -149,19 +147,19 @@ class local_xray_renderer extends plugin_renderer_base {
         // Load specific js for tables.
         $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray");
         $output = "";
-        $output .= html_writer::start_tag('div', array("id" => $data['id'], "class" => "xray_element xray_element_table"));
-        $output .= html_writer::tag('h3', $data['title'], array("class" => "reportsname eventtoogletable"));
+        $output .= html_writer::start_tag('div', array("id" => $datatable['id'], "class" => "xray_element xray_element_table"));
+        $output .= html_writer::tag('h3', $datatable['title'], array("class" => "reportsname eventtoogletable"));
         
         // Table jquery datatables for show reports.
         $output .= html_writer::start_tag("table", 
-        		array("id" => "table_{$data['id']}",
-        		"class" => "xraydatatable display {$classes}"));
+        		array("id" => "table_{$datatable['id']}",
+        		"class" => "xraydatatable display"));
         
         $output .= html_writer::start_tag("thead");
         $output .= html_writer::start_tag("tr");        
         		
         
-        foreach ($data['columns'] as $c) {
+        foreach ($datatable['columns'] as $c) {
             $output .= html_writer::tag("th", $c->text);
         }
         
@@ -171,7 +169,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::end_tag('div');
 
         // Load table with data.
-        $PAGE->requires->js_init_call("local_xray_show_on_table", array($data));
+        $PAGE->requires->js_init_call("local_xray_show_on_table", array($datatable));
 
         return $output;
     }
@@ -220,102 +218,9 @@ class local_xray_renderer extends plugin_renderer_base {
     }
     /************************** End General elements for Reports **************************/
 
-    /************************** Elements for Report Activity **************************/
-
-    /**
-     * Graphic students activity (TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_students_activity($courseid, $element) {
-
-        $columns = array(new local_xray\datatables\datatablescolumns('action', '', false, false));
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
-            }
-        }
-
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $courseid,
-            $columns,
-            false,
-            true,
-            "lftipr",
-            array(10, 50, 100),
-            true,
-            1); // Sort by first column "Lastname".
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-
-    /**
-     * Graphic first login non startes (TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @return string
-     */
-    public function activityreport_first_login_non_starters($courseid, $element) {
-        $columns = array();
-        // This report has not specified columnOrder.
-        if (!empty($element->columnHeaders) && is_object($element->columnHeaders)) {
-            $c = get_object_vars($element->columnHeaders);
-            foreach ($c as $id => $name) {
-                $columns[] = new local_xray\datatables\datatablescolumns($id, $name);
-            }
-        }
-
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            "view.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $courseid,
-            $columns);
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-        return $output;
-    }
-    /************************** End Elements for Report Activity **************************/
-
     /************************** Elements for Report Discussion **************************/
-
     /**
-     * Graphic Participation Metrics (TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @return string
-     */
-    public function discussionreport_participation_metrics($courseid, $element) {
-        $columns = array(new local_xray\datatables\datatablescolumns('action', '', false, false));
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
-            }
-        }
-
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $courseid,
-            $columns,
-            false,
-            true,
-            "lftipr",
-            array(10, 50, 100),
-            true,
-            1); // Sort by first column "Lastname".
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-
-    /**
-     * Graphic Discussion Activity by Week (TABLE)
+     * Graphic Discussion Activity by Week (TABLE) - Special case table.
      * @param int $courseid
      * @param stdClass $element
      * @return string
@@ -330,8 +235,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
 
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
+        $datatable = new local_xray\datatables\datatables($element,
             "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=" . $courseid . "&count=" . $numberofweeks,
             $columns,
             false,
@@ -352,35 +256,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /************************** Elements for Report Discussion for an individual **************************/
 
     /**
-     * Graphic Participation Metrics (TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @param int $userid
-     * @return string
-     */
-    public function discussionreportindividual_participation_metrics($courseid, $element, $userid) {
-
-        $columns = array();
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
-            }
-        }
-
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=" .
-            $courseid . "&userid=" . $userid,
-            $columns);
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-
-    /**
-     * Graphic Discussion Activity by Week (TABLE)
+     * Graphic Discussion Activity by Week (TABLE) - Special case table.
      * @param int $courseid
      * @param int $userid
      * @param object $element
@@ -396,14 +272,15 @@ class local_xray_renderer extends plugin_renderer_base {
 
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
 
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
+        $datatable = new local_xray\datatables\datatables($element,
             "view.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&courseid=" .
             $courseid . "&userid=" . $userid . "&count=" . $numberofweeks,
             $columns,
             false,
             false, // We don't need pagination because we have only four rows.
-            '<"xray_table_scrool"t>'); // Only the table.
+            '<"xray_table_scrool"t>',
+            array(10, 50, 100),
+        	false); // without sortable.
 
         // Create standard table.
         $output = $this->standard_table((array)$datatable);
@@ -411,141 +288,6 @@ class local_xray_renderer extends plugin_renderer_base {
         return $output;
     }
     /************************** End Elements for Report Discussion for an individual **************************/
-
-    /************************** Elements for Report Risk **************************/
-
-    /**
-     * Graphic first login non startes (TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @return string
-     */
-    public function risk_first_login_non_starters($courseid, $element) {
-        $columns = array();
-        // This report has not specified columnOrder.
-        if (!empty($element->columnHeaders) && is_object($element->columnHeaders)) {
-            $c = get_object_vars($element->columnHeaders);
-            foreach ($c as $id => $name) {
-                $columns[] = new local_xray\datatables\datatablescolumns($id, $name);
-            }
-        }
-
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            "view.php?controller='risk'&action='jsonfirstloginnonstarters'&courseid=" . $courseid,
-            $columns);
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-        return $output;
-    }
-
-    /**
-     * Risk Measures(TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @return string
-     */
-    public function risk_risk_measures($courseid, $element) {
-        $columns = array();
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
-            }
-        }
-
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            "view.php?controller='risk'&action='jsonriskmeasures'&courseid=" . $courseid,
-            $columns);
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-    /************************** End Elements for Report Risk **************************/
-    /**************************  Elements for Report Discussion grading **************************/
-
-    /**
-     * Discussion grading students grades (TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @return string
-     */
-    public function discussiongrading_students_grades_based_on_discussions($courseid, $element) {
-        $columns = array();
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
-            }
-        }
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            // INT-8194 , this report is moved to discussionreport.
-            "view.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $courseid,
-            $columns);
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-
-    /************************** End Elements for Report Discussion grading **************************/
-    /**************************  Elements for Gradebook Report **************************/
-
-    /**
-     * Students' Grades for course (TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @return string
-     */
-    public function gradebookreport_student_grades($courseid, $element) {
-
-        $columns = array();
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
-            }
-        }
-
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            "view.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=" . $courseid,
-            $columns);
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-
-    /**
-     * Summary of Quizzes (TABLE)
-     * @param int $courseid
-     * @param object $element
-     * @return string
-     */
-    public function gradebookreport_summary_of_quizzes($courseid, $element) {
-
-        $columns = array();
-        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-            foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
-            }
-        }
-
-        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
-            $element->title,
-            "view.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=" . $courseid,
-            $columns);
-
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
-
-        return $output;
-    }
-    /************************** End Elements for Gradebook Report **************************/
 
     /************************** Course Header **************************/
 

@@ -56,11 +56,17 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                     $output .= $this->print_top();
                     $output .= $this->output->inforeport($response->elements->element1->date);
                     // Its a table, I will get info with new call.
-                    $output .= $this->output->gradebookreport_student_grades($this->courseid, $response->elements->element2);
+                    $datatable = new local_xray\datatables\datatables($response->elements->element2,
+                    		"view.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=" . $this->courseid);
+                    $output .= $this->output->standard_table((array)$datatable);       
                     // Graph.
                     $output .= $this->output->show_on_lightbox("densityofstandardizedscores", $response->elements->element3);
+                    
                     // Its a table, I will get info with new call.
-                    $output .= $this->output->gradebookreport_summary_of_quizzes($this->courseid, $response->elements->element4);
+                    $datatable = new local_xray\datatables\datatables($response->elements->element4,
+                    		"view.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=" . $this->courseid);
+                    $output .= $this->output->standard_table((array)$datatable);
+
                     // Graphs.
                     $output .= $this->output->show_on_lightbox("boxplotofstandardizedscoresperquiz", $response->elements->element5);
                     $output .= $this->output->show_on_lightbox("scoresassignedbyxrayversusresultsfromquizzes", $response->elements->element6);

@@ -63,11 +63,13 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate,
                                                      $DB->get_record('user', array("id" => $this->userid)));
+                
                 // Its a table, I will get info with new call.
-                $output .= $this->output->discussionreportindividual_participation_metrics($this->courseid, 
-                		$response->elements->discussionMetrics, 
-                		$this->userid);
-                // Table with variable columns - Send data to create columns.
+                $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
+                		"view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=" . $this->courseid."&userid=".$this->userid);
+                $output .= $this->output->standard_table((array)$datatable);
+                 
+                // Special Table with variable columns.
                 $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid, 
                 		$this->userid, 
                 		$response->elements->discussionActivityByWeek);

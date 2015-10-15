@@ -25,6 +25,7 @@
 
 namespace local_xray\datatables;
 defined('MOODLE_INTERNAL') || die();
+use local_xray\datatables\datatablescolumns;
 
 class datatables {
 
@@ -129,23 +130,28 @@ class datatables {
     /**
      * Construct
      * 
-     * @param integer $id
+     * @param stdClass $element - element response of xray side.
      * @param string $jsonurl
-     * @param array $columns
-     * @param bool $search
+     * @param array $columns - If empty, columns will be take from element. This array is used for special cases.
+     * @param bool $columnaction - Add column action first in table.
      * @param bool $paging
      * @param string $dom
      * @param array $lengthMenu
      * @param integer $default_field_sort
      * @param string $sort_order
      */
-    public function __construct($id, $title, $jsonurl, $columns, $search = false, $paging=true, $dom = 'lftipr',
+    public function __construct($element, $jsonurl, $columns = array(), $columnaction = false, $paging=true, $dom = 'lftipr',
                                 $lengthMenu = array(10, 50, 100), $sort = true, $default_field_sort = 0, $sort_order = "asc") {
-        $this->id = $id;
-        $this->title = $title;
+    	
+        $this->id = $element->elementName;
+        $this->title = $element->title;
         $this->jsonurl = $jsonurl;
         $this->columns = $columns;
-        $this->search = $search;
+        if(empty($this->columns)) {
+        	// Get columns from element.
+        	$this->columns = self::convertcolumns($element, $columnaction);
+        }
+        $this->search = false; // Not implemented.
         $this->paging = $paging;
         $this->dom = $dom;
         $this->lengthMenu = $lengthMenu;
@@ -170,5 +176,32 @@ class datatables {
         $this->sZeroRecords = get_string('sZeroRecords', 'local_xray');
              
         $this->errorMessage = get_string('error_datatables','local_xray');
+    }
+    
+    /**
+     * Create array of columns from element sent by xray webservice.
+     * @param \stdClass $element
+     * @param boolean $actioncolumn - Include column action
+     * @return array
+     */
+    static function convertcolumns($element, $actioncolumn = false) {
+
+    	$columns = array();
+    	if($actioncolumn){
+    		$columns[] = new \local_xray\datatables\datatablescolumns('action', '', false, false);
+    	}
+
+    	if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+    		foreach ($element->columnOrder as $c) {
+    			$columns[] = new \local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
+    		}
+    	} else {
+    		// This report has not specified columnOrder.
+    		$c = get_object_vars($element->columnHeaders);
+    		foreach ($c as $id => $name) {
+    			$columns[] = new \local_xray\datatables\datatablescolumns($id, $name);
+    		}   		
+    	}
+    	return $columns;
     }
 }

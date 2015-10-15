@@ -73,9 +73,20 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $output .= $this->output->inforeport($response->elements->element1->date);
                     
                     // Its a table, I will get info with new call.
-                    $output .= $this->output->discussionreport_participation_metrics($this->courseid, $response->elements->discussionMetrics);
-                    // Table with variable columns - Send data to create columns.
-                    $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid, $response->elements->discussionActivityByWeek);
+                    $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
+                    		"view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $this->courseid,
+                    		array(),
+				            true, // Add column action.
+				            true,
+				            "lftipr",
+				            array(10, 50, 100),
+				            true,
+				            1); // Sort by first column "Lastname".Because table has action column.      
+                    $output .= $this->output->standard_table((array)$datatable);
+                    
+                    // Special Table with variable columns.
+                    $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid, 
+                    		$response->elements->discussionActivityByWeek);
                     
                     $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
                     $output .= $this->output->show_on_lightbox("avgWordPerPost", $response->elements->avgWordPerPost);
@@ -86,7 +97,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 }
             }
 
-            // Show reports Discussion endogenic (INT-8194).
+            // Show reports Discussion endogenic.
             if (has_capability("local/xray:discussionendogenicplagiarism_view", $ctx)) {
                 $report = "discussionEndogenicPlagiarism";
                 $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
@@ -106,7 +117,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 }
             }
 
-            // Show reports discussion grading. (INT-8194).
+            // Show reports discussion grading.
             if (has_capability("local/xray:discussiongrading_view", $ctx)) {
 
                 $report = "discussionGrading";
@@ -121,9 +132,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         html_writer::tag("h2", get_string("discussiongrading", $this->component), array("class" => "main")),
                         array("class" => "mr_html_heading"));
                     $output .= $this->output->inforeport($response->reportdate);
+                    
                     // Its a table, I will get info with new call.
-                    $output .= $this->output->discussiongrading_students_grades_based_on_discussions($this->courseid, 
-                    		$response->elements->studentDiscussionGrades);
+                    $datatable = new local_xray\datatables\datatables($response->elements->studentDiscussionGrades,
+                    		"view.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
+                    $output .= $this->output->standard_table((array)$datatable);
                     
                     $output .= $this->output->show_on_lightbox("discussionSuggestedGrades", $response->elements->discussionSuggestedGrades);;
                 }
