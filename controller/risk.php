@@ -67,6 +67,8 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 // Show table.
             	$datatable = new local_xray\datatables\datatables($response->elements->riskMeasures,
             			"view.php?controller='risk'&action='jsonriskmeasures'&courseid=" . $this->courseid);
+            	$datatable->sort_order = "desc";
+            	$datatable->default_field_sort = 5; // New requirement, order by total risk desc.
             	$output .= $this->output->standard_table((array)$datatable);
 
                 // Graphs.
