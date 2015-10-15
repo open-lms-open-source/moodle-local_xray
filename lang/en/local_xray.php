@@ -95,6 +95,10 @@ $string['error_loadimg'] = 'Error to load image, please try again reloading the 
 $string['error_xray'] = 'Error to connect with Xray, please try again reloading the page. If error persist, '.
                         'contact with the administrator please.';
 
+$string['error_compress'] = 'Unable to create compressed file. Please check with your administrator.';
+
+$string['error_generic'] = '{$a}';
+
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';
 $string['enabledreports_desc'] = 'Reports enabled for view in moodle.';
@@ -118,6 +122,8 @@ $string['s3bucket'] = 'S3 bucket';
 $string['s3bucket_desc'] = 'Name of the bucket to use for storing data uploads.';
 $string['s3bucketregion'] = 'S3 region';
 $string['s3bucketregion_desc'] = 'Region of the destination bucket.';
+$string['enablepacker'] = 'Use native compression';
+$string['enablepacker_desc'] = 'If enabled permits the use of OS native compression tools.';
 $string['packertar'] = 'GNU tar executable';
 $string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/software/tar/" target="_blank" '.
                             'title="GNU tar">GNU tar</a> executable on your server. Make sure to install '.

@@ -95,6 +95,10 @@ $string['error_loadimg'] = 'Error al cargar imagen, por favor intenta nuevamente
 $string['error_xray'] = 'Error al conectar con Xray, por favor intenta nuevamente recargando la página. Si el error '.
                         'persiste, por favor contacta con el administrador del sitio.';
 
+$string['error_compress'] = 'No fue possible crear archivo comprimido. Por favor contacta con el administrador del sitio.';
+
+$string['error_generic'] = '{$a}';
+
 /* Settings */
 $string['xrayclientid'] = 'Identificador de cliente';
 $string['xrayclientid_desc'] = 'Identificador de client para Xray';
@@ -116,6 +120,8 @@ $string['s3bucket'] = 'S3 bucket';
 $string['s3bucket_desc'] = 'Nombre del bucket a usar para guardar datos subidos.';
 $string['s3bucketregion'] = 'S3 region';
 $string['s3bucketregion_desc'] = 'Región de destino del bucket.';
+$string['enablepacker'] = 'Compresión nativa';
+$string['enablepacker_desc'] = 'Una vez habilitida permite uso de compresores de sistema operativo.';
 $string['packertar'] = 'Ejecutable GNU tar';
 $string['packertar_desc'] = 'Configurar locación de <a href="http://www.gnu.org/software/tar/" '.
                             'target="_blank" title="GNU tar">GNU tar</a> ejecutable en tu servidor. Asegurate de '.

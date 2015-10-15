@@ -124,6 +124,11 @@ if ($hassiteconfig) {
                                                    new lang_string("s3bucketregion_desc", $plugin),
                                                    'us-east-1', $choices));
 
+    // Should we use OS native packer or not?
+    $settings->add( new admin_setting_configcheckbox("{$plugin}/enablepacker",
+                                                     new lang_string("enablepacker", $plugin),
+                                                     new lang_string("enablepacker_desc", $plugin),
+                                                     '0'));
 
     $settings->add( new admin_setting_configexecutable("{$plugin}/packertar",
                                                        new lang_string("packertar", $plugin),

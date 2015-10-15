@@ -438,11 +438,62 @@ class dataexport {
     /**
      * @param string $dirbase
      * @param string $dirname
-     * @return mixed
-     * @throws \Exception
+     * @return string[]
+     */
+    public static function compress($dirbase, $dirname) {
+        $usenative = get_config('local_xray', 'enablepacker');
+        if ($usenative) {
+            $result = self::compresstargznative($dirbase, $dirname);
+        } else {
+            $result = self::compresstargz($dirbase, $dirname);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $dirbase
+     * @param string $dirname
+     * @return string[]
+     * @throws \moodle_exception
      */
     public static function compresstargz($dirbase, $dirname) {
-        $transdir = $dirbase.DIRECTORY_SEPARATOR.$dirname;
+        $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
+
+        // Get the list of files in directory.
+        $filestemp = get_directory_list($transdir, '', false, true, true);
+        $files = [];
+        foreach ($filestemp as $file) {
+            $files[$file] = $transdir . DIRECTORY_SEPARATOR . $file;
+        }
+
+        $archivefile = null;
+        $destfile = null;
+
+        if (!empty($files)) {
+            $admin = get_config('local_xray', 'xrayadmin');
+            $basefile = self::generatefilename($admin);
+            $archivefile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
+            $destfile = $admin . '/' . $basefile;
+
+            $tgzpacker = get_file_packer('application/x-gzip');
+            $result = $tgzpacker->archive_to_pathname($files, $archivefile);
+            if (!$result) {
+                print_error('error_compress', 'local_xray');
+            }
+        }
+
+        return array($archivefile, $destfile);
+    }
+
+    /**
+     * @param string $dirbase
+     * @param string $dirname
+     * @return string[]
+     * @throws \moodle_exception
+     */
+    public static function compresstargznative($dirbase, $dirname) {
+        $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
 
         $exportfiles = array_diff(scandir($transdir), array('..', '.'));
         $compfile = null;
@@ -464,7 +515,7 @@ class dataexport {
             $lastmsg = system($command, $ret);
             if ($ret != 0) {
                 // We have error code should not upload...
-                throw new \Exception($lastmsg, $ret);
+                print_error('error_generic', 'local_xray', '', $lastmsg);
             }
         }
 

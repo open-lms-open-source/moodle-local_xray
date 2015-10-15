@@ -26,11 +26,13 @@
 namespace local_xray\task;
 
 use core\task\scheduled_task;
+use local_xray\local\api\autocleanfile;
 use local_xray\local\api\wsapi;
 use local_xray\local\api\xrayws;
 use local_xray\local\api\dataexport;
 use local_xray\event\sync_log;
 use local_xray\event\sync_failed;
+use local_xray\local\api\autoclean;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -68,11 +70,6 @@ class data_sync extends scheduled_task {
     public function execute() {
         global $CFG;
         try {
-
-            if (is_callable('mr_off') and mr_off('xray', 'local')) {
-                throw new \Exception('Plugin is not enabled in control panel!');
-            }
-
             $config = get_config('local_xray');
 
             // Check if it is enabled?
@@ -118,15 +115,13 @@ class data_sync extends scheduled_task {
                 $timest = $dates[0];
             }
 
-            $dirbase  = dataexport::getdir();
-            $dirname  = uniqid('export_', true);
-            $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
-            make_writable_directory($transdir);
+            $storage = new autoclean();
+            dataexport::exportcsv($timest, $storage->getdirectory());
 
-            dataexport::exportcsv($timest, $transdir);
-
-            list($compfile, $destfile) = dataexport::compresstargz($dirbase, $dirname);
+            list($compfile, $destfile) = dataexport::compress($storage->getdirbase(), $storage->getdirname());
             if ($compfile !== null) {
+                $cleanfile = new autocleanfile($compfile);
+                ($cleanfile);
                 $uploadresult = $s3->upload($config->s3bucket,
                     $destfile,
                     fopen($compfile, 'rb'),
@@ -138,17 +133,11 @@ class data_sync extends scheduled_task {
                 }
 
                 sync_log::create_msg("Uploaded {$destfile}.")->trigger();
-
-                unlink($compfile);
             } else {
                 sync_log::create_msg("No data to upload.")->trigger();
             }
 
-            // Remove the directory.
-            dataexport::deletedir($transdir);
-
             sync_log::create_msg("Completed data sync.")->trigger();
-
         } catch (\Exception $e) {
             mtrace($e->getMessage());
             sync_failed::create_from_exception($e)->trigger();
