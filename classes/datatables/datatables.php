@@ -15,72 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Create column for Datatable Jquery plugin integration.
- * @package local_xray
- * @author Pablo Pagnone
- */
-class local_xray_datatableColumn {
-
-    /**
-     * Id of column
-     * @var string
-     */
-    public $mData;
-    
-    /**
-     * Is searchable
-     * @var boolean
-     */
-    public $bSearchable;
-    
-    /**
-     * Text to show
-     * @var string
-     */
-    public $text;
-    
-    /**
-     * Is sortable
-     * @var boolean
-     */
-    public $bSortable;
-    
-    /**
-     * Show column
-     * @var boolean
-     */
-    public $bVisible;
-    
-    /**
-     * Width column
-     * @var string
-     */
-    public $sWidth;
-
-    /**
-     * @param $mdata
-     * @param string $text
-     * @param bool|false $search
-     * @param bool|true $sortable
-     * @param bool|true $visible
-     * @param string $width
-     */
-    public function __construct($mdata, $text = '', $search = false, $sortable = true, $visible = true, $width = '') {
-        $this->mData = $mdata;
-        $this->text = $text;
-        $this->bSearchable = $search;
-        $this->bSortable = $sortable;
-        $this->bVisible = $visible;
-        $this->sWidth = $width;
-    }
-}
-
-/**
  * Create configuration for Datatable Jquery plugin integration.
+ *
  * @package local_xray
  * @author Pablo Pagnone
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_xray_datatable {
+
+namespace local_xray\datatables;
+defined('MOODLE_INTERNAL') || die();
+
+class datatables {
 
     /**
      * id for table

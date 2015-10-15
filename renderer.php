@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') or die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
-require_once($CFG->dirroot . '/local/xray/classes/local_xray_datatables.php');
+use local_xray\datatables\datatablescolumns;
 
 /**
  * Renderer
@@ -230,14 +230,14 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function activityreport_students_activity($courseid, $element) {
 
-        $columns = array(new local_xray_datatableColumn('action', '', false, false));
+        $columns = array(new local_xray\datatables\datatablescolumns('action', '', false, false));
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
             }
         }
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $courseid,
             $columns,
@@ -266,11 +266,11 @@ class local_xray_renderer extends plugin_renderer_base {
         if (!empty($element->columnHeaders) && is_object($element->columnHeaders)) {
             $c = get_object_vars($element->columnHeaders);
             foreach ($c as $id => $name) {
-                $columns[] = new local_xray_datatableColumn($id, $name);
+                $columns[] = new local_xray\datatables\datatablescolumns($id, $name);
             }
         }
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $courseid,
             $columns);
@@ -290,14 +290,14 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function discussionreport_participation_metrics($courseid, $element) {
-        $columns = array(new local_xray_datatableColumn('action', '', false, false));
+        $columns = array(new local_xray\datatables\datatablescolumns('action', '', false, false));
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
             }
         }
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $courseid,
             $columns,
@@ -323,14 +323,14 @@ class local_xray_renderer extends plugin_renderer_base {
     public function discussionreport_discussion_activity_by_week($courseid, $element) {
         // Create standard table.
         $columns = array();
-        $columns[] = new local_xray_datatableColumn('weeks', get_string('weeks', 'local_xray'), false, false);
+        $columns[] = new local_xray\datatables\datatablescolumns('weeks', get_string('weeks', 'local_xray'), false, false);
         foreach ($element->data as $column) {
-            $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value, false, false);
+            $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value, false, false);
         }
 
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=" . $courseid . "&count=" . $numberofweeks,
             $columns,
@@ -363,11 +363,11 @@ class local_xray_renderer extends plugin_renderer_base {
         $columns = array();
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
             }
         }
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=" .
             $courseid . "&userid=" . $userid,
@@ -389,14 +389,14 @@ class local_xray_renderer extends plugin_renderer_base {
     public function discussionreportindividual_discussion_activity_by_week($courseid, $userid, $element) {
         // Create standard table.
         $columns = array();
-        $columns[] = new local_xray_datatableColumn('weeks', get_string('week', 'local_xray'));
+        $columns[] = new local_xray\datatables\datatablescolumns('weeks', get_string('week', 'local_xray'));
         foreach ($element->data as $column) {
-            $columns[] = new local_xray_datatableColumn($column->week->value, $column->week->value);
+            $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value);
         }
 
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&courseid=" .
             $courseid . "&userid=" . $userid . "&count=" . $numberofweeks,
@@ -426,11 +426,11 @@ class local_xray_renderer extends plugin_renderer_base {
         if (!empty($element->columnHeaders) && is_object($element->columnHeaders)) {
             $c = get_object_vars($element->columnHeaders);
             foreach ($c as $id => $name) {
-                $columns[] = new local_xray_datatableColumn($id, $name);
+                $columns[] = new local_xray\datatables\datatablescolumns($id, $name);
             }
         }
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='risk'&action='jsonfirstloginnonstarters'&courseid=" . $courseid,
             $columns);
@@ -450,11 +450,11 @@ class local_xray_renderer extends plugin_renderer_base {
         $columns = array();
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
             }
         }
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='risk'&action='jsonriskmeasures'&courseid=" . $courseid,
             $columns);
@@ -477,10 +477,10 @@ class local_xray_renderer extends plugin_renderer_base {
         $columns = array();
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
             }
         }
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             // INT-8194 , this report is moved to discussionreport.
             "view.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $courseid,
@@ -505,11 +505,11 @@ class local_xray_renderer extends plugin_renderer_base {
         $columns = array();
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
             }
         }
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=" . $courseid,
             $columns);
@@ -531,11 +531,11 @@ class local_xray_renderer extends plugin_renderer_base {
         $columns = array();
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
-                $columns[] = new local_xray_datatableColumn($c, $element->columnHeaders->{$c});
+                $columns[] = new local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
             }
         }
 
-        $datatable = new local_xray_datatable(__FUNCTION__,
+        $datatable = new local_xray\datatables\datatables(__FUNCTION__,
             $element->title,
             "view.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=" . $courseid,
             $columns);
