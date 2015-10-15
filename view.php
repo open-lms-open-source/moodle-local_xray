@@ -24,7 +24,7 @@
 
 require_once('../../config.php');
 /* @var stdClass $CFG */
-require_once($CFG->dirroot.'/local/mr/bootstrap.php');
+require($CFG->dirroot.'/local/mr/bootstrap.php');
 require_once($CFG->dirroot.'/local/xray/lib/ehandler.php');
 
 if (!PHPUNIT_TEST or PHPUNIT_UTIL) {

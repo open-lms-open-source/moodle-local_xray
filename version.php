@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 // Because of the MDL-48156 we require Moodle 2.8.1.
 
 /* @var stdClass $plugin */
-$plugin->version  = 2015070321;
+$plugin->version  = 2015070322;
 $plugin->requires = 2014111001; // Moodle 2.8.1 .
 $plugin->cron = 0;
 $plugin->component = 'local_xray';

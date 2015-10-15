@@ -24,7 +24,7 @@
  */
 
 namespace local_xray\event;
-use core;
+use core\event\base;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -35,7 +35,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class sync_failed extends core\event\base {
+class sync_failed extends base {
 
     /**
      * Override in subclass.

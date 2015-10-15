@@ -24,7 +24,7 @@
  */
 
 namespace local_xray\event;
-use core;
+use core\event\base;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * Class sync_log
  * @package local_xray
  */
-class sync_log extends core\event\base {
+class sync_log extends base {
 
     /**
      * Override in subclass.
