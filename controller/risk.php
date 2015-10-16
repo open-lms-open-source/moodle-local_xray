@@ -54,7 +54,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 
                 // Show graphs. We need show table first in activity report.
                 $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
-                		"view.php?controller='risk'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
+                        "view.php?controller='risk'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
                 $output .= $this->output->standard_table((array)$datatable);
             }
 
@@ -65,11 +65,11 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 // Show table.
-            	$datatable = new local_xray\datatables\datatables($response->elements->riskMeasures,
-            			"view.php?controller='risk'&action='jsonriskmeasures'&courseid=" . $this->courseid);
-            	$datatable->sort_order = "desc";
-            	$datatable->default_field_sort = 5; // New requirement, order by total risk desc.
-            	$output .= $this->output->standard_table((array)$datatable);
+                $datatable = new local_xray\datatables\datatables($response->elements->riskMeasures,
+                        "view.php?controller='risk'&action='jsonriskmeasures'&courseid=" . $this->courseid);
+                $datatable->sort_order = "desc";
+                $datatable->default_field_sort = 5; // New requirement, order by total risk desc.
+                $output .= $this->output->standard_table((array)$datatable);
 
                 // Graphs.
                 $output .= $this->output->show_on_lightbox("riskDensity", $response->elements->riskDensity);

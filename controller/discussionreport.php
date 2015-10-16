@@ -67,26 +67,26 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-                    // Show graphs.               	
+                    // Show graphs.                   
                     // Report date.
                     $output  = $this->print_top();
                     $output .= $this->output->inforeport($response->elements->element1->date);
                     
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
-                    		"view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $this->courseid,
-                    		array(),
-				            true, // Add column action.
-				            true,
-				            "lftipr",
-				            array(10, 50, 100),
-				            true,
-				            1); // Sort by first column "Lastname".Because table has action column.      
+                            "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $this->courseid,
+                            array(),
+                            true, // Add column action.
+                            true,
+                            "lftipr",
+                            array(10, 50, 100),
+                            true,
+                            1); // Sort by first column "Lastname".Because table has action column.      
                     $output .= $this->output->standard_table((array)$datatable);
                     
                     // Special Table with variable columns.
                     $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid, 
-                    		$response->elements->discussionActivityByWeek);
+                            $response->elements->discussionActivityByWeek);
                     
                     $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
                     $output .= $this->output->show_on_lightbox("avgWordPerPost", $response->elements->avgWordPerPost);
@@ -135,7 +135,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->studentDiscussionGrades,
-                    		"view.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
+                            "view.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
                     
                     $output .= $this->output->show_on_lightbox("discussionSuggestedGrades", $response->elements->discussionSuggestedGrades);;

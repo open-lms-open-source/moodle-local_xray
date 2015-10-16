@@ -142,14 +142,14 @@ class datatables {
      */
     public function __construct($element, $jsonurl, $columns = array(), $columnaction = false, $paging=true, $dom = 'lftipr',
                                 $lengthMenu = array(10, 50, 100), $sort = true, $default_field_sort = 0, $sort_order = "asc") {
-    	
+        
         $this->id = $element->elementName;
         $this->title = $element->title;
         $this->jsonurl = $jsonurl;
         $this->columns = $columns;
         if(empty($this->columns)) {
-        	// Get columns from element.
-        	$this->columns = self::convertcolumns($element, $columnaction);
+            // Get columns from element.
+            $this->columns = self::convertcolumns($element, $columnaction);
         }
         $this->search = false; // Not implemented.
         $this->paging = $paging;
@@ -186,22 +186,22 @@ class datatables {
      */
     static function convertcolumns($element, $actioncolumn = false) {
 
-    	$columns = array();
-    	if($actioncolumn){
-    		$columns[] = new \local_xray\datatables\datatablescolumns('action', '', false, false);
-    	}
+        $columns = array();
+        if($actioncolumn){
+            $columns[] = new \local_xray\datatables\datatablescolumns('action', '', false, false);
+        }
 
-    	if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
-    		foreach ($element->columnOrder as $c) {
-    			$columns[] = new \local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
-    		}
-    	} else {
-    		// This report has not specified columnOrder.
-    		$c = get_object_vars($element->columnHeaders);
-    		foreach ($c as $id => $name) {
-    			$columns[] = new \local_xray\datatables\datatablescolumns($id, $name);
-    		}   		
-    	}
-    	return $columns;
+        if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
+            foreach ($element->columnOrder as $c) {
+                $columns[] = new \local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
+            }
+        } else {
+            // This report has not specified columnOrder.
+            $c = get_object_vars($element->columnHeaders);
+            foreach ($c as $id => $name) {
+                $columns[] = new \local_xray\datatables\datatablescolumns($id, $name);
+            }           
+        }
+        return $columns;
     }
 }

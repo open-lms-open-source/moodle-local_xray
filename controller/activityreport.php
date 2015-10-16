@@ -58,7 +58,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     
                     // We need show table first in activity report.(INT-8186).
                     $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
-                    		"view.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);                 
+                            "view.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);                 
                     $output .= $this->output->standard_table((array)$datatable);
                 }
 
@@ -69,19 +69,19 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
                     
-                	// Show table Activity report.
-                	$datatable = new local_xray\datatables\datatables($response->elements->studentList,
-                			"view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,
-                			array(),
-				            true, // add column action.
-				            true,
-				            "lftipr",
-				            array(10, 50, 100),
-				            true,
-				            1); // Sort by first column "Lastname".Because table has action column);
-                	$output .= $this->output->standard_table((array)$datatable);
-                	
-                	// Show graphs Activity report.
+                    // Show table Activity report.
+                    $datatable = new local_xray\datatables\datatables($response->elements->studentList,
+                            "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,
+                            array(),
+                            true, // add column action.
+                            true,
+                            "lftipr",
+                            array(10, 50, 100),
+                            true,
+                            1); // Sort by first column "Lastname".Because table has action column);
+                    $output .= $this->output->standard_table((array)$datatable);
+                    
+                    // Show graphs Activity report.
                     $output .= $this->output->show_on_lightbox("activityLevelTimeline", $response->elements->activityLevelTimeline);
                     $output .= $this->output->show_on_lightbox("compassTimeDiagram", $response->elements->compassTimeDiagram);             
                     $output .= $this->output->show_on_lightbox("barplotOfActivityByWeekday", $response->elements->barplotOfActivityByWeekday);

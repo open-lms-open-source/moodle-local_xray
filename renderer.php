@@ -152,12 +152,12 @@ class local_xray_renderer extends plugin_renderer_base {
         
         // Table jquery datatables for show reports.
         $output .= html_writer::start_tag("table", 
-        		array("id" => "table_{$datatable['id']}",
-        		"class" => "xraydatatable display"));
+                array("id" => "table_{$datatable['id']}",
+                "class" => "xraydatatable display"));
         
         $output .= html_writer::start_tag("thead");
         $output .= html_writer::start_tag("tr");        
-        		
+                
         
         foreach ($datatable['columns'] as $c) {
             $output .= html_writer::tag("th", $c->text);
@@ -280,7 +280,7 @@ class local_xray_renderer extends plugin_renderer_base {
             false, // We don't need pagination because we have only four rows.
             '<"xray_table_scrool"t>',
             array(10, 50, 100),
-        	false); // without sortable.
+            false); // without sortable.
 
         // Create standard table.
         $output = $this->standard_table((array)$datatable);
@@ -409,9 +409,9 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Students at risk.
         $studentsrisk = html_writer::tag("div", 
-        		html_writer::tag("span", $studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$studentsenrolled}", 
-        		array("class" => "xray-headline"));
-        		
+                html_writer::tag("span", $studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$studentsenrolled}", 
+                array("class" => "xray-headline"));
+                
         $studentatrisktext = html_writer::div(get_string('studentatrisk', 'local_xray'), 'xray-headline-description');
         // Bootstrap classes for positive/negative data.
         $comparitorclass = "xray-comparitor";
@@ -453,9 +453,9 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Students Visitors.  
         $studentsvisitors = html_writer::div(html_writer::tag("span", 
-							        		$studentsvisitslastsevendays, 
-							        		array("class" => "xray-headline-number h1"))."{$of} {$studentsenrolled}", 
-        		array("class" => "xray-headline"));
+                                            $studentsvisitslastsevendays, 
+                                            array("class" => "xray-headline-number h1"))."{$of} {$studentsenrolled}", 
+                array("class" => "xray-headline"));
         
         $studentvisitslastdaystext = html_writer::div(get_string('studentvisitslastdays', 'local_xray'),
             'xray-headline-description');
@@ -484,7 +484,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 $studentsvisitsperday .= html_writer::start_div("xray-visits-unit");
                 $studentsvisitsperday .= html_writer::div($day, array("class" => "xray-visits-per-day"));             
                 $studentsvisitsperday .= html_writer::div($visitsperday, 
-                		array("class" => "xray-visits-per-day-line", "style" => "height:{$percent}%"));             
+                        array("class" => "xray-visits-per-day-line", "style" => "height:{$percent}%"));             
                     
                 $studentsvisitsperday .= html_writer::end_div();
             }
@@ -510,8 +510,8 @@ class local_xray_renderer extends plugin_renderer_base {
         $userpicture->size = 30;
         $picture = $this->render($userpicture);
         $fullname = html_writer::tag("a", 
-        		format_string(fullname($user)), 
-        		array("href" => $CFG->wwwroot . '/user/profile.php?id=' . $user->id));
+                format_string(fullname($user)), 
+                array("href" => $CFG->wwwroot . '/user/profile.php?id=' . $user->id));
         return html_writer::div("{$picture} {$fullname}", array("class" => "dashboard_xray_users_profile"));
     }
 
