@@ -57,24 +57,24 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                     $output .= $this->output->inforeport($response->elements->element1->date);
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->element2,
-                            "view.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=" . $this->courseid);
+                        "view.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=".$this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
                     // Graph.
                     $output .= $this->output->show_on_lightbox("densityofstandardizedscores",
-                            $response->elements->studentScoreDistribution);
+                        $response->elements->studentScoreDistribution);
 
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->element4,
-                            "view.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=" . $this->courseid);
+                        "view.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=".$this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
 
                     // Graphs.
                     $output .= $this->output->show_on_lightbox("boxplotofstandardizedscoresperquiz",
-                            $response->elements->scoreDistributionByItem);
+                        $response->elements->scoreDistributionByItem);
                     $output .= $this->output->show_on_lightbox("scoresassignedbyxrayversusresultsfromquizzes",
-                            $response->elements->scatterPlot);
+                        $response->elements->scatterPlot);
                     $output .= $this->output->show_on_lightbox("comparisonofscoresinquizzes",
-                            $response->elements->itemsHeatmap);
+                        $response->elements->itemsHeatmap);
                 }
             }
         } catch (Exception $e) {

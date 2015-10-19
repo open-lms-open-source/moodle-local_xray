@@ -71,29 +71,28 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Report date.
                     $output  = $this->print_top();
                     $output .= $this->output->inforeport($response->elements->element1->date);
-                    
+
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
-                            "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $this->courseid,
-                            array(),
-                            true, // Add column action.
-                            true,
-                            "lftipr",
-                            array(10, 50, 100),
-                            true,
-                            1); // Sort by first column "Lastname".Because table has action column.      
+                        "view.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $this->courseid,
+                        array(),
+                        true); // Add column action.
+                    $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
                     $output .= $this->output->standard_table((array)$datatable);
-                    
+
                     // Special Table with variable columns.
-                    $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid, 
-                            $response->elements->discussionActivityByWeek);
-                    
+                    $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid,
+                        $response->elements->discussionActivityByWeek);
+
                     $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
                     $output .= $this->output->show_on_lightbox("avgWordPerPost", $response->elements->avgWordPerPost);
                     $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordCount", $response->elements->socialStructureWordCount);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordContribution", $response->elements->socialStructureWordContribution);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordCTC", $response->elements->socialStructureWordCTC);
+                    $output .= $this->output->show_on_lightbox("socialStructureWordCount",
+                        $response->elements->socialStructureWordCount);
+                    $output .= $this->output->show_on_lightbox("socialStructureWordContribution",
+                        $response->elements->socialStructureWordContribution);
+                    $output .= $this->output->show_on_lightbox("socialStructureWordCTC",
+                        $response->elements->socialStructureWordCTC);
                 }
             }
 
@@ -112,8 +111,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                             array("class" => "main")),
                         array("class" => "mr_html_heading"));
                     $output .= $this->output->inforeport($response->reportdate);
-                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismStudentsHeatmap", $response->elements->endogenicPlagiarismStudentsHeatmap);
-                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismHeatmap", $response->elements->endogenicPlagiarismHeatmap);
+                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismStudentsHeatmap",
+                        $response->elements->endogenicPlagiarismStudentsHeatmap);
+                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismHeatmap",
+                        $response->elements->endogenicPlagiarismHeatmap);
                 }
             }
 
@@ -128,17 +129,18 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 } else {
 
                     // Show graphs.
-                    $output .= html_writer::tag("div",
-                        html_writer::tag("h2", get_string("discussiongrading", $this->component), array("class" => "main")),
-                        array("class" => "mr_html_heading"));
+                    $subtitle = html_writer::tag("h2",
+                        get_string("discussiongrading", $this->component),
+                        array("class" => "main"));
+                    $output .= html_writer::div($subtitle, array("class" => "mr_html_heading"));
                     $output .= $this->output->inforeport($response->reportdate);
-                    
+
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->studentDiscussionGrades,
-                            "view.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
+                        "view.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
-                    
-                    $output .= $this->output->show_on_lightbox("discussionSuggestedGrades", $response->elements->discussionSuggestedGrades);;
+                    $output .= $this->output->show_on_lightbox("discussionSuggestedGrades",
+                        $response->elements->discussionSuggestedGrades);;
                 }
             }
 

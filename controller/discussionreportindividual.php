@@ -62,18 +62,19 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 // Show graphs.
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate,
-                                                     $DB->get_record('user', array("id" => $this->userid)));
-                
+                    $DB->get_record('user', array("id" => $this->userid)));
+
                 // Its a table, I will get info with new call.
                 $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
-                        "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=" . $this->courseid."&userid=".$this->userid);
+                    "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=".
+                    $this->courseid."&userid=".$this->userid);
                 $output .= $this->output->standard_table((array)$datatable);
-                 
+
                 // Special Table with variable columns.
-                $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid, 
-                        $this->userid, 
-                        $response->elements->discussionActivityByWeek);
-                
+                $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid,
+                    $this->userid,
+                    $response->elements->discussionActivityByWeek);
+
                 // Graphs.
                 $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
                 $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
@@ -144,7 +145,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
         return json_encode($return);
     }
-    
+
     /**
      * Json for provide data to discussion_activity_by_week table.
      *
