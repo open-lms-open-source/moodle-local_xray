@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+use local_xray\event\get_report_failed;
 
 /**
  * Risk report
@@ -76,6 +77,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $output .= $this->output->show_on_lightbox("riskScatterPlot", $response->elements->riskScatterPlot);
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 
@@ -152,6 +154,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $return["data"] = $data;
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
@@ -212,6 +215,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $return["data"] = $data;
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }

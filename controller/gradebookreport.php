@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') or die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+use local_xray\event\get_report_failed;
 
 /**
  * Xray integration Reports Controller
@@ -78,6 +79,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 }
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 
@@ -136,6 +138,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 $return["data"] = $data;
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
@@ -192,6 +195,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                 $return["data"] = $data;
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
