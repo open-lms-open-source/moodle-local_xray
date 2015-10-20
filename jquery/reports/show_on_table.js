@@ -59,6 +59,14 @@ function local_xray_show_on_table(YUI, data) {
                     "data": aoData,
                     "success": fnCallback
                 })
+            },
+            "fnDrawCallback": function( oSettings ,aoData) {
+                // INT-8289, not show paginate when pager is 1.
+                if($("#table_" + data.id).DataTable().rows().data().length == oSettings._iRecordsTotal) {
+                    $("#table_" + data.id +"_paginate").hide();
+                } else {
+                    $("#table_" + data.id +"_paginate").show();
+                }
             }
         });
 
