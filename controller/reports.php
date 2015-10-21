@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot.'/local/mr/framework/controller.php');
+use local_xray\event\get_report_failed;
 
 /**
  * Xray integration Reports Controller
@@ -188,5 +189,99 @@ class local_xray_controller_reports extends mr_controller {
         $result .= $this->mroutput->render($this->heading);
         $this->heading->text = '';
         return $result;
+    }
+
+    /**
+     * Generic json response for datatables.
+     * @param $reportname - Name of report
+     * @param $reportelement - Name Element of report
+     * @param null|string $functiontoprocessdata - Name of function for process data.
+     * By default this will use processdataforresponsedatatable(), but you can not overwritte this method because
+     * maybe you need 2 or more specific responses in same class).
+     *
+     * @return string
+     */
+    public function genericresponsejsonfordatatables($reportname, $reportelement, $functiontoprocessdata = null) {
+
+        // Pager.
+        $count = optional_param('iDisplayLength', 10, PARAM_INT);
+        $start = optional_param('iDisplayStart', 0, PARAM_INT);
+        // Sortable
+        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
+        $sortorder = optional_param('sSortDir_0', 'asc', PARAM_ALPHA); // Direction of sort.
+        $sortfield = optional_param("mDataProp_{$sortcol}", 'id', PARAM_TEXT); // Get column name.
+
+        $return = "";
+        try {
+            //$report = "activity";
+            //$element = "studentList";
+            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
+                $reportelement,
+                $reportname,
+                $this->userid,
+                '',
+                '',
+                $start,
+                $count,
+                $sortfield,
+                $sortorder);
+
+            if (!$response) {
+                // Fail response of webservice.
+                \local_xray\local\api\xrayws::instance()->print_error();
+            } else {
+                $data = array();
+                if (!empty($response->data)) {
+                    if(!empty($functiontoprocessdata) && method_exists($this, $functiontoprocessdata)) {
+                        // Specific method to process data.
+                        $data = $this->{$functiontoprocessdata}($response);
+                    } else {
+                        $data = $this->processdataforresponsedatatable($response);
+                    }
+                }
+                // Provide count info to table.
+                $return["recordsFiltered"] = $response->itemCount;
+                $return["recordsTotal"] = $response->itemCount;
+                $return["data"] = $data;
+            }
+        } catch (Exception $e) {
+            // Error, return invalid data, and pluginjs will show error in table.
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
+            $return["data"] = "-";
+        }
+
+        return json_encode($return);
+    }
+
+    /**
+     * This function is used by default for format data sent from xray side.
+     * @param $response - Response of xray webservice.
+     * @return array
+     */
+    private function processdataforresponsedatatable($response) {
+
+        $data = array();
+        foreach ($response->data as $row) {
+
+            $r = new stdClass();
+            // Format of response for columns(if return has columnorder).
+            if (!empty($response->columnOrder) && is_array($response->columnOrder)) {
+                foreach ($response->columnOrder as $column) {
+                    $r->{$column} = '';
+                    if (isset($row->{$column}->value)) {
+                        $r->{$column} = $row->{$column}->value;
+                    }
+                }
+            } // If report has not specified columnOrder.
+            elseif (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+                $c = get_object_vars($response->columnHeaders);
+                foreach ($c as $id => $name) {
+                    $r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');
+                }
+            }
+            $data[] = $r;
+        }
+
+        return $data;
     }
 }

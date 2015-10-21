@@ -137,7 +137,9 @@ class datatables {
      * @param bool $paging
      * @param string $dom
      * @param array $lengthMenu
+     * @param boolean $sort
      * @param integer $default_field_sort
+     * @param string $sort_order
      * @param string $sort_order
      */
     public function __construct($element, $jsonurl, $columns = array(), $columnaction = false, $paging=true, $dom = 'lftipr',

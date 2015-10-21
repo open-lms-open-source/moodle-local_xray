@@ -25,7 +25,6 @@
 defined('MOODLE_INTERNAL') or die();
 
 /* @var stdClass $CFG */
-require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\datatables\datatablescolumns;
 
 /**
