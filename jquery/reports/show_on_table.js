@@ -37,13 +37,13 @@ function local_xray_show_on_table(YUI, data) {
                 "sLoadingRecords": data.sLoadingRecords,
                 "sProcessing": data.sProcessing,
                 "sZeroRecords": data.sZeroRecords,
-                "Paginate": {
+                "paginate": {
                     "sFirst": data.sFirst,
                     "sLast": data.sLast,
                     "sNext": data.sNext,
                     "sPrevious": data.sPrevious,
                 },
-                "Aria": {
+                "aria": {
                     "sSortAscending":  data.sSortAscending,
                     "sSortDescending": data.sSortDescending
                 }
