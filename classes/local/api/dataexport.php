@@ -79,6 +79,26 @@ class dataexport {
     }
 
     /**
+     * Generate the greates where condition
+     *
+     * @param  string $field1
+     * @param  string $field2
+     * @param  string $value
+     * @return string
+     */
+    public static function greatest($field1, $field2 = null, $value) {
+        $format = "( (COALESCE(%1\$s, 0) = 0) OR (COALESCE(%1\$s, 0) >= %3\$s) )";
+        if (!empty($field2)) {
+            $format = "( ".
+                      "( (COALESCE(%1\$s, 0) = 0) AND ( (COALESCE(%2\$s, 0) = 0) OR (COALESCE(%2\$s, 0) >= %3\$s) ) )".
+                      " OR ".
+                      $format.
+                      " )";
+        }
+        return sprintf($format, $field1, $field2, $value);
+    }
+
+    /**
      * @param int $timest
      * @param string $dir
      */
@@ -104,6 +124,8 @@ class dataexport {
         $startdate = self::to_timestamp('startdate');
         $timecreated = self::to_timestamp('timecreated');
         $timemodified = self::to_timestamp('timemodified');
+        $wherecond = self::greatest('timemodified', 'timecreated', '?');
+
         $sql = "
             SELECT id,
                    fullname,
@@ -116,9 +138,11 @@ class dataexport {
                    {$timecreated},
                    {$timemodified}
            FROM    {course}
-           WHERE   timecreated >= :timecreated";
+           WHERE   (category <> 0)
+                   AND
+                   {$wherecond}";
 
-        $params = array('timecreated' => $timest);
+        $params = array($timest, $timest);
 
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
@@ -132,6 +156,7 @@ class dataexport {
         $timemodified = self::to_timestamp('timemodified');
         $firstaccess = self::to_timestamp('firstaccess');
         $lastaccess = self::to_timestamp('lastaccess');
+        $wherecond = self::greatest('timemodified', 'timecreated', '?');
 
         $sql = "SELECT id,
                        firstname,
@@ -145,11 +170,11 @@ class dataexport {
                        {$firstaccess},
                        {$lastaccess}
                 FROM   {user}
-                WHERE  deleted = :deleted
+                WHERE  deleted = 0
                        AND
-                       timecreated >= :timecreated";
+                       {$wherecond}";
 
-        $params = array('timecreated' => $timest, 'deleted' => false);
+        $params = array($timest, $timest);
 
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
@@ -159,6 +184,7 @@ class dataexport {
      * @param string $dir
      */
     public static function enrolment($timest, $dir) {
+        $wherecond = self::greatest('l.timemodified', null, ':timemodified');
 
         $sql = "SELECT l.id AS id,
                        cu.id AS courseid,
@@ -178,7 +204,7 @@ class dataexport {
                        AND
                        u.deleted = :deleted
                        AND
-                       l.timemodified >= :timemodified
+                       {$wherecond}
                        ";
 
         $params = array('ctxt' => CONTEXT_COURSE, 'deleted' => false, 'timemodified' => $timest);
@@ -249,16 +275,23 @@ class dataexport {
      * @param string $dir
      */
     public static function forums($timest, $dir) {
-        $timemodified = self::to_timestamp('timemodified');
+        $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
+        $wherecond = self::greatest('f.timemodified', null, ':time');
+
         $sql = "
-            SELECT id,
-                   course AS courseid,
-                   type,
-                   name,
-                   intro,
+            SELECT f.id,
+                   f.course AS courseid,
+                   f.type,
+                   f.name,
+                   f.intro,
                    {$timemodified}
-            FROM   {forum}
-            WHERE  timemodified >= :time";
+            FROM   {forum}  f,
+                   {course} c
+            WHERE  (f.course = c.id)
+                   AND
+                   (c.category <> 0)
+                   AND
+                   {$wherecond}";
 
         $params = array('time' => $timest);
 
@@ -270,16 +303,22 @@ class dataexport {
      * @param string $dir
      */
     public static function threads($timest, $dir) {
-        $timemodified = self::to_timestamp('timemodified');
+        $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
+        $wherecond = self::greatest('f.timemodified', null, ':time');
         $sql = "
-            SELECT id,
-                   forum AS forumid,
-                   name,
-                   userid AS participantid,
-                   groupid,
+            SELECT f.id,
+                   f.forum AS forumid,
+                   f.name,
+                   f.userid AS participantid,
+                   f.groupid,
                    {$timemodified}
-            FROM   {forum_discussions}
-            WHERE  timemodified >= :time";
+            FROM   {forum_discussions} f,
+                   {course} c
+            WHERE  (f.course = c.id)
+                   AND
+                   (c.category <> 0)
+                   AND
+                   {$wherecond}";
 
         $params = array('time' => $timest);
 
@@ -291,22 +330,32 @@ class dataexport {
      * @param string $dir
      */
     public static function posts($timest, $dir) {
-        $created = self::to_timestamp('created');
-        $modified = self::to_timestamp('modified');
+        $created = self::to_timestamp('fp.created', true, 'created');
+        $modified = self::to_timestamp('fp.modified', true, 'modified');
+        $wherecond = self::greatest('fp.modified', 'fp.created', '?');
+
         $sql = "
-            SELECT id,
-                   parent,
-                   discussion as threadid,
-                   userid as participantid,
+            SELECT fp.id,
+                   fp.parent,
+                   fp.discussion AS threadid,
+                   fp.userid AS participantid,
                    {$created},
                    {$modified},
-                   subject,
-                   message
-            FROM {forum_posts}
-            WHERE created >= :created
+                   fp.subject,
+                   fp.message
+            FROM   {forum_posts} fp,
+                   {forum_discussions} fd,
+                   {course} c
+            WHERE  (fp.discussion = fd.id)
+                   AND
+                   (fd.course = c.id)
+                   AND
+                   (c.category <> 0)
+                   AND
+                   {$wherecond}
         ";
 
-        $params = array('created' => $timest);
+        $params = array($timest, $timest);
 
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
@@ -316,17 +365,24 @@ class dataexport {
      * @param string $dir
      */
     public static function quiz($timest, $dir) {
+        $wherecond = self::greatest('q.timemodified', 'q.timecreated', '?');
+
         $sql = "
-            SELECT id,
-                   course AS courseid,
-                   name,
-                   attempts,
-                   grade
-            FROM {quiz}
-            WHERE timecreated >= :created
+            SELECT q.id,
+                   q.course AS courseid,
+                   q.name,
+                   q.attempts,
+                   q.grade
+            FROM   {quiz} q,
+                   {course} c
+            WHERE  (q.course = c.id)
+                   AND
+                   (c.category <> 0)
+                   AND
+                   {$wherecond}
         ";
 
-        $params = array('created' => $timest);
+        $params = array($timest, $timest);
 
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
@@ -336,10 +392,7 @@ class dataexport {
      * @param string $dir
      */
     public static function grades($timest, $dir) {
-        $wherecond = '(gg.timemodified >= :added)';
-        if ($timest == 0) {
-            $wherecond .= ' OR (gg.timemodified IS NULL)';
-        }
+        $wherecond = self::greatest('gg.timemodified', 'gg.timecreated', '?');
 
         $sql = "
           SELECT     gg.id,
@@ -351,10 +404,10 @@ class dataexport {
                      gg.timecreated,
                      gg.timemodified
           FROM       {grade_grades}   gg
-          INNER JOIN {grade_items}    gi ON gi.id = gg.itemid AND gi.itemmodule = :module
+          INNER JOIN {grade_items}    gi ON gi.id = gg.itemid AND gi.itemmodule = 'quiz'
           WHERE      {$wherecond}";
 
-        $params = array('added' => $timest, 'module' => 'quiz');
+        $params = array($timest, $timest);
 
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
