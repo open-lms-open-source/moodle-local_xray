@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+use local_xray\event\get_report_failed;
 
 /**
  * Xray integration Reports Controller
@@ -54,7 +55,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     }
 
     public function view_action() {
-        global $PAGE;
+
         $output = '';
         $ctx = $this->get_context();
         try {
@@ -143,88 +144,55 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             }
 
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             $output = $this->print_error('error_xray', $e->getMessage());
         }
         return $output;
     }
 
+    public function jsonparticipationdiscussion_action() {
+        return $this->genericresponsejsonfordatatables("discussion",
+            "discussionMetrics",
+            "responseparticipationdiscussion");
+    }
+
     /**
      * Json for provide data to participation_metrics table.
      */
-    public function jsonparticipationdiscussion_action() {
+    public function responseparticipationdiscussion($response) {
+
         global $PAGE;
-
-        // Pager.
-        $count = optional_param('iDisplayLength', 10, PARAM_INT);
-        $start = optional_param('iDisplayStart', 0, PARAM_INT);
-        // Sortable
-        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
-
-        $return = "";
-
-        try {
-            $report = "discussion";
-            $element = "discussionMetrics";
-
-            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
-                $element,
-                $report,
-                null,
-                '',
-                '',
-                $start,
-                $count,
-                $sortfield,
-                $sortorder);
-
-            if (!$response) {
-                \local_xray\local\api\xrayws::instance()->print_error();
-            } else {
-                $data = array();
-                if (!empty($response->data)) {
-                    $discussionreportind = get_string('discussionreportindividual', $this->component);
-                    foreach ($response->data as $row) {
-                        $r = new stdClass();
-                        $r->action = "";
-                        if (has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
-                            // Url for discussionreportindividual.
-                            $url = new moodle_url("/local/xray/view.php",
-                                array("controller" => "discussionreportindividual",
-                                    "courseid" => $this->courseid,
-                                    "userid" => $row->participantId->value
-                                ));
-                            $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
-                                "title" => $discussionreportind,
-                                "target" => "_blank"));
-                        }
-
-                        // Format of response for columns.
-                        if (!empty($response->columnOrder)) {
-                            foreach ($response->columnOrder as $column) {
-                                $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
-                            }
-                            $data[] = $r;
-                        }
-                    }
-                }
-
-                // Provide info to table.
-                $return["recordsFiltered"] = $response->itemCount;
-                $return["recordsTotal"] = $response->itemCount;
-                $return["data"] = $data;
+        $data = array();
+        $discussionreportind = get_string('discussionreportindividual', $this->component);
+        foreach ($response->data as $row) {
+            $r = new stdClass();
+            $r->action = "";
+            if (has_capability('local/xray:discussionreportindividual_view', $PAGE->context)) {
+                // Url for discussionreportindividual.
+                $url = new moodle_url("/local/xray/view.php",
+                    array("controller" => "discussionreportindividual",
+                        "courseid" => $this->courseid,
+                        "userid" => $row->participantId->value
+                    ));
+                $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
+                    "title" => $discussionreportind,
+                    "target" => "_blank"));
             }
-        } catch (Exception $e) {
-            // Error, return invalid data, and pluginjs will show error in table.
-            $return["data"] = "-";
-        }
 
-        return json_encode($return);
+            // Format of response for columns.
+            if (!empty($response->columnOrder)) {
+                foreach ($response->columnOrder as $column) {
+                    $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                }
+                $data[] = $r;
+            }
+        }
+        return $data;
     }
 
     /**
      * Json for provide data to discussion_activity_by_week table.
+     * We dont use genericresponsejsonfordatatables because this is a specific table with different format.
      */
     public function jsonweekdiscussion_action() {
         // Pager.
@@ -284,6 +252,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 $return["data"] = $data;
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             // Error, return invalid data, and pluginjs will show error in table.
             $return["data"] = "-";
         }
@@ -295,57 +264,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      * Json for provide data to students_grades_based_on_discussions table.
      */
     public function jsonstudentsgrades_action() {
-        // Pager.
-        $count = optional_param('iDisplayLength', 10, PARAM_INT);
-        $start = optional_param('iDisplayStart', 0, PARAM_INT);
-        // Sortable
-        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
-
-        $return = "";
-
-        try {
-            $report = "discussionGrading";
-            $element = "studentDiscussionGrades";
-            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
-                $element,
-                $report,
-                null,
-                '',
-                '',
-                $start,
-                $count,
-                $sortfield,
-                $sortorder);
-
-            if (!$response) {
-                \local_xray\local\api\xrayws::instance()->print_error();
-            } else {
-
-                $data = array();
-                if (!empty ($response->data)) {
-                    foreach ($response->data as $row) {
-                        // Format of response for columns.
-                        if (!empty($response->columnOrder)) {
-                            $r = new stdClass();
-                            foreach ($response->columnOrder as $column) {
-                                $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
-                            }
-                            $data[] = $r;
-                        }
-                    }
-                }
-                // Provide count info to table.
-                $return ["recordsFiltered"] = $response->itemCount;
-                $return ["recordsTotal"] = $response->itemCount;
-                $return ["data"] = $data;
-            }
-        } catch (Exception $e) {
-            // Error, return invalid data, and pluginjs will show error in table.
-            $return["data"] = "-";
-        }
-
-        return json_encode($return);
+        return $this->genericresponsejsonfordatatables("discussionGrading", "studentDiscussionGrades");
     }
 }

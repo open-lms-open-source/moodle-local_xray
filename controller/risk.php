@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+use local_xray\event\get_report_failed;
 
 /**
  * Risk report
@@ -38,7 +39,6 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_risk extends local_xray_controller_reports {
 
     public function view_action() {
-        global $PAGE;
 
         $output = '';
         try {
@@ -76,6 +76,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $output .= $this->output->show_on_lightbox("riskScatterPlot", $response->elements->riskScatterPlot);
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 
@@ -87,76 +88,41 @@ class local_xray_controller_risk extends local_xray_controller_reports {
      * @return string
      */
     public function jsonriskmeasures_action() {
+        return $this->genericresponsejsonfordatatables("risk", "riskMeasures", "responseriskmeasures");
+    }
+
+    public function responseriskmeasures($response) {
         global $PAGE;
+        $data = array();
+        foreach ($response->data as $row) {
 
-        // Pager.
-        $count = optional_param('iDisplayLength', 10, PARAM_INT);
-        $start = optional_param('iDisplayStart', 0, PARAM_INT);
-        // Sortable
-        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
-
-        $return = "";
-
-        try {
-            $report = "risk";
-            $element = "riskMeasures";
-            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
-                $element,
-                $report,
-                null,
-                '',
-                '',
-                $start,
-                $count,
-                $sortfield,
-                $sortorder);
-            if (!$response) {
-                // Fail response of webservice.
-                \local_xray\local\api\xrayws::instance()->print_error();
-            } else {
-                $data = array();
-                if (!empty($response->data)) {
-                    foreach ($response->data as $row) {
-
-                        // Format of response for columns.
-                        if (!empty($response->columnOrder)) {
-                            $r = new stdClass();
-                            foreach ($response->columnOrder as $column) {
-                                $r->{$column} = '';
-                                if (isset($row->{$column}->value)) {
-                                    /* @var local_xray_renderer $localxrayrenderer */
-                                    $localxrayrenderer = $PAGE->get_renderer('local_xray');
-                                    switch ($column) {
-                                        case 'timeOnTask':
-                                            $r->{$column} = $localxrayrenderer->minutes_to_hours($row->{$column}->value);
-                                            break;
-                                        case 'fail':
-                                        case 'DW';
-                                        case 'DWF';
-                                            $r->{$column} = $localxrayrenderer->set_category($row->{$column}->value);
-                                            break;
-                                        default:
-                                            $r->{$column} = $row->{$column}->value;
-                                    }
-                                }
-                            }
-                            $data[] = $r;
+            // Format of response for columns.
+            if (!empty($response->columnOrder)) {
+                $r = new stdClass();
+                foreach ($response->columnOrder as $column) {
+                    $r->{$column} = '';
+                    if (isset($row->{$column}->value)) {
+                        /* @var local_xray_renderer $localxrayrenderer */
+                        $localxrayrenderer = $PAGE->get_renderer('local_xray');
+                        switch ($column) {
+                            case 'timeOnTask':
+                                $r->{$column} = $localxrayrenderer->minutes_to_hours($row->{$column}->value);
+                                break;
+                            case 'fail':
+                            case 'DW';
+                            case 'DWF';
+                                $r->{$column} = $localxrayrenderer->set_category($row->{$column}->value);
+                                break;
+                            default:
+                                $r->{$column} = $row->{$column}->value;
                         }
                     }
                 }
-                // Provide count info to table.
-                $return["recordsFiltered"] = $response->itemCount;
-                $return["recordsTotal"] = $response->itemCount;
-                $return["data"] = $data;
+                $data[] = $r;
             }
-        } catch (Exception $e) {
-            // Error, return invalid data, and pluginjs will show error in table.
-            $return["data"] = "-";
         }
 
-        return json_encode($return);
+        return $data;
     }
 
     /**
@@ -164,58 +130,6 @@ class local_xray_controller_risk extends local_xray_controller_reports {
      * @return string
      */
     public function jsonfirstloginnonstarters_action() {
-        // Pager.
-        $count = optional_param('iDisplayLength', 10, PARAM_INT);
-        $start = optional_param('iDisplayStart', 0, PARAM_INT);
-        // Sortable.
-        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
-
-        $return = "";
-        try {
-            $report = "firstLogin";
-            $element = "nonStarters";
-            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
-                $element,
-                $report,
-                null,
-                '',
-                '',
-                $start,
-                $count,
-                $sortfield,
-                $sortorder);
-
-            if (!$response) {
-                // Fail response of webservice.
-                \local_xray\local\api\xrayws::instance()->print_error();
-            } else {
-                $data = array();
-                if (!empty($response->data)) {
-                    // Format of response for columns.
-                    foreach ($response->data as $row) {
-                        // This report has not specified columnOrder.
-                        if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
-                            $r = new stdClass();
-                            $c = get_object_vars($response->columnHeaders);
-                            foreach ($c as $id => $name) {
-                                $r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');
-                            }
-                            $data[] = $r;
-                        }
-                    }
-                }
-                // Provide info to table.
-                $return["recordsFiltered"] = $response->itemCount;
-                $return["recordsTotal"] = $response->itemCount;
-                $return["data"] = $data;
-            }
-        } catch (Exception $e) {
-            // Error, return invalid data, and pluginjs will show error in table.
-            $return["data"] = "-";
-        }
-
-        return json_encode($return);
+        return $this->genericresponsejsonfordatatables("firstLogin", "nonStarters");
     }
 }

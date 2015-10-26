@@ -165,6 +165,7 @@ $string['unexperror'] = 'Unexpected error';
 $string['syncfailedexplanation'] = 'Failed to synchronize data with XRay.';
 $string['synclog'] = 'XRay data sync info message';
 $string['synclogexplanation'] = 'Regular log entry for data sync.';
+$string['getreportfailed'] = 'Error to get report from XRay';
 
 /* Course Header */
 $string['atrisk'] = 'At risk';
