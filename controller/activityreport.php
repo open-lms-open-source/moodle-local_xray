@@ -57,7 +57,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
                     // We need show table first in activity report.(INT-8186).
                     $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
-                        "view.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
+                        "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
                 }
 
@@ -70,7 +70,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
                     // Show table Activity report.
                     $datatable = new local_xray\datatables\datatables($response->elements->studentList,
-                        "view.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,
+                        "rest.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,
                         array(),
                         true);// add column action.
                     $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
