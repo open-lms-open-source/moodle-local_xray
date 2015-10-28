@@ -139,14 +139,15 @@ class dataexport {
         $timemodified = self::to_timestamp('timemodified');
         $wherecond = self::rangewhere('timemodified', null, $timest, $timeend);
         $sql = "
-                SELECT id,
+                SELECT
+                       id,
                        name,
                        description,
                        {$timemodified}
                 FROM   {course_categories}
                 WHERE  {$wherecond}";
 
-        $params = ['timestart' => $timest, 'timeend' => $timeend];
+        $params = null;
 
         self::doexport($sql, $params, __FUNCTION__, $dir);
     }
@@ -163,7 +164,8 @@ class dataexport {
         $wherecond = self::rangewhere('timemodified', 'timecreated', $timest, $timeend);
 
         $sql = "
-            SELECT id,
+            SELECT
+                   id,
                    fullname,
                    shortname,
                    summary,
@@ -193,7 +195,9 @@ class dataexport {
         $lastaccess = self::to_timestamp('lastaccess');
         $wherecond = self::rangewhere('timemodified', 'timecreated', $timest, $timeend);
 
-        $sql = "SELECT id,
+        $sql = "
+                SELECT
+                       id,
                        firstname,
                        lastname,
                        '' AS gender,
@@ -222,27 +226,21 @@ class dataexport {
     public static function enrolment($timest, $timeend, $dir) {
         $wherecond = self::rangewhere('l.timemodified', null, $timest, $timeend);
         $timemodified = self::to_timestamp('l.timemodified', true, 'timemodified');
-        $sql = "SELECT l.id AS id,
-                       cu.id AS courseid,
-                       l.roleid,
-                       l.userid AS participantid,
-                       {$timemodified}
-                FROM   {role_assignments} l,
-                       {context} c,
-                       {user} u,
-                       {course} cu
-                WHERE  c.contextlevel= :ctxt
-                       AND
-                       c.instanceid = cu.id
-                       AND
-                       l.contextid = c.id
-                       AND
-                       l.userid = u.id
-                       AND
-                       u.deleted = :deleted
-                       AND
-                       {$wherecond}
-                       ";
+        $sql = "
+                SELECT
+                           l.id AS id,
+                           c.instanceid AS courseid,
+                           l.roleid,
+                           l.userid AS participantid,
+                           {$timemodified}
+                FROM       {role_assignments} l
+                INNER JOIN {context}          c  ON l.contextid = c.id AND c.contextlevel= :ctxt
+                WHERE
+                           EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = 0)
+                           AND
+                           EXISTS (SELECT c.id FROM {course} c WHERE c.instanceid = c.id AND c.category <> 0)
+                           AND
+                           {$wherecond}";
 
         $params = ['ctxt' => CONTEXT_COURSE, 'deleted' => false];
 
@@ -286,9 +284,12 @@ class dataexport {
         // Update fresh recordset.
         $DB->execute($sqli, array('ctxt' => CONTEXT_COURSE, 'deleted' => false));
         $time = self::to_timestamp('l.time', true, 'time');
+        $wherecond = self::rangewhere('l.time', null, $timest, $timeend);
+
         // Now export.
         $sql = "
-            SELECT l.id,
+            SELECT
+                   l.id,
                    l.userid AS participantid,
                    l.course AS courseid,
                    {$time},
@@ -297,13 +298,11 @@ class dataexport {
                    l.info,
                    l.module,
                    l.url
-            FROM   {log} l,
-                   {local_xray_uctmp} rx
-            WHERE rx.courseid = l.course
-                  AND
-                  rx.userid = l.userid
-                  AND
-                  l.time BETWEEN :timestart AND :timeend";
+            FROM   {log} l
+            WHERE  EXISTS (SELECT * FROM {local_xray_uctmp} rx WHERE rx.courseid = l.course AND rx.userid = l.userid)
+                   AND
+                   {$wherecond}
+            ";
 
         $params = ['timestart' => $timest, 'timeend' => $timeend, 'ctxt' => CONTEXT_COURSE, 'deleted' => false];
 
@@ -320,17 +319,16 @@ class dataexport {
         $wherecond = self::rangewhere('f.timemodified', null, $timest, $timeend);
 
         $sql = "
-            SELECT f.id,
+            SELECT
+                   f.id,
                    f.course AS courseid,
                    f.type,
                    f.name,
                    f.intro,
                    {$timemodified}
-            FROM   {forum}  f,
-                   {course} c
-            WHERE  (f.course = c.id)
-                   AND
-                   (c.category <> 0)
+            FROM   {forum}  f
+            WHERE
+                   EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}";
 
@@ -348,17 +346,16 @@ class dataexport {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
         $wherecond = self::rangewhere('f.timemodified', null, $timest, $timeend);
         $sql = "
-            SELECT f.id,
+            SELECT
+                   f.id,
                    f.forum AS forumid,
                    f.name,
                    f.userid AS participantid,
                    f.groupid,
                    {$timemodified}
-            FROM   {forum_discussions} f,
-                   {course} c
-            WHERE  (f.course = c.id)
-                   AND
-                   (c.category <> 0)
+            FROM   {forum_discussions} f
+            WHERE
+                   EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}";
 
@@ -378,7 +375,8 @@ class dataexport {
         $wherecond = self::rangewhere('fp.modified', 'fp.created', $timest, $timeend);
 
         $sql = "
-            SELECT fp.id,
+            SELECT
+                   fp.id,
                    fp.parent,
                    fp.discussion AS threadid,
                    fp.userid AS participantid,
@@ -386,14 +384,16 @@ class dataexport {
                    {$modified},
                    fp.subject,
                    fp.message
-            FROM   {forum_posts} fp,
-                   {forum_discussions} fd,
-                   {course} c
-            WHERE  (fp.discussion = fd.id)
-                   AND
-                   (fd.course = c.id)
-                   AND
-                   (c.category <> 0)
+            FROM   {forum_posts} fp
+            WHERE
+                   EXISTS (
+                      SELECT fd.id
+                      FROM   {forum_discussions} fd
+                      WHERE
+                             EXISTS (SELECT c.id FROM {course} c WHERE fd.course = c.id AND c.category <> 0)
+                             AND
+                             fp.discussion = fd.id
+                   )
                    AND
                    {$wherecond}
         ";
@@ -413,17 +413,16 @@ class dataexport {
         $wherecond = self::rangewhere('f.timemodified', null, $timest, $timeend);
 
         $sql = "
-            SELECT f.id,
+            SELECT
+                   f.id,
                    f.course AS courseid,
                    f.type,
                    f.name,
                    f.intro,
                    {$timemodified}
-            FROM   {hsuforum}  f,
-                   {course} c
-            WHERE  (f.course = c.id)
-                   AND
-                   (c.category <> 0)
+            FROM   {hsuforum}  f
+            WHERE
+                   EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}";
 
@@ -441,17 +440,16 @@ class dataexport {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
         $wherecond = self::rangewhere('f.timemodified', null, $timest, $timeend);
         $sql = "
-            SELECT f.id,
+            SELECT
+                   f.id,
                    f.forum AS forumid,
                    f.name,
                    f.userid AS participantid,
                    f.groupid,
                    {$timemodified}
-            FROM   {hsuforum_discussions} f,
-                   {course} c
-            WHERE  (f.course = c.id)
-                   AND
-                   (c.category <> 0)
+            FROM   {hsuforum_discussions} f
+            WHERE
+                   EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}";
 
@@ -471,7 +469,8 @@ class dataexport {
         $wherecond = self::rangewhere('fp.modified', 'fp.created', $timest, $timeend);
 
         $sql = "
-            SELECT fp.id,
+            SELECT
+                   fp.id,
                    fp.parent,
                    fp.discussion AS threadid,
                    fp.userid AS participantid,
@@ -479,14 +478,16 @@ class dataexport {
                    {$modified},
                    fp.subject,
                    fp.message
-            FROM   {hsuforum_posts} fp,
-                   {hsuforum_discussions} fd,
-                   {course} c
-            WHERE  (fp.discussion = fd.id)
-                   AND
-                   (fd.course = c.id)
-                   AND
-                   (c.category <> 0)
+            FROM   {hsuforum_posts} fp
+            WHERE
+                   EXISTS (
+                      SELECT fd.id
+                      FROM   {hsuforum_discussions} fd
+                      WHERE
+                             EXISTS (SELECT c.id FROM {course} c WHERE fd.course = c.id AND c.category <> 0)
+                             AND
+                             fp.discussion = fd.id
+                   )
                    AND
                    {$wherecond}
         ";
@@ -505,17 +506,16 @@ class dataexport {
         $wherecond = self::rangewhere('q.timemodified', 'q.timecreated', $timest, $timeend);
         $timemodified = self::to_timestamp('q.timemodified', true, 'timemodified');
         $sql = "
-            SELECT q.id,
+            SELECT
+                   q.id,
                    q.course AS courseid,
                    q.name,
                    q.attempts,
                    q.grade,
                    {$timemodified}
-            FROM   {quiz} q,
-                   {course} c
-            WHERE  (q.course = c.id)
-                   AND
-                   (c.category <> 0)
+            FROM   {quiz} q
+            WHERE
+                   EXISTS (SELECT c.id FROM {course} c WHERE q.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}
         ";
@@ -534,7 +534,8 @@ class dataexport {
         $wherecond = self::rangewhere('gg.timemodified', 'gg.timecreated', $timest, $timeend);
 
         $sql = "
-          SELECT     gg.id,
+          SELECT
+                     gg.id,
                      gg.userid AS participantid,
                      gi.iteminstance AS quizid,
                      gg.rawgrade,
