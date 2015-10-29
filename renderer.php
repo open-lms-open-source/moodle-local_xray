@@ -384,7 +384,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $studentsvisitors = html_writer::div(html_writer::tag("span", 
                                             $data->studentsvisitslastsevendays,
                                             array("class" => "xray-headline-number h1"))."{$of} {$data->studentsenrolled}",
-                array("class" => "xray-headline"));
+            "xray-headline");
         
         $studentvisitslastdaystext = html_writer::div(get_string('studentvisitslastdays', 'local_xray'),
             'xray-headline-description');
