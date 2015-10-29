@@ -213,8 +213,6 @@ class local_xray_controller_reports extends mr_controller {
 
         $return = "";
         try {
-            //$report = "activity";
-            //$element = "studentList";
             $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $reportelement,
                 $reportname,
@@ -272,8 +270,7 @@ class local_xray_controller_reports extends mr_controller {
                         $r->{$column} = $row->{$column}->value;
                     }
                 }
-            } // If report has not specified columnOrder.
-            elseif (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
+            } else if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
                 $c = get_object_vars($response->columnHeaders);
                 foreach ($c as $id => $name) {
                     $r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');
