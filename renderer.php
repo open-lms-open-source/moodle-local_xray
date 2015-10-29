@@ -313,7 +313,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Snap Dashboard Xray
      *
-     * @param local_xray\dashboard\dashboard $data
+     * @param local_xray\dashboard\dashboarddata $data
      * @return string
      * */
     private function snap_dashboard_xray_output($data) {
