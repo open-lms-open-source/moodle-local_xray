@@ -85,7 +85,7 @@ class dashboard {
                 // Students visits by week day.
                 $studentsvisitsbyweekday = $response->elements->activity_level->data;
 
-                $result = new dashboarddata($usersinrisk, $countstudentsenrolled, $countstudentsrisk,
+                $result = new dashboard_data($usersinrisk, $countstudentsenrolled, $countstudentsrisk,
                     $countstudentsvisitslastsevendays, $diffrisk, $diffvisits, $studentsvisitsbyweekday);
 
             }
