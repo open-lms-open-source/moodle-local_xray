@@ -14,23 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace local_xray\dashboard;
+defined('MOODLE_INTERNAL') || die();
+
 /**
- * Object data for dashboard
+ * Object with the data provided from xray to show in dashboard.
  *
  * @package local_xray
  * @author Pablo Pagnone
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-namespace local_xray\dashboard;
-defined('MOODLE_INTERNAL') || die();
-
-/**
- * Object with the data provided from xray to show in dashboard.
- * @package local_xray\dashboard
- */
-class dashboarddata {
+class dashboard_data {
     /**
      * Users in risk
      * @var array
@@ -72,6 +67,16 @@ class dashboarddata {
      */
     public $studentsvisitsbyweekday;
 
+    /**
+     * Construct
+     * @param array $usersinrisk
+     * @param integer $studentsenrolled
+     * @param integer $studentsrisk
+     * @param integer $studentsvisitslastsevendays
+     * @param float $riskfromlastweek
+     * @param float $visitorsfromlastweek
+     * @param array $studentsvisitsbyweekday
+     */
     public function __construct($usersinrisk, $studentsenrolled, $studentsrisk, $studentsvisitslastsevendays,
                                 $riskfromlastweek, $visitorsfromlastweek, $studentsvisitsbyweekday) {
 

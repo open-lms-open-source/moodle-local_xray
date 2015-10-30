@@ -15,10 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace local_xray\dashboard;
-use core\session\exception;
-
 defined('MOODLE_INTERNAL') || die();
 use local_xray\event\get_report_failed;
+
 /**
  * Communication with xray to get data for dashboard
  *
@@ -32,9 +31,9 @@ class dashboard {
     /**
      * Connect with xray webservice and get data for dashboard.
      * @param $courseid
-     * @return bool|dashboarddata
+     * @return bool|dashboard_data
      */
-    static function get($courseid) {
+    public static function get($courseid) {
 
         $result = "";
 
@@ -85,7 +84,6 @@ class dashboard {
 
                 // Students visits by week day.
                 $studentsvisitsbyweekday = $response->elements->activity_level->data;
-
 
                 $result = new dashboarddata($usersinrisk, $countstudentsenrolled, $countstudentsrisk,
                     $countstudentsvisitslastsevendays, $diffrisk, $diffvisits, $studentsvisitsbyweekday);

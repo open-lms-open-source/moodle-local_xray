@@ -300,7 +300,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         if (has_capability('local/xray:dashboard_view', $PAGE->context)) {
             $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id);
-            if($dashboarddata instanceof local_xray\dashboard\dashboarddata) {
+            if($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
                 $output .= $this->snap_dashboard_xray_output($dashboarddata);
             } else {
                 $output .= get_string('error_xray', 'local_xray');
@@ -313,7 +313,7 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Snap Dashboard Xray
      *
-     * @param local_xray\dashboard\dashboarddata $data
+     * @param local_xray\dashboard\dashboard_data $data
      * @return string
      * */
     private function snap_dashboard_xray_output($data) {
