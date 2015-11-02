@@ -42,13 +42,13 @@ abstract class timer {
     /**
      * @var int
      */
-    private static $timeframe = null;
+    private static $timeframe = 0;
 
     /**
      * @param int $timeframe
      * @return void
      */
-    public static function start($timeframe = null) {
+    public static function start($timeframe = 0) {
         self::$timeframe = $timeframe;
         self::$timestart = microtime(true);
     }
@@ -68,7 +68,7 @@ abstract class timer {
         if (empty(self::$timestart)) {
             $result = self::current();
             self::$timestart = null;
-            self::$timeframe = null;
+            self::$timeframe = 0;
         }
         return $result;
     }
