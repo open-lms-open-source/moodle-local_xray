@@ -140,10 +140,12 @@ if ($hassiteconfig) {
                                                  new lang_string("exportlocation_desc", $plugin),
                                                  '', PARAM_TEXT));
 
-    $settings->add( new admin_setting_configtext_int_only("{$plugin}/exporttime",
+    // Default time set to 1h.
+    $settings->add( new admin_setting_configtime("{$plugin}/exporttime_hours",
+                                                 "{$plugin}/exporttime_minutes",
                                                  new lang_string("exporttime", $plugin),
                                                  new lang_string("exporttime_desc", $plugin),
-                                                 0));
+                                                 ['h' => 1, 'm' => 0]));
 
     $ADMIN->add('localplugins', $settings);
 }
