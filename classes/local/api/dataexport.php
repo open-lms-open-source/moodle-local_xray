@@ -304,7 +304,7 @@ class dataexport {
                    {$wherecond}
             ";
 
-        $params = ['timestart' => $timest, 'timeend' => $timeend, 'ctxt' => CONTEXT_COURSE, 'deleted' => false];
+        $params = null;
 
         self::doexport($sql, $params, __FUNCTION__, $dir, 'l.id');
     }
