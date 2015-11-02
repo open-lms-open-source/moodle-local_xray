@@ -594,6 +594,7 @@ class dataexport {
         $recordset = null;
         $lastid    = null;
         $altered   = false;
+        $psql      = " ORDER BY {$idfield} ASC ";
         if (!is_array($params)) {
             $params = array();
         }
@@ -606,14 +607,14 @@ class dataexport {
         do {
             if (!$altered) {
                 if ($lastid !== null) {
-                    $sql .= " AND ({$idfield} > :lastid) ORDER BY {$idfield} ASC ";
+                    $psql = " AND ({$idfield} > :lastid) ORDER BY {$idfield} ASC ";
                     $altered = true;
                 }
             }
             if ($lastid !== null) {
                 $params['lastid'] = $lastid;
             }
-            $recordset = $DB->get_recordset_sql($sql, $params, 0, $count);
+            $recordset = $DB->get_recordset_sql($sql.$psql, $params, 0, $count);
             $recordset->rewind();
             if (!$recordset->valid()) {
                 $recordset->close();
