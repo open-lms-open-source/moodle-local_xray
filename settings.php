@@ -142,7 +142,7 @@ if ($hassiteconfig) {
 
     // Default time set to 1h.
     $settings->add( new admin_setting_configtime("{$plugin}/exporttime_hours",
-                                                 "{$plugin}/exporttime_minutes",
+                                                 "exporttime_minutes",
                                                  new lang_string("exporttime", $plugin),
                                                  new lang_string("exporttime_desc", $plugin),
                                                  ['h' => 1, 'm' => 0]));

@@ -778,7 +778,10 @@ class dataexport {
     public static function exportcsv($timest, $timeend, $dir) {
         self::$meta = array();
 
-        timer::start((int)get_config('local_xray', 'exporttime') * MINSECS);
+        $timeframe = (int)get_config('local_xray', 'exporttime_hours') * HOURSECS +
+                     (int)get_config('local_xray', 'exporttime_minutes') * MINSECS;
+        // In case timeframe is 0 - there would be no limit to the execution.
+        timer::start($timeframe);
 
         // Order of export matters. Do not change unless sure.
         self::coursecategories($timest, $timeend, $dir);

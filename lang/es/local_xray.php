@@ -130,7 +130,7 @@ $string['exportlocation'] = 'Locacion de export';
 $string['exportlocation_desc'] = 'Configura directorio local para almacenamiento temporario de data exportada. '.
                                  'Si lo dejas vacio (o ruta es invalida), Moodle tempdir es usado.';
 $string['exporttime'] = 'Tiempo de exportacion';
-$string['exporttime_desc'] = 'Configure tiempo permitido para exportacion de los datos. Valor numerico representa minutos.'.
+$string['exporttime_desc'] = 'Configure tiempo permitido para exportacion de los datos.'.
                              'Si valor configurado es 0 exportacion es sin limite.';
 
 $string['xrayadminserver'] = 'Servidor de administración XRay';

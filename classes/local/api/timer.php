@@ -40,12 +40,12 @@ abstract class timer {
     private static $timestart = null;
 
     /**
-     * @var float
+     * @var int
      */
     private static $timeframe = null;
 
     /**
-     * @param float $timeframe
+     * @param int $timeframe
      * @return void
      */
     public static function start($timeframe = null) {
@@ -65,7 +65,7 @@ abstract class timer {
      */
     public static function end() {
         $result = 0.0;
-        if (self::$timestart !== null) {
+        if (empty(self::$timestart)) {
             $result = self::current();
             self::$timestart = null;
             self::$timeframe = null;
