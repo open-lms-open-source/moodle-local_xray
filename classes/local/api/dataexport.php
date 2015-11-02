@@ -244,7 +244,7 @@ class dataexport {
 
         $params = ['ctxt' => CONTEXT_COURSE, 'deleted' => false];
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'l.id');
     }
 
     /**
@@ -306,7 +306,7 @@ class dataexport {
 
         $params = ['timestart' => $timest, 'timeend' => $timeend, 'ctxt' => CONTEXT_COURSE, 'deleted' => false];
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'l.id');
     }
 
     /**
@@ -334,7 +334,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'f.id');
     }
 
     /**
@@ -361,7 +361,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'f.id');
     }
 
     /**
@@ -400,7 +400,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'fp.id');
     }
 
     /**
@@ -428,7 +428,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'f.id');
     }
 
     /**
@@ -455,7 +455,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'f.id');
     }
 
     /**
@@ -494,7 +494,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'fp.id');
     }
 
     /**
@@ -522,7 +522,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'q.id');
     }
 
     /**
@@ -549,7 +549,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::doexport($sql, $params, __FUNCTION__, $dir, 'gg.id');
     }
 
     /**
@@ -568,23 +568,52 @@ class dataexport {
     /**
      * Unfortunately due to way MySQL query execution is implemented in Moodle we can not fetch entire recordset
      *
+     * The problem we have to solve is related to the way data are structured and used in Moodle. Excluding log tables
+     * all other tables in the system can (and often do) have records that are updated a posteriori. This means that we
+     * can not rely only on last read record id but always take into account updated timemodified field if it is
+     * available.
+     *
      * @param string $sql
      * @param array $params
      * @param string $filename
      * @param string $dir
+     * @param string $idfield
      * @return bool
      */
-    public static function doexport($sql, $params = null, $filename, $dir) {
+    public static function doexport($sql, $params = null, $filename, $dir, $idfield = 'id') {
         global $DB;
 
-        $count     = 250000;
+        if (!timer::withintime()) {
+            return;
+        }
+
+        $count     = 50000;
         $pos       = 0;
         $counter   = 0;
         $fcount    = 1;
         $recordset = null;
+        $lastid    = null;
+        $altered   = false;
+        if (!is_array($params)) {
+            $params = array();
+        }
+
+        $lastidstore = get_config('local_xray', $filename);
+        if (!empty($lastidstore)) {
+            $lastid = $lastidstore;
+        }
 
         do {
-            $recordset = $DB->get_recordset_sql($sql, $params, $pos, $count);
+            if (!$altered) {
+                if ($lastid !== null) {
+                    $sql .= " AND ({$idfield} > :lastid) ORDER BY {$idfield} ASC ";
+                    $altered = true;
+                }
+            }
+            if ($lastid !== null) {
+                $params['lastid'] = $lastid;
+            }
+            $recordset = $DB->get_recordset_sql($sql, $params, 0, $count);
             $recordset->rewind();
             if (!$recordset->valid()) {
                 $recordset->close();
@@ -602,6 +631,7 @@ class dataexport {
                     break;
                 }
                 $counter++;
+                $lastid = $record->id;
             }
 
             $file->close();
@@ -616,8 +646,9 @@ class dataexport {
             $pos    += $count;
             $fcount += 1;
 
-        } while ($counter >= $pos);
+        } while (($counter >= $pos) && timer::withintime());
 
+        set_config($filename, $lastid, 'local_xray');
     }
 
     /**
@@ -747,6 +778,8 @@ class dataexport {
     public static function exportcsv($timest, $timeend, $dir) {
         self::$meta = array();
 
+        timer::start((int)get_config('local_xray', 'exporttime') * MINSECS);
+
         // Order of export matters. Do not change unless sure.
         self::coursecategories($timest, $timeend, $dir);
         self::courseinfo($timest, $timeend, $dir);
@@ -763,5 +796,7 @@ class dataexport {
         self::grades($timest, $timeend, $dir);
 
         self::exportmetadata($dir);
+
+        mtrace("Export data execution time: ".timer::end()." sec.");
     }
 }

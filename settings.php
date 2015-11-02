@@ -140,5 +140,10 @@ if ($hassiteconfig) {
                                                  new lang_string("exportlocation_desc", $plugin),
                                                  '', PARAM_TEXT));
 
+    $settings->add( new admin_setting_configtext_int_only("{$plugin}/exporttime",
+                                                 new lang_string("exporttime", $plugin),
+                                                 new lang_string("exporttime_desc", $plugin),
+                                                 0));
+
     $ADMIN->add('localplugins', $settings);
 }

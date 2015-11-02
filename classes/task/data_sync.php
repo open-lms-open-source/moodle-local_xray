@@ -68,7 +68,7 @@ class data_sync extends scheduled_task {
      * Throw exceptions on errors (the job will be retried).
      */
     public function execute() {
-        global $CFG;
+        global $CFG, $DB;
         try {
             $config = get_config('local_xray');
 
@@ -94,29 +94,10 @@ class data_sync extends scheduled_task {
                 ],
             ]);
 
-            // Get last export timestamp. If none use 0.
-            $data = wsapi::datalist();
-            if ($data === false) {
-                xrayws::instance()->print_error();
-            }
-
-            $timest = 0;
-            $dates = array();
-            foreach ($data as $item) {
-                try {
-                    $dt = new \DateTime($item->added);
-                    $dates[] = $dt->getTimestamp();
-                } catch (\Exception $e) {
-                    // Silence it.
-                }
-            }
-            if (!empty($dates)) {
-                arsort($dates);
-                $timest = $dates[0];
-            }
-
             $storage = new autoclean();
-            dataexport::exportcsv($timest, $storage->getdirectory());
+            $DB->set_debug(($CFG->debug == DEBUG_DEVELOPER) && $CFG->debugdisplay);
+            dataexport::exportcsv(0, null, $storage->getdirectory());
+            $DB->set_debug(false);
 
             list($compfile, $destfile) = dataexport::compress($storage->getdirbase(), $storage->getdirname());
             if ($compfile !== null) {
@@ -140,6 +121,7 @@ class data_sync extends scheduled_task {
             sync_log::create_msg("Completed data sync.")->trigger();
         } catch (\Exception $e) {
             mtrace($e->getMessage());
+            mtrace($e->getTraceAsString());
             sync_failed::create_from_exception($e)->trigger();
         }
     }

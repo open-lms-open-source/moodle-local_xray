@@ -131,6 +131,9 @@ $string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/s
 $string['exportlocation'] = 'Export location';
 $string['exportlocation_desc'] = 'Configure local directory for temporary storage of exported data. If left empty '.
                                  '(or if path not valid) Moodle tempdir is used.';
+$string['exporttime'] = 'Export time';
+$string['exporttime_desc'] = 'Set maximum permitted time for exporting data. Value represents minutes.'.
+                             'If set to 0 no time limit is imposed.';
 
 $string['xrayadminserver'] = 'XRay Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';
