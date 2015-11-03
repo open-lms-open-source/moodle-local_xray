@@ -28,17 +28,17 @@ namespace local_xray\local\api;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class autocleanfile
+ * Class auto_clean_file
  * @package local_xray
  * @author    Darko Miletic
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class autocleanfile {
+class auto_clean_file {
     /**
-     * @var null|string
+     * @var string
      */
-    private $filename = null;
+    private $filename = '';
 
     /**
      * @param string $file
@@ -49,10 +49,13 @@ class autocleanfile {
         }
     }
 
+    /**
+     * @return void
+     */
     public function __destruct() {
-        if ($this->filename !== null) {
+        if (empty($this->filename)) {
             unlink($this->filename);
-            $this->filename = null;
+            $this->filename = '';
         }
     }
 

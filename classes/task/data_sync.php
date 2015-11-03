@@ -26,13 +26,11 @@
 namespace local_xray\task;
 
 use core\task\scheduled_task;
-use local_xray\local\api\autocleanfile;
-use local_xray\local\api\wsapi;
-use local_xray\local\api\xrayws;
-use local_xray\local\api\dataexport;
+use local_xray\local\api\auto_clean_file;
+use local_xray\local\api\data_export;
 use local_xray\event\sync_log;
 use local_xray\event\sync_failed;
-use local_xray\local\api\autoclean;
+use local_xray\local\api\auto_clean;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -46,7 +44,7 @@ defined('MOODLE_INTERNAL') || die();
  *
  * To manually execute run:
  *
- * php admin/tool/task/cli/schedule_task.php --execute=\\local_xray\\task\\data_sync
+ * php -f admin/tool/task/cli/schedule_task.php -- --execute=\\local_xray\\task\\data_sync
  *
  * @package   local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -83,7 +81,7 @@ class data_sync extends scheduled_task {
 
             sync_log::create_msg("Start data sync.")->trigger();
 
-            require_once($CFG->dirroot.'/local/xray/lib/vendor/aws/aws-autoloader.php');
+            require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
 
             $s3 = new \Aws\S3\S3Client([
                 'version' => '2006-03-01',
@@ -94,14 +92,15 @@ class data_sync extends scheduled_task {
                 ],
             ]);
 
-            $storage = new autoclean();
+            $storage = new auto_clean();
             $DB->set_debug(($CFG->debug == DEBUG_DEVELOPER) && $CFG->debugdisplay);
-            dataexport::exportcsv(0, null, $storage->getdirectory());
+            $timeend = time() - (2 * HOURSECS);
+            data_export::export_csv(0, $timeend, $storage->get_directory());
             $DB->set_debug(false);
 
-            list($compfile, $destfile) = dataexport::compress($storage->getdirbase(), $storage->getdirname());
+            list($compfile, $destfile) = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
             if ($compfile !== null) {
-                $cleanfile = new autocleanfile($compfile);
+                $cleanfile = new auto_clean_file($compfile);
                 ($cleanfile);
                 $uploadresult = $s3->upload($config->s3bucket,
                     $destfile,

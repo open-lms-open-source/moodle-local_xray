@@ -35,9 +35,9 @@ defined('MOODLE_INTERNAL') || die();
  */
 abstract class timer {
     /**
-     * @var null|float
+     * @var float
      */
-    private static $timestart = null;
+    private static $timestart = 0.0;
 
     /**
      * @var int
@@ -67,7 +67,7 @@ abstract class timer {
         $result = 0.0;
         if (empty(self::$timestart)) {
             $result = self::current();
-            self::$timestart = null;
+            self::$timestart = 0.0;
             self::$timeframe = 0;
         }
         return $result;
@@ -76,7 +76,14 @@ abstract class timer {
     /**
      * @return bool
      */
-    public static function withintime() {
+    public static function within_time() {
         return (empty(self::$timeframe) || (self::current() < self::$timeframe));
+    }
+
+    /**
+     * @return float
+     */
+    public static function get_start() {
+        return self::$timestart;
     }
 }

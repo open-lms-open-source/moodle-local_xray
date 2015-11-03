@@ -28,17 +28,17 @@ namespace local_xray\local\api;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class dataexport for exporting raw data for xray processing
+ * Class data_export for exporting raw data for xray processing
  *
  * @package local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class dataexport {
+class data_export {
     /**
-     * @var mixed
+     * @var array
      */
-    protected static $meta = null;
+    protected static $meta = array();
 
     /**
      * @param $fieldname
@@ -114,7 +114,7 @@ class dataexport {
      * @param null|int    $to
      * @return string
      */
-    public static function rangewhere($field1, $field2 = null, $from, $to = null) {
+    public static function range_where($field1, $field2 = null, $from, $to = null) {
         if (empty($to)) {
             return self::greatest($field1, $field2, $from);
         }
@@ -137,7 +137,7 @@ class dataexport {
      */
     public static function coursecategories($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('timemodified');
-        $wherecond = self::rangewhere('timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('timemodified', null, $timest, $timeend);
         $sql = "
                 SELECT
                        id,
@@ -149,7 +149,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -161,7 +161,7 @@ class dataexport {
         $startdate = self::to_timestamp('startdate');
         $timecreated = self::to_timestamp('timecreated');
         $timemodified = self::to_timestamp('timemodified');
-        $wherecond = self::rangewhere('timemodified', 'timecreated', $timest, $timeend);
+        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend);
 
         $sql = "
             SELECT
@@ -180,7 +180,7 @@ class dataexport {
                    AND
                    {$wherecond}";
 
-        self::doexport($sql, null, __FUNCTION__, $dir);
+        self::do_export($sql, null, __FUNCTION__, $dir);
     }
 
     /**
@@ -193,7 +193,7 @@ class dataexport {
         $timemodified = self::to_timestamp('timemodified');
         $firstaccess = self::to_timestamp('firstaccess');
         $lastaccess = self::to_timestamp('lastaccess');
-        $wherecond = self::rangewhere('timemodified', 'timecreated', $timest, $timeend);
+        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend);
 
         $sql = "
                 SELECT
@@ -215,7 +215,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -224,7 +224,7 @@ class dataexport {
      * @param string $dir
      */
     public static function enrolment($timest, $timeend, $dir) {
-        $wherecond = self::rangewhere('l.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('l.timemodified', null, $timest, $timeend);
         $timemodified = self::to_timestamp('l.timemodified', true, 'timemodified');
         $sql = "
                 SELECT
@@ -244,7 +244,7 @@ class dataexport {
 
         $params = ['ctxt' => CONTEXT_COURSE, 'deleted' => false];
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'l.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'l.id');
     }
 
     /**
@@ -284,7 +284,7 @@ class dataexport {
         // Update fresh recordset.
         $DB->execute($sqli, array('ctxt' => CONTEXT_COURSE, 'deleted' => false));
         $time = self::to_timestamp('l.time', true, 'time');
-        $wherecond = self::rangewhere('l.time', null, $timest, $timeend);
+        $wherecond = self::range_where('l.time', null, $timest, $timeend);
 
         // Now export.
         $sql = "
@@ -306,7 +306,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'l.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'l.id');
     }
 
     /**
@@ -316,7 +316,7 @@ class dataexport {
      */
     public static function forums($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
-        $wherecond = self::rangewhere('f.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend);
 
         $sql = "
             SELECT
@@ -334,7 +334,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'f.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'f.id');
     }
 
     /**
@@ -344,7 +344,7 @@ class dataexport {
      */
     public static function threads($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
-        $wherecond = self::rangewhere('f.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend);
         $sql = "
             SELECT
                    f.id,
@@ -361,7 +361,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'f.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'f.id');
     }
 
     /**
@@ -372,7 +372,7 @@ class dataexport {
     public static function posts($timest, $timeend, $dir) {
         $created = self::to_timestamp('fp.created', true, 'created');
         $modified = self::to_timestamp('fp.modified', true, 'modified');
-        $wherecond = self::rangewhere('fp.modified', 'fp.created', $timest, $timeend);
+        $wherecond = self::range_where('fp.modified', 'fp.created', $timest, $timeend);
 
         $sql = "
             SELECT
@@ -400,7 +400,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'fp.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'fp.id');
     }
 
     /**
@@ -410,7 +410,7 @@ class dataexport {
      */
     public static function hsuforums($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
-        $wherecond = self::rangewhere('f.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend);
 
         $sql = "
             SELECT
@@ -428,7 +428,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'f.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'f.id');
     }
 
     /**
@@ -438,7 +438,7 @@ class dataexport {
      */
     public static function hsuthreads($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
-        $wherecond = self::rangewhere('f.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend);
         $sql = "
             SELECT
                    f.id,
@@ -455,7 +455,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'f.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'f.id');
     }
 
     /**
@@ -466,7 +466,7 @@ class dataexport {
     public static function hsuposts($timest, $timeend, $dir) {
         $created = self::to_timestamp('fp.created', true, 'created');
         $modified = self::to_timestamp('fp.modified', true, 'modified');
-        $wherecond = self::rangewhere('fp.modified', 'fp.created', $timest, $timeend);
+        $wherecond = self::range_where('fp.modified', 'fp.created', $timest, $timeend);
 
         $sql = "
             SELECT
@@ -494,7 +494,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'fp.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'fp.id');
     }
 
     /**
@@ -503,7 +503,7 @@ class dataexport {
      * @param string $dir
      */
     public static function quiz($timest, $timeend, $dir) {
-        $wherecond = self::rangewhere('q.timemodified', 'q.timecreated', $timest, $timeend);
+        $wherecond = self::range_where('q.timemodified', 'q.timecreated', $timest, $timeend);
         $timemodified = self::to_timestamp('q.timemodified', true, 'timemodified');
         $sql = "
             SELECT
@@ -522,7 +522,7 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'q.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'q.id');
     }
 
     /**
@@ -531,7 +531,7 @@ class dataexport {
      * @param string $dir
      */
     public static function grades($timest, $timeend, $dir) {
-        $wherecond = self::rangewhere('gg.timemodified', 'gg.timecreated', $timest, $timeend);
+        $wherecond = self::range_where('gg.timemodified', 'gg.timecreated', $timest, $timeend);
 
         $sql = "
           SELECT
@@ -549,13 +549,13 @@ class dataexport {
 
         $params = null;
 
-        self::doexport($sql, $params, __FUNCTION__, $dir, 'gg.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir, 'gg.id');
     }
 
     /**
      * @return mixed|string
      */
-    public static function getdir() {
+    public static function get_dir() {
         $dir = get_config('local_xray', 'exportlocation');
         if (empty($dir) or !is_dir($dir) or !is_writable($dir)) {
             $dir = get_config('core', 'tempdir');
@@ -580,10 +580,10 @@ class dataexport {
      * @param string $idfield
      * @return bool
      */
-    public static function doexport($sql, $params = null, $filename, $dir, $idfield = 'id') {
+    public static function do_export($sql, $params = null, $filename, $dir, $idfield = 'id') {
         global $DB;
 
-        if (!timer::withintime()) {
+        if (!timer::within_time()) {
             return;
         }
 
@@ -624,10 +624,10 @@ class dataexport {
 
             $filenamer = sprintf('%s_%08d.csv', $filename, $fcount);
             $exportf   = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filenamer);
-            $file      = new csvfile($exportf);
+            $file      = new csv_file($exportf);
 
             foreach ($recordset as $record) {
-                $write = $file->writecsv($record);
+                $write = $file->write_csv($record);
                 if ($write === false) {
                     break;
                 }
@@ -647,7 +647,7 @@ class dataexport {
             $pos    += $count;
             $fcount += 1;
 
-        } while (($counter >= $pos) && timer::withintime());
+        } while (($counter >= $pos) && timer::within_time());
 
         set_config($filename, $lastid, 'local_xray');
     }
@@ -656,7 +656,7 @@ class dataexport {
      * @param string $prefix
      * @return string
      */
-    protected static function generatefilename($prefix) {
+    protected static function generate_filename($prefix) {
         return $prefix.'_'.(string)(int)(microtime(true) * 1000.0).'.tar.gz';
     }
 
@@ -668,9 +668,9 @@ class dataexport {
     public static function compress($dirbase, $dirname) {
         $usenative = get_config('local_xray', 'enablepacker');
         if ($usenative) {
-            $result = self::compresstargznative($dirbase, $dirname);
+            $result = self::compress_targz_native($dirbase, $dirname);
         } else {
-            $result = self::compresstargz($dirbase, $dirname);
+            $result = self::compress_targz($dirbase, $dirname);
         }
 
         return $result;
@@ -682,7 +682,7 @@ class dataexport {
      * @return string[]
      * @throws \moodle_exception
      */
-    public static function compresstargz($dirbase, $dirname) {
+    public static function compress_targz($dirbase, $dirname) {
         $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
 
         // Get the list of files in directory.
@@ -697,7 +697,7 @@ class dataexport {
 
         if (!empty($files)) {
             $admin = get_config('local_xray', 'xrayadmin');
-            $basefile = self::generatefilename($admin);
+            $basefile = self::generate_filename($admin);
             $archivefile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
             $destfile = $admin . '/' . $basefile;
 
@@ -717,7 +717,7 @@ class dataexport {
      * @return string[]
      * @throws \moodle_exception
      */
-    public static function compresstargznative($dirbase, $dirname) {
+    public static function compress_targz_native($dirbase, $dirname) {
         $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
 
         $exportfiles = array_diff(scandir($transdir), ['..', '.']);
@@ -730,7 +730,7 @@ class dataexport {
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
             $escdir = escapeshellarg($transdir);
             // We have to use microseconds timestamp because of nodejs...
-            $basefile = self::generatefilename($admin);
+            $basefile = self::generate_filename($admin);
             $compfile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
             $escfile = escapeshellarg($compfile);
             $esctar = escapeshellarg($bintar);
@@ -750,7 +750,7 @@ class dataexport {
     /**
      * @param string $dir
      */
-    public static function exportmetadata($dir) {
+    public static function export_metadata($dir) {
         $exportf  = sprintf('%s%smeta.json', $dir, DIRECTORY_SEPARATOR);
 
         if (!empty(self::$meta)) {
@@ -760,23 +760,11 @@ class dataexport {
     }
 
     /**
-     * @param string $dir
-     */
-    public static function deletedir($dir) {
-        $exportfiles = array_diff(scandir($dir), array('..', '.'));
-        foreach ($exportfiles as $file) {
-            unlink($dir.DIRECTORY_SEPARATOR.$file);
-        }
-
-        rmdir($dir);
-    }
-
-    /**
      * @param int $timest
      * @param int $timeend
      * @param string $dir
      */
-    public static function exportcsv($timest, $timeend, $dir) {
+    public static function export_csv($timest, $timeend, $dir) {
         self::$meta = array();
 
         $timeframe = (int)get_config('local_xray', 'exporttime_hours') * HOURSECS +
@@ -799,7 +787,7 @@ class dataexport {
         self::quiz($timest, $timeend, $dir);
         self::grades($timest, $timeend, $dir);
 
-        self::exportmetadata($dir);
+        self::export_metadata($dir);
 
         mtrace("Export data execution time: ".timer::end()." sec.");
     }
