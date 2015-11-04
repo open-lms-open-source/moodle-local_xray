@@ -133,7 +133,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $subtitle = html_writer::tag("h2",
                         get_string("discussiongrading", $this->component),
                         array("class" => "main"));
-                    $output .= html_writer::div($subtitle, array("class" => "mr_html_heading"));
+                    $output .= html_writer::div($subtitle, "mr_html_heading");
                     $output .= $this->output->inforeport($response->reportdate);
 
                     // Its a table, I will get info with new call.
