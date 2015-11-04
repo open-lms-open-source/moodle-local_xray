@@ -132,6 +132,9 @@ $string['exportlocation_desc'] = 'Configura directorio local para almacenamiento
 $string['exporttime'] = 'Tiempo de exportacion';
 $string['exporttime_desc'] = 'Configure tiempo permitido para exportacion de los datos.'.
                              'Si valor configurado es 0 exportacion es sin limite.';
+$string['export_progress'] = 'Reiniciar informacion del progreso';
+$string['export_progress_desc'] = 'Durante exportacion de los datos, informacion del progreso se guarda en '.
+                                  'la base de datos. Markando esa opccion borraria esa informacion.';
 
 $string['xrayadminserver'] = 'Servidor de administración XRay';
 $string['xrayadminserver_desc'] = 'Locación del servidor.';

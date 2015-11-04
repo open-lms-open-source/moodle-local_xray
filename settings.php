@@ -147,5 +147,11 @@ if ($hassiteconfig) {
                                                  new lang_string("exporttime_desc", $plugin),
                                                  ['h' => 1, 'm' => 0]));
 
+
+    $settings->add( new \local_xray\local\api\admin_setting_configcheckbox_xray("{$plugin}/export_progress",
+                                                new lang_string("export_progress", $plugin),
+                                                new lang_string("export_progress_desc", $plugin),
+                                                '0'));
+
     $ADMIN->add('localplugins', $settings);
 }

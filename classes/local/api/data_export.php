@@ -84,9 +84,10 @@ class data_export {
      * @param  string $field1
      * @param  string $field2
      * @param  string $value
+     * @param  string $idfield
      * @return string
      */
-    public static function greatest($field1, $field2 = null, $value) {
+    public static function greatest($field1, $field2 = null, $value, $idfield) {
         if ($value == 0) {
             $format = "(COALESCE(%1\$s, 0) >= %3\$s)";
         } else {
@@ -98,12 +99,16 @@ class data_export {
             } else {
                 $sformat = "( (COALESCE(%2\$s, 0) = 0) OR (COALESCE(%2\$s, 0) >= %3\$s) )";
             }
-            $format = "( ".
+            $format =
+                      "( ".
                       "( (COALESCE(%1\$s, 0) = 0) AND {$sformat} )".
                       " OR ".
                       $format.
-                      " )";
+                      " ) ";
         }
+
+        $format = " ( {$format}  OR ({$idfield} > :lastid) ) ORDER BY {$idfield} ASC ";
+
         return sprintf($format, $field1, $field2, (int)$value);
     }
 
@@ -112,11 +117,17 @@ class data_export {
      * @param null|string $field2
      * @param int         $from
      * @param null|int    $to
+     * @param string      $fn
+     * @param null|string $idfield
      * @return string
      */
-    public static function range_where($field1, $field2 = null, $from, $to = null) {
+    public static function range_where($field1, $field2 = null, $from, $to = null, $fn, $idfield = 'id') {
+        $maxdatestore = get_config('local_xray', $fn."_maxdate");
+        if (!empty($maxdatestore)) {
+            $from = $maxdatestore;
+        }
         if (empty($to)) {
-            return self::greatest($field1, $field2, $from);
+            return self::greatest($field1, $field2, $from, $idfield);
         }
         $format = "( (COALESCE(%1\$s, 0) = 0) OR (COALESCE(%1\$s, 0) BETWEEN %3\$s AND %4\$s) )";
         if (!empty($field2)) {
@@ -127,6 +138,9 @@ class data_export {
                       $format.
                       " )";
         }
+
+        $format = " ( {$format}  OR ({$idfield} > :lastid) ) ORDER BY {$idfield} ASC ";
+
         return sprintf($format, $field1, $field2, (int)$from, (int)$to);
     }
 
@@ -137,17 +151,20 @@ class data_export {
      */
     public static function coursecategories($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('timemodified');
-        $wherecond = self::range_where('timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('timemodified', null, $timest, $timeend, __FUNCTION__);
+
         $sql = "
                 SELECT
                        id,
                        name,
                        description,
-                       {$timemodified}
+                       {$timemodified},
+                       timemodified AS traw
                 FROM   {course_categories}
-                WHERE  {$wherecond}";
+                WHERE
+                       {$wherecond}";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
         self::do_export($sql, $params, __FUNCTION__, $dir);
     }
@@ -161,7 +178,7 @@ class data_export {
         $startdate = self::to_timestamp('startdate');
         $timecreated = self::to_timestamp('timecreated');
         $timemodified = self::to_timestamp('timemodified');
-        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend);
+        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
 
         $sql = "
             SELECT
@@ -174,13 +191,15 @@ class data_export {
                    visible,
                    {$startdate},
                    {$timecreated},
-                   {$timemodified}
+                   {$timemodified},
+                   timemodified AS traw
            FROM    {course}
-           WHERE   (category <> 0)
+           WHERE
+                   (category <> 0)
                    AND
                    {$wherecond}";
 
-        self::do_export($sql, null, __FUNCTION__, $dir);
+        self::do_export($sql, ['lastid' => 0], __FUNCTION__, $dir);
     }
 
     /**
@@ -193,7 +212,7 @@ class data_export {
         $timemodified = self::to_timestamp('timemodified');
         $firstaccess = self::to_timestamp('firstaccess');
         $lastaccess = self::to_timestamp('lastaccess');
-        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend);
+        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
 
         $sql = "
                 SELECT
@@ -207,13 +226,15 @@ class data_export {
                        {$timecreated},
                        {$timemodified},
                        {$firstaccess},
-                       {$lastaccess}
+                       {$lastaccess},
+                       timemodified AS traw
                 FROM   {user}
-                WHERE  deleted = 0
+                WHERE
+                       deleted = :deleted
                        AND
                        {$wherecond}";
 
-        $params = null;
+        $params = ['lastid' => 0, 'deleted' => false];
 
         self::do_export($sql, $params, __FUNCTION__, $dir);
     }
@@ -224,7 +245,7 @@ class data_export {
      * @param string $dir
      */
     public static function enrolment($timest, $timeend, $dir) {
-        $wherecond = self::range_where('l.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('l.timemodified', null, $timest, $timeend, __FUNCTION__, 'l.id');
         $timemodified = self::to_timestamp('l.timemodified', true, 'timemodified');
         $sql = "
                 SELECT
@@ -232,19 +253,20 @@ class data_export {
                            c.instanceid AS courseid,
                            l.roleid,
                            l.userid AS participantid,
-                           {$timemodified}
+                           {$timemodified},
+                           l.timemodified AS traw
                 FROM       {role_assignments} l
                 INNER JOIN {context}          c  ON l.contextid = c.id AND c.contextlevel= :ctxt
                 WHERE
-                           EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = 0)
+                           EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = :deleted)
                            AND
                            EXISTS (SELECT c.id FROM {course} c WHERE c.instanceid = c.id AND c.category <> 0)
                            AND
                            {$wherecond}";
 
-        $params = ['ctxt' => CONTEXT_COURSE, 'deleted' => false];
+        $params = ['ctxt' => CONTEXT_COURSE, 'lastid' => 0, 'deleted' => false];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'l.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -263,28 +285,20 @@ class data_export {
         $sqli = "
             INSERT INTO {local_xray_uctmp} (userid, courseid)
             (
-                SELECT DISTINCT ra.userid, c.id AS courseid
-                FROM   {role_assignments} ra,
-                       {context} ctx,
-                       {course} c,
-                       {user} u
-                WHERE  ctx.contextlevel = :ctxt
-                       AND
-                       ra.contextid = ctx.id
-                       AND
-                       ctx.instanceid = c.id
-                       AND
-                       ra.userid = u.id
-                       AND
-                       u.deleted = :deleted
-                       AND
-                       c.category <> 0
+                SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
+                FROM       {role_assignments} ra
+                INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = :ctxt
+                WHERE
+                      EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0     )
+                      AND
+                      EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = :deleted)
             )
         ";
+
         // Update fresh recordset.
         $DB->execute($sqli, array('ctxt' => CONTEXT_COURSE, 'deleted' => false));
         $time = self::to_timestamp('l.time', true, 'time');
-        $wherecond = self::range_where('l.time', null, $timest, $timeend);
+        $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id');
 
         // Now export.
         $sql = "
@@ -297,16 +311,18 @@ class data_export {
                    l.action,
                    l.info,
                    l.module,
-                   l.url
+                   l.url,
+                   l.time AS traw
             FROM   {log} l
-            WHERE  EXISTS (SELECT * FROM {local_xray_uctmp} rx WHERE rx.courseid = l.course AND rx.userid = l.userid)
+            WHERE
+                   EXISTS (SELECT * FROM {local_xray_uctmp} rx WHERE rx.courseid = l.course AND rx.userid = l.userid)
                    AND
                    {$wherecond}
             ";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'l.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -316,7 +332,7 @@ class data_export {
      */
     public static function forums($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
-        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend, __FUNCTION__, 'f.id');
 
         $sql = "
             SELECT
@@ -325,16 +341,17 @@ class data_export {
                    f.type,
                    f.name,
                    f.intro,
-                   {$timemodified}
-            FROM   {forum}  f
+                   {$timemodified},
+                   f.timemodified AS traw
+            FROM   {forum} f
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'f.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -344,7 +361,7 @@ class data_export {
      */
     public static function threads($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
-        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend, __FUNCTION__, 'f.id');
         $sql = "
             SELECT
                    f.id,
@@ -352,16 +369,17 @@ class data_export {
                    f.name,
                    f.userid AS participantid,
                    f.groupid,
-                   {$timemodified}
+                   {$timemodified},
+                   f.timemodified AS traw
             FROM   {forum_discussions} f
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'f.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -372,7 +390,7 @@ class data_export {
     public static function posts($timest, $timeend, $dir) {
         $created = self::to_timestamp('fp.created', true, 'created');
         $modified = self::to_timestamp('fp.modified', true, 'modified');
-        $wherecond = self::range_where('fp.modified', 'fp.created', $timest, $timeend);
+        $wherecond = self::range_where('fp.modified', 'fp.created', $timest, $timeend, __FUNCTION__, 'fp.id');
 
         $sql = "
             SELECT
@@ -383,12 +401,13 @@ class data_export {
                    {$created},
                    {$modified},
                    fp.subject,
-                   fp.message
+                   fp.message,
+                   fp.modified AS traw
             FROM   {forum_posts} fp
             WHERE
                    EXISTS (
                       SELECT fd.id
-                      FROM   {forum_discussions} fd
+                      FROM   {forum_discussions} AS fd
                       WHERE
                              EXISTS (SELECT c.id FROM {course} c WHERE fd.course = c.id AND c.category <> 0)
                              AND
@@ -398,9 +417,9 @@ class data_export {
                    {$wherecond}
         ";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'fp.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -410,7 +429,7 @@ class data_export {
      */
     public static function hsuforums($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
-        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend, __FUNCTION__, 'f.id');
 
         $sql = "
             SELECT
@@ -419,16 +438,17 @@ class data_export {
                    f.type,
                    f.name,
                    f.intro,
-                   {$timemodified}
-            FROM   {hsuforum}  f
+                   {$timemodified},
+                   f.timemodified AS traw
+            FROM   {hsuforum} f
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'f.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -438,7 +458,7 @@ class data_export {
      */
     public static function hsuthreads($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
-        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend);
+        $wherecond = self::range_where('f.timemodified', null, $timest, $timeend, __FUNCTION__, 'f.id');
         $sql = "
             SELECT
                    f.id,
@@ -446,16 +466,17 @@ class data_export {
                    f.name,
                    f.userid AS participantid,
                    f.groupid,
-                   {$timemodified}
+                   {$timemodified},
+                   f.timemodified AS traw
             FROM   {hsuforum_discussions} f
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    {$wherecond}";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'f.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -466,7 +487,7 @@ class data_export {
     public static function hsuposts($timest, $timeend, $dir) {
         $created = self::to_timestamp('fp.created', true, 'created');
         $modified = self::to_timestamp('fp.modified', true, 'modified');
-        $wherecond = self::range_where('fp.modified', 'fp.created', $timest, $timeend);
+        $wherecond = self::range_where('fp.modified', 'fp.created', $timest, $timeend, __FUNCTION__, 'fp.id');
 
         $sql = "
             SELECT
@@ -477,7 +498,8 @@ class data_export {
                    {$created},
                    {$modified},
                    fp.subject,
-                   fp.message
+                   fp.message,
+                   fp.modified AS traw
             FROM   {hsuforum_posts} fp
             WHERE
                    EXISTS (
@@ -492,9 +514,9 @@ class data_export {
                    {$wherecond}
         ";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'fp.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -503,7 +525,7 @@ class data_export {
      * @param string $dir
      */
     public static function quiz($timest, $timeend, $dir) {
-        $wherecond = self::range_where('q.timemodified', 'q.timecreated', $timest, $timeend);
+        $wherecond = self::range_where('q.timemodified', 'q.timecreated', $timest, $timeend, __FUNCTION__, 'q.id');
         $timemodified = self::to_timestamp('q.timemodified', true, 'timemodified');
         $sql = "
             SELECT
@@ -512,7 +534,8 @@ class data_export {
                    q.name,
                    q.attempts,
                    q.grade,
-                   {$timemodified}
+                   {$timemodified},
+                   q.timemodified AS traw
             FROM   {quiz} q
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE q.course = c.id AND c.category <> 0)
@@ -520,9 +543,9 @@ class data_export {
                    {$wherecond}
         ";
 
-        $params = null;
+        $params = ['lastid' => 0];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'q.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -531,7 +554,9 @@ class data_export {
      * @param string $dir
      */
     public static function grades($timest, $timeend, $dir) {
-        $wherecond = self::range_where('gg.timemodified', 'gg.timecreated', $timest, $timeend);
+        $wherecond = self::range_where('gg.timemodified', 'gg.timecreated', $timest, $timeend, __FUNCTION__, 'gg.id');
+        $timecreated = self::to_timestamp('gg.timecreated', true, 'timecreated');
+        $timemodified = self::to_timestamp('gg.timemodified', true, 'timemodified');
 
         $sql = "
           SELECT
@@ -541,15 +566,17 @@ class data_export {
                      gg.rawgrade,
                      gg.finalgrade,
                      gg.locktime,
-                     gg.timecreated,
-                     gg.timemodified
+                     {$timecreated},
+                     {$timemodified},
+                     gg.timemodified AS traw
           FROM       {grade_grades} gg
-          INNER JOIN {grade_items}  gi ON gi.id = gg.itemid AND gi.itemmodule = 'quiz'
-          WHERE      {$wherecond}";
+          INNER JOIN {grade_items}  gi ON gi.id = gg.itemid AND gi.itemmodule = :module
+          WHERE
+                     {$wherecond}";
 
-        $params = null;
+        $params = ['lastid' => 0, 'module' => 'quiz'];
 
-        self::do_export($sql, $params, __FUNCTION__, $dir, 'gg.id');
+        self::do_export($sql, $params, __FUNCTION__, $dir);
     }
 
     /**
@@ -574,13 +601,12 @@ class data_export {
      * available.
      *
      * @param string $sql
-     * @param array $params
+     * @param array  $params
      * @param string $filename
      * @param string $dir
-     * @param string $idfield
      * @return bool
      */
-    public static function do_export($sql, $params = null, $filename, $dir, $idfield = 'id') {
+    public static function do_export($sql, $params = null, $filename, $dir) {
         global $DB;
 
         if (!timer::within_time()) {
@@ -593,8 +619,7 @@ class data_export {
         $fcount    = 1;
         $recordset = null;
         $lastid    = null;
-        $altered   = false;
-        $psql      = " ORDER BY {$idfield} ASC ";
+        $maxdate   = null;
         if (!is_array($params)) {
             $params = array();
         }
@@ -605,16 +630,10 @@ class data_export {
         }
 
         do {
-            if (!$altered) {
-                if ($lastid !== null) {
-                    $psql = " AND ({$idfield} > :lastid) ORDER BY {$idfield} ASC ";
-                    $altered = true;
-                }
-            }
             if ($lastid !== null) {
                 $params['lastid'] = $lastid;
             }
-            $recordset = $DB->get_recordset_sql($sql.$psql, $params, 0, $count);
+            $recordset = $DB->get_recordset_sql($sql, $params, 0, $count);
             $recordset->rewind();
             if (!$recordset->valid()) {
                 $recordset->close();
@@ -627,12 +646,17 @@ class data_export {
             $file      = new csv_file($exportf);
 
             foreach ($recordset as $record) {
+                $cmaxdate = $record->traw;
+                unset($record->traw);
                 $write = $file->write_csv($record);
                 if ($write === false) {
                     break;
                 }
                 $counter++;
                 $lastid = $record->id;
+                if ($maxdate < $cmaxdate) {
+                    $maxdate = $cmaxdate;
+                }
             }
 
             $file->close();
@@ -650,6 +674,10 @@ class data_export {
         } while (($counter >= $pos) && timer::within_time());
 
         set_config($filename, $lastid, 'local_xray');
+        set_config($filename."_maxdate", $maxdate, 'local_xray');
+
+        $lastid = null;
+        $maxdate = null;
     }
 
     /**
@@ -791,4 +819,21 @@ class data_export {
 
         mtrace("Export data execution time: ".timer::end()." sec.");
     }
+
+    /**
+     * Resets all progress settings
+     *
+     * @return void
+     */
+    public static function delete_progress_settings() {
+        $items = ['coursecategories', 'courseinfo',
+                  'userlist', 'enrolment', 'accesslog',
+                  'forums', 'threads', 'posts', 'hsuforums',
+                  'hsuthreads', 'hsuposts', 'quiz', 'grades'];
+        foreach ($items as $item) {
+            set_config($item, null, 'local_xray');
+            set_config($item.'_maxdate', null, 'local_xray');
+        }
+    }
+
 }

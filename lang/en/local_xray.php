@@ -133,6 +133,9 @@ $string['exportlocation_desc'] = 'Configure local directory for temporary storag
                                  '(or if path not valid) Moodle tempdir is used.';
 $string['exporttime'] = 'Export time';
 $string['exporttime_desc'] = 'Set maximum permitted time for exporting data. If set to 0 no time limit is imposed.';
+$string['export_progress'] = 'Reset export progress';
+$string['export_progress_desc'] = 'During export progress of the currently exported information is stored in the '.
+                                  'database. Checking this option will reset that data.';
 
 $string['xrayadminserver'] = 'XRay Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';
