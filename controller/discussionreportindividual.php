@@ -67,7 +67,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
                 // Its a table, I will get info with new call.
                 $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
-                    "view.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=".
+                    "rest.php?controller='discussionreportindividual'&action='jsonparticipationdiscussionindividual'&courseid=".
                     $this->courseid."&userid=".$this->userid);
                 $output .= $this->output->standard_table((array)$datatable);
 

@@ -235,7 +235,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
 
         $datatable = new local_xray\datatables\datatables($element,
-            "view.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=" . $courseid . "&count=" . $numberofweeks,
+            "rest.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=" . $courseid . "&count=" . $numberofweeks,
             $columns,
             false,
             false, // We don't need pagination because we have only four rows.
@@ -272,7 +272,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
 
         $datatable = new local_xray\datatables\datatables($element,
-            "view.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&courseid=" .
+            "rest.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&courseid=" .
             $courseid . "&userid=" . $userid . "&count=" . $numberofweeks,
             $columns,
             false,

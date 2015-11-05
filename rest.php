@@ -15,12 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Xray view renderer
- *
- * @package   local_xray
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+* Rest json controller
+*
+* @package   local_xray
+* @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+* @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+*/
+
+define('AJAX_SCRIPT', true);
+define('NO_DEBUG_DISPLAY', true);
 
 require_once('../../config.php');
 /* @var stdClass $CFG */
