@@ -27,9 +27,9 @@
 defined('MOODLE_INTERNAL') or die();
 
 /* @var string[] $string */
-$string['navigation_xray'] = 'X-Ray ';
-$string['navitationcourse_xray'] = 'X-Ray';
-$string['pluginname'] = 'X-Ray';
+$string['navigation_xray'] = 'X-Ray Learning Analytics ';
+$string['navitationcourse_xray'] = 'X-Ray Learning Analytics';
+$string['pluginname'] = 'X-Ray Learning Analytics';
 $string['reports'] = 'Reports';
 $string['analytics'] = 'Course Analytics';
 $string['xraydisplayheading'] = 'Course Integration';
@@ -52,7 +52,7 @@ $string['xray:discussiongrading_view'] = 'View Discussion Grading';
 $string['xray:gradebookreport_view'] = 'View Gradebook Report';
 $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indivisual Quiz';
 $string['xray:risk_view'] = 'View Risk Report';
-$string['xray:view'] = 'X-ray View';
+$string['xray:view'] = 'X-Ray Learning Analytics View';
 
 /* Categories for numbers values */
 $string['high'] = 'High';
@@ -92,7 +92,7 @@ $string['error_loadimg'] = 'Error to load image, please try again reloading the 
                            'with the administrator please.';
 
 /* Error Webservice */
-$string['error_xray'] = 'Error to connect with Xray, please try again reloading the page. If error persist, '.
+$string['error_xray'] = 'Error to connect with X-Ray Learning Analytics, please try again reloading the page. If error persist, '.
                         'contact with the administrator please.';
 
 $string['error_compress'] = 'Unable to create compressed file. Please check with your administrator.';
@@ -103,17 +103,17 @@ $string['error_generic'] = '{$a}';
 $string['enabledreports'] = 'Enabled Reports';
 $string['enabledreports_desc'] = 'Reports enabled for view in moodle.';
 $string['xrayclientid'] = 'Identifier client';
-$string['xrayclientid_desc'] = 'Identifier client for xray';
-$string['xraypassword'] = 'Xray Password';
+$string['xrayclientid_desc'] = 'Identifier client for X-Ray Learning Analytics';
+$string['xraypassword'] = 'X-Ray Learning Analytics Password';
 $string['xraypassword_desc'] = '';
-$string['xrayurl'] = 'Xray Url';
+$string['xrayurl'] = 'X-Ray Learning Analytics Url';
 $string['xrayurl_desc'] = '';
-$string['xrayusername'] = 'Xray Username';
+$string['xrayusername'] = 'X-Ray Learning Analytics Username';
 $string['xrayusername_desc'] = '';
 $string['xrayawsheading'] = 'Data Synchronization';
-$string['xrayawsheading_desc'] = 'In this section you can configure automated data synchronization with XRay.';
+$string['xrayawsheading_desc'] = 'In this section you can configure automated data synchronization with X-Ray Learning Analytics.';
 $string['enablesync'] = 'Data Sync';
-$string['enablesync_desc'] = 'Enable automated data synchronization with XRay.';
+$string['enablesync_desc'] = 'Enable automated data synchronization with X-Ray Learning Analytics.';
 $string['awskey'] = 'AWS Key';
 $string['awskey_desc'] = 'Access key for AWS web services';
 $string['awssecret'] = 'AWS Secret';
@@ -132,7 +132,7 @@ $string['exportlocation'] = 'Export location';
 $string['exportlocation_desc'] = 'Configure local directory for temporary storage of exported data. If left empty '.
                                  '(or if path not valid) Moodle tempdir is used.';
 
-$string['xrayadminserver'] = 'XRay Administration server';
+$string['xrayadminserver'] = 'X-Ray Learning Analytics Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';
 $string['xrayadmin'] = 'Admin user';
 $string['xrayadmin_desc'] = 'User for logging into admin server.';
@@ -160,12 +160,12 @@ $string['xrayws_error_curl'] = '{$a}';
 
 /* Scheduled task */
 $string['datasync'] = 'Data Synchronization';
-$string['syncfailed'] = 'XRay data sync failed';
+$string['syncfailed'] = 'X-Ray Learning Analytics data sync failed';
 $string['unexperror'] = 'Unexpected error';
-$string['syncfailedexplanation'] = 'Failed to synchronize data with XRay.';
-$string['synclog'] = 'XRay data sync info message';
+$string['syncfailedexplanation'] = 'Failed to synchronize data with X-Ray Learning Analytics.';
+$string['synclog'] = 'X-Ray Learning Analytics data sync info message';
 $string['synclogexplanation'] = 'Regular log entry for data sync.';
-$string['getreportfailed'] = 'Error to get report from XRay';
+$string['getreportfailed'] = 'Error to get report from X-Ray Learning Analytics';
 
 /* Course Header */
 $string['atrisk'] = 'At risk';
