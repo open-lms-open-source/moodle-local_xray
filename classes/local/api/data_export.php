@@ -237,7 +237,10 @@ class data_export {
                    {$startdate},
                    {$timecreated},
                    {$timemodified},
-                   timemodified AS traw
+                   CASE
+                        WHEN COALESCE(timemodified, 0) = 0 THEN timecreated
+                        ELSE timemodified
+                   END AS traw
            FROM    {course}
            WHERE
                    (category <> 0)
@@ -272,7 +275,10 @@ class data_export {
                        {$timemodified},
                        {$firstaccess},
                        {$lastaccess},
-                       timemodified AS traw
+                       CASE
+                            WHEN COALESCE(timemodified, 0) = 0 THEN timecreated
+                            ELSE timemodified
+                       END AS traw
                 FROM   {user}
                 WHERE
                        deleted = :deleted
@@ -320,7 +326,7 @@ class data_export {
      * @param string $dir
      * @throws \ddl_exception
      */
-    public static function accesslog($timest, $timeend, $dir) {
+    public static function accesslog_prev($timest, $timeend, $dir) {
         global $DB;
 
         $DB->delete_records('local_xray_uctmp');
@@ -364,6 +370,45 @@ class data_export {
             ";
 
         self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+    }
+
+    public static function accesslog($timest, $timeend, $dir) {
+        $time = self::to_timestamp('l.time', true, 'time');
+        $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id');
+
+        // Now export.
+        $sql = "
+            SELECT
+                   l.id,
+                   l.userid AS participantid,
+                   l.course AS courseid,
+                   {$time},
+                   l.ip,
+                   l.action,
+                   l.info,
+                   l.module,
+                   l.url,
+                   l.time AS traw
+            FROM   {log} l
+            WHERE
+                   EXISTS (
+                        SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
+                        FROM       {role_assignments} ra
+                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = :ctxt
+                        WHERE
+                              EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
+                              AND
+                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = :deleted)
+                              AND
+                              ctx.instanceid = l.course
+                              AND
+                              ra.userid = l.userid
+                   )
+                   AND
+                   {$wherecond}
+            ";
+
+        self::do_export($sql, self::default_params(['ctxt' => CONTEXT_COURSE, 'deleted' => false]), __FUNCTION__, $dir);
     }
 
     /**
@@ -439,7 +484,10 @@ class data_export {
                    {$modified},
                    fp.subject,
                    fp.message,
-                   fp.modified AS traw
+                   CASE
+                        WHEN COALESCE(fp.modified, 0) = 0 THEN fp.created
+                        ELSE fp.modified
+                   END AS traw
             FROM   {forum_posts} fp
             WHERE
                    EXISTS (
@@ -530,7 +578,10 @@ class data_export {
                    {$modified},
                    fp.subject,
                    fp.message,
-                   fp.modified AS traw
+                   CASE
+                        WHEN COALESCE(fp.modified, 0) = 0 THEN fp.created
+                        ELSE fp.modified
+                   END AS traw
             FROM   {hsuforum_posts} fp
             WHERE
                    EXISTS (
@@ -595,7 +646,10 @@ class data_export {
                      gg.locktime,
                      {$timecreated},
                      {$timemodified},
-                     gg.timemodified AS traw
+                     CASE
+                          WHEN COALESCE(gg.timemodified, 0) = 0 THEN gg.timecreated
+                          ELSE gg.timemodified
+                     END AS traw
           FROM       {grade_grades} gg
           INNER JOIN {grade_items}  gi ON gi.id = gg.itemid AND gi.itemmodule = :module
           WHERE
