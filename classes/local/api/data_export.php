@@ -35,10 +35,21 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class data_export {
+
+    const PLUGIN = 'local_xray';
+
     /**
      * @var array
      */
     protected static $meta = array();
+
+    /**
+     * @param string $base
+     * @return string
+     */
+    public static function get_maxdate_setting($base) {
+        return "{$base}_maxdate";
+    }
 
     /**
      * @param $fieldname
@@ -122,26 +133,62 @@ class data_export {
      * @return string
      */
     public static function range_where($field1, $field2 = null, $from, $to = null, $fn, $idfield = 'id') {
-        $maxdatestore = get_config('local_xray', $fn."_maxdate");
+        $maxdatestore = get_config(self::PLUGIN, self::get_maxdate_setting($fn));
         if (!empty($maxdatestore)) {
             $from = $maxdatestore;
         }
         if (empty($to)) {
             return self::greatest($field1, $field2, $from, $idfield);
         }
-        $format = "( (COALESCE(%1\$s, 0) = 0) OR (COALESCE(%1\$s, 0) BETWEEN %3\$s AND %4\$s) )";
-        if (!empty($field2)) {
-            $format = "( ".
-                      "( (COALESCE(%1\$s, 0) = 0) AND ".
-                      "( (COALESCE(%2\$s, 0) = 0) OR (COALESCE(%2\$s, 0) BETWEEN %3\$s AND %4\$s) ) )".
-                      " OR ".
-                      $format.
-                      " )";
-        }
+        $format1 = "(
+                     (
+                       (COALESCE(%1\$s, 0) = 0)
+                       AND
+                       ({$idfield} > :lastid)
+                     )
+                     OR
+                     ( (COALESCE(%1\$s, 0) = %3\$s) AND ({$idfield} > :lastid2) )
+                     OR
+                     (COALESCE(%1\$s, 0) BETWEEN (%3\$s+1) AND %4\$s)
+                    )";
+        $format2 = "(
+                     (
+                       (COALESCE(%1\$s, 0) = 0)
+                       AND
+                       (
+                          (
+                            (COALESCE(%2\$s, 0) = 0)
+                            AND
+                            ({$idfield} > :lastid1)
+                          )
+                          OR
+                          ( (COALESCE(%2\$s, 0) = %3\$s) AND ({$idfield} > :lastid3) )
+                          OR
+                          (COALESCE(%2\$s, 0) BETWEEN (%3\$s+1) AND %4\$s)
+                       )
+                     )
+                     OR
+                     {$format1}
+                    )";
 
-        $format = " ( {$format}  OR ({$idfield} > :lastid) ) ORDER BY {$idfield} ASC ";
+        $format = empty($field2) ? $format1 : $format2;
+
+        $format = "(
+                    {$format}
+                    OR
+                    ({$idfield} > :lastid4)
+                   )
+                ORDER BY {$idfield} ASC ";
 
         return sprintf($format, $field1, $field2, (int)$from, (int)$to);
+    }
+
+    /**
+     * @param array $addmore
+     * @return array
+     */
+    public static function default_params(array $addmore = []) {
+        return ['lastid' => 0, 'lastid1' => 0, 'lastid2' => 0, 'lastid3' => 0, 'lastid4' => 0] + $addmore;
     }
 
     /**
@@ -164,9 +211,7 @@ class data_export {
                 WHERE
                        {$wherecond}";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -199,7 +244,7 @@ class data_export {
                    AND
                    {$wherecond}";
 
-        self::do_export($sql, ['lastid' => 0], __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -234,9 +279,7 @@ class data_export {
                        AND
                        {$wherecond}";
 
-        $params = ['lastid' => 0, 'deleted' => false];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(['deleted' => false]), __FUNCTION__, $dir);
     }
 
     /**
@@ -264,7 +307,7 @@ class data_export {
                            AND
                            {$wherecond}";
 
-        $params = ['ctxt' => CONTEXT_COURSE, 'lastid' => 0, 'deleted' => false];
+        $params = self::default_params(['ctxt' => CONTEXT_COURSE, 'deleted' => false]);
 
         self::do_export($sql, $params, __FUNCTION__, $dir);
     }
@@ -320,9 +363,7 @@ class data_export {
                    {$wherecond}
             ";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -349,9 +390,7 @@ class data_export {
                    AND
                    {$wherecond}";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -377,9 +416,7 @@ class data_export {
                    AND
                    {$wherecond}";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -417,9 +454,7 @@ class data_export {
                    {$wherecond}
         ";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -446,9 +481,7 @@ class data_export {
                    AND
                    {$wherecond}";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -474,9 +507,7 @@ class data_export {
                    AND
                    {$wherecond}";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -514,9 +545,7 @@ class data_export {
                    {$wherecond}
         ";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -543,9 +572,7 @@ class data_export {
                    {$wherecond}
         ";
 
-        $params = ['lastid' => 0];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
     }
 
     /**
@@ -574,16 +601,14 @@ class data_export {
           WHERE
                      {$wherecond}";
 
-        $params = ['lastid' => 0, 'module' => 'quiz'];
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::do_export($sql, self::default_params(['module' => 'quiz']), __FUNCTION__, $dir);
     }
 
     /**
      * @return mixed|string
      */
     public static function get_dir() {
-        $dir = get_config('local_xray', 'exportlocation');
+        $dir = get_config(self::PLUGIN, 'exportlocation');
         if (empty($dir) or !is_dir($dir) or !is_writable($dir)) {
             $dir = get_config('core', 'tempdir');
         }
@@ -624,14 +649,18 @@ class data_export {
             $params = array();
         }
 
-        $lastidstore = get_config('local_xray', $filename);
+        $lastidstore = get_config(self::PLUGIN, $filename);
         if (!empty($lastidstore)) {
             $lastid = $lastidstore;
         }
 
         do {
             if ($lastid !== null) {
-                $params['lastid'] = $lastid;
+                $params['lastid' ] = $lastid;
+                $params['lastid1'] = $lastid;
+                $params['lastid2'] = $lastid;
+                $params['lastid3'] = $lastid;
+                $params['lastid4'] = $lastid;
             }
             $recordset = $DB->get_recordset_sql($sql, $params, 0, $count);
             $recordset->rewind();
@@ -653,7 +682,9 @@ class data_export {
                     break;
                 }
                 $counter++;
-                $lastid = $record->id;
+                if ($record->id > $lastidstore) {
+                    $lastid = $record->id;
+                }
                 if ($maxdate < $cmaxdate) {
                     $maxdate = $cmaxdate;
                 }
@@ -673,11 +704,12 @@ class data_export {
 
         } while (($counter >= $pos) && timer::within_time());
 
-        set_config($filename, $lastid, 'local_xray');
-        set_config($filename."_maxdate", $maxdate, 'local_xray');
-
-        $lastid = null;
-        $maxdate = null;
+        if (!empty($lastid)) {
+            set_config($filename, $lastid, self::PLUGIN);
+        }
+        if (!empty($maxdate)) {
+            set_config(self::get_maxdate_setting($filename), $maxdate, self::PLUGIN);
+        }
     }
 
     /**
@@ -694,7 +726,7 @@ class data_export {
      * @return string[]
      */
     public static function compress($dirbase, $dirname) {
-        $usenative = get_config('local_xray', 'enablepacker');
+        $usenative = get_config(self::PLUGIN, 'enablepacker');
         if ($usenative) {
             $result = self::compress_targz_native($dirbase, $dirname);
         } else {
@@ -724,7 +756,7 @@ class data_export {
         $destfile = null;
 
         if (!empty($files)) {
-            $admin = get_config('local_xray', 'xrayadmin');
+            $admin = get_config(self::PLUGIN, 'xrayadmin');
             $basefile = self::generate_filename($admin);
             $archivefile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
             $destfile = $admin . '/' . $basefile;
@@ -732,7 +764,7 @@ class data_export {
             $tgzpacker = get_file_packer('application/x-gzip');
             $result = $tgzpacker->archive_to_pathname($files, $archivefile);
             if (!$result) {
-                print_error('error_compress', 'local_xray');
+                print_error('error_compress', self::PLUGIN);
             }
         }
 
@@ -753,8 +785,8 @@ class data_export {
         $destfile = null;
 
         if (!empty($exportfiles)) {
-            $admin = get_config('local_xray', 'xrayadmin');
-            $tarpath = get_config('local_xray', 'packertar');
+            $admin = get_config(self::PLUGIN, 'xrayadmin');
+            $tarpath = get_config(self::PLUGIN, 'packertar');
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
             $escdir = escapeshellarg($transdir);
             // We have to use microseconds timestamp because of nodejs...
@@ -768,7 +800,7 @@ class data_export {
             $lastmsg = system($command, $ret);
             if ($ret != 0) {
                 // We have error code should not upload...
-                print_error('error_generic', 'local_xray', '', $lastmsg);
+                print_error('error_generic', self::PLUGIN, '', $lastmsg);
             }
         }
 
@@ -795,8 +827,8 @@ class data_export {
     public static function export_csv($timest, $timeend, $dir) {
         self::$meta = array();
 
-        $timeframe = (int)get_config('local_xray', 'exporttime_hours') * HOURSECS +
-                     (int)get_config('local_xray', 'exporttime_minutes') * MINSECS;
+        $timeframe = (int)get_config(self::PLUGIN, 'exporttime_hours') * HOURSECS +
+                     (int)get_config(self::PLUGIN, 'exporttime_minutes') * MINSECS;
         // In case timeframe is 0 - there would be no limit to the execution.
         timer::start($timeframe);
 
@@ -831,8 +863,8 @@ class data_export {
                   'forums', 'threads', 'posts', 'hsuforums',
                   'hsuthreads', 'hsuposts', 'quiz', 'grades'];
         foreach ($items as $item) {
-            set_config($item, null, 'local_xray');
-            set_config($item.'_maxdate', null, 'local_xray');
+            set_config($item, null, self::PLUGIN);
+            set_config($item.'_maxdate', null, self::PLUGIN);
         }
     }
 

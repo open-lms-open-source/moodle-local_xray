@@ -119,6 +119,9 @@ class data_sync extends scheduled_task {
 
             sync_log::create_msg("Completed data sync.")->trigger();
         } catch (\Exception $e) {
+            if ($DB->get_debug()) {
+                $DB->set_debug(false);
+            }
             mtrace($e->getMessage());
             mtrace($e->getTraceAsString());
             sync_failed::create_from_exception($e)->trigger();
