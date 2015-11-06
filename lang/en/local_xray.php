@@ -88,14 +88,14 @@ $string['weeks'] = 'Weeks';
 $string['week'] = 'Week';
 
 /* Error to load tables and images */
-$string['error_loadimg'] = 'Error to load image, please try again reloading the page. If error persist, contact '.
-                           'with the administrator please.';
+$string['error_loadimg'] = 'Unable to load image, please try reloading the page. If error persists, '.
+                           'contact system administrator.';
 
 /* Error Webservice */
 $string['error_xray'] = 'Error to connect with X-Ray Learning Analytics, please try again reloading the page. If error persist, '.
-                        'contact with the administrator please.';
+                        'contact system administrator.';
 
-$string['error_compress'] = 'Unable to create compressed file. Please check with your administrator.';
+$string['error_compress'] = 'Unable to create compressed file. Please contact system administrator.';
 
 $string['error_generic'] = '{$a}';
 
