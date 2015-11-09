@@ -299,68 +299,10 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = "";
 
         if (has_capability('local/xray:dashboard_view', $PAGE->context)) {
-            try {
-                $report = "dashboard";
-                $response = \local_xray\local\api\wsapi::course($COURSE->id, $report);
-
-                if (!$response) {
-                    // Fail response of webservice.
-                    \local_xray\local\api\xrayws::instance()->print_error();
-
-                } else {
-
-                    // Get users in risk.
-                    $usersinrisk = array();
-
-                    if (isset($response->elements->element3->data) && !empty($response->elements->element3->data)) {
-                        foreach ($response->elements->element3->data as $key => $obj) {
-                            if ($obj->severity->value == "high") {
-                                $usersinrisk[] = $obj->participantId->value;
-                            }
-                        }
-                    }
-                    // Student ins risk.
-                    $countstudentsrisk = (isset($response->elements->element6->items[5]->value) ?
-                        $response->elements->element6->items[5]->value : "-");
-                    // Students enrolled.
-                    $countstudentsenrolled = (isset($response->elements->element6->items[2]->value) ?
-                        $response->elements->element6->items[2]->value : "-");
-                    // Visits last 7 days.
-                    $countstudentsvisitslastsevendays = (isset($response->elements->element6->items[0]->value) ?
-                        $response->elements->element6->items[0]->value : "-");
-                    // Risk previous 7 days.
-                    $countstudentsriskprev = (isset($response->elements->element6->items[6]->value) ?
-                        $response->elements->element6->items[6]->value : "-");
-                    // Visits previous 7 days.
-                    $countstudentsvisitsprev = (isset($response->elements->element6->items[1]->value) ?
-                        $response->elements->element6->items[1]->value : "-");
-
-                    // Calculate percentajes from last weeks.
-                    $precentajevalueperstudent = 100 / $countstudentsenrolled;
-
-                    // Diff risk.
-                    $percentajestudentsriskprev = $precentajevalueperstudent * $countstudentsriskprev;
-                    $percentajestudentsrisk = $precentajevalueperstudent * $countstudentsrisk;
-                    $diffrisk = round($percentajestudentsrisk - $percentajestudentsriskprev);
-
-                    // Diff visits.
-                    $percentajestudentsvisitsprev = $precentajevalueperstudent * $countstudentsvisitsprev;
-                    $percentajestudentsvisitslastsevendays = $precentajevalueperstudent * $countstudentsvisitslastsevendays;
-                    $diffvisits = round($percentajestudentsvisitslastsevendays - $percentajestudentsvisitsprev);
-
-                    // Students visits by week day.
-                    $studentsvisitsbyweekday = (isset($response->elements->activity_level->data) ?
-                        $response->elements->activity_level->data : "-");
-
-                    $output .= $this->snap_dashboard_xray_output($usersinrisk,
-                        $countstudentsenrolled,
-                        $countstudentsrisk,
-                        $countstudentsvisitslastsevendays,
-                        $diffrisk,
-                        $diffvisits,
-                        $studentsvisitsbyweekday);
-                }
-            } catch (exception $e) {
+            $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id);
+            if($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
+                $output .= $this->snap_dashboard_xray_output($dashboarddata);
+            } else {
                 $output .= get_string('error_xray', 'local_xray');
             }
         }
@@ -371,22 +313,10 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Snap Dashboard Xray
      *
-     * @param mixed $usersinrisk
-     * @param int $studentsenrolled
-     * @param int $studentsrisk
-     * @param int $studentsvisitslastsevendays
-     * @param float $riskfromlastweek
-     * @param float $visitorsfromlastweek
-     * @param Array $studentsvisitsbyweekday
+     * @param local_xray\dashboard\dashboard_data $data
      * @return string
      * */
-    public function snap_dashboard_xray_output($usersinrisk,
-                                               $studentsenrolled,
-                                               $studentsrisk,
-                                               $studentsvisitslastsevendays,
-                                               $riskfromlastweek,
-                                               $visitorsfromlastweek,
-                                               $studentsvisitsbyweekday) {
+    private function snap_dashboard_xray_output($data) {
 
         global $DB;
 
@@ -408,27 +338,27 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Students at risk.
         $studentsrisk = html_writer::tag("div", 
-                html_writer::tag("span", $studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$studentsenrolled}", 
+                html_writer::tag("span", $data->studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$data->studentsenrolled}",
                 array("class" => "xray-headline"));
                 
         $studentatrisktext = html_writer::div(get_string('studentatrisk', 'local_xray'), 'xray-headline-description');
         // Bootstrap classes for positive/negative data.
         $comparitorclass = "xray-comparitor";
         $comparitorbsclass = " text-muted";
-        if ($visitorsfromlastweek < 0) {
+        if ($data->visitorsfromlastweek < 0) {
             $comparitorbsclass = " text-success";
         }
-        if ($visitorsfromlastweek > 0) {
+        if ($data->visitorsfromlastweek > 0) {
             $comparitorbsclass = " text-danger";
         }
         $comparitorclass .= $comparitorbsclass;
-        $riskfromlastweekth = html_writer::div(get_string('fromlastweek', 'local_xray', $riskfromlastweek), $comparitorclass);
+        $riskfromlastweekth = html_writer::div(get_string('fromlastweek', 'local_xray', $data->riskfromlastweek), $comparitorclass);
 
         $usersprofile = ""; // Six firsts users.
         $usersprofilehidden = ""; // Rest of users will be hidden.
         $countusers = 1;
-        if (!empty($usersinrisk)) {
-            foreach ($usersinrisk as $key => $id) {
+        if (!empty($data->usersinrisk)) {
+            foreach ($data->usersinrisk as $key => $id) {
                 if ($countusers > 6) {
                     $usersprofilehidden .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
                 } else {
@@ -442,7 +372,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $usersprofileboxhidden = html_writer::div($usersprofilehidden, 'xray_dashboard_users_risk_hidden');
 
         $showall = '';
-        if (count($usersinrisk) > 6) {
+        if (count($data->usersinrisk) > 6) {
             $showall = html_writer::div('Show all', 'btn btn-default btn-sm xray_dashboard_seeall');
         }
 
@@ -452,8 +382,8 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Students Visitors.  
         $studentsvisitors = html_writer::div(html_writer::tag("span", 
-                                            $studentsvisitslastsevendays, 
-                                            array("class" => "xray-headline-number h1"))."{$of} {$studentsenrolled}", 
+                                            $data->studentsvisitslastsevendays,
+                                            array("class" => "xray-headline-number h1"))."{$of} {$data->studentsenrolled}",
                 array("class" => "xray-headline"));
         
         $studentvisitslastdaystext = html_writer::div(get_string('studentvisitslastdays', 'local_xray'),
@@ -461,24 +391,24 @@ class local_xray_renderer extends plugin_renderer_base {
         // Bootstrap classes for positive/negative data.
         $comparitorclass = "xray-comparitor";
         $comparitorbsclass = " text-muted";
-        if ($visitorsfromlastweek < 0) {
+        if ($data->visitorsfromlastweek < 0) {
             $comparitorbsclass = " text-danger";
         }
-        if ($visitorsfromlastweek > 0) {
+        if ($data->visitorsfromlastweek > 0) {
             $comparitorbsclass = " text-success";
         }
         $comparitorclass .= $comparitorbsclass;
 
-        $visitorsfromlastweektr = html_writer::div(get_string('fromlastweek', 'local_xray', $visitorsfromlastweek),
+        $visitorsfromlastweektr = html_writer::div(get_string('fromlastweek', 'local_xray', $data->visitorsfromlastweek),
             $comparitorclass);
 
         // Students visits by Week Day.
         $studentsvisitsperday = "";
-        if ($studentsvisitslastsevendays) {
+        if ($data->studentsvisitslastsevendays) {
             $studentsvisitsperday = html_writer::start_div("xray-student-visits-lastsevendays");
-            foreach ($studentsvisitsbyweekday as $key => $value) {
+            foreach ($data->studentsvisitsbyweekday as $key => $value) {
                 $visitsperday = $value->number_of_visits->value;
-                $percent = ceil(($visitsperday / $studentsvisitslastsevendays) * 100);
+                $percent = ceil(($visitsperday / $data->studentsvisitslastsevendays) * 100);
                 $day = substr($value->day_of_week->value, 0, 3);
                 $studentsvisitsperday .= html_writer::start_div("xray-visits-unit");
                 $studentsvisitsperday .= html_writer::div($day, array("class" => "xray-visits-per-day"));             
@@ -500,7 +430,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param stdClass $user
      * @return string
      */
-    public function print_student_profile($user) {
+    private function print_student_profile($user) {
         global $CFG;
 
         $userpicture = new user_picture($user);
