@@ -6,7 +6,6 @@
 
 #page-local-xray-view #page-content #region-main {
     max-width: 92%; /* snap theme limit to 60.5 em */
-    margin: 0 auto;
     box-sizing: content-box;
 }
 
