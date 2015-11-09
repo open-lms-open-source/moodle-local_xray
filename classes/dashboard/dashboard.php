@@ -58,19 +58,44 @@ class dashboard {
                         }
                     }
                 }
+                // Default value. This is because webservice when is 0 return "NA" string or not return value.(depend case).
+                $countstudentsrisk = 0;
+                $countstudentsenrolled = 0;
+                $countstudentsvisitslastsevendays = 0;
+                $countstudentsriskprev = 0;
+                $countstudentsvisitsprev = 0;
+
                 // Student ins risk.
-                $countstudentsrisk = $response->elements->element6->items[5]->value;
+                if(isset($response->elements->element6->items[5]->value) && is_number($response->elements->element6->items[5]->value)) {
+                    $countstudentsrisk = $response->elements->element6->items[5]->value;
+                }
+
                 // Students enrolled.
-                $countstudentsenrolled = $response->elements->element6->items[2]->value;
+                if(isset($response->elements->element6->items[2]->value) && is_number($response->elements->element6->items[2]->value)) {
+                    $countstudentsenrolled = $response->elements->element6->items[2]->value;
+                }
+
                 // Visits last 7 days.
-                $countstudentsvisitslastsevendays = $response->elements->element6->items[0]->value;
+                if(isset($response->elements->element6->items[0]->value) && is_number($response->elements->element6->items[0]->value)) {
+                    $countstudentsvisitslastsevendays = $response->elements->element6->items[0]->value;
+                }
+
                 // Risk previous 7 days.
-                $countstudentsriskprev = $response->elements->element6->items[6]->value;
+                if(isset($response->elements->element6->items[6]->value) && is_number($response->elements->element6->items[6]->value)) {
+                    $countstudentsriskprev = $response->elements->element6->items[6]->value;
+                }
+
                 // Visits previous 7 days.
-                $countstudentsvisitsprev = $response->elements->element6->items[1]->value;
+                if(isset($response->elements->element6->items[1]->value) && is_number($response->elements->element6->items[1]->value)) {
+                    $countstudentsvisitsprev = $response->elements->element6->items[1]->value;
+                }
 
                 // Calculate percentajes from last weeks.
-                $precentajevalueperstudent = 100 / $countstudentsenrolled;
+                $precentajevalueperstudent = 0;
+                if(!empty($countstudentsenrolled)) {
+                    $precentajevalueperstudent = 100 / $countstudentsenrolled;
+                }
+
 
                 // Diff risk.
                 $percentajestudentsriskprev = $precentajevalueperstudent * $countstudentsriskprev;
