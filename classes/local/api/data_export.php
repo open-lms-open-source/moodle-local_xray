@@ -37,6 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class data_export {
 
     const PLUGIN = 'local_xray';
+    const RECCOUNT = 50000;
 
     /**
      * @var array
@@ -49,6 +50,22 @@ class data_export {
      */
     public static function get_maxdate_setting($base) {
         return "{$base}_maxdate";
+    }
+
+    /**
+     * Determines the maximum ammount of records to be fetched in one take. Default is 50000.
+     * To set different value add this to the config.php:
+     * $CFG->forced_plugin_settings = array('local_xray' => array('maxrecords' => yourvaluehere));
+     *
+     * @return int
+     */
+    public static function get_max_record_count() {
+        $result = get_config(self::PLUGIN, 'maxrecords');
+        if (empty($result)) {
+            $result = self::RECCOUNT;
+        }
+
+        return $result;
     }
 
     /**
@@ -692,7 +709,7 @@ class data_export {
             return;
         }
 
-        $count     = 50000;
+        $count     = self::get_max_record_count();
         $pos       = 0;
         $counter   = 0;
         $fcount    = 1;
