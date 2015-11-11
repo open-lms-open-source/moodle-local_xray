@@ -54,13 +54,11 @@ class admin_setting_configcheckbox_xray extends \admin_setting_configcheckbox {
      * @return bool
      */
     protected function disablewrite() {
+        global $PAGE;
         $result = false;
-        if (!during_initial_install() && !CLI_SCRIPT) {
-            global $PAGE;
-            $url = new \moodle_url('/admin/settings.php', array('section' => 'local_xray'));
-            if ($PAGE->url->compare($url)) {
-                $result = true;
-            }
+        if (!during_initial_install() && !CLI_SCRIPT && $PAGE->has_set_url()) {
+            $url = new \moodle_url('/admin/settings.php', ['section' => 'local_xray']);
+            $result = $PAGE->url->compare($url);
         }
         return $result;
     }
