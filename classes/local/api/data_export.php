@@ -509,7 +509,7 @@ class data_export {
             WHERE
                    EXISTS (
                       SELECT fd.id
-                      FROM   {forum_discussions} AS fd
+                      FROM   {forum_discussions} fd
                       WHERE
                              EXISTS (SELECT c.id FROM {course} c WHERE fd.course = c.id AND c.category <> 0)
                              AND
