@@ -45,6 +45,11 @@ class data_export {
     protected static $meta = array();
 
     /**
+     * @var array
+     */
+    protected static $counters = array();
+
+    /**
      * @param string $base
      * @return string
      */
@@ -780,10 +785,19 @@ class data_export {
         } while (($counter >= $pos) && timer::within_time());
 
         if (!empty($lastid)) {
-            set_config($filename, $lastid, self::PLUGIN);
+            self::$counters[] = ['setting' => $filename, 'value' => $lastid];
         }
         if (!empty($maxdate)) {
-            set_config(self::get_maxdate_setting($filename), $maxdate, self::PLUGIN);
+            self::$counters[] = ['setting' => self::get_maxdate_setting($filename), 'value' => $maxdate];
+        }
+    }
+
+    /**
+     * Save stored counters.
+     */
+    public static function store_counters() {
+        foreach (self::$counters as $item) {
+            set_config($item['setting'], $item['value'], self::PLUGIN);
         }
     }
 
@@ -939,7 +953,7 @@ class data_export {
                   'hsuthreads', 'hsuposts', 'quiz', 'grades'];
         foreach ($items as $item) {
             set_config($item, null, self::PLUGIN);
-            set_config($item.'_maxdate', null, self::PLUGIN);
+            set_config(self::get_maxdate_setting($item), null, self::PLUGIN);
         }
     }
 

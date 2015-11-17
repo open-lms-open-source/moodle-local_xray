@@ -112,6 +112,9 @@ class data_sync extends scheduled_task {
                     throw new \Exception("Upload to S3 bucket failed!");
                 }
 
+                // Save counters only when entire process passed OK.
+                data_export::store_counters();
+
                 sync_log::create_msg("Uploaded {$destfile}.")->trigger();
             } else {
                 sync_log::create_msg("No data to upload.")->trigger();
