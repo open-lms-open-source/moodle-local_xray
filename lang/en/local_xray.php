@@ -196,3 +196,5 @@ $string['sSortDescending'] = ': activate to sort column descending';
 
 /* Close modal */
 $string['close'] = 'Close';
+/* Close Report Tables */
+$string['closetable'] = 'Close table';

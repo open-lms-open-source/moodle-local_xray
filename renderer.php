@@ -122,9 +122,19 @@ class local_xray_renderer extends plugin_renderer_base {
         // Load specific js for tables.
         $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray");
         $output = "";
-        $output .= html_writer::start_tag('div', array("id" => $datatable['id'], "class" => "xray_element xray_element_table"));
-        $output .= html_writer::tag('h3', $datatable['title'], array("class" => "reportsname eventtoogletable"));
-        // Table jquery datatables for show reports.
+        // Table Title with link to open it.
+        $output .= html_writer::start_tag('div', array('class' => 'xray-table-title'));
+        $output .= html_writer::start_tag('a', array('id' => "title_{$datatable['id']}", 'href' => "#{$datatable['id']}", 'class' => 'xray-table-title-link'));
+        $output .= html_writer::start_tag('div', array('class' => 'xray-table-title-text'));
+        $output .= html_writer::tag('h3', $datatable['title']);
+        $output .= html_writer::end_tag('div');
+        $output .= html_writer::start_tag('div', array('class' => 'xray-table-title-arrow'));
+        $output .= html_writer::end_tag('div');
+        $output .= html_writer::end_tag('a');
+        $output .= html_writer::end_tag('div');
+        // Table.
+        $output .= html_writer::start_tag('div', array('id' => "{$datatable['id']}", 'class' => 'xray-toggleable-table', 'tabindex' => '0'));
+        // Table jquery datatables for show reports. //TODO clean styles.
         $output .= html_writer::start_tag("table",
             array("id" => "table_{$datatable['id']}",
                 "class" => "xraydatatable display"));
@@ -136,7 +146,10 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::end_tag("tr");
         $output .= html_writer::end_tag("thead");
         $output .= html_writer::end_tag("table");
+        // Close Table button.
+        $output .= html_writer::tag('a', get_string('closetable', 'local_xray'), array('href' => "#"));
         $output .= html_writer::end_tag('div');
+        // End Table.
         // Load table with data.
         $PAGE->requires->js_init_call("local_xray_show_on_table", array($datatable));
         return $output;
