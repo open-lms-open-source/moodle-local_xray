@@ -479,7 +479,8 @@ class local_xray_renderer extends plugin_renderer_base {
                 }
                 $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
                                                                'class' => 'xray-reports-links'));
-                $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
+                $navmenu = html_writer::tag("nav", $amenu);
+                $menu = \html_writer::div($title . $navmenu, 'clearfix', array('id' => 'js-xraymenu'));
             }
         }
 
