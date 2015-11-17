@@ -142,7 +142,7 @@ class data_export {
 
         // Use lastid only if not exporting for the first time.
         $lastidstore = get_config(self::PLUGIN, $fn);
-        if (!empty($lastidstore)) {
+        if (!empty($lastidstore) && ($fn != 'accesslog')) {
             $sqlbetween = " {$field1} BETWEEN :from+1 AND :to
                              AND
                              {$idfield} <= :lastid
