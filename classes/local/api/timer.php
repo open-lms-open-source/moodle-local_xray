@@ -65,7 +65,7 @@ abstract class timer {
      */
     public static function end() {
         $result = 0.0;
-        if (empty(self::$timestart)) {
+        if (!empty(self::$timestart)) {
             $result = self::current();
             self::$timestart = 0.0;
             self::$timeframe = 0;
