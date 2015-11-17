@@ -193,3 +193,6 @@ $string['sInfoEmpty'] = 'Showing 0 to 0 of 0 entries';
 $string['sLoadingRecords'] = 'Loading...';
 $string['sSortAscending'] = ': activate to sort column ascending';
 $string['sSortDescending'] = ': activate to sort column descending';
+
+/* Close modal */
+$string['close'] = 'Close';

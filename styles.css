@@ -9,14 +9,13 @@
     box-sizing: content-box;
 }
 
-/* General info report */
-#page-local-xray-view .inforeport {
-    display: block;
-    margin-bottom: 1em;
+/* Report title */
+#page-local-xray-view  h2.main {
+  margin: 0;
 }
+/* Report date */
+#page-local-xray-view .inforeport {
 
-#page-local-xray-view .inforeport p {
-    margin-bottom: 0;
 }
 
 /* Name elements (tables and graphs) */
@@ -43,15 +42,6 @@
 
 /* General xray element (graphs and tables elements) */
 #page-local-xray-view .xray_element {
-}
-
-/* General xray element (specific for graphs) */
-#page-local-xray-view .xray_element_graph {
-    display: inline-block;
-    box-sizing: content-box;
-    overflow: hidden;
-    width: 29%;
-    margin: 1em 2%;
 }
 
 /* General xray image graph */
@@ -137,7 +127,7 @@
     background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
 }
 
-/** Horizontal Scrool to tables (Table) **/
+/** Horizontal Scroll for tables (Table) **/
 
 .xray_table_scrool {
     overflow: auto;
@@ -295,91 +285,20 @@
   text-align:left;
 }
 
-/**************** Show Graph****************/
-.xray-image-box {
-    transition: all;
-    background-color: white;
-    margin: 0 auto;
-}
-
-.xray-image-box img {
-    max-width: 95%;
-    margin: 0 auto;
-}
-
-.xray-graph-background{
-    display: none;
-}
-
-.xray-graph-background:target {
-    bottom: 0;
-    position: fixed;
-    right: 0;
-    overflow-x: auto;
-    overflow-y: scroll;
-    display: block;
-    height: auto;
-    width: auto;
-    background: rgba(255,255,255,0.75) none repeat scroll 0 0;
-    left: 0;
-    top: 0;
-    z-index: 8010;
-}
-
-.xray-box{
-    width:200px;
-}
-
+/**************** Plots ****************/
 .xray-col-4 {
     box-sizing: content-box;
     display: inline-block;
     margin: 1em 2%;
-    overflow: hidden;
     width: 29%;
 }
 
-.xray-graph-view {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
-    z-index: 8020;
-    max-width:95%;
-    max-height:95%;
-}
-
-.xray-graph-view img{
-    width:100%;
-    height:100%;
-}
-
-.closeButton{
-    display:block;
-    position:absolute;
-    top:-11px;
-    right:-15px;
-    width:27px;
-    height:27px;
-    background:url([[pix:local_xray|close]]) no-repeat center center;
-}
-.xray-graph-caption{
-    margin:3px 0 0 9px;
-    background-color:#fff;
-}
-
-.xray-graph-caption-text{
-    color: #000;
-    display: inline-block;
-    font-weight: bold;
-    line-height: 24px;
-    white-space: nowrap;
-}
-
 .xray-graph-box-link{
-    height:300px;
+    display: block;
+    height: 300px;
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
+    position: relative;
 }
 
 .xray-graph-box-link:hover {
@@ -387,26 +306,63 @@
 }
 
 .xray-graph-small-image{
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-.xray-graph-small-image-border{
     display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
     height: 100%;
-    overflow: hidden;
-    position: relative;
     width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
 }
 
-.xray-graph-border {
-    background-color: #fff;
-    padding: 15px;
+/* TODO - uses vh, impliment ios polyfill */
+.xray-graph-background{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    background-color: white;
+    overflow-y: scroll;
+    z-index: 8010;
+    display: none;
 }
-/**************** End Styles for Show Graph****************/
+
+.xray-graph-background:target {
+    display: block;
+}
+
+.xray-graph-view {
+    height: 80vh;
+    padding: 1em 4%;
+}
+
+/* TODO - make responsive when we can */
+.xray-graph-view img{
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0.5em 0;
+    margin: 0 auto;
+    float: right;
+    width: 70%;
+}
+
+.xray-graph-description {
+    float: left;
+    width: 25%;
+    padding: 2em 0;
+}
+
+.xray-close-link{
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    width: 2em;
+    height: 2em;
+    display: block;
+    background:url([[pix:local_xray|close_x]]) no-repeat center center;
+}
+/**************** End Styles for Plots ****************/

@@ -107,10 +107,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
                     // Show graphs.
-                    $output .= html_writer::tag("div",
-                        html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
-                            array("class" => "main")),
-                        array("class" => "mr_html_heading"));
+                    $output .= html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
+                        array("class" => "main"));
                     $output .= $this->output->inforeport($response->reportdate);
                     $output .= $this->output->show_graph("endogenicPlagiarismStudentsHeatmap",
                         $response->elements->endogenicPlagiarismStudentsHeatmap);
@@ -128,12 +126,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-
                     // Show graphs.
-                    $subtitle = html_writer::tag("h2",
+                    $output .= html_writer::tag("h2",
                         get_string("discussiongrading", $this->component),
                         array("class" => "main"));
-                    $output .= html_writer::div($subtitle, "mr_html_heading");
                     $output .= $this->output->inforeport($response->reportdate);
 
                     // Its a table, I will get info with new call.

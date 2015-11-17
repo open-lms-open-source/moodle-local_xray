@@ -47,15 +47,13 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function inforeport($reportdate, $user = null) {
-        $date = new DateTime($reportdate);
-        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
-
-        $output  = html_writer::start_div('inforeport');
-        $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate);
+        $output = '';
         if (!empty($user)) {
             $output .= html_writer::tag("p", get_string(("user")) . ": " . format_string(fullname($user)));
         }
-        $output .= html_writer::end_div();
+        $date = new DateTime($reportdate);
+        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
+        $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'inforeport'));
         return $output;
     }
 
@@ -76,48 +74,35 @@ class local_xray_renderer extends plugin_renderer_base {
         $imgurl = new moodle_url($imgurl, array('accesstoken' => $accesstoken));
         $output = "";
         // List Graph.
-        $output .= html_writer::start_tag('div', array('class' => 'xray-col-4'));
-        $output .= html_writer::start_tag('div', array('class' => 'xray-graph-box'));
+        $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
         $output .= html_writer::tag('h3', $element->title, array("class" => "reportsname"));
-        $output .= html_writer::start_tag('div', array('class' => 'xray-graph-box-link'));
-        $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName));
-        $output .= html_writer::start_tag('div', array('class' => 'xray-graph-small-image-border'));
+        $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName , 'class' => 'xray-graph-box-link'));
         // Validate if url of image is valid. Prohibited to use @.
         if (fopen($imgurl, "r")) {
-            $output .= html_writer::start_tag('div',
+            $output .= html_writer::start_tag('span',
                 array('class' => 'xray-graph-small-image',
                     'style' => 'background-image: url('.$imgurl.');'));
-            $output .= html_writer::end_tag('div');
+            $output .= html_writer::end_tag('span');
         } else {
             // Incorrect url img. Show error message.
             $output .= html_writer::tag("div",
                 get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
         }
-        $output .= html_writer::end_tag('div');
         $output .= html_writer::end_tag('a');
-        $output .= html_writer::end_tag('div');
-        $output .= html_writer::end_tag('div');
         $output .= html_writer::end_tag('div');
         // Show Graph.
         // Get Tooltip.
-        $tooltip = '';
-        if (isset($element->tooltip) && !empty($element->tooltip)) {
-            $tooltip = $element->tooltip;
-        }
         // Validate if url of image is valid. Prohibited to use @.
         if (fopen($imgurl, "r")) {
-            $output .= html_writer::start_tag('div',
-                array('id' => $element->elementName, 'class' => 'xray-graph-background'));
+            $output .= html_writer::start_tag('div', array('id' => $element->elementName, 'class' => 'xray-graph-background'));
             $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
-            $output .= html_writer::start_tag('div', array('class' => 'xray-graph-border'));
-            $output .= html_writer::start_tag('div', array('class' => 'xray-graph-caption'));
-            $output .= html_writer::tag('span', $element->title, array('class' => 'xray-graph-caption-text'));
-            $output .= html_writer::tag('p', $tooltip);
+            $output .= html_writer::tag('h6', $element->title, array('class' => 'xray-graph-caption-text'));
+            if (isset($element->tooltip) && !empty($element->tooltip)) {
+                $output .= html_writer::tag('p', $element->tooltip, array('class' => 'xray-graph-description'));
+            }
+            $output .= html_writer::img($imgurl, '', array('class' => 'xray-graph-image'));
             $output .= html_writer::end_tag('div');
-            $output .= html_writer::img($imgurl, '', array('title' => $tooltip, 'class' => 'xray-graph-image'));
-            $output .= html_writer::end_tag('div');
-            $output .= html_writer::tag('a', '', array('href' => '#', 'class' => 'closeButton'));
-            $output .= html_writer::end_tag('div');
+            $output .= html_writer::tag('a', '' , array('href' => '#', 'class' => 'xray-close-link', 'title' => get_string('close', 'local_xray')));
             $output .= html_writer::end_tag('div');
         }
         return $output;
@@ -139,28 +124,21 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = "";
         $output .= html_writer::start_tag('div', array("id" => $datatable['id'], "class" => "xray_element xray_element_table"));
         $output .= html_writer::tag('h3', $datatable['title'], array("class" => "reportsname eventtoogletable"));
-        
         // Table jquery datatables for show reports.
-        $output .= html_writer::start_tag("table", 
-                array("id" => "table_{$datatable['id']}",
+        $output .= html_writer::start_tag("table",
+            array("id" => "table_{$datatable['id']}",
                 "class" => "xraydatatable display"));
-        
         $output .= html_writer::start_tag("thead");
-        $output .= html_writer::start_tag("tr");        
-                
-        
+        $output .= html_writer::start_tag("tr");
         foreach ($datatable['columns'] as $c) {
             $output .= html_writer::tag("th", $c->text);
         }
-        
         $output .= html_writer::end_tag("tr");
         $output .= html_writer::end_tag("thead");
         $output .= html_writer::end_tag("table");
         $output .= html_writer::end_tag('div');
-
         // Load table with data.
         $PAGE->requires->js_init_call("local_xray_show_on_table", array($datatable));
-
         return $output;
     }
 
@@ -328,7 +306,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
 
         // Students at risk.
-        $studentsrisk = html_writer::tag("div", 
+        $studentsrisk = html_writer::tag("div",
                 html_writer::tag("span", $data->studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$data->studentsenrolled}",
                 array("class" => "xray-headline"));
                 
