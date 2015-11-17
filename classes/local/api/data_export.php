@@ -107,37 +107,15 @@ class data_export {
     }
 
     /**
-     * Generate the greates where condition
-     *
-     * @param  string $field1
-     * @param  string $field2
-     * @param  string $value
-     * @param  string $idfield
-     * @return string
+     * @param array $addmore
+     * @return array
      */
-    public static function greatest($field1, $field2 = null, $value, $idfield) {
-        if ($value == 0) {
-            $format = "(COALESCE(%1\$s, 0) >= %3\$s)";
-        } else {
-            $format = "( (COALESCE(%1\$s, 0) = 0) OR (COALESCE(%1\$s, 0) >= %3\$s) )";
+    public static function default_params($addmore = null) {
+        $result = ['lastid' => 0];
+        if (is_array($addmore)) {
+            $result += $addmore;
         }
-        if (!empty($field2)) {
-            if ($value == 0) {
-                $sformat = "(COALESCE(%2\$s, 0) >= %3\$s)";
-            } else {
-                $sformat = "( (COALESCE(%2\$s, 0) = 0) OR (COALESCE(%2\$s, 0) >= %3\$s) )";
-            }
-            $format =
-                      "( ".
-                      "( (COALESCE(%1\$s, 0) = 0) AND {$sformat} )".
-                      " OR ".
-                      $format.
-                      " ) ";
-        }
-
-        $format = " ( {$format}  OR ({$idfield} > :lastid) ) ORDER BY {$idfield} ASC ";
-
-        return sprintf($format, $field1, $field2, (int)$value);
+        return $result;
     }
 
     /**
@@ -147,65 +125,69 @@ class data_export {
      * @param null|int    $to
      * @param string      $fn
      * @param null|string $idfield
-     * @return string
+     * @return array
      */
-    public static function range_where($field1, $field2 = null, $from, $to = null, $fn, $idfield = 'id') {
+    public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id') {
         $maxdatestore = get_config(self::PLUGIN, self::get_maxdate_setting($fn));
         if (!empty($maxdatestore)) {
             $from = $maxdatestore;
         }
-        if (empty($to)) {
-            return self::greatest($field1, $field2, $from, $idfield);
+
+        $sqlgt = " {$idfield} > :lastid
+                   ORDER BY {$idfield} ASC ";
+
+        $sqlparams = [
+            ['sql' => $sqlgt, 'params' => null]
+        ];
+
+        // Use lastid only if not exporting for the first time.
+        $lastidstore = get_config(self::PLUGIN, $fn);
+        if (!empty($lastidstore)) {
+            $sqlbetween = " {$field1} BETWEEN :from+1 AND :to
+                             AND
+                             {$idfield} <= :lastid
+                             ORDER BY {$idfield} ASC ";
+            $sqlparams[] = ['sql' => $sqlbetween, 'params' => ['from' => $from, 'to' => $to]];
+
+            $sqlbetween1 = " {$field1} = :from
+                             AND
+                             {$idfield} > :lastid
+                             ORDER BY {$idfield} ASC ";
+            $sqlparams[] = ['sql' => $sqlbetween1, 'params' => ['from' => $from, 'to' => $to]];
+            if (!empty($field2)) {
+                $sqlbetween2 = " {$field2} BETWEEN :from+1 AND :to
+                             AND
+                             {$field1} = 0
+                             AND
+                             {$idfield} <= :lastid
+                             ORDER BY {$idfield} ASC ";
+                $sqlparams[] = ['sql' => $sqlbetween2, 'params' => ['from' => $from, 'to' => $to]];
+
+                $sqlbetween3 = " {$field2} = :from
+                             AND
+                             {$field1} = 0
+                             AND
+                             {$idfield} > :lastid
+                             ORDER BY {$idfield} ASC ";
+                $sqlparams[] = ['sql' => $sqlbetween3, 'params' => ['from' => $from, 'to' => $to]];
+
+            }
         }
-        $format1 = "(
-                     (
-                       (COALESCE(%1\$s, 0) = 0)
-                       AND
-                       ({$idfield} > :lastid)
-                     )
-                     OR
-                     ( (COALESCE(%1\$s, 0) = %3\$s) AND ({$idfield} > :lastid2) )
-                     OR
-                     (COALESCE(%1\$s, 0) BETWEEN (%3\$s+1) AND %4\$s)
-                    )";
-        $format2 = "(
-                     (
-                       (COALESCE(%1\$s, 0) = 0)
-                       AND
-                       (
-                          (
-                            (COALESCE(%2\$s, 0) = 0)
-                            AND
-                            ({$idfield} > :lastid1)
-                          )
-                          OR
-                          ( (COALESCE(%2\$s, 0) = %3\$s) AND ({$idfield} > :lastid3) )
-                          OR
-                          (COALESCE(%2\$s, 0) BETWEEN (%3\$s+1) AND %4\$s)
-                       )
-                     )
-                     OR
-                     {$format1}
-                    )";
 
-        $format = empty($field2) ? $format1 : $format2;
-
-        $format = "(
-                    {$format}
-                    OR
-                    ({$idfield} > :lastid4)
-                   )
-                ORDER BY {$idfield} ASC ";
-
-        return sprintf($format, $field1, $field2, (int)$from, (int)$to);
+        return $sqlparams;
     }
 
     /**
-     * @param array $addmore
-     * @return array
+     * @param  string $sqlbase
+     * @param  array  $params
+     * @param  string $method
+     * @param  string $dir
+     * @return void
      */
-    public static function default_params(array $addmore = []) {
-        return ['lastid' => 0, 'lastid1' => 0, 'lastid2' => 0, 'lastid3' => 0, 'lastid4' => 0] + $addmore;
+    public static function dispatch_query($sqlbase, $params, $method, $dir) {
+        foreach ($params as $query) {
+            self::do_export($sqlbase.$query['sql'], self::default_params($query['params']), $method, $dir);
+        }
     }
 
     /**
@@ -215,7 +197,6 @@ class data_export {
      */
     public static function coursecategories($timest, $timeend, $dir) {
         $timemodified = self::to_timestamp('timemodified');
-        $wherecond = self::range_where('timemodified', null, $timest, $timeend, __FUNCTION__);
 
         $sql = "
                 SELECT
@@ -226,9 +207,9 @@ class data_export {
                        timemodified AS traw
                 FROM   {course_categories}
                 WHERE
-                       {$wherecond}";
-
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+                       ";
+        $wherecond = self::range_where('timemodified', null, $timest, $timeend, __FUNCTION__);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -240,7 +221,6 @@ class data_export {
         $startdate = self::to_timestamp('startdate');
         $timecreated = self::to_timestamp('timecreated');
         $timemodified = self::to_timestamp('timemodified');
-        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
 
         $sql = "
             SELECT
@@ -255,16 +235,17 @@ class data_export {
                    {$timecreated},
                    {$timemodified},
                    CASE
-                        WHEN COALESCE(timemodified, 0) = 0 THEN timecreated
+                        WHEN timemodified = 0 THEN timecreated
                         ELSE timemodified
                    END AS traw
            FROM    {course}
            WHERE
                    (category <> 0)
                    AND
-                   {$wherecond}";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -277,7 +258,6 @@ class data_export {
         $timemodified = self::to_timestamp('timemodified');
         $firstaccess = self::to_timestamp('firstaccess');
         $lastaccess = self::to_timestamp('lastaccess');
-        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
 
         $sql = "
                 SELECT
@@ -293,16 +273,17 @@ class data_export {
                        {$firstaccess},
                        {$lastaccess},
                        CASE
-                            WHEN COALESCE(timemodified, 0) = 0 THEN timecreated
+                            WHEN timemodified = 0 THEN timecreated
                             ELSE timemodified
                        END AS traw
                 FROM   {user}
                 WHERE
-                       deleted = :deleted
+                       deleted = 0
                        AND
-                       {$wherecond}";
+                       ";
 
-        self::do_export($sql, self::default_params(['deleted' => false]), __FUNCTION__, $dir);
+        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -322,21 +303,19 @@ class data_export {
                            {$timemodified},
                            l.timemodified AS traw
                 FROM       {role_assignments} l
-                INNER JOIN {context}          c  ON l.contextid = c.id AND c.contextlevel= :ctxt
+                INNER JOIN {context}          c  ON l.contextid = c.id AND c.contextlevel= 50
                 WHERE
-                           EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = :deleted)
+                           EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = 0)
                            AND
                            EXISTS (SELECT c.id FROM {course} c WHERE c.instanceid = c.id AND c.category <> 0)
                            AND
-                           {$wherecond}";
+                           ";
 
-        $params = self::default_params(['ctxt' => CONTEXT_COURSE, 'deleted' => false]);
-
-        self::do_export($sql, $params, __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
-     * Export accesslog
+     * Export accesslog version with intermediate table. For now disabled.
      *
      * @param int $timest
      * @param int $timeend
@@ -346,27 +325,62 @@ class data_export {
     public static function accesslog_prev($timest, $timeend, $dir) {
         global $DB;
 
-        $DB->delete_records('local_xray_uctmp');
+        $transaction = null;
 
-        $sqli = "
-            INSERT INTO {local_xray_uctmp} (userid, courseid)
-            (
-                SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
-                FROM       {role_assignments} ra
-                INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = :ctxt
+        try {
+            $transaction = $DB->start_delegated_transaction();
+
+            $preparams = array('ctxt' => CONTEXT_COURSE, 'deleted' => false);
+
+            $sqlremove = "
+                DELETE {local_xray_uctmp}
+                FROM   {local_xray_uctmp}
                 WHERE
-                      EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0     )
-                      AND
-                      EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = :deleted)
-            )
-        ";
+                      NOT EXISTS (
+                        SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
+                        FROM       {role_assignments} ra
+                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = :ctxt
+                        WHERE
+                              EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
+                              AND
+                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = :deleted)
+                      )
+            ";
 
-        // Update fresh recordset.
-        $DB->execute($sqli, array('ctxt' => CONTEXT_COURSE, 'deleted' => false));
+            $DB->execute($sqlremove, $preparams);
+
+            $sqli = "
+                INSERT INTO {local_xray_uctmp} (userid, courseid)
+                (
+                    SELECT * FROM
+                    (
+                    SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
+                    FROM       {role_assignments} ra
+                    INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = :ctxt
+                    WHERE
+                          EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0     )
+                          AND
+                          EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = :deleted)
+                          AND
+                          NOT EXISTS (SELECT * FROM {local_xray_uctmp} uc WHERE uc.userid = ra.userid
+                                                                                AND
+                                                                                ctx.instanceid = uc.courseid)
+                    ) t
+                )
+            ";
+            // Update fresh recordset.
+            $DB->execute($sqli, $preparams);
+
+            $transaction->allow_commit();
+        } catch (\Exception $e) {
+            if ($transaction && !$transaction->is_disposed()) {
+                $transaction->rollback($e);
+            }
+        }
+
         $time = self::to_timestamp('l.time', true, 'time');
         $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id');
 
-        // Now export.
         $sql = "
             SELECT
                    l.id,
@@ -383,17 +397,15 @@ class data_export {
             WHERE
                    EXISTS (SELECT * FROM {local_xray_uctmp} rx WHERE rx.courseid = l.course AND rx.userid = l.userid)
                    AND
-                   {$wherecond}
-            ";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, 'accesslog', $dir);
     }
 
     public static function accesslog($timest, $timeend, $dir) {
         $time = self::to_timestamp('l.time', true, 'time');
         $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id');
 
-        // Now export.
         $sql = "
             SELECT
                    l.id,
@@ -411,21 +423,20 @@ class data_export {
                    EXISTS (
                         SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
                         FROM       {role_assignments} ra
-                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = :ctxt
+                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
                         WHERE
                               EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
                               AND
-                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = :deleted)
+                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = 0)
                               AND
                               ctx.instanceid = l.course
                               AND
                               ra.userid = l.userid
                    )
                    AND
-                   {$wherecond}
-            ";
+          ";
 
-        self::do_export($sql, self::default_params(['ctxt' => CONTEXT_COURSE, 'deleted' => false]), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -450,9 +461,9 @@ class data_export {
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
-                   {$wherecond}";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -476,9 +487,9 @@ class data_export {
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
-                   {$wherecond}";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -502,7 +513,7 @@ class data_export {
                    fp.subject,
                    fp.message,
                    CASE
-                        WHEN COALESCE(fp.modified, 0) = 0 THEN fp.created
+                        WHEN fp.modified = 0 THEN fp.created
                         ELSE fp.modified
                    END AS traw
             FROM   {forum_posts} fp
@@ -516,10 +527,9 @@ class data_export {
                              fp.discussion = fd.id
                    )
                    AND
-                   {$wherecond}
-        ";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -544,9 +554,9 @@ class data_export {
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
-                   {$wherecond}";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -570,9 +580,9 @@ class data_export {
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
-                   {$wherecond}";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -596,7 +606,7 @@ class data_export {
                    fp.subject,
                    fp.message,
                    CASE
-                        WHEN COALESCE(fp.modified, 0) = 0 THEN fp.created
+                        WHEN fp.modified = 0 THEN fp.created
                         ELSE fp.modified
                    END AS traw
             FROM   {hsuforum_posts} fp
@@ -610,10 +620,9 @@ class data_export {
                              fp.discussion = fd.id
                    )
                    AND
-                   {$wherecond}
-        ";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -637,10 +646,9 @@ class data_export {
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE q.course = c.id AND c.category <> 0)
                    AND
-                   {$wherecond}
-        ";
+                   ";
 
-        self::do_export($sql, self::default_params(), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -664,15 +672,15 @@ class data_export {
                      {$timecreated},
                      {$timemodified},
                      CASE
-                          WHEN COALESCE(gg.timemodified, 0) = 0 THEN gg.timecreated
+                          WHEN gg.timemodified = 0 THEN gg.timecreated
                           ELSE gg.timemodified
                      END AS traw
           FROM       {grade_grades} gg
-          INNER JOIN {grade_items}  gi ON gi.id = gg.itemid AND gi.itemmodule = :module
+          INNER JOIN {grade_items}  gi ON gi.id = gg.itemid AND gi.itemmodule = 'quiz'
           WHERE
-                     {$wherecond}";
+                     ";
 
-        self::do_export($sql, self::default_params(['module' => 'quiz']), __FUNCTION__, $dir);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
@@ -728,10 +736,6 @@ class data_export {
         do {
             if ($lastid !== null) {
                 $params['lastid' ] = $lastid;
-                $params['lastid1'] = $lastid;
-                $params['lastid2'] = $lastid;
-                $params['lastid3'] = $lastid;
-                $params['lastid4'] = $lastid;
             }
             $recordset = $DB->get_recordset_sql($sql, $params, 0, $count);
             $recordset->rewind();
