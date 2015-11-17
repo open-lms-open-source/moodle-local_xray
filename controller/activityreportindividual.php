@@ -65,11 +65,11 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 $output .= $this->output->inforeport($response->reportdate,
                     $DB->get_record('user', array('id' => $this->userid)));
 
-                $output .= $this->output->show_on_lightbox("activityLevelTimeline",
+                $output .= $this->output->show_graph("activityLevelTimeline",
                     $response->elements->activityLevelTimeline);
-                $output .= $this->output->show_on_lightbox("barplotOfActivityWholeWeek",
+                $output .= $this->output->show_graph("barplotOfActivityWholeWeek",
                     $response->elements->barplotOfActivityWholeWeek);
-                $output .= $this->output->show_on_lightbox("barplotOfActivityByWeekday",
+                $output .= $this->output->show_graph("barplotOfActivityByWeekday",
                     $response->elements->barplotOfActivityByWeekday);
             }
         } catch (Exception $e) {

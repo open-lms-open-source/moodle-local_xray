@@ -60,75 +60,66 @@ class local_xray_renderer extends plugin_renderer_base {
     }
 
     /**
-     * Generate img with lightbox.
-     * General template for show graph with lightbox.
-     *
-     * Structure:
-     * <div id=$name">
-     * <h3 class='reportsname'>$name</h3>
-     * <a><img class='xray_graph'></a>
-     * <div class='xray_graph_legend'>legend element</div>
-     * </div>
-     *
-     * Important: Link to image will have id fancybox + "name of report".
+     * Show Graph.
      *
      * @param  string $name
      * @param  stdClass $element
      * @return string
      */
-    public function show_on_lightbox($name, $element) {
+    public function show_graph($name, $element) {
         global $PAGE;
         $plugin = "local_xray";
-
-        // Load Jquery.
-        $PAGE->requires->jquery();
-        $PAGE->requires->jquery_plugin('ui');
-        $PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', $plugin); // Js for show on lightbox.
-        $PAGE->requires->jquery_plugin('local_xray-create_thumb', $plugin); // Js for dynamic thumbnails.
-
         $cfgxray = get_config('local_xray');
         $imgurl = sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $element->uuid);
-
         // Access Token.
         $accesstoken = local_xray\local\api\wsapi::accesstoken();
         $imgurl = new moodle_url($imgurl, array('accesstoken' => $accesstoken));
-
         $output = "";
-        $output .= html_writer::start_tag('div', array("id" => $name, "class" => "xray_element xray_element_graph"));
-
-        /* Graph Name */
+        // List Graph.
+        $output .= html_writer::start_tag('div', array('class' => 'xray-col-4'));
+        $output .= html_writer::start_tag('div', array('class' => 'xray-graph-box'));
         $output .= html_writer::tag('h3', $element->title, array("class" => "reportsname"));
-        /* End Graph Name */
-
-        /* Img */
+        $output .= html_writer::start_tag('div', array('class' => 'xray-graph-box-link'));
+        $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName));
+        $output .= html_writer::start_tag('div', array('class' => 'xray-graph-small-image-border'));
+        // Validate if url of image is valid. Prohibited to use @.
+        if (fopen($imgurl, "r")) {
+            $output .= html_writer::start_tag('div',
+                array('class' => 'xray-graph-small-image',
+                    'style' => 'background-image: url('.$imgurl.');'));
+            $output .= html_writer::end_tag('div');
+        } else {
+            // Incorrect url img. Show error message.
+            $output .= html_writer::tag("div",
+                get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
+        }
+        $output .= html_writer::end_tag('div');
+        $output .= html_writer::end_tag('a');
+        $output .= html_writer::end_tag('div');
+        $output .= html_writer::end_tag('div');
+        $output .= html_writer::end_tag('div');
+        // Show Graph.
+        // Get Tooltip.
         $tooltip = '';
         if (isset($element->tooltip) && !empty($element->tooltip)) {
             $tooltip = $element->tooltip;
         }
-        $output .= html_writer::start_tag('div', array("class" => "xray_element_img"));
-
         // Validate if url of image is valid. Prohibited to use @.
         if (fopen($imgurl, "r")) {
-            $idimg = "fancybox_" . $name;
-            $output .= html_writer::start_tag('a', array("id" => $idimg, "href" => $imgurl));
-            $output .= html_writer::empty_tag('img', array("title" => $tooltip,
-                "src" => $imgurl,
-                "class" => "thumb") // Used by dynamic thumbnails.
-            );
-
-            $output .= html_writer::end_tag('a');
-            /* End Img */
-
-            // Send data to js.
-            $PAGE->requires->js_init_call("local_xray_show_on_lightbox", array($idimg, $element));
-        } else {
-            // Incorrect url img. Show error message.
-            $output .= html_writer::tag("div", get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
+            $output .= html_writer::start_tag('div',
+                array('id' => $element->elementName, 'class' => 'xray-graph-background'));
+            $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
+            $output .= html_writer::start_tag('div', array('class' => 'xray-graph-border'));
+            $output .= html_writer::start_tag('div', array('class' => 'xray-graph-caption'));
+            $output .= html_writer::tag('span', $element->title, array('class' => 'xray-graph-caption-text'));
+            $output .= html_writer::tag('p', $tooltip);
+            $output .= html_writer::end_tag('div');
+            $output .= html_writer::img($imgurl, '', array('title' => $tooltip, 'class' => 'xray-graph-image'));
+            $output .= html_writer::end_tag('div');
+            $output .= html_writer::tag('a', '', array('href' => '#', 'class' => 'closeButton'));
+            $output .= html_writer::end_tag('div');
+            $output .= html_writer::end_tag('div');
         }
-
-        $output .= html_writer::end_tag('div');
-        $output .= html_writer::end_tag('div');
-
         return $output;
     }
 

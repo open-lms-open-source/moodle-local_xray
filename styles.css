@@ -294,3 +294,119 @@
 #xraymenu h4 {
   text-align:left;
 }
+
+/**************** Show Graph****************/
+.xray-image-box {
+    transition: all;
+    background-color: white;
+    margin: 0 auto;
+}
+
+.xray-image-box img {
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.xray-graph-background{
+    display: none;
+}
+
+.xray-graph-background:target {
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    overflow-x: auto;
+    overflow-y: scroll;
+    display: block;
+    height: auto;
+    width: auto;
+    background: rgba(255,255,255,0.75) none repeat scroll 0 0;
+    left: 0;
+    top: 0;
+    z-index: 8010;
+}
+
+.xray-box{
+    width:200px;
+}
+
+.xray-col-4 {
+    box-sizing: content-box;
+    display: inline-block;
+    margin: 1em 2%;
+    overflow: hidden;
+    width: 29%;
+}
+
+.xray-graph-view {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    z-index: 8020;
+    max-width:95%;
+    max-height:95%;
+}
+
+.xray-graph-view img{
+    width:100%;
+    height:100%;
+}
+
+.closeButton{
+    display:block;
+    position:absolute;
+    top:-11px;
+    right:-15px;
+    width:27px;
+    height:27px;
+    background:url([[pix:local_xray|close]]) no-repeat center center;
+}
+.xray-graph-caption{
+    margin:3px 0 0 9px;
+    background-color:#fff;
+}
+
+.xray-graph-caption-text{
+    color: #000;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 24px;
+    white-space: nowrap;
+}
+
+.xray-graph-box-link{
+    height:300px;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.xray-graph-box-link:hover {
+    transform: scale(1.1);
+}
+
+.xray-graph-small-image{
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.xray-graph-small-image-border{
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.xray-graph-border {
+    background-color: #fff;
+    padding: 15px;
+}
+/**************** End Styles for Show Graph****************/

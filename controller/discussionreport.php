@@ -85,14 +85,14 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid,
                         $response->elements->discussionActivityByWeek);
 
-                    $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
-                    $output .= $this->output->show_on_lightbox("avgWordPerPost", $response->elements->avgWordPerPost);
-                    $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordCount",
+                    $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud);
+                    $output .= $this->output->show_graph("avgWordPerPost", $response->elements->avgWordPerPost);
+                    $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure);
+                    $output .= $this->output->show_graph("socialStructureWordCount",
                         $response->elements->socialStructureWordCount);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordContribution",
+                    $output .= $this->output->show_graph("socialStructureWordContribution",
                         $response->elements->socialStructureWordContribution);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordCTC",
+                    $output .= $this->output->show_graph("socialStructureWordCTC",
                         $response->elements->socialStructureWordCTC);
                 }
             }
@@ -112,9 +112,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                             array("class" => "main")),
                         array("class" => "mr_html_heading"));
                     $output .= $this->output->inforeport($response->reportdate);
-                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismStudentsHeatmap",
+                    $output .= $this->output->show_graph("endogenicPlagiarismStudentsHeatmap",
                         $response->elements->endogenicPlagiarismStudentsHeatmap);
-                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismHeatmap",
+                    $output .= $this->output->show_graph("endogenicPlagiarismHeatmap",
                         $response->elements->endogenicPlagiarismHeatmap);
                 }
             }
@@ -140,7 +140,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $datatable = new local_xray\datatables\datatables($response->elements->studentDiscussionGrades,
                         "rest.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
-                    $output .= $this->output->show_on_lightbox("discussionSuggestedGrades",
+                    $output .= $this->output->show_graph("discussionSuggestedGrades",
                         $response->elements->discussionSuggestedGrades);;
                 }
             }
