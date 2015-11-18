@@ -38,6 +38,14 @@
     background: transparent url([[pix:t/expanded]]) 0 center no-repeat;
 }
 
+.xray-toggleable-table {
+    display: none;
+}
+
+.xray-toggleable-table:target {
+    display: block;
+}
+
 .xray-table-title{
     clear:both;
     display:flex;
