@@ -320,93 +320,12 @@ class data_export {
     }
 
     /**
-     * Export accesslog version with intermediate table. For now disabled.
+     * Export log information
      *
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
-     * @throws \ddl_exception
      */
-    public static function accesslog_prev($timest, $timeend, $dir) {
-        global $DB;
-
-        $transaction = null;
-
-        try {
-            $transaction = $DB->start_delegated_transaction();
-
-            $preparams = array('ctxt' => CONTEXT_COURSE, 'deleted' => false);
-
-            $sqlremove = "
-                DELETE {local_xray_uctmp}
-                FROM   {local_xray_uctmp}
-                WHERE
-                      NOT EXISTS (
-                        SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
-                        FROM       {role_assignments} ra
-                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = :ctxt
-                        WHERE
-                              EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
-                              AND
-                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = :deleted)
-                      )
-            ";
-
-            $DB->execute($sqlremove, $preparams);
-
-            $sqli = "
-                INSERT INTO {local_xray_uctmp} (userid, courseid)
-                (
-                    SELECT * FROM
-                    (
-                    SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
-                    FROM       {role_assignments} ra
-                    INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = :ctxt
-                    WHERE
-                          EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0     )
-                          AND
-                          EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = :deleted)
-                          AND
-                          NOT EXISTS (SELECT * FROM {local_xray_uctmp} uc WHERE uc.userid = ra.userid
-                                                                                AND
-                                                                                ctx.instanceid = uc.courseid)
-                    ) t
-                )
-            ";
-            // Update fresh recordset.
-            $DB->execute($sqli, $preparams);
-
-            $transaction->allow_commit();
-        } catch (\Exception $e) {
-            if ($transaction && !$transaction->is_disposed()) {
-                $transaction->rollback($e);
-            }
-        }
-
-        $time = self::to_timestamp('l.time', true, 'time');
-        $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id');
-
-        $sql = "
-            SELECT
-                   l.id,
-                   l.userid AS participantid,
-                   l.course AS courseid,
-                   {$time},
-                   l.ip,
-                   l.action,
-                   l.info,
-                   l.module,
-                   l.url,
-                   l.time AS traw
-            FROM   {log} l
-            WHERE
-                   EXISTS (SELECT * FROM {local_xray_uctmp} rx WHERE rx.courseid = l.course AND rx.userid = l.userid)
-                   AND
-                   ";
-
-        self::dispatch_query($sql, $wherecond, 'accesslog', $dir);
-    }
-
     public static function accesslog($timest, $timeend, $dir) {
         $time = self::to_timestamp('l.time', true, 'time');
         $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id');

@@ -35,29 +35,14 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
 
     $dbman = $DB->get_manager();
 
-    if ($oldversion < 2015070321) {
+    if ($oldversion < 2015070324) {
         // Delete old table if present.
-        $oldtable = new xmldb_table('usercoursetmp');
+        $oldtable = new xmldb_table('local_xray_uctmp');
         if ($dbman->table_exists($oldtable)) {
             $dbman->drop_table($oldtable);
         }
 
-        // Define table local_xray_uctmp to be created.
-        $table = new xmldb_table('local_xray_uctmp');
-
-        // Adding fields to table local_xray_uctmp.
-        $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
-        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
-
-        // Adding keys to table local_xray_uctmp.
-        $table->add_key('tmpckeypk', XMLDB_KEY_UNIQUE, array('userid', 'courseid'));
-
-        // Conditionally launch create table for local_xray_uctmp.
-        if (!$dbman->table_exists($table)) {
-            $dbman->create_table($table);
-        }
-
-        upgrade_plugin_savepoint(true, 2015070321, 'local', 'xray');
+        upgrade_plugin_savepoint(true, 2015070324, 'local', 'xray');
     }
 
     return true;
