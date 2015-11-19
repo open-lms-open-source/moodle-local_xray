@@ -103,11 +103,24 @@ class data_sync extends scheduled_task {
             if ($compfile !== null) {
                 $cleanfile = new auto_clean_file($compfile);
                 ($cleanfile);
-                $uploadresult = $s3->upload($config->s3bucket,
-                    $destfile,
-                    fopen($compfile, 'rb'),
-                    'private',
-                    array('debug' => true));
+                $uploadresult = null;
+                // We will try several times to upload file.
+                $retrycount = (int)$config->s3uploadretry;
+                for ($count = 0; $count < $retrycount; $count++) {
+                    try {
+                        $uploadresult = $s3->upload($config->s3bucket,
+                            $destfile,
+                            fopen($compfile, 'rb'),
+                            'private',
+                            array('debug' => true));
+                    } catch (\Exception $e) {
+                        sync_failed::create_from_exception($e)->trigger();
+                        if ($count = ($retrycount - 1)) {
+                            throw $e;
+                        }
+                        sleep(1);
+                    }
+                }
                 $metadata = $uploadresult->get('@metadata');
                 if ($metadata['statusCode'] != 200) {
                     throw new \Exception("Upload to S3 bucket failed!");

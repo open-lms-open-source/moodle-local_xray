@@ -146,6 +146,8 @@ $string['s3protocol'] = 'Protocolo de subida';
 $string['s3protocol_desc'] = 'Determina protocolo que se debe usar para subir informacion extraida.';
 $string['http'] = 'Protocolo HTTP';
 $string['https'] = 'Protocolo seguro HTTP';
+$string['s3uploadretry'] = 'Intentar de subir de nuevo';
+$string['s3uploadretry_desc'] = 'Define cuantas veces sistema debe intentar de subir datos en el caso de falla.';
 
 $string['useast1'] = 'US Standard (N. Virginia)';
 $string['uswest2'] = 'US West (Oregon)';

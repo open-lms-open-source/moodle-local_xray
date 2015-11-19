@@ -135,6 +135,24 @@ if ($hassiteconfig) {
                                                     new lang_string("s3protocol_desc", $plugin),
                                                     'https', $protocols));
 
+    // How many tries shall we retry upload when it fails?
+    $retries = array(
+        '1'  => '1',
+        '2'  => '2',
+        '3'  => '3',
+        '4'  => '4',
+        '5'  => '5',
+        '6'  => '6',
+        '7'  => '7',
+        '8'  => '8',
+        '9'  => '9',
+        '10' => '10',
+    );
+    $settings->add( new admin_setting_configselect("{$plugin}/s3uploadretry",
+                                                    new lang_string("s3uploadretry", $plugin),
+                                                    new lang_string("s3uploadretry_desc", $plugin),
+                                                    '3', $retries));
+
     // Should we use OS native packer or not?
     $settings->add( new admin_setting_configcheckbox("{$plugin}/enablepacker",
                                                      new lang_string("enablepacker", $plugin),

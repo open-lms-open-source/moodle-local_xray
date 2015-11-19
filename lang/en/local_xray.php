@@ -147,6 +147,8 @@ $string['s3protocol'] = 'Upload protocol';
 $string['s3protocol_desc'] = 'Determines a protocol that will be used in upoloading exported information.';
 $string['http'] = 'HTTP protocol';
 $string['https'] = 'Secure HTTP protocol';
+$string['s3uploadretry'] = 'Upload retries';
+$string['s3uploadretry_desc'] = 'How many times should the system try to re-upload exported information if the upload fails.';
 
 $string['useast1'] = 'US Standard (N. Virginia)';
 $string['uswest2'] = 'US West (Oregon)';
