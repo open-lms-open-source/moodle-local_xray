@@ -143,6 +143,10 @@ $string['xrayadmin'] = 'Admin user';
 $string['xrayadmin_desc'] = 'User for logging into admin server.';
 $string['xrayadminkey'] = 'Admin key';
 $string['xrayadminkey_desc'] = 'Access key for logging into admin server.';
+$string['s3protocol'] = 'Upload protocol';
+$string['s3protocol_desc'] = 'Determines a protocol that will be used in upoloading exported information.';
+$string['http'] = 'HTTP protocol';
+$string['https'] = 'Secure HTTP protocol';
 
 $string['useast1'] = 'US Standard (N. Virginia)';
 $string['uswest2'] = 'US West (Oregon)';

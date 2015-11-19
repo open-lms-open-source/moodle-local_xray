@@ -142,6 +142,10 @@ $string['xrayadmin'] = 'Usuario administrador';
 $string['xrayadmin_desc'] = 'Usuario para loguear en servidor de administración.';
 $string['xrayadminkey'] = 'Clave de Administrador';
 $string['xrayadminkey_desc'] = 'Clave de acceso para loguearse dentro de servidor de administración.';
+$string['s3protocol'] = 'Protocolo de subida';
+$string['s3protocol_desc'] = 'Determina protocolo que se debe usar para subir informacion extraida.';
+$string['http'] = 'Protocolo HTTP';
+$string['https'] = 'Protocolo seguro HTTP';
 
 $string['useast1'] = 'US Standard (N. Virginia)';
 $string['uswest2'] = 'US West (Oregon)';

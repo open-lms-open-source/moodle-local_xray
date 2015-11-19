@@ -124,6 +124,17 @@ if ($hassiteconfig) {
                                                    new lang_string("s3bucketregion_desc", $plugin),
                                                    'us-east-1', $choices));
 
+    // Offers a choice of protocol to use for uploading data. HTTP is faster but HTTPS is safer. The default is HTTPS.
+    $protocols = array(
+        'http'  => new lang_string('http' , $plugin),
+        'https' => new lang_string('https', $plugin)
+    );
+
+    $settings->add( new admin_setting_configselect("{$plugin}/s3protocol",
+                                                    new lang_string("s3protocol", $plugin),
+                                                    new lang_string("s3protocol_desc", $plugin),
+                                                    'https', $protocols));
+
     // Should we use OS native packer or not?
     $settings->add( new admin_setting_configcheckbox("{$plugin}/enablepacker",
                                                      new lang_string("enablepacker", $plugin),

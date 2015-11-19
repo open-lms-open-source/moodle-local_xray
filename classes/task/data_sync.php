@@ -86,6 +86,7 @@ class data_sync extends scheduled_task {
             $s3 = new \Aws\S3\S3Client([
                 'version' => '2006-03-01',
                 'region'  => $config->s3bucketregion,
+                'scheme'  => $config->s3protocol,
                 'credentials' => [
                     'key'    => $config->awskey,
                     'secret' => $config->awssecret,
