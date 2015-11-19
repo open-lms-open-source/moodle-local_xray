@@ -15,24 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Xray integration version file
- *
- * @package local_xray
- * @author Pablo Pagnone
- * @author German Vitale
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+* Rest json controller
+*
+* @package   local_xray
+* @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+* @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+*/
 
-defined('MOODLE_INTERNAL') || die();
+define('AJAX_SCRIPT', true);
+define('NO_DEBUG_DISPLAY', true);
 
-/* @var stdClass $plugin */
-$plugin->version  = 2015070322;
-$plugin->requires = 2014051200; // Moodle 2.7 .
-$plugin->cron = 0;
-$plugin->component = 'local_xray';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0 (Build: 2012123101)';
-$plugin->dependencies = array(
-        'local_mr'       => ANY_VERSION
-);
+require_once('../../config.php');
+/* @var stdClass $CFG */
+require($CFG->dirroot.'/local/mr/bootstrap.php');
+
+mr_controller::render('local/xray', 'pluginname', 'local_xray');

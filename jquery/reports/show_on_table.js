@@ -37,13 +37,13 @@ function local_xray_show_on_table(YUI, data) {
                 "sLoadingRecords": data.sLoadingRecords,
                 "sProcessing": data.sProcessing,
                 "sZeroRecords": data.sZeroRecords,
-                "Paginate": {
+                "paginate": {
                     "sFirst": data.sFirst,
                     "sLast": data.sLast,
                     "sNext": data.sNext,
                     "sPrevious": data.sPrevious,
                 },
-                "Aria": {
+                "aria": {
                     "sSortAscending":  data.sSortAscending,
                     "sSortDescending": data.sSortDescending
                 }
@@ -59,6 +59,14 @@ function local_xray_show_on_table(YUI, data) {
                     "data": aoData,
                     "success": fnCallback
                 })
+            },
+            "fnDrawCallback": function( oSettings ,aoData) {
+                // INT-8289, not show paginate when pager is 1.
+                if($("#table_" + data.id).DataTable().rows().data().length == oSettings._iRecordsTotal) {
+                    $("#table_" + data.id +"_paginate").hide();
+                } else {
+                    $("#table_" + data.id +"_paginate").show();
+                }
             }
         });
 

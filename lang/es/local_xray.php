@@ -27,9 +27,9 @@
 defined('MOODLE_INTERNAL') or die();
 
 /* @var string[] $string */
-$string['navigation_xray'] = 'X-Ray ';
-$string['navitationcourse_xray'] = 'X-Ray';
-$string['pluginname'] = 'X-Ray';
+$string['navigation_xray'] = 'X-Ray Learning Analytics ';
+$string['navitationcourse_xray'] = 'X-Ray Learning Analytics';
+$string['pluginname'] = 'X-Ray Learning Analytics';
 $string['reports'] = 'Reportes';
 $string['analytics'] = 'Análisis de curso';
 $string['xraydisplayheading'] = 'Integración de curso';
@@ -52,7 +52,7 @@ $string['xray:discussiongrading_view'] = 'Ver calificaciones en foros de discusi
 $string['xray:gradebookreport_view'] = 'Ver reporte de calificaciones';
 $string['xray:gradebookreportindividualquiz_view'] = 'Ver reporte individual de calificaciones para quiz';
 $string['xray:risk_view'] = 'Ver reporte de riesgo';
-$string['xray:view'] = 'Ver X-ray';
+$string['xray:view'] = 'Ver X-Ray Learning Analytics';
 
 /* Categories for numbers values */
 $string['high'] = 'Alto';
@@ -92,7 +92,7 @@ $string['error_loadimg'] = 'Error al cargar imagen, por favor intenta nuevamente
                            'error persiste, por favor contacta con el administrador del sitio.';
 
 /* Error Webservice */
-$string['error_xray'] = 'Error al conectar con Xray, por favor intenta nuevamente recargando la página. Si el error '.
+$string['error_xray'] = 'Error al conectar con X-Ray Learning Analytics, por favor intenta nuevamente recargando la página. Si el error '.
                         'persiste, por favor contacta con el administrador del sitio.';
 
 $string['error_compress'] = 'No fue possible crear archivo comprimido. Por favor contacta con el administrador del sitio.';
@@ -101,17 +101,17 @@ $string['error_generic'] = '{$a}';
 
 /* Settings */
 $string['xrayclientid'] = 'Identificador de cliente';
-$string['xrayclientid_desc'] = 'Identificador de client para Xray';
-$string['xraypassword'] = 'Password para Xray ';
-$string['xraypassword_desc'] = '';
-$string['xrayurl'] = 'Url de Xray';
-$string['xrayurl_desc'] = '';
-$string['xrayusername'] = 'Usuario de Xray';
-$string['xrayusername_desc'] = '';
+$string['xrayclientid_desc'] = 'Identificador de client para X-Ray Learning Analytics';
+$string['xraypassword'] = 'Password para X-Ray Learning Analytics ';
+$string['xraypassword_desc'] = 'Password utilizado para loguearse en X-Ray Learning Analytics';
+$string['xrayurl'] = 'Url de X-Ray Learning Analytics';
+$string['xrayurl_desc'] = 'Url de servidor X-Ray Learning Analytics.';
+$string['xrayusername'] = 'Usuario de X-Ray Learning Analytics';
+$string['xrayusername_desc'] = 'Usuario utilizado para loguearse en X-Ray Learning Analytics.';
 $string['xrayawsheading'] = 'Sincronización de datos';
-$string['xrayawsheading_desc'] = 'En esta sección tu puedes configurar la sincronización de datos con Xray.';
+$string['xrayawsheading_desc'] = 'En esta sección tu puedes configurar la sincronización de datos con X-Ray Learning Analytics.';
 $string['enablesync'] = 'Sincronizar datos';
-$string['enablesync_desc'] = 'Activar sincronización automática de datos con Xray.';
+$string['enablesync_desc'] = 'Activar sincronización automática de datos con X-Ray Learning Analytics.';
 $string['awskey'] = 'Clave AWS';
 $string['awskey_desc'] = 'Clave de acceso para AWS web services';
 $string['awssecret'] = 'Secret para AWS';
@@ -136,7 +136,7 @@ $string['export_progress'] = 'Reiniciar informacion del progreso';
 $string['export_progress_desc'] = 'Durante exportacion de los datos, informacion del progreso se guarda en '.
                                   'la base de datos. Markando esa opccion borraria esa informacion.';
 
-$string['xrayadminserver'] = 'Servidor de administración XRay';
+$string['xrayadminserver'] = 'Servidor de administración X-Ray Learning Analytics';
 $string['xrayadminserver_desc'] = 'Locación del servidor.';
 $string['xrayadmin'] = 'Usuario administrador';
 $string['xrayadmin_desc'] = 'Usuario para loguear en servidor de administración.';
@@ -158,16 +158,16 @@ $string['xrayws_error_nocurl'   ] = 'Módulo cURL debe estar presente y activado
 $string['xrayws_error_nourl'    ] = 'Debes espeficificar una URL!';
 $string['xrayws_error_nomethod' ] = 'Debes especificar método requerido!';
 
-/* Web service errors returned from XRay*/
+/* Web service errors returned from X-Ray Learning Analytics*/
 $string['xrayws_error_server'] = '{$a}';
 $string['xrayws_error_curl'] = '{$a}';
 
 /* Scheduled task */
 $string['datasync'] = 'Sincronización de datos';
-$string['syncfailed'] = 'Sincronización de datos con XRay ha fallado';
+$string['syncfailed'] = 'Sincronización de datos con X-Ray Learning Analytics ha fallado';
 $string['unexperror'] = 'Error inesperado';
-$string['syncfailedexplanation'] = 'Fallo al sincronizar datos con Xray.';
-$string['synclog'] = 'Mensaje de información de sincronización de datos con XRay';
+$string['syncfailedexplanation'] = 'Fallo al sincronizar datos con X-Ray Learning Analytics.';
+$string['synclog'] = 'Mensaje de información de sincronización de datos con X-Ray Learning Analytics';
 $string['synclogexplanation'] = 'Entrada de registro regular para sincronizar datos.';
 
 // Course Header.

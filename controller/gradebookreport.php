@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') or die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+use local_xray\event\get_report_failed;
 
 /**
  * Xray integration Reports Controller
@@ -39,7 +40,6 @@ require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 class local_xray_controller_gradebookreport extends local_xray_controller_reports {
 
     public function view_action() {
-        global $PAGE;
 
         $output = '';
         try {
@@ -57,27 +57,28 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                     $output .= $this->output->inforeport($response->elements->element1->date);
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->element2,
-                            "view.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=" . $this->courseid);
+                        "rest.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=".$this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
                     // Graph.
                     $output .= $this->output->show_on_lightbox("densityofstandardizedscores",
-                            $response->elements->studentScoreDistribution);
+                        $response->elements->studentScoreDistribution);
 
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->element4,
-                            "view.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=" . $this->courseid);
+                        "rest.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=".$this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
 
                     // Graphs.
                     $output .= $this->output->show_on_lightbox("boxplotofstandardizedscoresperquiz",
-                            $response->elements->scoreDistributionByItem);
+                        $response->elements->scoreDistributionByItem);
                     $output .= $this->output->show_on_lightbox("scoresassignedbyxrayversusresultsfromquizzes",
-                            $response->elements->scatterPlot);
+                        $response->elements->scatterPlot);
                     $output .= $this->output->show_on_lightbox("comparisonofscoresinquizzes",
-                            $response->elements->itemsHeatmap);
+                        $response->elements->itemsHeatmap);
                 }
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 
@@ -90,56 +91,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
      * @return string
      */
     public function jsonstudentgrades_action() {
-        // Pager.
-        $count = optional_param('iDisplayLength', 10, PARAM_INT);
-        $start = optional_param('iDisplayStart', 0, PARAM_INT);
-        // Sortable.
-        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
-
-        $return = "";
-
-        try {
-            $report = "gradebook";
-            $element = "element2";
-            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
-                $element,
-                $report,
-                null,
-                '',
-                '',
-                $start,
-                $count,
-                $sortfield,
-                $sortorder);
-
-            if (!$response) {
-                throw new Exception(\local_xray\local\api\xrayws::instance()->geterrormsg());
-            } else {
-                $data = array();
-                if (!empty($response->data)) {
-                    foreach ($response->data as $row) {
-                        // Format of response for columns.
-                        if (!empty($response->columnOrder)) {
-                            $r = new stdClass();
-                            foreach ($response->columnOrder as $column) {
-                                $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
-                            }
-                            $data[] = $r;
-                        }
-                    }
-                }
-                // Provide count info to table.
-                $return["recordsFiltered"] = $response->itemCount;
-                $return["recordsTotal"] = $response->itemCount;
-                $return["data"] = $data;
-            }
-        } catch (Exception $e) {
-            // Error, return invalid data, and pluginjs will show error in table.
-            $return["data"] = "-";
-        }
-        return json_encode($return);
+        return $this->genericresponsejsonfordatatables("gradebook", "element2");
     }
 
     /**
@@ -147,55 +99,6 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
      * @return string
      */
     public function jsonsummaryquizzes_action() {
-        // Pager.
-        $count = optional_param('iDisplayLength', 10, PARAM_INT);
-        $start = optional_param('iDisplayStart', 0, PARAM_INT);
-        // Sortable
-        $sortcol = optional_param('iSortCol_0', 0, PARAM_INT); // Number of column to sort.
-        $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
-        $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
-
-        $return = "";
-        try {
-            $report = "gradebook";
-            $element = "element4";
-            $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
-                $element,
-                $report,
-                null,
-                '',
-                '',
-                $start,
-                $count,
-                $sortfield,
-                $sortorder);
-
-            if (!$response) {
-                \local_xray\local\api\xrayws::instance()->print_error();
-            } else {
-                $data = array();
-                if (!empty($response->data)) {
-                    foreach ($response->data as $row) {
-                        // Format of response for columns.
-                        if (!empty($response->columnOrder)) {
-                            $r = new stdClass();
-                            foreach ($response->columnOrder as $column) {
-                                $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
-                            }
-                            $data[] = $r;
-                        }
-                    }
-                }
-                // Provide count info to table.
-                $return["recordsFiltered"] = $response->itemCount;
-                $return["recordsTotal"] = $response->itemCount;
-                $return["data"] = $data;
-            }
-        } catch (Exception $e) {
-            // Error, return invalid data, and pluginjs will show error in table.
-            $return["data"] = "-";
-        }
-
-        return json_encode($return);
+        return $this->genericresponsejsonfordatatables("gradebook", "element4");
     }
 }

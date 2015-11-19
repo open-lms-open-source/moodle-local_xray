@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+use local_xray\event\get_report_failed;
 
 /**
  * Report Discussion Individual forum.
@@ -60,7 +61,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
         // Add title to breadcrumb.
         $forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
-        $PAGE->navbar->add($forumname, new moodle_url("/mod/forum/view.php",
+        $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/forum/view.php",
             array("id" => $this->cmid)));
         $PAGE->navbar->add($PAGE->title);
         $output = "";
@@ -75,12 +76,12 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                 // Show graphs.
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate);
-                
                 $output .= $this->output->show_on_lightbox("wordHistogram", $response->elements->wordHistogram);
                 $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
                 $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 

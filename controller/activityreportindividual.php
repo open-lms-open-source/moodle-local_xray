@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+use local_xray\event\get_report_failed;
 
 /**
  * Activity Report Individual
@@ -62,14 +63,17 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
             } else {
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate,
-                                                    $DB->get_record('user', array('id' => $this->userid)));
-                
-                
-                $output .= $this->output->show_on_lightbox("activityLevelTimeline", $response->elements->activityLevelTimeline);
-                $output .= $this->output->show_on_lightbox("barplotOfActivityWholeWeek", $response->elements->barplotOfActivityWholeWeek);
-                $output .= $this->output->show_on_lightbox("barplotOfActivityByWeekday", $response->elements->barplotOfActivityByWeekday);               
+                    $DB->get_record('user', array('id' => $this->userid)));
+
+                $output .= $this->output->show_on_lightbox("activityLevelTimeline",
+                    $response->elements->activityLevelTimeline);
+                $output .= $this->output->show_on_lightbox("barplotOfActivityWholeWeek",
+                    $response->elements->barplotOfActivityWholeWeek);
+                $output .= $this->output->show_on_lightbox("barplotOfActivityByWeekday",
+                    $response->elements->barplotOfActivityByWeekday);
             }
         } catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
             $output = $this->print_error('error_xray', $e->getMessage());
         }
 

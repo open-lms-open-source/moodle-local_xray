@@ -173,3 +173,24 @@ function local_xray_extends_navigation(global_navigation $nav) {
     }
 
 }
+
+/**
+ * Moodle 2.9+ compliant method.
+ *
+ * @link  https://tracker.moodle.org/browse/MDL-49643 MDL-49643
+ * @param settings_navigation $settings
+ * @param context $context
+ */
+function local_xray_extend_settings_navigation(settings_navigation $settings, context $context) {
+    local_xray_extends_settings_navigation($settings, $context);
+}
+
+/**
+ * Moodle 2.9+ compliant method.
+ *
+ * @link  https://tracker.moodle.org/browse/MDL-49643 MDL-49643
+ * @param global_navigation $nav
+ */
+function local_xray_extend_navigation(global_navigation $nav) {
+    local_xray_extends_navigation($nav);
+}
