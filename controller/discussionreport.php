@@ -139,7 +139,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         "rest.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
                     $output .= $this->output->show_graph("discussionSuggestedGrades",
-                        $response->elements->discussionSuggestedGrades, $response->id);;
+                        $response->elements->discussionSuggestedGrades, $response->id);
                 }
             }
 
