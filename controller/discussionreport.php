@@ -77,7 +77,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
                         "rest.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $this->courseid,
                         array(),
-                        true); // Add column action.
+                        true,
+                        true,
+                        'ftlipr'); // Add column action.
                     $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
                     $output .= $this->output->standard_table((array)$datatable);
 

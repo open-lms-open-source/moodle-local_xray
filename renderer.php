@@ -126,18 +126,16 @@ class local_xray_renderer extends plugin_renderer_base {
         $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray");
         $output = "";
         // Table Title with link to open it.
-        $output .= html_writer::start_tag('a', array(
+        $output .= "<h3 class='xray-table-title-link reportsname'>
+        <a href='#".$datatable['id']."'>".$datatable['title']."</a>
+        </h3>";
+        /*$link = html_writer::start_tag('a', array(
             'id' => "title_{$datatable['id']}",
             'href' => "#{$datatable['id']}",
             'class' => 'xray-table-title-link'));
-        $output .= html_writer::start_tag('div', array('class' => 'xray-table-title'));
-        $output .= html_writer::start_tag('div', array('class' => 'xray-table-title-text'));
-        $output .= html_writer::tag('h3', $datatable['title']);
-        $output .= html_writer::end_tag('div');
-        $output .= html_writer::start_tag('div', array('class' => 'xray-table-title-arrow'));
-        $output .= html_writer::end_tag('div');
-        $output .= html_writer::end_tag('div');
-        $output .= html_writer::end_tag('a');
+        $link .= html_writer::end_tag('a');
+        $output .= html_writer::tag('h3', $datatable['title'], array('class' => 'reportsname'));
+        */
         // Table.
         $output .= html_writer::start_tag('div', array(
             'id' => "{$datatable['id']}",
@@ -147,6 +145,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::start_tag("table",
             array("id" => "table_{$datatable['id']}",
                 "class" => "xraydatatable display"));
+        $output .= html_writer::tag("caption", $datatable['title']);
         $output .= html_writer::start_tag("thead");
         $output .= html_writer::start_tag("tr");
         foreach ($datatable['columns'] as $c) {

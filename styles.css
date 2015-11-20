@@ -1,21 +1,14 @@
 /****************  Styles for Xray reports ****************/
 
-/* Region main for all reports */
-#page-local-xray-view {
-}
-
-#page-local-xray-view #page-content #region-main {
+#page-local-xray-view #region-main {
     max-width: 92%; /* snap theme limit to 60.5 em */
     box-sizing: content-box;
+    background-color: white;
 }
 
-/* Report title */
+/* Report page title */
 #page-local-xray-view  h2.main {
   margin: 0;
-}
-/* Report date */
-#page-local-xray-view .inforeport {
-
 }
 
 /* Name elements (tables and graphs) */
@@ -28,14 +21,9 @@
 }
 
 /* Toogle tables */
-#page-local-xray-view .eventtoogletable {
-    cursor: pointer;
-    padding-left: 1em;
-    background: transparent url([[pix:t/collapsed]]) 0 center no-repeat;
-}
-
-#page-local-xray-view .expanded {
-    background: transparent url([[pix:t/expanded]]) 0 center no-repeat;
+.xray-table-title-link.reportsname{
+    background: transparent url([[pix:local_xray|down-arrow]]) 0 0 no-repeat;
+    padding-left: 2em;
 }
 
 .xray-toggleable-table {
@@ -44,36 +32,22 @@
 
 .xray-toggleable-table:target {
     display: block;
+    outline: none;
+    padding: 1em 0;
 }
 
-.xray-table-title{
-    clear:both;
-    display:flex;
-}
-
-.xray-table-title-arrow {
-    background-image: url([[pix:local_xray|down-arrow]]);
-    background-repeat: no-repeat;
-    display: block;
-    height: 50px;
-    width: 50px;
-    float:left;
-}
-.xray-table-title-text{
-    float:left;
-    margin-top: -29px;
-    margin-right: 13px;
+.xray-toggleable-table caption {
+    font-size: 2em;
+    padding: 1em 0;
 }
 /* End Toogle tables */
-
-/* General xray element (graphs and tables elements) */
-#page-local-xray-view .xray_element {
-}
 
 /* General xray image graph */
 #page-local-xray-view .xray_element_img {
     height: 300px;
     -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
 }
 
@@ -88,35 +62,18 @@
 }
 
 /* Xray datatables style */
-#page-local-xray-view table.xraydatatable {
-	width:100%;
-	border-spacing: 0;
-}
-
-/* General xray legend of graph */
-#page-local-xray-view .xray_graph_legend {
-    font-size: 11px;
-    height: 55px;
-    margin-top: 5px;
-    padding: 5px;
+#page-local-xray-view .xraydatatable {
+    width:100%;
+    border-spacing: 0;
 }
 
 /** Wrapper Datatables**/
-
-/* Table content */
-#page-local-xray-view .dataTables_wrapper table {
-}
-
-/* Table content */
-#page-local-xray-view .dataTables_wrapper table tr td {
-}
-
 #page-local-xray-view .error_datatables {
     background-color: #CE2F2F;
     color: #fff;
     text-align: center;
     display: block;
-    margin: 3px 0px;
+    margin: 3px 0;
     padding: 5px;
 }
 
@@ -127,12 +84,7 @@
     margin: auto;
     padding: 100px 10px;
 }
-
 /** End Wrapper Datatables**/
-
-#page-local-xray-view .fancybox-title-float-wrap .child {
-    background-color: #3bcedb;
-}
 
 /**************** Styles for specific reports****************/
 /** Link in table to activity report individual **/
@@ -308,7 +260,7 @@
 #headerdata h5,
 #headerdata h6,
 #xraymenu h4 {
-  text-align:left;
+    text-align: left;
 }
 
 /**************** Plots ****************/
