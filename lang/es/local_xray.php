@@ -190,3 +190,9 @@ $string['sInfoEmpty'] = 'Mostrando 0 a 0 de 0 entradas';
 $string['sLoadingRecords'] = 'Cargando...';
 $string['sSortAscending'] = ': activar para ordenar columna ascendentemente';
 $string['sSortDescending'] = ': activar para ordenar columna descendentemente';
+
+/*Accessible data */
+$string['accessibledata'] = 'Datos accesibles';
+$string['accessible_view_data'] = 'Ver datos';
+$string['accessible_emptydata'] = 'No hay datos disponibles para version accesible.';
+$string['accessible_error'] = 'Versión accesible para este gráfico no fue encontrada en X-Ray Learning Analytics.';

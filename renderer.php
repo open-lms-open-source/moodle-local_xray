@@ -62,10 +62,12 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * @param  string $name
      * @param  stdClass $element
+     * @param  integer $reportid - Id of report, we need this to get accessible data from webservice.
      * @return string
      */
-    public function show_graph($name, $element) {
-        global $PAGE;
+
+    public function show_graph($name, $element, $reportid) {
+        global $PAGE, $COURSE;
         $plugin = "local_xray";
         $cfgxray = get_config('local_xray');
         $imgurl = sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $element->uuid);
@@ -76,6 +78,20 @@ class local_xray_renderer extends plugin_renderer_base {
         // List Graph.
         $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
         $output .= html_writer::tag('h3', $element->title, array("class" => "reportsname"));
+
+        // Link to accessible version.
+        $urlaccessible = new moodle_url("view.php",
+            array("controller" => "accessibledata",
+                "origincontroller" => $PAGE->url->get_param("controller"),
+                "graphname" => rawurlencode($element->title),
+                "reportid" => $reportid,
+                "elementname" => $element->elementName,
+                "courseid" => $COURSE->id));
+        $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
+            array("target" => "_blank",
+                "class" => "xray-accessible-view-data"));
+        $output .= html_writer::tag('span', $linkaccessibleversion);
+
         $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName , 'class' => 'xray-graph-box-link'));
         // Validate if url of image is valid. Prohibited to use @.
         if (fopen($imgurl, "r")) {
@@ -108,6 +124,26 @@ class local_xray_renderer extends plugin_renderer_base {
                 'title' => get_string('close', 'local_xray')));
             $output .= html_writer::end_tag('div');
         }
+        return $output;
+    }
+
+    /**
+     * Show accessibledata in table.
+     * @param Array $data
+     * @param Array $rows
+     * @param String $title
+     * @return string
+     */
+    public function accessibledata(array $columnsnames, array $rows, $title = "") {
+
+        $output = "";
+        // Create table.
+        $table = new html_table();
+        $table->attributes = array("title" => $title);
+        $table->head  = $columnsnames;
+        $table->data  = $rows;
+        $table->summary  = $title;
+        $output .= html_writer::table($table);
         return $output;
     }
 
@@ -328,9 +364,9 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Students at risk.
         $studentsrisk = html_writer::tag("div",
-                html_writer::tag("span", $data->studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$data->studentsenrolled}",
-                array("class" => "xray-headline"));
-                
+            html_writer::tag("span", $data->studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$data->studentsenrolled}",
+            array("class" => "xray-headline"));
+
         $studentatrisktext = html_writer::div(get_string('studentatrisk', 'local_xray'), 'xray-headline-description');
         // Bootstrap classes for positive/negative data.
         $comparitorclass = "xray-comparitor";
@@ -370,12 +406,12 @@ class local_xray_renderer extends plugin_renderer_base {
             $riskfromlastweekth . $usersprofilebox . $usersprofileboxhidden .
             $showall, 'xray-risk col-sm-6 span6');
 
-        // Students Visitors.  
-        $studentsvisitors = html_writer::div(html_writer::tag("span", 
-                                            $data->studentsvisitslastsevendays,
-                                            array("class" => "xray-headline-number h1"))."{$of} {$data->studentsenrolled}",
+        // Students Visitors.
+        $studentsvisitors = html_writer::div(html_writer::tag("span",
+                $data->studentsvisitslastsevendays,
+                array("class" => "xray-headline-number h1"))."{$of} {$data->studentsenrolled}",
             "xray-headline");
-        
+
         $studentvisitslastdaystext = html_writer::div(get_string('studentvisitslastdays', 'local_xray'),
             'xray-headline-description');
         // Bootstrap classes for positive/negative data.
@@ -401,10 +437,10 @@ class local_xray_renderer extends plugin_renderer_base {
                 $percent = ceil(($visitsperday / $data->studentsvisitslastsevendays) * 100);
                 $day = substr($value->day_of_week->value, 0, 3);
                 $studentsvisitsperday .= html_writer::start_div("xray-visits-unit");
-                $studentsvisitsperday .= html_writer::div($day, array("class" => "xray-visits-per-day"));             
-                $studentsvisitsperday .= html_writer::div($visitsperday, 
-                        array("class" => "xray-visits-per-day-line", "style" => "height:{$percent}%"));             
-                    
+                $studentsvisitsperday .= html_writer::div($day, array("class" => "xray-visits-per-day"));
+                $studentsvisitsperday .= html_writer::div($visitsperday,
+                    array("class" => "xray-visits-per-day-line", "style" => "height:{$percent}%"));
+
                 $studentsvisitsperday .= html_writer::end_div();
             }
             $studentsvisitsperday .= html_writer::end_div();
@@ -428,9 +464,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $userpicture->alttext = false;
         $userpicture->size = 30;
         $picture = $this->render($userpicture);
-        $fullname = html_writer::tag("a", 
-                format_string(fullname($user)), 
-                array("href" => $CFG->wwwroot . '/user/profile.php?id=' . $user->id));
+        $fullname = html_writer::tag("a",
+            format_string(fullname($user)),
+            array("href" => $CFG->wwwroot . '/user/profile.php?id=' . $user->id));
         return html_writer::div("{$picture} {$fullname}", array("class" => "dashboard_xray_users_profile"));
     }
 
@@ -468,7 +504,7 @@ class local_xray_renderer extends plugin_renderer_base {
                     $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
                 }
                 $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
-                                                               'class' => 'xray-reports-links'));
+                    'class' => 'xray-reports-links'));
                 $navmenu = html_writer::tag("nav", $amenu);
                 $menu = \html_writer::div($title . $navmenu, 'clearfix', array('id' => 'js-xraymenu'));
             }
@@ -490,7 +526,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $headerdata = $this->snap_dashboard_xray();
             if (!empty($headerdata)) {
                 $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') .
-                                           get_string('analytics', 'local_xray'));
+                    get_string('analytics', 'local_xray'));
                 $subc = $title . $headerdata;
                 $headerdata = \html_writer::div($subc, '', ['id' => 'js-headerdata', 'class' => 'clearfix']);
             }

@@ -68,7 +68,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-                    // Show graphs.                   
+                    // Show graphs.
                     // Report date.
                     $output  = $this->print_top();
                     $output .= $this->output->inforeport($response->elements->element1->date);
@@ -87,15 +87,15 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid,
                         $response->elements->discussionActivityByWeek);
 
-                    $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud);
-                    $output .= $this->output->show_graph("avgWordPerPost", $response->elements->avgWordPerPost);
-                    $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure);
+                    $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud, $response->id);
+                    $output .= $this->output->show_graph("avgWordPerPost", $response->elements->avgWordPerPost, $response->id);
+                    $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure, $response->id);
                     $output .= $this->output->show_graph("socialStructureWordCount",
-                        $response->elements->socialStructureWordCount);
+                        $response->elements->socialStructureWordCount, $response->id);
                     $output .= $this->output->show_graph("socialStructureWordContribution",
-                        $response->elements->socialStructureWordContribution);
+                        $response->elements->socialStructureWordContribution, $response->id);
                     $output .= $this->output->show_graph("socialStructureWordCTC",
-                        $response->elements->socialStructureWordCTC);
+                        $response->elements->socialStructureWordCTC, $response->id);
                 }
             }
 
@@ -113,9 +113,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         array("class" => "main"));
                     $output .= $this->output->inforeport($response->reportdate);
                     $output .= $this->output->show_graph("endogenicPlagiarismStudentsHeatmap",
-                        $response->elements->endogenicPlagiarismStudentsHeatmap);
+                        $response->elements->endogenicPlagiarismStudentsHeatmap, $response->id);
                     $output .= $this->output->show_graph("endogenicPlagiarismHeatmap",
-                        $response->elements->endogenicPlagiarismHeatmap);
+                        $response->elements->endogenicPlagiarismHeatmap, $response->id);
                 }
             }
 
@@ -139,7 +139,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         "rest.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
                     $output .= $this->output->show_graph("discussionSuggestedGrades",
-                        $response->elements->discussionSuggestedGrades);;
+                        $response->elements->discussionSuggestedGrades, $response->id);;
                 }
             }
 

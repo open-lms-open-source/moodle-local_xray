@@ -436,4 +436,19 @@ abstract class wsapi {
         $url = sprintf('%s/data/list', $baseurl);
         return self::generic_admingetcall($url);
     }
+
+    /**
+     * @param string $reportid
+     * @param string $elementname
+     * @return bool|mixed
+     */
+    public static function report_accessibility($reportid, $elementname) {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
+            return false;
+        }
+        $url = sprintf('%s/%s/data/%s/%s/accessible', $baseurl, $domain, $reportid, $elementname);
+        return self::generic_getcall($url);
+    }
 }
