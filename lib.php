@@ -123,7 +123,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
     static $search = [
         'topics' => '#region-main',
         'weeks' => '#region-main',
-        'flexpage' => '#region-main',
+        'flexpage' => '#page-content',
         'folderview' => '#region-main',
         'onetopic' => '#region-main',
         'singleactivity' => '.notexist', // Not sure what to do here?
