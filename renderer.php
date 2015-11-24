@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') or die();
 
 /* @var stdClass $CFG */
 use local_xray\datatables\datatablescolumns;
+use local_xray\event\get_report_failed;
 
 /**
  * Renderer
@@ -67,6 +68,7 @@ class local_xray_renderer extends plugin_renderer_base {
      */
 
     public function show_graph($name, $element, $reportid) {
+
         global $PAGE, $COURSE;
         $plugin = "local_xray";
         $cfgxray = get_config('local_xray');
@@ -79,37 +81,56 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
         $output .= html_writer::tag('h3', $element->title, array("class" => "reportsname"));
 
-        // Link to accessible version.
-        $urlaccessible = new moodle_url("view.php",
-            array("controller" => "accessibledata",
-                "origincontroller" => $PAGE->url->get_param("controller"),
-                "graphname" => rawurlencode($element->title),
-                "reportid" => $reportid,
-                "elementname" => $element->elementName,
-                "courseid" => $COURSE->id));
-        $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
-            array("target" => "_blank",
-                "class" => "xray-accessible-view-data"));
-        $output .= html_writer::tag('span', $linkaccessibleversion);
+        // Validate if exist and is available image in xray side.
+        $existimg = false;
+        try {
+            $ch = new curl();
+            $ch->setopt(array("CURLOPT_NOBODY" => 1, "CURLOPT_RETURNTRANSFER" => 1));
+            $ch->head($imgurl);
+            if(!empty($ch->response)) {
+                $existimg =  true;
+            }
+        }
+        catch (Exception $e) {
+            get_report_failed::create_from_exception($e, $PAGE->context, "renderer_show_graph")->trigger();
+        }
 
-        $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName , 'class' => 'xray-graph-box-link'));
-        // Validate if url of image is valid. Prohibited to use @.
-        if (fopen($imgurl, "r")) {
+        // Link to accessible version.
+        if($existimg) {
+            $urlaccessible = new moodle_url("view.php",
+                array("controller" => "accessibledata",
+                    "origincontroller" => $PAGE->url->get_param("controller"),
+                    "graphname" => rawurlencode($element->title),
+                    "reportid" => $reportid,
+                    "elementname" => $element->elementName,
+                    "courseid" => $COURSE->id));
+
+            $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
+                array("target" => "_blank",
+                    "class" => "xray-accessible-view-data"));
+            $output .= html_writer::tag('span', $linkaccessibleversion);
+        }
+
+        // Show image.
+        if ($existimg) {
+            // Show image.
+            $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName , 'class' => 'xray-graph-box-link'));
             $output .= html_writer::start_tag('span',
                 array('class' => 'xray-graph-small-image',
                     'style' => 'background-image: url('.$imgurl.');'));
             $output .= html_writer::end_tag('span');
+            $output .= html_writer::end_tag('a');
         } else {
             // Incorrect url img. Show error message.
             $output .= html_writer::tag("div",
                 get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
         }
-        $output .= html_writer::end_tag('a');
+
         $output .= html_writer::end_tag('div');
+
         // Show Graph.
         // Get Tooltip.
-        // Validate if url of image is valid. Prohibited to use @.
-        if (fopen($imgurl, "r")) {
+        if ($existimg) {
             $output .= html_writer::start_tag('div', array('id' => $element->elementName, 'class' => 'xray-graph-background'));
             $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
             $output .= html_writer::tag('h6', $element->title, array('class' => 'xray-graph-caption-text'));
