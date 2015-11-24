@@ -174,7 +174,7 @@ if ($hassiteconfig) {
                                                  "exporttime_minutes",
                                                  new lang_string("exporttime", $plugin),
                                                  new lang_string("exporttime_desc", $plugin),
-                                                 ['h' => 1, 'm' => 0]));
+                                                 ['h' => 1, 'm' => 30]));
 
 
     $settings->add( new \local_xray\local\api\admin_setting_configcheckbox_xray("{$plugin}/export_progress",

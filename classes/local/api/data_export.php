@@ -37,7 +37,7 @@ defined('MOODLE_INTERNAL') || die();
 class data_export {
 
     const PLUGIN = 'local_xray';
-    const RECCOUNT = 50000;
+    const RECCOUNT = 500000;
 
     /**
      * @var array
