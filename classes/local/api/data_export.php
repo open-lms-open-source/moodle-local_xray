@@ -835,6 +835,8 @@ class data_export {
     public static function export_csv($timest, $timeend, $dir) {
         self::$meta = array();
 
+        $plugins = core_plugin_manager::instance()->get_plugins_of_type('mod');
+
         $timeframe = (int)get_config(self::PLUGIN, 'exporttime_hours') * HOURSECS +
                      (int)get_config(self::PLUGIN, 'exporttime_minutes') * MINSECS;
         // In case timeframe is 0 - there would be no limit to the execution.
@@ -849,9 +851,12 @@ class data_export {
         self::forums($timest, $timeend, $dir);
         self::threads($timest, $timeend, $dir);
         self::posts($timest, $timeend, $dir);
-        self::hsuforums($timest, $timeend, $dir);
-        self::hsuthreads($timest, $timeend, $dir);
-        self::hsuposts($timest, $timeend, $dir);
+        // Since Advanced Forum is not core plugin we check for it's presence.
+        if (array_key_exists('hsuforum', $plugins)) {
+            self::hsuforums($timest, $timeend, $dir);
+            self::hsuthreads($timest, $timeend, $dir);
+            self::hsuposts($timest, $timeend, $dir);
+        }
         self::quiz($timest, $timeend, $dir);
         self::grades($timest, $timeend, $dir);
 
