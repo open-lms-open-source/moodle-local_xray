@@ -835,7 +835,7 @@ class data_export {
     public static function export_csv($timest, $timeend, $dir) {
         self::$meta = array();
 
-        $plugins = core_plugin_manager::instance()->get_plugins_of_type('mod');
+        $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
 
         $timeframe = (int)get_config(self::PLUGIN, 'exporttime_hours') * HOURSECS +
                      (int)get_config(self::PLUGIN, 'exporttime_minutes') * MINSECS;
