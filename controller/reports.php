@@ -258,13 +258,13 @@ class local_xray_controller_reports extends mr_controller {
                 foreach ($response->columnOrder as $column) {
                     $r->{$column} = '';
                     if (isset($row->{$column}->value)) {
-                        $r->{$column} = $row->{$column}->value;
+                        $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
                     }
                 }
             } else if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
                 $c = get_object_vars($response->columnHeaders);
                 foreach ($c as $id => $name) {
-                    $r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');
+                    $r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');// TODO see values here.
                 }
             }
             $data[] = $r;

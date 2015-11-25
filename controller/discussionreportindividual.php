@@ -141,8 +141,14 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
                         // Add the remaining data. The number of each week will be the column name.
                         foreach ($response->data as $col) {
+                            // Number of posts.
                             $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
-                            $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                            // Average No of Words.
+                            $avgwordcount[$col->week->value] = '';
+                            if (isset($col->avgWordCount->value)) {
+                                // Round Value.
+                                $avgwordcount[$col->week->value] = round($col->avgWordCount->value, 2);
+                            }
                         }
                         $data[] = $posts;
                         $data[] = $avgwordcount;
