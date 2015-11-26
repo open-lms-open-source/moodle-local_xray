@@ -582,8 +582,6 @@ class data_export {
      */
     public static function grades($timest, $timeend, $dir) {
         $wherecond = self::range_where('gg.timemodified', 'gg.timecreated', $timest, $timeend, __FUNCTION__, 'gg.id');
-        $timecreated = self::to_timestamp('gg.timecreated', true, 'timecreated');
-        $timemodified = self::to_timestamp('gg.timemodified', true, 'timemodified');
 
         $sql = "
           SELECT
@@ -593,8 +591,8 @@ class data_export {
                      gg.rawgrade,
                      gg.finalgrade,
                      gg.locktime,
-                     {$timecreated},
-                     {$timemodified},
+                     gg.timecreated,
+                     gg.timemodified,
                      CASE
                           WHEN gg.timemodified = 0 THEN gg.timecreated
                           ELSE gg.timemodified
