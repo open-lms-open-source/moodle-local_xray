@@ -301,7 +301,7 @@ class local_xray_controller_reports extends mr_controller {
                         $category = 'high';
                         $risk1 = get_config($plugin, 'risk1');
                         $risk2 = get_config($plugin, 'risk2');
-                        if ($risk1 && $risk2) {
+                        if (($risk1 !== false) && ($risk2 !== false)) {
                             if ($roundvalue < $risk1) {
                                 $category = 'low';
                             } else if ($roundvalue < $risk2) {
@@ -328,7 +328,7 @@ class local_xray_controller_reports extends mr_controller {
                         $roundvalue = round($value, 2);
                         $visitreg1 = get_config($plugin, 'visitreg1');
                         $visitreg2 = get_config($plugin, 'visitreg2');
-                        if ($visitreg1 && $visitreg2) {
+                        if (($visitreg1 !== false) && ($visitreg2 !== false)) {
                             $category = 'irregular';
                             if ($roundvalue < $visitreg1) {
                                 $category = 'highlyregularity';
@@ -356,7 +356,7 @@ class local_xray_controller_reports extends mr_controller {
                         $roundvalue = round($percentage, 2);
                         $partc1 = get_config($plugin, 'partc1');
                         $partc2 = get_config($plugin, 'partc2');
-                        if ($partc1 && $partc2) {
+                        if (($partc1 !== false) && ($partc2 !== false)) {
                             $category = 'high';
                             if ($roundvalue < $partc1) {
                                 $category = 'low';
@@ -375,7 +375,7 @@ class local_xray_controller_reports extends mr_controller {
                         $roundvalue = round($value, 2);
                         $partreg1 = get_config($plugin, 'partreg1');
                         $partreg2 = get_config($plugin, 'partreg2');
-                        if ($partreg1 and $partreg2) {
+                        if (($partreg1 !== false) and ($partreg2 !== false)) {
                             $category = 'irregular';
                             if ($roundvalue < $partreg1) {
                                 $category = 'highlyregularity';
@@ -405,7 +405,7 @@ class local_xray_controller_reports extends mr_controller {
                         $roundvalue = round($percentage, 2);
                         $partc1 = get_config($plugin, 'partc1');
                         $partc2 = get_config($plugin, 'partc2');
-                        if ($partc1 && $partc2) {
+                        if (($partc1 !== false) && ($partc2 !== false)) {
                             $category = 'high';
                             if ($roundvalue < $partc1) {
                                 $category = 'low';
@@ -422,7 +422,7 @@ class local_xray_controller_reports extends mr_controller {
                         $roundvalue = round($value, 2);
                         $partreg1 = get_config($plugin, 'partreg1');
                         $partreg2 = get_config($plugin, 'partreg2');
-                        if ($partreg1 and $partreg2) {
+                        if (($partreg1 !== false) and ($partreg2 !== false)) {
                             $category = 'irregular';
                             if ($roundvalue < $partreg1) {
                                 $category = 'highlyregularity';
