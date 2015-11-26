@@ -346,6 +346,7 @@ class local_xray_controller_reports extends mr_controller {
                 }
             case 'discussionMetrics';
                 // Table Participation Metrics from Discussion Report.
+                // Table Participation Metrics from Discussion Report Individual.
                 switch ($column) {
                     case 'contrib':
                         // Column Contribution.
