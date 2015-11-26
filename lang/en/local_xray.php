@@ -59,9 +59,9 @@ $string['high'] = 'High';
 $string['low'] = 'Low';
 $string['medium'] = 'Medium';
 
-$string['highlyregularity'] = 'Highly regularity';
+$string['highlyregularity'] = 'Highly regular';
 $string['irregular'] = 'Irregular';
-$string['somewhatregularity'] = 'Somewhat regularity';
+$string['somewhatregularity'] = 'Somewhat regular';
 
 /* Report Activity Report*/
 $string['activityreport'] = 'Activity';
