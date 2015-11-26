@@ -401,18 +401,19 @@ class local_xray_controller_reports extends mr_controller {
                     case 'ctc':
                         // Column CTC.
                         $percentage = $value * 100;
+                        $roundvalue = round($percentage, 2);
                         $partc1 = get_config($plugin, 'partc1');
                         $partc2 = get_config($plugin, 'partc2');
                         if ($partc1 && $partc2) {
                             $category = 'high';
-                            if ($percentage < $partc1) {
+                            if ($roundvalue < $partc1) {
                                 $category = 'low';
-                            } else if ($percentage < $partc2) {
+                            } else if ($roundvalue < $partc2) {
                                 $category = 'medium';
                             }
-                            return get_string($category, 'local_xray') . ' ' . $percentage . '%';
+                            return get_string($category, 'local_xray') . ' ' . $roundvalue . '%';
                         } else {
-                            return $percentage . '%';
+                            return $roundvalue . '%';
                         }
                         break;
                     case 'regularityContrib';
