@@ -113,6 +113,7 @@ class data_sync extends scheduled_task {
                             fopen($compfile, 'rb'),
                             'private',
                             array('debug' => true));
+                        break;
                     } catch (\Exception $e) {
                         sync_failed::create_from_exception($e)->trigger();
                         if ($count = ($retrycount - 1)) {
