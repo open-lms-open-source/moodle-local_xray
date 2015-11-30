@@ -191,6 +191,11 @@ $string['sLoadingRecords'] = 'Cargando...';
 $string['sSortAscending'] = ': activar para ordenar columna ascendentemente';
 $string['sSortDescending'] = ': activar para ordenar columna descendentemente';
 
+/* Close modal */
+$string['close'] = 'Cerrar';
+/* Close Report Tables */
+$string['closetable'] = 'Cerrar';
+
 /*Accessible data */
 $string['accessibledata'] = 'Datos accesibles';
 $string['accessible_view_data'] = 'Ver datos';
