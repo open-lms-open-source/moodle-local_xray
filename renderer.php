@@ -84,11 +84,14 @@ class local_xray_renderer extends plugin_renderer_base {
         // Validate if exist and is available image in xray side.
         $existimg = false;
         try {
-            $ch = new curl();
-            $ch->setopt(array("CURLOPT_NOBODY" => 1, "CURLOPT_RETURNTRANSFER" => 1));
-            $ch->head($imgurl);
-            if(!empty($ch->response)) {
-                $existimg =  true;
+            $ch = new curl(['debug' => false]);
+            $response = $ch->head($imgurl, ['CURLOPT_CONNECTTIMEOUT' => 1, 'CURLOPT_TIMEOUT' => 1]);
+            $errno = $ch->get_errno();
+            if (!empty($errno)) {
+                print_error('xrayws_error_curl', 'local_xray', '', $response);
+            }
+            if (!empty($response)) {
+                $existimg = true;
             }
         }
         catch (Exception $e) {
