@@ -155,7 +155,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
     }
 
     if (!empty($menu) or !empty($headerdata)) {
-        $menuappend = $reportview ? 0 : 1;
+        $menuappend = 0;
         // Easy way to force include on every page (provided that navigation block is present).
         $PAGE->requires->yui_module(['moodle-local_xray-custmenu'],
             'M.local_xray.custmenu.init',
