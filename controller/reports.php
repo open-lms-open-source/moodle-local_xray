@@ -297,7 +297,7 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Social risk.
                     case 'DWF';
                         // Column Total risk.
-                        $roundvalue = round($value, 2);
+                        $roundvalue = round(floatval($value), 2);
                         $category = 'high';
                         $risk1 = get_config($plugin, 'risk1');
                         $risk2 = get_config($plugin, 'risk2');
@@ -325,7 +325,7 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'weeklyRegularity':
                         // Column Visit regularity (weekly).
-                        $roundvalue = round($value, 2);
+                        $roundvalue = round(floatval($value), 2);
                         $visitreg1 = get_config($plugin, 'visitreg1');
                         $visitreg2 = get_config($plugin, 'visitreg2');
                         if (($visitreg1 !== false) && ($visitreg2 !== false)) {
@@ -353,7 +353,7 @@ class local_xray_controller_reports extends mr_controller {
                     case 'ctc':
                         // Column CTC.
                         $percentage = $value * 100;
-                        $roundvalue = round($percentage, 2);
+                        $roundvalue = round(floatval($percentage), 2);
                         $partc1 = get_config($plugin, 'partc1');
                         $partc2 = get_config($plugin, 'partc2');
                         if (($partc1 !== false) && ($partc2 !== false)) {
@@ -372,7 +372,7 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Regularity of contributions.
                     case 'regularityCTC':
                         // Column Regularity of CTC.
-                        $roundvalue = round($value, 2);
+                        $roundvalue = round(floatval($value), 2);
                         $partreg1 = get_config($plugin, 'partreg1');
                         $partreg2 = get_config($plugin, 'partreg2');
                         if (($partreg1 !== false) and ($partreg2 !== false)) {
@@ -396,13 +396,13 @@ class local_xray_controller_reports extends mr_controller {
                 switch ($column) {
                     case 'wc':
                         // Column Word count (rel.).
-                        $roundvalue = round($value, 2);
+                        $roundvalue = round(floatval($value), 2);
                         return $roundvalue;
                         break;
                     case 'ctc':
                         // Column CTC.
                         $percentage = $value * 100;
-                        $roundvalue = round($percentage, 2);
+                        $roundvalue = round(floatval($percentage), 2);
                         $partc1 = get_config($plugin, 'partc1');
                         $partc2 = get_config($plugin, 'partc2');
                         if (($partc1 !== false) && ($partc2 !== false)) {
@@ -419,7 +419,7 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'regularityContrib';
                         // Column Regularity of contributions.
-                        $roundvalue = round($value, 2);
+                        $roundvalue = round(floatval($value), 2);
                         $partreg1 = get_config($plugin, 'partreg1');
                         $partreg2 = get_config($plugin, 'partreg2');
                         if (($partreg1 !== false) and ($partreg2 !== false)) {
@@ -443,7 +443,7 @@ class local_xray_controller_reports extends mr_controller {
                 switch ($column) {
                     case 'standarScore':
                         // Column Standardized score.
-                        return round($value, 2);
+                        return round(floatval($value), 2);
                         break;
                     default:
                         return $value;
@@ -457,7 +457,7 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Average standardized score.
                     case 'finalGradeCorrelation':
                         // Column Correlation between final score and score from this quiz.
-                        return round($value, 2);
+                        return round(floatval($value), 2);
                         break;
                     default:
                         return $value;

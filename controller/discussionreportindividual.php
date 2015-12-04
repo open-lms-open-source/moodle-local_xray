@@ -147,7 +147,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                             $avgwordcount[$col->week->value] = '';
                             if (isset($col->avgWordCount->value)) {
                                 // Round Value.
-                                $avgwordcount[$col->week->value] = round($col->avgWordCount->value, 2);
+                                $avgwordcount[$col->week->value] = round(floatval($col->avgWordCount->value), 2);
                             }
                         }
                         $data[] = $posts;
