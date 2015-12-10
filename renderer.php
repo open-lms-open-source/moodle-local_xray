@@ -85,12 +85,11 @@ class local_xray_renderer extends plugin_renderer_base {
         $existimg = false;
         try {
             $ch = new curl(['debug' => false]);
-            $response = $ch->head($imgurl, ['CURLOPT_CONNECTTIMEOUT' => 1, 'CURLOPT_TIMEOUT' => 1]);
-            $errno = $ch->get_errno();
-            if (!empty($errno)) {
-                print_error('xrayws_error_curl', 'local_xray', '', $response);
+            $ch->head($imgurl, ['CURLOPT_CONNECTTIMEOUT' => 2, 'CURLOPT_TIMEOUT' => 2]);
+            if (!empty($ch->get_errno())) {
+                print_error('xrayws_error_curl', 'local_xray', '', $ch->response);
             }
-            if (!empty($response)) {
+            if (!empty($ch->info['content_type']) && preg_match('#^image/.*#', $ch->info['content_type'])) {
                 $existimg = true;
             }
         }
