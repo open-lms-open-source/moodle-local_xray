@@ -1,22 +1,14 @@
 /****************  Styles for Xray reports ****************/
 
-/* Region main for all reports */
-#page-local-xray-view {
-}
-
-#page-local-xray-view #page-content #region-main {
+#page-local-xray-view #region-main {
     max-width: 92%; /* snap theme limit to 60.5 em */
     box-sizing: content-box;
+    background-color: white;
 }
 
-/* General info report */
-#page-local-xray-view .inforeport {
-    display: block;
-    margin-bottom: 1em;
-}
-
-#page-local-xray-view .inforeport p {
-    margin-bottom: 0;
+/* Report page title */
+#page-local-xray-view  h2.main {
+  margin: 0;
 }
 
 /* Name elements (tables and graphs) */
@@ -29,35 +21,33 @@
 }
 
 /* Toogle tables */
-#page-local-xray-view .eventtoogletable {
-    cursor: pointer;
-    padding-left: 1em;
-    background: transparent url([[pix:t/collapsed]]) 0 center no-repeat;
+.xray-table-title-link.reportsname{
+    background: transparent url([[pix:local_xray|down-arrow]]) 0 0 no-repeat;
+    padding-left: 2em;
 }
 
-#page-local-xray-view .expanded {
-    background: transparent url([[pix:t/expanded]]) 0 center no-repeat;
+.xray-toggleable-table {
+    display: none;
 }
 
+.xray-toggleable-table:target {
+    display: block;
+    outline: none;
+    padding: 1em 0;
+}
+
+.xray-toggleable-table caption {
+    font-size: 2em;
+    padding: 1em 0;
+}
 /* End Toogle tables */
-
-/* General xray element (graphs and tables elements) */
-#page-local-xray-view .xray_element {
-}
-
-/* General xray element (specific for graphs) */
-#page-local-xray-view .xray_element_graph {
-    display: inline-block;
-    box-sizing: content-box;
-    overflow: hidden;
-    width: 29%;
-    margin: 1em 2%;
-}
 
 /* General xray image graph */
 #page-local-xray-view .xray_element_img {
     height: 300px;
     -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
 }
 
@@ -72,35 +62,18 @@
 }
 
 /* Xray datatables style */
-#page-local-xray-view table.xraydatatable {
-	width:100%;
-	border-spacing: 0;
-}
-
-/* General xray legend of graph */
-#page-local-xray-view .xray_graph_legend {
-    font-size: 11px;
-    height: 55px;
-    margin-top: 5px;
-    padding: 5px;
+#page-local-xray-view .xraydatatable {
+    width:100%;
+    border-spacing: 0;
 }
 
 /** Wrapper Datatables**/
-
-/* Table content */
-#page-local-xray-view .dataTables_wrapper table {
-}
-
-/* Table content */
-#page-local-xray-view .dataTables_wrapper table tr td {
-}
-
 #page-local-xray-view .error_datatables {
     background-color: #CE2F2F;
     color: #fff;
     text-align: center;
     display: block;
-    margin: 3px 0px;
+    margin: 3px 0;
     padding: 5px;
 }
 
@@ -111,12 +84,7 @@
     margin: auto;
     padding: 100px 10px;
 }
-
 /** End Wrapper Datatables**/
-
-#page-local-xray-view .fancybox-title-float-wrap .child {
-    background-color: #3bcedb;
-}
 
 /**************** Styles for specific reports****************/
 /** Link in table to activity report individual **/
@@ -137,7 +105,7 @@
     background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
 }
 
-/** Horizontal Scrool to tables (Table) **/
+/** Horizontal Scroll for tables (Table) **/
 
 .xray_table_scrool {
     overflow: auto;
@@ -292,5 +260,87 @@
 #headerdata h5,
 #headerdata h6,
 #xraymenu h4 {
-  text-align:left;
+    text-align: left;
 }
+
+/**************** Plots ****************/
+.xray-col-4 {
+    box-sizing: content-box;
+    display: inline-block;
+    margin: 1em 2%;
+    width: 29%;
+}
+
+.xray-graph-box-link{
+    display: block;
+    height: 300px;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    position: relative;
+}
+
+.xray-graph-box-link:hover {
+    transform: scale(1.1);
+}
+
+.xray-graph-small-image{
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+/* TODO - uses vh, impliment ios polyfill */
+.xray-graph-background{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    background-color: white;
+    overflow-y: scroll;
+    z-index: 8010;
+    display: none;
+}
+
+.xray-graph-background:target {
+    display: block;
+}
+
+.xray-graph-view {
+    height: 80vh;
+    padding: 1em 4%;
+}
+
+/* TODO - make responsive when we can */
+.xray-graph-view img{
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0.5em 0;
+    margin: 0 auto;
+    float: right;
+    width: 70%;
+}
+
+.xray-graph-description {
+    float: left;
+    width: 25%;
+    padding: 2em 0;
+}
+
+.xray-close-link{
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    width: 2em;
+    height: 2em;
+    display: block;
+    background:url([[pix:local_xray|close_x]]) no-repeat center center;
+}
+/**************** End Styles for Plots ****************/

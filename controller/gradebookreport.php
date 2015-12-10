@@ -60,7 +60,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                         "rest.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=".$this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
                     // Graph.
-                    $output .= $this->output->show_on_lightbox("densityofstandardizedscores",
+                    $output .= $this->output->show_graph("densityofstandardizedscores",
                         $response->elements->studentScoreDistribution);
 
                     // Its a table, I will get info with new call.
@@ -69,11 +69,11 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                     $output .= $this->output->standard_table((array)$datatable);
 
                     // Graphs.
-                    $output .= $this->output->show_on_lightbox("boxplotofstandardizedscoresperquiz",
+                    $output .= $this->output->show_graph("boxplotofstandardizedscoresperquiz",
                         $response->elements->scoreDistributionByItem);
-                    $output .= $this->output->show_on_lightbox("scoresassignedbyxrayversusresultsfromquizzes",
+                    $output .= $this->output->show_graph("scoresassignedbyxrayversusresultsfromquizzes",
                         $response->elements->scatterPlot);
-                    $output .= $this->output->show_on_lightbox("comparisonofscoresinquizzes",
+                    $output .= $this->output->show_graph("comparisonofscoresinquizzes",
                         $response->elements->itemsHeatmap);
                 }
             }

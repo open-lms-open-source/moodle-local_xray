@@ -72,8 +72,8 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $output .= $this->output->standard_table((array)$datatable);
 
                 // Graphs.
-                $output .= $this->output->show_on_lightbox("riskDensity", $response->elements->riskDensity);
-                $output .= $this->output->show_on_lightbox("riskScatterPlot", $response->elements->riskScatterPlot);
+                $output .= $this->output->show_graph("riskDensity", $response->elements->riskDensity);
+                $output .= $this->output->show_graph("riskScatterPlot", $response->elements->riskScatterPlot);
             }
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();

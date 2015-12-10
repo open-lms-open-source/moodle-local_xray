@@ -77,19 +77,19 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     $output .= $this->output->standard_table((array)$datatable);
 
                     // Show graphs Activity report.
-                    $output .= $this->output->show_on_lightbox("activityLevelTimeline",
+                    $output .= $this->output->show_graph("activityLevelTimeline",
                         $response->elements->activityLevelTimeline);
-                    $output .= $this->output->show_on_lightbox("compassTimeDiagram",
+                    $output .= $this->output->show_graph("compassTimeDiagram",
                         $response->elements->compassTimeDiagram);
-                    $output .= $this->output->show_on_lightbox("barplotOfActivityByWeekday",
+                    $output .= $this->output->show_graph("barplotOfActivityByWeekday",
                         $response->elements->barplotOfActivityByWeekday);
-                    $output .= $this->output->show_on_lightbox("barplotOfActivityWholeWeek",
+                    $output .= $this->output->show_graph("barplotOfActivityWholeWeek",
                         $response->elements->barplotOfActivityWholeWeek);
-                    $output .= $this->output->show_on_lightbox("activityByWeekAsFractionOfTotal",
+                    $output .= $this->output->show_graph("activityByWeekAsFractionOfTotal",
                         $response->elements->activityByWeekAsFractionOfTotal);
-                    $output .= $this->output->show_on_lightbox("activityByWeekAsFractionOfOwn",
+                    $output .= $this->output->show_graph("activityByWeekAsFractionOfOwn",
                         $response->elements->activityByWeekAsFractionOfOwn);
-                    $output .= $this->output->show_on_lightbox("firstloginPiechartAdjusted",
+                    $output .= $this->output->show_graph("firstloginPiechartAdjusted",
                         $responsefirstlogin->elements->firstloginPiechartAdjusted);
                 }
             }

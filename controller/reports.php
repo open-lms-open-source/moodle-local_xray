@@ -73,7 +73,7 @@ class local_xray_controller_reports extends mr_controller {
     }
 
     public function setup() {
-        global $CFG, $PAGE;
+        global $CFG, $PAGE, $COURSE;
 
         $courseid = optional_param('courseid', SITEID, PARAM_INT);
         require_login($courseid, false);
@@ -89,6 +89,7 @@ class local_xray_controller_reports extends mr_controller {
             $PAGE->set_title($title);
             $this->heading->text = $title;
             $PAGE->set_pagelayout('report');
+            $PAGE->set_heading($COURSE->fullname);
         }
     }
 

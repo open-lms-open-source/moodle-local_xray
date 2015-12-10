@@ -77,7 +77,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
                         "rest.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $this->courseid,
                         array(),
-                        true); // Add column action.
+                        true,
+                        true,
+                        'ftlipr'); // Add column action.
                     $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
                     $output .= $this->output->standard_table((array)$datatable);
 
@@ -85,14 +87,14 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid,
                         $response->elements->discussionActivityByWeek);
 
-                    $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
-                    $output .= $this->output->show_on_lightbox("avgWordPerPost", $response->elements->avgWordPerPost);
-                    $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordCount",
+                    $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud);
+                    $output .= $this->output->show_graph("avgWordPerPost", $response->elements->avgWordPerPost);
+                    $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure);
+                    $output .= $this->output->show_graph("socialStructureWordCount",
                         $response->elements->socialStructureWordCount);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordContribution",
+                    $output .= $this->output->show_graph("socialStructureWordContribution",
                         $response->elements->socialStructureWordContribution);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordCTC",
+                    $output .= $this->output->show_graph("socialStructureWordCTC",
                         $response->elements->socialStructureWordCTC);
                 }
             }
@@ -107,14 +109,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
                     // Show graphs.
-                    $output .= html_writer::tag("div",
-                        html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
-                            array("class" => "main")),
-                        array("class" => "mr_html_heading"));
+                    $output .= html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
+                        array("class" => "main"));
                     $output .= $this->output->inforeport($response->reportdate);
-                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismStudentsHeatmap",
+                    $output .= $this->output->show_graph("endogenicPlagiarismStudentsHeatmap",
                         $response->elements->endogenicPlagiarismStudentsHeatmap);
-                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismHeatmap",
+                    $output .= $this->output->show_graph("endogenicPlagiarismHeatmap",
                         $response->elements->endogenicPlagiarismHeatmap);
                 }
             }
@@ -128,19 +128,17 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-
                     // Show graphs.
-                    $subtitle = html_writer::tag("h2",
+                    $output .= html_writer::tag("h2",
                         get_string("discussiongrading", $this->component),
                         array("class" => "main"));
-                    $output .= html_writer::div($subtitle, "mr_html_heading");
                     $output .= $this->output->inforeport($response->reportdate);
 
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->studentDiscussionGrades,
                         "rest.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
-                    $output .= $this->output->show_on_lightbox("discussionSuggestedGrades",
+                    $output .= $this->output->show_graph("discussionSuggestedGrades",
                         $response->elements->discussionSuggestedGrades);;
                 }
             }
