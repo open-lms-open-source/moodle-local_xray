@@ -182,7 +182,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             // Format of response for columns.
             if (!empty($response->columnOrder)) {
                 foreach ($response->columnOrder as $column) {
-                    $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                    $r->{$column} = '';
+                    if (isset($row->{$column}->value)) {
+                        $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
+                    }
                 }
                 $data[] = $r;
             }
@@ -236,9 +239,20 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
                         // Add the remaining data. The number of each week will be the column name.
                         foreach ($response->data as $col) {
+                            // Number of posts.
                             $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
-                            $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
-                            $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                            // Average time to respond (hours).
+                            $avglag[$col->week->value] = '';
+                            if (isset($col->avgLag->value)) {
+                                // Set time to HH:MM.
+                                $avglag[$col->week->value] = $this->show_time_hours_minutes($col->avgLag->value);
+                            }
+                            // Average word count.
+                            $avgwordcount[$col->week->value] = '';
+                            if (isset($col->avgWordCount->value)) {
+                                // Round Value.
+                                $avgwordcount[$col->week->value] = round(floatval($col->avgWordCount->value), 2);
+                            }
                         }
                         $data[] = $posts;
                         $data[] = $avglag;

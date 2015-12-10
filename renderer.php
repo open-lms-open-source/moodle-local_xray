@@ -199,48 +199,6 @@ class local_xray_renderer extends plugin_renderer_base {
         return $output;
     }
 
-    /**
-     * Show minutes in format hours:minutes
-     * @param int $minutes
-     * @return string
-     */
-    public function minutes_to_hours($minutes) {
-        return date('H:i', mktime(0, $minutes));
-    }
-
-    /**
-     * Set Category
-     *
-     * @param  float $value
-     * @return string
-     */
-    public function set_category($value) {
-        $size = 'high';
-        if ($value < 0.2) {
-            $size = 'low';
-        } else if (($value > 0.2) && ($value < 0.3)) {
-            $size = 'medium';
-        }
-
-        return get_string($size, 'local_xray') . ' ' . $value;
-    }
-
-    /**
-     * Set Category Regularly
-     *
-     * @param int $value
-     * @return string
-     */
-    public function set_category_regularly($value) {
-        $string = 'irregular';
-        if ($value < 1) {
-            $string = 'highlyregularity';
-        } else if ($value < 2) {
-            $string = 'somewhatregularity';
-        }
-
-        return get_string($string, 'local_xray') . ' ' . $value;
-    }
     /************************** End General elements for Reports **************************/
 
     /************************** Elements for Report Discussion **************************/

@@ -88,41 +88,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
      * @return string
      */
     public function jsonriskmeasures_action() {
-        return $this->genericresponsejsonfordatatables("risk", "riskMeasures", "responseriskmeasures");
-    }
-
-    public function responseriskmeasures($response) {
-        global $PAGE;
-        $data = array();
-        foreach ($response->data as $row) {
-
-            // Format of response for columns.
-            if (!empty($response->columnOrder)) {
-                $r = new stdClass();
-                foreach ($response->columnOrder as $column) {
-                    $r->{$column} = '';
-                    if (isset($row->{$column}->value)) {
-                        /* @var local_xray_renderer $localxrayrenderer */
-                        $localxrayrenderer = $PAGE->get_renderer('local_xray');
-                        switch ($column) {
-                            case 'timeOnTask':
-                                $r->{$column} = $localxrayrenderer->minutes_to_hours($row->{$column}->value);
-                                break;
-                            case 'fail':
-                            case 'DW';
-                            case 'DWF';
-                                $r->{$column} = $localxrayrenderer->set_category($row->{$column}->value);
-                                break;
-                            default:
-                                $r->{$column} = $row->{$column}->value;
-                        }
-                    }
-                }
-                $data[] = $r;
-            }
-        }
-
-        return $data;
+        return $this->genericresponsejsonfordatatables("risk", "riskMeasures");
     }
 
     /**
