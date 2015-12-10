@@ -78,19 +78,19 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
                     // Show graphs Activity report.
                     $output .= $this->output->show_graph("activityLevelTimeline",
-                        $response->elements->activityLevelTimeline);
+                        $response->elements->activityLevelTimeline, $response->id);
                     $output .= $this->output->show_graph("compassTimeDiagram",
-                        $response->elements->compassTimeDiagram);
+                        $response->elements->compassTimeDiagram, $response->id);
                     $output .= $this->output->show_graph("barplotOfActivityByWeekday",
-                        $response->elements->barplotOfActivityByWeekday);
+                        $response->elements->barplotOfActivityByWeekday, $response->id);
                     $output .= $this->output->show_graph("barplotOfActivityWholeWeek",
-                        $response->elements->barplotOfActivityWholeWeek);
+                        $response->elements->barplotOfActivityWholeWeek, $response->id);
                     $output .= $this->output->show_graph("activityByWeekAsFractionOfTotal",
-                        $response->elements->activityByWeekAsFractionOfTotal);
+                        $response->elements->activityByWeekAsFractionOfTotal, $response->id);
                     $output .= $this->output->show_graph("activityByWeekAsFractionOfOwn",
-                        $response->elements->activityByWeekAsFractionOfOwn);
+                        $response->elements->activityByWeekAsFractionOfOwn, $response->id);
                     $output .= $this->output->show_graph("firstloginPiechartAdjusted",
-                        $responsefirstlogin->elements->firstloginPiechartAdjusted);
+                        $responsefirstlogin->elements->firstloginPiechartAdjusted, $responsefirstlogin->id);
                 }
             }
 

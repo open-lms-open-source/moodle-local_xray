@@ -51,7 +51,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
             } else {
                 $output  = $this->print_top();
                 $output .= $this->output->inforeport($responsefirstlogin->reportdate);
-                
+
                 // Show graphs. We need show table first in activity report.
                 $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
                         "rest.php?controller='risk'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
@@ -72,8 +72,8 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $output .= $this->output->standard_table((array)$datatable);
 
                 // Graphs.
-                $output .= $this->output->show_graph("riskDensity", $response->elements->riskDensity);
-                $output .= $this->output->show_graph("riskScatterPlot", $response->elements->riskScatterPlot);
+                $output .= $this->output->show_graph("riskDensity", $response->elements->riskDensity, $response->id);
+                $output .= $this->output->show_graph("riskScatterPlot", $response->elements->riskScatterPlot, $response->id);
             }
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
@@ -82,7 +82,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
         return $output;
     }
-    
+
     /**
      * Json response for table risk measures.
      * @return string
