@@ -21,18 +21,4 @@
         <license>MIT</license>
         <licenseversion></licenseversion>
     </library>
-    <library>
-        <location>jquery/fancybox2</location>
-        <name>DataTables</name>
-        <version>1.10.7</version>
-        <license>CC BY-NC</license>
-        <licenseversion>3.0</licenseversion>
-    </library>
-    <library>
-        <location>jquery/jqthumb</location>
-        <name>jQThumb</name>
-        <version>2.1.7</version>
-        <license>MIT</license>
-        <licenseversion></licenseversion>
-    </library>
 </libraries>

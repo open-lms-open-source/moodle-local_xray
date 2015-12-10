@@ -202,3 +202,63 @@ $string['sInfoEmpty'] = 'Mostrando 0 a 0 de 0 entradas';
 $string['sLoadingRecords'] = 'Cargando...';
 $string['sSortAscending'] = ': activar para ordenar columna ascendentemente';
 $string['sSortDescending'] = ': activar para ordenar columna descendentemente';
+
+/* Close modal */
+$string['close'] = 'Cerrar';
+/* Close Report Tables */
+$string['closetable'] = 'Cerrar';
+
+/*Accessible data */
+$string['accessibledata'] = 'Datos accesibles';
+$string['accessible_view_data'] = 'Ver datos';
+$string['accessible_emptydata'] = 'No hay datos disponibles para version accesible.';
+$string['accessible_error'] = 'Versión accesible para este gráfico no fue encontrada en X-Ray Learning Analytics.';
+
+/* Cut-off points settings */
+/* Header Title */
+$string['cutoff_title'] = 'Valores de los puntos de corte entre cada rango';
+$string['cutoff_desc'] = 'En esta sección tu puedes definir los valores de los puntos de corte entre cada rango. '.
+                         'Estos rangos serán utilizados para mostrar resultados más intuitivos en las tablas de los reportes.';
+/* Risk Report */
+/* low - medium - high */
+$string['risk1_name'] = 'Punto de corte entre los rangos Bajo y Medio para el Reporte de riesgo';
+$string['risk1_desc'] = 'Defina el punto de corte entre los rangos Bajo y Medio. Por ejemplo, '.
+                        'si el punto de corte es 0.2, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.
+                        'Esta configuración afecta las columnas Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
+$string['risk2_name'] = 'Punto de corte entre los rangos Medio y Alto para el Reporte de riesgo';
+$string['risk2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto. Por ejemplo, '.
+                        'si el punto de corte es 0.3, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
+                        'Esta configuración afecta las columnas  Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
+/* Activity Report */
+/* highly regular - somewhat regular - irregular */
+$string['visitreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regularidad media para el Reporte de actividad';
+$string['visitreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regularidad media. Por ejemplo, '.
+                            'si el punto de corte es 1, cualquier valor igual o mayor será de Regularidad media y cualquier valor menor será de Alta regularidad. '.
+                            'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
+$string['visitreg2_name'] = 'Punto de corte entre los rangos Regularidad media e Irregular para el Reporte de actividad';
+$string['visitreg2_desc'] = 'Defina el punto de corte entre los rangos Regularidad media e Irregular. Por ejemplo, '.
+                            'si el punto de corte es 2, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regularidad media. '.
+                            'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
+/* Discussion Report */
+/* highly regular - somewhat regular - irregular */
+$string['partreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regularidad media para el Reporte de discusiones';
+$string['partreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regularidad media. Por ejemplo, '.
+                           'si el punto de corte es 2, cualquier valor igual o mayor será de Regularidad media y cualquier valor menor será de Alta regularidad. '.
+                           'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
+                           'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
+$string['partreg2_name'] = 'Punto de corte entre los rangos Regularidad media e Irregular para el Reporte de discusiones';
+$string['partreg2_desc'] = 'Defina el punto de corte entre los rangos Regularidad media e Irregular. Por ejemplo, '.
+                           'si el punto de corte es 4, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regularidad media. '.
+                           'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
+                           'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
+/* low - medium - high */
+$string['partc1_name'] = 'Punto de corte entre los rangos Bajo y Medio para el Reporte de discusiones';
+$string['partc1_desc'] = 'Defina el punto de corte entre los rangos Bajo y Medio. Por ejemplo, '.
+                         'si el punto de corte es 33, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.
+                         'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
+                         'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
+$string['partc2_name'] = 'Punto de corte entre los rangos Medio y Alto para el Reporte de discusiones';
+$string['partc2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto. Por ejemplo, '.
+                         'si el punto de corte es 66, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
+                         'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
+                         'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';

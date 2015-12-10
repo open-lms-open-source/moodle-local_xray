@@ -51,7 +51,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
             } else {
                 $output  = $this->print_top();
                 $output .= $this->output->inforeport($responsefirstlogin->reportdate);
-                
+
                 // Show graphs. We need show table first in activity report.
                 $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
                         "rest.php?controller='risk'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
@@ -72,8 +72,8 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $output .= $this->output->standard_table((array)$datatable);
 
                 // Graphs.
-                $output .= $this->output->show_on_lightbox("riskDensity", $response->elements->riskDensity);
-                $output .= $this->output->show_on_lightbox("riskScatterPlot", $response->elements->riskScatterPlot);
+                $output .= $this->output->show_graph("riskDensity", $response->elements->riskDensity, $response->id);
+                $output .= $this->output->show_graph("riskScatterPlot", $response->elements->riskScatterPlot, $response->id);
             }
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
@@ -82,47 +82,13 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
         return $output;
     }
-    
+
     /**
      * Json response for table risk measures.
      * @return string
      */
     public function jsonriskmeasures_action() {
-        return $this->genericresponsejsonfordatatables("risk", "riskMeasures", "responseriskmeasures");
-    }
-
-    public function responseriskmeasures($response) {
-        global $PAGE;
-        $data = array();
-        foreach ($response->data as $row) {
-
-            // Format of response for columns.
-            if (!empty($response->columnOrder)) {
-                $r = new stdClass();
-                foreach ($response->columnOrder as $column) {
-                    $r->{$column} = '';
-                    if (isset($row->{$column}->value)) {
-                        /* @var local_xray_renderer $localxrayrenderer */
-                        $localxrayrenderer = $PAGE->get_renderer('local_xray');
-                        switch ($column) {
-                            case 'timeOnTask':
-                                $r->{$column} = $localxrayrenderer->minutes_to_hours($row->{$column}->value);
-                                break;
-                            case 'fail':
-                            case 'DW';
-                            case 'DWF';
-                                $r->{$column} = $localxrayrenderer->set_category($row->{$column}->value);
-                                break;
-                            default:
-                                $r->{$column} = $row->{$column}->value;
-                        }
-                    }
-                }
-                $data[] = $r;
-            }
-        }
-
-        return $data;
+        return $this->genericresponsejsonfordatatables("risk", "riskMeasures");
     }
 
     /**
