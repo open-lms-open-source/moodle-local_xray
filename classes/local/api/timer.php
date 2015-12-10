@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * File manager class.
+ * Timer.
  *
- * @package   local_xray
- * @author    Darko Miletic
+ * @package local_xray
+ * @author Darko Miletic
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,70 +28,62 @@ namespace local_xray\local\api;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class autoclean
+ * Class timer
  * @package local_xray
- * @author    Darko Miletic
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class autoclean {
+abstract class timer {
     /**
-     * @var null|string
+     * @var float
      */
-    private $directory = null;
+    private static $timestart = 0.0;
 
     /**
-     * @var null|string
+     * @var int
      */
-    private $dirbase = null;
+    private static $timeframe = 0;
 
     /**
-     * @var null|string
+     * @param int $timeframe
+     * @return void
      */
-    private $dirname = null;
+    public static function start($timeframe = 0) {
+        self::$timeframe = $timeframe;
+        self::$timestart = microtime(true);
+    }
 
     /**
-     * @throws \coding_exception
-     * @throws \invalid_dataroot_permissions
+     * @return float
      */
-    public function __construct() {
-        $dirbase  = dataexport::getdir();
-        $dirname  = uniqid('export_', true);
-        $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
-        if (!file_exists($transdir)) {
-            make_writable_directory($transdir);
+    public static function current() {
+        return (microtime(true) - self::$timestart);
+    }
+
+    /**
+     * @return float
+     */
+    public static function end() {
+        $result = 0.0;
+        if (!empty(self::$timestart)) {
+            $result = self::current();
+            self::$timestart = 0.0;
+            self::$timeframe = 0;
         }
-        $this->directory = $transdir;
-        $this->dirbase = $dirbase;
-        $this->dirname = $dirname;
-    }
-
-    public function __destruct() {
-        dataexport::deletedir($this->directory);
-        $this->directory = null;
-    }
-
-    private function __clone() {
+        return $result;
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getdirectory() {
-        return $this->directory;
+    public static function within_time() {
+        return (empty(self::$timeframe) || (self::current() < self::$timeframe));
     }
 
     /**
-     * @return string
+     * @return float
      */
-    public function getdirbase() {
-        return $this->dirbase;
-    }
-
-    /**
-     * @return string
-     */
-    public function getdirname() {
-        return $this->dirname;
+    public static function get_start() {
+        return self::$timestart;
     }
 }

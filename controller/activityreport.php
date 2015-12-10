@@ -77,20 +77,20 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     $output .= $this->output->standard_table((array)$datatable);
 
                     // Show graphs Activity report.
-                    $output .= $this->output->show_on_lightbox("activityLevelTimeline",
-                        $response->elements->activityLevelTimeline);
-                    $output .= $this->output->show_on_lightbox("compassTimeDiagram",
-                        $response->elements->compassTimeDiagram);
-                    $output .= $this->output->show_on_lightbox("barplotOfActivityByWeekday",
-                        $response->elements->barplotOfActivityByWeekday);
-                    $output .= $this->output->show_on_lightbox("barplotOfActivityWholeWeek",
-                        $response->elements->barplotOfActivityWholeWeek);
-                    $output .= $this->output->show_on_lightbox("activityByWeekAsFractionOfTotal",
-                        $response->elements->activityByWeekAsFractionOfTotal);
-                    $output .= $this->output->show_on_lightbox("activityByWeekAsFractionOfOwn",
-                        $response->elements->activityByWeekAsFractionOfOwn);
-                    $output .= $this->output->show_on_lightbox("firstloginPiechartAdjusted",
-                        $responsefirstlogin->elements->firstloginPiechartAdjusted);
+                    $output .= $this->output->show_graph("activityLevelTimeline",
+                        $response->elements->activityLevelTimeline, $response->id);
+                    $output .= $this->output->show_graph("compassTimeDiagram",
+                        $response->elements->compassTimeDiagram, $response->id);
+                    $output .= $this->output->show_graph("barplotOfActivityByWeekday",
+                        $response->elements->barplotOfActivityByWeekday, $response->id);
+                    $output .= $this->output->show_graph("barplotOfActivityWholeWeek",
+                        $response->elements->barplotOfActivityWholeWeek, $response->id);
+                    $output .= $this->output->show_graph("activityByWeekAsFractionOfTotal",
+                        $response->elements->activityByWeekAsFractionOfTotal, $response->id);
+                    $output .= $this->output->show_graph("activityByWeekAsFractionOfOwn",
+                        $response->elements->activityByWeekAsFractionOfOwn, $response->id);
+                    $output .= $this->output->show_graph("firstloginPiechartAdjusted",
+                        $responsefirstlogin->elements->firstloginPiechartAdjusted, $responsefirstlogin->id);
                 }
             }
 
@@ -145,18 +145,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                 foreach ($response->columnOrder as $column) {
                     $r->{$column} = '';
                     if (isset($row->{$column}->value)) {
-                        /* @var local_xray_renderer $localxrayrenderer */
-                        $localxrayrenderer = $PAGE->get_renderer('local_xray');
-                        switch ($column) {
-                            case 'timeOnTask':
-                                $r->{$column} = $localxrayrenderer->minutes_to_hours($row->{$column}->value);
-                                break;
-                            case 'weeklyRegularity':
-                                $r->{$column} = $localxrayrenderer->set_category_regularly($row->{$column}->value);
-                                break;
-                            default:
-                                $r->{$column} = $row->{$column}->value;
-                        }
+                        $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
                     }
                 }
             }

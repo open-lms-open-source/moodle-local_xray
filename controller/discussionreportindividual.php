@@ -77,9 +77,9 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                     $response->elements->discussionActivityByWeek);
 
                 // Graphs.
-                $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
-                $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
-                $output .= $this->output->show_on_lightbox("wordHistogram", $response->elements->wordHistogram);
+                $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure, $response->id);
+                $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud, $response->id);
+                $output .= $this->output->show_graph("wordHistogram", $response->elements->wordHistogram, $response->id);
             }
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
@@ -141,8 +141,14 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
 
                         // Add the remaining data. The number of each week will be the column name.
                         foreach ($response->data as $col) {
+                            // Number of posts.
                             $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
-                            $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                            // Average No of Words.
+                            $avgwordcount[$col->week->value] = '';
+                            if (isset($col->avgWordCount->value)) {
+                                // Round Value.
+                                $avgwordcount[$col->week->value] = round(floatval($col->avgWordCount->value), 2);
+                            }
                         }
                         $data[] = $posts;
                         $data[] = $avgwordcount;

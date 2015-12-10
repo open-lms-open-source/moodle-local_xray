@@ -69,15 +69,5 @@ function local_xray_show_on_table(YUI, data) {
                 }
             }
         });
-
-
-        // Hide table to load.
-        $("#table_" + data.id + "_wrapper").hide();
-
-        // Toogle table on click in report name.
-        $("#" + data.id + " .reportsname").click(function () {
-            $("#table_" + data.id + "_wrapper").toggle('1000');
-            $("#" + data.id + " .reportsname").toggleClass("expanded");
-        });
     });
 }

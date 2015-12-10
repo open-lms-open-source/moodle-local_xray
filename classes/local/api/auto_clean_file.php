@@ -15,35 +15,50 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Upgrade file
+ * File manager class.
  *
  * @package   local_xray
+ * @author    Darko Miletic
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') or die();
+namespace local_xray\local\api;
+
+defined('MOODLE_INTERNAL') || die();
 
 /**
- * @param int $oldversion
- * @return bool
- * @throws downgrade_exception
- * @throws upgrade_exception
+ * Class auto_clean_file
+ * @package local_xray
+ * @author    Darko Miletic
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-function xmldb_local_xray_upgrade($oldversion = 0) {
-    global $DB;
+class auto_clean_file {
+    /**
+     * @var string
+     */
+    private $filename = '';
 
-    $dbman = $DB->get_manager();
-
-    if ($oldversion < 2015070324) {
-        // Delete old table if present.
-        $oldtable = new xmldb_table('local_xray_uctmp');
-        if ($dbman->table_exists($oldtable)) {
-            $dbman->drop_table($oldtable);
+    /**
+     * @param string $file
+     */
+    public function __construct($file) {
+        if (file_exists($file)) {
+            $this->filename = $file;
         }
-
-        upgrade_plugin_savepoint(true, 2015070324, 'local', 'xray');
     }
 
-    return true;
+    /**
+     * @return void
+     */
+    public function __destruct() {
+        if (empty($this->filename)) {
+            unlink($this->filename);
+            $this->filename = '';
+        }
+    }
+
+    private function __clone() {
+    }
 }

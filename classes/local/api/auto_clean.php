@@ -28,34 +28,77 @@ namespace local_xray\local\api;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class autocleanfile
+ * Class auto_clean
  * @package local_xray
  * @author    Darko Miletic
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class autocleanfile {
+class auto_clean {
     /**
-     * @var null|string
+     * @var string
      */
-    private $filename = null;
+    private $directory = '';
 
     /**
-     * @param string $file
+     * @var string
      */
-    public function __construct($file) {
-        if (file_exists($file)) {
-            $this->filename = $file;
+    private $dirbase = '';
+
+    /**
+     * @var string
+     */
+    private $dirname = '';
+
+    /**
+     * @throws \coding_exception
+     * @throws \invalid_dataroot_permissions
+     */
+    public function __construct() {
+        $dirbase  = data_export::get_dir();
+        $dirname  = uniqid('export_', true);
+        $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
+        if (!file_exists($transdir)) {
+            make_writable_directory($transdir);
         }
+        $this->directory = $transdir;
+        $this->dirbase   = $dirbase;
+        $this->dirname   = $dirname;
     }
 
+    /**
+     * @return void
+     */
     public function __destruct() {
-        if ($this->filename !== null) {
-            unlink($this->filename);
-            $this->filename = null;
+        $exportfiles = array_diff(scandir($this->directory), array('..', '.'));
+        foreach ($exportfiles as $file) {
+            unlink($this->directory.DIRECTORY_SEPARATOR.$file);
         }
+        rmdir($this->directory);
+        $this->directory = '';
     }
 
     private function __clone() {
+    }
+
+    /**
+     * @return string
+     */
+    public function get_directory() {
+        return $this->directory;
+    }
+
+    /**
+     * @return string
+     */
+    public function get_dirbase() {
+        return $this->dirbase;
+    }
+
+    /**
+     * @return string
+     */
+    public function get_dirname() {
+        return $this->dirname;
     }
 }
