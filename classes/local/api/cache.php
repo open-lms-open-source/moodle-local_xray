@@ -44,13 +44,7 @@ class cache {
     protected $muc = null;
 
     public function __construct() {
-        $this->muc = \cache::make_from_params(
-            \cache_store::MODE_APPLICATION,
-            'local_xray',
-            'request',
-            [],
-            ['simplekeys' => true, 'staticacceleration' => false]
-        );
+        $this->muc = \cache::make('local_xray', 'request');
     }
 
     /**
