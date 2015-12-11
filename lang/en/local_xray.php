@@ -39,6 +39,7 @@ $string['displaymenu_desc'] = 'Control the display reports menu on the course fr
 $string['displayheaderdata'] = 'Show Analytics';
 $string['displayheaderdata_desc'] = 'Control the display course analytics on the course frontpage.';
 $string['debuginfo'] = 'Debug information';
+$string['cachedef_request'] = 'X-Ray request cache';
 
 /* Capabilities */
 $string['xray:activityreportindividual_view'] = 'View Activity Report Individual';
