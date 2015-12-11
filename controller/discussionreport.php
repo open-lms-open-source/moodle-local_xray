@@ -68,7 +68,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-                    // Show graphs.                   
+                    // Show graphs.
                     // Report date.
                     $output  = $this->print_top();
                     $output .= $this->output->inforeport($response->elements->element1->date);
@@ -77,7 +77,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
                         "rest.php?controller='discussionreport'&action='jsonparticipationdiscussion'&courseid=" . $this->courseid,
                         array(),
-                        true); // Add column action.
+                        true,
+                        true,
+                        'ftlipr'); // Add column action.
                     $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
                     $output .= $this->output->standard_table((array)$datatable);
 
@@ -85,15 +87,15 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid,
                         $response->elements->discussionActivityByWeek);
 
-                    $output .= $this->output->show_on_lightbox("wordcloud", $response->elements->wordcloud);
-                    $output .= $this->output->show_on_lightbox("avgWordPerPost", $response->elements->avgWordPerPost);
-                    $output .= $this->output->show_on_lightbox("socialStructure", $response->elements->socialStructure);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordCount",
-                        $response->elements->socialStructureWordCount);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordContribution",
-                        $response->elements->socialStructureWordContribution);
-                    $output .= $this->output->show_on_lightbox("socialStructureWordCTC",
-                        $response->elements->socialStructureWordCTC);
+                    $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud, $response->id);
+                    $output .= $this->output->show_graph("avgWordPerPost", $response->elements->avgWordPerPost, $response->id);
+                    $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure, $response->id);
+                    $output .= $this->output->show_graph("socialStructureWordCount",
+                        $response->elements->socialStructureWordCount, $response->id);
+                    $output .= $this->output->show_graph("socialStructureWordContribution",
+                        $response->elements->socialStructureWordContribution, $response->id);
+                    $output .= $this->output->show_graph("socialStructureWordCTC",
+                        $response->elements->socialStructureWordCTC, $response->id);
                 }
             }
 
@@ -107,15 +109,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
                     // Show graphs.
-                    $output .= html_writer::tag("div",
-                        html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
-                            array("class" => "main")),
-                        array("class" => "mr_html_heading"));
+                    $output .= html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
+                        array("class" => "main"));
                     $output .= $this->output->inforeport($response->reportdate);
-                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismStudentsHeatmap",
-                        $response->elements->endogenicPlagiarismStudentsHeatmap);
-                    $output .= $this->output->show_on_lightbox("endogenicPlagiarismHeatmap",
-                        $response->elements->endogenicPlagiarismHeatmap);
+                    $output .= $this->output->show_graph("endogenicPlagiarismStudentsHeatmap",
+                        $response->elements->endogenicPlagiarismStudentsHeatmap, $response->id);
+                    $output .= $this->output->show_graph("endogenicPlagiarismHeatmap",
+                        $response->elements->endogenicPlagiarismHeatmap, $response->id);
                 }
             }
 
@@ -128,20 +128,18 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-
                     // Show graphs.
-                    $subtitle = html_writer::tag("h2",
+                    $output .= html_writer::tag("h2",
                         get_string("discussiongrading", $this->component),
                         array("class" => "main"));
-                    $output .= html_writer::div($subtitle, "mr_html_heading");
                     $output .= $this->output->inforeport($response->reportdate);
 
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->studentDiscussionGrades,
                         "rest.php?controller='discussionreport'&action='jsonstudentsgrades'&courseid=" . $this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
-                    $output .= $this->output->show_on_lightbox("discussionSuggestedGrades",
-                        $response->elements->discussionSuggestedGrades);;
+                    $output .= $this->output->show_graph("discussionSuggestedGrades",
+                        $response->elements->discussionSuggestedGrades, $response->id);
                 }
             }
 
@@ -184,7 +182,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             // Format of response for columns.
             if (!empty($response->columnOrder)) {
                 foreach ($response->columnOrder as $column) {
-                    $r->{$column} = (isset($row->{$column}->value) ? $row->{$column}->value : '');
+                    $r->{$column} = '';
+                    if (isset($row->{$column}->value)) {
+                        $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
+                    }
                 }
                 $data[] = $r;
             }
@@ -238,9 +239,20 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
                         // Add the remaining data. The number of each week will be the column name.
                         foreach ($response->data as $col) {
+                            // Number of posts.
                             $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
-                            $avglag[$col->week->value] = (isset($col->avgLag->value) ? $col->avgLag->value : '');
-                            $avgwordcount[$col->week->value] = (isset($col->avgWordCount->value) ? $col->avgWordCount->value : '');
+                            // Average time to respond (hours).
+                            $avglag[$col->week->value] = '';
+                            if (isset($col->avgLag->value)) {
+                                // Set time to HH:MM.
+                                $avglag[$col->week->value] = $this->show_time_hours_minutes($col->avgLag->value);
+                            }
+                            // Average word count.
+                            $avgwordcount[$col->week->value] = '';
+                            if (isset($col->avgWordCount->value)) {
+                                // Round Value.
+                                $avgwordcount[$col->week->value] = round(floatval($col->avgWordCount->value), 2);
+                            }
                         }
                         $data[] = $posts;
                         $data[] = $avglag;

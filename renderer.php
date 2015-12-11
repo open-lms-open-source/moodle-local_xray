@@ -47,88 +47,103 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function inforeport($reportdate, $user = null) {
-        $date = new DateTime($reportdate);
-        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
-
-        $output  = html_writer::start_div('inforeport');
-        $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate);
+        $output = '';
         if (!empty($user)) {
             $output .= html_writer::tag("p", get_string(("user")) . ": " . format_string(fullname($user)));
         }
-        $output .= html_writer::end_div();
+        $date = new DateTime($reportdate);
+        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
+        $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'inforeport'));
         return $output;
     }
 
     /**
-     * Generate img with lightbox.
-     * General template for show graph with lightbox.
-     *
-     * Structure:
-     * <div id=$name">
-     * <h3 class='reportsname'>$name</h3>
-     * <a><img class='xray_graph'></a>
-     * <div class='xray_graph_legend'>legend element</div>
-     * </div>
-     *
-     * Important: Link to image will have id fancybox + "name of report".
+     * Show Graph.
      *
      * @param  string $name
      * @param  stdClass $element
+     * @param  integer $reportid - Id of report, we need this to get accessible data from webservice.
      * @return string
      */
-    public function show_on_lightbox($name, $element) {
-        global $PAGE;
+
+    public function show_graph($name, $element, $reportid) {
+        global $PAGE, $COURSE;
         $plugin = "local_xray";
-
-        // Load Jquery.
-        $PAGE->requires->jquery();
-        $PAGE->requires->jquery_plugin('ui');
-        $PAGE->requires->jquery_plugin('local_xray-show_on_lightbox', $plugin); // Js for show on lightbox.
-        $PAGE->requires->jquery_plugin('local_xray-create_thumb', $plugin); // Js for dynamic thumbnails.
-
         $cfgxray = get_config('local_xray');
         $imgurl = sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $element->uuid);
-
         // Access Token.
         $accesstoken = local_xray\local\api\wsapi::accesstoken();
         $imgurl = new moodle_url($imgurl, array('accesstoken' => $accesstoken));
-
         $output = "";
-        $output .= html_writer::start_tag('div', array("id" => $name, "class" => "xray_element xray_element_graph"));
-
-        /* Graph Name */
+        // List Graph.
+        $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
         $output .= html_writer::tag('h3', $element->title, array("class" => "reportsname"));
-        /* End Graph Name */
 
-        /* Img */
-        $tooltip = '';
-        if (isset($element->tooltip) && !empty($element->tooltip)) {
-            $tooltip = $element->tooltip;
-        }
-        $output .= html_writer::start_tag('div', array("class" => "xray_element_img"));
+        // Link to accessible version.
+        $urlaccessible = new moodle_url("view.php",
+            array("controller" => "accessibledata",
+                "origincontroller" => $PAGE->url->get_param("controller"),
+                "graphname" => rawurlencode($element->title),
+                "reportid" => $reportid,
+                "elementname" => $element->elementName,
+                "courseid" => $COURSE->id));
+        $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
+            array("target" => "_blank",
+                "class" => "xray-accessible-view-data"));
+        $output .= html_writer::tag('span', $linkaccessibleversion);
 
+        $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName , 'class' => 'xray-graph-box-link'));
         // Validate if url of image is valid. Prohibited to use @.
         if (fopen($imgurl, "r")) {
-            $idimg = "fancybox_" . $name;
-            $output .= html_writer::start_tag('a', array("id" => $idimg, "href" => $imgurl));
-            $output .= html_writer::empty_tag('img', array("title" => $tooltip,
-                "src" => $imgurl,
-                "class" => "thumb") // Used by dynamic thumbnails.
-            );
-
-            $output .= html_writer::end_tag('a');
-            /* End Img */
-
-            // Send data to js.
-            $PAGE->requires->js_init_call("local_xray_show_on_lightbox", array($idimg, $element));
+            $output .= html_writer::start_tag('span',
+                array('class' => 'xray-graph-small-image',
+                    'style' => 'background-image: url('.$imgurl.');'));
+            $output .= html_writer::end_tag('span');
         } else {
             // Incorrect url img. Show error message.
-            $output .= html_writer::tag("div", get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
+            $output .= html_writer::tag("div",
+                get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
         }
-
+        $output .= html_writer::end_tag('a');
         $output .= html_writer::end_tag('div');
-        $output .= html_writer::end_tag('div');
+        // Show Graph.
+        // Get Tooltip.
+        // Validate if url of image is valid. Prohibited to use @.
+        if (fopen($imgurl, "r")) {
+            $output .= html_writer::start_tag('div', array('id' => $element->elementName, 'class' => 'xray-graph-background'));
+            $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
+            $output .= html_writer::tag('h6', $element->title, array('class' => 'xray-graph-caption-text'));
+            if (isset($element->tooltip) && !empty($element->tooltip)) {
+                $output .= html_writer::tag('p', $element->tooltip, array('class' => 'xray-graph-description'));
+            }
+            $output .= html_writer::img($imgurl, '', array('class' => 'xray-graph-image'));
+            $output .= html_writer::end_tag('div');
+            $output .= html_writer::tag('a', '' , array(
+                'href' => '#',
+                'class' => 'xray-close-link',
+                'title' => get_string('close', 'local_xray')));
+            $output .= html_writer::end_tag('div');
+        }
+        return $output;
+    }
 
+    /**
+     * Show accessibledata in table.
+     * @param Array $data
+     * @param Array $rows
+     * @param String $title
+     * @return string
+     */
+    public function accessibledata(array $columnsnames, array $rows, $title = "") {
+
+        $output = "";
+        // Create table.
+        $table = new html_table();
+        $table->attributes = array("title" => $title);
+        $table->head  = $columnsnames;
+        $table->data  = $rows;
+        $table->summary  = $title;
+        $output .= html_writer::table($table);
         return $output;
     }
 
@@ -146,75 +161,44 @@ class local_xray_renderer extends plugin_renderer_base {
         // Load specific js for tables.
         $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray");
         $output = "";
-        $output .= html_writer::start_tag('div', array("id" => $datatable['id'], "class" => "xray_element xray_element_table"));
-        $output .= html_writer::tag('h3', $datatable['title'], array("class" => "reportsname eventtoogletable"));
-        
-        // Table jquery datatables for show reports.
-        $output .= html_writer::start_tag("table", 
-                array("id" => "table_{$datatable['id']}",
+        // Table Title with link to open it.
+        $output .= "<h3 class='xray-table-title-link reportsname'>
+        <a href='#".$datatable['id']."'>".$datatable['title']."</a>
+        </h3>";
+        /*$link = html_writer::start_tag('a', array(
+            'id' => "title_{$datatable['id']}",
+            'href' => "#{$datatable['id']}",
+            'class' => 'xray-table-title-link'));
+        $link .= html_writer::end_tag('a');
+        $output .= html_writer::tag('h3', $datatable['title'], array('class' => 'reportsname'));
+        */
+        // Table.
+        $output .= html_writer::start_tag('div', array(
+            'id' => "{$datatable['id']}",
+            'class' => 'xray-toggleable-table',
+            'tabindex' => '0'));
+        // Table jquery datatables for show reports. //TODO clean styles.
+        $output .= html_writer::start_tag("table",
+            array("id" => "table_{$datatable['id']}",
                 "class" => "xraydatatable display"));
-        
+        $output .= html_writer::tag("caption", $datatable['title']);
         $output .= html_writer::start_tag("thead");
-        $output .= html_writer::start_tag("tr");        
-                
-        
+        $output .= html_writer::start_tag("tr");
         foreach ($datatable['columns'] as $c) {
             $output .= html_writer::tag("th", $c->text);
         }
-        
         $output .= html_writer::end_tag("tr");
         $output .= html_writer::end_tag("thead");
         $output .= html_writer::end_tag("table");
+        // Close Table button.
+        $output .= html_writer::tag('a', get_string('closetable', 'local_xray'), array('href' => "#"));
         $output .= html_writer::end_tag('div');
-
+        // End Table.
         // Load table with data.
         $PAGE->requires->js_init_call("local_xray_show_on_table", array($datatable));
-
         return $output;
     }
 
-    /**
-     * Show minutes in format hours:minutes
-     * @param int $minutes
-     * @return string
-     */
-    public function minutes_to_hours($minutes) {
-        return date('H:i', mktime(0, $minutes));
-    }
-
-    /**
-     * Set Category
-     *
-     * @param  float $value
-     * @return string
-     */
-    public function set_category($value) {
-        $size = 'high';
-        if ($value < 0.2) {
-            $size = 'low';
-        } else if (($value > 0.2) && ($value < 0.3)) {
-            $size = 'medium';
-        }
-
-        return get_string($size, 'local_xray') . ' ' . $value;
-    }
-
-    /**
-     * Set Category Regularly
-     *
-     * @param int $value
-     * @return string
-     */
-    public function set_category_regularly($value) {
-        $string = 'irregular';
-        if ($value < 1) {
-            $string = 'highlyregularity';
-        } else if ($value < 2) {
-            $string = 'somewhatregularity';
-        }
-
-        return get_string($string, 'local_xray') . ' ' . $value;
-    }
     /************************** End General elements for Reports **************************/
 
     /************************** Elements for Report Discussion **************************/
@@ -337,10 +321,10 @@ class local_xray_renderer extends plugin_renderer_base {
         $of = html_writer::tag('small', get_string('of', 'local_xray'));
 
         // Students at risk.
-        $studentsrisk = html_writer::tag("div", 
-                html_writer::tag("span", $data->studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$data->studentsenrolled}",
-                array("class" => "xray-headline"));
-                
+        $studentsrisk = html_writer::tag("div",
+            html_writer::tag("span", $data->studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$data->studentsenrolled}",
+            array("class" => "xray-headline"));
+
         $studentatrisktext = html_writer::div(get_string('studentatrisk', 'local_xray'), 'xray-headline-description');
         // Bootstrap classes for positive/negative data.
         $comparitorclass = "xray-comparitor";
@@ -380,12 +364,12 @@ class local_xray_renderer extends plugin_renderer_base {
             $riskfromlastweekth . $usersprofilebox . $usersprofileboxhidden .
             $showall, 'xray-risk col-sm-6 span6');
 
-        // Students Visitors.  
-        $studentsvisitors = html_writer::div(html_writer::tag("span", 
-                                            $data->studentsvisitslastsevendays,
-                                            array("class" => "xray-headline-number h1"))."{$of} {$data->studentsenrolled}",
+        // Students Visitors.
+        $studentsvisitors = html_writer::div(html_writer::tag("span",
+                $data->studentsvisitslastsevendays,
+                array("class" => "xray-headline-number h1"))."{$of} {$data->studentsenrolled}",
             "xray-headline");
-        
+
         $studentvisitslastdaystext = html_writer::div(get_string('studentvisitslastdays', 'local_xray'),
             'xray-headline-description');
         // Bootstrap classes for positive/negative data.
@@ -411,10 +395,10 @@ class local_xray_renderer extends plugin_renderer_base {
                 $percent = ceil(($visitsperday / $data->studentsvisitslastsevendays) * 100);
                 $day = substr($value->day_of_week->value, 0, 3);
                 $studentsvisitsperday .= html_writer::start_div("xray-visits-unit");
-                $studentsvisitsperday .= html_writer::div($day, array("class" => "xray-visits-per-day"));             
-                $studentsvisitsperday .= html_writer::div($visitsperday, 
-                        array("class" => "xray-visits-per-day-line", "style" => "height:{$percent}%"));             
-                    
+                $studentsvisitsperday .= html_writer::div($day, array("class" => "xray-visits-per-day"));
+                $studentsvisitsperday .= html_writer::div($visitsperday,
+                    array("class" => "xray-visits-per-day-line", "style" => "height:{$percent}%"));
+
                 $studentsvisitsperday .= html_writer::end_div();
             }
             $studentsvisitsperday .= html_writer::end_div();
@@ -438,9 +422,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $userpicture->alttext = false;
         $userpicture->size = 30;
         $picture = $this->render($userpicture);
-        $fullname = html_writer::tag("a", 
-                format_string(fullname($user)), 
-                array("href" => $CFG->wwwroot . '/user/profile.php?id=' . $user->id));
+        $fullname = html_writer::tag("a",
+            format_string(fullname($user)),
+            array("href" => $CFG->wwwroot . '/user/profile.php?id=' . $user->id));
         return html_writer::div("{$picture} {$fullname}", array("class" => "dashboard_xray_users_profile"));
     }
 
@@ -478,8 +462,9 @@ class local_xray_renderer extends plugin_renderer_base {
                     $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
                 }
                 $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
-                                                               'class' => 'xray-reports-links'));
-                $menu = \html_writer::div($title . $amenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
+                    'class' => 'xray-reports-links'));
+                $navmenu = html_writer::tag("nav", $amenu);
+                $menu = \html_writer::div($title . $navmenu, 'clearfix', array('id' => 'js-xraymenu'));
             }
         }
 
@@ -499,7 +484,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $headerdata = $this->snap_dashboard_xray();
             if (!empty($headerdata)) {
                 $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') .
-                                           get_string('analytics', 'local_xray'));
+                    get_string('analytics', 'local_xray'));
                 $subc = $title . $headerdata;
                 $headerdata = \html_writer::div($subc, '', ['id' => 'js-headerdata', 'class' => 'clearfix']);
             }

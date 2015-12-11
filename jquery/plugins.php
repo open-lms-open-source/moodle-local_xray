@@ -23,24 +23,12 @@
  */
 
 $plugins = array(
-    'local_xray-show_on_lightbox' => array(
-        'files' => array(
-            'fancybox2/jquery.fancybox.js',
-            'fancybox2/jquery.fancybox.css',
-            'reports/show_on_lightbox.js'
-        )
-    ),
     'local_xray-show_on_table' => array(
         'files' => array('dataTables/js/jquery.dataTables.min.js',
             'dataTables/css/jquery.dataTables.min.css',
             'dataTables-jqueryui-1.10.7/dataTables.jqueryui.css',
             'dataTables-jqueryui-1.10.7/dataTables.jqueryui.js',
             'reports/show_on_table.js'
-        )
-    ),
-    'local_xray-create_thumb' => array(
-        'files' => array('jqthumb/jqthumb.js',
-            'reports/report_thumbnails.js'
         )
     )
 );

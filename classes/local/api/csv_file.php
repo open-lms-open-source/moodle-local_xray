@@ -27,14 +27,14 @@ namespace local_xray\local\api;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Class csvfile - for exporting data into CSV file
+ * Class csv_file - for exporting data into CSV file
  *
  * @package   local_xray
  * @author    Darko Miletic
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class csvfile {
+class csv_file {
     const ESCAPE = '\\';
     const DBLESCAPE = '\\\\';
 
@@ -100,7 +100,7 @@ class csvfile {
      * @param \stdClass $fields
      * @return int|bool
      */
-    public function writecsv($fields) {
+    public function write_csv($fields) {
         $data = (array)$fields;
         if (!$this->header) {
             $result = fputcsv($this->resource, array_keys($data));

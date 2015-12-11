@@ -73,7 +73,7 @@ class local_xray_controller_reports extends mr_controller {
     }
 
     public function setup() {
-        global $CFG, $PAGE;
+        global $CFG, $PAGE, $COURSE;
 
         $courseid = optional_param('courseid', SITEID, PARAM_INT);
         require_login($courseid, false);
@@ -89,6 +89,7 @@ class local_xray_controller_reports extends mr_controller {
             $PAGE->set_title($title);
             $this->heading->text = $title;
             $PAGE->set_pagelayout('report');
+            $PAGE->set_heading($COURSE->fullname);
         }
     }
 
@@ -257,18 +258,220 @@ class local_xray_controller_reports extends mr_controller {
                 foreach ($response->columnOrder as $column) {
                     $r->{$column} = '';
                     if (isset($row->{$column}->value)) {
-                        $r->{$column} = $row->{$column}->value;
+                        $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
                     }
                 }
             } else if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
                 $c = get_object_vars($response->columnHeaders);
                 foreach ($c as $id => $name) {
-                    $r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');
+                    $r->{$id} = (isset($row->{$id}->value) ? $row->{$id}->value : '');// TODO see values here.
                 }
             }
             $data[] = $r;
         }
 
         return $data;
+    }
+
+    /**
+     * Set Categories for difficult values in tables
+     *
+     * @param  float $value
+     * @param  string $table The elementname of the table
+     * @param  string $column
+     * @return string
+     */
+    public function show_intuitive_value($value, $table, $column) {
+        $plugin = 'local_xray';
+        switch ($table) {
+            case 'riskMeasures':
+                // Table Risk Measures from Risk Report.
+                switch ($column) {
+                    case 'timeOnTask':
+                        // Column Time spent in course (hours).
+                        return $this->show_time_hours_minutes($value);
+                        break;
+                    case 'fail':
+                        // Column Academic risk.
+                    case 'DW';
+                        // Column Social risk.
+                    case 'DWF';
+                        // Column Total risk.
+                        $roundvalue = round(floatval($value), 2);
+                        $category = 'high';
+                        $risk1 = get_config($plugin, 'risk1');
+                        $risk2 = get_config($plugin, 'risk2');
+                        if (($risk1 !== false) && ($risk2 !== false)) {
+                            if ($roundvalue < $risk1) {
+                                $category = 'low';
+                            } else if ($roundvalue < $risk2) {
+                                $category = 'medium';
+                            }
+                            return get_string($category, 'local_xray') . ' ' . $roundvalue;
+                        } else {
+                            return $roundvalue;
+                        }
+                        break;
+                    default:
+                        return $value;
+                        break;
+                }
+            case 'studentList';
+                // Table Student Activity from Activity Report.
+                switch ($column) {
+                    case 'timeOnTask':
+                        // Column Time spent in course (hours).
+                        return $this->show_time_hours_minutes($value);
+                        break;
+                    case 'weeklyRegularity':
+                        // Column Visit regularity (weekly).
+                        $roundvalue = round(floatval($value), 2);
+                        $visitreg1 = get_config($plugin, 'visitreg1');
+                        $visitreg2 = get_config($plugin, 'visitreg2');
+                        if (($visitreg1 !== false) && ($visitreg2 !== false)) {
+                            $category = 'irregular';
+                            if ($roundvalue < $visitreg1) {
+                                $category = 'highlyregularity';
+                            } else if ($roundvalue < $visitreg2) {
+                                $category = 'somewhatregularity';
+                            }
+                            return get_string($category, 'local_xray') . ' ' . $roundvalue;
+                        } else {
+                            return $roundvalue;
+                        }
+                        break;
+                    default:
+                        return $value;
+                        break;
+                }
+            case 'discussionMetrics';
+                // Table Participation Metrics from Discussion Report.
+                // Table Participation Metrics from Discussion Report Individual.
+                switch ($column) {
+                    case 'contrib':
+                        // Column Contribution.
+                    case 'ctc':
+                        // Column CTC.
+                        $percentage = $value * 100;
+                        $roundvalue = round(floatval($percentage), 2);
+                        $partc1 = get_config($plugin, 'partc1');
+                        $partc2 = get_config($plugin, 'partc2');
+                        if (($partc1 !== false) && ($partc2 !== false)) {
+                            $category = 'high';
+                            if ($roundvalue < $partc1) {
+                                $category = 'low';
+                            } else if ($roundvalue < $partc2) {
+                                $category = 'medium';
+                            }
+                            return get_string($category, 'local_xray') . ' ' . $roundvalue . '%';
+                        } else {
+                            return $roundvalue . '%';
+                        }
+                        break;
+                    case 'regularityContrib';
+                        // Column Regularity of contributions.
+                    case 'regularityCTC':
+                        // Column Regularity of CTC.
+                        $roundvalue = round(floatval($value), 2);
+                        $partreg1 = get_config($plugin, 'partreg1');
+                        $partreg2 = get_config($plugin, 'partreg2');
+                        if (($partreg1 !== false) and ($partreg2 !== false)) {
+                            $category = 'irregular';
+                            if ($roundvalue < $partreg1) {
+                                $category = 'highlyregularity';
+                            } else if ($roundvalue < $partreg2) {
+                                $category = 'somewhatregularity';
+                            }
+                            return get_string($category, 'local_xray') . ' ' . $roundvalue;
+                        } else {
+                            return $roundvalue;
+                        }
+                        break;
+                    default:
+                        return $value;
+                        break;
+                }
+            case 'studentDiscussionGrades';
+                // Table Student Grades Based on Discussions from Discussion Report.
+                switch ($column) {
+                    case 'wc':
+                        // Column Word count (rel.).
+                        $roundvalue = round(floatval($value), 2);
+                        return $roundvalue;
+                        break;
+                    case 'ctc':
+                        // Column CTC.
+                        $percentage = $value * 100;
+                        $roundvalue = round(floatval($percentage), 2);
+                        $partc1 = get_config($plugin, 'partc1');
+                        $partc2 = get_config($plugin, 'partc2');
+                        if (($partc1 !== false) && ($partc2 !== false)) {
+                            $category = 'high';
+                            if ($roundvalue < $partc1) {
+                                $category = 'low';
+                            } else if ($roundvalue < $partc2) {
+                                $category = 'medium';
+                            }
+                            return get_string($category, 'local_xray') . ' ' . $roundvalue . '%';
+                        } else {
+                            return $roundvalue . '%';
+                        }
+                        break;
+                    case 'regularityContrib';
+                        // Column Regularity of contributions.
+                        $roundvalue = round(floatval($value), 2);
+                        $partreg1 = get_config($plugin, 'partreg1');
+                        $partreg2 = get_config($plugin, 'partreg2');
+                        if (($partreg1 !== false) and ($partreg2 !== false)) {
+                            $category = 'irregular';
+                            if ($roundvalue < $partreg1) {
+                                $category = 'highlyregularity';
+                            } else if ($roundvalue < $partreg2) {
+                                $category = 'somewhatregularity';
+                            }
+                            return get_string($category, 'local_xray') . ' ' . $roundvalue;
+                        } else {
+                            return $roundvalue;
+                        }
+                        break;
+                    default:
+                        return $value;
+                        break;
+                }
+            case 'element2':
+                // Table Student Grades from Gradebook Report.
+                switch ($column) {
+                    case 'standarScore':
+                        // Column Standardized score.
+                        return round(floatval($value), 2);
+                        break;
+                    default:
+                        return $value;
+                }
+            case 'element4':
+                // Table Summary of Quizzes from Gradebook Report.
+                switch ($column) {
+                    case 'earnScore':
+                        // Column Average score.
+                    case 'standarScore':
+                        // Column Average standardized score.
+                    case 'finalGradeCorrelation':
+                        // Column Correlation between final score and score from this quiz.
+                        return round(floatval($value), 2);
+                        break;
+                    default:
+                        return $value;
+                }
+            default:
+                return $value;
+        }
+    }
+    /**
+     * Show time in format hours:minutes
+     * @param int $minutes
+     * @return string
+     */
+    public function show_time_hours_minutes($minutes) {
+        return date('H:i', mktime(0, $minutes));
     }
 }

@@ -26,13 +26,11 @@
 namespace local_xray\task;
 
 use core\task\scheduled_task;
-use local_xray\local\api\autocleanfile;
-use local_xray\local\api\wsapi;
-use local_xray\local\api\xrayws;
-use local_xray\local\api\dataexport;
+use local_xray\local\api\auto_clean_file;
+use local_xray\local\api\data_export;
 use local_xray\event\sync_log;
 use local_xray\event\sync_failed;
-use local_xray\local\api\autoclean;
+use local_xray\local\api\auto_clean;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -46,7 +44,7 @@ defined('MOODLE_INTERNAL') || die();
  *
  * To manually execute run:
  *
- * php admin/tool/task/cli/schedule_task.php --execute=\\local_xray\\task\\data_sync
+ * php -f admin/tool/task/cli/schedule_task.php -- --execute=\\local_xray\\task\\data_sync
  *
  * @package   local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -68,7 +66,7 @@ class data_sync extends scheduled_task {
      * Throw exceptions on errors (the job will be retried).
      */
     public function execute() {
-        global $CFG;
+        global $CFG, $DB;
         try {
             $config = get_config('local_xray');
 
@@ -83,54 +81,54 @@ class data_sync extends scheduled_task {
 
             sync_log::create_msg("Start data sync.")->trigger();
 
-            require_once($CFG->dirroot.'/local/xray/lib/vendor/aws/aws-autoloader.php');
+            require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
 
             $s3 = new \Aws\S3\S3Client([
                 'version' => '2006-03-01',
                 'region'  => $config->s3bucketregion,
+                'scheme'  => $config->s3protocol,
                 'credentials' => [
                     'key'    => $config->awskey,
                     'secret' => $config->awssecret,
                 ],
             ]);
 
-            // Get last export timestamp. If none use 0.
-            $data = wsapi::datalist();
-            if ($data === false) {
-                xrayws::instance()->print_error();
-            }
+            $storage = new auto_clean();
+            $DB->set_debug(($CFG->debug == DEBUG_DEVELOPER) && $CFG->debugdisplay);
+            $timeend = time() - (2 * HOURSECS);
+            data_export::export_csv(0, $timeend, $storage->get_directory());
+            $DB->set_debug(false);
 
-            $timest = 0;
-            $dates = array();
-            foreach ($data as $item) {
-                try {
-                    $dt = new \DateTime($item->added);
-                    $dates[] = $dt->getTimestamp();
-                } catch (\Exception $e) {
-                    // Silence it.
-                }
-            }
-            if (!empty($dates)) {
-                arsort($dates);
-                $timest = $dates[0];
-            }
-
-            $storage = new autoclean();
-            dataexport::exportcsv($timest, $storage->getdirectory());
-
-            list($compfile, $destfile) = dataexport::compress($storage->getdirbase(), $storage->getdirname());
+            list($compfile, $destfile) = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
             if ($compfile !== null) {
-                $cleanfile = new autocleanfile($compfile);
+                $cleanfile = new auto_clean_file($compfile);
                 ($cleanfile);
-                $uploadresult = $s3->upload($config->s3bucket,
-                    $destfile,
-                    fopen($compfile, 'rb'),
-                    'private',
-                    array('debug' => true));
+                $uploadresult = null;
+                // We will try several times to upload file.
+                $retrycount = (int)$config->s3uploadretry;
+                for ($count = 0; $count < $retrycount; $count++) {
+                    try {
+                        $uploadresult = $s3->upload($config->s3bucket,
+                            $destfile,
+                            fopen($compfile, 'rb'),
+                            'private',
+                            array('debug' => true));
+                        break;
+                    } catch (\Exception $e) {
+                        sync_failed::create_from_exception($e)->trigger();
+                        if ($count = ($retrycount - 1)) {
+                            throw $e;
+                        }
+                        sleep(1);
+                    }
+                }
                 $metadata = $uploadresult->get('@metadata');
                 if ($metadata['statusCode'] != 200) {
                     throw new \Exception("Upload to S3 bucket failed!");
                 }
+
+                // Save counters only when entire process passed OK.
+                data_export::store_counters();
 
                 sync_log::create_msg("Uploaded {$destfile}.")->trigger();
             } else {
@@ -139,7 +137,11 @@ class data_sync extends scheduled_task {
 
             sync_log::create_msg("Completed data sync.")->trigger();
         } catch (\Exception $e) {
+            if ($DB->get_debug()) {
+                $DB->set_debug(false);
+            }
             mtrace($e->getMessage());
+            mtrace($e->getTraceAsString());
             sync_failed::create_from_exception($e)->trigger();
         }
     }
