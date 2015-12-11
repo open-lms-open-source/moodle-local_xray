@@ -61,10 +61,6 @@ if ($hassiteconfig) {
                                                      new lang_string("displaymenu", $plugin),
                                                      new lang_string("displaymenu_desc", $plugin),
                                                      '0'));
-    $settings->add( new admin_setting_configcheckbox("{$plugin}/displayheaderdata",
-                                                     new lang_string("displayheaderdata", $plugin),
-                                                     new lang_string("displayheaderdata_desc", $plugin),
-                                                     '0'));
 
     // Configuration and credentials for accessing Xray S3 bucket.
     $settings->add( new admin_setting_heading("{$plugin}/xrayawsheading",
