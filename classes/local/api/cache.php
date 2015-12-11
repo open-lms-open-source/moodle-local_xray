@@ -72,7 +72,7 @@ class cache {
      * @return string
      */
     protected function getkeyname($seed) {
-        $result = 'local_xray_'.sha1(serialize($seed));
+        $result = md5($seed);
         return $result;
     }
 

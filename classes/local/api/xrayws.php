@@ -490,7 +490,7 @@ class xrayws {
      * @throws nourl_exception
      */
     public function request_withcookie($url, $method, array $custheaders = array(), array $options = array()) {
-        if (!empty($this->cookie)) {
+        if ($this->hascookie()) {
             $options[CURLOPT_COOKIE] = $this->cookie;
         }
         return $this->request($url, $method, $custheaders, $options);
@@ -544,10 +544,8 @@ class xrayws {
     }
 
     public function resetcookie() {
-        if ($this->cookie !== null) {
-            $this->cache->delete(self::COOKIE);
-            $this->cookie = null;
-        }
+        $this->cache->delete(self::COOKIE);
+        $this->cookie = null;
     }
 
     protected function setcookie($value) {
