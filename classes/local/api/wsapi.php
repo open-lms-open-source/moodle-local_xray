@@ -137,7 +137,9 @@ abstract class wsapi {
             return false;
         }
         $result = false;
-        $data = array('domain' => $domain, 'validhours' => (cache::cache_timeout() / HOURSECS));
+        $setting = cache::cache_timeout_hours();
+        $validhours = empty($setting) ? 1 : $setting;
+        $data = array('domain' => $domain, 'validhours' => $validhours);
         $url = sprintf('%s/user/accesstoken', $baseurl);
         if (!xrayws::instance()->hascookie()) {
             if (!self::adminlogin()) {

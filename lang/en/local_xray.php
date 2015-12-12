@@ -137,6 +137,9 @@ $string['exporttime_desc'] = 'Set maximum permitted time for exporting data. If 
 $string['export_progress'] = 'Reset export progress';
 $string['export_progress_desc'] = 'During export progress of the currently exported information is stored in the '.
                                   'database. Checking this option will reset that data.';
+$string['curlcache'] = 'Web service cache timeout';
+$string['curlcache_desc'] = 'Determines for how long to store cached web service responses.'.
+                            ' If set to 0 no caching is performed. Note - only successfoul responses are cached.';
 
 $string['xrayadminserver'] = 'X-Ray Learning Analytics Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';

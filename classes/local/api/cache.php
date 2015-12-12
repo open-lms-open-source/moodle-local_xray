@@ -53,11 +53,17 @@ class cache {
     public static function cache_timeout() {
         static $result = null;
         if ($result === null) {
-            $result = get_config('core', 'curlcache');
-            if ($result === false) {
-                $result = HOURSECS;
-            }
+            $result = (int)get_config('local_xray', 'curlcache') * HOURSECS +
+                      (int)get_config('local_xray', 'curlcache_minutes') * MINSECS;
         }
+        return $result;
+    }
+
+    /**
+     * @return int
+     */
+    public static function cache_timeout_hours() {
+        $result = (int)round(self::cache_timeout() / HOURSECS);
         return $result;
     }
 
@@ -86,6 +92,9 @@ class cache {
      */
     public function get($param) {
         $result = false;
+        if (self::cache_timeout() == 0) {
+            return $result;
+        }
         $keyarray = $this->getkeys($param);
         list($key, $created) = $keyarray;
         $items = $this->muc->get_many($keyarray);
@@ -107,8 +116,10 @@ class cache {
      * @return void
      */
     public function set($param, $val) {
-        list($key, $created) = $this->getkeys($param);
-        $this->muc->set_many([$key => serialize($val), $created => time()]);
+        if (self::cache_timeout() > 0) {
+            list($key, $created) = $this->getkeys($param);
+            $this->muc->set_many([$key => serialize($val), $created => time()]);
+        }
     }
 
     /**
