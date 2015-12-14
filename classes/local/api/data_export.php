@@ -17,8 +17,8 @@
 /**
  * Data export API.
  *
- * @package local_xray
- * @author Darko Miletic
+ * @package   local_xray
+ * @author    Darko Miletic <darko.miletic@blackboard.com>
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Class data_export for exporting raw data for xray processing
  *
- * @package local_xray
+ * @package   local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -365,6 +365,7 @@ class data_export {
 
     /**
      * Export standard log information
+     * For now only userid, courseid and timestamp are used in calculations.
      *
      * @param int    $timest
      * @param int    $timeend
@@ -893,6 +894,7 @@ class data_export {
         self::userlist($timest, $timeend, $dir);
         self::enrolment($timest, $timeend, $dir);
         self::accesslog($timest, $timeend, $dir);
+        self::standardlog($timest, $timeend, $dir);
         self::forums($timest, $timeend, $dir);
         self::threads($timest, $timeend, $dir);
         self::posts($timest, $timeend, $dir);
