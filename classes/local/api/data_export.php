@@ -882,6 +882,8 @@ class data_export {
 
         /* @var array $plugins */
         $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
+        /* @var array $logstores */
+        $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
 
         $timeframe = (int)get_config(self::PLUGIN, 'exporttime_hours') * HOURSECS +
                      (int)get_config(self::PLUGIN, 'exporttime_minutes') * MINSECS;
@@ -893,18 +895,37 @@ class data_export {
         self::courseinfo($timest, $timeend, $dir);
         self::userlist($timest, $timeend, $dir);
         self::enrolment($timest, $timeend, $dir);
-        self::accesslog($timest, $timeend, $dir);
-        self::standardlog($timest, $timeend, $dir);
-        self::forums($timest, $timeend, $dir);
-        self::threads($timest, $timeend, $dir);
-        self::posts($timest, $timeend, $dir);
+        // Unfortunately log stores can be uninstalled so we check for that case.
+        if (array_key_exists('legacy', $logstores)) {
+            self::accesslog($timest, $timeend, $dir);
+        } else {
+            mtrace('Legacy logstore not installed. Skipping.');
+        }
+        if (array_key_exists('standard', $logstores)) {
+            self::standardlog($timest, $timeend, $dir);
+        } else {
+            mtrace('Standard logstore not installed. Skipping.');
+        }
+        if (array_key_exists('forum', $plugins)) {
+            self::forums($timest, $timeend, $dir);
+            self::threads($timest, $timeend, $dir);
+            self::posts($timest, $timeend, $dir);
+        } else {
+            mtrace('Forum activity not installed. Skipping.');
+        }
         // Since Advanced Forum is not core plugin we check for it's presence.
         if (array_key_exists('hsuforum', $plugins)) {
             self::hsuforums($timest, $timeend, $dir);
             self::hsuthreads($timest, $timeend, $dir);
             self::hsuposts($timest, $timeend, $dir);
+        } else {
+            mtrace('Advanced forum activity not installed. Skipping.');
         }
-        self::quiz($timest, $timeend, $dir);
+        if (array_key_exists('quiz', $plugins)) {
+            self::quiz($timest, $timeend, $dir);
+        } else {
+            mtrace('Quiz activity not installed. Skipping.');
+        }
         self::grades($timest, $timeend, $dir);
 
         self::export_metadata($dir);
