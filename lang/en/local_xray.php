@@ -139,7 +139,7 @@ $string['export_progress_desc'] = 'During export progress of the currently expor
                                   'database. Checking this option will reset that data.';
 $string['curlcache'] = 'Web service cache timeout';
 $string['curlcache_desc'] = 'Determines for how long to store cached web service responses.'.
-                            ' If set to 0 no caching is performed. Note - only successfoul responses are cached.';
+                            ' If set to 0 no caching is performed. Note - only successful responses are cached.';
 
 $string['xrayadminserver'] = 'X-Ray Learning Analytics Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';
