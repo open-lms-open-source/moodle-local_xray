@@ -364,6 +364,52 @@ class data_export {
     }
 
     /**
+     * Export standard log information
+     *
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function standardlog($timest, $timeend, $dir) {
+        $time = self::to_timestamp('l.timecreated', true, 'time');
+        $wherecond = self::range_where('l.timecreated', null, $timest, $timeend, __FUNCTION__, 'l.id');
+        // TODO: determine exact url, module etc.
+        $sql = "
+            SELECT
+                   l.id,
+                   l.userid AS participantid,
+                   l.courseid AS courseid,
+                   {$time},
+                   l.ip,
+                   l.action,
+                   l.other AS info,
+                   l.component AS module,
+                   '' AS url,
+                   l.timecreated AS traw
+            FROM   {log} l
+            WHERE
+                   EXISTS (
+                        SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
+                        FROM       {role_assignments} ra
+                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
+                        WHERE
+                              EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
+                              AND
+                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = 0)
+                              AND
+                              ctx.instanceid = l.courseid
+                              AND
+                              ra.userid = l.userid
+                              AND
+                              l.courseid <> 0
+                   )
+                   AND
+          ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
      * @param int $timest
      * @param int $timeend
      * @param string $dir
