@@ -387,7 +387,7 @@ class data_export {
                    l.component AS module,
                    '' AS url,
                    l.timecreated AS traw
-            FROM   {log} l
+            FROM   {logstore_standard_log} l
             WHERE
                    EXISTS (
                         SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
