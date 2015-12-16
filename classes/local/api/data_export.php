@@ -374,7 +374,7 @@ class data_export {
     public static function standardlog($timest, $timeend, $dir) {
         $time = self::to_timestamp('l.timecreated', true, 'time');
         $wherecond = self::range_where('l.timecreated', null, $timest, $timeend, __FUNCTION__, 'l.id');
-        // TODO: determine exact url, module etc.
+
         $sql = "
             SELECT
                    l.id,
@@ -384,8 +384,10 @@ class data_export {
                    l.ip,
                    l.action,
                    l.other AS info,
-                   l.component AS module,
-                   '' AS url,
+                   l.component,
+                   l.target,
+                   l.objecttable,
+                   l.objectid,
                    l.timecreated AS traw
             FROM   {logstore_standard_log} l
             WHERE
@@ -809,10 +811,10 @@ class data_export {
         $destfile = null;
 
         if (!empty($files)) {
-            $admin = get_config(self::PLUGIN, 'xrayadmin');
-            $basefile = self::generate_filename($admin);
+            $clientid = get_config(self::PLUGIN, 'xrayclientid');
+            $basefile = self::generate_filename($clientid);
             $archivefile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
-            $destfile = $admin . '/' . $basefile;
+            $destfile = $clientid . '/' . $basefile;
 
             $tgzpacker = get_file_packer('application/x-gzip');
             $result = $tgzpacker->archive_to_pathname($files, $archivefile);
@@ -838,16 +840,16 @@ class data_export {
         $destfile = null;
 
         if (!empty($exportfiles)) {
-            $admin = get_config(self::PLUGIN, 'xrayadmin');
+            $clientid = get_config(self::PLUGIN, 'xrayclientid');
             $tarpath = get_config(self::PLUGIN, 'packertar');
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
             $escdir = escapeshellarg($transdir);
             // We have to use microseconds timestamp because of nodejs...
-            $basefile = self::generate_filename($admin);
+            $basefile = self::generate_filename($clientid);
             $compfile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
             $escfile = escapeshellarg($compfile);
             $esctar = escapeshellarg($bintar);
-            $destfile = $admin . '/' . $basefile;
+            $destfile = $clientid . '/' . $basefile;
             $command = escapeshellcmd("{$esctar} -C {$escdir} -zcf {$escfile} .");
             $ret = 0;
             $lastmsg = system($command, $ret);
