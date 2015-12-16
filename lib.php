@@ -143,7 +143,6 @@ function local_xray_extends_navigation(global_navigation $nav) {
         return;
     }
 
-    $headerdata = '';
     $menu = '';
     if (!$reportview) {
         $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
@@ -151,10 +150,9 @@ function local_xray_extends_navigation(global_navigation $nav) {
         /* @var local_xray_renderer $renderer */
         $renderer = $PAGE->get_renderer('local_xray');
         $menu = $renderer->print_course_menu($reportcontroller, $reports);
-        $headerdata = $renderer->print_course_header_data();
     }
 
-    if (!empty($menu) or !empty($headerdata)) {
+    if (!empty($menu)) {
         $menuappend = 0;
         // Easy way to force include on every page (provided that navigation block is present).
         $PAGE->requires->yui_module(['moodle-local_xray-custmenu'],
@@ -163,9 +161,6 @@ function local_xray_extends_navigation(global_navigation $nav) {
                 'menusearch' => $search[$courseformat],
                 'menuappend' => $menuappend,
                 'items'      => $menu,
-                'hdrsearch'  => $search[$courseformat],
-                'hdrappend'  => 1,
-                'header'     => $headerdata
             ]],
             null,
             true
