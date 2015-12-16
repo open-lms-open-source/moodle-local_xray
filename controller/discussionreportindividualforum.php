@@ -52,17 +52,36 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     public function init() {
         parent::init();
-        $this->cmid = required_param('cmid', PARAM_INT); // Cmid of forum.
-        $this->forumid = required_param('forum', PARAM_INT);
+        $this->cmid = required_param('cmid', PARAM_INT); // Cmid of forum/hsuforum.
+        $this->forumid = required_param('forum', PARAM_INT); // Id of forum/hsuforum.
     }
 
     public function view_action() {
         global $PAGE, $DB;
 
+        $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         // Add title to breadcrumb.
-        $forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
-        $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/forum/view.php",
-            array("id" => $this->cmid)));
+        // Check if hsuforum is present in this moodle/joule instance.
+        $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
+        if (array_key_exists('hsuforum', $plugins)) {
+            // Get module name and forum/hsuforum id.
+            $sqlmodule = "SELECT m.name
+                            FROM {course_modules} cm
+                            INNER JOIN {modules} m ON m.id = cm.module
+                            WHERE cm.id = :cmid";
+            $params = array('cmid' => $this->cmid);
+            $module = $DB->get_record_sql($sqlmodule, $params);
+
+            $forumname = $DB->get_field($module->name, 'name', array("id" => $this->forumid));
+            $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/".$module->name."/view.php",
+                array("id" => $this->cmid)));
+        }else{
+            // Use forum.
+            $forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
+            $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/forum/view.php",
+                array("id" => $this->cmid)));
+        }
+
         $PAGE->navbar->add($PAGE->title);
         $output = "";
 
