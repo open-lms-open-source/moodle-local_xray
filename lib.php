@@ -138,7 +138,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
     }
 
     $reportview = ($PAGE->pagetype == 'local-xray-view');
-    $courseview = $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE);
+    $courseview = $PAGE->url->compare(new moodle_url('/course/view.php', ['id' => $PAGE->course->id]));
     if (!$reportview && !$courseview) {
         return;
     }
