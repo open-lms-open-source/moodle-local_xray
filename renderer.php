@@ -164,6 +164,8 @@ class local_xray_renderer extends plugin_renderer_base {
         $table = new html_table();
         $table->attributes = array("title" => $title);
         $table->head  = $columnsnames;
+        $table->caption = $title;
+        $table->captionhide = true;
         $table->data  = $rows;
         $table->summary  = $title;
         $output .= html_writer::table($table);
