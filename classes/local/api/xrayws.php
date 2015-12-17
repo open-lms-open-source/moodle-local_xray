@@ -43,6 +43,7 @@ class xrayws {
 
     const ERR_UNKNOWN  = 1010;
     const PLUGIN       = 'local_xray';
+    const COOKIE       = 'local_xray_cookie';
 
     /**
      * @var null|xrayws
@@ -93,6 +94,11 @@ class xrayws {
     private $curlinfo = null;
 
     /**
+     * @var null|cache
+     */
+    private $cache = null;
+
+    /**
      * @throws nocurl_exception
      */
     private function __construct() {
@@ -102,6 +108,7 @@ class xrayws {
         }
 
         $this->memfile = new memfile();
+        $this->cache = new cache();
     }
 
     private function __clone() {
@@ -121,24 +128,35 @@ class xrayws {
     }
 
     /**
+     * Reset cURL cache for current user.
+     */
+    public function reset_cache() {
+        $this->cache->refresh();
+    }
+
+    /**
      *
      * @param array $custopts
      * @return array
      */
     public function getopts(array $custopts = array()) {
         $this->memfile->reset();
-        $this->rawresponse = null;
+        $this->rawresponse  = null;
         $this->lasthttpcode = null;
-        $this->respheaders = null;
+        $this->respheaders  = null;
+        $this->error        = null;
+        $this->errorno      = 0;
+        $this->errorstring  = null;
+        $this->curlinfo     = null;
 
         $standard = array(
             CURLOPT_FOLLOWLOCATION => false,
             CURLOPT_MAXREDIRS      => 0,
+            CURLOPT_PROTOCOLS      => CURLPROTO_HTTP | CURLPROTO_HTTPS,
             CURLOPT_RETURNTRANSFER => false,
             CURLOPT_FILE           => $this->memfile->get(),
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_CONNECTTIMEOUT => 8,
-            CURLOPT_TIMEOUT        => 8,
+            CURLOPT_CONNECTTIMEOUT => 1,
             CURLOPT_USERAGENT      => 'MoodleXRayClient/1.0',
             CURLINFO_HEADER_OUT    => true,
             CURLOPT_ENCODING       => '',
@@ -152,6 +170,47 @@ class xrayws {
             $standard[CURLOPT_CAINFO] = $certpath;
             $standard[CURLOPT_SSL_VERIFYPEER] = true;
             $standard[CURLOPT_SSL_VERIFYHOST] = 2;
+        }
+
+        // Set $CFG->forced_plugin_settings['local_xray'][connecttimeout] to custom connect timeout.
+        // For more details on this option take a look at
+        // CURLOPT_CONNECTTIMEOUT on http://php.net/manual/en/function.curl-setopt.php .
+        $connecttimeout = get_config('local_xray', 'connecttimeout');
+        if ($connecttimeout !== false) {
+            $standard[CURLOPT_CONNECTTIMEOUT] = $connecttimeout;
+        }
+
+        // Set $CFG->forced_plugin_settings['local_xray'][timeout] to custom timeout.
+        // For more details on this option take a look at
+        // CURLOPT_TIMEOUT on http://php.net/manual/en/function.curl-setopt.php .
+        $timeout = get_config('local_xray', 'timeout');
+        if ($timeout !== false) {
+            $standard[CURLOPT_TIMEOUT] = $timeout;
+        }
+
+        // Proxy support.
+        $proxyhost = get_config('local_xray', 'proxyhost');
+        $proxyport = get_config('local_xray', 'proxyport');
+        if (!empty($proxyhost)) {
+            if (!empty($proxyport)) {
+                $proxyhost .= ':'.$proxyport;
+            }
+            $standard[CURLOPT_PROXY] = $proxyhost;
+        }
+        $proxyuser = get_config('local_xray', 'proxyuser');
+        $proxypwd  = get_config('local_xray', 'proxypwd');
+        if (!empty($proxyuser) && !empty($proxypwd)) {
+            $standard[CURLOPT_PROXYUSERPWD] = $proxyuser.':'.$proxypwd;
+            $standard[CURLOPT_PROXYAUTH   ] = CURLAUTH_BASIC | CURLAUTH_NTLM;
+        }
+        $proxytype = get_config('local_xray', 'proxytype');
+        if (!empty($proxytype)) {
+            if (strcasecmp('SOCKS5', $proxytype) == 0) {
+                $standard[CURLOPT_PROXYTYPE] = CURLPROXY_SOCKS5;
+            } else {
+                $standard[CURLOPT_PROXYTYPE] = CURLPROXY_HTTP;
+                $standard[CURLOPT_HTTPPROXYTUNNEL] = false;
+            }
         }
 
         $options = $standard + $custopts;
@@ -204,7 +263,7 @@ class xrayws {
         if ($length > 11) {
             $pos = stripos($header, 'set-cookie:');
             if ($pos !== false) {
-                self::instance()->cookie = trim(substr($header, $pos + 11));
+                self::instance()->setcookie(trim(substr($header, $pos + 11)));
             }
         }
 
@@ -237,7 +296,12 @@ class xrayws {
             CURLOPT_HTTPHEADER    => $headers,
         );
         $fullopts = $options + $useopts;
-        $curl = new nethold($this->getopts($fullopts));
+        $curlopts = $this->getopts($fullopts);
+        if ($ret = $this->cache->get($url)) {
+            $this->rawresponse = $ret;
+            return true;
+        }
+        $curl = new nethold($curlopts);
         $response = $curl->exec();
         $this->error = $curl->geterror();
         $this->errorno = $curl->geterrno();
@@ -256,7 +320,11 @@ class xrayws {
                     $contentype = isset($this->curlinfo['content_type']) ? $this->curlinfo['content_type'] : false;
                     if ($contentype && (stripos($contentype, 'application/json') !== false)) {
                         $decode = json_decode($this->rawresponse);
-                        if (property_exists($decode, 'error')) {
+                        if ($decode === false) {
+                            $this->errorno     = json_last_error();
+                            $this->error       = json_last_error_msg();
+                            $this->errorstring = 'error_generic';
+                        } else if (property_exists($decode, 'error')) {
                             $this->errorno     = self::ERR_UNKNOWN;
                             $this->error       = $decode->error;
                             $this->errorstring = 'xrayws_error_server';
@@ -268,6 +336,10 @@ class xrayws {
             if ($this->errorno) {
                 $this->errorstring = 'xrayws_error_curl';
             }
+        }
+
+        if ($response) {
+            $this->cache->set($url, $this->rawresponse);
         }
 
         return $response;
@@ -418,7 +490,7 @@ class xrayws {
      * @throws nourl_exception
      */
     public function request_withcookie($url, $method, array $custheaders = array(), array $options = array()) {
-        if (!empty($this->cookie)) {
+        if ($this->hascookie()) {
             $options[CURLOPT_COOKIE] = $this->cookie;
         }
         return $this->request($url, $method, $custheaders, $options);
@@ -462,11 +534,25 @@ class xrayws {
      * @return null|string
      */
     public function getcookie() {
+        if (empty($this->cookie)) {
+            $value = $this->cache->get(self::COOKIE);
+            if (!empty($value)) {
+                $this->cookie = $value;
+            }
+        }
         return $this->cookie;
     }
 
     public function resetcookie() {
+        $this->cache->delete(self::COOKIE);
         $this->cookie = null;
+    }
+
+    protected function setcookie($value) {
+        if (!empty($value)) {
+            $this->cache->set(self::COOKIE, $value);
+            $this->cookie = $value;
+        }
     }
 
     /**
@@ -482,7 +568,8 @@ class xrayws {
      * @return bool
      */
     public function hascookie() {
-        return ($this->cookie !== null);
+        $value = $this->getcookie();
+        return !empty($value);
     }
 
     /**

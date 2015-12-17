@@ -39,6 +39,7 @@ $string['displaymenu_desc'] = 'Controlar la visualización del menu de reportes 
 $string['displayheaderdata'] = 'Mostrar Análisis';
 $string['displayheaderdata_desc'] = 'Controla la visualización de Análisis del curso en la página principal del curso.';
 $string['debuginfo'] = 'Información';
+$string['cachedef_request'] = 'X-Ray caché de los pedidos';
 
 /* Capabilities */
 $string['xray:activityreportindividual_view'] = 'Ver reporte individual de actividad';
@@ -135,6 +136,9 @@ $string['exporttime_desc'] = 'Configure tiempo permitido para exportacion de los
 $string['export_progress'] = 'Reiniciar informacion del progreso';
 $string['export_progress_desc'] = 'Durante exportacion de los datos, informacion del progreso se guarda en '.
                                   'la base de datos. Markando esa opccion borraria esa informacion.';
+$string['curlcache'] = 'Expiracion de Web service caché';
+$string['curlcache_desc'] = 'Determina por cuanto tiempo guardar respuestas de Web service.'.
+                            'Puesto en cero caché seria apagado. Para aclarar - solo respuestas exitosas se guardaran.';
 
 $string['xrayadminserver'] = 'Servidor de administración X-Ray Learning Analytics';
 $string['xrayadminserver_desc'] = 'Locación del servidor.';

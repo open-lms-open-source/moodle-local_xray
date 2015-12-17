@@ -50,12 +50,17 @@ abstract class wsapi {
      * @throws jsonerror_exception
      */
     public static function login() {
+        if (xrayws::instance()->hascookie()) {
+            return true;
+        }
+
         $username = get_config(self::PLUGIN, 'xrayusername');
         $pass     = get_config(self::PLUGIN, 'xraypassword');
         $baseurl  = get_config(self::PLUGIN, 'xrayurl');
         if (($username === false) || ($pass === false) || ($baseurl === false)) {
             return false;
         }
+
         $data = array('email' => $username, 'pass' => $pass);
         $url = sprintf('%s/user/login', $baseurl);
         $result = xrayws::instance()->post_hook($url, $data);
@@ -132,7 +137,9 @@ abstract class wsapi {
             return false;
         }
         $result = false;
-        $data = array('domain' => $domain, 'validhours' => 1);
+        $setting = cache::cache_timeout_hours();
+        $validhours = empty($setting) ? 1 : $setting;
+        $data = array('domain' => $domain, 'validhours' => $validhours);
         $url = sprintf('%s/user/accesstoken', $baseurl);
         if (!xrayws::instance()->hascookie()) {
             if (!self::adminlogin()) {

@@ -52,6 +52,13 @@ if ($hassiteconfig) {
                                                  new lang_string("xrayclientid_desc", $plugin),
                                                  '', PARAM_TEXT));
 
+    // Default time set to 1h.
+    $settings->add( new admin_setting_configtime("{$plugin}/curlcache",
+                                                 "curlcache_minutes",
+                                                 new lang_string("curlcache", $plugin),
+                                                 new lang_string("curlcache_desc", $plugin),
+                                                 ['h' => 1, 'm' => 0]));
+
     // Settings for displaying content inline course front page.
     $settings->add( new admin_setting_heading("{$plugin}/xraydisplayheading",
                                               new lang_string("xraydisplayheading", $plugin),
