@@ -139,7 +139,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
 
             }
         } catch(Exception $e) {
-            get_report_failed::create_from_exception($e, context::instance_by_id($this->courseid), "accessibledata")->trigger();
+            get_report_failed::create_from_exception($e, context_course::instance($this->courseid), "accessibledata")->trigger();
             $output = $this->print_error('accessible_error', $e->getMessage());
         }
 
