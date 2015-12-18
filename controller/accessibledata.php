@@ -71,6 +71,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $this->reportid = required_param("reportid", PARAM_ALPHANUMEXT);
         $this->elementname = required_param("elementname", PARAM_ALPHANUMEXT);
         $this->graphname = rawurldecode(required_param("graphname", PARAM_TEXT));
+        $this->userid = optional_param("userid", null, PARAM_ALPHANUMEXT);
     }
 
     /**
@@ -91,10 +92,13 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $output = "";
 
         // Add nav to return to report.
+        $paramsurl = array("controller" => $this->origincontroller,
+            "courseid" => $this->courseid);
+        if(!empty($this->userid)) {
+            $paramsurl["userid"] = $this->userid;
+        }
         $PAGE->navbar->add(get_string($this->origincontroller, $this->component),
-            new moodle_url('/local/xray/view.php',
-                array("controller" => $this->origincontroller,
-                      "courseid" => $this->courseid)));
+            new moodle_url('/local/xray/view.php',$paramsurl));
         // Set title.
         $title = format_string(get_string($this->name, $this->component).get_string("of",$this->component).$this->graphname);
         $PAGE->set_title($title);

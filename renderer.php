@@ -67,7 +67,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
 
-    public function show_graph($name, $element, $reportid) {
+    public function show_graph($name, $element, $reportid, $extraparamurlaccessible = array()) {
 
         global $PAGE, $COURSE;
         $plugin = "local_xray";
@@ -99,13 +99,17 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Link to accessible version.
         if($existimg) {
-            $urlaccessible = new moodle_url("view.php",
-                array("controller" => "accessibledata",
-                    "origincontroller" => $PAGE->url->get_param("controller"),
-                    "graphname" => rawurlencode($element->title),
-                    "reportid" => $reportid,
-                    "elementname" => $element->elementName,
-                    "courseid" => $COURSE->id));
+
+            $paramsurl = array("controller" => "accessibledata",
+                "origincontroller" => $PAGE->url->get_param("controller"),
+                "graphname" => rawurlencode($element->title),
+                "reportid" => $reportid,
+                "elementname" => $element->elementName,
+                "courseid" => $COURSE->id);
+            if(!empty($extraparamurlaccessible)) {
+                $paramsurl = array_merge($paramsurl, $extraparamurlaccessible);
+            }
+            $urlaccessible = new moodle_url("view.php", $paramsurl);
 
             $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
                 array("target" => "_blank",
