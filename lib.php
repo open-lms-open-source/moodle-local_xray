@@ -117,7 +117,7 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
  * @return void
  */
 function local_xray_extends_navigation(global_navigation $nav) {
-    global $PAGE, $ME;
+    global $PAGE;
     ($nav); // Just to remove unused param warning.
 
     static $search = [
