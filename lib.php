@@ -117,7 +117,7 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
  * @return void
  */
 function local_xray_extends_navigation(global_navigation $nav) {
-    global $PAGE;
+    global $PAGE, $ME;
     ($nav); // Just to remove unused param warning.
 
     static $search = [
@@ -141,6 +141,14 @@ function local_xray_extends_navigation(global_navigation $nav) {
     $courseview = false;
     if ($PAGE->has_set_url()) {
         $courseview = $PAGE->url->compare(new moodle_url('/course/view.php', ['id' => $PAGE->course->id]));
+        if ($courseview) {
+            $buieditid = (int)optional_param('bui_editid'  , 0, PARAM_INT);
+            $buihideid = (int)optional_param('bui_hideid'  , 0, PARAM_INT);
+            $buidelid  = (int)optional_param('bui_deleteid', 0, PARAM_INT);
+            if (!empty($buidelid) || !empty($buihideid) || !empty($buieditid)) {
+                $courseview = false;
+            }
+        }
     }
     if (!$reportview && !$courseview) {
         return;
