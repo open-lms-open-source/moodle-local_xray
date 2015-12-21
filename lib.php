@@ -174,7 +174,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
                 'items'      => $menu,
             ]],
             null,
-            true
+            false
         );
     }
 
