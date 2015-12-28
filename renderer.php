@@ -109,7 +109,7 @@ class local_xray_renderer extends plugin_renderer_base {
             if(!empty($extraparamurlaccessible)) {
                 $paramsurl = array_merge($paramsurl, $extraparamurlaccessible);
             }
-            $urlaccessible = new moodle_url("view.php", $paramsurl);
+            $urlaccessible = new moodle_url("/local/xray/view.php", $paramsurl);
 
             $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
                 array("target" => "_blank",
