@@ -41,6 +41,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     public function view_action() {
 
+        $this->addiconhelp();
         $output = '';
         try {
             if (has_capability("local/xray:gradebookreport_view", $this->get_context())) {

@@ -69,7 +69,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
     public function show_graph($name, $element, $reportid) {
 
-        global $PAGE, $COURSE;
+        global $PAGE, $COURSE, $OUTPUT;
         $plugin = "local_xray";
         $cfgxray = get_config('local_xray');
         $imgurl = sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $element->uuid);
@@ -78,8 +78,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $imgurl = new moodle_url($imgurl, array('accesstoken' => $accesstoken));
         $output = "";
         // List Graph.
+        $title = get_string($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
         $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
-        $output .= html_writer::tag('h3', $element->title, array("class" => "reportsname"));
+        $output .= html_writer::tag('h3', $title, array("class" => "reportsname"));
 
         // Validate if exist and is available image in xray side.
         $existimg = false;
@@ -102,7 +103,6 @@ class local_xray_renderer extends plugin_renderer_base {
             $urlaccessible = new moodle_url("view.php",
                 array("controller" => "accessibledata",
                     "origincontroller" => $PAGE->url->get_param("controller"),
-                    "graphname" => rawurlencode($element->title),
                     "reportid" => $reportid,
                     "elementname" => $element->elementName,
                     "courseid" => $COURSE->id));
@@ -135,7 +135,10 @@ class local_xray_renderer extends plugin_renderer_base {
         if ($existimg) {
             $output .= html_writer::start_tag('div', array('id' => $element->elementName, 'class' => 'xray-graph-background'));
             $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
-            $output .= html_writer::tag('h6', $element->title, array('class' => 'xray-graph-caption-text'));
+
+            $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
+            $output .= html_writer::tag('h6', $title.$helpicon, array('class' => 'xray-graph-caption-text'));
+
             if (isset($element->tooltip) && !empty($element->tooltip)) {
                 $output .= html_writer::tag('p', $element->tooltip, array('class' => 'xray-graph-description'));
             }
@@ -145,6 +148,8 @@ class local_xray_renderer extends plugin_renderer_base {
                 'href' => '#',
                 'class' => 'xray-close-link',
                 'title' => get_string('close', 'local_xray')));
+
+
             $output .= html_writer::end_tag('div');
         }
         return $output;
@@ -179,34 +184,34 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function standard_table(array $datatable) {
-        global $PAGE;
+
+        global $PAGE, $OUTPUT, $PAGE;
         // Load Jquery.
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         // Load specific js for tables.
         $PAGE->requires->jquery_plugin("local_xray-show_on_table", "local_xray");
+
         $output = "";
+
         // Table Title with link to open it.
-        $output .= "<h3 class='xray-table-title-link reportsname'>
-        <a href='#".$datatable['id']."'>".$datatable['title']."</a>
-        </h3>";
-        /*$link = html_writer::start_tag('a', array(
-            'id' => "title_{$datatable['id']}",
-            'href' => "#{$datatable['id']}",
-            'class' => 'xray-table-title-link'));
-        $link .= html_writer::end_tag('a');
-        $output .= html_writer::tag('h3', $datatable['title'], array('class' => 'reportsname'));
-        */
+        $title = get_string($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
+        $link = html_writer::tag("a", $title, array('href' => "#{$datatable['id']}"));
+        $output .= html_writer::tag('h3', $link, array('class' => 'xray-table-title-link reportsname'));
+
         // Table.
         $output .= html_writer::start_tag('div', array(
             'id' => "{$datatable['id']}",
             'class' => 'xray-toggleable-table',
             'tabindex' => '0'));
-        // Table jquery datatables for show reports. //TODO clean styles.
+        // Table jquery datatables for show reports.
         $output .= html_writer::start_tag("table",
             array("id" => "table_{$datatable['id']}",
                 "class" => "xraydatatable display"));
-        $output .= html_writer::tag("caption", $datatable['title']);
+
+        // Help icon for tables.
+        $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
+        $output .= html_writer::tag("caption", $datatable['title'].$helpicon);
         $output .= html_writer::start_tag("thead");
         $output .= html_writer::start_tag("tr");
         foreach ($datatable['columns'] as $c) {
@@ -224,6 +229,68 @@ class local_xray_renderer extends plugin_renderer_base {
         return $output;
     }
 
+    /**
+     * Show minutes in format hours:minutes
+     * @param int $minutes
+     * @return string
+     */
+    public function minutes_to_hours($minutes) {
+        return date('H:i', mktime(0, $minutes));
+    }
+
+    /**
+     * Set Category
+     *
+     * @param  float $value
+     * @return string
+     */
+    public function set_category($value) {
+        $size = 'high';
+        if ($value < 0.2) {
+            $size = 'low';
+        } else if (($value > 0.2) && ($value < 0.3)) {
+            $size = 'medium';
+        }
+
+        return get_string($size, 'local_xray') . ' ' . $value;
+    }
+
+    /**
+     * Set Category Regularly
+     *
+     * @param int $value
+     * @return string
+     */
+    public function set_category_regularly($value) {
+        $string = 'irregular';
+        if ($value < 1) {
+            $string = 'highlyregularity';
+        } else if ($value < 2) {
+            $string = 'somewhatregularity';
+        }
+
+        return get_string($string, 'local_xray') . ' ' . $value;
+    }
+
+    /**
+     * Similar to render_help_icon but redirect to external url in a new page.
+     *
+     * @param $title
+     * @param $url
+     * @return string
+     */
+    public function help_icon_external_url($title, $url) {
+        global $CFG;
+
+        // first get the help image icon
+        $src = $this->pix_url('help');
+        $attributes = array('src'=>$src, 'class'=>'iconhelp');
+        $output = html_writer::empty_tag('img', $attributes);
+
+        $attributes = array('href' => $url, 'title' => $title, 'aria-haspopup' => 'true', 'target'=>'_blank');
+        $output = html_writer::tag('a', $output, $attributes);
+        return html_writer::tag('span', $output);
+    }
     /************************** End General elements for Reports **************************/
 
     /************************** Elements for Report Discussion **************************/

@@ -70,7 +70,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $this->origincontroller = required_param("origincontroller", PARAM_ALPHANUMEXT);
         $this->reportid = required_param("reportid", PARAM_ALPHANUMEXT);
         $this->elementname = required_param("elementname", PARAM_ALPHANUMEXT);
-        $this->graphname = rawurldecode(required_param("graphname", PARAM_TEXT));
+        $this->graphname = get_string($this->origincontroller."_".$this->elementname, $this->component);
     }
 
     /**

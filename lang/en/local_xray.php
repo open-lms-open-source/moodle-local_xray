@@ -42,17 +42,17 @@ $string['debuginfo'] = 'Debug information';
 $string['cachedef_request'] = 'X-Ray request cache';
 
 /* Capabilities */
-$string['xray:activityreportindividual_view'] = 'View Activity Report Individual';
+$string['xray:activityreportindividual_view'] = 'View Activity Metrics - Individual';
 $string['xray:activityreport_view'] = 'View Activity Report';
 $string['xray:dashboard_view'] = 'View Dashboard Report';
 $string['xray:discussionreport_view'] = 'View Discussion Report';
 $string['xray:discussionreportindividual_view'] = 'View Discussion Report Individual';
 $string['xray:discussionreportindividualforum_view'] = 'View Discussion Report Individual Forum';
-$string['xray:discussionendogenicplagiarism_view'] = 'View Discussion Plagiarism';
-$string['xray:discussiongrading_view'] = 'View Discussion Grading';
+$string['xray:discussionendogenicplagiarism_view'] = 'View Word Overlap';
+$string['xray:discussiongrading_view'] = 'View Grading';
 $string['xray:gradebookreport_view'] = 'View Gradebook Report';
 $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indivisual Quiz';
-$string['xray:risk_view'] = 'View Risk Report';
+$string['xray:risk_view'] = 'View Risk Status Report';
 $string['xray:view'] = 'X-Ray Learning Analytics View';
 
 /* Categories for numbers values */
@@ -67,7 +67,7 @@ $string['somewhatregularity'] = 'Somewhat regular';
 /* Report Activity Report*/
 $string['activityreport'] = 'Activity';
 /* Report Activity Report Individual*/
-$string['activityreportindividual'] = 'Activity Report Individual';
+$string['activityreportindividual'] = 'Activity Metrics - Individual';
 /* Discussion report*/
 $string['discussionreport'] = 'Discussions';
 /* Discussion report individual*/
@@ -75,13 +75,14 @@ $string['discussionreportindividual'] = 'Discussion Report Individual';
 /* Discussion report individual forum*/
 $string['discussionreportindividualforum'] = 'Discussion Report Individual Forum';
 /* Discussion report Endogenic Plagiarism*/
-$string['discussionendogenicplagiarism'] = 'Discussion Plagiarism';
+$string['discussionendogenicplagiarism'] = 'Word Overlap';
 /* Risk report*/
 $string['risk'] = 'Risk Status';
 /* Discussiongrading report*/
-$string['discussiongrading'] = 'Discussion Grading';
+$string['discussiongrading'] = 'Grading';
 /* Gradebook report*/
 $string['gradebookreport'] = 'Gradebook';
+$string['help'] = 'Help';
 
 /* Columns reports */
 $string['reportdate'] = 'Date of report';
@@ -219,6 +220,218 @@ $string['accessibledata'] = 'Accessible Data';
 $string['accessible_view_data'] = 'View data';
 $string['accessible_emptydata'] = 'Without data available for Accessible version.';
 $string['accessible_error'] = 'Accessible version for this graph was not found in X-Ray Learning Analytics.';
+$string['reports_help'] = 'Help';
+
+/* Tables names all report*/
+$string['activityreport_nonStarters'] = 'Inactive Students';// Activity report.
+$string['activityreport_studentList'] = 'Activity Metrics'; // Activity report.
+$string['risk_nonStarters'] = 'Inactive Students'; // Risk report.
+$string['risk_riskMeasures'] = 'Risk Metrics'; // Risk report.
+$string['gradebookreport_element2'] = 'Student grades'; // Gradebook report.
+$string['gradebookreport_element4'] = 'Summary of Quizzes'; // Gradebook report.
+$string['discussionreport_discussionMetrics'] = 'Participation Metrics'; // Discussion report.
+$string['discussionreport_discussionActivityByWeek'] = 'Activity by Week'; // Discussion report.
+$string['discussionreport_studentDiscussionGrades'] = 'Grade Recommendation'; // Discussion report.
+$string['discussionreportindividual_discussionMetrics'] = 'Participation Metrics'; // Discussion report individual.
+$string['discussionreportindividual_discussionActivityByWeek'] = 'Activity by Week'; // Discussion report individual.
+
+/* Help tables all reports*/
+$string['activityreport_nonStarters_help'] = 'The following students have not been active in your course yet. ';// Activity.
+$string['activityreport_studentList_help'] = 'Seeing how students are active in a course give insight into their'.
+    ' engagement and practices. This table shows student activity and regularity. The lower the number in the Visit'.
+    ' Regularity column the more regular they are. You can also see reports on individual students. Click the report'.
+    ' at the beginning of the row to see how that student is doing. '; // Activity report.
+$string['risk_nonStarters_help'] = 'The following students have not been active in your course yet.'; // Risk report.
+$string['risk_riskMeasures_help'] = 'This table helps you identify the students who are at risk of droping out,'.
+    ' withdrawing from, or failing in your course. Higher numbers indicate greater risk. The total risk is based'.
+    ' on a student\'s grades (academic) as well as their participation in course discussions (social).'; // Risk report.
+$string['gradebookreport_element2_help'] = 'This table shows you how well students are doing on the quizzes in the'.
+    ' course. A standardize score is given to each student. It shows how well a student has done on the quizzes'.
+    ' compared to the average of the class.'; // Gradebook report.
+$string['gradebookreport_element4_help'] = 'This table shows how students have done on average on each quiz. It also'.
+    ' shows you the relationship of this quiz to the student\'s accumulative score so far. High percentages could'.
+    ' indicate strong students. '; // Gradebook report.
+$string['discussionreport_discussionMetrics_help'] = 'This table shows how a student participates in discussions.'.
+    ' Original contribution and critical thought scores are determined by an analysis of the words used by the students.'.
+    ' Original contribution is based on a word count with stop words, such as pronouns and prepositions, filtered out'.
+    ' to determine the ratio of unique words used. Critical thought is based on the number of reflective statements'.
+    ' students use. For example, "I agree" or "Me too!". Click the report beside a student name to see how they are'.
+    ' doing.'; // Discussion report.
+$string['discussionreport_discussionActivityByWeek_help'] = 'This table shows how long it took students to reply on'.
+    ' average and the average word count.'; // Discussion report.
+$string['discussionreport_studentDiscussionGrades_help'] = 'Grading recommendations are based on the frequency of posts,'.
+    ' original contribution, and evidence of critical thought. Each are weighted equally by default.'; // Discussion report.
+$string['discussionreportindividual_discussionMetrics_help'] = 'This table shows how the student participates in'.
+    ' discussions. Original contribution and critical thought scores are determined by an analysis of the words used'.
+    ' by the students. Original contribution is based on a word count with stop words, such as pronouns and'.
+    ' prepositions, filtered out to determine the ratio of unique words used. Critical thought is based on the'.
+    ' number of reflective statements students use.'; // Discussion report individual.
+$string['discussionreportindividual_discussionActivityByWeek_help'] = 'This table shows how long it took students to'.
+    ' reply on average and the average word count.'; // Discussion report individual.
+
+/* Graphs Activity report*/
+$string['activityreport_activityLevelTimeline'] = 'Course Activity by Date';
+$string['activityreport_compassTimeDiagram'] = 'Activity by Time of Day';
+$string['activityreport_barplotOfActivityByWeekday'] = 'Activity Over Last Two Weeks by Weekday';
+$string['activityreport_barplotOfActivityWholeWeek'] = 'Activity Over Last Two Weeks';
+$string['activityreport_activityByWeekAsFractionOfTotal'] = 'Relative Activity Compared to Other Students in Class';
+$string['activityreport_activityByWeekAsFractionOfOwn'] = 'Relative Activity Compared to Self';
+$string['activityreport_firstloginPiechartAdjusted'] = 'Pie Chart of First Time Access Distribution';
+
+/* Help Graphs Activity report*/
+$string['activityreport_activityLevelTimeline_help'] = 'This graph shows an estimate of time spent in your course'.
+    ' (blue line) and a forecast (dotted line) for the next two weeks. The dark-gray line shows the estimated'.
+    ' average hours actove over a period of time. The shaded area It shows how close the representation of the estimated'.
+    ' average is to the true average of the class. Activity forecasted for the next two weeks is indicated with'.
+    ' a dotted line. Spikes in activity which are outside of the expected range are highlighted.';
+$string['activityreport_compassTimeDiagram_help'] = 'This diagram is of a 24-hour day. It is based on the time set on'.
+    ' your institution\'s server.  A line shows when students are spending time in your course. Your course is busiest'.
+    ' when the line approaches the outside edges of the 24-hour circle. This information  can help you plan activities'.
+    ' that require full participation.';
+$string['activityreport_barplotOfActivityByWeekday_help'] = 'This chart shows the estimated time spent in the course broken down by weekday.'.
+    'The blue bars represent the activity from the past seven days. The yellow bars show what the activity was like seven days before.';
+$string['activityreport_barplotOfActivityWholeWeek_help'] = 'This chart shows the activity-level (estimated time spent)'.
+    ' in the course over a week. The blue bars represent the activity from the last seven days. The yellow bars show'.
+    ' what the activity was like the seven days before. ';
+$string['activityreport_activityByWeekAsFractionOfTotal_help'] = 'Each dot in this chart represents the time'.
+    ' a student spent in your course in a given week compared to other students. A bigger dots indicate more activity.';
+$string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Each dot in this chart represents the time'.
+' a student spent in your course in a given week compared to other weeks. A bigger dots  indicate more activity.';
+$string['activityreport_firstloginPiechartAdjusted_help'] = 'The diagram shows you when students logged into your course'.
+    ' and how many haven\'t yet. The first day of the course may not be the scheduled start date. It starts the day the'.
+    ' first participant accessed the course.This includes the teacher. The pattern seen here may be an indication of'.
+    ' future engagement';
+
+/* Graphs Activity Individual report*/
+$string['activityreportindividual_activityLevelTimeline'] = 'Activity by Date';
+$string['activityreportindividual_barplotOfActivityByWeekday'] = 'Activity Over Last Two Weeks by Weekday';
+$string['activityreportindividual_barplotOfActivityWholeWeek'] = 'Activity Over Last Two Weeks';
+
+/* Help Graphs Activity Individual report*/
+$string['activityreportindividual_activityLevelTimeline_help'] = 'The graph shows an estimate of time spent in your'.
+    ' course (blue line) and a forecast (dotted line) for the next two weeks. The dark-gray line shows the estimated'.
+    ' average hours actove over a period of time. The shaded area It shows how close the representation of the'.
+    ' estimated average is to the true average of the class. Activity forecasted for the next two weeks is indicated'.
+    ' with a dotted line. Spikes in activity which are outside of the expected range are highlighted.';
+$string['activityreportindividual_barplotOfActivityByWeekday_help'] = 'The chart shows the estimated time spent in the'.
+    ' course broken down by weekday. The blue bars represent the activity from the last seven days. The yellow bars'.'
+     show what the activity was like the seven days before.';
+$string['activityreportindividual_barplotOfActivityWholeWeek_help'] = 'TThe chart shows the estimated time spent in the'.
+    ' course over a week. The blue bars represent the activity from the last seven days. The yellow bars show what the'.
+    ' activity was like seven days before. ';
+
+/* Graphs Risk report*/
+$string['risk_riskDensity'] = 'Total Risk Profile';
+$string['risk_riskScatterPlot'] = 'Academic Versus Social Risk';
+
+/* Help Graphs Risk report*/
+$string['risk_riskDensity_help'] = 'This graphic shows the distribution of estimated risk in the course. '.
+    'Green represents those who are not considered at risk. Red shows those who are at risk.';
+$string['risk_riskScatterPlot_help'] = 'Each dot in this scatterplot represents a student. Where the student is on'.
+    ' the graph shows their level of social and academic risk. The black line shows the expected relationship between'.
+    ' social and academic risk. The shaded area (confidence interval) gives a range for the expected relationship.'.
+    ' Color is used to help you determine risk potential quickly. Green is not at risk. Red is at risk. ';
+
+/* Graphs Risk report*/
+$string['gradebookreport_studentScoreDistribution'] = 'Distribution of Scores';
+$string['gradebookreport_scoreDistributionByItem'] = 'Distribution of Quiz Scores';
+$string['gradebookreport_scatterPlot'] = 'Assigned Score Points versus Percentages';
+$string['gradebookreport_itemsHeatmap'] = 'Comparison of Quiz Scores';
+
+/* Help Graphs Gradebook report*/
+$string['gradebookreport_studentScoreDistribution_help'] = 'This graph shows how the scores scores are distributed'.
+    ' over your students. The peak shows what the majority of students are getting. A bell shaped distribution pattern'.
+    ' could indicate that there was no bias or inconsistencies. Different distribution patterns may indicate'.
+    ' significant differences in the difficulty level of the quizzes.';
+$string['gradebookreport_scoreDistributionByItem_help'] = 'This boxplot shows the distribution of student scores on'.
+    ' a quiz. A quiz is represented by a box and any vertical lines above and below it. Dots are student scores. The'.
+    ' thick horizontal line shows the average score on the quiz. There are four grade ranges represented for each quiz.'.
+    ' The top 25% (vertical line on top of the box), the 25% above average (area of the box above the average score),'.
+    ' the 25% below average (area of the box below the average score), and the bottom 25% (vertical line below the box).'.
+    ' The longer or taller the range the more spread out the scores are in it. ';
+$string['gradebookreport_scatterPlot_help'] = 'This graph shows consistency in grading. Each dot in this diagram'.
+    ' represents a quiz. The black line shows the expected relationship between assigned grade points and percentages.'.
+    ' The shaded area (confidence interval) gives a range for the expected relationship. Quizzes outside the expected'.
+    ' relationship range may indicate inconsistencies in grading.';
+$string['gradebookreport_itemsHeatmap_help'] = 'This heatmap shows how each student did on a quiz compared to the rest'.
+    ' of the class. Darker colors indicate higher scores. If you have too many of one shade it may indicate that'.
+    ' the quiz is too easy or too difficult.';
+
+/* Graphs Discussion report*/
+$string['discussionreport_wordcloud'] = 'Main Terms';
+$string['discussionreport_avgWordPerPost'] = 'Weekly Average Word Count per Post';
+$string['discussionreport_socialStructure'] = 'Social Structure';
+$string['discussionreport_socialStructureWordCount'] = 'Social Structure with Word Count';
+$string['discussionreport_socialStructureWordContribution'] = 'Social Structure with Adjusted Contributions';
+$string['discussionreport_socialStructureWordCTC'] = 'Social Structure with Critical Thinking Coefficient';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = 'Heatmap Endogenic Plagiarism (Students only)';
+$string['discussionreport_endogenicPlagiarismHeatmap'] = 'Heatmap Endogenic Plagiarism (Including Instructor)';
+$string['discussionreport_discussionSuggestedGrades'] = 'Barplot of Suggested Grades';
+
+/* Help Graphs Discussion report*/
+$string['discussionreport_wordcloud_help'] = 'The diagram shows the main terms of the discussion groups. Stop-words have been filtered'.
+    ' out leaving the semantically relevant ones. The larger and more central a word is the more it has been used'.
+    ' in the discussion groups. ';
+$string['discussionreport_avgWordPerPost_help'] = 'The diagram shows the average word count in the posts that have been made to the'.
+    ' discussion groups in the course. The x-axis corresponds to the weeks of the course and the y axis average number'.
+    ' of words in the posts. The blue line represents observed values while the yellow dotted line represents'.
+    ' the expected values.';
+$string['discussionreport_socialStructure_help'] = 'The diagram shows who is talking to whom in the discussion groups for the course.'.
+    ' Each participant is represented by a vertex, and the communication between them is represented by the edges of'.
+    ' the sociogram, bulging to the right in the direction of the communication. The thickness of the edges represents'.
+    ' the raw word-count of the posts.';
+$string['discussionreport_socialStructureWordCount_help'] = 'The diagram shows who is talking to whom in the discussion groups for the'.
+    ' course. Each participant is represented by a vertex, and the communication between them is represented by the'.
+    ' edges of the sociogram, bulging to the right in the direction of the communication. The thickness of the edges'.
+    ' represents the type/token ratio for the posts.';
+$string['discussionreport_socialStructureWordContribution_help'] = 'The diagram shows who is talking to whom in the discussion groups'.
+    ' for the course. Each participant is represented by a vertex, and the communication between them is represented'.
+    ' by the edges of the sociogram, bulging to the right in the direction of the communication. The thickness of the'.
+    ' edges represents the type/token ratio for the posts.';
+$string['discussionreport_socialStructureWordCTC_help'] = 'The diagram shows who is talking to whom in the discussion groups for the'.
+    ' course. Each participant is represented by a vertex, and the communication between them is represented by the'.
+    ' edges of the sociogram, bulging to the right in the direction of the communication. The thickness of the edges'.
+    ' represents the critical thinking coefficient of the posts.';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'The heat-maps shows the degree of similarity of the'.
+    ' participants’s posts in the discussion groups. Since each post has a time stamp it is possible to elicit'.
+    ' information about endogenic plagiarism, i.e. participants copying previous posts instead of making original'.
+    ' contributions. This may be completely legitimate, e.g. quoting a fellow student, or an attempt to present'.
+    ' someone else’s idea without giving credit. In this visualization the instructor has been filtered out.';
+$string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'The heat-maps shows the degree of similarity of the participants’s'.
+    ' posts in the discussion groups. Since each post has a time stamp it is possible to elicit information about'.
+    ' endogenic plagiarism, i.e. participants copying previous posts instead of making original contributions. This'.
+    ' may be completely legitimate, e.g. quoting a fellow student, or an attempt to present someone else’s idea'.
+    ' without giving credit.';
+$string['discussionreport_discussionSuggestedGrades_help'] = 'The diagram shows the distribution of grades suggested by X-Ray'.
+    ' Learning Analytics for the participation in the discussion groups. The yellow line represents a statistically'.
+    ' normal (bell-curve) distribution and the red dotted line represents a skewed distribution, which is more'.
+    ' frequently found when analyzing grade-data.';
+
+/* Graphs Discussion report individual*/
+$string['discussionreportindividual_wordcloud'] = 'Most Used Words';
+$string['discussionreportindividual_socialStructure'] = 'Regularity of Most Used Words';
+$string['discussionreportindividual_wordHistogram'] = 'Histogram of Main Terms';
+
+/* Help Graphs Discussion report individual*/
+$string['discussionreportindividual_wordcloud_help'] = 'This word cloud shows the words used most often in discussions.'.
+    ' It is based on a word count of unique words used.  Bigger words indicate more use.  ';
+$string['discussionreportindividual_socialStructure_help'] = 'This diagram shows who this student is talking to. Color'.
+    ' show how connected a student is to the rest of the class. Blue shows an average or a above average connection.'.
+    ' Yellow shows a below average connection. Red shows that there has been no connection with that student yet. ';
+$string['discussionreportindividual_wordHistogram_help'] = 'This histogram shows how often a student\'s 10 most used words are used.';
+
+/* Graphs Discussion report individual forum*/
+$string['discussionreportindividualforum_wordcloud'] = 'Most Used Words';
+$string['discussionreportindividualforum_socialStructure'] = 'Regularity of Most Used Words';
+$string['discussionreportindividualforum_wordHistogram'] = 'Histogram of Main Terms';
+
+/* Help Graphs Discussion report individual forum*/
+$string['discussionreportindividualforum_wordcloud_help'] = 'This word cloud shows the words used most often in discussions.'.
+    ' It is based on a word count of unique words used.  Bigger words indicate more use.  ';
+$string['discussionreportindividualforum_socialStructure_help'] = 'This diagram shows who this student is talking to. Color'.
+    ' show how connected a student is to the rest of the class. Blue shows an average or a above average connection.'.
+    ' Yellow shows a below average connection. Red shows that there has been no connection with that student yet. ';
+$string['discussionreportindividualforum_wordHistogram_help'] = 'This histogram shows how often a student\'s 10 most used words are used.';
 
 /* Cut-off points settings */
 /* Header Title */

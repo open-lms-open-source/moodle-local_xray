@@ -94,6 +94,54 @@ class local_xray_controller_reports extends mr_controller {
     }
 
     /**
+     * Add icon for redirect to help in heading.
+     */
+    public function addiconhelp() {
+
+        global $PAGE;
+
+        // Set url for report.
+        switch($this->name) {
+            case "activityreport":
+            case "activityreportindividual":
+                $report = "Activity_Report";
+                break;
+            case "discussionreport":
+            case "discussionreportindividual":
+            case "discussionreportindividualforum":
+                $report = "Discussions_Report";
+                break;
+            case "gradebookreport":
+                $report = "Gradebook_Report";
+                break;
+            case "risk":
+                $report = "Risk_Status_Report";
+                break;
+            default:
+                $report = "";
+        }
+
+        // Set url lang.
+        switch(current_language()) {
+            case "es":
+                $lang = "es-es";
+                break;
+            default:
+                // All languages except spanish will have link to english help in blackboard site.
+                $lang = "en-us";
+                break;
+        }
+        $baseurl = "https://%s.help.blackboard.com/Moodlerooms/Teacher/Track_Progress/X-Ray_Learning_Analytics/%s";
+        $helpurl = sprintf($baseurl, $lang, $report);
+
+        // Add icon for help of report. Link redirect to external url.
+        $newheading = $PAGE->title.$this->output->help_icon_external_url(get_string('reports_help', $this->component),
+                $helpurl);
+
+        $this->heading->text = $newheading;
+    }
+
+    /**
      * @return core_renderer_ajax|null
      */
     protected function getajaxrenderer() {

@@ -40,18 +40,21 @@ use local_xray\event\get_report_failed;
 class local_xray_controller_discussionreportindividual extends local_xray_controller_reports {
 
     public function init() {
-        parent::init();
         $this->userid = required_param('userid', PARAM_INT);
+        $this->url->param("userid", $this->userid);
     }
 
     public function view_action() {
         global $PAGE, $DB;
 
+        $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         // Add nav to return to discussionreport.
         $PAGE->navbar->add(get_string("discussionreport", $this->component),
             new moodle_url('/local/xray/view.php',
                 array("controller" => "discussionreport", "courseid" => $this->courseid)));
         $PAGE->navbar->add($PAGE->title);
+        $this->addiconhelp();
+
         $output = "";
         try {
             $report = "discussion";

@@ -40,6 +40,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
     public function view_action() {
 
+        $this->addiconhelp();
         $output = '';
         try {
             // INT-8186 (add non-active students from firstlogin in this report. This is available in activity report too).

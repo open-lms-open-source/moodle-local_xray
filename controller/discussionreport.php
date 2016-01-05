@@ -56,6 +56,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     public function view_action() {
 
+        $this->addiconhelp();
         $output = '';
         $ctx = $this->get_context();
         try {

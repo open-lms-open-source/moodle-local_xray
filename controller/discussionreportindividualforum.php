@@ -51,9 +51,10 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
     private $cmid;
 
     public function init() {
-        parent::init();
         $this->cmid = required_param('cmid', PARAM_INT); // Cmid of forum/hsuforum.
         $this->forumid = required_param('forum', PARAM_INT); // Id of forum/hsuforum.
+        $this->url->param("cmid", $this->cmid);
+        $this->url->param("forum", $this->forumid);
     }
 
     public function view_action() {
@@ -83,6 +84,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
         }
 
         $PAGE->navbar->add($PAGE->title);
+        $this->addiconhelp();
         $output = "";
 
         try {

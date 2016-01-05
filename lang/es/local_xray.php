@@ -217,7 +217,141 @@ $string['accessibledata'] = 'Datos accesibles';
 $string['accessible_view_data'] = 'Ver datos';
 $string['accessible_emptydata'] = 'No hay datos disponibles para version accesible.';
 $string['accessible_error'] = 'Versión accesible para este gráfico no fue encontrada en X-Ray Learning Analytics.';
+$string['reports_help'] = 'Ayuda';
 
+/* Tables names all report*/
+/* TODO:: Waiting spanish translation.
+$string['activityreport_nonStarters'] = '';// Activity and risk report.
+$string['activityreport_studentList'] = ''; // Activity report.
+$string['risk_nonStarters'] = ''; // Risk report.
+$string['risk_riskMeasures'] = ''; // Risk report.
+$string['gradebookreport_element2'] = ''; // Gradebook report.
+$string['gradebookreport_element4'] = ''; // Gradebook report.
+$string['discussionreport_discussionMetrics'] = ''; // Discussion report.
+$string['discussionreport_discussionActivityByWeek'] = ''; // Discussion report.
+$string['discussionreport_studentDiscussionGrades'] = ''; // Discussion report.
+$string['discussionreportindividual_discussionMetrics'] = ''; // Discussion report individual.
+$string['discussionreportindividual_discussionActivityByWeek'] = ''; // Discussion report individual.
+*/
+/* Help tables all reports*/
+/* TODO:: Waiting spanish translation.
+$string['activityreport_nonStarters_help'] = '';// Activity and risk report.
+$string['activityreport_studentList_help'] = ''; // Activity report.
+$string['risk_nonStarters_help'] = ''; // Risk report.
+$string['risk_riskMeasures_help'] = ''; // Risk report.
+$string['gradebookreport_element2_help'] = ''; // Gradebook report.
+$string['gradebookreport_element4_help'] = ''; // Gradebook report.
+$string['discussionreport_discussionMetrics_help'] = ''; // Discussion report.
+$string['discussionreport_discussionActivityByWeek_help'] = ''; // Discussion report.
+$string['discussionreport_studentDiscussionGrades_help'] = ''; // Discussion report.
+$string['discussionreportindividual_discussionMetrics_help'] = ''; // Discussion report individual.
+$string['discussionreportindividual_discussionActivityByWeek_help'] = ''; // Discussion report individual.
+*/
+/* Graphs Activity report*/
+/* TODO:: Waiting spanish translation.
+$string['activityreport_activityLevelTimeline'] = '';
+$string['activityreport_compassTimeDiagram'] = '';
+$string['activityreport_barplotOfActivityByWeekday'] = '';
+$string['activityreport_barplotOfActivityWholeWeek'] = '';
+$string['activityreport_activityByWeekAsFractionOfTotal'] = '';
+$string['activityreport_activityByWeekAsFractionOfOwn'] = '';
+$string['activityreport_firstloginPiechartAdjusted'] = '';
+*/
+/* Help Graphs Activity report*/
+/* TODO:: Waiting spanish translation.
+$string['activityreport_activityLevelTimeline_help'] = '';
+$string['activityreport_compassTimeDiagram_help'] = '';
+$string['activityreport_barplotOfActivityByWeekday_help'] = '';
+$string['activityreport_barplotOfActivityWholeWeek_help'] = '';
+$string['activityreport_activityByWeekAsFractionOfTotal_help'] = '';
+$string['activityreport_activityByWeekAsFractionOfOwn_help'] = '';
+$string['activityreport_firstloginPiechartAdjusted_help'] = '';
+*/
+
+/* Graphs Activity Individual report*/
+/* TODO:: Waiting spanish translation.
+$string['activityreportindividual_activityLevelTimeline'] = '';
+$string['activityreportindividual_barplotOfActivityByWeekday'] = '';
+$string['activityreportindividual_barplotOfActivityWholeWeek'] = '';
+*/
+/* Help Graphs Activity Individual report*/
+/* TODO:: Waiting spanish translation.
+$string['activityreportindividual_activityLevelTimeline_help'] = '';
+$string['activityreportindividual_barplotOfActivityByWeekday_help'] = '';
+$string['activityreportindividual_barplotOfActivityWholeWeek_help'] = '';
+*/
+/* Graphs Risk report*/
+/* TODO:: Waiting spanish translation.
+$string['risk_riskDensity'] = '';
+$string['risk_riskScatterPlot'] = '';
+*/
+/* Help Graphs Risk report*/
+/* TODO:: Waiting spanish translation.
+$string['risk_riskDensity_help'] = '';
+$string['risk_riskScatterPlot_help'] = '';
+*/
+/* Graphs Risk report*/
+/* TODO:: Waiting spanish translation.
+$string['gradebookreport_studentScoreDistribution'] = '';
+$string['gradebookreport_scoreDistributionByItem'] = '';
+$string['gradebookreport_scatterPlot'] = '';
+$string['gradebookreport_itemsHeatmap'] = '';
+*/
+/* Help Graphs Gradebook report*/
+/* TODO:: Waiting spanish translation.
+$string['gradebookreport_studentScoreDistribution_help'] = '';
+$string['gradebookreport_scoreDistributionByItem_help'] = '';
+$string['gradebookreport_scatterPlot_help'] = '';
+$string['gradebookreport_itemsHeatmap_help'] = '';
+*/
+/* Graphs Discussion report*/
+/* TODO:: Waiting spanish translation.
+$string['discussionreport_wordcloud'] = '';
+$string['discussionreport_avgWordPerPost'] = '';
+$string['discussionreport_socialStructure'] = '';
+$string['discussionreport_socialStructureWordCount'] = '';
+$string['discussionreport_socialStructureWordContribution'] = '';
+$string['discussionreport_socialStructureWordCTC'] = '';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = '';
+$string['discussionreport_endogenicPlagiarismHeatmap'] = '';
+$string['discussionreport_discussionSuggestedGrades'] = '';
+*/
+/* Help Graphs Discussion report*/
+/* TODO:: Waiting spanish translation.
+$string['discussionreport_wordcloud_help'] = '';
+$string['discussionreport_avgWordPerPost_help'] = '';
+$string['discussionreport_socialStructure_help'] = '';
+$string['discussionreport_socialStructureWordCount_help'] = '';
+$string['discussionreport_socialStructureWordContribution_help'] = '';
+$string['discussionreport_socialStructureWordCTC_help'] = '';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = '';
+$string['discussionreport_endogenicPlagiarismHeatmap_help'] = '';
+$string['discussionreport_discussionSuggestedGrades_help'] = '';
+*/
+/* Graphs Discussion report individual*/
+/* TODO:: Waiting spanish translation.
+$string['discussionreportindividual_wordcloud'] = '';
+$string['discussionreportindividual_socialStructure'] = '';
+$string['discussionreportindividual_wordHistogram'] = '';
+*/
+/* Help Graphs Discussion report individual*/
+/* TODO:: Waiting spanish translation.
+$string['discussionreportindividual_wordcloud_help'] = '';
+$string['discussionreportindividual_socialStructure_help'] = '';
+$string['discussionreportindividual_wordHistogram_help'] = '';
+*/
+/* Graphs Discussion report individual forum*/
+/* TODO:: Waiting spanish translation.
+$string['discussionreportindividualforum_wordcloud'] = '';
+$string['discussionreportindividualforum_socialStructure'] = '';
+$string['discussionreportindividualforum_wordHistogram'] = '';
+*/
+/* Help Graphs Discussion report individual forum*/
+/* TODO:: Waiting spanish translation.
+$string['discussionreportindividualforum_wordcloud_help'] = '';
+$string['discussionreportindividualforum_socialStructure_help'] = '';
+$string['discussionreportindividualforum_wordHistogram_help'] ='';
+*/
 /* Cut-off points settings */
 /* Header Title */
 $string['cutoff_title'] = 'Valores de los puntos de corte entre cada rango';

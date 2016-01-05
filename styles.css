@@ -308,6 +308,10 @@
     display: none;
 }
 
+#page-local-xray-view div.moodle-dialogue-base div.yui3-widget {
+    z-index: 8013 !important; /* We have modal with index 8010*/
+}
+
 .xray-graph-background:target {
     display: block;
 }
@@ -318,20 +322,17 @@
 }
 
 /* TODO - make responsive when we can */
-.xray-graph-view img{
+.xray-graph-view img.xray-graph-image{
     display: block;
     max-width: 100%;
     max-height: 100%;
     padding: 0.5em 0;
     margin: 0 auto;
-    float: right;
-    width: 70%;
+    width: 100%;
 }
 
 .xray-graph-description {
     float: left;
-    width: 25%;
-    padding: 2em 0;
 }
 
 .xray-close-link{
