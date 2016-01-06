@@ -39,6 +39,7 @@
 .xray-toggleable-table caption {
     font-size: 2em;
     padding: 1em 0;
+    text-align: center;
 }
 
 .xray-closetable {
@@ -113,6 +114,10 @@
 
 .xray_table_scrool {
     overflow: auto;
+}
+
+.xray_table_scrool caption {
+    text-align: left;
 }
 
 /**************** End Styles for specific reports****************/
