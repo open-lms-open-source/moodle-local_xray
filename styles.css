@@ -28,6 +28,7 @@
 
 .xray-toggleable-table {
     display: none;
+    margin-bottom:12px;
 }
 
 .xray-toggleable-table:target {
