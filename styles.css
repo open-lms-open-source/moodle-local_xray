@@ -46,9 +46,9 @@
 #page-local-xray-view .xray_element_img {
     height: 300px;
     -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+       -moz-transition: all 0.4s ease-in-out;
+         -o-transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
 }
 
 #page-local-xray-view .xray_element_img:hover {
@@ -69,7 +69,7 @@
 
 /** Wrapper Datatables**/
 #page-local-xray-view .error_datatables {
-    background-color: #CE2F2F;
+    background-color: #ce2f2f;
     color: #fff;
     text-align: center;
     display: block;
@@ -92,7 +92,7 @@
     display: block;
     width: 16px;
     height: 16px;
-    background-color: #BFE3FF;
+    background-color: #bfe3ff;
     background-image: url([[pix:local_xray|activityindividualreport]]);
 }
 
@@ -101,7 +101,7 @@
     display: block;
     width: 16px;
     height: 16px;
-    background-color: #BFE3FF;
+    background-color: #bfe3ff;
     background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
 }
 
@@ -188,7 +188,7 @@
     left: 19.1%;
     text-align: center;
     color: white;
-    background-color: #3AA2D8;
+    background-color: #3aa2d8;
 }
 
 
@@ -275,7 +275,7 @@
     display: block;
     height: 300px;
     -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
     position: relative;
 }
 
@@ -358,7 +358,8 @@
     height: 100% !important;
 }
 /* 2 */
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
     .xray-graph-view img[src*=".svg"] {
         width: auto !important;
         height: 100% !important;
