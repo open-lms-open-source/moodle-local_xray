@@ -7,7 +7,7 @@
 }
 
 /* Report page title */
-#page-local-xray-view  h2.main {
+.xray-report-page-title {
   margin: 0;
 }
 

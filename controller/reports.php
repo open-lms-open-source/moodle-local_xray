@@ -91,6 +91,8 @@ class local_xray_controller_reports extends mr_controller {
             $PAGE->set_pagelayout('report');
             $PAGE->set_heading($COURSE->fullname);
         }
+        // Add specific class for xray heading
+        $this->heading->classes = 'xray-report-page-title';
     }
 
     /**

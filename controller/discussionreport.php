@@ -111,7 +111,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 } else {
                     // Show graphs.
                     $output .= html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
-                        array("class" => "main"));
+                        array("class" => "xray-report-page-title"));
                     $output .= $this->output->inforeport($response->reportdate);
                     $output .= $this->output->show_graph("endogenicPlagiarismStudentsHeatmap",
                         $response->elements->endogenicPlagiarismStudentsHeatmap, $response->id);
@@ -132,7 +132,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Show graphs.
                     $output .= html_writer::tag("h2",
                         get_string("discussiongrading", $this->component),
-                        array("class" => "main"));
+                        array("class" => "xray-report-page-title"));
                     $output .= $this->output->inforeport($response->reportdate);
 
                     // Its a table, I will get info with new call.
