@@ -139,7 +139,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                         "courseid" => $this->courseid,
                         "userid" => $row->participantId->value
                     ));
-                $r->action = html_writer::link($url, '', array("class" => "icon_activityreportindividual",
+                $r->action = html_writer::link($url, '', array("class" => "xray_icon_activityreportindividual",
                     "title" => $activityreportind,
                     "target" => "_blank"));
             }

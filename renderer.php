@@ -125,7 +125,7 @@ class local_xray_renderer extends plugin_renderer_base {
         } else {
             // Incorrect url img. Show error message.
             $output .= html_writer::tag("div",
-                get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
+                get_string('error_loadimg', $plugin), array("class" => "xray_error_loadmsg"));
         }
 
         $output .= html_writer::end_tag('div');

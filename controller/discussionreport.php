@@ -175,7 +175,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         "courseid" => $this->courseid,
                         "userid" => $row->participantId->value
                     ));
-                $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
+                $r->action = html_writer::link($url, '', array("class" => "xray_icon_discussionreportindividual",
                     "title" => $discussionreportind,
                     "target" => "_blank"));
             }

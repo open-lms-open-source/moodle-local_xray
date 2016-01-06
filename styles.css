@@ -68,13 +68,13 @@
 }
 
 /* Xray datatables style */
-#page-local-xray-view .xraydatatable {
+.xraydatatable {
     width:100%;
     border-spacing: 0;
 }
 
 /** Wrapper Datatables**/
-#page-local-xray-view .error_datatables {
+.xray_error_datatables {
     background-color: #ce2f2f;
     color: #fff;
     text-align: center;
@@ -84,7 +84,7 @@
 }
 
 /** Error load img report**/
-#page-local-xray-view .error_loadmsg {
+.xray_error_loadmsg {
     color: #ce2f2f;
     font-size: 11px;
     margin: auto;
@@ -94,7 +94,7 @@
 
 /**************** Styles for specific reports****************/
 /** Link in table to activity report individual **/
-#page-local-xray-view .icon_activityreportindividual {
+#page-local-xray-view .xray_icon_activityreportindividual {
     display: block;
     width: 16px;
     height: 16px;
@@ -103,7 +103,7 @@
 }
 
 /** Link in table to discussion report individual **/
-#page-local-xray-view .icon_discussionreportindividual {
+#page-local-xray-view .xray_icon_discussionreportindividual {
     display: block;
     width: 16px;
     height: 16px;
