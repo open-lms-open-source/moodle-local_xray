@@ -73,7 +73,9 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     $datatable = new local_xray\datatables\datatables($response->elements->studentList,
                         "rest.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,
                         array(),
-                        true);// add column action.
+                        true,
+                        true,
+                        '<"top">rt<"bottom"flp><"clear">');// add column action.
                     $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
                     $output .= $this->output->standard_table((array)$datatable);
 

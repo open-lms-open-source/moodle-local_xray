@@ -365,3 +365,20 @@
     }
 }
 /*************** End styles for IE View graph ***************/
+/*********************** DataTables *************************/
+.xray-toggleable-table .dataTables_length {
+    margin-top: 0.25em !important;
+}
+
+.xray-toggleable-table .dataTables_paginate {
+    color: #777 !important;
+    font-family: "Roboto","Fira Sans","Segoe UI","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-size:1em;
+}
+
+.xray-toggleable-table a.disabled:hover,
+a.disabled {
+    font-style: normal !important;
+    color: #d6d6d6 !important;
+}
+/**************** End styles for DataTables ****************/
