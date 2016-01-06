@@ -345,3 +345,23 @@
     background:url([[pix:local_xray|close_x]]) no-repeat center center;
 }
 /**************** End Styles for Plots ****************/
+/***************  IE View graph ***************/
+/*
+ * Let's target IE to respect aspect ratios and sizes for img tags containing SVG files
+ *
+ * [1] IE9
+ * [2] IE10+
+ */
+/* 1 */
+.ie9 .xray-graph-view img[src*=".svg"] {
+    width: auto !important;
+    height: 100% !important;
+}
+/* 2 */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .xray-graph-view img[src*=".svg"] {
+        width: auto !important;
+        height: 100% !important;
+    }
+}
+/*************** End styles for IE View graph ***************/
