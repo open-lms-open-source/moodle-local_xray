@@ -198,11 +198,11 @@ $string['sLast'] = 'Último';
 $string['sNext'] = 'Siguiente';
 $string['sPrevious'] = 'Anterior';
 $string['sProcessing'] = 'Procesando...';
-$string['sLengthMenu'] = 'Mostrar _MENU_ entradas';
+$string['sLengthMenu'] = 'Mostrar _MENU_';
 $string['sZeroRecords'] = 'No se encontraron registros';
 $string['sEmptyTable'] = 'No hay datos disponibles para esta tabla';
-$string['sInfo'] = 'Mostrando _START_ a _END_ de _TOTAL_ entradas';
-$string['sInfoEmpty'] = 'Mostrando 0 a 0 de 0 entradas';
+$string['sInfo'] = 'Mostrando _START_';
+$string['sInfoEmpty'] = 'Mostrando 0';
 $string['sLoadingRecords'] = 'Cargando...';
 $string['sSortAscending'] = ': activar para ordenar columna ascendentemente';
 $string['sSortDescending'] = ': activar para ordenar columna descendentemente';
@@ -368,28 +368,28 @@ $string['risk2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto.
                         'si el punto de corte es 0.3, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
                         'Esta configuración afecta las columnas  Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
 /* Activity Report */
-/* highly regular - somewhat regular - irregular */
-$string['visitreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regularidad media para el Reporte de actividad';
-$string['visitreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regularidad media. Por ejemplo, '.
-                            'si el punto de corte es 1, cualquier valor igual o mayor será de Regularidad media y cualquier valor menor será de Alta regularidad. '.
+/* Alta regularidad - regular - irregular */
+$string['visitreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regular para el Reporte de actividad';
+$string['visitreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regular. Por ejemplo, '.
+                            'si el punto de corte es 1, cualquier valor igual o mayor será de Regular y cualquier valor menor será de Alta regularidad. '.
                             'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
-$string['visitreg2_name'] = 'Punto de corte entre los rangos Regularidad media e Irregular para el Reporte de actividad';
-$string['visitreg2_desc'] = 'Defina el punto de corte entre los rangos Regularidad media e Irregular. Por ejemplo, '.
-                            'si el punto de corte es 2, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regularidad media. '.
+$string['visitreg2_name'] = 'Punto de corte entre los rangos Regular e Irregular para el Reporte de actividad';
+$string['visitreg2_desc'] = 'Defina el punto de corte entre los rangos Regular e Irregular. Por ejemplo, '.
+                            'si el punto de corte es 2, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regular. '.
                             'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
 /* Discussion Report */
-/* highly regular - somewhat regular - irregular */
-$string['partreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regularidad media para el Reporte de discusiones';
-$string['partreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regularidad media. Por ejemplo, '.
-                           'si el punto de corte es 2, cualquier valor igual o mayor será de Regularidad media y cualquier valor menor será de Alta regularidad. '.
+/* Alta regularidad - regular - irregular */
+$string['partreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regular para el Reporte de discusiones';
+$string['partreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regular. Por ejemplo, '.
+                           'si el punto de corte es 2, cualquier valor igual o mayor será de Regular y cualquier valor menor será de Alta regularidad. '.
                            'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
                            'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
-$string['partreg2_name'] = 'Punto de corte entre los rangos Regularidad media e Irregular para el Reporte de discusiones';
-$string['partreg2_desc'] = 'Defina el punto de corte entre los rangos Regularidad media e Irregular. Por ejemplo, '.
-                           'si el punto de corte es 4, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regularidad media. '.
+$string['partreg2_name'] = 'Punto de corte entre los rangos Regular e Irregular para el Reporte de discusiones';
+$string['partreg2_desc'] = 'Defina el punto de corte entre los rangos Regular e Irregular. Por ejemplo, '.
+                           'si el punto de corte es 4, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regular. '.
                            'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
                            'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
-/* low - medium - high */
+/* Bajo - Medio - Alto */
 $string['partc1_name'] = 'Punto de corte entre los rangos Bajo y Medio para el Reporte de discusiones';
 $string['partc1_desc'] = 'Defina el punto de corte entre los rangos Bajo y Medio. Por ejemplo, '.
                          'si el punto de corte es 33, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.

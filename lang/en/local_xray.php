@@ -201,11 +201,11 @@ $string['sLast'] = 'Last';
 $string['sNext'] = 'Next';
 $string['sPrevious'] = 'Previous';
 $string['sProcessing'] = 'Processing...';
-$string['sLengthMenu'] = 'Show _MENU_ entries';
+$string['sLengthMenu'] = 'Show _MENU_';
 $string['sZeroRecords'] = 'No matching records found';
 $string['sEmptyTable'] = 'No data available in table';
-$string['sInfo'] = 'Showing _START_ to _END_ of _TOTAL_ entries';
-$string['sInfoEmpty'] = 'Showing 0 to 0 of 0 entries';
+$string['sInfo'] = 'Showing _START_';
+$string['sInfoEmpty'] = 'Showing 0';
 $string['sLoadingRecords'] = 'Loading...';
 $string['sSortAscending'] = ': activate to sort column ascending';
 $string['sSortDescending'] = ': activate to sort column descending';
@@ -448,25 +448,25 @@ $string['risk2_desc'] = 'Define cut-off point between medium and high ranges. Fo
                         'if the cut off point is 0.3, anything 0.3 and higher is in the high risk range and anything lower is in the medium risk range. '.
                         'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Measures table in the Risk Report.';
 /* Activity Report */
-/* highly regular - somewhat regular - irregular */
-$string['visitreg1_name'] = 'Cut-off point between "highly regular" and "somewhat regular" ranges for Activity Report';
-$string['visitreg1_desc'] = 'Define cut-off value between "highly regular" and "somewhat regular" ranges. For example, '.
-                            'if the cut off value is 1, anything 1 and higher is somewhat regular and anything lower is highly regular. '.
+/* highly regular - regular - irregular */
+$string['visitreg1_name'] = 'Cut-off point between "highly regular" and "regular" ranges for Activity Report';
+$string['visitreg1_desc'] = 'Define cut-off value between "highly regular" and "regular" ranges. For example, '.
+                            'if the cut off value is 1, anything 1 and higher is regular and anything lower is highly regular. '.
                             'This setting affects the Visit regularity (weekly) column in the Student Activity table in the Activity Report.';
-$string['visitreg2_name'] = 'Cut-off point between "somewhat regular" and "irregular" ranges for Activity Report';
-$string['visitreg2_desc'] = 'Define cut-off value between "somewhat regular" and "irregular" ranges. For example, '.
-                            'if the cut off value is 2, anything 2 and higher is irregular and anything lower is somewhat regular. '.
+$string['visitreg2_name'] = 'Cut-off point between "regular" and "irregular" ranges for Activity Report';
+$string['visitreg2_desc'] = 'Define cut-off value between "regular" and "irregular" ranges. For example, '.
+                            'if the cut off value is 2, anything 2 and higher is irregular and anything lower is regular. '.
                             'This setting affects the Visit regularity (weekly) column in the Student Activity table in the Activity Report.';
 /* Discussion Report */
-/* highly regular - somewhat regular - irregular */
-$string['partreg1_name'] = 'Cut-off point between "highly regular" and "somewhat regular" ranges for Discussion Report';
-$string['partreg1_desc'] = 'Define cut-off value between "highly regular" and "somewhat regular" ranges. For example, '.
-                           'if the cut off value is 2, anything 2 and higher is somewhat regular and anything lower is highly regular. '.
+/* highly regular - regular - irregular */
+$string['partreg1_name'] = 'Cut-off point between "highly regular" and "regular" ranges for Discussion Report';
+$string['partreg1_desc'] = 'Define cut-off value between "highly regular" and "regular" ranges. For example, '.
+                           'if the cut off value is 2, anything 2 and higher is regular and anything lower is highly regular. '.
                            'This setting affects the Regularity of contributions and Regularity of CTC columns in the Participation Metrics table and '.
                            'the Regularity of contributions column in the Student Grades Based on Discussions table in the Discussion Report.';
-$string['partreg2_name'] = 'Cut-off point between "somewhat regular" and "irregular" ranges for Discussion Report';
-$string['partreg2_desc'] = 'Define cut-off value between "somewhat regular" and "highly regularity" ranges. For example, '.
-                           'if the cut off value is 4, anything 4 and higher is irregular and anything lower is somewhat regular. '.
+$string['partreg2_name'] = 'Cut-off point between "regular" and "irregular" ranges for Discussion Report';
+$string['partreg2_desc'] = 'Define cut-off value between "regular" and "highly regular" ranges. For example, '.
+                           'if the cut off value is 4, anything 4 and higher is irregular and anything lower is regular. '.
                            'This setting affects the Regularity of contributions and Regularity of CTC columns in the Participation Metrics table and '.
                            'the Regularity of contributions column from the Student Grades Based on Discussions table in the Discussion Report.';
 /* low - medium - high */
