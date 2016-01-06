@@ -40,6 +40,10 @@
     font-size: 2em;
     padding: 1em 0;
 }
+
+.xray-closetable {
+    float:right;
+}
 /* End Toogle tables */
 
 /* General xray image graph */
@@ -190,8 +194,6 @@
     color: white;
     background-color: #3aa2d8;
 }
-
-
 
 /* Links to xray pages */
 #xraymenu {

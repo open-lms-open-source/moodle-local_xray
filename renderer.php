@@ -221,7 +221,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::end_tag("thead");
         $output .= html_writer::end_tag("table");
         // Close Table button.
+        $output .= html_writer::start_tag('div', array('class' => 'xray-closetable'));
         $output .= html_writer::tag('a', get_string('closetable', 'local_xray'), array('href' => "#"));
+        $output .= html_writer::end_tag('div');
         $output .= html_writer::end_tag('div');
         // End Table.
         // Load table with data.
