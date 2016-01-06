@@ -21,8 +21,8 @@
 }
 
 /* Toogle tables */
-.xray-table-title-link.reportsname{
-    background: transparent url([[pix:local_xray|down-arrow]]) 0 0 no-repeat;
+.xray-table-title-link.reportsname {
+    background: transparent url([[pix:local_xray|plus]]) 0 0 no-repeat;
     padding-left: 2em;
 }
 
