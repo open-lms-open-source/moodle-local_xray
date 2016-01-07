@@ -358,10 +358,10 @@ $string['gradebookreport_itemsHeatmap_help'] = 'This heatmap shows how each stud
 
 $string['discussionreport_wordcloud'] = 'Most Used Words';
 $string['discussionreport_avgWordPerPost'] = 'Weekly Average Word Count per Post';
-$string['discussionreport_socialStructure'] = 'Interaction Analysis';
-$string['discussionreport_socialStructureWordCount'] = 'Interaction Analysis with Word Count';
-$string['discussionreport_socialStructureWordContribution'] = 'Interaction Analysis with Original Contributions';
-$string['discussionreport_socialStructureWordCTC'] = 'Interaction Analysis with  Critical Thought';
+$string['discussionreport_socialStructure'] = 'Interaction Analysis (with instructor)';
+$string['discussionreport_socialStructureWordCount'] = 'Interaction Analysis with Word Count (with instructor)';
+$string['discussionreport_socialStructureWordContribution'] = 'Interaction Analysis with Original Contributions (with instructor)';
+$string['discussionreport_socialStructureWordCTC'] = 'Interaction Analysis with  Critical Thought (with instructor)';
 $string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = 'Word Overlap Between Students';
 $string['discussionreport_endogenicPlagiarismHeatmap'] = 'Word Overlap With Teacher Included';
 $string['discussionreport_discussionSuggestedGrades'] = 'Distribution of Recommended Grades';
