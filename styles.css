@@ -226,12 +226,12 @@
 }
 
 .xray-reports-links li a.xray-reports-links-bk-image-frontpage {
-    background-size: 44px auto !important;
+    background-size: 44px 44px !important;
 }
 
 .xray-reports-links-bk-image-frontpage {
     background-position: center 0;
-    height: 16px;
+    height: 70px;
     padding-top: 44px;
 }
 
@@ -260,6 +260,8 @@
     background-repeat: no-repeat;
     background-image: url([[pix:local_xray|xray-logo2]]);
     border-bottom: 1px solid #3bcedb;
+    background-size: 100px auto;
+    height: 110px;
 }
 /**************** End Styles for Course Headline data ******************/
 
