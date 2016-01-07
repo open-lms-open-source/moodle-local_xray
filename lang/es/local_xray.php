@@ -42,17 +42,17 @@ $string['debuginfo'] = 'Información';
 $string['cachedef_request'] = 'X-Ray caché de los pedidos';
 
 /* Capabilities */
-$string['xray:activityreportindividual_view'] = 'Ver reporte individual de actividad';
-$string['xray:activityreport_view'] = 'Ver reporte de actividad';
+$string['xray:activityreportindividual_view'] = 'Ver Reporte individual de actividad';
+$string['xray:activityreport_view'] = 'Ver Reporte de actividad';
 $string['xray:dashboard_view'] = 'Ver interfaz de reportes';
-$string['xray:discussionreport_view'] = 'Ver reporte de discusiones';
-$string['xray:discussionreportindividual_view'] = 'Ver reporte individual de discusiones';
-$string['xray:discussionreportindividualforum_view'] = 'Ver reporte individual de discusiones en foros';
-$string['xray:discussionendogenicplagiarism_view'] = 'Ver reporte de plagio en foros de discusión';
-$string['xray:discussiongrading_view'] = 'Ver calificaciones en foros de discusión';
-$string['xray:gradebookreport_view'] = 'Ver reporte de calificaciones';
-$string['xray:gradebookreportindividualquiz_view'] = 'Ver reporte individual de calificaciones para quiz';
-$string['xray:risk_view'] = 'Ver reporte de riesgo';
+$string['xray:discussionreport_view'] = 'Ver Reporte de discusiones';
+$string['xray:discussionreportindividual_view'] = 'Ver Reporte de Discusión - Individual';
+$string['xray:discussionreportindividualforum_view'] = 'Ver Reporte individual de discusiones en foros';
+$string['xray:discussionendogenicplagiarism_view'] = 'Ver Reporte de Superposición de Palabras';
+$string['xray:discussiongrading_view'] = 'Ver Reporte de Calificaciones de Discusión';
+$string['xray:gradebookreport_view'] = 'Ver Reporte de Calificaciones';
+$string['xray:gradebookreportindividualquiz_view'] = 'Ver Reporte individual de calificaciones para quiz';
+$string['xray:risk_view'] = 'Ver Reporte de Estado de riesgo';
 $string['xray:view'] = 'Ver X-Ray Learning Analytics';
 
 /* Categories for numbers values */
@@ -69,22 +69,22 @@ $string['activityreport'] = 'Reporte de actividad';
 /* Report Activity Report Individual*/
 $string['activityreportindividual'] = 'Reporte individual de actividad';
 /* Discussion report*/
-$string['discussionreport'] = 'Reporte de discusiones';
+$string['discussionreport'] = 'Discusiones';
 /* Discussion report individual*/
-$string['discussionreportindividual'] = 'Reporte individual de discusiones';
+$string['discussionreportindividual'] = 'Reporte de Discusión - Individual';
 /* Discussion report individual forum*/
 $string['discussionreportindividualforum'] = 'Reporte individual de discusiones en foros';
 /* Discussion report Endogenic Plagiarism*/
-$string['discussionendogenicplagiarism'] = 'Reporte de plagio en foros de discusión';
+$string['discussionendogenicplagiarism'] = 'Superposición de Palabras';
 /* Risk report*/
-$string['risk'] = 'Reporte de riesgo';
+$string['risk'] = 'Reporte de Estado de riesgo';
 /* Discussiongrading report*/
-$string['discussiongrading'] = 'Calificaciones en foros de discusión';
+$string['discussiongrading'] = 'Calificaciones de Discusión';
 /* Gradebook report*/
-$string['gradebookreport'] = 'Reporte de calificaciones';
+$string['gradebookreport'] = 'Reporte de Calificaciones';
 
 /* Columns reports */
-$string['reportdate'] = 'Fecha de reporte';
+$string['reportdate'] = 'Fecha de Reporte';
 $string['weeks'] = 'Semanas';
 $string['week'] = 'Semana';
 
@@ -220,33 +220,52 @@ $string['accessible_error'] = 'Versión accesible para este gráfico no fue enco
 $string['reports_help'] = 'Ayuda';
 
 /* Tables names all report*/
-/* TODO:: Waiting spanish translation.
 $string['activityreport_nonStarters'] = '';// Activity and risk report.
 $string['activityreport_studentList'] = ''; // Activity report.
-$string['risk_nonStarters'] = ''; // Risk report.
-$string['risk_riskMeasures'] = ''; // Risk report.
-$string['gradebookreport_element2'] = ''; // Gradebook report.
-$string['gradebookreport_element4'] = ''; // Gradebook report.
-$string['discussionreport_discussionMetrics'] = ''; // Discussion report.
-$string['discussionreport_discussionActivityByWeek'] = ''; // Discussion report.
-$string['discussionreport_studentDiscussionGrades'] = ''; // Discussion report.
-$string['discussionreportindividual_discussionMetrics'] = ''; // Discussion report individual.
-$string['discussionreportindividual_discussionActivityByWeek'] = ''; // Discussion report individual.
-*/
+$string['risk_nonStarters'] = 'Estudiantes Inactivos'; // Risk report.
+$string['risk_riskMeasures'] = 'Métricas de Riesgo'; // Risk report.
+$string['gradebookreport_element2'] = 'Calificaciones de los estudiantes'; // Gradebook report.
+$string['gradebookreport_element4'] = 'Resumen de Ejercicios'; // Gradebook report.
+$string['discussionreport_discussionMetrics'] = 'Métricas de Participación'; // Discussion report.
+$string['discussionreport_discussionActivityByWeek'] = 'Actividad Semanal'; // Discussion report.
+$string['discussionreport_studentDiscussionGrades'] = 'Calificaciones Recomendadas'; // Discussion report.
+$string['discussionreportindividual_discussionMetrics'] = 'Métricas de Participación'; // Discussion report individual.
+$string['discussionreportindividual_discussionActivityByWeek'] = 'Actividad Semanal'; // Discussion report individual.
+
 /* Help tables all reports*/
-/* TODO:: Waiting spanish translation.
 $string['activityreport_nonStarters_help'] = '';// Activity and risk report.
 $string['activityreport_studentList_help'] = ''; // Activity report.
-$string['risk_nonStarters_help'] = ''; // Risk report.
-$string['risk_riskMeasures_help'] = ''; // Risk report.
-$string['gradebookreport_element2_help'] = ''; // Gradebook report.
-$string['gradebookreport_element4_help'] = ''; // Gradebook report.
-$string['discussionreport_discussionMetrics_help'] = ''; // Discussion report.
-$string['discussionreport_discussionActivityByWeek_help'] = ''; // Discussion report.
-$string['discussionreport_studentDiscussionGrades_help'] = ''; // Discussion report.
-$string['discussionreportindividual_discussionMetrics_help'] = ''; // Discussion report individual.
-$string['discussionreportindividual_discussionActivityByWeek_help'] = ''; // Discussion report individual.
-*/
+$string['risk_nonStarters_help'] = 'Los siguientes estudiantes aún no han participado del curso. '; // Risk report.
+$string['risk_riskMeasures_help'] = 'Esta tabla ayuda a identificar a los estudiantes que se encuentran en riesgo'.
+    ' de dejar el curso, retirarse de la clase o abandonar la escuela. Los números más altos indican mayor riesgo.'.
+    ' El riesgo total está basado en las calificaciones de los estudiantes (Riesgo Académico), así como también en'.
+    ' su participación en los foros de discusión (Riesgo Social).'; // Risk report.
+$string['gradebookreport_element2_help'] = 'Esta tabla muestra el desempeño de los estudiantes en los exámenes y'.
+    ' ejercicios del curso. Se provee un puntaje estandarizado para cada estudiante. Esto demuestra la performance'.
+    ' del mismo en comparación con la media de la clase. '; // Gradebook report.
+$string['gradebookreport_element4_help'] = 'Esta tabla muestra la performance promedio de los estudiantes para'.
+    ' cada examen o ejercicio. Se observa la puntuación de ese examen comparada con el puntaje acumulado hasta'.
+    ' el momento. Los altos porcentajes indican estudiantes fuertes.'; // Gradebook report.
+$string['discussionreport_discussionMetrics_help'] = 'Esta tabla muestra cómo un estudiante participa en las'.
+    ' discusiones . Contribución original y el pensamiento crítico son puntajes determinados por un análisis'.
+    ' de las palabras usadas por los estudiantes. Contribución original se basa era recuento de palabras con'.
+    ' palabras vacías , pronombres y preposiciones tales como, filtrados a cabo para determinar la relación de'.
+    ' las palabras individuales utilizados . El pensamiento crítico se basa en el número de estudiantes utilizar'.
+    ' declaraciones reflexivas . Por ejemplo, " estoy de acuerdo " o " ¡Yo también! " . Haga clic en el nombre'.
+    ' del informe junto a un estudiante para ver cómo lo están haciendo .'; // Discussion report.
+$string['discussionreport_discussionActivityByWeek_help'] = ''; // No mostraremos help.
+$string['discussionreport_studentDiscussionGrades_help'] = 'Las recomendaciones de calificación se basan en la'.
+    ' frecuencia de los posteos, el aporte original y la evidencia de pensamiento crítico. Cada uno tiene'.
+    ' el mismo valor por defecto.'; // Discussion report.
+$string['discussionreportindividual_discussionMetrics_help'] = 'Esta tabla muestra cuanto participa un estudiante'.
+    ' en las discusiones. Los puntajes para la contribución original y el pensamiento crítico, están determinados'.
+    ' por el análisis de las palabras utilizadas por los estudiantes. La contribución original se basa en el conteo'.
+    ' de palabras y conectores tales como pronombres y preposiciones, filtradas para determinar un radio de palabras'.
+    ' únicas utilizadas. El pensamiento crítico se establece a partir del numero de comentarios o posteos reflexivos'.
+    ' como por ejemplo, "Estoy de acuerdo" o "Yo también". Haga click en el ícono al lado del nombre del estudiante'.
+    ' para ver su performance individual.'; // Discussion report individual.
+$string['discussionreportindividual_discussionActivityByWeek_help'] = ''; // No mostraremos help.
+
 /* Graphs Activity report*/
 /* TODO:: Waiting spanish translation.
 $string['activityreport_activityLevelTimeline'] = '';
@@ -281,77 +300,124 @@ $string['activityreportindividual_barplotOfActivityByWeekday_help'] = '';
 $string['activityreportindividual_barplotOfActivityWholeWeek_help'] = '';
 */
 /* Graphs Risk report*/
-/* TODO:: Waiting spanish translation.
-$string['risk_riskDensity'] = '';
-$string['risk_riskScatterPlot'] = '';
-*/
+$string['risk_riskDensity'] = 'Perfil Total de Riesgo';
+$string['risk_riskScatterPlot'] = 'Riesgo Académico versus Riesgo Social';
+
 /* Help Graphs Risk report*/
-/* TODO:: Waiting spanish translation.
-$string['risk_riskDensity_help'] = '';
-$string['risk_riskScatterPlot_help'] = '';
-*/
+$string['risk_riskDensity_help'] = 'Este gráfico muestra la distribución del riesgo estimado en el curso. El color'.
+    ' verde representa a los estudiantes fuera de riesgo. En rojo los que están en riesgo.';
+$string['risk_riskScatterPlot_help'] = 'Cada punto en este diagrama de dispersión represente un estudiante. Dependiendo'.
+    ' de la posición del estudiante en el gráfico, se observa su nivel social y su riesgo académico. La línea negra'.
+    ' muestra la relación esperada entre el riesgo social y el académico. El área sombreada (intervalo de confidencia)'.
+    ' nos provee un rango de relación esperada. El color es utilizado para ayudar a determinar el riesgo potencial'.' de forma rápida. Verde significa fuera de riesgo. Rojo en riesgo. ';
+
 /* Graphs Risk report*/
-/* TODO:: Waiting spanish translation.
-$string['gradebookreport_studentScoreDistribution'] = '';
-$string['gradebookreport_scoreDistributionByItem'] = '';
-$string['gradebookreport_scatterPlot'] = '';
-$string['gradebookreport_itemsHeatmap'] = '';
-*/
+$string['gradebookreport_studentScoreDistribution'] = 'Distribución de Puntajes';
+$string['gradebookreport_scoreDistributionByItem'] = 'Distribución de puntajes de ejercicios';
+$string['gradebookreport_scatterPlot'] = 'Puntajes asignados versus porcentajes';
+$string['gradebookreport_itemsHeatmap'] = 'Comparación de los puntajes de ejercicios';
+
 /* Help Graphs Gradebook report*/
-/* TODO:: Waiting spanish translation.
-$string['gradebookreport_studentScoreDistribution_help'] = '';
-$string['gradebookreport_scoreDistributionByItem_help'] = '';
-$string['gradebookreport_scatterPlot_help'] = '';
-$string['gradebookreport_itemsHeatmap_help'] = '';
-*/
+$string['gradebookreport_studentScoreDistribution_help'] = 'Este gráfico muestra la distribución de los puntajes'.
+    ' entre todos los estudiantes. El pico muestra el puntaje que la mayoría de los estudiantes obtiene. Un patrón'.
+    ' de distribución en forma de campana podría indicar la presencia de inconsistencias. Los diferentes patrones'.
+    ' de distribución pueden indicar diferencias significativas en el nivel de dificultad de las pruebas.';
+$string['gradebookreport_scoreDistributionByItem_help'] = 'Este diagrama muestra la distribución de los resultados'.
+    ' de los estudiantes para un ejercicio. Cada ejercicio está representado por un recuadro. Los puntos son los'.
+    ' resultados de los estudiantes. La línea horizontal gruesa muestra la puntuación media de cada ejercicio. Hay'.
+    ' cuatro rangos de calificación representados para cada examen. El 25% superior (línea vertical en la parte'.
+    ' superior de la caja), el 25 % por encima del promedio (área de la caja por encima de la puntuación media),'.
+    ' el 25% por debajo del promedio (área de la caja por debajo del promedio), y el 25% por debajo (línea vertical'.
+    ' por debajo de la caja) . Mientras más altas o largas sean las líneas, más dispersos serán los resultados que'.
+    ' se observen.';
+$string['gradebookreport_scatterPlot_help'] = 'Este gráfico muestra la consistencia de la calificación. Cada punto'.
+    ' representa un ejercicio de prueba. La línea de color negro muestra la relación entre las calificaciones'.
+    ' y porcentajes esperados y los asignados. El área sombreada (intervalo de confianza) demuestra la relación'.
+    ' esperada. Los ejercicios fuera de la relación esperada pueden indicar inconsistencias en las calificaciones.';
+$string['gradebookreport_itemsHeatmap_help'] = 'Este esquema o mapa de temperatura muestra cómo performó cada'.
+    ' estudiante en un ejercicio de prueba, en comparación con el resto de la clase  Los colores más oscuros'.
+    ' indican las puntuaciones superiores. Si el color observado se encuentra siempre en el mismo tono para los'.
+    ' estudiantes, se podría tratar de un examen muy simple o muy complejo.';
+
 /* Graphs Discussion report*/
-/* TODO:: Waiting spanish translation.
-$string['discussionreport_wordcloud'] = '';
-$string['discussionreport_avgWordPerPost'] = '';
-$string['discussionreport_socialStructure'] = '';
-$string['discussionreport_socialStructureWordCount'] = '';
-$string['discussionreport_socialStructureWordContribution'] = '';
-$string['discussionreport_socialStructureWordCTC'] = '';
-$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = '';
-$string['discussionreport_endogenicPlagiarismHeatmap'] = '';
-$string['discussionreport_discussionSuggestedGrades'] = '';
-*/
+$string['discussionreport_wordcloud'] = 'Palabras más utilizadas';
+$string['discussionreport_avgWordPerPost'] = 'Promedio Semanal de Palabras por Posteo';
+$string['discussionreport_socialStructure'] = 'Análisis de Interacción';
+$string['discussionreport_socialStructureWordCount'] = 'Análisis de Interacción con Conteo de Palabras';
+$string['discussionreport_socialStructureWordContribution'] = 'Análisis de Interacción con Contribuciones Originales';
+$string['discussionreport_socialStructureWordCTC'] = 'Análisis de Interacción con Pensamiento Crítico';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = 'Superposición de Palabras entre Estudiantes';
+$string['discussionreport_endogenicPlagiarismHeatmap'] = 'Superposición de Palabras Incluyendo al instructor';
+$string['discussionreport_discussionSuggestedGrades'] = 'Distribución de Calificaciones Recomendadas';
+
 /* Help Graphs Discussion report*/
-/* TODO:: Waiting spanish translation.
-$string['discussionreport_wordcloud_help'] = '';
-$string['discussionreport_avgWordPerPost_help'] = '';
-$string['discussionreport_socialStructure_help'] = '';
-$string['discussionreport_socialStructureWordCount_help'] = '';
-$string['discussionreport_socialStructureWordContribution_help'] = '';
-$string['discussionreport_socialStructureWordCTC_help'] = '';
-$string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = '';
-$string['discussionreport_endogenicPlagiarismHeatmap_help'] = '';
-$string['discussionreport_discussionSuggestedGrades_help'] = '';
-*/
+$string['discussionreport_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con mayor'.
+    ' frecuencia en las discusiones. Se basa en una única cuenta de las palabras más utilizadas. Las palabras'.
+    ' más grandes indican mayor uso.';
+$string['discussionreport_avgWordPerPost_help'] = 'Este gráfico muestra el promedio del conteo de palabras en los'.
+    ' posteos de discusión a lo largo de una semana. La línea azul representa los valores observados y la línea'.
+    ' de puntos representa el promedio esperado. ';
+$string['discussionreport_socialStructure_help'] = 'Este diagrama muestra a quiénes están respondiendo sus'.
+    ' estudiantes. El color demuestra cuán conectados están sus estudiantes con el resto de la clase. El'.
+    ' azul muestra mucha interacción con otros estudiantes, el amarillo por debajo del promedio de interacción'.
+    ' y el rojo es de nula interacción.';
+$string['discussionreport_socialStructureWordCount_help'] = 'Este diagrama muestra a quién habla cada estudiante'.
+    ' y lo mucho que está diciendo. Estos valores se obtienen del conteo de palabras intercambiadas entre los'.
+    ' estudiantes. Las líneas más gruesas indican mayor utilización de palabras en el intercambio de posteos. ';
+$string['discussionreport_socialStructureWordContribution_help'] = 'Este diagrama muestra quién habla a quién entre'.
+    ' los estudiantes, junto con la calidad de su contribución. La contribución original se obtiene del conteo'.
+    ' de palabras filtradas como únicas en cuanto a su nivel de utilización. Las líneas más gruesas indican'.
+    ' la cantidad de palabras únicas utilizadas. ';
+$string['discussionreport_socialStructureWordCTC_help'] = 'Este diagrama muestra en cuáles de las respuestas de los'.
+    ' estudiantes se observa un pensamiento crítico. Esto está basado en el número de posteos reflexivos.';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'Los mapas de temperatura muestran cuán'.
+    ' similares son los posteos entre los estudiantes de la claese. Este esquema demuestra quién fue la fuente'.
+    ' de un profundo conocimiento y quién está copiando los posteos de otros. Los posteos originales están'.
+    ' determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante revisar'.
+    ' los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros estudiantes.';
+$string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'Los mapas de temperatura muestran cuán similares'.
+    ' son los posteos entre los estudiantes de la clase, incluyendo al instructor. Este esquema demuestra quién'.
+    ' fue la fuente de un profundo conocimiento y quién está copiando los posteos de otros. Los posteos originales'.
+    ' están determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante'.
+    ' revisar los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros'.
+    ' estudiantes y al instructor.';
+$string['discussionreport_discussionSuggestedGrades_help'] = 'Este diagrama de barras muestra la distribución'.
+    ' de las calificaciones sugeridas para la participación grupos de discusión. La línea continua muestra la'.
+    ' distribución esperada de las calificaciones, con una calificación promedio de C. La línea de puntos muestra'.
+    ' la distribución con un promedio de B para la clase. Las calificaciones reales se representan con la barra azul.';
+
 /* Graphs Discussion report individual*/
-/* TODO:: Waiting spanish translation.
-$string['discussionreportindividual_wordcloud'] = '';
-$string['discussionreportindividual_socialStructure'] = '';
-$string['discussionreportindividual_wordHistogram'] = '';
-*/
+$string['discussionreportindividual_wordcloud'] = 'Palabras más utilizadas';
+$string['discussionreportindividual_socialStructure'] = 'Análisis de Interacción';
+$string['discussionreportindividual_wordHistogram'] = 'Regularidad de Palabras más utilizadas';
+
 /* Help Graphs Discussion report individual*/
-/* TODO:: Waiting spanish translation.
-$string['discussionreportindividual_wordcloud_help'] = '';
-$string['discussionreportindividual_socialStructure_help'] = '';
-$string['discussionreportindividual_wordHistogram_help'] = '';
-*/
+$string['discussionreportindividual_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
+    ' mayor frecuencia en las discusiones. Se basa en un conteo único de cada palabra. Las palabras más'.
+    ' grandes son las más utilizadas.';
+$string['discussionreportindividual_socialStructure_help'] = 'Este diagrama muestra a quién le está hablando este'.
+    ' estudiante. Los colores muestran su conexión con el resto de la clase. El azul muestra relación'.
+    ' por encima del promedio. El amarillo muestra una conexión inferior a la media. Y el rojo muestra que'.
+    ' no tiene ninguna conexión con ese estudiante todavía.';
+$string['discussionreportindividual_wordHistogram_help'] = 'Este histograma muestra la frecuencia en la que los'.
+    ' estudiantes postean las 10 palabras más utilizadas en los foros de discusión.';
+
 /* Graphs Discussion report individual forum*/
-/* TODO:: Waiting spanish translation.
-$string['discussionreportindividualforum_wordcloud'] = '';
-$string['discussionreportindividualforum_socialStructure'] = '';
-$string['discussionreportindividualforum_wordHistogram'] = '';
-*/
+$string['discussionreportindividualforum_wordcloud'] = 'Palabras más utilizadas';
+$string['discussionreportindividualforum_socialStructure'] = 'Análisis de Interacción';
+$string['discussionreportindividualforum_wordHistogram'] = 'Regularidad de Palabras más utilizadas';
+
 /* Help Graphs Discussion report individual forum*/
-/* TODO:: Waiting spanish translation.
-$string['discussionreportindividualforum_wordcloud_help'] = '';
-$string['discussionreportindividualforum_socialStructure_help'] = '';
-$string['discussionreportindividualforum_wordHistogram_help'] ='';
-*/
+$string['discussionreportindividualforum_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
+    ' mayor frecuencia en las discusiones. Se basa en un conteo único de cada palabra. Las palabras más'.
+    ' grandes son las más utilizadas.';
+$string['discussionreportindividualforum_socialStructure_help'] = 'Este diagrama muestra a quién le está hablando este'.
+    ' estudiante. Los colores muestran su conexión con el resto de la clase. El azul muestra relación'.
+    ' por encima del promedio. El amarillo muestra una conexión inferior a la media. Y el rojo muestra que'.
+    ' no tiene ninguna conexión con ese estudiante todavía.';
+$string['discussionreportindividualforum_wordHistogram_help'] ='Este histograma muestra la frecuencia en la que los'.
+    ' estudiantes postean las 10 palabras más utilizadas en los foros de discusión.';
+
 /* Cut-off points settings */
 /* Header Title */
 $string['cutoff_title'] = 'Valores de los puntos de corte entre cada rango';
