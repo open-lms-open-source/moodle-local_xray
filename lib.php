@@ -138,7 +138,18 @@ function local_xray_extends_navigation(global_navigation $nav) {
     }
 
     $reportview = ($PAGE->pagetype == 'local-xray-view');
-    $courseview = $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE);
+    $courseview = false;
+    if ($PAGE->has_set_url()) {
+        $courseview = $PAGE->url->compare(new moodle_url('/course/view.php', ['id' => $PAGE->course->id]));
+        if ($courseview) {
+            $buieditid = (int)optional_param('bui_editid'  , 0, PARAM_INT);
+            $buihideid = (int)optional_param('bui_hideid'  , 0, PARAM_INT);
+            $buidelid  = (int)optional_param('bui_deleteid', 0, PARAM_INT);
+            if (!empty($buidelid) || !empty($buihideid) || !empty($buieditid)) {
+                $courseview = false;
+            }
+        }
+    }
     if (!$reportview && !$courseview) {
         return;
     }
@@ -163,7 +174,7 @@ function local_xray_extends_navigation(global_navigation $nav) {
                 'items'      => $menu,
             ]],
             null,
-            true
+            false
         );
     }
 
