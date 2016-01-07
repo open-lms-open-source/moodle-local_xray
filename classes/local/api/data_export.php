@@ -17,8 +17,8 @@
 /**
  * Data export API.
  *
- * @package local_xray
- * @author Darko Miletic
+ * @package   local_xray
+ * @author    Darko Miletic <darko.miletic@blackboard.com>
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Class data_export for exporting raw data for xray processing
  *
- * @package local_xray
+ * @package   local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -356,6 +356,55 @@ class data_export {
                               ctx.instanceid = l.course
                               AND
                               ra.userid = l.userid
+                   )
+                   AND
+          ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * Export standard log information
+     * For now only userid, courseid and timestamp are used in calculations.
+     *
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function standardlog($timest, $timeend, $dir) {
+        $time = self::to_timestamp('l.timecreated', true, 'time');
+        $wherecond = self::range_where('l.timecreated', null, $timest, $timeend, __FUNCTION__, 'l.id');
+
+        $sql = "
+            SELECT
+                   l.id,
+                   l.userid AS participantid,
+                   l.courseid AS courseid,
+                   {$time},
+                   l.ip,
+                   l.action,
+                   l.other AS info,
+                   l.component,
+                   l.target,
+                   l.objecttable,
+                   l.objectid,
+                   l.timecreated AS traw
+            FROM   {logstore_standard_log} l
+            WHERE
+                   EXISTS (
+                        SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
+                        FROM       {role_assignments} ra
+                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
+                        WHERE
+                              EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
+                              AND
+                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = 0)
+                              AND
+                              ctx.instanceid = l.courseid
+                              AND
+                              ra.userid = l.userid
+                              AND
+                              l.courseid <> 0
                    )
                    AND
           ";
@@ -762,10 +811,10 @@ class data_export {
         $destfile = null;
 
         if (!empty($files)) {
-            $admin = get_config(self::PLUGIN, 'xrayadmin');
-            $basefile = self::generate_filename($admin);
+            $clientid = get_config(self::PLUGIN, 'xrayclientid');
+            $basefile = self::generate_filename($clientid);
             $archivefile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
-            $destfile = $admin . '/' . $basefile;
+            $destfile = $clientid . '/' . $basefile;
 
             $tgzpacker = get_file_packer('application/x-gzip');
             $result = $tgzpacker->archive_to_pathname($files, $archivefile);
@@ -791,16 +840,16 @@ class data_export {
         $destfile = null;
 
         if (!empty($exportfiles)) {
-            $admin = get_config(self::PLUGIN, 'xrayadmin');
+            $clientid = get_config(self::PLUGIN, 'xrayclientid');
             $tarpath = get_config(self::PLUGIN, 'packertar');
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
             $escdir = escapeshellarg($transdir);
             // We have to use microseconds timestamp because of nodejs...
-            $basefile = self::generate_filename($admin);
+            $basefile = self::generate_filename($clientid);
             $compfile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
             $escfile = escapeshellarg($compfile);
             $esctar = escapeshellarg($bintar);
-            $destfile = $admin . '/' . $basefile;
+            $destfile = $clientid . '/' . $basefile;
             $command = escapeshellcmd("{$esctar} -C {$escdir} -zcf {$escfile} .");
             $ret = 0;
             $lastmsg = system($command, $ret);
@@ -835,6 +884,8 @@ class data_export {
 
         /* @var array $plugins */
         $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
+        /* @var array $logstores */
+        $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
 
         $timeframe = (int)get_config(self::PLUGIN, 'exporttime_hours') * HOURSECS +
                      (int)get_config(self::PLUGIN, 'exporttime_minutes') * MINSECS;
@@ -846,17 +897,37 @@ class data_export {
         self::courseinfo($timest, $timeend, $dir);
         self::userlist($timest, $timeend, $dir);
         self::enrolment($timest, $timeend, $dir);
-        self::accesslog($timest, $timeend, $dir);
-        self::forums($timest, $timeend, $dir);
-        self::threads($timest, $timeend, $dir);
-        self::posts($timest, $timeend, $dir);
+        // Unfortunately log stores can be uninstalled so we check for that case.
+        if (array_key_exists('legacy', $logstores)) {
+            self::accesslog($timest, $timeend, $dir);
+        } else {
+            mtrace('Legacy logstore not installed. Skipping.');
+        }
+        if (array_key_exists('standard', $logstores)) {
+            self::standardlog($timest, $timeend, $dir);
+        } else {
+            mtrace('Standard logstore not installed. Skipping.');
+        }
+        if (array_key_exists('forum', $plugins)) {
+            self::forums($timest, $timeend, $dir);
+            self::threads($timest, $timeend, $dir);
+            self::posts($timest, $timeend, $dir);
+        } else {
+            mtrace('Forum activity not installed. Skipping.');
+        }
         // Since Advanced Forum is not core plugin we check for it's presence.
         if (array_key_exists('hsuforum', $plugins)) {
             self::hsuforums($timest, $timeend, $dir);
             self::hsuthreads($timest, $timeend, $dir);
             self::hsuposts($timest, $timeend, $dir);
+        } else {
+            mtrace('Advanced forum activity not installed. Skipping.');
         }
-        self::quiz($timest, $timeend, $dir);
+        if (array_key_exists('quiz', $plugins)) {
+            self::quiz($timest, $timeend, $dir);
+        } else {
+            mtrace('Quiz activity not installed. Skipping.');
+        }
         self::grades($timest, $timeend, $dir);
 
         self::export_metadata($dir);

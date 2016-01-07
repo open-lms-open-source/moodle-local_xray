@@ -79,21 +79,6 @@ if ($hassiteconfig) {
                                                     new lang_string("enablesync_desc", $plugin),
                                                     '0'));
 
-    $settings->add( new admin_setting_configtext("{$plugin}/xrayadminserver",
-                                                 new lang_string("xrayadminserver", $plugin),
-                                                 new lang_string("xrayadminserver_desc", $plugin),
-                                                 '', PARAM_URL));
-
-    $settings->add( new admin_setting_configtext("{$plugin}/xrayadmin",
-                                                 new lang_string("xrayadmin", $plugin),
-                                                 new lang_string("xrayadmin_desc", $plugin),
-                                                 '', PARAM_TEXT));
-
-    $settings->add( new admin_setting_configpasswordunmask("{$plugin}/xrayadminkey",
-                                                 new lang_string("xrayadminkey", $plugin),
-                                                 new lang_string("xrayadminkey_desc", $plugin),
-                                                 ''));
-
     $settings->add( new admin_setting_configpasswordunmask("{$plugin}/awskey",
                                                  new lang_string("awskey", $plugin),
                                                  new lang_string("awskey_desc", $plugin),
