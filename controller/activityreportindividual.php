@@ -68,12 +68,13 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 $output .= $this->output->inforeport($response->reportdate,
                     $DB->get_record('user', array('id' => $this->userid)));
 
+                $extraparamaccessible = array("userid" => $this->userid);
                 $output .= $this->output->show_graph("activityLevelTimeline",
-                    $response->elements->activityLevelTimeline, $response->id);
+                    $response->elements->activityLevelTimeline, $response->id, $extraparamaccessible);
                 $output .= $this->output->show_graph("barplotOfActivityWholeWeek",
-                    $response->elements->barplotOfActivityWholeWeek, $response->id);
+                    $response->elements->barplotOfActivityWholeWeek, $response->id, $extraparamaccessible);
                 $output .= $this->output->show_graph("barplotOfActivityByWeekday",
-                    $response->elements->barplotOfActivityByWeekday, $response->id);
+                    $response->elements->barplotOfActivityByWeekday, $response->id, $extraparamaccessible);
             }
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();

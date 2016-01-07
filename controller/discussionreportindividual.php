@@ -80,9 +80,13 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                     $response->elements->discussionActivityByWeek);
 
                 // Graphs.
-                $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure, $response->id);
-                $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud, $response->id);
-                $output .= $this->output->show_graph("wordHistogram", $response->elements->wordHistogram, $response->id);
+                $extraparamaccessible = array("userid" => $this->userid);
+                $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure,
+                    $response->id, $extraparamaccessible);
+                $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud,
+                    $response->id, $extraparamaccessible);
+                $output .= $this->output->show_graph("wordHistogram", $response->elements->wordHistogram,
+                    $response->id, $extraparamaccessible);
             }
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
