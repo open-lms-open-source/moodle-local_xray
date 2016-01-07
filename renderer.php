@@ -220,7 +220,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
         }
 
-        $output .= html_writer::tag("caption", $datatable['title'].$helpicon);
+        $output .= html_writer::tag("caption", $title.$helpicon);
         $output .= html_writer::start_tag("thead");
         $output .= html_writer::start_tag("tr");
         foreach ($datatable['columns'] as $c) {
