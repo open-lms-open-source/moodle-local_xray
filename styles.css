@@ -7,12 +7,12 @@
 }
 
 /* Report page title */
-#page-local-xray-view  h2.main {
+.xray-report-page-title {
   margin: 0;
 }
 
 /* Name elements (tables and graphs) */
-#page-local-xray-view .reportsname {
+.xray-reportsname {
     /* h3 for screenreaders, but needs to be smaller visually */
     font-size: 1.1em;
     line-height: 1.5;
@@ -21,13 +21,14 @@
 }
 
 /* Toogle tables */
-.xray-table-title-link.reportsname{
-    background: transparent url([[pix:local_xray|down-arrow]]) 0 0 no-repeat;
+.xray-table-title-link.xray-reportsname {
+    background: transparent url([[pix:local_xray|plus]]) 0 0 no-repeat;
     padding-left: 2em;
 }
 
 .xray-toggleable-table {
     display: none;
+    margin-bottom:12px;
 }
 
 .xray-toggleable-table:target {
@@ -39,6 +40,11 @@
 .xray-toggleable-table caption {
     font-size: 2em;
     padding: 1em 0;
+    text-align: center;
+}
+
+.xray-closetable {
+    float:right;
 }
 /* End Toogle tables */
 
@@ -46,9 +52,9 @@
 #page-local-xray-view .xray_element_img {
     height: 300px;
     -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+       -moz-transition: all 0.4s ease-in-out;
+         -o-transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
 }
 
 #page-local-xray-view .xray_element_img:hover {
@@ -62,14 +68,14 @@
 }
 
 /* Xray datatables style */
-#page-local-xray-view .xraydatatable {
+.xraydatatable {
     width:100%;
     border-spacing: 0;
 }
 
 /** Wrapper Datatables**/
-#page-local-xray-view .error_datatables {
-    background-color: #CE2F2F;
+.xray_error_datatables {
+    background-color: #ce2f2f;
     color: #fff;
     text-align: center;
     display: block;
@@ -78,7 +84,7 @@
 }
 
 /** Error load img report**/
-#page-local-xray-view .error_loadmsg {
+.xray_error_loadmsg {
     color: #ce2f2f;
     font-size: 11px;
     margin: auto;
@@ -88,20 +94,20 @@
 
 /**************** Styles for specific reports****************/
 /** Link in table to activity report individual **/
-#page-local-xray-view .icon_activityreportindividual {
+#page-local-xray-view .xray_icon_activityreportindividual {
     display: block;
     width: 16px;
     height: 16px;
-    background-color: #BFE3FF;
+    background-color: #bfe3ff;
     background-image: url([[pix:local_xray|activityindividualreport]]);
 }
 
 /** Link in table to discussion report individual **/
-#page-local-xray-view .icon_discussionreportindividual {
+#page-local-xray-view .xray_icon_discussionreportindividual {
     display: block;
     width: 16px;
     height: 16px;
-    background-color: #BFE3FF;
+    background-color: #bfe3ff;
     background-image: url([[pix:local_xray|discussionreportindividual_icon]]);
 }
 
@@ -109,6 +115,10 @@
 
 .xray_table_scrool {
     overflow: auto;
+}
+
+.xray_table_scrool caption {
+    text-align: left;
 }
 
 /**************** End Styles for specific reports****************/
@@ -188,10 +198,8 @@
     left: 19.1%;
     text-align: center;
     color: white;
-    background-color: #3AA2D8;
+    background-color: #3aa2d8;
 }
-
-
 
 /* Links to xray pages */
 #xraymenu {
@@ -274,8 +282,9 @@
 .xray-graph-box-link{
     display: block;
     height: 300px;
+    max-width: 344px;
     -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
     position: relative;
 }
 
@@ -345,3 +354,41 @@
     background:url([[pix:local_xray|close_x]]) no-repeat center center;
 }
 /**************** End Styles for Plots ****************/
+/***************  IE View graph ***************/
+/*
+ * Let's target IE to respect aspect ratios and sizes for img tags containing SVG files
+ *
+ * [1] IE9
+ * [2] IE10+
+ */
+/* 1 */
+.ie9 .xray-graph-view img[src*=".svg"] {
+    width: auto !important;
+    height: 100% !important;
+}
+/* 2 */
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+    .xray-graph-view img[src*=".svg"] {
+        width: auto !important;
+        height: 100% !important;
+    }
+}
+/*************** End styles for IE View graph ***************/
+/*********************** DataTables *************************/
+.xray-toggleable-table .dataTables_length {
+    margin-top: 0.25em !important;
+}
+
+.xray-toggleable-table .dataTables_paginate {
+    color: #777 !important;
+    font-family: "Roboto","Fira Sans","Segoe UI","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-size:1em;
+}
+
+.xray-toggleable-table a.disabled:hover,
+a.disabled {
+    font-style: normal !important;
+    color: #d6d6d6 !important;
+}
+/**************** End styles for DataTables ****************/
