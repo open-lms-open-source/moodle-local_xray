@@ -386,9 +386,15 @@ $string['discussionreport_socialStructureWordContribution_help'] = 'This diagram
     ' being used.';
 $string['discussionreport_socialStructureWordCTC_help'] = 'This diagram shows you which replies between students'.
     ' are showing evidence of critical thought. This is based on the number of reflective statements used.';
-// TODO:: Agregar estos textos
-$string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = ''; //We dont show help for this.
-$string['discussionreport_endogenicPlagiarismHeatmap_help'] = ''; //We dont show help for this.
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'The heatmaps show how similiar student posts'.
+    ' are to others in the class. It shows who the knowlege source is and who is copying them. Original posts are'.
+    ' determined by time stamps. Lower values indicate less similarity between posts. Review the posts of students'.
+    ' with higher values, they may be quoting other students or plagiarising their work.';
+$string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'The heatmaps show how similiar student posts are to'.
+    ' others in the class, including the instructor. It shows who the knowlege source is and who is copying'.
+    ' them. Original posts are determined by time stamps. Lower values indicate less similarity between posts. Review'.
+    ' the posts of students with higher values, they may be quoting other students and instructor or plagiarising'.
+    ' their work. ';
 $string['discussionreport_discussionSuggestedGrades_help'] = 'This bar plot shows the distribution of suggested'.
     ' grades for the participation in the discussion groups. The solid line shows an expected distribution of'.
     ' grades with a class average grade of C. The dotted line shows the distribution with a class average grade'.
