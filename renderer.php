@@ -541,22 +541,24 @@ class local_xray_renderer extends plugin_renderer_base {
                         if (!empty($reportcontroller)) {
                             $class .= " xray-reports-links-bk-image-small";
                         } else {
-                            $class .= " xray-reports-links-bk-image-large";
+                            $class .= " xray-reports-links-bk-image-frontpage";
                         }
                         if ($reportstring == $reportcontroller) {
                             $class .= " xray-menu-item-active";
                         }
-                        $menuitems[] = \html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $class));
+                        $menuitems[] = html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $class));
                     }
                 }
                 $title = '';
+                $class_nav = '';
                 if (empty($reportcontroller)) {
-                    $title = \html_writer::tag('h4', get_string('reports', 'local_xray'));
+                    $title = html_writer::tag('h4', get_string('pluginname', 'local_xray'));
+                    $class_nav = 'xray-logo-in-nav';
                 }
-                $amenu = \html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
+                $amenu = html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
                     'class' => 'xray-reports-links'));
-                $navmenu = html_writer::tag("nav", $amenu);
-                $menu = \html_writer::div($title . $navmenu, 'clearfix', array('id' => 'js-xraymenu'));
+                $navmenu = html_writer::tag("nav", $amenu, array("class" => $class_nav));
+                $menu = html_writer::div($title . $navmenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
             }
         }
 
