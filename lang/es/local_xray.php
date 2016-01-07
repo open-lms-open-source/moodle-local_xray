@@ -42,8 +42,8 @@ $string['debuginfo'] = 'Información';
 $string['cachedef_request'] = 'X-Ray caché de los pedidos';
 
 /* Capabilities */
-$string['xray:activityreportindividual_view'] = 'Ver Reporte individual de actividad';
-$string['xray:activityreport_view'] = 'Ver Reporte de actividad';
+$string['xray:activityreportindividual_view'] = 'Ver Reporte de Métricas de Actividad Individuales';
+$string['xray:activityreport_view'] = 'Ver Reporte de Actividad';
 $string['xray:dashboard_view'] = 'Ver interfaz de reportes';
 $string['xray:discussionreport_view'] = 'Ver Reporte de discusiones';
 $string['xray:discussionreportindividual_view'] = 'Ver Reporte de Discusión - Individual';
@@ -65,9 +65,9 @@ $string['irregular'] = 'Irregular';
 $string['regular'] = 'Regular';
 
 /* Report Activity Report*/
-$string['activityreport'] = 'Reporte de actividad';
+$string['activityreport'] = 'Reporte de Actividad';
 /* Report Activity Report Individual*/
-$string['activityreportindividual'] = 'Reporte individual de actividad';
+$string['activityreportindividual'] = 'Métricas de Actividad Individuales';
 /* Discussion report*/
 $string['discussionreport'] = 'Discusiones';
 /* Discussion report individual*/
@@ -220,8 +220,8 @@ $string['accessible_error'] = 'Versión accesible para este gráfico no fue enco
 $string['reports_help'] = 'Ayuda';
 
 /* Tables names all report*/
-$string['activityreport_nonStarters'] = '';// Activity and risk report.
-$string['activityreport_studentList'] = ''; // Activity report.
+$string['activityreport_nonStarters'] = 'Estudiantes Inactivos';// Activity and risk report.
+$string['activityreport_studentList'] = 'Métricas de Actividad'; // Activity report.
 $string['risk_nonStarters'] = 'Estudiantes Inactivos'; // Risk report.
 $string['risk_riskMeasures'] = 'Métricas de Riesgo'; // Risk report.
 $string['gradebookreport_element2'] = 'Calificaciones de los estudiantes'; // Gradebook report.
@@ -233,8 +233,12 @@ $string['discussionreportindividual_discussionMetrics'] = 'Métricas de Particip
 $string['discussionreportindividual_discussionActivityByWeek'] = 'Actividad Semanal'; // Discussion report individual.
 
 /* Help tables all reports*/
-$string['activityreport_nonStarters_help'] = '';// Activity and risk report.
-$string['activityreport_studentList_help'] = ''; // Activity report.
+$string['activityreport_nonStarters_help'] = 'Los siguientes estudiantes aún no muestran actividad en el curso.';// Activity and risk report.
+$string['activityreport_studentList_help'] = 'Observando la actividad de los estudiantes en un cursose obtiene una'.
+    ' idea de su compromiso y prácticas. Esta tabla muestra la actividad del estudiante y la regularidad. Cuanto'.
+    ' menor sea el número de la columna Regularidad de Visitas, más regulares serán. También se pueden ver los reportes'.
+    ' individuales de cada estudiante. Haga clic en ícono al inicio de cada fila para ver el reporte de ese'.
+    ' estudiante.'; // Activity report.
 $string['risk_nonStarters_help'] = 'Los siguientes estudiantes aún no han participado del curso. '; // Risk report.
 $string['risk_riskMeasures_help'] = 'Esta tabla ayuda a identificar a los estudiantes que se encuentran en riesgo'.
     ' de dejar el curso, retirarse de la clase o abandonar la escuela. Los números más altos indican mayor riesgo.'.
@@ -267,38 +271,58 @@ $string['discussionreportindividual_discussionMetrics_help'] = 'Esta tabla muest
 $string['discussionreportindividual_discussionActivityByWeek_help'] = ''; // No mostraremos help.
 
 /* Graphs Activity report*/
-/* TODO:: Waiting spanish translation.
-$string['activityreport_activityLevelTimeline'] = '';
-$string['activityreport_compassTimeDiagram'] = '';
-$string['activityreport_barplotOfActivityByWeekday'] = '';
-$string['activityreport_barplotOfActivityWholeWeek'] = '';
-$string['activityreport_activityByWeekAsFractionOfTotal'] = '';
-$string['activityreport_activityByWeekAsFractionOfOwn'] = '';
-$string['activityreport_firstloginPiechartAdjusted'] = '';
-*/
+$string['activityreport_activityLevelTimeline'] = 'Actividad del Curso por fecha';
+$string['activityreport_compassTimeDiagram'] = 'Actividad según la hora del día';
+$string['activityreport_barplotOfActivityByWeekday'] = 'Actividad de las últimas dos semanas por día de la semana.';
+$string['activityreport_barplotOfActivityWholeWeek'] = 'Actividad durante las últimas semanas';
+$string['activityreport_activityByWeekAsFractionOfTotal'] = 'Actividad Relativa en Comparación con Otros Estudiantes de la Clase';
+$string['activityreport_activityByWeekAsFractionOfOwn'] = 'Actividad Relativa en Comparación consigo mismo';
+$string['activityreport_firstloginPiechartAdjusted'] = 'Diagrama de Torta de Distribución de Primer Acceso';
+
 /* Help Graphs Activity report*/
-/* TODO:: Waiting spanish translation.
-$string['activityreport_activityLevelTimeline_help'] = '';
-$string['activityreport_compassTimeDiagram_help'] = '';
-$string['activityreport_barplotOfActivityByWeekday_help'] = '';
-$string['activityreport_barplotOfActivityWholeWeek_help'] = '';
-$string['activityreport_activityByWeekAsFractionOfTotal_help'] = '';
-$string['activityreport_activityByWeekAsFractionOfOwn_help'] = '';
-$string['activityreport_firstloginPiechartAdjusted_help'] = '';
-*/
+$string['activityreport_activityLevelTimeline_help'] = 'Este gráfico muestra un estimado del tiempo de permanencia'.
+    ' en el curso (línea azul) y una previsión (línea de puntos) para las próximas dos semanas. La línea gris'.
+    ' oscura muestra el promedio de horas estimadas durante un período activo de tiempo. El área sombreada muestra'.
+    ' la cercanía de la media estimada con la verdadera media de la clase. La actividad prevista para las próximas'.
+    ' dos semanas se indica con una línea de puntos. Los picos de actividad fuera de lo esperado, se ven resaltados.';
+$string['activityreport_compassTimeDiagram_help'] = 'Este diagrama muestra las 24 horas de un día. Se basa en el'.
+    ' horario  establecido en el servidor de la institución. Una línea muestra el el tiempo que los estudiantes'.
+    ' pasan en el curso. El curso es más concurrido cuando las líneas se acercan a los bordes exteriores del'.
+    ' círculo. Esta información puede ayudarle a diseñar actividades que requieran la plena participación.';
+$string['activityreport_barplotOfActivityByWeekday_help'] = 'Este gráfico muestra el tiempo estimado invertido en'.
+    ' el curso,  desglosado por día de la semana. Las barras azules representan la actividad de los últimos siete días.';
+$string['activityreport_barplotOfActivityWholeWeek_help'] = 'Este gráfico muestra el nivel de actividad (tiempo'.
+    ' estimado) a lo largo de la semana. Las barras azules representan la actividad de los últimos siete'.
+    ' días. Las barras amarillas muestran  la actividad de los siete días anteriores a esta semana.';
+$string['activityreport_activityByWeekAsFractionOfTotal_help'] = 'Cada punto en este gráfico representa el tiempo en'.
+    ' el que un estudiante permanece activo comparado con otros estudiantes en una semana determinada. Los'.
+    ' puntos más grandes representan mayor actividad.';
+$string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Cada punto en este gráfico representa el tiempo en el'.
+    ' que un estudiante permanece activo comparado con otras semanas. Los puntos más grandes representan mayor actividad.';
+$string['activityreport_firstloginPiechartAdjusted_help'] = 'El diagrama muestra cuántos estudiantes ingresaron al'.
+    ' curso y cuántos aún no. El primer día del curso no se establece en un momento programado, este comienza el'.
+    ' día en el que el primer participante acceda al mismo, incluyendo al docente o instructor. El patrón que se'.
+    ' vea aquí puede dar un indicio del compromiso futuro.';
 
 /* Graphs Activity Individual report*/
-/* TODO:: Waiting spanish translation.
-$string['activityreportindividual_activityLevelTimeline'] = '';
-$string['activityreportindividual_barplotOfActivityByWeekday'] = '';
-$string['activityreportindividual_barplotOfActivityWholeWeek'] = '';
-*/
+$string['activityreportindividual_activityLevelTimeline'] = 'Actividad por Fecha';
+$string['activityreportindividual_barplotOfActivityByWeekday'] = 'Actividad de las últimas dos semanas por día de la semana';
+$string['activityreportindividual_barplotOfActivityWholeWeek'] = 'Actividad durante las últimas semanas';
+
 /* Help Graphs Activity Individual report*/
-/* TODO:: Waiting spanish translation.
-$string['activityreportindividual_activityLevelTimeline_help'] = '';
-$string['activityreportindividual_barplotOfActivityByWeekday_help'] = '';
-$string['activityreportindividual_barplotOfActivityWholeWeek_help'] = '';
-*/
+$string['activityreportindividual_activityLevelTimeline_help'] = 'El gráfico muestra un estimado de tiempo dedicado'.
+    ' al curso (línea azul) y una previsión (línea de puntos) para las próximas dos semanas. La línea gris oscuro'.
+    ' muestra el promedio de horas estimadas durante un período activo de tiempo. El área sombreada muestra la'.
+    ' cercanía entre el tiempo previsto y el promedio real. La actividad prevista para las próximas dos semanas'.
+    ' se indica con una línea de puntos. Los picos de actividad más altos y fuera del rango esperado, se encuentran'.
+    ' resaltados.';
+$string['activityreportindividual_barplotOfActivityByWeekday_help'] = 'El gráfico muestra el tiempo estimado'.
+    ' invertido en el curso desglosado por día de la semana. Las barras azules representan la actividad de los'.
+    ' últimos siete días. Las barras amarillas, los siete días previos a esa semana.';
+$string['activityreportindividual_barplotOfActivityWholeWeek_help'] = 'El gráfico muestra el tiempo estimado'.
+    ' dedicado al curso en la ultima semana. Las barras azules representan la actividad de la última semana. Las'.
+    ' barras amarillas muestran los siete días previos a esa semana.';
+
 /* Graphs Risk report*/
 $string['risk_riskDensity'] = 'Perfil Total de Riesgo';
 $string['risk_riskScatterPlot'] = 'Riesgo Académico versus Riesgo Social';
