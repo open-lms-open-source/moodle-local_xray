@@ -349,7 +349,10 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Total risk.
                         $roundvalue = round($value, 2);
                         $risk1 = get_config($plugin, 'risk1');
+                        $risk1 = floatval($risk1);
                         $risk2 = get_config($plugin, 'risk2');
+                        $risk2 = floatval($risk2);
+
                         if (($risk1 !== false) && ($risk2 !== false)) {
                             $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
                             if ($roundvalue < $risk1) {
@@ -357,9 +360,9 @@ class local_xray_controller_reports extends mr_controller {
                             } else if ($roundvalue < $risk2) {
                                 $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
                             }
-                            return $category . ' ' . $roundvalue;
+                            return $category . ' ' . $roundvalue . '%';
                         } else {
-                            return $roundvalue;
+                            return $roundvalue . '%';
                         }
                         break;
                     default:
