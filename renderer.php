@@ -80,7 +80,7 @@ class local_xray_renderer extends plugin_renderer_base {
         // List Graph.
         $title = get_string($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
         $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
-        $output .= html_writer::tag('h3', $title, array("class" => "reportsname"));
+        $output .= html_writer::tag('h3', $title, array("class" => "xray-reportsname"));
 
         // Validate if exist and is available image in xray side.
         $existimg = false;
@@ -125,7 +125,7 @@ class local_xray_renderer extends plugin_renderer_base {
         } else {
             // Incorrect url img. Show error message.
             $output .= html_writer::tag("div",
-                get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
+                get_string('error_loadimg', $plugin), array("class" => "xray_error_loadmsg"));
         }
 
         $output .= html_writer::end_tag('div');
@@ -197,7 +197,7 @@ class local_xray_renderer extends plugin_renderer_base {
         // Table Title with link to open it.
         $title = get_string($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
         $link = html_writer::tag("a", $title, array('href' => "#{$datatable['id']}"));
-        $output .= html_writer::tag('h3', $link, array('class' => 'xray-table-title-link reportsname'));
+        $output .= html_writer::tag('h3', $link, array('class' => 'xray-table-title-link xray-reportsname'));
 
         // Table.
         $output .= html_writer::start_tag('div', array(
@@ -221,7 +221,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::end_tag("thead");
         $output .= html_writer::end_tag("table");
         // Close Table button.
+        $output .= html_writer::start_tag('div', array('class' => 'xray-closetable'));
         $output .= html_writer::tag('a', get_string('closetable', 'local_xray'), array('href' => "#"));
+        $output .= html_writer::end_tag('div');
         $output .= html_writer::end_tag('div');
         // End Table.
         // Load table with data.

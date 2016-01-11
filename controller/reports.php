@@ -91,6 +91,8 @@ class local_xray_controller_reports extends mr_controller {
             $PAGE->set_pagelayout('report');
             $PAGE->set_heading($COURSE->fullname);
         }
+        // Add specific class for xray heading
+        $this->heading->classes = 'xray-report-page-title';
     }
 
     /**
@@ -345,17 +347,17 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Social risk.
                     case 'DWF';
                         // Column Total risk.
-                        $roundvalue = round(floatval($value), 2);
-                        $category = 'high';
+                        $roundvalue = round($value, 2);
                         $risk1 = get_config($plugin, 'risk1');
                         $risk2 = get_config($plugin, 'risk2');
                         if (($risk1 !== false) && ($risk2 !== false)) {
+                            $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
                             if ($roundvalue < $risk1) {
-                                $category = 'low';
+                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
                             } else if ($roundvalue < $risk2) {
-                                $category = 'medium';
+                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
                             }
-                            return get_string($category, 'local_xray') . ' ' . $roundvalue;
+                            return $category . ' ' . $roundvalue;
                         } else {
                             return $roundvalue;
                         }
@@ -373,17 +375,17 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'weeklyRegularity':
                         // Column Visit regularity (weekly).
-                        $roundvalue = round(floatval($value), 2);
+                        $roundvalue = round($value, 2);
                         $visitreg1 = get_config($plugin, 'visitreg1');
                         $visitreg2 = get_config($plugin, 'visitreg2');
                         if (($visitreg1 !== false) && ($visitreg2 !== false)) {
-                            $category = 'irregular';
+                            $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
                             if ($roundvalue < $visitreg1) {
-                                $category = 'highlyregularity';
+                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
                             } else if ($roundvalue < $visitreg2) {
-                                $category = 'somewhatregularity';
+                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
                             }
-                            return get_string($category, 'local_xray') . ' ' . $roundvalue;
+                            return $category . ' ' . $roundvalue;
                         } else {
                             return $roundvalue;
                         }
@@ -397,40 +399,39 @@ class local_xray_controller_reports extends mr_controller {
                 // Table Participation Metrics from Discussion Report Individual.
                 switch ($column) {
                     case 'contrib':
-                        // Column Contribution.
+                        // Column Average original contribution.
                     case 'ctc':
-                        // Column CTC.
-                        $percentage = $value * 100;
-                        $roundvalue = round(floatval($percentage), 2);
+                        // Column Average critical thought.
+                        $roundvalue = round($value, 2);
                         $partc1 = get_config($plugin, 'partc1');
                         $partc2 = get_config($plugin, 'partc2');
                         if (($partc1 !== false) && ($partc2 !== false)) {
-                            $category = 'high';
+                            $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
                             if ($roundvalue < $partc1) {
-                                $category = 'low';
+                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
                             } else if ($roundvalue < $partc2) {
-                                $category = 'medium';
+                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
                             }
-                            return get_string($category, 'local_xray') . ' ' . $roundvalue . '%';
+                            return $category . ' ' . $roundvalue . '%';
                         } else {
                             return $roundvalue . '%';
                         }
                         break;
                     case 'regularityContrib';
-                        // Column Regularity of contributions.
+                        // Column Regularity of original contribution.
                     case 'regularityCTC':
-                        // Column Regularity of CTC.
-                        $roundvalue = round(floatval($value), 2);
+                        // Column Regularity of critical thought.
+                        $roundvalue = round($value, 2);
                         $partreg1 = get_config($plugin, 'partreg1');
                         $partreg2 = get_config($plugin, 'partreg2');
                         if (($partreg1 !== false) and ($partreg2 !== false)) {
-                            $category = 'irregular';
+                            $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
                             if ($roundvalue < $partreg1) {
-                                $category = 'highlyregularity';
+                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
                             } else if ($roundvalue < $partreg2) {
-                                $category = 'somewhatregularity';
+                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
                             }
-                            return get_string($category, 'local_xray') . ' ' . $roundvalue;
+                            return $category . ' ' . $roundvalue;
                         } else {
                             return $roundvalue;
                         }
@@ -444,40 +445,39 @@ class local_xray_controller_reports extends mr_controller {
                 switch ($column) {
                     case 'wc':
                         // Column Word count (rel.).
-                        $roundvalue = round(floatval($value), 2);
+                        $roundvalue = round($value, 2);
                         return $roundvalue;
                         break;
                     case 'ctc':
                         // Column CTC.
-                        $percentage = $value * 100;
-                        $roundvalue = round(floatval($percentage), 2);
+                        $roundvalue = round($value, 2);
                         $partc1 = get_config($plugin, 'partc1');
                         $partc2 = get_config($plugin, 'partc2');
                         if (($partc1 !== false) && ($partc2 !== false)) {
-                            $category = 'high';
+                            $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
                             if ($roundvalue < $partc1) {
-                                $category = 'low';
+                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
                             } else if ($roundvalue < $partc2) {
-                                $category = 'medium';
+                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
                             }
-                            return get_string($category, 'local_xray') . ' ' . $roundvalue . '%';
+                            return $category . ' ' . $roundvalue . '%';
                         } else {
                             return $roundvalue . '%';
                         }
                         break;
                     case 'regularityContrib';
                         // Column Regularity of contributions.
-                        $roundvalue = round(floatval($value), 2);
+                        $roundvalue = round($value, 2);
                         $partreg1 = get_config($plugin, 'partreg1');
                         $partreg2 = get_config($plugin, 'partreg2');
                         if (($partreg1 !== false) and ($partreg2 !== false)) {
-                            $category = 'irregular';
+                            $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
                             if ($roundvalue < $partreg1) {
-                                $category = 'highlyregularity';
+                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
                             } else if ($roundvalue < $partreg2) {
-                                $category = 'somewhatregularity';
+                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
                             }
-                            return get_string($category, 'local_xray') . ' ' . $roundvalue;
+                            return $category . ' ' . $roundvalue;
                         } else {
                             return $roundvalue;
                         }
@@ -491,7 +491,7 @@ class local_xray_controller_reports extends mr_controller {
                 switch ($column) {
                     case 'standarScore':
                         // Column Standardized score.
-                        return round(floatval($value), 2);
+                        return round($value, 2);
                         break;
                     default:
                         return $value;
@@ -505,7 +505,7 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Average standardized score.
                     case 'finalGradeCorrelation':
                         // Column Correlation between final score and score from this quiz.
-                        return round(floatval($value), 2);
+                        return round($value, 2);
                         break;
                     default:
                         return $value;

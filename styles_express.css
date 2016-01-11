@@ -2,6 +2,21 @@
 TODO - make express specific? */
 .xray-risk,
 .xray-visitors {
-  width:50%;
-  float:left;
+    width:50%;
+    float:left;
 }
+
+/* Background Colours - Styles from bootstrap */
+.xray-toggleable-table .label{display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em}
+.xray-toggleable-table .label-default{background-color:#777}
+.xray-toggleable-table .label-default[href]:focus,.label-default[href]:hover{background-color:#5e5e5e}
+.xray-toggleable-table .label-primary{background-color:#337ab7}
+.xray-toggleable-table .label-primary[href]:focus,.label-primary[href]:hover{background-color:#286090}
+.xray-toggleable-table .label-success{background-color:#5cb85c}
+.xray-toggleable-table .label-success[href]:focus,.label-success[href]:hover{background-color:#449d44}
+.xray-toggleable-table .label-info{background-color:#5bc0de}
+.xray-toggleable-table .label-info[href]:focus,.label-info[href]:hover{background-color:#31b0d5}
+.xray-toggleable-table .label-warning{background-color:#f0ad4e}
+.xray-toggleable-table .label-warning[href]:focus,.label-warning[href]:hover{background-color:#ec971f}
+.xray-toggleable-table .label-danger{background-color:#d9534f}
+.xray-toggleable-table .label-danger[href]:focus,.label-danger[href]:hover{background-color:#c9302c}
