@@ -64,10 +64,11 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param  string $name
      * @param  stdClass $element
      * @param  integer $reportid - Id of report, we need this to get accessible data from webservice.
+     * @param  boolean - Show help for graph or not.
      * @return string
      */
 
-    public function show_graph($name, $element, $reportid, $extraparamurlaccessible = array()) {
+    public function show_graph($name, $element, $reportid, $extraparamurlaccessible = array(), $has_help = true) {
 
         global $PAGE, $COURSE, $OUTPUT;
         $plugin = "local_xray";
@@ -80,7 +81,7 @@ class local_xray_renderer extends plugin_renderer_base {
         // List Graph.
         $title = get_string($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
         $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
-        $output .= html_writer::tag('h3', $title, array("class" => "reportsname"));
+        $output .= html_writer::tag('h3', $title, array("class" => "xray-reportsname"));
 
         // Validate if exist and is available image in xray side.
         $existimg = false;
@@ -130,7 +131,7 @@ class local_xray_renderer extends plugin_renderer_base {
         } else {
             // Incorrect url img. Show error message.
             $output .= html_writer::tag("div",
-                get_string('error_loadimg', $plugin), array("class" => "error_loadmsg"));
+                get_string('error_loadimg', $plugin), array("class" => "xray_error_loadmsg"));
         }
 
         $output .= html_writer::end_tag('div');
@@ -141,7 +142,10 @@ class local_xray_renderer extends plugin_renderer_base {
             $output .= html_writer::start_tag('div', array('id' => $element->elementName, 'class' => 'xray-graph-background'));
             $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
 
-            $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
+            $helpicon = "";
+            if($has_help) {
+                $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
+            }
             $output .= html_writer::tag('h6', $title.$helpicon, array('class' => 'xray-graph-caption-text'));
 
             if (isset($element->tooltip) && !empty($element->tooltip)) {
@@ -186,9 +190,10 @@ class local_xray_renderer extends plugin_renderer_base {
      * Standard table Theme with Jquery datatables.
      *
      * @param array $datatable - Array containing object DataTable.
+     * @param  boolean - Show help for table or not.
      * @return string
      */
-    public function standard_table(array $datatable) {
+    public function standard_table(array $datatable, $has_help = true) {
 
         global $PAGE, $OUTPUT, $PAGE;
         // Load Jquery.
@@ -202,7 +207,7 @@ class local_xray_renderer extends plugin_renderer_base {
         // Table Title with link to open it.
         $title = get_string($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
         $link = html_writer::tag("a", $title, array('href' => "#{$datatable['id']}"));
-        $output .= html_writer::tag('h3', $link, array('class' => 'xray-table-title-link reportsname'));
+        $output .= html_writer::tag('h3', $link, array('class' => 'xray-table-title-link xray-reportsname'));
 
         // Table.
         $output .= html_writer::start_tag('div', array(
@@ -215,8 +220,12 @@ class local_xray_renderer extends plugin_renderer_base {
                 "class" => "xraydatatable display"));
 
         // Help icon for tables.
-        $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
-        $output .= html_writer::tag("caption", $datatable['title'].$helpicon);
+        $helpicon = "";
+        if($has_help) {
+            $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
+        }
+
+        $output .= html_writer::tag("caption", $title.$helpicon);
         $output .= html_writer::start_tag("thead");
         $output .= html_writer::start_tag("tr");
         foreach ($datatable['columns'] as $c) {
@@ -226,7 +235,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::end_tag("thead");
         $output .= html_writer::end_tag("table");
         // Close Table button.
+        $output .= html_writer::start_tag('div', array('class' => 'xray-closetable'));
         $output .= html_writer::tag('a', get_string('closetable', 'local_xray'), array('href' => "#"));
+        $output .= html_writer::end_tag('div');
         $output .= html_writer::end_tag('div');
         // End Table.
         // Load table with data.
@@ -324,8 +335,8 @@ class local_xray_renderer extends plugin_renderer_base {
             array(10, 50, 100),
             false); // This table has not sortable.
 
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
+        // Create standard table. This table has not icon.
+        $output = $this->standard_table((array)$datatable, false);
 
         return $output;
     }
@@ -362,8 +373,8 @@ class local_xray_renderer extends plugin_renderer_base {
             array(10, 50, 100),
             false); // without sortable.
 
-        // Create standard table.
-        $output = $this->standard_table((array)$datatable);
+        // Create standard table.This tables has not icon help.
+        $output = $this->standard_table((array)$datatable, false);
 
         return $output;
     }

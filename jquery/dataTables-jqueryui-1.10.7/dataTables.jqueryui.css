@@ -47,9 +47,9 @@ table.dataTable thead th div.DataTables_sort_wrapper span {
 table.dataTable thead th.ui-state-default {
   border-right-width: 0;
 }
-table.dataTable thead th.ui-state-default:last-child {
+/*table.dataTable thead th.ui-state-default:last-child {
   border-right-width: 1px;
-}
+}*/
 table.dataTable tbody tr {
   background-color: #ffffff;
 }
@@ -334,7 +334,7 @@ table.dataTable td {
   text-decoration: none !important;
   cursor: pointer;
   *cursor: hand;
-  color: #333 !important;
+  color: #333;
   border: 1px solid transparent;
 }
 .dataTables_wrapper .dataTables_paginate .fg-button:active {

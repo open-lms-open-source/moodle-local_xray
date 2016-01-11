@@ -34,8 +34,8 @@ $.extend( DataTable.ext.classes, {
 
 	/* Full numbers paging buttons */
 	"sPageButton":         "fg-button ui-button ui-state-default",
-	"sPageButtonActive":   "ui-state-disabled",
-	"sPageButtonDisabled": "ui-state-disabled",
+	"sPageButtonActive":   "current",
+	"sPageButtonDisabled": "disabled",
 
 	/* Features */
 	"sPaging": "dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi "+

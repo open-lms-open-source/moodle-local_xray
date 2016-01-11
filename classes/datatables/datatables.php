@@ -142,7 +142,7 @@ class datatables {
      * @param string $sort_order
      * @param string $sort_order
      */
-    public function __construct($element, $jsonurl, $columns = array(), $columnaction = false, $paging=true, $dom = 'lftipr',
+    public function __construct($element, $jsonurl, $columns = array(), $columnaction = false, $paging=true, $dom = '<"top">rt<"bottom"flp><"clear">',
                                 $lengthMenu = array(10, 50, 100), $sort = true, $default_field_sort = 0, $sort_order = "asc") {
         
         $this->id = $element->elementName;

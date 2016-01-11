@@ -80,7 +80,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         array(),
                         true,
                         true,
-                        'ftlipr'); // Add column action.
+                        '<"top">rt<"bottom"flp><"clear">'); // Add column action.
                     $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
                     $output .= $this->output->standard_table((array)$datatable);
 
@@ -111,7 +111,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                 } else {
                     // Show graphs.
                     $output .= html_writer::tag("h2", get_string("discussionendogenicplagiarism", $this->component),
-                        array("class" => "main"));
+                        array("class" => "xray-report-page-title"));
                     $output .= $this->output->inforeport($response->reportdate);
                     $output .= $this->output->show_graph("endogenicPlagiarismStudentsHeatmap",
                         $response->elements->endogenicPlagiarismStudentsHeatmap, $response->id);
@@ -132,7 +132,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Show graphs.
                     $output .= html_writer::tag("h2",
                         get_string("discussiongrading", $this->component),
-                        array("class" => "main"));
+                        array("class" => "xray-report-page-title"));
                     $output .= $this->output->inforeport($response->reportdate);
 
                     // Its a table, I will get info with new call.
@@ -175,7 +175,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         "courseid" => $this->courseid,
                         "userid" => $row->participantId->value
                     ));
-                $r->action = html_writer::link($url, '', array("class" => "icon_discussionreportindividual",
+                $r->action = html_writer::link($url, '', array("class" => "xray_icon_discussionreportindividual",
                     "title" => $discussionreportind,
                     "target" => "_blank"));
             }
