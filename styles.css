@@ -20,6 +20,11 @@
     text-align: left;
 }
 
+/* Info about user in reports */
+#page-local-xray-view .xray-inforeport-user {
+     text-align: left;
+ }
+
 /* Toogle tables */
 .xray-table-title-link.xray-reportsname {
     background: transparent url([[pix:local_xray|plus]]) 0 0 no-repeat;
