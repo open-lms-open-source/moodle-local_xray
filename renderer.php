@@ -50,7 +50,9 @@ class local_xray_renderer extends plugin_renderer_base {
     public function inforeport($reportdate, $user = null) {
         $output = '';
         if (!empty($user)) {
-            $output .= html_writer::tag("p", get_string(("user")) . ": " . format_string(fullname($user)));
+            $output .= html_writer::tag("h4",
+                get_string(("user")) . ": " . format_string(fullname($user)),
+                array('class' => 'xray-inforeport-user'));
         }
         $date = new DateTime($reportdate);
         $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
