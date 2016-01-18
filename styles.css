@@ -297,7 +297,7 @@
 .xray-graph-box-link{
     display: block;
     height: 300px;
-    max-width: 344px;
+    max-width: 336px;
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     position: relative;
