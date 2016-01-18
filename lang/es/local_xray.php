@@ -42,17 +42,17 @@ $string['debuginfo'] = 'Información';
 $string['cachedef_request'] = 'X-Ray caché de los pedidos';
 
 /* Capabilities */
-$string['xray:activityreportindividual_view'] = 'Ver Reporte de Métricas de Actividad Individuales';
-$string['xray:activityreport_view'] = 'Ver Reporte de Actividad';
+$string['xray:activityreportindividual_view'] = 'Ver reporte individual de actividad';
+$string['xray:activityreport_view'] = 'Ver reporte de actividad';
 $string['xray:dashboard_view'] = 'Ver interfaz de reportes';
-$string['xray:discussionreport_view'] = 'Ver Reporte de discusiones';
-$string['xray:discussionreportindividual_view'] = 'Ver Reporte de Discusión - Individual';
-$string['xray:discussionreportindividualforum_view'] = 'Ver Reporte individual de discusiones en foros';
-$string['xray:discussionendogenicplagiarism_view'] = 'Ver Reporte de Superposición de Palabras';
-$string['xray:discussiongrading_view'] = 'Ver Reporte de Calificaciones de Discusión';
-$string['xray:gradebookreport_view'] = 'Ver Reporte de Calificaciones';
-$string['xray:gradebookreportindividualquiz_view'] = 'Ver Reporte individual de calificaciones para quiz';
-$string['xray:risk_view'] = 'Ver Reporte de Estado de riesgo';
+$string['xray:discussionreport_view'] = 'Ver reporte de discusiones';
+$string['xray:discussionreportindividual_view'] = 'Ver reporte individual de discusiones';
+$string['xray:discussionreportindividualforum_view'] = 'Ver reporte individual de discusiones en foros';
+$string['xray:discussionendogenicplagiarism_view'] = 'Ver reporte de plagio en foros de discusión';
+$string['xray:discussiongrading_view'] = 'Ver calificaciones en foros de discusión';
+$string['xray:gradebookreport_view'] = 'Ver reporte de calificaciones';
+$string['xray:gradebookreportindividualquiz_view'] = 'Ver reporte individual de calificaciones para quiz';
+$string['xray:risk_view'] = 'Ver reporte de riesgo';
 $string['xray:view'] = 'Ver X-Ray Learning Analytics';
 
 /* Categories for numbers values */
@@ -65,36 +65,36 @@ $string['irregular'] = 'Irregular';
 $string['regular'] = 'Regular';
 
 /* Report Activity Report*/
-$string['activityreport'] = 'Reporte de Actividad';
+$string['activityreport'] = 'Reporte de actividad';
 /* Report Activity Report Individual*/
-$string['activityreportindividual'] = 'Métricas de Actividad Individuales';
+$string['activityreportindividual'] = 'Reporte individual de actividad';
 /* Discussion report*/
-$string['discussionreport'] = 'Discusiones';
+$string['discussionreport'] = 'Reporte de discusiones';
 /* Discussion report individual*/
-$string['discussionreportindividual'] = 'Reporte de Discusión - Individual';
+$string['discussionreportindividual'] = 'Reporte individual de discusiones';
 /* Discussion report individual forum*/
 $string['discussionreportindividualforum'] = 'Reporte individual de discusiones en foros';
 /* Discussion report Endogenic Plagiarism*/
-$string['discussionendogenicplagiarism'] = 'Superposición de Palabras';
+$string['discussionendogenicplagiarism'] = 'Reporte de plagio en foros de discusión';
 /* Risk report*/
-$string['risk'] = 'Reporte de Estado de riesgo';
+$string['risk'] = 'Reporte de riesgo';
 /* Discussiongrading report*/
-$string['discussiongrading'] = 'Calificaciones de Discusión';
+$string['discussiongrading'] = 'Calificaciones en foros de discusión';
 /* Gradebook report*/
-$string['gradebookreport'] = 'Reporte de Calificaciones';
+$string['gradebookreport'] = 'Reporte de calificaciones';
 
 /* Columns reports */
-$string['reportdate'] = 'Fecha de Reporte';
+$string['reportdate'] = 'Fecha de reporte';
 $string['weeks'] = 'Semanas';
 $string['week'] = 'Semana';
 
 /* Error to load tables and images */
 $string['error_loadimg'] = 'Error al cargar imagen, por favor intenta nuevamente recargando la página. Si el '.
-    'error persiste, por favor contacta con el administrador del sitio.';
+                           'error persiste, por favor contacta con el administrador del sitio.';
 
 /* Error Webservice */
 $string['error_xray'] = 'Error al conectar con X-Ray Learning Analytics, por favor intenta nuevamente recargando la página. Si el error '.
-    'persiste, por favor contacta con el administrador del sitio.';
+                        'persiste, por favor contacta con el administrador del sitio.';
 
 $string['error_compress'] = 'No fue possible crear archivo comprimido. Por favor contacta con el administrador del sitio.';
 
@@ -125,20 +125,20 @@ $string['enablepacker'] = 'Compresión nativa';
 $string['enablepacker_desc'] = 'Una vez habilitida permite uso de compresores de sistema operativo.';
 $string['packertar'] = 'Ejecutable GNU tar';
 $string['packertar_desc'] = 'Configurar locación de <a href="http://www.gnu.org/software/tar/" '.
-    'target="_blank" title="GNU tar">GNU tar</a> ejecutable en tu servidor. Asegurate de '.
-    'instalar <a href="http://www.gnu.org/software/gzip/" target="_blank" title="GNU Gzip">GNU Gzip</a>.';
+                            'target="_blank" title="GNU tar">GNU tar</a> ejecutable en tu servidor. Asegurate de '.
+                            'instalar <a href="http://www.gnu.org/software/gzip/" target="_blank" title="GNU Gzip">GNU Gzip</a>.';
 $string['exportlocation'] = 'Locacion de export';
 $string['exportlocation_desc'] = 'Configura directorio local para almacenamiento temporario de data exportada. '.
-    'Si lo dejas vacio (o ruta es invalida), Moodle tempdir es usado.';
+                                 'Si lo dejas vacio (o ruta es invalida), Moodle tempdir es usado.';
 $string['exporttime'] = 'Tiempo de exportacion';
 $string['exporttime_desc'] = 'Configure tiempo permitido para exportacion de los datos.'.
-    'Si valor configurado es 0 exportacion es sin limite.';
+                             'Si valor configurado es 0 exportacion es sin limite.';
 $string['export_progress'] = 'Reiniciar informacion del progreso';
 $string['export_progress_desc'] = 'Durante exportacion de los datos, informacion del progreso se guarda en '.
-    'la base de datos. Markando esa opccion borraria esa informacion.';
+                                  'la base de datos. Markando esa opccion borraria esa informacion.';
 $string['curlcache'] = 'Expiracion de Web service caché';
 $string['curlcache_desc'] = 'Determina por cuanto tiempo guardar respuestas de Web service.'.
-    'Puesto en cero caché seria apagado. Para aclarar - solo respuestas exitosas se guardaran.';
+                            'Puesto en cero caché seria apagado. Para aclarar - solo respuestas exitosas se guardaran.';
 
 $string['xrayadminserver'] = 'Servidor de administración X-Ray Learning Analytics';
 $string['xrayadminserver_desc'] = 'Locación del servidor.';
@@ -191,7 +191,7 @@ $string['visitors'] = 'Visitantes';
 
 // Jquery Tables (with plugin datatables).
 $string['error_datatables'] = 'Error al traer datos para esta tabla. Por favor intenta nuevamente recargando la '.
-    'página. Si el error persiste, por favor contacta con el administrador del sitio.';
+                              'página. Si el error persiste, por favor contacta con el administrador del sitio.';
 $string['sProcessingMessage'] = 'Trayendo datos, Por favor espera...';
 $string['sFirst'] = 'Primero';
 $string['sLast'] = 'Último';
@@ -220,273 +220,183 @@ $string['accessible_error'] = 'Versión accesible para este gráfico no fue enco
 $string['reports_help'] = 'Ayuda';
 
 /* Tables names all report*/
-$string['activityreport_nonStarters'] = 'Estudiantes Inactivos';// Activity and risk report.
-$string['activityreport_studentList'] = 'Métricas de Actividad'; // Activity report.
-$string['risk_nonStarters'] = 'Estudiantes Inactivos'; // Risk report.
-$string['risk_riskMeasures'] = 'Métricas de Riesgo'; // Risk report.
-$string['gradebookreport_element2'] = 'Calificaciones de los estudiantes'; // Gradebook report.
-$string['gradebookreport_element4'] = 'Resumen de Ejercicios'; // Gradebook report.
-$string['discussionreport_discussionMetrics'] = 'Métricas de Participación'; // Discussion report.
-$string['discussionreport_discussionActivityByWeek'] = 'Actividad Semanal'; // Discussion report.
-$string['discussionreport_studentDiscussionGrades'] = 'Calificaciones Recomendadas'; // Discussion report.
-$string['discussionreportindividual_discussionMetrics'] = 'Métricas de Participación'; // Discussion report individual.
-$string['discussionreportindividual_discussionActivityByWeek'] = 'Actividad Semanal'; // Discussion report individual.
-
+/* TODO:: Waiting spanish translation.
+$string['activityreport_nonStarters'] = '';// Activity and risk report.
+$string['activityreport_studentList'] = ''; // Activity report.
+$string['risk_nonStarters'] = ''; // Risk report.
+$string['risk_riskMeasures'] = ''; // Risk report.
+$string['gradebookreport_element2'] = ''; // Gradebook report.
+$string['gradebookreport_element4'] = ''; // Gradebook report.
+$string['discussionreport_discussionMetrics'] = ''; // Discussion report.
+$string['discussionreport_discussionActivityByWeek'] = ''; // Discussion report.
+$string['discussionreport_studentDiscussionGrades'] = ''; // Discussion report.
+$string['discussionreportindividual_discussionMetrics'] = ''; // Discussion report individual.
+$string['discussionreportindividual_discussionActivityByWeek'] = ''; // Discussion report individual.
+*/
 /* Help tables all reports*/
-$string['activityreport_nonStarters_help'] = 'Los siguientes estudiantes aún no muestran actividad en el curso.';// Activity and risk report.
-$string['activityreport_studentList_help'] = 'Observando la actividad de los estudiantes en un cursose obtiene una'.
-    ' idea de su compromiso y prácticas. Esta tabla muestra la actividad del estudiante y la regularidad. Cuanto'.
-    ' menor sea el número de la columna Regularidad de Visitas, más regulares serán. También se pueden ver los reportes'.
-    ' individuales de cada estudiante. Haga clic en ícono al inicio de cada fila para ver el reporte de ese'.
-    ' estudiante.'; // Activity report.
-$string['risk_nonStarters_help'] = 'Los siguientes estudiantes aún no han participado del curso. '; // Risk report.
-$string['risk_riskMeasures_help'] = 'Esta tabla ayuda a identificar a los estudiantes que se encuentran en riesgo'.
-    ' de dejar el curso, retirarse de la clase o abandonar la escuela. Los números más altos indican mayor riesgo.'.
-    ' El riesgo total está basado en las calificaciones de los estudiantes (Riesgo Académico), así como también en'.
-    ' su participación en los foros de discusión (Riesgo Social).'; // Risk report.
-$string['gradebookreport_element2_help'] = 'Esta tabla muestra el desempeño de los estudiantes en los exámenes y'.
-    ' ejercicios del curso. Se provee un puntaje estandarizado para cada estudiante. Esto demuestra la performance'.
-    ' del mismo en comparación con la media de la clase. '; // Gradebook report.
-$string['gradebookreport_element4_help'] = 'Esta tabla muestra la performance promedio de los estudiantes para'.
-    ' cada examen o ejercicio. Se observa la puntuación de ese examen comparada con el puntaje acumulado hasta'.
-    ' el momento. Los altos porcentajes indican estudiantes fuertes.'; // Gradebook report.
-$string['discussionreport_discussionMetrics_help'] = 'Esta tabla muestra cómo un estudiante participa en las'.
-    ' discusiones . Contribución original y el pensamiento crítico son puntajes determinados por un análisis'.
-    ' de las palabras usadas por los estudiantes. Contribución original se basa era recuento de palabras con'.
-    ' palabras vacías , pronombres y preposiciones tales como, filtrados a cabo para determinar la relación de'.
-    ' las palabras individuales utilizados . El pensamiento crítico se basa en el número de estudiantes utilizar'.
-    ' declaraciones reflexivas . Por ejemplo, " estoy de acuerdo " o " ¡Yo también! " . Haga clic en el nombre'.
-    ' del informe junto a un estudiante para ver cómo lo están haciendo .'; // Discussion report.
-$string['discussionreport_discussionActivityByWeek_help'] = ''; // No mostraremos help.
-$string['discussionreport_studentDiscussionGrades_help'] = 'Las recomendaciones de calificación se basan en la'.
-    ' frecuencia de los posteos, el aporte original y la evidencia de pensamiento crítico. Cada uno tiene'.
-    ' el mismo valor por defecto.'; // Discussion report.
-$string['discussionreportindividual_discussionMetrics_help'] = 'Esta tabla muestra cuanto participa un estudiante'.
-    ' en las discusiones. Los puntajes para la contribución original y el pensamiento crítico, están determinados'.
-    ' por el análisis de las palabras utilizadas por los estudiantes. La contribución original se basa en el conteo'.
-    ' de palabras y conectores tales como pronombres y preposiciones, filtradas para determinar un radio de palabras'.
-    ' únicas utilizadas. El pensamiento crítico se establece a partir del numero de comentarios o posteos reflexivos'.
-    ' como por ejemplo, "Estoy de acuerdo" o "Yo también". Haga click en el ícono al lado del nombre del estudiante'.
-    ' para ver su performance individual.'; // Discussion report individual.
-$string['discussionreportindividual_discussionActivityByWeek_help'] = ''; // No mostraremos help.
-
+/* TODO:: Waiting spanish translation.
+$string['activityreport_nonStarters_help'] = '';// Activity and risk report.
+$string['activityreport_studentList_help'] = ''; // Activity report.
+$string['risk_nonStarters_help'] = ''; // Risk report.
+$string['risk_riskMeasures_help'] = ''; // Risk report.
+$string['gradebookreport_element2_help'] = ''; // Gradebook report.
+$string['gradebookreport_element4_help'] = ''; // Gradebook report.
+$string['discussionreport_discussionMetrics_help'] = ''; // Discussion report.
+$string['discussionreport_discussionActivityByWeek_help'] = ''; // Discussion report.
+$string['discussionreport_studentDiscussionGrades_help'] = ''; // Discussion report.
+$string['discussionreportindividual_discussionMetrics_help'] = ''; // Discussion report individual.
+$string['discussionreportindividual_discussionActivityByWeek_help'] = ''; // Discussion report individual.
+*/
 /* Graphs Activity report*/
-$string['activityreport_activityLevelTimeline'] = 'Actividad del Curso por fecha';
-$string['activityreport_compassTimeDiagram'] = 'Actividad según la hora del día';
-$string['activityreport_barplotOfActivityByWeekday'] = 'Actividad de las últimas dos semanas por día de la semana';
-$string['activityreport_barplotOfActivityWholeWeek'] = 'Actividad durante las últimas semanas';
-$string['activityreport_activityByWeekAsFractionOfTotal'] = 'Actividad Relativa en Comparación con Otros Estudiantes de la Clase';
-$string['activityreport_activityByWeekAsFractionOfOwn'] = 'Actividad Relativa en Comparación consigo mismo';
-$string['activityreport_firstloginPiechartAdjusted'] = 'Diagrama de Torta de Distribución de Primer Acceso';
-
+/* TODO:: Waiting spanish translation.
+$string['activityreport_activityLevelTimeline'] = '';
+$string['activityreport_compassTimeDiagram'] = '';
+$string['activityreport_barplotOfActivityByWeekday'] = '';
+$string['activityreport_barplotOfActivityWholeWeek'] = '';
+$string['activityreport_activityByWeekAsFractionOfTotal'] = '';
+$string['activityreport_activityByWeekAsFractionOfOwn'] = '';
+$string['activityreport_firstloginPiechartAdjusted'] = '';
+*/
 /* Help Graphs Activity report*/
-$string['activityreport_activityLevelTimeline_help'] = 'Este gráfico muestra un estimado del tiempo de permanencia'.
-    ' en el curso (línea azul) y una previsión (línea de puntos) para las próximas dos semanas. La línea gris'.
-    ' oscura muestra el promedio de horas estimadas durante un período activo de tiempo. El área sombreada muestra'.
-    ' la cercanía de la media estimada con la verdadera media de la clase. La actividad prevista para las próximas'.
-    ' dos semanas se indica con una línea de puntos. Los picos de actividad fuera de lo esperado, se ven resaltados.';
-$string['activityreport_compassTimeDiagram_help'] = 'Este diagrama muestra las 24 horas de un día. Se basa en el'.
-    ' horario  establecido en el servidor de la institución. Una línea muestra el el tiempo que los estudiantes'.
-    ' pasan en el curso. El curso es más concurrido cuando las líneas se acercan a los bordes exteriores del'.
-    ' círculo. Esta información puede ayudarle a diseñar actividades que requieran la plena participación.';
-$string['activityreport_barplotOfActivityByWeekday_help'] = 'Este gráfico muestra el tiempo estimado invertido en'.
-    ' el curso,  desglosado por día de la semana. Las barras azules representan la actividad de los últimos siete días.';
-$string['activityreport_barplotOfActivityWholeWeek_help'] = 'Este gráfico muestra el nivel de actividad (tiempo'.
-    ' estimado) a lo largo de la semana. Las barras azules representan la actividad de los últimos siete'.
-    ' días. Las barras amarillas muestran  la actividad de los siete días anteriores a esta semana.';
-$string['activityreport_activityByWeekAsFractionOfTotal_help'] = 'Cada punto en este gráfico representa el tiempo en'.
-    ' el que un estudiante permanece activo comparado con otros estudiantes en una semana determinada. Los'.
-    ' puntos más grandes representan mayor actividad.';
-$string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Cada punto en este gráfico representa el tiempo en el'.
-    ' que un estudiante permanece activo comparado con otras semanas. Los puntos más grandes representan mayor actividad.';
-$string['activityreport_firstloginPiechartAdjusted_help'] = 'El diagrama muestra cuántos estudiantes ingresaron al'.
-    ' curso y cuántos aún no. El primer día del curso no se establece en un momento programado, este comienza el'.
-    ' día en el que el primer participante acceda al mismo, incluyendo al docente o instructor. El patrón que se'.
-    ' vea aquí puede dar un indicio del compromiso futuro.';
+/* TODO:: Waiting spanish translation.
+$string['activityreport_activityLevelTimeline_help'] = '';
+$string['activityreport_compassTimeDiagram_help'] = '';
+$string['activityreport_barplotOfActivityByWeekday_help'] = '';
+$string['activityreport_barplotOfActivityWholeWeek_help'] = '';
+$string['activityreport_activityByWeekAsFractionOfTotal_help'] = '';
+$string['activityreport_activityByWeekAsFractionOfOwn_help'] = '';
+$string['activityreport_firstloginPiechartAdjusted_help'] = '';
+*/
 
 /* Graphs Activity Individual report*/
-$string['activityreportindividual_activityLevelTimeline'] = 'Actividad por Fecha';
-$string['activityreportindividual_barplotOfActivityByWeekday'] = 'Actividad de las últimas dos semanas por día de la semana';
-$string['activityreportindividual_barplotOfActivityWholeWeek'] = 'Actividad durante las últimas semanas';
-
+/* TODO:: Waiting spanish translation.
+$string['activityreportindividual_activityLevelTimeline'] = '';
+$string['activityreportindividual_barplotOfActivityByWeekday'] = '';
+$string['activityreportindividual_barplotOfActivityWholeWeek'] = '';
+*/
 /* Help Graphs Activity Individual report*/
-$string['activityreportindividual_activityLevelTimeline_help'] = 'El gráfico muestra un estimado de tiempo dedicado'.
-    ' al curso (línea azul) y una previsión (línea de puntos) para las próximas dos semanas. La línea gris oscuro'.
-    ' muestra el promedio de horas estimadas durante un período activo de tiempo. El área sombreada muestra la'.
-    ' cercanía entre el tiempo previsto y el promedio real. La actividad prevista para las próximas dos semanas'.
-    ' se indica con una línea de puntos. Los picos de actividad más altos y fuera del rango esperado, se encuentran'.
-    ' resaltados.';
-$string['activityreportindividual_barplotOfActivityByWeekday_help'] = 'El gráfico muestra el tiempo estimado'.
-    ' invertido en el curso desglosado por día de la semana. Las barras azules representan la actividad de los'.
-    ' últimos siete días. Las barras amarillas, los siete días previos a esa semana.';
-$string['activityreportindividual_barplotOfActivityWholeWeek_help'] = 'El gráfico muestra el tiempo estimado'.
-    ' dedicado al curso en la ultima semana. Las barras azules representan la actividad de la última semana. Las'.
-    ' barras amarillas muestran los siete días previos a esa semana.';
-
+/* TODO:: Waiting spanish translation.
+$string['activityreportindividual_activityLevelTimeline_help'] = '';
+$string['activityreportindividual_barplotOfActivityByWeekday_help'] = '';
+$string['activityreportindividual_barplotOfActivityWholeWeek_help'] = '';
+*/
 /* Graphs Risk report*/
-$string['risk_riskDensity'] = 'Perfil Total de Riesgo';
-$string['risk_riskScatterPlot'] = 'Riesgo Académico versus Riesgo Social';
-
+/* TODO:: Waiting spanish translation.
+$string['risk_riskDensity'] = '';
+$string['risk_riskScatterPlot'] = '';
+*/
 /* Help Graphs Risk report*/
-$string['risk_riskDensity_help'] = 'Este gráfico muestra la distribución del riesgo estimado en el curso. El color'.
-    ' verde representa a los estudiantes fuera de riesgo. En rojo los que están en riesgo.';
-$string['risk_riskScatterPlot_help'] = 'Cada punto en este diagrama de dispersión represente un estudiante. Dependiendo'.
-    ' de la posición del estudiante en el gráfico, se observa su nivel social y su riesgo académico. La línea negra'.
-    ' muestra la relación esperada entre el riesgo social y el académico. El área sombreada (intervalo de confidencia)'.
-    ' nos provee un rango de relación esperada. El color es utilizado para ayudar a determinar el riesgo potencial'.' de forma rápida. Verde significa fuera de riesgo. Rojo en riesgo. ';
-
+/* TODO:: Waiting spanish translation.
+$string['risk_riskDensity_help'] = '';
+$string['risk_riskScatterPlot_help'] = '';
+*/
 /* Graphs Risk report*/
-$string['gradebookreport_studentScoreDistribution'] = 'Distribución de Puntajes';
-$string['gradebookreport_scoreDistributionByItem'] = 'Distribución de puntajes de ejercicios';
-$string['gradebookreport_scatterPlot'] = 'Puntajes asignados versus porcentajes';
-$string['gradebookreport_itemsHeatmap'] = 'Comparación de los puntajes de ejercicios';
-
+/* TODO:: Waiting spanish translation.
+$string['gradebookreport_studentScoreDistribution'] = '';
+$string['gradebookreport_scoreDistributionByItem'] = '';
+$string['gradebookreport_scatterPlot'] = '';
+$string['gradebookreport_itemsHeatmap'] = '';
+*/
 /* Help Graphs Gradebook report*/
-$string['gradebookreport_studentScoreDistribution_help'] = 'Este gráfico muestra la distribución de los puntajes'.
-    ' entre todos los estudiantes. El pico muestra el puntaje que la mayoría de los estudiantes obtiene. Un patrón'.
-    ' de distribución en forma de campana podría indicar la presencia de inconsistencias. Los diferentes patrones'.
-    ' de distribución pueden indicar diferencias significativas en el nivel de dificultad de las pruebas.';
-$string['gradebookreport_scoreDistributionByItem_help'] = 'Este diagrama muestra la distribución de los resultados'.
-    ' de los estudiantes para un ejercicio. Cada ejercicio está representado por un recuadro. Los puntos son los'.
-    ' resultados de los estudiantes. La línea horizontal gruesa muestra la puntuación media de cada ejercicio. Hay'.
-    ' cuatro rangos de calificación representados para cada examen. El 25% superior (línea vertical en la parte'.
-    ' superior de la caja), el 25 % por encima del promedio (área de la caja por encima de la puntuación media),'.
-    ' el 25% por debajo del promedio (área de la caja por debajo del promedio), y el 25% por debajo (línea vertical'.
-    ' por debajo de la caja) . Mientras más altas o largas sean las líneas, más dispersos serán los resultados que'.
-    ' se observen.';
-$string['gradebookreport_scatterPlot_help'] = 'Este gráfico muestra la consistencia de la calificación. Cada punto'.
-    ' representa un ejercicio de prueba. La línea de color negro muestra la relación entre las calificaciones'.
-    ' y porcentajes esperados y los asignados. El área sombreada (intervalo de confianza) demuestra la relación'.
-    ' esperada. Los ejercicios fuera de la relación esperada pueden indicar inconsistencias en las calificaciones.';
-$string['gradebookreport_itemsHeatmap_help'] = 'Este esquema o mapa de temperatura muestra cómo performó cada'.
-    ' estudiante en un ejercicio de prueba, en comparación con el resto de la clase  Los colores más oscuros'.
-    ' indican las puntuaciones superiores. Si el color observado se encuentra siempre en el mismo tono para los'.
-    ' estudiantes, se podría tratar de un examen muy simple o muy complejo.';
-
+/* TODO:: Waiting spanish translation.
+$string['gradebookreport_studentScoreDistribution_help'] = '';
+$string['gradebookreport_scoreDistributionByItem_help'] = '';
+$string['gradebookreport_scatterPlot_help'] = '';
+$string['gradebookreport_itemsHeatmap_help'] = '';
+*/
 /* Graphs Discussion report*/
-$string['discussionreport_wordcloud'] = 'Palabras más utilizadas';
-$string['discussionreport_avgWordPerPost'] = 'Promedio Semanal de Palabras por Posteo';
-$string['discussionreport_socialStructure'] = 'Análisis de Interacción';
-$string['discussionreport_socialStructureWordCount'] = 'Análisis de Interacción con Conteo de Palabras';
-$string['discussionreport_socialStructureWordContribution'] = 'Análisis de Interacción con Contribuciones Originales';
-$string['discussionreport_socialStructureWordCTC'] = 'Análisis de Interacción con Pensamiento Crítico';
-$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = 'Superposición de Palabras entre Estudiantes';
-$string['discussionreport_endogenicPlagiarismHeatmap'] = 'Superposición de Palabras Incluyendo al instructor';
-$string['discussionreport_discussionSuggestedGrades'] = 'Distribución de Calificaciones Recomendadas';
-
+/* TODO:: Waiting spanish translation.
+$string['discussionreport_wordcloud'] = '';
+$string['discussionreport_avgWordPerPost'] = '';
+$string['discussionreport_socialStructure'] = '';
+$string['discussionreport_socialStructureWordCount'] = '';
+$string['discussionreport_socialStructureWordContribution'] = '';
+$string['discussionreport_socialStructureWordCTC'] = '';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = '';
+$string['discussionreport_endogenicPlagiarismHeatmap'] = '';
+$string['discussionreport_discussionSuggestedGrades'] = '';
+*/
 /* Help Graphs Discussion report*/
-$string['discussionreport_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con mayor'.
-    ' frecuencia en las discusiones. Se basa en una única cuenta de las palabras más utilizadas. Las palabras'.
-    ' más grandes indican mayor uso.';
-$string['discussionreport_avgWordPerPost_help'] = 'Este gráfico muestra el promedio del conteo de palabras en los'.
-    ' posteos de discusión a lo largo de una semana. La línea azul representa los valores observados y la línea'.
-    ' de puntos representa el promedio esperado. ';
-$string['discussionreport_socialStructure_help'] = 'Este diagrama muestra a quiénes están respondiendo sus'.
-    ' estudiantes. El color demuestra cuán conectados están sus estudiantes con el resto de la clase. El'.
-    ' azul muestra mucha interacción con otros estudiantes, el amarillo por debajo del promedio de interacción'.
-    ' y el rojo es de nula interacción.';
-$string['discussionreport_socialStructureWordCount_help'] = 'Este diagrama muestra a quién habla cada estudiante'.
-    ' y lo mucho que está diciendo. Estos valores se obtienen del conteo de palabras intercambiadas entre los'.
-    ' estudiantes. Las líneas más gruesas indican mayor utilización de palabras en el intercambio de posteos. ';
-$string['discussionreport_socialStructureWordContribution_help'] = 'Este diagrama muestra quién habla a quién entre'.
-    ' los estudiantes, junto con la calidad de su contribución. La contribución original se obtiene del conteo'.
-    ' de palabras filtradas como únicas en cuanto a su nivel de utilización. Las líneas más gruesas indican'.
-    ' la cantidad de palabras únicas utilizadas. ';
-$string['discussionreport_socialStructureWordCTC_help'] = 'Este diagrama muestra en cuáles de las respuestas de los'.
-    ' estudiantes se observa un pensamiento crítico. Esto está basado en el número de posteos reflexivos.';
-$string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'Los mapas de temperatura muestran cuán'.
-    ' similares son los posteos entre los estudiantes de la claese. Este esquema demuestra quién fue la fuente'.
-    ' de un profundo conocimiento y quién está copiando los posteos de otros. Los posteos originales están'.
-    ' determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante revisar'.
-    ' los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros estudiantes.';
-$string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'Los mapas de temperatura muestran cuán similares'.
-    ' son los posteos entre los estudiantes de la clase, incluyendo al instructor. Este esquema demuestra quién'.
-    ' fue la fuente de un profundo conocimiento y quién está copiando los posteos de otros. Los posteos originales'.
-    ' están determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante'.
-    ' revisar los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros'.
-    ' estudiantes y al instructor.';
-$string['discussionreport_discussionSuggestedGrades_help'] = 'Este diagrama de barras muestra la distribución'.
-    ' de las calificaciones sugeridas para la participación grupos de discusión. La línea continua muestra la'.
-    ' distribución esperada de las calificaciones, con una calificación promedio de C. La línea de puntos muestra'.
-    ' la distribución con un promedio de B para la clase. Las calificaciones reales se representan con la barra azul.';
-
+/* TODO:: Waiting spanish translation.
+$string['discussionreport_wordcloud_help'] = '';
+$string['discussionreport_avgWordPerPost_help'] = '';
+$string['discussionreport_socialStructure_help'] = '';
+$string['discussionreport_socialStructureWordCount_help'] = '';
+$string['discussionreport_socialStructureWordContribution_help'] = '';
+$string['discussionreport_socialStructureWordCTC_help'] = '';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = '';
+$string['discussionreport_endogenicPlagiarismHeatmap_help'] = '';
+$string['discussionreport_discussionSuggestedGrades_help'] = '';
+*/
 /* Graphs Discussion report individual*/
-$string['discussionreportindividual_wordcloud'] = 'Palabras más utilizadas';
-$string['discussionreportindividual_socialStructure'] = 'Análisis de Interacción';
-$string['discussionreportindividual_wordHistogram'] = 'Regularidad de Palabras más utilizadas';
-
+/* TODO:: Waiting spanish translation.
+$string['discussionreportindividual_wordcloud'] = '';
+$string['discussionreportindividual_socialStructure'] = '';
+$string['discussionreportindividual_wordHistogram'] = '';
+*/
 /* Help Graphs Discussion report individual*/
-$string['discussionreportindividual_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
-    ' mayor frecuencia en las discusiones. Se basa en un conteo único de cada palabra. Las palabras más'.
-    ' grandes son las más utilizadas.';
-$string['discussionreportindividual_socialStructure_help'] = 'Este diagrama muestra a quién le está hablando este'.
-    ' estudiante. Los colores muestran su conexión con el resto de la clase. El azul muestra relación'.
-    ' por encima del promedio. El amarillo muestra una conexión inferior a la media. Y el rojo muestra que'.
-    ' no tiene ninguna conexión con ese estudiante todavía.';
-$string['discussionreportindividual_wordHistogram_help'] = 'Este histograma muestra la frecuencia en la que los'.
-    ' estudiantes postean las 10 palabras más utilizadas en los foros de discusión.';
-
+/* TODO:: Waiting spanish translation.
+$string['discussionreportindividual_wordcloud_help'] = '';
+$string['discussionreportindividual_socialStructure_help'] = '';
+$string['discussionreportindividual_wordHistogram_help'] = '';
+*/
 /* Graphs Discussion report individual forum*/
-$string['discussionreportindividualforum_wordcloud'] = 'Palabras más utilizadas';
-$string['discussionreportindividualforum_socialStructure'] = 'Análisis de Interacción';
-$string['discussionreportindividualforum_wordHistogram'] = 'Regularidad de Palabras más utilizadas';
-
+/* TODO:: Waiting spanish translation.
+$string['discussionreportindividualforum_wordcloud'] = '';
+$string['discussionreportindividualforum_socialStructure'] = '';
+$string['discussionreportindividualforum_wordHistogram'] = '';
+*/
 /* Help Graphs Discussion report individual forum*/
-$string['discussionreportindividualforum_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
-    ' mayor frecuencia en las discusiones. Se basa en un conteo único de cada palabra. Las palabras más'.
-    ' grandes son las más utilizadas.';
-$string['discussionreportindividualforum_socialStructure_help'] = 'Este diagrama muestra a quién le está hablando este'.
-    ' estudiante. Los colores muestran su conexión con el resto de la clase. El azul muestra relación'.
-    ' por encima del promedio. El amarillo muestra una conexión inferior a la media. Y el rojo muestra que'.
-    ' no tiene ninguna conexión con ese estudiante todavía.';
-$string['discussionreportindividualforum_wordHistogram_help'] ='Este histograma muestra la frecuencia en la que los'.
-    ' estudiantes postean las 10 palabras más utilizadas en los foros de discusión.';
-
+/* TODO:: Waiting spanish translation.
+$string['discussionreportindividualforum_wordcloud_help'] = '';
+$string['discussionreportindividualforum_socialStructure_help'] = '';
+$string['discussionreportindividualforum_wordHistogram_help'] ='';
+*/
 /* Cut-off points settings */
 /* Header Title */
 $string['cutoff_title'] = 'Valores de los puntos de corte entre cada rango';
 $string['cutoff_desc'] = 'En esta sección tu puedes definir los valores de los puntos de corte entre cada rango. '.
-    'Estos rangos serán utilizados para mostrar resultados más intuitivos en las tablas de los reportes.';
+                         'Estos rangos serán utilizados para mostrar resultados más intuitivos en las tablas de los reportes.';
 /* Risk Report */
 /* low - medium - high */
 $string['risk1_name'] = 'Punto de corte entre los rangos Bajo y Medio para el Reporte de riesgo';
 $string['risk1_desc'] = 'Defina el punto de corte entre los rangos Bajo y Medio. Por ejemplo, '.
-    'si el punto de corte es 0.2, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.
-    'Esta configuración afecta las columnas Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
+                        'si el punto de corte es 0.2, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.
+                        'Esta configuración afecta las columnas Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
 $string['risk2_name'] = 'Punto de corte entre los rangos Medio y Alto para el Reporte de riesgo';
 $string['risk2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto. Por ejemplo, '.
-    'si el punto de corte es 0.3, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
-    'Esta configuración afecta las columnas  Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
+                        'si el punto de corte es 0.3, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
+                        'Esta configuración afecta las columnas  Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
 /* Activity Report */
 /* Alta regularidad - regular - irregular */
 $string['visitreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regular para el Reporte de actividad';
 $string['visitreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regular. Por ejemplo, '.
-    'si el punto de corte es 1, cualquier valor igual o mayor será de Regular y cualquier valor menor será de Alta regularidad. '.
-    'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
+                            'si el punto de corte es 1, cualquier valor igual o mayor será de Regular y cualquier valor menor será de Alta regularidad. '.
+                            'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
 $string['visitreg2_name'] = 'Punto de corte entre los rangos Regular e Irregular para el Reporte de actividad';
 $string['visitreg2_desc'] = 'Defina el punto de corte entre los rangos Regular e Irregular. Por ejemplo, '.
-    'si el punto de corte es 2, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regular. '.
-    'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
+                            'si el punto de corte es 2, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regular. '.
+                            'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
 /* Discussion Report */
 /* Alta regularidad - regular - irregular */
 $string['partreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regular para el Reporte de discusiones';
 $string['partreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regular. Por ejemplo, '.
-    'si el punto de corte es 2, cualquier valor igual o mayor será de Regular y cualquier valor menor será de Alta regularidad. '.
-    'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
-    'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
+                           'si el punto de corte es 2, cualquier valor igual o mayor será de Regular y cualquier valor menor será de Alta regularidad. '.
+                           'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
+                           'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
 $string['partreg2_name'] = 'Punto de corte entre los rangos Regular e Irregular para el Reporte de discusiones';
 $string['partreg2_desc'] = 'Defina el punto de corte entre los rangos Regular e Irregular. Por ejemplo, '.
-    'si el punto de corte es 4, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regular. '.
-    'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
-    'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
+                           'si el punto de corte es 4, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regular. '.
+                           'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
+                           'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
 /* Bajo - Medio - Alto */
 $string['partc1_name'] = 'Punto de corte entre los rangos Bajo y Medio para el Reporte de discusiones';
 $string['partc1_desc'] = 'Defina el punto de corte entre los rangos Bajo y Medio. Por ejemplo, '.
-    'si el punto de corte es 33, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.
-    'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
-    'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
+                         'si el punto de corte es 33, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.
+                         'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
+                         'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
 $string['partc2_name'] = 'Punto de corte entre los rangos Medio y Alto para el Reporte de discusiones';
 $string['partc2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto. Por ejemplo, '.
-    'si el punto de corte es 66, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
-    'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
-    'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
+                         'si el punto de corte es 66, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
+                         'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
+                         'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';

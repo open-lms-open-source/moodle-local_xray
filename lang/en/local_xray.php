@@ -91,11 +91,11 @@ $string['week'] = 'Week';
 
 /* Error to load tables and images */
 $string['error_loadimg'] = 'Unable to load image, please try reloading the page. If the image still doesn’t load, '.
-    'contact your system administrator.';
+                           'contact your system administrator.';
 
 /* Error Webservice */
 $string['error_xray'] = 'Can’t connect to X-Ray Learning Analytics, please try reloading the page. If you still can’t connect, '.
-    'contact your system administrator.';
+                        'contact your system administrator.';
 
 $string['error_compress'] = 'Unable to create compressed file. Please contact your system administrator.';
 
@@ -128,19 +128,19 @@ $string['enablepacker'] = 'Use native compression';
 $string['enablepacker_desc'] = 'If enabled permits the use of OS native compression tools.';
 $string['packertar'] = 'GNU tar executable';
 $string['packertar_desc'] = 'Configure location of <a href="http://www.gnu.org/software/tar/" target="_blank" '.
-    'title="GNU tar">GNU tar</a> executable on your server. Make sure to install '.
-    '<a href="http://www.gnu.org/software/gzip/" target="_blank" title="GNU Gzip">GNU Gzip</a> as well.';
+                            'title="GNU tar">GNU tar</a> executable on your server. Make sure to install '.
+                            '<a href="http://www.gnu.org/software/gzip/" target="_blank" title="GNU Gzip">GNU Gzip</a> as well.';
 $string['exportlocation'] = 'Export location';
 $string['exportlocation_desc'] = 'Configure local directory for temporary storage of exported data. If left empty '.
-    '(or if path not valid) Moodle tempdir is used.';
+                                 '(or if path not valid) Moodle tempdir is used.';
 $string['exporttime'] = 'Export time';
 $string['exporttime_desc'] = 'Set maximum permitted time for exporting data. If set to 0 no time limit is imposed.';
 $string['export_progress'] = 'Reset export progress';
 $string['export_progress_desc'] = 'During export progress of the currently exported information is stored in the '.
-    'database. Checking this option will reset that data.';
+                                  'database. Checking this option will reset that data.';
 $string['curlcache'] = 'Web service cache timeout';
 $string['curlcache_desc'] = 'Determines for how long to store cached web service responses.'.
-    ' If set to 0 no caching is performed. Note - only successful responses are cached.';
+                            ' If set to 0 no caching is performed. Note - only successful responses are cached.';
 
 $string['xrayadminserver'] = 'X-Ray Learning Analytics Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';
@@ -194,7 +194,7 @@ $string['visitors'] = 'Visitors';
 
 /* Jquery Tables (with plugin datatables) */
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. '.
-    'If error persist, contact with the administrator please.';
+                              'If error persist, contact with the administrator please.';
 $string['sProcessingMessage'] = 'Fetching Data, Please wait...';
 $string['sFirst'] = 'First';
 $string['sLast'] = 'Last';
@@ -280,7 +280,7 @@ $string['activityreport_firstloginPiechartAdjusted'] = 'Pie Chart of First Time 
 /* Help Graphs Activity report*/
 $string['activityreport_activityLevelTimeline_help'] = 'This graph shows an estimate of time spent in your course'.
     ' (blue line) and a forecast (dotted line) for the next two weeks. The dark-gray line shows the estimated'.
-    ' average hours active over a period of time. The shaded area it shows how close the representation of the estimated'.
+    ' average hours active over a period of time. The shaded area It shows how close the representation of the estimated'.
     ' average is to the true average of the class. Activity forecasted for the next two weeks is indicated with'.
     ' a dotted line. Spikes in activity which are outside of the expected range are highlighted.';
 $string['activityreport_compassTimeDiagram_help'] = 'This diagram is of a 24-hour day. It is based on the time set on'.
@@ -288,18 +288,18 @@ $string['activityreport_compassTimeDiagram_help'] = 'This diagram is of a 24-hou
     ' when the line approaches the outside edges of the 24-hour circle. This information  can help you plan activities'.
     ' that require full participation.';
 $string['activityreport_barplotOfActivityByWeekday_help'] = 'This chart shows the estimated time spent in the course broken down by weekday.'.
-    ' The blue bars represent the activity from the past seven days. The yellow bars show what the activity was like seven days before.';
+    'The blue bars represent the activity from the past seven days. The yellow bars show what the activity was like seven days before.';
 $string['activityreport_barplotOfActivityWholeWeek_help'] = 'This chart shows the estimated time spent in the course'.
     ' over a week. The blue bars represent the activity from the last seven days. The yellow bars show what'.
     ' the activity was like the seven days before. ';
 $string['activityreport_activityByWeekAsFractionOfTotal_help'] = 'Each dot in this chart represents the time a student'.
-    ' spent in your course in a given week compared to other students. Bigger dots indicate more activity. ';
+    ' spent in your course a given week compared to other students. Bigger dots indicate more activity. ';
 $string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Each dot in this chart represents the time a student'.
     ' spent in your course in a given week compared to other weeks. Bigger dots indicate more activity.';
 $string['activityreport_firstloginPiechartAdjusted_help'] = 'The diagram shows you when students logged into your course'.
     ' and how many haven\'t yet. The first day of the course may not be the scheduled start date. It starts the day the'.
-    ' first participant accessed the course. This includes the teacher. The pattern seen here may be an indication of'.
-    ' future engagement.';
+    ' first participant accessed the course.This includes the teacher. The pattern seen here may be an indication of'.
+    ' future engagement';
 
 /* Graphs Activity Individual report*/
 $string['activityreportindividual_activityLevelTimeline'] = 'Activity by Date';
@@ -309,7 +309,7 @@ $string['activityreportindividual_barplotOfActivityWholeWeek'] = 'Activity Over 
 /* Help Graphs Activity Individual report*/
 $string['activityreportindividual_activityLevelTimeline_help'] = 'The graph shows an estimate of time spent in your'.
     ' course (blue line) and a forecast (dotted line) for the next two weeks. The dark-gray line shows the estimated'.
-    ' average hours active over a period of time. The shaded area it shows how close the representation of the'.
+    ' average hours active over a period of time. The shaded area It shows how close the representation of the'.
     ' estimated average is to the true average of the class. Activity forecasted for the next two weeks is indicated'.
     ' with a dotted line. Spikes in activity which are outside of the expected range are highlighted.';
 $string['activityreportindividual_barplotOfActivityByWeekday_help'] = 'The chart shows the estimated time spent in the'.
@@ -369,8 +369,10 @@ $string['discussionreport_discussionSuggestedGrades'] = 'Distribution of Recomme
 /* Help Graphs Discussion report*/
 $string['discussionreport_wordcloud_help'] = 'This word cloud shows the words used most often in discussions. It is'.
     ' based on a word count of unique words used. Bigger words indicate more use. ';
-$string['discussionreport_avgWordPerPost_help'] = 'This graph shows the average word count in course discussion posts'.
-    ' per week. The blue line represents observed values while the yellow dotted line represents the expected  average.';
+$string['discussionreport_avgWordPerPost_help'] = 'The diagram shows the average word count in the posts that have been made to the'.
+    ' discussion groups in the course. The x-axis corresponds to the weeks of the course and the y axis average number'.
+    ' of words in the posts. The blue line represents observed values while the yellow dotted line represents'.
+    ' the expected values.';
 $string['discussionreport_socialStructure_help'] = 'This diagram shows you who your students are replying to. Color'.
     ' shows how connected a student is to the rest of the class. Blue shows the student has an average or a above'.
     ' average connection to the rest of the class. Yellow shows a below average connection. Red shows the student'.
@@ -394,7 +396,7 @@ $string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'The heatmaps show
     ' the posts of students with higher values, they may be quoting other students and instructor or plagiarising'.
     ' their work. ';
 $string['discussionreport_discussionSuggestedGrades_help'] = 'This bar plot shows the distribution of suggested'.
-    ' grades for the participation in discussion groups. The solid line shows an expected distribution of'.
+    ' grades for the participation in the discussion groups. The solid line shows an expected distribution of'.
     ' grades with a class average grade of C. The dotted line shows the distribution with a class average grade'.
     ' of B-. Blue bars represent the actual grades.';
 
@@ -432,42 +434,42 @@ $string['cutoff_desc'] = 'Define cut-off values for the ranges. These ranges wil
 /* low - medium - high */
 $string['risk1_name'] = 'Cut-off point between low and medium ranges for Risk Report';
 $string['risk1_desc'] = 'Define the cut-off point between low and medium ranges. For example, '.
-    'if the cut off point is 0.2, anything 0.2 and higher is in the medium risk range and anything lower is in the low risk range. '.
-    'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Measures table in the Risk Report.';
+                        'if the cut off point is 0.2, anything 0.2 and higher is in the medium risk range and anything lower is in the low risk range. '.
+                        'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Measures table in the Risk Report.';
 $string['risk2_name'] = 'Cut-off point between medium and high ranges for Risk Report';
 $string['risk2_desc'] = 'Define cut-off point between medium and high ranges. For example, '.
-    'if the cut off point is 0.3, anything 0.3 and higher is in the high risk range and anything lower is in the medium risk range. '.
-    'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Measures table in the Risk Report.';
+                        'if the cut off point is 0.3, anything 0.3 and higher is in the high risk range and anything lower is in the medium risk range. '.
+                        'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Measures table in the Risk Report.';
 /* Activity Report */
 /* highly regular - regular - irregular */
 $string['visitreg1_name'] = 'Cut-off point between "highly regular" and "regular" ranges for Activity Report';
 $string['visitreg1_desc'] = 'Define cut-off value between "highly regular" and "regular" ranges. For example, '.
-    'if the cut off value is 1, anything 1 and higher is regular and anything lower is highly regular. '.
-    'This setting affects the Visit regularity (weekly) column in the Student Activity table in the Activity Report.';
+                            'if the cut off value is 1, anything 1 and higher is regular and anything lower is highly regular. '.
+                            'This setting affects the Visit regularity (weekly) column in the Student Activity table in the Activity Report.';
 $string['visitreg2_name'] = 'Cut-off point between "regular" and "irregular" ranges for Activity Report';
 $string['visitreg2_desc'] = 'Define cut-off value between "regular" and "irregular" ranges. For example, '.
-    'if the cut off value is 2, anything 2 and higher is irregular and anything lower is regular. '.
-    'This setting affects the Visit regularity (weekly) column in the Student Activity table in the Activity Report.';
+                            'if the cut off value is 2, anything 2 and higher is irregular and anything lower is regular. '.
+                            'This setting affects the Visit regularity (weekly) column in the Student Activity table in the Activity Report.';
 /* Discussion Report */
 /* highly regular - regular - irregular */
 $string['partreg1_name'] = 'Cut-off point between "highly regular" and "regular" ranges for Discussion Report';
 $string['partreg1_desc'] = 'Define cut-off value between "highly regular" and "regular" ranges. For example, '.
-    'if the cut off value is 2, anything 2 and higher is regular and anything lower is highly regular. '.
-    'This setting affects the Regularity of contributions and Regularity of CTC columns in the Participation Metrics table and '.
-    'the Regularity of contributions column in the Student Grades Based on Discussions table in the Discussion Report.';
+                           'if the cut off value is 2, anything 2 and higher is regular and anything lower is highly regular. '.
+                           'This setting affects the Regularity of contributions and Regularity of CTC columns in the Participation Metrics table and '.
+                           'the Regularity of contributions column in the Student Grades Based on Discussions table in the Discussion Report.';
 $string['partreg2_name'] = 'Cut-off point between "regular" and "irregular" ranges for Discussion Report';
 $string['partreg2_desc'] = 'Define cut-off value between "regular" and "highly regular" ranges. For example, '.
-    'if the cut off value is 4, anything 4 and higher is irregular and anything lower is regular. '.
-    'This setting affects the Regularity of contributions and Regularity of CTC columns in the Participation Metrics table and '.
-    'the Regularity of contributions column from the Student Grades Based on Discussions table in the Discussion Report.';
+                           'if the cut off value is 4, anything 4 and higher is irregular and anything lower is regular. '.
+                           'This setting affects the Regularity of contributions and Regularity of CTC columns in the Participation Metrics table and '.
+                           'the Regularity of contributions column from the Student Grades Based on Discussions table in the Discussion Report.';
 /* low - medium - high */
 $string['partc1_name'] = 'Cut-off point between "low" and "medium" ranges for Discussion Report';
 $string['partc1_desc'] = 'Define cut-off point between "low" and "medium" ranges. For example, '.
-    'if the cut off point is 33, anything 33 and higher is in the medium risk range and anything lower is in the low risk range. '.
-    'This setting affects the Contribution and CTC columns in the Participation Metrics table and the CTC column '.
-    'in the Student Grades Based on Discussions table in the Discussion Report.';
+                         'if the cut off point is 33, anything 33 and higher is in the medium risk range and anything lower is in the low risk range. '.
+                         'This setting affects the Contribution and CTC columns in the Participation Metrics table and the CTC column '.
+                         'in the Student Grades Based on Discussions table in the Discussion Report.';
 $string['partc2_name'] = 'Cut-off point between "medium" and "high" ranges for Discussion Report';
 $string['partc2_desc'] = 'Define cut-off point between "medium" and "high" ranges. For example, '.
-    'if the cut off point is 66, anything 66 and higher is in the high risk range and anything lower is in the medium risk range. '.
-    'This setting affects the Contribution and CTC columns in the Participation Metrics table and the CTC column '.
-    'in the Student Grades Based on Discussions table in the Discussion Report.';
+                         'if the cut off point is 66, anything 66 and higher is in the high risk range and anything lower is in the medium risk range. '.
+                         'This setting affects the Contribution and CTC columns in the Participation Metrics table and the CTC column '.
+                         'in the Student Grades Based on Discussions table in the Discussion Report.';
