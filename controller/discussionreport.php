@@ -72,7 +72,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     // Show graphs.
                     // Report date.
                     $output  = $this->print_top();
-                    $output .= $this->output->inforeport($response->elements->element1->date);
+                    $output .= $this->output->inforeport($response->reportdate);
 
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->discussionMetrics,
