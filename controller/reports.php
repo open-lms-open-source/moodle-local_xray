@@ -352,7 +352,6 @@ class local_xray_controller_reports extends mr_controller {
                         $risk1 = floatval($risk1);
                         $risk2 = get_config($plugin, 'risk2');
                         $risk2 = floatval($risk2);
-
                         if (($risk1 !== false) && ($risk2 !== false)) {
                             $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
                             if ($roundvalue < $risk1) {
@@ -493,8 +492,9 @@ class local_xray_controller_reports extends mr_controller {
                 // Table Student Grades from Gradebook Report.
                 switch ($column) {
                     case 'standarScore':
-                        // Column Standardized score.
-                        return round($value, 2);
+                        // Column Quiz scores (%) (ex Standardized score).
+                        $roundvalue = round($value, 2);
+                        return $roundvalue . '%';
                         break;
                     default:
                         return $value;
@@ -503,12 +503,15 @@ class local_xray_controller_reports extends mr_controller {
                 // Table Summary of Quizzes from Gradebook Report.
                 switch ($column) {
                     case 'earnScore':
-                        // Column Average score.
-                    case 'standarScore':
-                        // Column Average standardized score.
-                    case 'finalGradeCorrelation':
-                        // Column Correlation between final score and score from this quiz.
+                        // Column Average score (Points) - (ex Average score).
                         return round($value, 2);
+                        break;
+                    case 'standarScore':
+                        // Column Average score (%) - (ex Average standardized score).
+                    case 'finalGradeCorrelation':
+                        // Column Relationship with current total course grade - (ex Correlation between final score and score from this quiz).
+                        $roundvalue = round($value, 2);
+                        return $roundvalue . '%';
                         break;
                     default:
                         return $value;
