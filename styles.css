@@ -2,7 +2,6 @@
 
 #page-local-xray-view #region-main {
     max-width: 92%; /* snap theme limit to 60.5 em */
-    box-sizing: content-box;
     background-color: white;
 }
 
