@@ -2,12 +2,13 @@
 
 #page-local-xray-view #region-main {
     max-width: 92%; /* snap theme limit to 60.5 em */
+    box-sizing: content-box;
     background-color: white;
 }
 
 /* Report page title */
 .xray-report-page-title {
-    margin: 0;
+  margin: 0;
 }
 
 /* Name elements (tables and graphs) */
@@ -16,11 +17,6 @@
     font-size: 1.1em;
     line-height: 1.5;
     /* for express we need to override heading centering */
-    text-align: left;
-}
-
-/* Info about user in reports */
-#page-local-xray-view .xray-inforeport-user {
     text-align: left;
 }
 
@@ -56,9 +52,9 @@
 #page-local-xray-view .xray_element_img {
     height: 300px;
     -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+       -moz-transition: all 0.4s ease-in-out;
+         -o-transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
 }
 
 #page-local-xray-view .xray_element_img:hover {
@@ -135,13 +131,13 @@
 }
 
 .xray-headline {
-    padding: 1em 0 0.3em 0;
+  padding: 1em 0 0.3em 0;
 }
 
 .xray-headline-number {
-    font-size: 3em;
-    font-weight: bold;
-    padding: 2%;
+  font-size: 3em;
+  font-weight: bold;
+  padding: 2%;
 }
 
 .xray-comparitor {
@@ -177,10 +173,10 @@
 }
 
 .xray-visits-unit {
-    width: 14%;
-    float: left;
-    height: 150px;
-    position: relative;
+   width: 14%;
+   float: left;
+   height: 150px;
+   position: relative;
 }
 
 .xray-visits-per-day {
@@ -233,14 +229,9 @@
     height: 70px;
 }
 
-.xray-reports-links li a.xray-reports-links-bk-image-frontpage {
-    background-size: 44px 44px !important;
-}
-
-.xray-reports-links-bk-image-frontpage {
-    background-position: center 0;
-    height: 70px;
-    padding-top: 44px;
+.xray-reports-links-bk-image-large {
+    background-position: 50% 70%;
+    height: 150px;
 }
 
 .xray-reports-links .risk {
@@ -261,16 +252,6 @@
     display: none;
 }
 
-.xray-logo-in-nav {
-    padding-left:150px;
-    background-color: transparent;
-    background-position: 30px 0;
-    background-repeat: no-repeat;
-    background-image: url([[pix:local_xray|xray-logo2]]);
-    border-bottom: 1px solid #3bcedb;
-    background-size: 100px auto;
-    height: 110px;
-}
 /**************** End Styles for Course Headline data ******************/
 
 
@@ -299,7 +280,7 @@
     height: 300px;
     max-width: 336px;
     -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
     position: relative;
 }
 
