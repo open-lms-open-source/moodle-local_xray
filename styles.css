@@ -2,7 +2,6 @@
 
 #page-local-xray-view #region-main {
     max-width: 92%; /* snap theme limit to 60.5 em */
-    box-sizing: content-box;
     background-color: white;
 }
 
@@ -45,7 +44,7 @@
 .xray-toggleable-table caption {
     font-size: 2em;
     padding: 1em 0;
-    text-align: center;
+    text-align: left;
 }
 
 .xray-closetable {
@@ -120,10 +119,6 @@
 
 .xray_table_scrool {
     overflow: auto;
-}
-
-.xray_table_scrool caption {
-    text-align: left;
 }
 
 /**************** End Styles for specific reports****************/
@@ -302,7 +297,7 @@
 .xray-graph-box-link{
     display: block;
     height: 300px;
-    max-width: 344px;
+    max-width: 336px;
     -webkit-transition: all 0.4s ease-in-out;
             transition: all 0.4s ease-in-out;
     position: relative;

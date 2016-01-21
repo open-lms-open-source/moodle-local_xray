@@ -144,12 +144,19 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                         // Inverted table.
                         // Add column names to the first column.
                         $posts = array('weeks' => $response->columnHeaders->posts);
+                        $avglag = array('weeks' => $response->columnHeaders->avgLag);
                         $avgwordcount = array('weeks' => $response->columnHeaders->avgWordCount);
 
                         // Add the remaining data. The number of each week will be the column name.
                         foreach ($response->data as $col) {
                             // Number of posts.
                             $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
+                            // Average time to respond (hours).
+                            $avglag[$col->week->value] = '';
+                            if (isset($col->avgLag->value)) {
+                                // Set time to HH:MM.
+                                $avglag[$col->week->value] = $this->show_time_hours_minutes($col->avgLag->value);
+                            }
                             // Average No of Words.
                             $avgwordcount[$col->week->value] = '';
                             if (isset($col->avgWordCount->value)) {
@@ -158,6 +165,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                             }
                         }
                         $data[] = $posts;
+                        $data[] = $avglag;
                         $data[] = $avgwordcount;
                     }
                 }

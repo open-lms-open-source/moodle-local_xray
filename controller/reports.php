@@ -347,19 +347,26 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Social risk.
                     case 'DWF';
                         // Column Total risk.
-                        $roundvalue = round($value, 2);
-                        $risk1 = get_config($plugin, 'risk1');
-                        $risk2 = get_config($plugin, 'risk2');
-                        if (($risk1 !== false) && ($risk2 !== false)) {
-                            $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                            if ($roundvalue < $risk1) {
-                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                            } else if ($roundvalue < $risk2) {
-                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            $risk1 = get_config($plugin, 'risk1');
+                            $risk1 = floatval($risk1);
+                            $risk2 = get_config($plugin, 'risk2');
+                            $risk2 = floatval($risk2);
+                            if (($risk1 !== false) && ($risk2 !== false)) {
+                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
+                                if ($roundvalue < $risk1) {
+                                    $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
+                                } else if ($roundvalue < $risk2) {
+                                    $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
+                                }
+                                return $category . ' ' . $roundvalue . '%';
+                            } else {
+                                return $roundvalue . '%';
                             }
-                            return $category . ' ' . $roundvalue;
                         } else {
-                            return $roundvalue;
+                            return '-';
                         }
                         break;
                     default:
@@ -375,19 +382,24 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'weeklyRegularity':
                         // Column Visit regularity (weekly).
-                        $roundvalue = round($value, 2);
-                        $visitreg1 = get_config($plugin, 'visitreg1');
-                        $visitreg2 = get_config($plugin, 'visitreg2');
-                        if (($visitreg1 !== false) && ($visitreg2 !== false)) {
-                            $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            if ($roundvalue < $visitreg1) {
-                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($roundvalue < $visitreg2) {
-                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            $visitreg1 = get_config($plugin, 'visitreg1');
+                            $visitreg2 = get_config($plugin, 'visitreg2');
+                            if (($visitreg1 !== false) && ($visitreg2 !== false)) {
+                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
+                                if ($roundvalue < $visitreg1) {
+                                    $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
+                                } else if ($roundvalue < $visitreg2) {
+                                    $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
+                                }
+                                return $category . ' ' . $roundvalue;
+                            } else {
+                                return $roundvalue;
                             }
-                            return $category . ' ' . $roundvalue;
                         } else {
-                            return $roundvalue;
+                            return '-';
                         }
                         break;
                     default:
@@ -402,38 +414,48 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Average original contribution.
                     case 'ctc':
                         // Column Average critical thought.
-                        $roundvalue = round($value, 2);
-                        $partc1 = get_config($plugin, 'partc1');
-                        $partc2 = get_config($plugin, 'partc2');
-                        if (($partc1 !== false) && ($partc2 !== false)) {
-                            $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                            if ($roundvalue < $partc1) {
-                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                            } else if ($roundvalue < $partc2) {
-                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            $partc1 = get_config($plugin, 'partc1');
+                            $partc2 = get_config($plugin, 'partc2');
+                            if (($partc1 !== false) && ($partc2 !== false)) {
+                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
+                                if ($roundvalue < $partc1) {
+                                    $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
+                                } else if ($roundvalue < $partc2) {
+                                    $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
+                                }
+                                return $category . ' ' . $roundvalue . '%';
+                            } else {
+                                return $roundvalue . '%';
                             }
-                            return $category . ' ' . $roundvalue . '%';
                         } else {
-                            return $roundvalue . '%';
+                            return '-';
                         }
                         break;
                     case 'regularityContrib';
                         // Column Regularity of original contribution.
                     case 'regularityCTC':
                         // Column Regularity of critical thought.
-                        $roundvalue = round($value, 2);
-                        $partreg1 = get_config($plugin, 'partreg1');
-                        $partreg2 = get_config($plugin, 'partreg2');
-                        if (($partreg1 !== false) and ($partreg2 !== false)) {
-                            $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            if ($roundvalue < $partreg1) {
-                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($roundvalue < $partreg2) {
-                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            $partreg1 = get_config($plugin, 'partreg1');
+                            $partreg2 = get_config($plugin, 'partreg2');
+                            if (($partreg1 !== false) and ($partreg2 !== false)) {
+                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
+                                if ($roundvalue < $partreg1) {
+                                    $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
+                                } else if ($roundvalue < $partreg2) {
+                                    $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
+                                }
+                                return $category . ' ' . $roundvalue;
+                            } else {
+                                return $roundvalue;
                             }
-                            return $category . ' ' . $roundvalue;
                         } else {
-                            return $roundvalue;
+                            return '-';
                         }
                         break;
                     default:
@@ -445,41 +467,56 @@ class local_xray_controller_reports extends mr_controller {
                 switch ($column) {
                     case 'wc':
                         // Column Word count (rel.).
-                        $roundvalue = round($value, 2);
-                        return $roundvalue;
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            return $roundvalue;
+                        } else {
+                            return '-';
+                        }
                         break;
                     case 'ctc':
                         // Column CTC.
-                        $roundvalue = round($value, 2);
-                        $partc1 = get_config($plugin, 'partc1');
-                        $partc2 = get_config($plugin, 'partc2');
-                        if (($partc1 !== false) && ($partc2 !== false)) {
-                            $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                            if ($roundvalue < $partc1) {
-                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                            } else if ($roundvalue < $partc2) {
-                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            $partc1 = get_config($plugin, 'partc1');
+                            $partc2 = get_config($plugin, 'partc2');
+                            if (($partc1 !== false) && ($partc2 !== false)) {
+                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
+                                if ($roundvalue < $partc1) {
+                                    $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
+                                } else if ($roundvalue < $partc2) {
+                                    $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
+                                }
+                                return $category . ' ' . $roundvalue . '%';
+                            } else {
+                                return $roundvalue . '%';
                             }
-                            return $category . ' ' . $roundvalue . '%';
                         } else {
-                            return $roundvalue . '%';
+                            return '-';
                         }
                         break;
                     case 'regularityContrib';
                         // Column Regularity of contributions.
-                        $roundvalue = round($value, 2);
-                        $partreg1 = get_config($plugin, 'partreg1');
-                        $partreg2 = get_config($plugin, 'partreg2');
-                        if (($partreg1 !== false) and ($partreg2 !== false)) {
-                            $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            if ($roundvalue < $partreg1) {
-                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($roundvalue < $partreg2) {
-                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            $partreg1 = get_config($plugin, 'partreg1');
+                            $partreg2 = get_config($plugin, 'partreg2');
+                            if (($partreg1 !== false) and ($partreg2 !== false)) {
+                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
+                                if ($roundvalue < $partreg1) {
+                                    $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
+                                } else if ($roundvalue < $partreg2) {
+                                    $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
+                                }
+                                return $category . ' ' . $roundvalue;
+                            } else {
+                                return $roundvalue;
                             }
-                            return $category . ' ' . $roundvalue;
                         } else {
-                            return $roundvalue;
+                            return '-';
                         }
                         break;
                     default:
@@ -490,8 +527,14 @@ class local_xray_controller_reports extends mr_controller {
                 // Table Student Grades from Gradebook Report.
                 switch ($column) {
                     case 'standarScore':
-                        // Column Standardized score.
-                        return round($value, 2);
+                        // Column Quiz scores (%) (ex Standardized score).
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            return $roundvalue . '%';
+                        } else {
+                            return '-';
+                        }
                         break;
                     default:
                         return $value;
@@ -500,12 +543,25 @@ class local_xray_controller_reports extends mr_controller {
                 // Table Summary of Quizzes from Gradebook Report.
                 switch ($column) {
                     case 'earnScore':
-                        // Column Average score.
+                        // Column Average score (Points) - (ex Average score).
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            return round($value, 2);
+                        } else {
+                            return '-';
+                        }
+                        break;
                     case 'standarScore':
-                        // Column Average standardized score.
+                        // Column Average score (%) - (ex Average standardized score).
                     case 'finalGradeCorrelation':
-                        // Column Correlation between final score and score from this quiz.
-                        return round($value, 2);
+                        // Column Relationship with current total course grade - (ex Correlation between final score and score from this quiz).
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            return $roundvalue . '%';
+                        } else {
+                            return '-';
+                        }
                         break;
                     default:
                         return $value;

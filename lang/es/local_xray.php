@@ -273,7 +273,7 @@ $string['discussionreportindividual_discussionActivityByWeek_help'] = ''; // No 
 /* Graphs Activity report*/
 $string['activityreport_activityLevelTimeline'] = 'Actividad del Curso por fecha';
 $string['activityreport_compassTimeDiagram'] = 'Actividad según la hora del día';
-$string['activityreport_barplotOfActivityByWeekday'] = 'Actividad de las últimas dos semanas por día de la semana.';
+$string['activityreport_barplotOfActivityByWeekday'] = 'Actividad de las últimas dos semanas por día de la semana';
 $string['activityreport_barplotOfActivityWholeWeek'] = 'Actividad durante las últimas semanas';
 $string['activityreport_activityByWeekAsFractionOfTotal'] = 'Actividad Relativa en Comparación con Otros Estudiantes de la Clase';
 $string['activityreport_activityByWeekAsFractionOfOwn'] = 'Actividad Relativa en Comparación consigo mismo';
