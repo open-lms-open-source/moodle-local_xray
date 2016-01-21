@@ -192,13 +192,13 @@ if ($hassiteconfig) {
     // Define cut-off values for Table Risk Measures from Risk Report.
     // Columns: Academic risk, Social risk and Total risk.
     $risk_values = array();
-    for ($i = 0; $i <= 10; $i = $i + 0.1) {
-        $risk_values[] = $i;
+    foreach(range(0, 100, 0.1) as $i) {
+        $risk_values[(string)$i] = $i;
     }
     $settings->add( new admin_setting_configselect("{$plugin}/risk1",  new lang_string("risk1_name", $plugin),
-        new lang_string("risk1_desc", $plugin), 2, $risk_values));
+        new lang_string("risk1_desc", $plugin), "20", $risk_values));
     $settings->add( new admin_setting_configselect("{$plugin}/risk2", new lang_string("risk2_name", $plugin),
-        new lang_string("risk2_desc", $plugin), 3, $risk_values));
+        new lang_string("risk2_desc", $plugin), "30", $risk_values));
     // Define cut-off values for Activity table in Activity Report.
     // Column Visit regularity (weekly).
     $regularity_values = array();
