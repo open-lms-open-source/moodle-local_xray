@@ -355,9 +355,9 @@ class local_xray_controller_reports extends mr_controller {
                             $risk2 = get_config($plugin, 'risk2');
                             $risk2 = floatval($risk2);
                             if (($risk1 !== false) && ($risk2 !== false)) {
-                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
+                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-danger');
                                 if ($roundvalue < $risk1) {
-                                    $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
+                                    $category = html_writer::span(get_string('low', 'local_xray'), 'label label-success');
                                 } else if ($roundvalue < $risk2) {
                                     $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
                                 }
