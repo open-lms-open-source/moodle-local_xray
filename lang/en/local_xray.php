@@ -104,8 +104,8 @@ $string['error_generic'] = '{$a}';
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';
 $string['enabledreports_desc'] = 'Reports enabled for view in moodle.';
-$string['xrayclientid'] = 'Identifier client';
-$string['xrayclientid_desc'] = 'Identifier client for X-Ray Learning Analytics';
+$string['xrayclientid'] = 'X-Ray Learning Analytics Client Identifier';
+$string['xrayclientid_desc'] = 'Client identifier for X-Ray Learning Analytics';
 $string['xraypassword'] = 'X-Ray Learning Analytics Password';
 $string['xraypassword_desc'] = 'Password for logging into X-Ray Learning Analytics server.';
 $string['xrayurl'] = 'X-Ray Learning Analytics Url';

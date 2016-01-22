@@ -102,7 +102,7 @@ $string['error_generic'] = '{$a}';
 
 /* Settings */
 $string['xrayclientid'] = 'Identificador de cliente';
-$string['xrayclientid_desc'] = 'Identificador de client para X-Ray Learning Analytics';
+$string['xrayclientid_desc'] = 'Identificador de cliente para X-Ray Learning Analytics';
 $string['xraypassword'] = 'Password para X-Ray Learning Analytics ';
 $string['xraypassword_desc'] = 'Password utilizado para loguearse en X-Ray Learning Analytics';
 $string['xrayurl'] = 'Url de X-Ray Learning Analytics';
