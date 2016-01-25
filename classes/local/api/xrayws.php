@@ -263,7 +263,10 @@ class xrayws {
         if ($length > 11) {
             $pos = stripos($header, 'set-cookie:');
             if ($pos !== false) {
-                self::instance()->setcookie(trim(substr($header, $pos + 11)));
+                $cookie = trim(substr($header, $pos + 11));
+                if (stripos($cookie, 'connect.sid=') !== false) {
+                    self::instance()->setcookie($cookie);
+                }
             }
         }
 
