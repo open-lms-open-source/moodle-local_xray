@@ -87,6 +87,7 @@ class data_sync extends scheduled_task {
                 'version' => '2006-03-01',
                 'region'  => $config->s3bucketregion,
                 'scheme'  => $config->s3protocol,
+                'retries' => (int)$config->s3uploadretry,
                 'credentials' => [
                     'key'    => $config->awskey,
                     'secret' => $config->awssecret,
@@ -104,23 +105,14 @@ class data_sync extends scheduled_task {
                 $cleanfile = new auto_clean_file($compfile);
                 ($cleanfile);
                 $uploadresult = null;
-                // We will try several times to upload file.
-                $retrycount = (int)$config->s3uploadretry;
-                for ($count = 0; $count < $retrycount; $count++) {
-                    try {
-                        $uploadresult = $s3->upload($config->s3bucket,
-                            $destfile,
-                            fopen($compfile, 'rb'),
-                            'private',
-                            array('debug' => true));
-                        break;
-                    } catch (\Exception $e) {
-                        sync_failed::create_from_exception($e)->trigger();
-                        if ($count = ($retrycount - 1)) {
-                            throw $e;
-                        }
-                        sleep(1);
-                    }
+                try {
+                    $uploadresult = $s3->upload($config->s3bucket,
+                        $destfile,
+                        fopen($compfile, 'rb'),
+                        'private',
+                        array('debug' => true));
+                } catch (\Exception $e) {
+                    sync_failed::create_from_exception($e)->trigger();
                 }
                 $metadata = $uploadresult->get('@metadata');
                 if ($metadata['statusCode'] != 200) {
