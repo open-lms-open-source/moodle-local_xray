@@ -1,6 +1,81 @@
 # CHANGELOG
 
+## 3.4.0 - 2015-09-24
+
+* `Aws\S3` - Fixed retry handling of networking errors and client socket timeout
+  errors to ensure the client `retries` option is respected.
+* Added `@method` annotations on all clients to support autocomplete and static
+  analysis.
+* Added performance tests to the acceptance test suite.
+* Fixed error when `getIterator` was called on a paginator with no specified
+  `output_token`.
+* Added support for reading the `aws_session_token` parameter from credentials
+  files.
+
+## 3.3.8 - 2015-09-17
+
+* `Aws\CloudWatchLogs` - Added support for export task operations.
+
+## 3.3.7 - 2015-09-16
+
+* `Aws\S3` - Added support for new `STANDARD_IA` storage class.
+* `Aws\S3` - Added support for specifying storage class in cross-region
+  replication configuration.
+* `Aws\Sqs` - Added a 'QueueExists' waiter to create a queue and wait until it
+  has been fully provisioned.
+
+## 3.3.6 - 2015-09-15
+
+* `Aws\Ec2` - Added support for the "diversified" SpotFleet allocation strategy.
+* `Aws\Ec2` - Added support for reading `StateMessage` and `DataEncryptionKeyId`
+  from a `DescribeSnapshots` response.
+* `Aws\Efs` - Added support for using a `MountTargetId` parameter instead of a
+  `FileSystemId` parameter with the `DescribeMountTargets` command.
+* `Aws\Route53` - Added support for calculated and latency health checks.
+* `Aws\S3` - Fixed warning emitted by `BatchDelete` when no matching objects
+  were found to delete.
+
+## 3.3.5 - 2015-09-10
+
+* `Aws\Iam` - Added support for new policy simulation APIs.
+* `Aws\Kinesis` - Added support for timestamped GetRecords call.
+* `Aws\MachineLearning` - Fixed invalid validation constraint on `Predict`
+  operation.
+* `Aws\S3` - Added support for retrying special error cases with the
+  `ListObjects`, `CompleteMultipartUpload`, `CopyObject`, and `UploadPartCopy`.
+
+## 3.3.4 - 2015-09-03
+
+* `Aws\StorageGateway` - Added support for tagging and untagging resources.
+
+## 3.3.3 - 2015-08-31
+
+* `Aws\Ec2` - Added support for using instance weights with the 
+  `RequestSpotFleet` API.
+
+## 3.3.2 - 2015-08-27
+
+* `Aws\ConfigService` - Added support for the `ListDiscoveredResources` 
+  operation and new resource types.
+
+## 3.3.1 - 2015-08-25
+
+* `Aws\CodePipeline` - Added support for using encryption keys with artifact
+  stores.
+
+## 3.3.0 - 2015-08-20
+
+* `Aws\S3` - Added support for event notification filters.
+* Fixed waiter logic to always retry connection errors.
+* Added support for per-command retry count overrides.
+* Added support for defining custom patterns for the client debug log to use
+  to scrub sensitive data from the output logged.
+* Moved the work being done by `Aws\JsonCompiler` from run time to build time.
+* Fixed bug causing the phar autoloader not to be found when the phar was loaded
+  from opcache instead of from the filesystem.
+
 ## 3.2.6 - 2015-08-12
+
 * `Aws\ElasticBeanstalk` - Added support for enhanced health reporting.
 * `Aws\S3` - Fixed retry middleware to ensure that S3 requests are retried
   following errors raised by the HTTP handler.
@@ -37,6 +112,9 @@
 
 ## 3.2.1 - 2015-07-23
 
+* **SECURITY FIX**: This release addresses a security issue associated with 
+  CVE-2015-5723, specifically, fixes improper default directory umask behavior 
+  that could potentially allow unauthorized modifications of PHP code.
 * `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
 * `Aws\Emr` - Added support for Amazon EMR release 4.0.0, which includes a new
   application installation and configuration experience, upgraded versions of
