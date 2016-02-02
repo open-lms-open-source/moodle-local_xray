@@ -3,7 +3,7 @@
     <library>
         <location>lib/vendor/aws</location>
         <name>aws-sdk-php</name>
-        <version>3.2.6</version>
+        <version>3.4.0</version>
         <license>Apache</license>
         <licenseversion>2.0</licenseversion>
     </library>

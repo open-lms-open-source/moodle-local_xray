@@ -181,6 +181,7 @@ class EachPromise implements PromisorInterface
         }
 
         unset($this->pending[$idx]);
+//        gc_collect_cycles();
         $this->advanceIterator();
 
         if (!$this->checkIfFinished()) {
