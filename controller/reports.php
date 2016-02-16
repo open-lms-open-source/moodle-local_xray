@@ -575,12 +575,16 @@ class local_xray_controller_reports extends mr_controller {
      * @param int $minutes
      * @return string
      */
-    public function show_time_hours_minutes($minutes) {
-        // Get hours.
-        $hours = floor($minutes / 60);
-        // Get the remaining minutes.
-        $remainingminutes = $minutes % 60;
-        // Return hours:minutes.
-        return $hours.':'.$remainingminutes;
+    public static function show_time_hours_minutes($minutes) {
+        if (is_numeric(trim($minutes)) && $minutes >= 0) {
+            // Get hours
+            $hours = floor($minutes / 60);
+            // Get the remaining minutes.
+            $remainingminutes = $minutes % 60;
+            // Return hours:minutes.
+            return $hours.':'.$remainingminutes;
+        } else {
+            return '-';
+        }
     }
 }
