@@ -39,6 +39,24 @@ class local_xray_reports extends \advanced_testcase {
 
     /**
      * Method show_time_hours_minutes
+     * Test positive values lower than 24 hours.
+     */
+    public function test_positive_lower_values() {
+        $this->resetAfterTest(true);
+        global $CFG;
+        require_once($CFG->dirroot.'/local/xray/controller/reports.php');
+        // Create a higher value than 24 hours.
+        $highervalue = 60 * 12;
+
+        $result = \local_xray_controller_reports::show_time_hours_minutes($highervalue);
+        $time = explode(":", $result);
+        $hours = $time[0];
+
+        $this->assertEquals(12, $hours);
+    }
+
+    /**
+     * Method show_time_hours_minutes
      * Test values highers than 24 hours.
      */
     public function test_high_values() {
