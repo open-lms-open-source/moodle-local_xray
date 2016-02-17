@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Reports Tests
+ * show_time_hours_minutes tests
  *
  * @package   local_xray
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -27,7 +27,7 @@ namespace local_xray\tests;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Test Reports methods
+ * Test show_time_hours_minutes method
  *
  * @author    German Vitale
  * @package   local_xray
