@@ -35,14 +35,14 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_xray_reports extends \basic_testcase {
+class local_xray_reports extends \advanced_testcase {
 
     /**
      * Method show_time_hours_minutes
      * Test values highers than 24 hours.
      */
     public function test_high_values() {
-
+        $this->resetAfterTest(true);
         global $CFG;
         require_once($CFG->dirroot.'/local/xray/controller/reports.php');
         // Create a higher value than 24 hours.
@@ -60,7 +60,7 @@ class local_xray_reports extends \basic_testcase {
      * Test negative values.
      */
     public function test_negative_values() {
-
+        $this->resetAfterTest(true);
         global $CFG;
         require_once($CFG->dirroot.'/local/xray/controller/reports.php');
         // Create a negative value.
@@ -76,7 +76,7 @@ class local_xray_reports extends \basic_testcase {
      * Test non numeric values.
      */
     public function test_non_numeric_values() {
-
+        $this->resetAfterTest(true);
         global $CFG;
         require_once($CFG->dirroot.'/local/xray/controller/reports.php');
         // Create a not number value.
