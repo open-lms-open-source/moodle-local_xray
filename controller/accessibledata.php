@@ -156,7 +156,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
      * Standard process of data received from webservice.
      * We dont show column sent "_row".
      *
-     * @param $data
+     * @param array $data
      * @return array
      */
     private function standard($data) {
@@ -199,7 +199,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
 
     /**
      * Special case 1, we need to show first column with the value sent in "_row".
-     * @param $data
+     * @param array $data
      * @return array
      */
     private function specialcase1($data) {
@@ -251,7 +251,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
 
     /**
      * Special case 2, show table and single values.
-     * @param $data
+     * @param stdClass $data
      * @param boolean $showtablename - Show the table names
      * @return string
      */
