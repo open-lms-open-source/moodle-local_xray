@@ -25,7 +25,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
+/* @noinspection PhpIncludeInspection */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
+
 use local_xray\event\get_report_failed;
 /**
  * Xray integration Accessible data
@@ -154,7 +156,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
      * Standard process of data received from webservice.
      * We dont show column sent "_row".
      *
-     * @param $data
+     * @param array $data
      * @return array
      */
     private function standard($data) {
@@ -163,16 +165,18 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $columnsnames = array();
         $rows = array();
         // Get data.
-        if(!empty($data)) {
+        if(is_array($data) && !empty($data)) {
 
             // Get columns names.
             $columns = get_object_vars($data[0]);
             $exclude_columns = array("_row");
-            foreach($columns as $c => $value){
-                if(in_array($c, $exclude_columns)){
-                    continue;
+            if (!empty($columns)) {
+                foreach ($columns as $c => $value) {
+                    if (in_array($c, $exclude_columns)) {
+                        continue;
+                    }
+                    $columnsnames[] = $c;
                 }
-                $columnsnames[] = $c;
             }
 
             // Get columns data.
@@ -195,7 +199,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
 
     /**
      * Special case 1, we need to show first column with the value sent in "_row".
-     * @param $data
+     * @param array $data
      * @return array
      */
     private function specialcase1($data) {
@@ -204,19 +208,21 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $columnsnames = array();
         $rows = array();
         // Get data.
-        if(!empty($data)) {
+        if(is_array($data) && !empty($data)) {
 
             // Get columns names.
             $columns = get_object_vars($data[0]);
-            if(isset($columns["_row"])){
-                $columnsnames[] = ""; // Empty name of columns when we have _row.
-            }
-
-            foreach($columns as $c => $value){
-                if($c == "_row"){
-                    continue;
+            if (!empty($columns)) {
+                if (isset($columns["_row"])) {
+                    $columnsnames[] = ""; // Empty name of columns when we have _row.
                 }
-                $columnsnames[] = $c;
+
+                foreach ($columns as $c => $value) {
+                    if ($c == "_row") {
+                        continue;
+                    }
+                    $columnsnames[] = $c;
+                }
             }
 
             // Get columns data.
@@ -245,23 +251,27 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
 
     /**
      * Special case 2, show table and single values.
-     * @param $data
+     * @param stdClass $data
      * @param boolean $showtablename - Show the table names
      * @return string
      */
     private function specialcase2($data, $showtablename = false) {
 
         $output = "";
-        $props = get_object_vars($data->data);
-        foreach($props as $key => $val) {
-            if(is_array($val)) {
-                if($showtablename) {
-                    $output .= html_writer::tag("h3", $key);
-                }
-                $output .= $this->standard($val);
+        if (is_object($data) && property_exists($data, 'data') && is_object($data->data)) {
+            $props = get_object_vars($data->data);
+            if (!empty($props)) {
+                foreach ($props as $key => $val) {
+                    if (is_array($val)) {
+                        if ($showtablename) {
+                            $output .= html_writer::tag("h3", $key);
+                        }
+                        $output .= $this->standard($val);
 
-            } else {
-                $output .= html_writer::tag("p",$key.": ".$val);
+                    } else {
+                        $output .= html_writer::tag("p", $key . ": " . $val);
+                    }
+                }
             }
         }
 
