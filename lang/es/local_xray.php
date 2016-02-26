@@ -336,9 +336,9 @@ $string['risk_riskScatterPlot_help'] = 'Cada punto en este diagrama de dispersi�
 
 /* Graphs Risk report*/
 $string['gradebookreport_studentScoreDistribution'] = 'Distribución de Puntajes';
-$string['gradebookreport_scoreDistributionByItem'] = 'Distribución de puntajes de ejercicios';
-$string['gradebookreport_scatterPlot'] = 'Puntajes asignados versus porcentajes';
-$string['gradebookreport_itemsHeatmap'] = 'Comparación de los puntajes de ejercicios';
+$string['gradebookreport_scoreDistributionByItem'] = ' Distribución de Puntajes de Ejercicios';
+$string['gradebookreport_scatterPlot'] = 'Puntajes Asignados Versus Porcentajes';
+$string['gradebookreport_itemsHeatmap'] = 'Comparación de los Puntajes de Ejercicios';
 
 /* Help Graphs Gradebook report*/
 $string['gradebookreport_studentScoreDistribution_help'] = 'Este gráfico muestra la distribución de los puntajes'.
