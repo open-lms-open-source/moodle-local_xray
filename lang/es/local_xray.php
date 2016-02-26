@@ -246,9 +246,9 @@ $string['risk_riskMeasures_help'] = 'Esta tabla ayuda a identificar a los estudi
 $string['gradebookreport_element2_help'] = 'Esta tabla muestra el desempeño de los estudiantes en los exámenes y'.
     ' ejercicios del curso. Se provee un puntaje estandarizado para cada estudiante. Esto demuestra la performance'.
     ' del mismo en comparación con la media de la clase. '; // Gradebook report.
-$string['gradebookreport_element4_help'] = 'Esta tabla muestra la performance promedio de los estudiantes para'.
-    ' cada examen o ejercicio. Se observa la puntuación de ese examen comparada con el puntaje acumulado hasta'.
-    ' el momento. Los altos porcentajes indican estudiantes fuertes.'; // Gradebook report.
+$string['gradebookreport_element4_help'] = 'Esta tabla muestra el desempeño promedio de los estudiantes para'.
+    ' cada examen o ejercicio. Se observa la puntuación de ese examen comparada con el puntaje acumulado hasta el'.
+    ' momento. Los porcentajes más altos indican estudiantes con mejor rendimiento.'; // Gradebook report.
 $string['discussionreport_discussionMetrics_help'] = 'Esta tabla muestra cuánto participa un estudiante en las'.
     ' discusiones. Los puntajes para la contribución original y el pensamiento crítico, están determinados por'.
     ' el análisis de las palabras utilizadas por los estudiantes. La contribución original se basa en el conteo'.
