@@ -330,9 +330,9 @@ $string['risk_riskScatterPlot'] = 'Riesgo Académico versus Riesgo Social';
 /* Help Graphs Risk report*/
 $string['risk_riskDensity_help'] = 'Este gráfico muestra la distribución del riesgo estimado en el curso. El color'.
     ' verde representa a los estudiantes fuera de riesgo. En rojo los que están en riesgo.';
-$string['risk_riskScatterPlot_help'] = 'Cada punto en este diagrama de dispersión represente un estudiante. Dependiendo'.
+$string['risk_riskScatterPlot_help'] = 'Cada punto en este diagrama de dispersión representa un estudiante. Dependiendo'.
     ' de la posición del estudiante en el gráfico, se observa su nivel social y su riesgo académico. La línea negra'.
-    ' muestra la relación esperada entre el riesgo social y el académico. El área sombreada (intervalo de confidencia)'.
+    ' muestra la relación esperada entre el riesgo social y el académico. El área sombreada (intervalo de confianza)'.
     ' nos provee un rango de relación esperada. El color es utilizado para ayudar a determinar el riesgo potencial'.' de forma rápida. Verde significa fuera de riesgo. Rojo en riesgo. ';
 
 /* Graphs Risk report*/
