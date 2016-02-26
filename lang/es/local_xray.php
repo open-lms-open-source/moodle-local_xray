@@ -65,7 +65,7 @@ $string['irregular'] = 'Irregular';
 $string['regular'] = 'Regular';
 
 /* Report Activity Report*/
-$string['activityreport'] = 'Reporte de Actividad';
+$string['activityreport'] = 'Actividad';
 /* Report Activity Report Individual*/
 $string['activityreportindividual'] = 'Métricas de Actividad Individuales';
 /* Discussion report*/
@@ -77,11 +77,11 @@ $string['discussionreportindividualforum'] = 'Reporte individual de discusiones 
 /* Discussion report Endogenic Plagiarism*/
 $string['discussionendogenicplagiarism'] = 'Superposición de Palabras';
 /* Risk report*/
-$string['risk'] = 'Reporte de Estado de riesgo';
+$string['risk'] = 'Estado de riesgo';
 /* Discussiongrading report*/
 $string['discussiongrading'] = 'Calificaciones de Discusión';
 /* Gradebook report*/
-$string['gradebookreport'] = 'Reporte de Calificaciones';
+$string['gradebookreport'] = 'Calificaciones';
 
 /* Columns reports */
 $string['reportdate'] = 'Fecha de Reporte';
