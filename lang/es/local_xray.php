@@ -250,13 +250,13 @@ $string['gradebookreport_element2_help'] = 'Esta tabla muestra el desempeño de 
 $string['gradebookreport_element4_help'] = 'Esta tabla muestra la performance promedio de los estudiantes para'.
     ' cada examen o ejercicio. Se observa la puntuación de ese examen comparada con el puntaje acumulado hasta'.
     ' el momento. Los altos porcentajes indican estudiantes fuertes.'; // Gradebook report.
-$string['discussionreport_discussionMetrics_help'] = 'Esta tabla muestra cómo un estudiante participa en las'.
-    ' discusiones . Contribución original y el pensamiento crítico son puntajes determinados por un análisis'.
-    ' de las palabras usadas por los estudiantes. Contribución original se basa era recuento de palabras con'.
-    ' palabras vacías , pronombres y preposiciones tales como, filtrados a cabo para determinar la relación de'.
-    ' las palabras individuales utilizados . El pensamiento crítico se basa en el número de estudiantes utilizar'.
-    ' declaraciones reflexivas . Por ejemplo, " estoy de acuerdo " o " ¡Yo también! " . Haga clic en el nombre'.
-    ' del informe junto a un estudiante para ver cómo lo están haciendo .'; // Discussion report.
+$string['discussionreport_discussionMetrics_help'] = 'Esta tabla muestra cuánto participa un estudiante en las'.
+    ' discusiones. Los puntajes para la contribución original y el pensamiento crítico, están determinados por'.
+    ' el análisis de las palabras utilizadas por los estudiantes. La contribución original se basa en el conteo'.
+    ' de palabras y conectores tales como pronombres y preposiciones, filtradas para determinar un radio de'.
+    ' palabras únicas utilizadas. El pensamiento crítico se establece a partir del número de comentarios o posteos'.
+    ' reflexivos como por ejemplo, "Estoy de acuerdo" o "Yo también". Haga click en el ícono al lado del nombre del'.
+    ' estudiante para ver su performance individual.'; // Discussion report.
 $string['discussionreport_discussionActivityByWeek_help'] = ''; // No mostraremos help.
 $string['discussionreport_studentDiscussionGrades_help'] = 'Las recomendaciones de calificación se basan en la'.
     ' frecuencia de los posteos, el aporte original y la evidencia de pensamiento crítico. Cada uno tiene'.
