@@ -394,7 +394,7 @@ $string['discussionreport_socialStructureWordContribution_help'] = 'Este diagram
 $string['discussionreport_socialStructureWordCTC_help'] = 'Este diagrama muestra en cuáles de las respuestas de los'.
     ' estudiantes se observa un pensamiento crítico. Esto está basado en el número de posteos reflexivos.';
 $string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'Los mapas de temperatura muestran cuán'.
-    ' similares son los posteos entre los estudiantes de la claese. Este esquema demuestra quién fue la fuente'.
+    ' similares son los posteos entre los estudiantes de la clase. Este esquema demuestra quién fue la fuente'.
     ' de un profundo conocimiento y quién está copiando los posteos de otros. Los posteos originales están'.
     ' determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante revisar'.
     ' los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros estudiantes.';
