@@ -234,11 +234,10 @@ $string['discussionreportindividual_discussionActivityByWeek'] = 'Actividad Sema
 
 /* Help tables all reports*/
 $string['activityreport_nonStarters_help'] = 'Los siguientes estudiantes aún no muestran actividad en el curso.';// Activity and risk report.
-$string['activityreport_studentList_help'] = 'Observando la actividad de los estudiantes en un cursose obtiene una'.
-    ' idea de su compromiso y prácticas. Esta tabla muestra la actividad del estudiante y la regularidad. Cuanto'.
-    ' menor sea el número de la columna Regularidad de Visitas, más regulares serán. También se pueden ver los reportes'.
-    ' individuales de cada estudiante. Haga clic en ícono al inicio de cada fila para ver el reporte de ese'.
-    ' estudiante.'; // Activity report.
+$string['activityreport_studentList_help'] = 'Observando la actividad de los estudiantes en un curso, se obtiene'.
+    ' una idea de su compromiso y sus prácticas. Esta tabla muestra la actividad del estudiante y su regularidad.'.
+    ' Cuanto menor sea el número de la columna Regularidad de Visitas, más regular será el estudiante. También'.
+    ' se pueden ver los reportes individuales de cada alumno haciendo clic en ícono al inicio de cada fila.'; // Activity report.
 $string['risk_nonStarters_help'] = 'Los siguientes estudiantes aún no han participado del curso. '; // Risk report.
 $string['risk_riskMeasures_help'] = 'Esta tabla ayuda a identificar a los estudiantes que se encuentran en riesgo'.
     ' de dejar el curso, retirarse de la clase o abandonar la escuela. Los números más altos indican mayor riesgo.'.
