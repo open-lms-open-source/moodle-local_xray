@@ -270,12 +270,12 @@ $string['discussionreportindividual_discussionMetrics_help'] = 'Esta tabla muest
 $string['discussionreportindividual_discussionActivityByWeek_help'] = ''; // No mostraremos help.
 
 /* Graphs Activity report*/
-$string['activityreport_activityLevelTimeline'] = 'Actividad del Curso por fecha';
-$string['activityreport_compassTimeDiagram'] = 'Actividad según la hora del día';
-$string['activityreport_barplotOfActivityByWeekday'] = 'Actividad de las últimas dos semanas por día de la semana';
-$string['activityreport_barplotOfActivityWholeWeek'] = 'Actividad durante las últimas semanas';
+$string['activityreport_activityLevelTimeline'] = 'Actividad del Curso por Fecha';
+$string['activityreport_compassTimeDiagram'] = 'Actividad Según la Hora del Día';
+$string['activityreport_barplotOfActivityByWeekday'] = 'Actividad de las Últimas Dos Semanas por Día de la Semana';
+$string['activityreport_barplotOfActivityWholeWeek'] = 'Actividad Durante las Últimas Semanas';
 $string['activityreport_activityByWeekAsFractionOfTotal'] = 'Actividad Relativa en Comparación con Otros Estudiantes de la Clase';
-$string['activityreport_activityByWeekAsFractionOfOwn'] = 'Actividad Relativa en Comparación consigo mismo';
+$string['activityreport_activityByWeekAsFractionOfOwn'] = 'Actividad Relativa en Comparación Consigo Mismo';
 $string['activityreport_firstloginPiechartAdjusted'] = 'Diagrama de Torta de Distribución de Primer Acceso';
 
 /* Help Graphs Activity report*/
