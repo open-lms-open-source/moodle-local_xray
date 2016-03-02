@@ -76,7 +76,13 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                         true,
                         true,
                         '<"top">rt<"bottom"flp><"clear">');// add column action.
-                    $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
+                    // If the user comes from header.
+                    if ($this->header) {
+                        $datatable->default_field_sort = 3; // Sort by column "Last activity".
+                        $datatable->sort_order = "desc";
+                    } else {
+                        $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
+                    }
                     $output .= $this->output->standard_table((array)$datatable);
 
                     // Show graphs Activity report.

@@ -401,137 +401,165 @@ class local_xray_renderer extends plugin_renderer_base {
 
     /**
      * Snap Dashboard Xray
-     */
-    public function snap_dashboard_xray() {
-        global $PAGE, $COURSE;
-
-        $output = "";
-
-        if (has_capability('local/xray:dashboard_view', $PAGE->context)) {
-            $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id);
-            if($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
-                $output .= $this->snap_dashboard_xray_output($dashboarddata);
-            } else {
-                $output .= get_string('error_xray', 'local_xray');
-            }
-        }
-
-        return $output;
-    }
-
-    /**
-     * Snap Dashboard Xray
      *
      * @param local_xray\dashboard\dashboard_data $data
      * @return string
      * */
-    private function snap_dashboard_xray_output($data) {
+    private function dashboard_xray_output($data) {
 
-        global $DB;
+        global $COURSE;
+        $plugin = "local_xray";
+        $output = "";
+        $string_lastweek = get_string("lastweekwas", $plugin);
+        $string_of = get_string("of", $plugin);
 
-        // JQuery to show all students.
-        $jscode = "$(function(){
-            $('.xray_dashboard_seeall').click(function()
-                {
-                    var div = $('.xray_dashboard_users_risk_hidden');
-                    startAnimation();
-                    function startAnimation(){
-                        div.slideToggle('slow');
-                    }
-                });
-            });";
+        // Number of students at risk in the last 7 days.
+        $text_link = "{$string_lastweek} {$data->usersinrisklastsevendays_previousweek} {$string_of} {$data->totalstudents}";
+        // To risk metrics.
+        $url = new moodle_url("/local/xray/view.php",
+            array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
+        // Calculate colour status.
+        $status_class = $this->headline_status_risk($data->usersinrisklastsevendays, $data->usersinrisklastsevendays_previousweek);
 
-        $xraydashboardjquery = html_writer::script($jscode);
+        $column1 = $this->headline_column($data->usersinrisklastsevendays,
+            get_string('headline_studentatrisk', 'local_xray'),
+            $url,
+            $text_link,
+            $status_class);
 
-        $of = html_writer::tag('small', get_string('of', 'local_xray'));
+        // Number of students logged in in last 7 days.
+        $text_link = "{$string_lastweek} {$data->studentsloggedlastsevendays_previousweek}";
+        // To activity metrics.
+        $url = new moodle_url("/local/xray/view.php",
+            array("controller" => "activityreport", "courseid" => $COURSE->id, "header" => 1), "studentList");
+        // Calculate colour status.
+        $status_class = $this->headline_status($data->studentsloggedlastsevendays, $data->studentsloggedlastsevendays_previousweek);
 
-        // Students at risk.
-        $studentsrisk = html_writer::tag("div",
-            html_writer::tag("span", $data->studentsrisk, array("class" => "xray-headline-number h1"))."${of} {$data->studentsenrolled}",
-            array("class" => "xray-headline"));
+        $column2 = $this->headline_column($data->studentsloggedlastsevendays,
+            get_string('headline_loggedstudents', 'local_xray'),
+            $url,
+            $text_link,
+            $status_class);
 
-        $studentatrisktext = html_writer::div(get_string('studentatrisk', 'local_xray'), 'xray-headline-description');
-        // Bootstrap classes for positive/negative data.
-        $comparitorclass = "xray-comparitor";
-        $comparitorbsclass = " text-muted";
-        if ($data->visitorsfromlastweek < 0) {
-            $comparitorbsclass = " text-success";
+        // Number of average grades in the last 7 days.
+        $text_link = "{$string_lastweek} {$data->averagegradeslastsevendays_previousweek} %";
+        // To students grades.
+        $url = new moodle_url("/local/xray/view.php",
+            array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "element2");
+        // Calculate colour status.
+        $status_class = $this->headline_status($data->averagegradeslastsevendays, $data->averagegradeslastsevendays_previousweek);
+
+        $column3 = $this->headline_column($data->averagegradeslastsevendays." %",
+            get_string('headline_average', 'local_xray'),
+            $url,
+            $text_link,
+            $status_class);
+
+        // Number of posts in the last 7 days.
+        $text_link = "{$string_lastweek} {$data->postslastsevendays_previousweek}";
+        // To participation metrics.
+        $url = new moodle_url("/local/xray/view.php",
+            array("controller" => "discussionreport", "courseid" => $COURSE->id, "header" => 1), "discussionMetrics");
+        // Calculate colour status.
+        $status_class = $this->headline_status($data->postslastsevendays, $data->postslastsevendays_previousweek);
+
+        $column4 = $this->headline_column($data->postslastsevendays,
+            get_string('headline_posts', 'local_xray'),
+            $url,
+            $text_link,
+            $status_class);
+
+        // Menu list.
+        $list = html_writer::start_tag("ul", array("class" => "xray-headline"));
+        $list .= html_writer::tag("li", $column1, array("id" => "xray-headline-risk"));
+        $list .= html_writer::tag("li", $column2, array("id" => "xray-headline-activity"));
+        $list .= html_writer::tag("li", $column3, array("id" => "xray-headline-gradebook"));
+        $list .= html_writer::tag("li", $column4, array("id" => "xray-headline-discussion"));
+        $list .= html_writer::end_tag("ul");
+
+        $output .= html_writer::tag("nav", $list, array("id" => "xray-nav-headline"));
+        return $output;
+    }
+
+    /**
+     * Create column for headeline data.
+     *
+     * @param integer $number
+     * @param string $text
+     * @param string $linkurl
+     * @param string $text_link
+     * @param string $style_status
+     * @return string
+     */
+    private function headline_column($number, $text, $linkurl, $textweekbefore, $style_status) {
+
+        // Link with Number and icon.
+        $icon = html_writer::span('', $style_status."-icon xray-headline-icon");
+        $number = html_writer::tag("p", $number.$icon, array("class" => "xray-headline-number"));
+        $link = html_writer::link($linkurl, $number, array("class" => "xray-headline-link", "title" => get_string('link_gotoreport', 'local_xray')));
+        // Text for description and text of week before.
+        $text_desc = html_writer::tag("p", $text, array("class" => "xray-headline-desc"));
+        $textweekbefore = html_writer::tag("span", $textweekbefore, array("class" => "xray-headline-textweekbefore {$style_status}"));
+
+        return $link.$text_desc.$textweekbefore;
+
+
+    }
+
+    /**
+     * Calculate colour and arrow for headline (compare current value and value in the previous week).
+     *
+     * Same value = return class for yellow colour.
+     * Increment value = return class for green colour.
+     * Decrement value = return class for red colour.
+     *
+     * @param $valuenow
+     * @param $valuepreviousweek
+     * @return string
+     */
+    private function headline_status($valuenow, $valuepreviousweek) {
+
+        // Default, same value.
+        $style_status = "xray-headline-yellow";
+
+        if($valuenow < $valuepreviousweek) {
+            // Decrement.
+            $style_status = "xray-headline-red";
         }
-        if ($data->visitorsfromlastweek > 0) {
-            $comparitorbsclass = " text-danger";
-        }
-        $comparitorclass .= $comparitorbsclass;
-        $riskfromlastweekth = html_writer::div(get_string('fromlastweek', 'local_xray', $data->riskfromlastweek), $comparitorclass);
-
-        $usersprofile = ""; // Six firsts users.
-        $usersprofilehidden = ""; // Rest of users will be hidden.
-        $countusers = 1;
-        if (!empty($data->usersinrisk)) {
-            foreach ($data->usersinrisk as $key => $id) {
-                if ($countusers > 6) {
-                    $usersprofilehidden .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
-                } else {
-                    $usersprofile .= $this->print_student_profile($DB->get_record('user', array("id" => $id)));
-                }
-                $countusers++;
-            }
+        elseif ($valuenow > $valuepreviousweek) {
+            // Increment.
+            $style_status = "xray-headline-green";
         }
 
-        $usersprofilebox = html_writer::div($usersprofile);
-        $usersprofileboxhidden = html_writer::div($usersprofilehidden, 'xray_dashboard_users_risk_hidden');
+        return $style_status;
+    }
+    /**
+     * Calculate colour and arrow for headline (compare current value and value in the previous week).
+     * This case is only for RISK column.
+     *
+     * Same value = return class for yellow colour.
+     * Decrement value = return class for green colour.
+     * Increment value = return class for red colour.
+     *
+     * @param $valuenow
+     * @param $valuepreviousweek
+     * @return string
+     */
+    private function headline_status_risk($valuenow, $valuepreviousweek) {
 
-        $showall = '';
-        if (count($data->usersinrisk) > 6) {
-            $showall = html_writer::div('Show all', 'btn btn-default btn-sm xray_dashboard_seeall');
+        // Default, same value.
+        $style_status = "xray-headline-yellow";
+
+        if($valuenow > $valuepreviousweek) {
+            // Decrement.
+            $style_status = "xray-headline-red-caserisk";
+        }
+        elseif ($valuenow < $valuepreviousweek) {
+            // Increment.
+            $style_status = "xray-headline-green-caserisk";
         }
 
-        $riskcolumn = html_writer::div($xraydashboardjquery . $studentsrisk . $studentatrisktext .
-            $riskfromlastweekth . $usersprofilebox . $usersprofileboxhidden .
-            $showall, 'xray-risk col-sm-6 span6');
-
-        // Students Visitors.
-        $studentsvisitors = html_writer::div(html_writer::tag("span",
-                $data->studentsvisitslastsevendays,
-                array("class" => "xray-headline-number h1"))."{$of} {$data->studentsenrolled}",
-            "xray-headline");
-
-        $studentvisitslastdaystext = html_writer::div(get_string('studentvisitslastdays', 'local_xray'),
-            'xray-headline-description');
-        // Bootstrap classes for positive/negative data.
-        $comparitorclass = "xray-comparitor";
-        $comparitorbsclass = " text-muted";
-        if ($data->visitorsfromlastweek < 0) {
-            $comparitorbsclass = " text-danger";
-        }
-        if ($data->visitorsfromlastweek > 0) {
-            $comparitorbsclass = " text-success";
-        }
-        $comparitorclass .= $comparitorbsclass;
-
-        $visitorsfromlastweektr = html_writer::div(get_string('fromlastweek', 'local_xray', $data->visitorsfromlastweek),
-            $comparitorclass);
-
-        // Students visits by Week Day.
-        $studentsvisitsperday = "";
-        if ($data->studentsvisitslastsevendays) {
-            $studentsvisitsperday = html_writer::start_div("xray-student-visits-lastsevendays");
-            foreach ($data->studentsvisitsbyweekday as $key => $value) {
-                $visitsperday = $value->number_of_visits->value;
-                $percent = ceil(($visitsperday / $data->studentsvisitslastsevendays) * 100);
-                $day = substr($value->day_of_week->value, 0, 3);
-                $studentsvisitsperday .= html_writer::start_div("xray-visits-unit");
-                $studentsvisitsperday .= html_writer::div($day, array("class" => "xray-visits-per-day"));
-                $studentsvisitsperday .= html_writer::div($visitsperday,
-                    array("class" => "xray-visits-per-day-line", "style" => "height:{$percent}%"));
-
-                $studentsvisitsperday .= html_writer::end_div();
-            }
-            $studentsvisitsperday .= html_writer::end_div();
-        }
-        $visitorscolumn = html_writer::div($studentsvisitors . $studentvisitslastdaystext . $visitorsfromlastweektr .
-            $studentsvisitsperday, 'xray-visitors col-sm-6 span6');
-
-        return html_writer::div($riskcolumn . $visitorscolumn, 'row row-fluid container-fluid');
+        return $style_status;
     }
 
     /**
@@ -563,6 +591,8 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function print_course_menu($reportcontroller, $reports) {
+
+        global $PAGE, $COURSE, $OUTPUT;
         $displaymenu = get_config('local_xray', 'displaymenu');
         $menu = '';
         if ($displaymenu) {
@@ -571,11 +601,8 @@ class local_xray_renderer extends plugin_renderer_base {
                 foreach ($reports as $nodename => $reportsublist) {
                     foreach ($reportsublist as $reportstring => $url) {
                         $class = $reportstring;
-                        if (!empty($reportcontroller)) {
-                            $class .= " xray-reports-links-bk-image-small";
-                        } else {
-                            $class .= " xray-reports-links-bk-image-frontpage";
-                        }
+                        $class .= " xray-reports-links-image";
+
                         if ($reportstring == $reportcontroller) {
                             $class .= " xray-menu-item-active";
                         }
@@ -583,41 +610,33 @@ class local_xray_renderer extends plugin_renderer_base {
                     }
                 }
                 $title = '';
-                $class_nav = '';
                 if (empty($reportcontroller)) {
-                    $title = html_writer::tag('h4', get_string('pluginname', 'local_xray'));
-                    $class_nav = 'xray-logo-in-nav';
+                    $pluginname = get_string('pluginname', 'local_xray');
+                    $icon = $OUTPUT->pix_icon('xray-logo', $pluginname, 'local_xray', array("class" => "x-ray-icon-title"));
+                    $title = html_writer::tag('h4', $icon.$pluginname);
                 }
-                $amenu = html_writer::alist($menuitems, array('style' => 'list-style-type: none;',
-                    'class' => 'xray-reports-links'));
-                $navmenu = html_writer::tag("nav", $amenu, array("class" => $class_nav));
-                $menu = html_writer::div($title . $navmenu, 'clearfix', array('id' => 'js-xraymenu', 'role' => 'region'));
+                $amenu = html_writer::alist($menuitems, array('class' => 'xray-reports-links'));
+                $navmenu = html_writer::tag("nav", $amenu, array("id" => "xray-nav-reports"));
+
+                // Check if show headerline in course frontpage.
+                $headerdata = "";
+                if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
+
+                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id);
+                    if($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
+                        $headerdata .= $this->dashboard_xray_output($dashboarddata);
+                    } else {
+                        $headerdata .= html_writer::div(get_string('error_xray', 'local_xray'), 'xray-headline-errortoconnect');
+                    }
+                }
+
+                $menu = html_writer::div($title . $navmenu. $headerdata,
+                    'clearfix',
+                    array('id' => 'js-xraymenu', 'role' => 'region'));
+
             }
         }
 
         return $menu;
-    } // End print_course_header_menu.
-
-    /**
-     * Print course header data html
-     *
-     * @return string
-     */
-    public function print_course_header_data() {
-        $displayheaderdata = get_config('local_xray', 'displayheaderdata');
-
-        $headerdata = '';
-        if ($displayheaderdata) {
-            $headerdata = $this->snap_dashboard_xray();
-            if (!empty($headerdata)) {
-                $title = \html_writer::tag('h2', get_string('navigation_xray', 'local_xray') .
-                    get_string('analytics', 'local_xray'));
-                $subc = $title . $headerdata;
-                $headerdata = \html_writer::div($subc, '', ['id' => 'js-headerdata', 'class' => 'clearfix']);
-            }
-        }
-
-        return $headerdata;
-    } // End print_course_header_data.
-
+    }
 }

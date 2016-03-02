@@ -125,80 +125,115 @@
 
 /**************** Course Headline data  *********************************/
 
-
-/* In page headline data and links to reports */
-/* TODO - add a class for this title. */
-#headerdata > h2 {
-    background: transparent url([[pix:local_xray|xray-logo]]) 0 0 no-repeat;
-    background-size: contain;
-    padding-left: 2em;
-}
-
 .xray-headline {
-  padding: 1em 0 0.3em 0;
+    display: inline-block;
+    width:100%;
+    line-height: 1;
+    margin:0;
+    padding:0;
 }
-
+.xray-headline li {
+    display: block;
+    float:left;
+    width: 24%;
+    padding:0 0.5%;
+}
 .xray-headline-number {
-  font-size: 3em;
-  font-weight: bold;
-  padding: 2%;
+    font-size: 40px;
+    color:#AEAEAE !important;
+    margin-bottom: 5px;
+}
+a.xray-headline-link:hover {
+    text-decoration: none !important;
 }
 
-.xray-comparitor {
-    font-style: oblique;
-    font-size: smaller;
+.xray-headline-number:hover {
+    color:#6a6a6a !important;
 }
 
-.dashboard_xray_users_profile {
-    float: left;
-    width: 50%;
-    padding: 0.5em 0;
+.xray-headline-desc {
+    font-size: 14px;
+    color:#AEAEAE;
+    margin-bottom: 5px;
+}
+.xray-headline-textweekbefore {
+    font-size: 14px;
+}
+.xray-headline-desc b{
+    color:#6A6A6A;
 }
 
-.dashboard_xray_users_profile .userpicture {
-    border-radius: 100%;
+.xray-headline-link {
 }
 
-.xray-icon {
-    width: 2em;
-    height: auto;
-    margin-right: 0.3em;
+.xray-headline-red,
+.xray-headline-red-caserisk{
+    color:#F86B69 !important;
+}
+
+.xray-headline-green,
+.xray-headline-green-caserisk{
+    color:#75C445 !important;
+}
+
+.xray-headline-yellow {
+    color:#FBC400 !important;
+}
+
+.xray-headline-icon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 26px;
+    margin-left: 5px;
+    width: 26px;
+}
+
+.xray-headline-red-icon {
+    background-image: url([[pix:local_xray|arrow_red]]);
+}
+
+.xray-headline-green-icon {
+    background-image: url([[pix:local_xray|arrow_green]]);
+}
+
+.xray-headline-yellow-icon {
+    background-image: url([[pix:local_xray|arrow_yellow]]);
+}
+/* Risk work with inverse arrows */
+.xray-headline-red-caserisk-icon{
+    background-image: url([[pix:local_xray|arrow_red_risk]]);
+}
+.xray-headline-green-caserisk-icon{
+    background-image: url([[pix:local_xray|arrow_green_risk]]);
+}
+/* End Risk work with inverse arrows */
+
+.xray-headline-errortoconnect {
+    color:#F86B69 !important;
+    padding:5px;
+}
+
+/**************** End Course Headline data  *********************************/
+/**************** Navigation reports  *********************************/
+#js-xraymenu {
+    margin:8px 0;
+}
+
+#js-xraymenu h4 {
+    margin:10px 0;
+    font-size:30px;
+    text-align: left;
+    color: #aeaeae !important;
+}
+
+#js-xraymenu h4 img.x-ray-icon-title {
+    display: inline-block;
+    height: 30px;
+    margin-right: 5px;
 }
 
 .xray-menu-item-active {
     font-weight: bold;
-}
-
-/* this is a css graph, so use appropriate typography */
-.xray-student-visits-lastsevendays {
-    padding: 0.5em 0;
-    font-size: small;
-    font-family: Roboto, 'Fira Sans', 'Segoe UI', HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-.xray-visits-unit {
-   width: 14%;
-   float: left;
-   height: 150px;
-   position: relative;
-}
-
-.xray-visits-per-day {
-    position: absolute;
-    bottom: -1.5em;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-.xray-visits-per-day-line {
-    position: absolute;
-    bottom: 0;
-    width: 61.8%;
-    left: 19.1%;
-    text-align: center;
-    color: white;
-    background-color: #3aa2d8;
 }
 
 /* Links to xray pages */
@@ -208,39 +243,32 @@
 }
 
 .xray-reports-links {
+    display: inline-block;
     margin: 0;
-    padding: 1em 0;
+    padding: 0;
+    width: 100%;
 }
 
 .xray-reports-links li {
-    display: inline-block;
+    display: block;
+    float:left;
     width: 24%;
-    padding: 0;
+    padding: 0 0.5%;
     margin: 0;
 }
 
 .xray-reports-links li a {
     display: block;
-    text-align: center;
-    background-size: 61.8% 61.8% !important;
+    text-align: left;
     background-color: transparent;
     background-repeat: no-repeat;
     background-image: url([[pix:local_xray|xray-discussions]]);
 }
 
-.xray-reports-links-bk-image-small {
-    background-position: 50% 100%;
-    height: 70px;
-}
-
-.xray-reports-links li a.xray-reports-links-bk-image-frontpage {
+.xray-reports-links li a.xray-reports-links-image {
     background-size: 44px 44px !important;
-}
-
-.xray-reports-links-bk-image-frontpage {
-    background-position: center 0;
-    height: 70px;
-    padding-top: 44px;
+    font-size: 14px;
+    padding: 12px 0 18px 50px;
 }
 
 .xray-reports-links .risk {
@@ -260,18 +288,7 @@
 .xray_dashboard_users_risk_hidden {
     display: none;
 }
-
-.xray-logo-in-nav {
-    padding-left:150px;
-    background-color: transparent;
-    background-position: 30px 0;
-    background-repeat: no-repeat;
-    background-image: url([[pix:local_xray|xray-logo2]]);
-    border-bottom: 1px solid #3bcedb;
-    background-size: 100px auto;
-    height: 110px;
-}
-/**************** End Styles for Course Headline data ******************/
+/**************** End Navigation reports  *********************************/
 
 
 

@@ -59,6 +59,13 @@ class local_xray_controller_reports extends mr_controller {
      * @var bool
      */
     protected $ajax = false;
+
+    /**
+     * Is it Accesed from headline?
+     * @var bool
+     */
+    protected $header = 0;
+
     /**
      * @var null|core_renderer_ajax
      */
@@ -76,6 +83,7 @@ class local_xray_controller_reports extends mr_controller {
         global $CFG, $PAGE, $COURSE;
 
         $courseid = optional_param('courseid', SITEID, PARAM_INT);
+        $this->header = optional_param('header', 0, PARAM_INT);
         require_login($courseid, false);
 
         // We want to send relative URL to $PAGE so $PAGE can set it to https or not.
@@ -343,9 +351,9 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'fail':
                         // Column Academic risk.
-                    case 'DW';
+                    case 'DW':
                         // Column Social risk.
-                    case 'DWF';
+                    case 'DWF':
                         // Column Total risk.
                         // It should be numeric.
                         if (is_numeric(trim($value))) {
@@ -373,9 +381,18 @@ class local_xray_controller_reports extends mr_controller {
                         return $value;
                         break;
                 }
-            case 'studentList';
+            case 'studentList':
                 // Table Student Activity from Activity Report.
                 switch ($column) {
+                    case 'discussion_posts':
+                        // Column Total discussion posts.
+                        // Add '-' for strange values.
+                        if (is_numeric(trim($value))) {
+                            return $value;
+                        } else {
+                            return '-';
+                        }
+                        break;
                     case 'timeOnTask':
                         // Column Time spent in course (hours).
                         return $this->show_time_hours_minutes($value);
@@ -406,10 +423,21 @@ class local_xray_controller_reports extends mr_controller {
                         return $value;
                         break;
                 }
-            case 'discussionMetrics';
+            case 'discussionMetrics':
                 // Table Participation Metrics from Discussion Report.
                 // Table Participation Metrics from Discussion Report Individual.
                 switch ($column) {
+                    case 'posts':
+                        // Column Total discussion posts.
+                    case 'discussion_posts_last_week':
+                        // Column Posts last week.
+                        // Add '-' for strange values
+                        if (is_numeric(trim($value))) {
+                            return $value;
+                        } else {
+                            return '-';
+                        }
+                        break;
                     case 'contrib':
                         // Column Average original contribution.
                     case 'ctc':
@@ -434,7 +462,7 @@ class local_xray_controller_reports extends mr_controller {
                             return '-';
                         }
                         break;
-                    case 'regularityContrib';
+                    case 'regularityContrib':
                         // Column Regularity of original contribution.
                     case 'regularityCTC':
                         // Column Regularity of critical thought.
@@ -462,9 +490,13 @@ class local_xray_controller_reports extends mr_controller {
                         return $value;
                         break;
                 }
-            case 'studentDiscussionGrades';
+            case 'studentDiscussionGrades':
                 // Table Student Grades Based on Discussions from Discussion Report.
                 switch ($column) {
+                    case 'letterGrade':
+                        // Column Grade recommendation.
+                    case 'posts':
+                        // Column Total posts.
                     case 'wc':
                         // Column Word count (rel.).
                         // It should be numeric.
@@ -497,7 +529,7 @@ class local_xray_controller_reports extends mr_controller {
                             return '-';
                         }
                         break;
-                    case 'regularityContrib';
+                    case 'regularityContrib':
                         // Column Regularity of contributions.
                         // It should be numeric.
                         if (is_numeric(trim($value))) {
@@ -526,6 +558,16 @@ class local_xray_controller_reports extends mr_controller {
             case 'element2':
                 // Table Student Grades from Gradebook Report.
                 switch ($column) {
+                    // Column Quiz scores (Points).
+                    case 'finalGrade':
+                        // It should be numeric.
+                        if (is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            return $roundvalue;
+                        } else {
+                            return '-';
+                        }
+                        break;
                     case 'standarScore':
                         // Column Quiz scores (%) (ex Standardized score).
                         // It should be numeric.
@@ -542,6 +584,10 @@ class local_xray_controller_reports extends mr_controller {
             case 'element4':
                 // Table Summary of Quizzes from Gradebook Report.
                 switch ($column) {
+                    case 'grade':
+                        // Column Possible Points.
+                    case 'nStudents':
+                        // Column Number of students.
                     case 'earnScore':
                         // Column Average score (Points) - (ex Average score).
                         // It should be numeric.

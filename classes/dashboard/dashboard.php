@@ -43,75 +43,78 @@ class dashboard {
             $response = \local_xray\local\api\wsapi::course($courseid, $report);
 
             if (!$response) {
+
                 // Fail response of webservice.
                 \local_xray\local\api\xrayws::instance()->print_error();
 
             } else {
 
-                // Get users in risk.
-                $usersinrisk = array();
-
-                if (isset($response->elements->element3->data) && !empty($response->elements->element3->data)) {
-                    foreach ($response->elements->element3->data as $key => $obj) {
-                        if ($obj->severity->value == "high") {
-                            $usersinrisk[] = $obj->participantId->value;
-                        }
-                    }
-                }
                 // Default value. This is because webservice when is 0 return "NA" string or not return value.(depend case).
-                $countstudentsrisk = 0;
-                $countstudentsenrolled = 0;
-                $countstudentsvisitslastsevendays = 0;
-                $countstudentsriskprev = 0;
-                $countstudentsvisitsprev = 0;
+                $usersinrisklastsevendays = "-";
+                $usersinrisklastsevendays_previousweek= "-";
+                $studentsloggedlastsevendays= "-";
+                $studentsloggedlastsevendays_previousweek= "-";
+                $postslastsevendays= "-";
+                $postslastsevendays_previousweek= "-";
+                $averagegradeslastsevendays= "-";
+                $averagegradeslastsevendays_previousweek= "-";
+                $totalstudents = "-";
 
-                // Student ins risk.
+                // Get users in risk last 7 days.
                 if(isset($response->elements->element6->items[5]->value) && is_number($response->elements->element6->items[5]->value)) {
-                    $countstudentsrisk = $response->elements->element6->items[5]->value;
-                }
-
-                // Students enrolled.
-                if(isset($response->elements->element6->items[2]->value) && is_number($response->elements->element6->items[2]->value)) {
-                    $countstudentsenrolled = $response->elements->element6->items[2]->value;
-                }
-
-                // Visits last 7 days.
-                if(isset($response->elements->element6->items[0]->value) && is_number($response->elements->element6->items[0]->value)) {
-                    $countstudentsvisitslastsevendays = $response->elements->element6->items[0]->value;
+                    $usersinrisklastsevendays = $response->elements->element6->items[5]->value;
                 }
 
                 // Risk previous 7 days.
                 if(isset($response->elements->element6->items[6]->value) && is_number($response->elements->element6->items[6]->value)) {
-                    $countstudentsriskprev = $response->elements->element6->items[6]->value;
+                    $usersinrisklastsevendays_previousweek = $response->elements->element6->items[6]->value;
+                }
+
+                // Posts last 7 days.
+                if(isset($response->elements->element6->items[7]->value) && is_number($response->elements->element6->items[7]->value)) {
+                    $postslastsevendays = $response->elements->element6->items[7]->value;
+                }
+
+                // Posts previous 7 days.
+                if(isset($response->elements->element6->items[8]->value) && is_number($response->elements->element6->items[8]->value)) {
+                    $postslastsevendays_previousweek = $response->elements->element6->items[8]->value;
+                }
+
+                // Visits last 7 days.
+                if(isset($response->elements->element6->items[0]->value) && is_number($response->elements->element6->items[0]->value)) {
+                    $studentsloggedlastsevendays = $response->elements->element6->items[0]->value;
                 }
 
                 // Visits previous 7 days.
                 if(isset($response->elements->element6->items[1]->value) && is_number($response->elements->element6->items[1]->value)) {
-                    $countstudentsvisitsprev = $response->elements->element6->items[1]->value;
+                    $studentsloggedlastsevendays_previousweek = $response->elements->element6->items[1]->value;
                 }
 
-                // Calculate percentajes from last weeks.
-                $precentajevalueperstudent = 0;
-                if(!empty($countstudentsenrolled)) {
-                    $precentajevalueperstudent = 100 / $countstudentsenrolled;
+                // Average grades last 7 days.
+                if(isset($response->elements->element6->items[9]->value) && is_number($response->elements->element6->items[9]->value)) {
+                    $averagegradeslastsevendays = $response->elements->element6->items[9]->value;
                 }
 
+                // Average grades previous 7 days.
+                if(isset($response->elements->element6->items[10]->value) && is_number($response->elements->element6->items[10]->value)) {
+                    $averagegradeslastsevendays_previousweek = $response->elements->element6->items[10]->value;
+                }
 
-                // Diff risk.
-                $percentajestudentsriskprev = $precentajevalueperstudent * $countstudentsriskprev;
-                $percentajestudentsrisk = $precentajevalueperstudent * $countstudentsrisk;
-                $diffrisk = round($percentajestudentsrisk - $percentajestudentsriskprev);
+                // Total of students enrolled actives.
+                if(isset($response->elements->element6->items[2]->value) && is_number($response->elements->element6->items[2]->value)) {
+                    $totalstudents = $response->elements->element6->items[2]->value;
+                }
 
-                // Diff visits.
-                $percentajestudentsvisitsprev = $precentajevalueperstudent * $countstudentsvisitsprev;
-                $percentajestudentsvisitslastsevendays = $precentajevalueperstudent * $countstudentsvisitslastsevendays;
-                $diffvisits = round($percentajestudentsvisitslastsevendays - $percentajestudentsvisitsprev);
-
-                // Students visits by week day.
-                $studentsvisitsbyweekday = $response->elements->activity_level->data;
-
-                $result = new dashboard_data($usersinrisk, $countstudentsenrolled, $countstudentsrisk,
-                    $countstudentsvisitslastsevendays, $diffrisk, $diffvisits, $studentsvisitsbyweekday);
+                // Return dashboard_data object.
+                $result = new dashboard_data($usersinrisklastsevendays,
+                    $usersinrisklastsevendays_previousweek,
+                    $studentsloggedlastsevendays,
+                    $studentsloggedlastsevendays_previousweek,
+                    $postslastsevendays,
+                    $postslastsevendays_previousweek,
+                    $averagegradeslastsevendays,
+                    $averagegradeslastsevendays_previousweek,
+                    $totalstudents);
 
             }
         } catch (\moodle_exception $e) {

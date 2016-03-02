@@ -26,66 +26,93 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class dashboard_data {
+
     /**
-     * Users in risk
-     * @var array
-     */
-    public $usersinrisk;
-    /**
-     * Student enrolled
+     * Users in risk last seven days.
      * @var integer
      */
-    public $studentsenrolled;
+    public $usersinrisklastsevendays;
 
     /**
-     * Students in risk
+     * Users in risk previous week.
      * @var integer
      */
-    public $studentsrisk;
+    public $usersinrisklastsevendays_previousweek;
 
     /**
-     * Students visit last 7 days.
+     * Students logged last 7 days.
      * @var integer
      */
-    public $studentsvisitslastsevendays;
+    public $studentsloggedlastsevendays;
 
     /**
-     * Risk from last week
-     * @var float
+     * Students logged previous week.
+     * @var integer
      */
-    public $riskfromlastweek;
+    public $studentsloggedlastsevendays_previousweek;
 
     /**
-     * Visitors from last week
-     * @var float
+     * Posts last seven days.
+     * @var integer
      */
-    public $visitorsfromlastweek;
+    public $postslastsevendays;
 
     /**
-     * Students visits by weekday
-     * @var array
+     * Posts last previous week.
+     * @var integer
      */
-    public $studentsvisitsbyweekday;
+    public $postslastsevendays_previousweek;
+
+    /**
+     * Displays student average grade last 7 days.
+     * @var integer
+     */
+    public $averagegradeslastsevendays;
+
+    /**
+     * Displays student average grade previous week.
+     * @var integer
+     */
+    public $averagegradeslastsevendays_previousweek;
+
+    /**
+     * Displays total of students.
+     * @var integer
+     */
+    public $totalstudents;
 
     /**
      * Construct
-     * @param array $usersinrisk
-     * @param integer $studentsenrolled
-     * @param integer $studentsrisk
-     * @param integer $studentsvisitslastsevendays
-     * @param float $riskfromlastweek
-     * @param float $visitorsfromlastweek
-     * @param array $studentsvisitsbyweekday
+     * @param integer $usersinrisklastsevendays
+     * @param integer $usersinrisklastsevendays_previousweek
+     * @param integer $studentsloggedlastsevendays
+     * @param integer $studentsloggedlastsevendays_previousweek
+     * @param integer $postslastsevendays
+     * @param integer $postslastsevendays_previousweek
+     * @param integer $averagegradeslastsevendays
+     * @param integer $averagegradeslastsevendays_previousweek
+     * @param integer $totalstudents
      */
-    public function __construct($usersinrisk, $studentsenrolled, $studentsrisk, $studentsvisitslastsevendays,
-                                $riskfromlastweek, $visitorsfromlastweek, $studentsvisitsbyweekday) {
+    public function __construct($usersinrisklastsevendays,
+                                $usersinrisklastsevendays_previousweek,
+                                $studentsloggedlastsevendays,
+                                $studentsloggedlastsevendays_previousweek,
+                                $postslastsevendays,
+                                $postslastsevendays_previousweek,
+                                $averagegradeslastsevendays,
+                                $averagegradeslastsevendays_previousweek,
+                                $totalstudents) {
 
-        $this->usersinrisk = $usersinrisk;
-        $this->studentsenrolled = $studentsenrolled;
-        $this->studentsrisk = $studentsrisk;
-        $this->studentsvisitslastsevendays = $studentsvisitslastsevendays;
-        $this->riskfromlastweek = $riskfromlastweek;
-        $this->visitorsfromlastweek = $visitorsfromlastweek;
-        $this->studentsvisitsbyweekday = $studentsvisitsbyweekday;
+
+        $this->usersinrisklastsevendays = $usersinrisklastsevendays;
+        $this->usersinrisklastsevendays_previousweek = $usersinrisklastsevendays_previousweek;
+        $this->studentsloggedlastsevendays = $studentsloggedlastsevendays;
+        $this->studentsloggedlastsevendays_previousweek = $studentsloggedlastsevendays_previousweek;
+        $this->postslastsevendays = $postslastsevendays;
+        $this->postslastsevendays_previousweek = $postslastsevendays_previousweek;
+        $this->averagegradeslastsevendays = $averagegradeslastsevendays;
+        $this->averagegradeslastsevendays_previousweek = $averagegradeslastsevendays_previousweek;
+        $this->totalstudents = $totalstudents;
+
     }
 }

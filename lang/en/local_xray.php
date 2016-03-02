@@ -187,10 +187,14 @@ $string['getreportfailed'] = 'Error to get report from X-Ray Learning Analytics'
 $string['atrisk'] = 'At risk';
 $string['dashboard'] = 'Dashboard';
 $string['fromlastweek'] = '{$a}% change from last week';
+$string['lastweekwas'] = 'Week before was';
 $string['of'] = ' of ';
-$string['studentatrisk'] = 'students at risk';
-$string['studentvisitslastdays'] = 'student visits in the last 7 days';
-$string['visitors'] = 'Visitors';
+$string['headline_studentatrisk'] = 'Students at <b>Risk</b> in the last 7 days';
+$string['headline_loggedstudents'] = '<b>Logged in</b> students in the last 7 days';
+$string['headline_posts'] = '<b>Posts</b> in the last 7 days';
+$string['headline_average'] = '<b>Average Grade</b> in quizzes in the last 7 days';
+$string['link_gotoreport'] = 'Go to report';
+
 
 /* Jquery Tables (with plugin datatables) */
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. '.
@@ -432,42 +436,46 @@ $string['cutoff_desc'] = 'Define cut-off values for the ranges. These ranges wil
 /* low - medium - high */
 $string['risk1_name'] = 'Cut-off point between low and medium ranges for Risk Report';
 $string['risk1_desc'] = 'Define the cut-off point between low and medium ranges. For example, '.
-    'if the cut off point is 0.2, anything 0.2 and higher is in the medium risk range and anything lower is in the low risk range. '.
-    'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Measures table in the Risk Report.';
+    'if the cut off point is 40, anything 40 and higher is in the medium risk range and anything lower is in the low risk range. '.
+    'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Metrics table in the Risk Report.';
 $string['risk2_name'] = 'Cut-off point between medium and high ranges for Risk Report';
 $string['risk2_desc'] = 'Define cut-off point between medium and high ranges. For example, '.
-    'if the cut off point is 0.3, anything 0.3 and higher is in the high risk range and anything lower is in the medium risk range. '.
-    'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Measures table in the Risk Report.';
+    'if the cut off point is 70, anything 70 and higher is in the high risk range and anything lower is in the medium risk range. '.
+    'This setting affects the Academic Risk, Social Risk and Total Risk columns in the Risk Metrics table in the Risk Report.';
 /* Activity Report */
 /* highly regular - regular - irregular */
 $string['visitreg1_name'] = 'Cut-off point between "highly regular" and "regular" ranges for Activity Report';
 $string['visitreg1_desc'] = 'Define cut-off value between "highly regular" and "regular" ranges. For example, '.
     'if the cut off value is 1, anything 1 and higher is regular and anything lower is highly regular. '.
-    'This setting affects the Visit regularity (weekly) column in the Student Activity table in the Activity Report.';
+    'This setting affects the Visit regularity (weekly) column in the Activity Metrics table in the Activity Report.';
 $string['visitreg2_name'] = 'Cut-off point between "regular" and "irregular" ranges for Activity Report';
 $string['visitreg2_desc'] = 'Define cut-off value between "regular" and "irregular" ranges. For example, '.
     'if the cut off value is 2, anything 2 and higher is irregular and anything lower is regular. '.
-    'This setting affects the Visit regularity (weekly) column in the Student Activity table in the Activity Report.';
+    'This setting affects the Visit regularity (weekly) column in the Activity Metrics table in the Activity Report.';
 /* Discussion Report */
 /* highly regular - regular - irregular */
 $string['partreg1_name'] = 'Cut-off point between "highly regular" and "regular" ranges for Discussion Report';
 $string['partreg1_desc'] = 'Define cut-off value between "highly regular" and "regular" ranges. For example, '.
     'if the cut off value is 2, anything 2 and higher is regular and anything lower is highly regular. '.
-    'This setting affects the Regularity of contributions and Regularity of CTC columns in the Participation Metrics table and '.
-    'the Regularity of contributions column in the Student Grades Based on Discussions table in the Discussion Report.';
+    'This setting affects the Regularity of original contribution and Regularity of critical thought columns in the Participation Metrics table and '.
+    'the Regularity of original contribution column in the Grade Recommendation table in the Discussion Report.';
 $string['partreg2_name'] = 'Cut-off point between "regular" and "irregular" ranges for Discussion Report';
 $string['partreg2_desc'] = 'Define cut-off value between "regular" and "highly regular" ranges. For example, '.
     'if the cut off value is 4, anything 4 and higher is irregular and anything lower is regular. '.
-    'This setting affects the Regularity of contributions and Regularity of CTC columns in the Participation Metrics table and '.
-    'the Regularity of contributions column from the Student Grades Based on Discussions table in the Discussion Report.';
+    'This setting affects the Regularity of original contribution and Regularity of critical thought columns in the Participation Metrics table and '.
+    'the Regularity of original contribution column from the Grade Recommendation table in the Discussion Report.';
 /* low - medium - high */
 $string['partc1_name'] = 'Cut-off point between "low" and "medium" ranges for Discussion Report';
 $string['partc1_desc'] = 'Define cut-off point between "low" and "medium" ranges. For example, '.
     'if the cut off point is 33, anything 33 and higher is in the medium risk range and anything lower is in the low risk range. '.
-    'This setting affects the Contribution and CTC columns in the Participation Metrics table and the CTC column '.
-    'in the Student Grades Based on Discussions table in the Discussion Report.';
+    'This setting affects the Average original contribution and Average critical thought columns in the Participation Metrics table and the Average critical thought column '.
+    'in the Grade Recommendation table in the Discussion Report.';
 $string['partc2_name'] = 'Cut-off point between "medium" and "high" ranges for Discussion Report';
 $string['partc2_desc'] = 'Define cut-off point between "medium" and "high" ranges. For example, '.
     'if the cut off point is 66, anything 66 and higher is in the high risk range and anything lower is in the medium risk range. '.
-    'This setting affects the Contribution and CTC columns in the Participation Metrics table and the CTC column '.
-    'in the Student Grades Based on Discussions table in the Discussion Report.';
+    'This setting affects the Average original contribution and Average critical thought columns in the Participation Metrics table and the Average critical thought column '.
+    'in the Grade Recommendation table in the Discussion Report.';
+
+/* Behat test */
+$string['error_behat_getjson'] = 'Error to get json file "{$a}" from folder local/xray/tests/fixtures for simulate call to X-Ray Learning Analytics webservice when you are running behat test.';
+$string['error_behat_instancefail'] = 'This is an instance configured for fail with behat tests.';

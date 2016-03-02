@@ -1,0 +1,198 @@
+{
+  "itemCount": 10,
+  "url": "/demo/c3075401-bb3f-48ce-a605-62fcb1ee4172",
+  "colorCodesSpecs": [],
+  "columnHeaders": {
+    "standarScore": "Quiz scores (%)",
+    "finalGrade": "Quiz scores (Points)",
+    "firstname": "Given name",
+    "lastname": "Surname"
+  },
+  "enableGraph": true,
+  "elementType": "xrayTable",
+  "elementName": "element2",
+  "data": [
+    {
+      "participantId": {
+        "value": 256
+      },
+      "standarScore": {
+        "value": "87.0454545454545"
+      },
+      "finalGrade": {
+        "value": "383"
+      },
+      "firstname": {
+        "value": "Shawn"
+      },
+      "lastname": {
+        "value": "Payne"
+      }
+    },
+    {
+      "participantId": {
+        "value": 276
+      },
+      "standarScore": {
+        "value": "64.0909090909091"
+      },
+      "finalGrade": {
+        "value": "282"
+      },
+      "firstname": {
+        "value": "Bryan"
+      },
+      "lastname": {
+        "value": "Duncan"
+      }
+    },
+    {
+      "participantId": {
+        "value": 304
+      },
+      "standarScore": {
+        "value": "68.4090909090909"
+      },
+      "finalGrade": {
+        "value": "301"
+      },
+      "firstname": {
+        "value": "Marvin"
+      },
+      "lastname": {
+        "value": "Guzman"
+      }
+    },
+    {
+      "participantId": {
+        "value": 470
+      },
+      "standarScore": {
+        "value": "53.4090909090909"
+      },
+      "finalGrade": {
+        "value": "235"
+      },
+      "firstname": {
+        "value": "Charlie"
+      },
+      "lastname": {
+        "value": "Stevenson"
+      }
+    },
+    {
+      "participantId": {
+        "value": 687
+      },
+      "standarScore": {
+        "value": "-"
+      },
+      "finalGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Anna"
+      },
+      "lastname": {
+        "value": "Bailey"
+      }
+    },
+    {
+      "participantId": {
+        "value": 688
+      },
+      "standarScore": {
+        "value": "-"
+      },
+      "finalGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Jonathan"
+      },
+      "lastname": {
+        "value": "Kim"
+      }
+    },
+    {
+      "participantId": {
+        "value": 689
+      },
+      "standarScore": {
+        "value": "3.40909090909091"
+      },
+      "finalGrade": {
+        "value": "15"
+      },
+      "firstname": {
+        "value": "Theresa"
+      },
+      "lastname": {
+        "value": "Snyder"
+      }
+    },
+    {
+      "participantId": {
+        "value": 690
+      },
+      "standarScore": {
+        "value": "73.8636363636364"
+      },
+      "finalGrade": {
+        "value": "325"
+      },
+      "firstname": {
+        "value": "Debbie"
+      },
+      "lastname": {
+        "value": "Pearson"
+      }
+    },
+    {
+      "participantId": {
+        "value": 692
+      },
+      "standarScore": {
+        "value": "51.5909090909091"
+      },
+      "finalGrade": {
+        "value": "227"
+      },
+      "firstname": {
+        "value": "Beth"
+      },
+      "lastname": {
+        "value": "Singh"
+      }
+    },
+    {
+      "participantId": {
+        "value": 693
+      },
+      "standarScore": {
+        "value": "71.3636363636364"
+      },
+      "finalGrade": {
+        "value": "314"
+      },
+      "firstname": {
+        "value": "Jeanne"
+      },
+      "lastname": {
+        "value": "Figueroa"
+      }
+    }
+  ],
+  "uuid": "c3075401-bb3f-48ce-a605-62fcb1ee4172",
+  "title": "Student Grades",
+  "legend": "Standardized scores range between 0 and 100%.",
+  "comment": [],
+  "inverted": false,
+  "dataFormat": [],
+  "columnOrder": [
+    "lastname",
+    "firstname",
+    "finalGrade",
+    "standarScore"
+  ]
+}

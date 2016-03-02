@@ -274,6 +274,11 @@ class xrayws {
     }
 
     /**
+     * Request to webservice.
+     *
+     * If you are running behat test, this simulate call to webservice, loading response from local json file.
+     * This search file generated with script "xray_fetch.sh" in folder local/xray/test/fixtures.
+     *
      * @param string $url
      * @param string $method
      * @param array $custheaders
@@ -290,6 +295,49 @@ class xrayws {
         if (empty($method)) {
             throw new norequestmethod_exception();
         }
+
+        /*
+         * Running behat test.
+         */
+        if(PHPUNIT_TEST || defined('BEHAT_SITE_RUNNING')) {
+
+            $result = ""; // Return json from file or empty.
+            $parse = parse_url($url);
+            $params = explode("/", $parse["path"]);
+
+            if(isset($params[1]) && $params[1] == "error") {
+                // With this name of instance, we simulate a error in connection to xray.
+                $this->errorno     = self::ERR_UNKNOWN;
+                $this->errorstring = 'error_generic';
+                $this->error       = get_string("error_behat_instancefail", "local_xray");
+
+            } else {
+
+                // Get filename of json to return.
+                $filename = $this->behat_getjsonfile($params);
+
+                // Get json file.
+                if(file_exists(__DIR__ . "/../../../tests/fixtures/$filename")) {
+                    $result = file_get_contents(__DIR__ . "/../../../tests/fixtures/$filename");
+
+                    // Call to user/login, set cookie required.
+                    if(isset($params[1]) && isset($params[2]) && $params[1] == "user" && $params[2]  == "login") {
+                        $this->setcookie("behat_test");
+                    }
+                }
+
+                if(empty($result)) {
+                    // Json file dont found. Set error for debug.
+                    $this->errorno     = self::ERR_UNKNOWN;
+                    $this->error       = get_string("error_behat_getjson", "local_xray", $filename);
+                    $this->errorstring = 'error_generic';
+                }
+            }
+            // Set rawresponse , this will be used in generic_call.
+            $this->rawresponse = $result;
+            return $result;
+        }
+
         $ctype = 'application/json; charset=UTF-8';
         $standardheader = array("Accept: {$ctype}", "Content-Type: {$ctype}");
         $headers = array_merge($standardheader, $custheaders);
@@ -346,6 +394,63 @@ class xrayws {
         }
 
         return $response;
+    }
+
+    /**
+     * Function used for behat tests.
+     * Get filename to return in call of webservice when behat is running.
+     *
+     * @param array $params
+     * @return string
+     */
+    private function behat_getjsonfile(array $params) {
+
+        $filename = "";
+
+        // Call to course reports / course element report / individual reports.
+        if(isset($params[2]) && $params[2] == "course" ) {
+
+            if(isset($params[4]) && $params[4] == "forum" &&
+                isset($params[6]) && $params[6] == "discussion"){
+                // Call to discussion individual forum.
+                $filename = "course-report-discussionreportindividualforum-final.json";
+            }
+
+            if(isset($params[5])) {
+
+                switch($params[5]) {
+                    case "elements":
+                        // Call to course elements reports.
+                        $filename = sprintf("course-element-%s-%s-final.json", $params[4], $params[6]);
+                        break;
+                    case "activity":
+                        // Call to activity report individual report.
+                        $filename = "course-report-activityreportindividual-final.json";
+                        break;
+                    case "discussion":
+                        // Call to discussion report individual report.
+                        $filename = "course-report-discussionreportindividual-final.json";
+                        break;
+                }
+            }
+
+            if(isset($params[4]) && !isset($params[5])) {
+                // Call to complete course report.
+                $filename = sprintf("course-report-%s-final.json", $params[4]);
+            }
+        }
+
+        // Call to accessibledata.
+        if(isset($params[2]) && isset($params[5]) && $params[2] == "data" && $params[5] == "accessible") {
+            $filename = sprintf("data-accessible-%s-final.json", $params[4]);
+        }
+
+        // Call to user/login or user/accesstoken
+        if(isset($params[1]) && isset($params[2]) && $params[1] == "user" && ($params[2] == "accesstoken" || $params[2] == "login")) {
+            $filename = sprintf('%s-%s-final.json', $params[1], $params[2]);
+        }
+
+        return $filename;
     }
 
     /**

@@ -184,10 +184,13 @@ $string['synclogexplanation'] = 'Entrada de registro regular para sincronizar da
 $string['atrisk'] = 'En riesgo';
 $string['dashboard'] = 'Interfaz';
 $string['fromlastweek'] = '{$a}% de cambio desde la ultima semana';
+$string['lastweekwas'] = 'Semana anterior fueron';
 $string['of'] = ' de ';
-$string['studentatrisk'] = 'estudiantes en riesgo';
-$string['studentvisitslastdays'] = 'visitas de estudiantes en los últimos 7 dias';
-$string['visitors'] = 'Visitantes';
+$string['headline_studentatrisk'] = 'Estudiantes en <b>Riesgo</b> en los últimos 7 dias';
+$string['headline_loggedstudents'] = 'Estudiantes <b>Logueados</b> en los últimos 7 dias';
+$string['headline_posts'] = '<b>Posts</b> en los últimos 7 dias';
+$string['headline_average'] = '<b>Promedio de calificaciones</b> en quizzes en los últimos 7 dias';
+$string['link_gotoreport'] = 'Ir al reporte';
 
 // Jquery Tables (with plugin datatables).
 $string['error_datatables'] = 'Error al traer datos para esta tabla. Por favor intenta nuevamente recargando la '.
@@ -490,3 +493,7 @@ $string['partc2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto
                          'si el punto de corte es 66, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
                          'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
                          'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
+
+/* Behat test */
+$string['error_behat_getjson'] = 'Error al traer archivo "{$a}" de carpeta local/xray/tests/fixtures para simular llamada a X-Ray Learning Analytics webservice cuando se esta corriendo behat test.';
+$string['error_behat_instancefail'] = 'Esta es una instancia configurada para fallar al correr behat tests.';

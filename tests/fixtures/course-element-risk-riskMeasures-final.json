@@ -1,0 +1,904 @@
+{
+  "itemCount": 30,
+  "url": "/datapushdemo/b8d7af31-a5ff-4167-ae2b-9d98dcae2ab6",
+  "colorCodesSpecs": [],
+  "columnHeaders": {
+    "timeOnTask": "Hours spent in course",
+    "firstname": "Given Name",
+    "lastname": "Surname",
+    "fail": "Academic risk",
+    "DWF": "Total risk",
+    "DW": "Social risk"
+  },
+  "enableGraph": true,
+  "elementType": "xrayTable",
+  "elementName": "riskMeasures",
+  "data": [
+    {
+      "participantId": {
+        "value": 68553
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Barnett"
+      },
+      "firstname": {
+        "value": "Jason"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 74702
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 51.5
+      },
+      "fail": {
+        "value": 22.9
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Beard"
+      },
+      "firstname": {
+        "value": "Angela"
+      },
+      "timeOnTask": {
+        "value": 2.9833
+      }
+    },
+    {
+      "participantId": {
+        "value": 63
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Blackmon"
+      },
+      "firstname": {
+        "value": "James"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 68558
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 51.8
+      },
+      "fail": {
+        "value": 23.2
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Bodree"
+      },
+      "firstname": {
+        "value": "Jack"
+      },
+      "timeOnTask": {
+        "value": 2.9
+      }
+    },
+    {
+      "participantId": {
+        "value": 72665
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Butler"
+      },
+      "firstname": {
+        "value": "Bev"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 43
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Davis"
+      },
+      "firstname": {
+        "value": "Darnell"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 14079
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.6
+      },
+      "fail": {
+        "value": 26
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Fontenot"
+      },
+      "firstname": {
+        "value": "Autumn"
+      },
+      "timeOnTask": {
+        "value": 2.0167
+      }
+    },
+    {
+      "participantId": {
+        "value": 58122
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Frasier"
+      },
+      "firstname": {
+        "value": "Amber"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 73172
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 48
+      },
+      "fail": {
+        "value": 19.4
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Goodrich"
+      },
+      "firstname": {
+        "value": "Larissa"
+      },
+      "timeOnTask": {
+        "value": 4.1833
+      }
+    },
+    {
+      "participantId": {
+        "value": 68713
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Hadley"
+      },
+      "firstname": {
+        "value": "Jaynie"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 59603
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 42.1
+      },
+      "fail": {
+        "value": 13.5
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Havens"
+      },
+      "firstname": {
+        "value": "Calvin"
+      },
+      "timeOnTask": {
+        "value": 6.6333
+      }
+    },
+    {
+      "participantId": {
+        "value": 68413
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 41.3
+      },
+      "fail": {
+        "value": 12.7
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Hocker"
+      },
+      "firstname": {
+        "value": "Michelle"
+      },
+      "timeOnTask": {
+        "value": 6.9833
+      }
+    },
+    {
+      "participantId": {
+        "value": 75
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Johnson"
+      },
+      "firstname": {
+        "value": "Jill"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 68265
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 31.2
+      },
+      "fail": {
+        "value": 2.6
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Jones"
+      },
+      "firstname": {
+        "value": "William"
+      },
+      "timeOnTask": {
+        "value": 14.5833
+      }
+    },
+    {
+      "participantId": {
+        "value": 3773
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Larkin"
+      },
+      "firstname": {
+        "value": "Amy"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 1312
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 39.6
+      },
+      "fail": {
+        "value": 11.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Lawhorn"
+      },
+      "firstname": {
+        "value": "Jo Ann"
+      },
+      "timeOnTask": {
+        "value": 7.8333
+      }
+    },
+    {
+      "participantId": {
+        "value": 71
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 53.7
+      },
+      "fail": {
+        "value": 25.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Lepa"
+      },
+      "firstname": {
+        "value": "Jeffrey"
+      },
+      "timeOnTask": {
+        "value": 2.2833
+      }
+    },
+    {
+      "participantId": {
+        "value": 26
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 52.4
+      },
+      "fail": {
+        "value": 23.9
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Long"
+      },
+      "firstname": {
+        "value": "Betsy"
+      },
+      "timeOnTask": {
+        "value": 2.6833
+      }
+    },
+    {
+      "participantId": {
+        "value": 3781
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.6
+      },
+      "fail": {
+        "value": 26
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "McDoniell"
+      },
+      "firstname": {
+        "value": "Colleen"
+      },
+      "timeOnTask": {
+        "value": 2.0167
+      }
+    },
+    {
+      "participantId": {
+        "value": 73173
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 28.6
+      },
+      "fail": {
+        "value": 0
+      },
+      "DWF_code": {
+        "value": "yellow"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "McWilliams"
+      },
+      "firstname": {
+        "value": "Michael"
+      },
+      "timeOnTask": {
+        "value": 25.45
+      }
+    },
+    {
+      "participantId": {
+        "value": 3812
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 48.4
+      },
+      "fail": {
+        "value": 19.9
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Moorer"
+      },
+      "firstname": {
+        "value": "Pamela"
+      },
+      "timeOnTask": {
+        "value": 4.0333
+      }
+    },
+    {
+      "participantId": {
+        "value": 3798
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 48.5
+      },
+      "fail": {
+        "value": 20
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Nordberg"
+      },
+      "firstname": {
+        "value": "Kristi"
+      },
+      "timeOnTask": {
+        "value": 4
+      }
+    },
+    {
+      "participantId": {
+        "value": 68464
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "O'Meara"
+      },
+      "firstname": {
+        "value": "Kevin"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 42
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Owen"
+      },
+      "firstname": {
+        "value": "Daline"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 2585
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.7
+      },
+      "fail": {
+        "value": 26.1
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Pollard"
+      },
+      "firstname": {
+        "value": "Ardina"
+      },
+      "timeOnTask": {
+        "value": 2
+      }
+    },
+    {
+      "participantId": {
+        "value": 3787
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.6
+      },
+      "fail": {
+        "value": 26
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Richardson"
+      },
+      "firstname": {
+        "value": "Donna"
+      },
+      "timeOnTask": {
+        "value": 2.0167
+      }
+    },
+    {
+      "participantId": {
+        "value": 1456
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.6
+      },
+      "fail": {
+        "value": 26
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Seale"
+      },
+      "firstname": {
+        "value": "Shelia"
+      },
+      "timeOnTask": {
+        "value": 2.0167
+      }
+    },
+    {
+      "participantId": {
+        "value": 68649
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 51.9
+      },
+      "fail": {
+        "value": 23.3
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "Turpen"
+      },
+      "firstname": {
+        "value": "Kathryn"
+      },
+      "timeOnTask": {
+        "value": 2.8667
+      }
+    },
+    {
+      "participantId": {
+        "value": 102120
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 48.5
+      },
+      "fail": {
+        "value": 20
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "User"
+      },
+      "firstname": {
+        "value": "Student"
+      },
+      "timeOnTask": {
+        "value": 4
+      }
+    },
+    {
+      "participantId": {
+        "value": 58
+      },
+      "DW": {
+        "value": 28.6
+      },
+      "DWF": {
+        "value": 54.2
+      },
+      "fail": {
+        "value": 25.6
+      },
+      "DWF_code": {
+        "value": "red"
+      },
+      "courseId": {
+        "value": null
+      },
+      "lastname": {
+        "value": "VanArsdale"
+      },
+      "firstname": {
+        "value": "Francisca"
+      },
+      "timeOnTask": {
+        "value": 2.1333
+      }
+    }
+  ],
+  "uuid": "b8d7af31-a5ff-4167-ae2b-9d98dcae2ab6",
+  "title": "Risk Metrics",
+  "legend": "Risk measures range between 0 and 100%. Lower values indicate smaller \n                      risk of failure. Academic risk is based on time spent in the course, social \n                      risk is based on discussion activity, and total is a combination of the two.",
+  "comment": [],
+  "inverted": false,
+  "dataFormat": {
+    "timeOnTask": "timerangeminute"
+  },
+  "columnOrder": [
+    "lastname",
+    "firstname",
+    "timeOnTask",
+    "fail",
+    "DW",
+    "DWF"
+  ]
+}

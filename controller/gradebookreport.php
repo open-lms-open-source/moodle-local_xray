@@ -59,6 +59,11 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->element2,
                         "rest.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=".$this->courseid);
+                    // If the user comes from header.
+                    if ($this->header) {
+                        $datatable->default_field_sort = 4; // Sort by column "Average grades".
+                        $datatable->sort_order = "desc";
+                    }
                     $output .= $this->output->standard_table((array)$datatable);
                     // Graph.
                     $output .= $this->output->show_graph("densityofstandardizedscores",
