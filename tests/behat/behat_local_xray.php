@@ -125,7 +125,7 @@ class behat_local_xray extends behat_base {
         // Get enrol id for guest user.
         $enrolid = $DB->get_field('enrol', 'id', array('enrol' => 'guest', 'courseid' => $courseid));
         if (!$enrolid) {
-            throw new ExpectationException('The courseid '.$courseid.' has not guest entollment', $session);
+            throw new ExpectationException('The course with courseid '.$courseid.' has not guest enrollment', $session);
         }
         // Add status 0 for guest user.
         $record = new stdClass();
