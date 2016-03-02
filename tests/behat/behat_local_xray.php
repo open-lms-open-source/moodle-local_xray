@@ -116,10 +116,17 @@ class behat_local_xray extends behat_base {
      */
     public function i_allow_guest_access_for_xray_in_course($shortname) {
         global $DB;
+        $session = $this->getSession();
         // Get course id.
         $courseid = $DB->get_field('course', 'id', array('shortname' => $shortname));
+        if (!$courseid) {
+            throw new ExpectationException('The course with shortname '.$shortname.' does not exist', $session);
+        }
         // Get enrol id for guest user.
         $enrolid = $DB->get_field('enrol', 'id', array('enrol' => 'guest', 'courseid' => $courseid));
+        if (!$enrolid) {
+            throw new ExpectationException('The courseid '.$courseid.' has not guest entollment', $session);
+        }
         // Add status 0 for guest user.
         $record = new stdClass();
         $record->id = $enrolid;
