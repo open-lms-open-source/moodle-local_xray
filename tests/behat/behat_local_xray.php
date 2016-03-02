@@ -86,8 +86,8 @@ class behat_local_xray extends behat_base {
         require_once("$CFG->dirroot/blocks/express/model/design.php");
 
         // Create express paths.
-        mkdir('/var/jouledata/gabo/behat_moodledata/express/');
-        mkdir('/var/jouledata/gabo/behat_moodledata/express/tmp/');
+        mkdir("$CFG->behat_dataroot/express/");
+        mkdir("$CFG->behat_dataroot/express/tmp/");
 
         // Add design at site context.
         $context_course = context_course::instance(SITEID);
