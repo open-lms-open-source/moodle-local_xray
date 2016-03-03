@@ -298,7 +298,7 @@ $string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Each dot in this
     ' spent in your course in a given week compared to other weeks. Bigger dots indicate more activity.';
 $string['activityreport_firstloginPiechartAdjusted_help'] = 'The diagram shows you when students logged into your course'.
     ' and how many haven\'t yet. The first day of the course may not be the scheduled start date. It starts the day the'.
-    ' first participant accessed the course. This includes the teacher. The pattern seen here may be an indication of'.
+    ' first participant accessed the course. This includes the instructor. The pattern seen here may be an indication of'.
     ' future engagement.';
 
 /* Graphs Activity Individual report*/
