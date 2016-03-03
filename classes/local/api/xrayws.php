@@ -299,13 +299,13 @@ class xrayws {
         /*
          * Running behat test.
          */
-        if(PHPUNIT_TEST || defined('BEHAT_SITE_RUNNING')) {
+        if (PHPUNIT_TEST || defined('BEHAT_SITE_RUNNING')) {
 
             $result = ""; // Return json from file or empty.
             $parse = parse_url($url);
             $params = explode("/", $parse["path"]);
 
-            if(isset($params[1]) && $params[1] == "error") {
+            if (isset($params[1]) && $params[1] == "error") {
                 // With this name of instance, we simulate a error in connection to xray.
                 $this->errorno     = self::ERR_UNKNOWN;
                 $this->errorstring = 'error_generic';
@@ -317,16 +317,16 @@ class xrayws {
                 $filename = $this->behat_getjsonfile($params);
 
                 // Get json file.
-                if(file_exists(__DIR__ . "/../../../tests/fixtures/$filename")) {
+                if (file_exists(__DIR__ . "/../../../tests/fixtures/$filename")) {
                     $result = file_get_contents(__DIR__ . "/../../../tests/fixtures/$filename");
 
                     // Call to user/login, set cookie required.
-                    if(isset($params[1]) && isset($params[2]) && $params[1] == "user" && $params[2]  == "login") {
+                    if (isset($params[1]) && isset($params[2]) && $params[1] == "user" && $params[2]  == "login") {
                         $this->setcookie("behat_test");
                     }
                 }
 
-                if(empty($result)) {
+                if (empty($result)) {
                     // Json file dont found. Set error for debug.
                     $this->errorno     = self::ERR_UNKNOWN;
                     $this->error       = get_string("error_behat_getjson", "local_xray", $filename);
@@ -408,15 +408,15 @@ class xrayws {
         $filename = "";
 
         // Call to course reports / course element report / individual reports.
-        if(isset($params[2]) && $params[2] == "course" ) {
+        if (isset($params[2]) && $params[2] == "course" ) {
 
-            if(isset($params[4]) && $params[4] == "forum" &&
+            if (isset($params[4]) && $params[4] == "forum" &&
                 isset($params[6]) && $params[6] == "discussion"){
                 // Call to discussion individual forum.
                 $filename = "course-report-discussionreportindividualforum-final.json";
             }
 
-            if(isset($params[5])) {
+            if (isset($params[5])) {
 
                 switch($params[5]) {
                     case "elements":
@@ -434,19 +434,19 @@ class xrayws {
                 }
             }
 
-            if(isset($params[4]) && !isset($params[5])) {
+            if (isset($params[4]) && !isset($params[5])) {
                 // Call to complete course report.
                 $filename = sprintf("course-report-%s-final.json", $params[4]);
             }
         }
 
         // Call to accessibledata.
-        if(isset($params[2]) && isset($params[5]) && $params[2] == "data" && $params[5] == "accessible") {
+        if (isset($params[2]) && isset($params[5]) && $params[2] == "data" && $params[5] == "accessible") {
             $filename = sprintf("data-accessible-%s-final.json", $params[4]);
         }
 
         // Call to user/login or user/accesstoken
-        if(isset($params[1]) && isset($params[2]) && $params[1] == "user" && ($params[2] == "accesstoken" || $params[2] == "login")) {
+        if (isset($params[1]) && isset($params[2]) && $params[1] == "user" && ($params[2] == "accesstoken" || $params[2] == "login")) {
             $filename = sprintf('%s-%s-final.json', $params[1], $params[2]);
         }
 
