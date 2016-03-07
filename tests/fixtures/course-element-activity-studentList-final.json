@@ -1,0 +1,1656 @@
+{
+  "itemCount": 30,
+  "url": "/datapushdemo/d27c3f98-5c60-4d5d-9a79-88b605e5bb87",
+  "colorCodesSpecs": [],
+  "columnHeaders": {
+    "last_activity_readable": "Last activity",
+    "weeklyRegularity": "Visit regularity (weekly)",
+    "discussion_posts": "Total discussion posts",
+    "loggedThisWeek": "Logged in during previous week",
+    "timeOnTask": "Hours spent in course",
+    "firstname": "Given Name",
+    "lastname": "Surname"
+  },
+  "enableGraph": true,
+  "elementType": "xrayTable",
+  "elementName": "studentList",
+  "data": [
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Thu 13 Nov"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 26
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-11-13 22:02:11"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.68333333333333"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Long"
+      },
+      "firstname": {
+        "value": "Betsy"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 25 Mar"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 42
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-03-25 15:52:59"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Owen"
+      },
+      "firstname": {
+        "value": "Daline"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 08 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 43
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-08 18:50:38"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Davis"
+      },
+      "firstname": {
+        "value": "Darnell"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Fri 09 Jan"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 58
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-01-09 15:08:38"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.13333333333333"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "VanArsdale"
+      },
+      "firstname": {
+        "value": "Francisca"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Mon 10 Aug"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 63
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-08-10 16:01:23"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Blackmon"
+      },
+      "firstname": {
+        "value": "James"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Mon 17 Aug"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 71
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-08-17 17:11:34"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.28333333333333"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Lepa"
+      },
+      "firstname": {
+        "value": "Jeffrey"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Mon 05 Jan"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 75
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-01-05 13:29:02"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Johnson"
+      },
+      "firstname": {
+        "value": "Jill"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Fri 14 Aug"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 1312
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-08-14 17:50:29"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "7.83333333333333"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Lawhorn"
+      },
+      "firstname": {
+        "value": "Jo Ann"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 22 Apr"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 1456
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-04-22 23:18:16"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.01666666666667"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Seale"
+      },
+      "firstname": {
+        "value": "Shelia"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Tue 10 Mar"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 2585
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-03-10 16:30:51"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Pollard"
+      },
+      "firstname": {
+        "value": "Ardina"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 08 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 3773
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-08 14:27:10"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Larkin"
+      },
+      "firstname": {
+        "value": "Amy"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 08 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 3781
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-08 14:24:03"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.01666666666667"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "McDoniell"
+      },
+      "firstname": {
+        "value": "Colleen"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 08 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 3787
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-08 14:26:19"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.01666666666667"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Richardson"
+      },
+      "firstname": {
+        "value": "Donna"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Thu 13 Nov"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 3798
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-11-13 22:56:17"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "4"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Nordberg"
+      },
+      "firstname": {
+        "value": "Kristi"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 08 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 3812
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-08 17:18:22"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "4.03333333333333"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Moorer"
+      },
+      "firstname": {
+        "value": "Pamela"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Sun 21 Dec"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 14079
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-12-21 01:10:49"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.01666666666667"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Fontenot"
+      },
+      "firstname": {
+        "value": "Autumn"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Mon 17 Aug"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 58122
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-08-17 13:20:16"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Frasier"
+      },
+      "firstname": {
+        "value": "Amber"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 13 May"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 59603
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-05-13 15:34:14"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "6.63333333333333"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Havens"
+      },
+      "firstname": {
+        "value": "Calvin"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 12 Aug"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 68265
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-08-12 19:51:00"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "14.5833333333333"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Jones"
+      },
+      "firstname": {
+        "value": "William"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Tue 04 Nov"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 68413
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-11-04 00:13:39"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "6.98333333333333"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Hocker"
+      },
+      "firstname": {
+        "value": "Michelle"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Thu 16 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 68464
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-16 18:16:43"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "O'Meara"
+      },
+      "firstname": {
+        "value": "Kevin"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 25 Feb"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 68553
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-02-25 14:56:24"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Barnett"
+      },
+      "firstname": {
+        "value": "Jason"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Fri 26 Sep"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 68558
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-09-26 16:03:40"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.9"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Bodree"
+      },
+      "firstname": {
+        "value": "Jack"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Sun 23 Aug"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 68649
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-08-23 15:48:06"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.86666666666667"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Turpen"
+      },
+      "firstname": {
+        "value": "Kathryn"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 08 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 68713
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-08 14:27:42"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Hadley"
+      },
+      "firstname": {
+        "value": "Jaynie"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 08 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 72665
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-08 14:27:24"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Butler"
+      },
+      "firstname": {
+        "value": "Bev"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Fri 24 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 73172
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-24 14:58:13"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "4.18333333333333"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Goodrich"
+      },
+      "firstname": {
+        "value": "Larissa"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 11 Feb"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 73173
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-02-11 00:12:09"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "25.45"
+      },
+      "gender": {
+        "value": "M"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "McWilliams"
+      },
+      "firstname": {
+        "value": "Michael"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 08 Oct"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 74702
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2014-10-08 14:24:54"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "2.98333333333333"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "Beard"
+      },
+      "firstname": {
+        "value": "Angela"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": 0
+      },
+      "last_activity_readable": {
+        "colorCode": "red",
+        "value": "Wed 09 Dec"
+      },
+      "weeklyRegularity": {
+        "value": "-"
+      },
+      "discussion_posts": {
+        "colorCode": "red",
+        "value": "0"
+      },
+      "loggedThisWeek": {
+        "value": "No"
+      },
+      "participantId": {
+        "value": 102120
+      },
+      "last_activity": {
+        "colorCode": "red",
+        "value": "2015-12-09 20:16:19"
+      },
+      "timeOnTask": {
+        "colorCode": "",
+        "value": "4"
+      },
+      "gender": {
+        "value": "F"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "deleted": {
+        "value": 0
+      },
+      "courseId": {
+        "value": 8
+      },
+      "lastname": {
+        "value": "User"
+      },
+      "firstname": {
+        "value": "Student"
+      },
+      "suspended": {
+        "value": 0
+      },
+      "regularity": {
+        "value": null
+      }
+    }
+  ],
+  "uuid": "d27c3f98-5c60-4d5d-9a79-88b605e5bb87",
+  "title": "Activity Metrics",
+  "legend": "A small number for regularity means, that there is a regular pattern.",
+  "comment": [],
+  "inverted": false,
+  "dataFormat": {
+    "timeOnTask": "timerangeminute"
+  },
+  "columnOrder": [
+    "lastname",
+    "firstname",
+    "loggedThisWeek",
+    "last_activity_readable",
+    "discussion_posts",
+    "timeOnTask",
+    "weeklyRegularity"
+  ]
+}

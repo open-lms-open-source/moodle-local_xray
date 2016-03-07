@@ -81,7 +81,14 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         true,
                         true,
                         '<"top">rt<"bottom"flp><"clear">'); // Add column action.
-                    $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
+
+                    // If the user came from header.
+                    if ($this->header) {
+                        $datatable->default_field_sort = 4; // Sort by column "Posts Last Week".
+                        $datatable->sort_order = "desc";
+                    } else {
+                        $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
+                    }
                     $output .= $this->output->standard_table((array)$datatable);
 
                     // Special Table with variable columns.
@@ -183,10 +190,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             // Format of response for columns.
             if (!empty($response->columnOrder)) {
                 foreach ($response->columnOrder as $column) {
-                    $r->{$column} = '';
-                    if (isset($row->{$column}->value)) {
-                        $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
-                    }
+                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
                 }
                 $data[] = $r;
             }

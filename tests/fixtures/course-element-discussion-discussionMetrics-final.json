@@ -1,0 +1,1446 @@
+{
+  "itemCount": 30,
+  "url": "/datapushdemo/bf6e9c09-9088-4e73-a9b2-14fc323da93a",
+  "colorCodesSpecs": [],
+  "columnHeaders": {
+    "discussion_posts_last_week": "Posts last week",
+    "regularityContrib": "Regularity of original contribution",
+    "regularityCTC": "Regularity of critical thought",
+    "firstname": "Given Name",
+    "lastname": "Surname",
+    "contrib": "Average original contribution",
+    "posts": "Total discussion posts",
+    "ctc": "Average critical thought"
+  },
+  "enableGraph": true,
+  "elementType": "xrayTable",
+  "elementName": "discussionMetrics",
+  "data": [
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 26
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Betsy"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Long"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 42
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Daline"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Owen"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 43
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Darnell"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Davis"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 58
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Francisca"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "VanArsdale"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 63
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "James"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Blackmon"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 71
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Jeffrey"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Lepa"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 75
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Jill"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Johnson"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 1312
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Jo Ann"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Lawhorn"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 1456
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Shelia"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Seale"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 2585
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Ardina"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Pollard"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 3773
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Amy"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Larkin"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 3781
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Colleen"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "McDoniell"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 3787
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Donna"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Richardson"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 3798
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Kristi"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Nordberg"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 3812
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Pamela"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Moorer"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 14079
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Autumn"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Fontenot"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 58122
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Amber"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Frasier"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 59603
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Calvin"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Havens"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 68265
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "William"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Jones"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 68413
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Michelle"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Hocker"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 68464
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Kevin"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "O'Meara"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 68553
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Jason"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Barnett"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 68558
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Jack"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Bodree"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 68649
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Kathryn"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Turpen"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 68713
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Jaynie"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Hadley"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 72665
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Bev"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Butler"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 73172
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Larissa"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Goodrich"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 73173
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Michael"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "McWilliams"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 74702
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Angela"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "Beard"
+      }
+    },
+    {
+      "discussion_posts_last_week": {
+        "value": "0"
+      },
+      "regularityContrib": {
+        "value": "-"
+      },
+      "regularityCTC": {
+        "value": "-"
+      },
+      "participantId": {
+        "value": 102120
+      },
+      "numberGrade": {
+        "value": null
+      },
+      "letterGrade": {
+        "value": "-"
+      },
+      "firstname": {
+        "value": "Student"
+      },
+      "wc": {
+        "value": null
+      },
+      "ctc": {
+        "value": "-"
+      },
+      "posts": {
+        "value": "-"
+      },
+      "roleId": {
+        "value": 5
+      },
+      "contrib": {
+        "value": "-"
+      },
+      "courseId": {
+        "value": null
+      },
+      "inCourse": {
+        "value": 0
+      },
+      "lastname": {
+        "value": "User"
+      }
+    }
+  ],
+  "uuid": "bf6e9c09-9088-4e73-a9b2-14fc323da93a",
+  "title": "Participation Metrics",
+  "legend": "This table displays relative word count without very common words \n                      (Contribution) and the critical thinking coefficient (CTC), the relative \n                      number of words that show the student's critical thinking.",
+  "comment": [],
+  "inverted": false,
+  "dataFormat": [],
+  "columnOrder": [
+    "lastname",
+    "firstname",
+    "posts",
+    "discussion_posts_last_week",
+    "contrib",
+    "ctc",
+    "regularityContrib",
+    "regularityCTC"
+  ]
+}

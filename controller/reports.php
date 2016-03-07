@@ -59,6 +59,13 @@ class local_xray_controller_reports extends mr_controller {
      * @var bool
      */
     protected $ajax = false;
+
+    /**
+     * Is it Accesed from headline?
+     * @var bool
+     */
+    protected $header = 0;
+
     /**
      * @var null|core_renderer_ajax
      */
@@ -76,6 +83,7 @@ class local_xray_controller_reports extends mr_controller {
         global $CFG, $PAGE, $COURSE;
 
         $courseid = optional_param('courseid', SITEID, PARAM_INT);
+        $this->header = optional_param('header', 0, PARAM_INT);
         require_login($courseid, false);
 
         // We want to send relative URL to $PAGE so $PAGE can set it to https or not.
@@ -306,10 +314,7 @@ class local_xray_controller_reports extends mr_controller {
             // Format of response for columns(if return has columnorder).
             if (!empty($response->columnOrder) && is_array($response->columnOrder)) {
                 foreach ($response->columnOrder as $column) {
-                    $r->{$column} = '';
-                    if (isset($row->{$column}->value)) {
-                        $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
-                    }
+                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
                 }
             } else if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
                 $c = get_object_vars($response->columnHeaders);
@@ -343,12 +348,12 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'fail':
                         // Column Academic risk.
-                    case 'DW';
+                    case 'DW':
                         // Column Social risk.
-                    case 'DWF';
+                    case 'DWF':
                         // Column Total risk.
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             $risk1 = get_config($plugin, 'risk1');
                             $risk1 = floatval($risk1);
@@ -373,9 +378,18 @@ class local_xray_controller_reports extends mr_controller {
                         return $value;
                         break;
                 }
-            case 'studentList';
+            case 'studentList':
                 // Table Student Activity from Activity Report.
                 switch ($column) {
+                    case 'discussion_posts':
+                        // Column Total discussion posts.
+                        // Add '-' for strange values.
+                        if (isset($value) && is_numeric(trim($value))) {
+                            return $value;
+                        } else {
+                            return '-';
+                        }
+                        break;
                     case 'timeOnTask':
                         // Column Time spent in course (hours).
                         return $this->show_time_hours_minutes($value);
@@ -383,7 +397,7 @@ class local_xray_controller_reports extends mr_controller {
                     case 'weeklyRegularity':
                         // Column Visit regularity (weekly).
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             $visitreg1 = get_config($plugin, 'visitreg1');
                             $visitreg2 = get_config($plugin, 'visitreg2');
@@ -406,16 +420,27 @@ class local_xray_controller_reports extends mr_controller {
                         return $value;
                         break;
                 }
-            case 'discussionMetrics';
+            case 'discussionMetrics':
                 // Table Participation Metrics from Discussion Report.
                 // Table Participation Metrics from Discussion Report Individual.
                 switch ($column) {
+                    case 'posts':
+                        // Column Total discussion posts.
+                    case 'discussion_posts_last_week':
+                        // Column Posts last week.
+                        // Add '-' for strange values
+                        if (isset($value) && is_numeric(trim($value))) {
+                            return $value;
+                        } else {
+                            return '-';
+                        }
+                        break;
                     case 'contrib':
                         // Column Average original contribution.
                     case 'ctc':
                         // Column Average critical thought.
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             $partc1 = get_config($plugin, 'partc1');
                             $partc2 = get_config($plugin, 'partc2');
@@ -434,12 +459,12 @@ class local_xray_controller_reports extends mr_controller {
                             return '-';
                         }
                         break;
-                    case 'regularityContrib';
+                    case 'regularityContrib':
                         // Column Regularity of original contribution.
                     case 'regularityCTC':
                         // Column Regularity of critical thought.
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             $partreg1 = get_config($plugin, 'partreg1');
                             $partreg2 = get_config($plugin, 'partreg2');
@@ -462,13 +487,17 @@ class local_xray_controller_reports extends mr_controller {
                         return $value;
                         break;
                 }
-            case 'studentDiscussionGrades';
+            case 'studentDiscussionGrades':
                 // Table Student Grades Based on Discussions from Discussion Report.
                 switch ($column) {
+                    case 'letterGrade':
+                        // Column Grade recommendation.
+                    case 'posts':
+                        // Column Total posts.
                     case 'wc':
                         // Column Word count (rel.).
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             return $roundvalue;
                         } else {
@@ -478,7 +507,7 @@ class local_xray_controller_reports extends mr_controller {
                     case 'ctc':
                         // Column CTC.
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             $partc1 = get_config($plugin, 'partc1');
                             $partc2 = get_config($plugin, 'partc2');
@@ -497,10 +526,10 @@ class local_xray_controller_reports extends mr_controller {
                             return '-';
                         }
                         break;
-                    case 'regularityContrib';
+                    case 'regularityContrib':
                         // Column Regularity of contributions.
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             $partreg1 = get_config($plugin, 'partreg1');
                             $partreg2 = get_config($plugin, 'partreg2');
@@ -526,10 +555,20 @@ class local_xray_controller_reports extends mr_controller {
             case 'element2':
                 // Table Student Grades from Gradebook Report.
                 switch ($column) {
+                    // Column Quiz scores (Points).
+                    case 'finalGrade':
+                        // It should be numeric.
+                        if (isset($value) && is_numeric(trim($value))) {
+                            $roundvalue = round($value, 2);
+                            return $roundvalue;
+                        } else {
+                            return '-';
+                        }
+                        break;
                     case 'standarScore':
                         // Column Quiz scores (%) (ex Standardized score).
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             return $roundvalue . '%';
                         } else {
@@ -542,10 +581,14 @@ class local_xray_controller_reports extends mr_controller {
             case 'element4':
                 // Table Summary of Quizzes from Gradebook Report.
                 switch ($column) {
+                    case 'grade':
+                        // Column Possible Points.
+                    case 'nStudents':
+                        // Column Number of students.
                     case 'earnScore':
                         // Column Average score (Points) - (ex Average score).
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             return round($value, 2);
                         } else {
                             return '-';
@@ -556,7 +599,7 @@ class local_xray_controller_reports extends mr_controller {
                     case 'finalGradeCorrelation':
                         // Column Relationship with current total course grade - (ex Correlation between final score and score from this quiz).
                         // It should be numeric.
-                        if (is_numeric(trim($value))) {
+                        if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
                             return $roundvalue . '%';
                         } else {

@@ -181,9 +181,9 @@ if ($hassiteconfig) {
         $risk_values[(string)$i] = $i;
     }
     $settings->add( new admin_setting_configselect("{$plugin}/risk1",  new lang_string("risk1_name", $plugin),
-        new lang_string("risk1_desc", $plugin), "20", $risk_values));
+        new lang_string("risk1_desc", $plugin), "40", $risk_values));
     $settings->add( new admin_setting_configselect("{$plugin}/risk2", new lang_string("risk2_name", $plugin),
-        new lang_string("risk2_desc", $plugin), "30", $risk_values));
+        new lang_string("risk2_desc", $plugin), "70", $risk_values));
     // Define cut-off values for Activity table in Activity Report.
     // Column Visit regularity (weekly).
     $regularity_values = array();

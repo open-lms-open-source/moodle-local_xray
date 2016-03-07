@@ -1,0 +1,4978 @@
+{
+  "date": "2016-01-21",
+  "scheduleid": 0,
+  "attachments": [],
+  "datecreated": "2016-01-28T00:00:00.000Z",
+  "oldid": null,
+  "notifications": {
+    "attributes": {
+      "row.names": {
+        "attributes": {},
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      "names": {
+        "attributes": {},
+        "value": [
+          "domain",
+          "report",
+          "courseId",
+          "participantId",
+          "forumId",
+          "type",
+          "severity",
+          "text",
+          "date"
+        ],
+        "type": "character"
+      },
+      "class": {
+        "attributes": {},
+        "value": [
+          "data.frame"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {
+          "levels": {
+            "attributes": {},
+            "value": [
+              "datapushdemo"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "factor"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {
+          "levels": {
+            "attributes": {},
+            "value": [
+              "xrayDashboardReport"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "factor"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {},
+        "value": [
+          8
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {
+          "levels": {
+            "attributes": {},
+            "value": [
+              "NA"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "factor"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {
+          "levels": {
+            "attributes": {},
+            "value": [
+              "No notifications"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "factor"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {
+          "class": {
+            "attributes": {},
+            "value": [
+              "Date"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          16821
+        ],
+        "type": "double"
+      }
+    ],
+    "type": "list"
+  },
+  "datapoints_plain": [],
+  "datapoints": {
+    "attributes": {},
+    "value": [],
+    "type": "list"
+  },
+  "id": 275044,
+  "courseid": 8,
+  "participantid": 0,
+  "type": "dashboard",
+  "subtype": "",
+  "reportdate": "2016-01-21T00:00:00.000Z",
+  "forumid": 0,
+  "elements": {
+    "element13": {
+      "contexts": {
+        "courseContext": "/datapushdemo/course/8/discussionGrading/2016-01-21/discussionSuggestedGrades.svg/courseContext",
+        "timeMachine": "/datapushdemo/course/8/discussionGrading/2016-01-21/discussionSuggestedGrades.svg/timeMachine",
+        "participantContext": "",
+        "forumContext": ""
+      },
+      "elementType": "xrayPlot",
+      "elementName": "element13",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "className": "ANY",
+        "field": "customData",
+        "class": "uninitializedField"
+      },
+      "uuid": "741cf1cf-0192-42d5-99c7-4fa4220c29abdiscussionSuggestedGrades.svg",
+      "title": "Grades",
+      "legend": "Average grades observed in course.",
+      "mapping": [],
+      "tooltip": "Average grades observed in course.",
+      "filename": "discussionSuggestedGrades.svg",
+      "plotType": "relative",
+      "reportId": "discussionGrading"
+    },
+    "element12": {
+      "contexts": {
+        "courseContext": "/datapushdemo/course/8/risk/2016-01-21/riskDensity.svg/courseContext",
+        "timeMachine": "/datapushdemo/course/8/risk/2016-01-21/riskDensity.svg/timeMachine",
+        "participantContext": "",
+        "forumContext": ""
+      },
+      "elementType": "xrayPlot",
+      "elementName": "element12",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "className": "ANY",
+        "field": "customData",
+        "class": "uninitializedField"
+      },
+      "uuid": "166c0d26-8561-4f04-972b-f9dbc15937fariskDensity.svg",
+      "title": "Risk Profile",
+      "legend": "Risk profile for course.",
+      "mapping": [],
+      "tooltip": "Risk profile for course.",
+      "filename": "riskDensity.svg",
+      "plotType": "relative",
+      "reportId": "risk"
+    },
+    "element11": {
+      "contexts": {
+        "courseContext": "/datapushdemo/course/8/discussion/2016-01-21/wordcloud.svg/courseContext",
+        "participantContext": "/datapushdemo/course/8/discussion/2016-01-21/wordcloud.svg/participantContext",
+        "timeMachine": "/datapushdemo/course/8/discussion/2016-01-21/wordcloud.svg/timeMachine",
+        "forumContext": "/datapushdemo/course/8/discussion/2016-01-21/wordcloud.svg/forumContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "element11",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "className": "ANY",
+        "field": "customData",
+        "class": "uninitializedField"
+      },
+      "uuid": "72ce95e6-d323-4e83-baba-23ef80fea198wordcloud.svg",
+      "title": "Discussion",
+      "legend": "Most common words in discussion communications.",
+      "mapping": [],
+      "tooltip": "Most common words in discussion communications.",
+      "filename": "wordcloud.svg",
+      "plotType": "relative",
+      "reportId": "discussion"
+    },
+    "element10": {
+      "contexts": {
+        "courseContext": "/datapushdemo/course/8/discussion/2016-01-21/socialStructure.svg/courseContext",
+        "participantContext": "/datapushdemo/course/8/discussion/2016-01-21/socialStructure.svg/participantContext",
+        "timeMachine": "/datapushdemo/course/8/discussion/2016-01-21/socialStructure.svg/timeMachine",
+        "forumContext": "/datapushdemo/course/8/discussion/2016-01-21/socialStructure.svg/forumContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "element10",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "className": "ANY",
+        "field": "customData",
+        "class": "uninitializedField"
+      },
+      "uuid": "8e98db58-6892-4d28-be6f-7e491234ffbasocialStructure.svg",
+      "title": "Social Structure",
+      "legend": "Social structure of course based on forum communications.",
+      "mapping": [],
+      "tooltip": "Social structure of course based on forum communications.",
+      "filename": "socialStructure.svg",
+      "plotType": "relative",
+      "reportId": "discussion"
+    },
+    "element9": {
+      "sectionLevel": 2,
+      "elementType": "xraySectionHeader",
+      "elementName": "element9",
+      "title": " ",
+      "date": "2016-01-21"
+    },
+    "element1": {
+      "sectionLevel": 1,
+      "instructors": [
+        "Janice Simon",
+        "Teacher User"
+      ],
+      "elementType": "xraySectionHeader",
+      "elementName": "element1",
+      "courseName": "BCHS Teachers",
+      "title": "Dashboard",
+      "date": "2016-01-21"
+    },
+    "element2": {
+      "tooltipOrder": [
+        "interpretation",
+        "expectedRange",
+        "comment",
+        "help"
+      ],
+      "elementType": "xrayList",
+      "elementName": "element2",
+      "subtitle": [],
+      "comment": [],
+      "title": "List title",
+      "items": [
+        {
+          "interpretation": {},
+          "expectedRange": "NA, NA",
+          "comment": "",
+          "value": "0",
+          "name": "Social interaction:",
+          "help": "",
+          "code": "CM01"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "0",
+          "name": "Isolated students:",
+          "help": "",
+          "code": "CM02"
+        },
+        {
+          "interpretation": {},
+          "expectedRange": "NA, NA",
+          "comment": {},
+          "value": "50.39",
+          "name": "Student risk profile:",
+          "help": "",
+          "code": "CM03"
+        },
+        {
+          "interpretation": {},
+          "expectedRange": "NA, NA",
+          "comment": "",
+          "value": "NaN",
+          "name": "Visit regularity:",
+          "help": "",
+          "code": "CM04"
+        },
+        {
+          "interpretation": {},
+          "expectedRange": "NA, NA",
+          "comment": "Number of students suspected: 0",
+          "value": "0 % ",
+          "name": "Plagiarism index:",
+          "help": "",
+          "code": "CM05"
+        },
+        {
+          "interpretation": {},
+          "expectedRange": "NA, NA",
+          "comment": "",
+          "value": "65.84 h",
+          "name": "Course activity level:",
+          "help": "",
+          "code": "CM06"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": {},
+          "name": "Grades within expected range:",
+          "help": "",
+          "code": "CM07"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": {},
+          "name": "Grade distribution:",
+          "help": "",
+          "code": "CM08"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": {},
+          "name": "Skewness:",
+          "help": "",
+          "code": "CM09"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": {},
+          "name": "Kurtosis:",
+          "help": "",
+          "code": "CM10"
+        }
+      ],
+      "uuid": "05c4fb3e-575c-4d92-a101-0bb846206786"
+    },
+    "element3": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "text": "Issues"
+      },
+      "enableGraph": true,
+      "elementType": "xrayTable",
+      "elementName": "element3",
+      "data": [
+        {
+          "participantId": {
+            "value": 26
+          },
+          "firstname": {
+            "value": "Betsy"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Long"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Betsy Long"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 26
+          },
+          "firstname": {
+            "value": "Betsy"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Long"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Betsy Long"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 26
+          },
+          "firstname": {
+            "value": "Betsy"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Long"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Betsy Long"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 42
+          },
+          "firstname": {
+            "value": "Daline"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Owen"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Daline Owen"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 42
+          },
+          "firstname": {
+            "value": "Daline"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Owen"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Daline Owen"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 42
+          },
+          "firstname": {
+            "value": "Daline"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Owen"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Daline Owen"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 43
+          },
+          "firstname": {
+            "value": "Darnell"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Davis"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Darnell Davis"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 43
+          },
+          "firstname": {
+            "value": "Darnell"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Davis"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Darnell Davis"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 43
+          },
+          "firstname": {
+            "value": "Darnell"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Davis"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Darnell Davis"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 58
+          },
+          "firstname": {
+            "value": "Francisca"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "VanArsdale"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Francisca VanArsdale"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 58
+          },
+          "firstname": {
+            "value": "Francisca"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "VanArsdale"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Francisca VanArsdale"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 58
+          },
+          "firstname": {
+            "value": "Francisca"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "VanArsdale"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Francisca VanArsdale"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 63
+          },
+          "firstname": {
+            "value": "James"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Blackmon"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: James Blackmon"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 63
+          },
+          "firstname": {
+            "value": "James"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Blackmon"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: James Blackmon"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 63
+          },
+          "firstname": {
+            "value": "James"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Blackmon"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: James Blackmon"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 71
+          },
+          "firstname": {
+            "value": "Jeffrey"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Lepa"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jeffrey Lepa"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 71
+          },
+          "firstname": {
+            "value": "Jeffrey"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Lepa"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Jeffrey Lepa"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 71
+          },
+          "firstname": {
+            "value": "Jeffrey"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Lepa"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jeffrey Lepa"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 75
+          },
+          "firstname": {
+            "value": "Jill"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Johnson"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jill Johnson"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 75
+          },
+          "firstname": {
+            "value": "Jill"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Johnson"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jill Johnson"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 75
+          },
+          "firstname": {
+            "value": "Jill"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Johnson"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Jill Johnson"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 1312
+          },
+          "firstname": {
+            "value": "Jo Ann"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Lawhorn"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jo Ann Lawhorn"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 1312
+          },
+          "firstname": {
+            "value": "Jo Ann"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Lawhorn"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Jo Ann Lawhorn"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 1312
+          },
+          "firstname": {
+            "value": "Jo Ann"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Lawhorn"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jo Ann Lawhorn"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 1456
+          },
+          "firstname": {
+            "value": "Shelia"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Seale"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Shelia Seale"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 1456
+          },
+          "firstname": {
+            "value": "Shelia"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Seale"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Shelia Seale"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 1456
+          },
+          "firstname": {
+            "value": "Shelia"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Seale"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Shelia Seale"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 2585
+          },
+          "firstname": {
+            "value": "Ardina"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Pollard"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Ardina Pollard"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 2585
+          },
+          "firstname": {
+            "value": "Ardina"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Pollard"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Ardina Pollard"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 2585
+          },
+          "firstname": {
+            "value": "Ardina"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Pollard"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Ardina Pollard"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3773
+          },
+          "firstname": {
+            "value": "Amy"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Larkin"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Amy Larkin"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3773
+          },
+          "firstname": {
+            "value": "Amy"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Larkin"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Amy Larkin"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3773
+          },
+          "firstname": {
+            "value": "Amy"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Larkin"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Amy Larkin"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3781
+          },
+          "firstname": {
+            "value": "Colleen"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "McDoniell"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Colleen McDoniell"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3781
+          },
+          "firstname": {
+            "value": "Colleen"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "McDoniell"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Colleen McDoniell"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3781
+          },
+          "firstname": {
+            "value": "Colleen"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "McDoniell"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Colleen McDoniell"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3787
+          },
+          "firstname": {
+            "value": "Donna"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Richardson"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Donna Richardson"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3787
+          },
+          "firstname": {
+            "value": "Donna"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Richardson"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Donna Richardson"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3787
+          },
+          "firstname": {
+            "value": "Donna"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Richardson"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Donna Richardson"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3798
+          },
+          "firstname": {
+            "value": "Kristi"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Nordberg"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Kristi Nordberg"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3798
+          },
+          "firstname": {
+            "value": "Kristi"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Nordberg"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Kristi Nordberg"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3798
+          },
+          "firstname": {
+            "value": "Kristi"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Nordberg"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Kristi Nordberg"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3812
+          },
+          "firstname": {
+            "value": "Pamela"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Moorer"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Pamela Moorer"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3812
+          },
+          "firstname": {
+            "value": "Pamela"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Moorer"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Pamela Moorer"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 3812
+          },
+          "firstname": {
+            "value": "Pamela"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Moorer"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Pamela Moorer"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 14079
+          },
+          "firstname": {
+            "value": "Autumn"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Fontenot"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Autumn Fontenot"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 14079
+          },
+          "firstname": {
+            "value": "Autumn"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Fontenot"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Autumn Fontenot"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 14079
+          },
+          "firstname": {
+            "value": "Autumn"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Fontenot"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Autumn Fontenot"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 58122
+          },
+          "firstname": {
+            "value": "Amber"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Frasier"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Amber Frasier"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 58122
+          },
+          "firstname": {
+            "value": "Amber"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Frasier"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Amber Frasier"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 58122
+          },
+          "firstname": {
+            "value": "Amber"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Frasier"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Amber Frasier"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 59603
+          },
+          "firstname": {
+            "value": "Calvin"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Havens"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Calvin Havens"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 59603
+          },
+          "firstname": {
+            "value": "Calvin"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Havens"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Calvin Havens"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 59603
+          },
+          "firstname": {
+            "value": "Calvin"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Havens"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Calvin Havens"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68265
+          },
+          "firstname": {
+            "value": "William"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Jones"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: William Jones"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68265
+          },
+          "firstname": {
+            "value": "William"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Jones"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: William Jones"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68265
+          },
+          "firstname": {
+            "value": "William"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Jones"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: William Jones"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68413
+          },
+          "firstname": {
+            "value": "Michelle"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Hocker"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Michelle Hocker"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68413
+          },
+          "firstname": {
+            "value": "Michelle"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Hocker"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Michelle Hocker"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68413
+          },
+          "firstname": {
+            "value": "Michelle"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Hocker"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Michelle Hocker"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68464
+          },
+          "firstname": {
+            "value": "Kevin"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "O'Meara"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Kevin O'Meara"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68464
+          },
+          "firstname": {
+            "value": "Kevin"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "O'Meara"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Kevin O'Meara"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68464
+          },
+          "firstname": {
+            "value": "Kevin"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "O'Meara"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Kevin O'Meara"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68553
+          },
+          "firstname": {
+            "value": "Jason"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Barnett"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Jason Barnett"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68553
+          },
+          "firstname": {
+            "value": "Jason"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Barnett"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jason Barnett"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68553
+          },
+          "firstname": {
+            "value": "Jason"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Barnett"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jason Barnett"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68558
+          },
+          "firstname": {
+            "value": "Jack"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Bodree"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Jack Bodree"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68558
+          },
+          "firstname": {
+            "value": "Jack"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Bodree"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jack Bodree"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68558
+          },
+          "firstname": {
+            "value": "Jack"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Bodree"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jack Bodree"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68649
+          },
+          "firstname": {
+            "value": "Kathryn"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Turpen"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Kathryn Turpen"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68649
+          },
+          "firstname": {
+            "value": "Kathryn"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Turpen"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Kathryn Turpen"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68649
+          },
+          "firstname": {
+            "value": "Kathryn"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Turpen"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Kathryn Turpen"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68713
+          },
+          "firstname": {
+            "value": "Jaynie"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Hadley"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jaynie Hadley"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68713
+          },
+          "firstname": {
+            "value": "Jaynie"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Hadley"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Jaynie Hadley"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 68713
+          },
+          "firstname": {
+            "value": "Jaynie"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Hadley"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Jaynie Hadley"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 72665
+          },
+          "firstname": {
+            "value": "Bev"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Butler"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Bev Butler"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 72665
+          },
+          "firstname": {
+            "value": "Bev"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Butler"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Bev Butler"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 72665
+          },
+          "firstname": {
+            "value": "Bev"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Butler"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Bev Butler"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 73172
+          },
+          "firstname": {
+            "value": "Larissa"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Goodrich"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Larissa Goodrich"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 73172
+          },
+          "firstname": {
+            "value": "Larissa"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Goodrich"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Larissa Goodrich"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 73172
+          },
+          "firstname": {
+            "value": "Larissa"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Goodrich"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Larissa Goodrich"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 73173
+          },
+          "firstname": {
+            "value": "Michael"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "McWilliams"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Michael McWilliams"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 73173
+          },
+          "firstname": {
+            "value": "Michael"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "McWilliams"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Michael McWilliams"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "M"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 74702
+          },
+          "firstname": {
+            "value": "Angela"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Beard"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Angela Beard"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 74702
+          },
+          "firstname": {
+            "value": "Angela"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Beard"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Angela Beard"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReportIndividual"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 74702
+          },
+          "firstname": {
+            "value": "Angela"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "Beard"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Angela Beard"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 102120
+          },
+          "firstname": {
+            "value": "Student"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "User"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "Irregular access: Student User"
+          },
+          "type": {
+            "value": 60
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayActivityReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        },
+        {
+          "participantId": {
+            "value": 102120
+          },
+          "firstname": {
+            "value": "Student"
+          },
+          "severity": {
+            "value": {}
+          },
+          "lastname": {
+            "value": "User"
+          },
+          "courseId": {
+            "value": 8
+          },
+          "date": {
+            "value": "2016-01-21"
+          },
+          "text": {
+            "value": "High drop-out risk: Student User"
+          },
+          "type": {
+            "value": 100
+          },
+          "domain": {
+            "value": "datapushdemo"
+          },
+          "gender": {
+            "value": "F"
+          },
+          "report": {
+            "value": "xrayRiskReport"
+          },
+          "roleId": {
+            "value": "5"
+          },
+          "forumId": {
+            "value": 0
+          }
+        }
+      ],
+      "uuid": "3f8e14d2-40c8-404a-b800-b476e7c96440",
+      "title": "Latest Issues",
+      "legend": "Latest Issues",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": [],
+      "columnOrder": {
+        "className": "ANY",
+        "field": "columnOrder",
+        "class": "uninitializedField"
+      }
+    },
+    "element4": {
+      "sectionLevel": 2,
+      "elementType": "xraySectionHeader",
+      "elementName": "element4",
+      "title": " ",
+      "date": "2016-01-21"
+    },
+    "activity_level": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "number_of_visits": "Students visits",
+        "time_on_task": "Time spent in course",
+        "day_of_week": "Day of the week",
+        "date": "Date"
+      },
+      "enableGraph": true,
+      "elementType": "xrayTable",
+      "elementName": "activity_level",
+      "data": [
+        {
+          "number_of_visits": {
+            "value": "0"
+          },
+          "time_on_task": {
+            "value": "0h 0m"
+          },
+          "day_of_week": {
+            "value": "Wednesday"
+          },
+          "date": {
+            "value": "2016-01-20"
+          }
+        },
+        {
+          "number_of_visits": {
+            "value": "0"
+          },
+          "time_on_task": {
+            "value": "0h 0m"
+          },
+          "day_of_week": {
+            "value": "Tuesday"
+          },
+          "date": {
+            "value": "2016-01-19"
+          }
+        },
+        {
+          "number_of_visits": {
+            "value": "0"
+          },
+          "time_on_task": {
+            "value": "0h 0m"
+          },
+          "day_of_week": {
+            "value": "Monday"
+          },
+          "date": {
+            "value": "2016-01-18"
+          }
+        },
+        {
+          "number_of_visits": {
+            "value": "0"
+          },
+          "time_on_task": {
+            "value": "0h 0m"
+          },
+          "day_of_week": {
+            "value": "Sunday"
+          },
+          "date": {
+            "value": "2016-01-17"
+          }
+        },
+        {
+          "number_of_visits": {
+            "value": "0"
+          },
+          "time_on_task": {
+            "value": "0h 0m"
+          },
+          "day_of_week": {
+            "value": "Saturday"
+          },
+          "date": {
+            "value": "2016-01-16"
+          }
+        },
+        {
+          "number_of_visits": {
+            "value": "0"
+          },
+          "time_on_task": {
+            "value": "0h 0m"
+          },
+          "day_of_week": {
+            "value": "Friday"
+          },
+          "date": {
+            "value": "2016-01-15"
+          }
+        },
+        {
+          "number_of_visits": {
+            "value": "0"
+          },
+          "time_on_task": {
+            "value": "0h 0m"
+          },
+          "day_of_week": {
+            "value": "Thursday"
+          },
+          "date": {
+            "value": "2016-01-14"
+          }
+        }
+      ],
+      "uuid": "8e2088f0-dddc-49d7-b503-2e730dd5dc08",
+      "title": "Activity Level",
+      "legend": "Activity Level",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": {
+        "time_on_task": "timerangeminute"
+      },
+      "columnOrder": [
+        "date",
+        "day_of_week",
+        "time_on_task",
+        "number_of_visits"
+      ]
+    },
+    "element6": {
+      "tooltipOrder": [
+        "interpretation",
+        "expectedRange",
+        "comment",
+        "help"
+      ],
+      "elementType": "xrayList",
+      "elementName": "element6",
+      "subtitle": [],
+      "comment": [],
+      "title": "Course summary",
+      "items": [
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "15",
+          "name": "Number of student visits last 7 days:",
+          "help": "",
+          "code": "CS001"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "20",
+          "name": "Number of student visits previous 7 days:",
+          "help": "",
+          "code": "CS002"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "30",
+          "name": "Number of students enrolled and active:",
+          "help": "",
+          "code": "CS003"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "0",
+          "name": "Number of newly active:",
+          "help": "",
+          "code": "CS004"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "55",
+          "name": "Number of no shows:",
+          "help": "",
+          "code": "CS005"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "29",
+          "name": "Number of students at risk:",
+          "help": "",
+          "code": "CS006"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "27",
+          "name": "Number of students at risk last week:",
+          "help": "",
+          "code": "CS007"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "10",
+          "name": "Number of posts last week:",
+          "help": "",
+          "code": "CS008"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "7",
+          "name": "Number of posts previous week:",
+          "help": "",
+          "code": "CS009"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "-",
+          "name": "Average grade:",
+          "help": "",
+          "code": "CS010"
+        },
+        {
+          "interpretation": "",
+          "expectedRange": "",
+          "comment": "",
+          "value": "-",
+          "name": "Average grade last week:",
+          "help": "",
+          "code": "CS011"
+        }
+      ],
+      "uuid": "8a7b45bd-25b2-477c-a0b9-00cd3cd7c494"
+    },
+    "element7": {
+      "sectionLevel": 2,
+      "elementType": "xraySectionHeader",
+      "elementName": "element7",
+      "title": " ",
+      "date": "2016-01-21"
+    },
+    "recommendations": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "recommendation": "Recommended Action"
+      },
+      "enableGraph": true,
+      "elementType": "xrayTable",
+      "elementName": "recommendations",
+      "data": [
+        {
+          "recommendation": {
+            "value": "Ask the instructor to look after the course."
+          },
+          "patricpantId": {
+            "value": ""
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "No discussion activity, encourage students to \n                                        participate in the forums."
+          },
+          "patricpantId": {
+            "value": ""
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "No discussion activity for Mary Beasley Nelson, Sheila McKibbon, Michael Brown, Cherrie Wiggins, Jamie Lynn Martin, William Jones, Ardina Pollard, Kevin O'Meara, John Calley, Michelle Hocker, Betsy Long, Larissa Goodrich, Daline Owen, Jaynie Hadley, Chantelle Smith, Paula Owen, Charlene Steedley, Vickie Locke, Janie Stillwell, Phillip Stewart, Patricia Horton, James Blackmon, Betty Clemmons, Darnell Davis, Karen Sims, Michelle Blackmon, Anthony Dunn, Carolina Smoak, Melissa Miller, Jason Barnett, Jo Ann Lawhorn, Angela Beard, Donna Richardson, Dustin Coleman, Kassandra Robbins, Marcus Willis, Mark Leavins, C Everett, Caroline Valentino, Tracy Robbins, Desirea McGilvray, Judy Bridges, Janie Baker, Calvin Havens, Ronda Campbell, Renee McNeil, Phillip Hunter, Zachary Smith, Tom Casolaro, Tyra Edwards, Michael McWilliams, Brad Middleton, Bev Butler, Shelia Seale, Kathryn Turpen, Kristin Broadus, Michele Phillippi Hall, Jeff Boone, Jonathan Crawford, Kelly Harris, Donna Sessions, Sandra Milstead, Jill Johnson, Tim Turpen, Stephanie Lee, Misty Morries, Amber Frasier, Jack Bodree, Clint Curtis, Jeffrey Lepa, Craig Smith, Lorenzo Hunter, Matthew Beckett, Francisca VanArsdale, Marianne Williams, Katherine Land, Scott Daugherty, Donna Steele, Marsha Strickland, Student User, Colleen McDoniell, Kristi Nordberg, Amy Larkin, Pamela Moorer and Autumn Fontenot, encourage them to participate in the forums."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68265,2585,68464,68569,68413,26,73172,42,68713,35,104,36,129,67,107,101,63,27,43,80,96,46375,68642,3636,68553,1312,74702,3787,51,81,88,91,34,33,126,46,61,68,59603,1656,108,106,68639,44624,127,73173,1477,72665,1456,68649,84,95,70,77,83,50,115,75,125,1278,99,58122,68558,68576,71,3403,87,94,58,89,82,116,49,92,102120,3781,3798,3773,3812,14079"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Mary Beasley Nelson. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Sheila McKibbon. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Michael Brown. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Cherrie Wiggins. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Jamie Lynn Martin. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact John Calley. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Chantelle Smith. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Paula Owen. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Charlene Steedley. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Vickie Locke. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Janie Stillwell. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Phillip Stewart. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Patricia Horton. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Betty Clemmons. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Karen Sims. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Michelle Blackmon. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Anthony Dunn. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Carolina Smoak. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Melissa Miller. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Dustin Coleman. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Kassandra Robbins. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Marcus Willis. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Mark Leavins. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact C Everett. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Caroline Valentino. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Tracy Robbins. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Desirea McGilvray. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Judy Bridges. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Janie Baker. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Ronda Campbell. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Renee McNeil. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Phillip Hunter. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Zachary Smith. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Tom Casolaro. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Tyra Edwards. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Brad Middleton. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Kristin Broadus. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Michele Phillippi Hall. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Jeff Boone. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Jonathan Crawford. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Kelly Harris. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Donna Sessions. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Sandra Milstead. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Tim Turpen. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Stephanie Lee. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Misty Morries. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Clint Curtis. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Craig Smith. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Lorenzo Hunter. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Matthew Beckett. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Marianne Williams. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Katherine Land. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Scott Daugherty. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Donna Steele. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Try to contact Marsha Strickland. Has yet to access this course."
+          },
+          "patricpantId": {
+            "value": "93,117,3982,37,51608,68569,35,104,36,129,67,107,101,27,80,96,46375,68642,3636,51,81,88,91,34,33,126,46,61,68,1656,108,106,68639,44624,127,1477,84,95,70,77,83,50,115,125,1278,99,68576,3403,87,94,89,82,116,49,92"
+          },
+          "importance": {
+            "value": ""
+          }
+        },
+        {
+          "recommendation": {
+            "value": "Check that the course start date is correct."
+          },
+          "patricpantId": {
+            "value": ""
+          },
+          "importance": {
+            "value": ""
+          }
+        }
+      ],
+      "uuid": "a26201ed-388e-4106-bbd7-737585d4301c",
+      "title": "Recommendations",
+      "legend": "Recommendations",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": [],
+      "columnOrder": {
+        "className": "ANY",
+        "field": "columnOrder",
+        "class": "uninitializedField"
+      }
+    }
+  }
+}

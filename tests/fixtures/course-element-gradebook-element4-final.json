@@ -1,0 +1,266 @@
+{
+  "itemCount": 8,
+  "url": "/demo/23d5c730-6650-4f01-b097-d8dce62a5644",
+  "colorCodesSpecs": [],
+  "columnHeaders": {
+    "finalGradeCorrelation": "Relationship with Current Total course grade (%)",
+    "standarScore": "Average score (%)",
+    "nStudents": "Number of students",
+    "earnScore": "Average score (Points)",
+    "quizId": "Quiz ID",
+    "grade": "Possible Points",
+    "name": "Quiz name"
+  },
+  "enableGraph": true,
+  "elementType": "xrayTable",
+  "elementName": "element4",
+  "data": [
+    {
+      "standarGradeCorrelation": {
+        "value": 0.7743
+      },
+      "name": {
+        "value": "Exercise 1"
+      },
+      "grade": {
+        "value": "100"
+      },
+      "quizId": {
+        "value": "1"
+      },
+      "attempts": {
+        "value": 1
+      },
+      "earnScore": {
+        "value": "81.5714285714286"
+      },
+      "nStudents": {
+        "value": "7"
+      },
+      "standarScore": {
+        "value": "81.5714285714286"
+      },
+      "finalGradeCorrelation": {
+        "value": "77.4"
+      }
+    },
+    {
+      "standarGradeCorrelation": {
+        "value": 0.7718
+      },
+      "name": {
+        "value": "Exercise 2"
+      },
+      "grade": {
+        "value": "10"
+      },
+      "quizId": {
+        "value": "2"
+      },
+      "attempts": {
+        "value": 1
+      },
+      "earnScore": {
+        "value": "6.75"
+      },
+      "nStudents": {
+        "value": "8"
+      },
+      "standarScore": {
+        "value": "67.5"
+      },
+      "finalGradeCorrelation": {
+        "value": "77.2"
+      }
+    },
+    {
+      "standarGradeCorrelation": {
+        "value": 0.6581
+      },
+      "name": {
+        "value": "Exercise 3"
+      },
+      "grade": {
+        "value": "10"
+      },
+      "quizId": {
+        "value": "3"
+      },
+      "attempts": {
+        "value": 1
+      },
+      "earnScore": {
+        "value": "6.5"
+      },
+      "nStudents": {
+        "value": "8"
+      },
+      "standarScore": {
+        "value": "65"
+      },
+      "finalGradeCorrelation": {
+        "value": "65.8"
+      }
+    },
+    {
+      "standarGradeCorrelation": {
+        "value": 0.5983
+      },
+      "name": {
+        "value": "Exercise 4"
+      },
+      "grade": {
+        "value": "100"
+      },
+      "quizId": {
+        "value": "4"
+      },
+      "attempts": {
+        "value": 1
+      },
+      "earnScore": {
+        "value": "78.1428571428571"
+      },
+      "nStudents": {
+        "value": "7"
+      },
+      "standarScore": {
+        "value": "78.1428571428571"
+      },
+      "finalGradeCorrelation": {
+        "value": "59.8"
+      }
+    },
+    {
+      "standarGradeCorrelation": {
+        "value": 0.5231
+      },
+      "name": {
+        "value": "Exercise 5"
+      },
+      "grade": {
+        "value": "10"
+      },
+      "quizId": {
+        "value": "5"
+      },
+      "attempts": {
+        "value": 1
+      },
+      "earnScore": {
+        "value": "4.375"
+      },
+      "nStudents": {
+        "value": "8"
+      },
+      "standarScore": {
+        "value": "43.75"
+      },
+      "finalGradeCorrelation": {
+        "value": "52.3"
+      }
+    },
+    {
+      "standarGradeCorrelation": {
+        "value": 0.3656
+      },
+      "name": {
+        "value": "Exercise 6"
+      },
+      "grade": {
+        "value": "10"
+      },
+      "quizId": {
+        "value": "6"
+      },
+      "attempts": {
+        "value": 1
+      },
+      "earnScore": {
+        "value": "5.625"
+      },
+      "nStudents": {
+        "value": "8"
+      },
+      "standarScore": {
+        "value": "56.25"
+      },
+      "finalGradeCorrelation": {
+        "value": "36.6"
+      }
+    },
+    {
+      "standarGradeCorrelation": {
+        "value": 0.7098
+      },
+      "name": {
+        "value": "Exercise 7"
+      },
+      "grade": {
+        "value": "100"
+      },
+      "quizId": {
+        "value": "7"
+      },
+      "attempts": {
+        "value": 1
+      },
+      "earnScore": {
+        "value": "75.7142857142857"
+      },
+      "nStudents": {
+        "value": "7"
+      },
+      "standarScore": {
+        "value": "75.7142857142857"
+      },
+      "finalGradeCorrelation": {
+        "value": "71"
+      }
+    },
+    {
+      "standarGradeCorrelation": {
+        "value": 0.4259
+      },
+      "name": {
+        "value": "Exercise 8"
+      },
+      "grade": {
+        "value": "100"
+      },
+      "quizId": {
+        "value": "8"
+      },
+      "attempts": {
+        "value": 1
+      },
+      "earnScore": {
+        "value": "35.4285714285714"
+      },
+      "nStudents": {
+        "value": "7"
+      },
+      "standarScore": {
+        "value": "35.4285714285714"
+      },
+      "finalGradeCorrelation": {
+        "value": "42.6"
+      }
+    }
+  ],
+  "uuid": "23d5c730-6650-4f01-b097-d8dce62a5644",
+  "title": "Summary of Quizzes",
+  "legend": "This chart displays student performance data for each quiz in the course.",
+  "comment": [],
+  "inverted": false,
+  "dataFormat": [],
+  "columnOrder": [
+    "quizId",
+    "name",
+    "grade",
+    "nStudents",
+    "earnScore",
+    "standarScore",
+    "finalGradeCorrelation"
+  ]
+}

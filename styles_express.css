@@ -20,3 +20,7 @@ TODO - make express specific? */
 .xray-toggleable-table .label-warning[href]:focus,.label-warning[href]:hover{background-color:#ec971f}
 .xray-toggleable-table .label-danger{background-color:#d9534f}
 .xray-toggleable-table .label-danger[href]:focus,.label-danger[href]:hover{background-color:#c9302c}
+
+#js-xraymenu {
+    padding:0 15px;
+}

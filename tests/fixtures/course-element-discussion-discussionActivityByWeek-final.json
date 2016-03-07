@@ -1,0 +1,43 @@
+{
+  "itemCount": 1,
+  "url": "/datapushdemo/1e2feb8d-b678-41fd-afb0-bc2c554ef347",
+  "colorCodesSpecs": [],
+  "columnHeaders": {
+    "avgWordCount": "Average word count",
+    "avgLag": "Average hours to respond",
+    "posts": "Number of posts",
+    "week": "Week"
+  },
+  "enableGraph": true,
+  "elementType": "xrayTable",
+  "elementName": "discussionActivityByWeek",
+  "data": [
+    {
+      "avgWordCount": {
+        "value": "9.75"
+      },
+      "avgLag": {
+        "value": "0"
+      },
+      "posts": {
+        "value": "4"
+      },
+      "week": {
+        "value": "Week 1"
+      }
+    }
+  ],
+  "uuid": "1e2feb8d-b678-41fd-afb0-bc2c554ef347",
+  "title": "Activity by Week",
+  "legend": "Activity by Week",
+  "comment": [],
+  "inverted": true,
+  "dataFormat": {
+    "avgLag": "timerange"
+  },
+  "columnOrder": {
+    "className": "ANY",
+    "field": "columnOrder",
+    "class": "uninitializedField"
+  }
+}
