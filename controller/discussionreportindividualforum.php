@@ -50,20 +50,34 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
      */
     private $cmid;
 
+    /**
+     * Discussion id.
+     * @var integer
+     */
+    private $d;
+
     public function init() {
         $this->cmid = required_param('cmid', PARAM_INT); // Cmid of forum/hsuforum.
         $this->forumid = required_param('forum', PARAM_INT); // Id of forum/hsuforum.
+        $this->d = optional_param('d', null, PARAM_INT); // Id of discussion.
         $this->url->param("cmid", $this->cmid);
         $this->url->param("forum", $this->forumid);
+        if (!empty($this->d)) {
+            $this->url->param("d", $this->d);
+        }
+
     }
 
+	/**
+	 * View Discussion individual forum.
+	 */
     public function view_action() {
         global $PAGE, $DB;
 
-        $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         // Add title to breadcrumb.
-        // Check if hsuforum is present in this moodle/joule instance.
+        $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
+        $modulename = 'forum';
         if (array_key_exists('hsuforum', $plugins)) {
             // Get module name and forum/hsuforum id.
             $sqlmodule = "SELECT m.name
@@ -72,15 +86,19 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                             WHERE cm.id = :cmid";
             $params = array('cmid' => $this->cmid);
             $module = $DB->get_record_sql($sqlmodule, $params);
+            $modulename = $module->name;
+        }
 
-            $forumname = $DB->get_field($module->name, 'name', array("id" => $this->forumid));
-            $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/".$module->name."/view.php",
-                array("id" => $this->cmid)));
-        }else{
-            // Use forum.
-            $forumname = $DB->get_field('forum', 'name', array("id" => $this->forumid));
-            $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/forum/view.php",
-                array("id" => $this->cmid)));
+        // Get and show forun name in navbar.
+        $forumname = $DB->get_field($modulename, 'name', array("id" => $this->forumid));
+        $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/".$modulename."/view.php",
+            array("id" => $this->cmid)));
+
+        if (!empty($this->d)) {
+            // Get discussion name.
+            $discussion = $DB->get_field($modulename."_discussions", 'name', array("id" => $this->d));
+            $PAGE->navbar->add(format_string($discussion), new moodle_url("/mod/".$modulename."/discuss.php",
+                array("d" => $this->d)));
         }
 
         $PAGE->navbar->add($PAGE->title);
