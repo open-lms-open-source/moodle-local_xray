@@ -48,31 +48,16 @@ Feature: The headline data should be present in the course page for manager, edi
       | student1 | xray1 | student |
 
   @javascript
-  Scenario Outline: Headline is displayed.
-    Given I log in as <username>
+  Scenario: Headline is displayed.
+    Given I log in as "teacher1"
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
     And I test Headline view "xray1" "displayed"
 
-    Examples:
-    | username |
-    | "admin" |
-    | "teacher1" |
-    | "teacher2" |
-
   @javascript
   Scenario: Headline is not displayed for students.
     Given I log in as "student1"
-    And I am on site homepage
-    And I follow "Xray Course 01"
-    And I wait until the page is ready
-    And I test Headline view "xray1" "notdisplayed"
-
-  @javascript
-  Scenario: Headline is not displayed for guest users.
-    Given I allow guest access for xray in course "xray1"
-    And I log in as "guest"
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
