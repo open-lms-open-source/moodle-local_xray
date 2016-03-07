@@ -298,7 +298,7 @@ $string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Each dot in this
     ' spent in your course in a given week compared to other weeks. Bigger dots indicate more activity.';
 $string['activityreport_firstloginPiechartAdjusted_help'] = 'The diagram shows you when students logged into your course'.
     ' and how many haven\'t yet. The first day of the course may not be the scheduled start date. It starts the day the'.
-    ' first participant accessed the course. This includes the teacher. The pattern seen here may be an indication of'.
+    ' first participant accessed the course. This includes the instructor. The pattern seen here may be an indication of'.
     ' future engagement.';
 
 /* Graphs Activity Individual report*/
@@ -334,7 +334,7 @@ $string['risk_riskScatterPlot_help'] = 'Each dot in this scatterplot represents 
 /* Graphs Risk report*/
 $string['gradebookreport_studentScoreDistribution'] = 'Distribution of Scores';
 $string['gradebookreport_scoreDistributionByItem'] = 'Distribution of Quiz Scores';
-$string['gradebookreport_scatterPlot'] = 'Assigned Score Points versus Percentages';
+$string['gradebookreport_scatterPlot'] = 'Automatic Discussion Forum Grading versus Quiz Results';
 $string['gradebookreport_itemsHeatmap'] = 'Comparison of Quiz Scores';
 
 /* Help Graphs Gradebook report*/
@@ -348,10 +348,11 @@ $string['gradebookreport_scoreDistributionByItem_help'] = 'This boxplot shows th
     ' The top 25% (vertical line on top of the box), the 25% above average (area of the box above the average score),'.
     ' the 25% below average (area of the box below the average score), and the bottom 25% (vertical line below the box).'.
     ' The longer or taller the range the more spread out the scores are in it. ';
-$string['gradebookreport_scatterPlot_help'] = 'This graph shows consistency in grading. Each dot in this diagram'.
-    ' represents a quiz. The black line shows the expected relationship between assigned grade points and percentages.'.
-    ' The shaded area (confidence interval) gives a range for the expected relationship. Quizzes outside the expected'.
-    ' relationship range may indicate inconsistencies in grading.';
+$string['gradebookreport_scatterPlot_help'] = 'This graph shows a comparison of the automatic X-Ray grading on'.
+    ' the basis of the quality of the discussion posts and results from quizzes. Each dot in this diagram represents'.
+    ' the values for a student. The black line shows the estimated relationship between the two grading methods.'.
+    ' The shaded area (confidence interval) gives a range for the estimated relationship. If all dots are close'.
+    ' to the black line, the two grading methods are consistent.';
 $string['gradebookreport_itemsHeatmap_help'] = 'This heatmap shows how each student did on a quiz compared to the rest'.
     ' of the class. Darker colors indicate higher scores. If you have too many of one shade it may indicate that'.
     ' the quiz is too easy or too difficult.';
@@ -362,8 +363,8 @@ $string['discussionreport_socialStructure'] = 'Interaction Analysis (with instru
 $string['discussionreport_socialStructureWordCount'] = 'Interaction Analysis with Word Count (with instructor)';
 $string['discussionreport_socialStructureWordContribution'] = 'Interaction Analysis with Original Contributions (with instructor)';
 $string['discussionreport_socialStructureWordCTC'] = 'Interaction Analysis with  Critical Thought (with instructor)';
-$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = 'Word Overlap Between Students';
-$string['discussionreport_endogenicPlagiarismHeatmap'] = 'Word Overlap With Teacher Included';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = 'Word Overlap between Students';
+$string['discussionreport_endogenicPlagiarismHeatmap'] = 'Word Overlap (with instructor)';
 $string['discussionreport_discussionSuggestedGrades'] = 'Distribution of Recommended Grades';
 
 /* Help Graphs Discussion report*/
