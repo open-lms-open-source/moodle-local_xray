@@ -40,39 +40,8 @@ use Behat\Behat\Context\Step\Given,
  */
 class behat_local_xray extends behat_base {
 
-    /**
-     * Logs in the user. There should exist a user with the same value as username and password.
-     *
-     * @Given /^I log in with express for xray as "(?P<username_string>(?:[^"]|\\")*)"$/
-     * @param string $username
-     * @return void
-     */
-    public function i_log_in_with_express_for_xray_as($username) {
 
-        // Running this step using the API rather than a chained step because
-        // we need to see if the 'Log in' link is available or we need to click
-        // the dropdown to expand the navigation bar before.
-        $this->getSession()->visit($this->locate_path('/'));
-
-        // Generic steps (we will prefix them later expanding the navigation dropdown if necessary).
-        $steps = array(
-            new Given('I click on "#thehandle" "css_element"'),
-            new Given('I wait until "#newregions" "css_element" is visible'),
-            new Given('I set the field "' . get_string('username') . '" to "' . $this->escape($username) . '"'),
-            new Given('I set the field "' . get_string('password') . '" to "'. $this->escape($username) . '"'),
-            new Given('I press "' . get_string('login', 'theme_express') . '"')
-        );
-
-        // If Javascript is disabled we have enough with these steps.
-        if (!$this->running_javascript()) {
-            return $steps;
-        }
-
-        // Wait for the homepage to be ready.
-        $this->getSession()->wait(self::TIMEOUT * 1000, self::PAGE_READY_JS);
-
-        return $steps;
-    }
+    public $courseshortname = '';
 
     /**
      * Create an express design based on an express template.
@@ -104,7 +73,7 @@ class behat_local_xray extends behat_base {
         $data->analyticcode = '';
         $data->customcss = '';
         $design->create($data);
-        $design->save($data); // TODO It is necesary?
+        $design->save($data);
     }
 
     /**
@@ -132,5 +101,135 @@ class behat_local_xray extends behat_base {
         $record->id = $enrolid;
         $record->status = 0;
         $DB->update_record('enrol', $record);
+    }
+
+    /**
+     * Test Headline.
+     *
+     * @Given /^I test Headline view "(?P<shortname_string>(?:[^"]|\\")*)" "(?P<view_string>[^"]*)"$/
+     * @param string $shortname
+     * @return void
+     */
+    public function i_test_headline_view($shortname, $view) {
+        global $DB;
+        $this->courseshortname = $shortname;
+        // Check if the headline shoould be displayed.
+        $positive = true;
+        if ($view == 'notdisplayed') {
+            $positive = false;
+        }
+        // Add themes and the course format for each one.
+        $themes = array();
+        $themes['clean'] = array('topics', 'folderview', 'onetopic', 'social', 'topcoll');
+        $themes['more'] = array('topics', 'folderview', 'onetopic', 'social', 'topcoll');
+        $themes['snap'] = array('topics');
+        $themes['express'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
+        // Add express templates and the course format for each one.
+        $templates = array();
+        $templates['minimal'] = array('topics', 'folderview', 'onetopic', 'social', 'topcoll');
+        $templates['cherub'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
+        $templates['dropshadow'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
+        $templates['future'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
+        $templates['joule'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
+        $templates['simple'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
+        $templates['sleek'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
+        $templates['topslide'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
+
+        $steps = array();
+        // Test default theme clean and default week format.
+        $steps1 = $this->local_xray_test_headline_themes('clean', $themes['clean'], $shortname, $positive);
+        if ($positive) {
+            // Test the other themes.
+            foreach ($themes as $theme => $formats) {
+                $steps2 = $this->local_xray_test_headline_themes($theme, $formats, $shortname, $positive);
+            }
+            // Test express templates.
+            foreach ($templates as $template => $formats) {
+                $steps3 = $this->local_xray_test_headline_themes($template, $formats, $shortname, $positive, false, true);
+            }
+            $steps = array_merge($steps1, $steps2, $steps3);
+        } else {
+            $steps = $steps1;
+        }
+        return $steps;
+    }
+
+    /**
+     * @param $theme
+     * @param $formats
+     * @param $shortname
+     * @param bool|true $positive
+     * @param bool|false $default
+     * @param bool|false $template
+     * @return array
+     */
+    private function local_xray_test_headline_themes($theme, $formats, $shortname, $positive = true, $default = false, $template = false) {
+        if (!$default){
+            if ($template) {
+                // Express theme should be activated for this option.
+                $steps[] = new Given('I use express template "'.$theme.'" for xray');
+            } else {
+                // Add theme.
+                $table = new \Behat\Gherkin\Node\TableNode("| theme | $theme |");
+                $steps[] = new Given('the following config values are set as admin:', $table);
+            }
+            // Add format weeks.
+            $steps[] = new Given('I set course format "weeks" in course "'.$shortname.'" for xray');
+        }
+        if ($positive) {
+            // Test headline is present.
+            $steps[] = new Given('"#xray-nav-headline" "css_element" should exist');
+            $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should exist');
+        } else {
+            // Test headline is not present.
+            $steps[] = new Given('"#xray-nav-headline" "css_element" should not exist');
+            $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should not exist');
+        }
+        // Tests theme clean with the other formats.
+        foreach ($formats as $format) {
+            $steps[] = new Given('I set course format "'.$format.'" in course "'.$shortname.'" for xray');
+            $steps[] = new Given('I reload the page');
+            $steps[] = new Given('I wait until the page is ready');
+            if ($positive) {
+                $steps[] = new Given('"#xray-nav-headline" "css_element" should exist');
+                $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should exist');
+                $steps[] = new Given('I click on "#xray-headline-risk p.xray-headline-number" "css_element"');
+                $steps[] = new Given('I wait until the page is ready');
+                $steps[] = new Given('"#xray-nav-headline" "css_element" should not exist');
+                $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should not exist');
+                $steps[] = new Given('"h2.xray-report-page-title" "css_element" should exist');
+                $steps[] = new Given('"#table_riskMeasures" "css_element" should exist');
+                $steps[] = new Given('".sorting:nth-child(6).sorting_desc" "css_element" should exist');
+                $steps[] = new Given('I scroll until "'.$this->courseshortname.'" "text" is visible');
+                $steps[] = new Given('I follow "'.$this->courseshortname.'"');
+                $steps[] = new Given('I wait until the page is ready');
+            } else {
+                $steps[] = new Given('"#xray-nav-headline" "css_element" should not exist');
+                $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should not exist');
+            }
+        }
+        return $steps;
+    }
+
+    /**
+     * Change course format.
+     *
+     * @Given /^I set course format "(?P<format_string>(?:[^"]|\\")*)" in course "(?P<shortname_string>(?:[^"]|\\")*)" for xray$/
+     * @param string $shortname
+     * @return void
+     */
+    public function i_set_course_format_in_course_for_xray($format, $shortname) {
+        global $DB;
+        $session = $this->getSession();
+        // Get course id.
+        $courseid = $DB->get_field('course', 'id', array('shortname' => $shortname));
+        if (!$courseid) {
+            throw new ExpectationException('The course with shortname '.$shortname.' does not exist', $session);
+        }
+        // Add format.
+        $record = new stdClass();
+        $record->id = $courseid;
+        $record->format = $format;
+        $DB->update_record('course', $record);
     }
 }
