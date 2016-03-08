@@ -61,48 +61,48 @@ class dashboard {
                 $totalstudents = "-";
 
                 // Get users in risk last 7 days.
-                if(isset($response->elements->element6->items[5]->value) && is_number($response->elements->element6->items[5]->value)) {
-                    $usersinrisklastsevendays = $response->elements->element6->items[5]->value;
+                if(isset($response->elements->element3->items[5]->value) && is_number($response->elements->element3->items[5]->value)) {
+                    $usersinrisklastsevendays = $response->elements->element3->items[5]->value;
                 }
 
                 // Risk previous 7 days.
-                if(isset($response->elements->element6->items[6]->value) && is_number($response->elements->element6->items[6]->value)) {
-                    $usersinrisklastsevendays_previousweek = $response->elements->element6->items[6]->value;
+                if(isset($response->elements->element3->items[6]->value) && is_number($response->elements->element3->items[6]->value)) {
+                    $usersinrisklastsevendays_previousweek = $response->elements->element3->items[6]->value;
                 }
 
                 // Posts last 7 days.
-                if(isset($response->elements->element6->items[7]->value) && is_number($response->elements->element6->items[7]->value)) {
-                    $postslastsevendays = $response->elements->element6->items[7]->value;
+                if(isset($response->elements->element3->items[7]->value) && is_number($response->elements->element3->items[7]->value)) {
+                    $postslastsevendays = $response->elements->element3->items[7]->value;
                 }
 
                 // Posts previous 7 days.
-                if(isset($response->elements->element6->items[8]->value) && is_number($response->elements->element6->items[8]->value)) {
-                    $postslastsevendays_previousweek = $response->elements->element6->items[8]->value;
+                if(isset($response->elements->element3->items[8]->value) && is_number($response->elements->element3->items[8]->value)) {
+                    $postslastsevendays_previousweek = $response->elements->element3->items[8]->value;
                 }
 
                 // Visits last 7 days.
-                if(isset($response->elements->element6->items[0]->value) && is_number($response->elements->element6->items[0]->value)) {
-                    $studentsloggedlastsevendays = $response->elements->element6->items[0]->value;
+                if(isset($response->elements->element3->items[0]->value) && is_number($response->elements->element3->items[0]->value)) {
+                    $studentsloggedlastsevendays = $response->elements->element3->items[0]->value;
                 }
 
                 // Visits previous 7 days.
-                if(isset($response->elements->element6->items[1]->value) && is_number($response->elements->element6->items[1]->value)) {
-                    $studentsloggedlastsevendays_previousweek = $response->elements->element6->items[1]->value;
+                if(isset($response->elements->element3->items[1]->value) && is_number($response->elements->element3->items[1]->value)) {
+                    $studentsloggedlastsevendays_previousweek = $response->elements->element3->items[1]->value;
                 }
 
                 // Average grades last 7 days.
-                if(isset($response->elements->element6->items[9]->value) && is_number($response->elements->element6->items[9]->value)) {
-                    $averagegradeslastsevendays = $response->elements->element6->items[9]->value;
+                if(isset($response->elements->element3->items[9]->value) && is_number($response->elements->element3->items[9]->value)) {
+                    $averagegradeslastsevendays = $response->elements->element3->items[9]->value;
                 }
 
                 // Average grades previous 7 days.
-                if(isset($response->elements->element6->items[10]->value) && is_number($response->elements->element6->items[10]->value)) {
-                    $averagegradeslastsevendays_previousweek = $response->elements->element6->items[10]->value;
+                if(isset($response->elements->element3->items[10]->value) && is_number($response->elements->element3->items[10]->value)) {
+                    $averagegradeslastsevendays_previousweek = $response->elements->element3->items[10]->value;
                 }
 
                 // Total of students enrolled actives.
-                if(isset($response->elements->element6->items[2]->value) && is_number($response->elements->element6->items[2]->value)) {
-                    $totalstudents = $response->elements->element6->items[2]->value;
+                if(isset($response->elements->element3->items[2]->value) && is_number($response->elements->element3->items[2]->value)) {
+                    $totalstudents = $response->elements->element3->items[2]->value;
                 }
 
                 // Return dashboard_data object.
