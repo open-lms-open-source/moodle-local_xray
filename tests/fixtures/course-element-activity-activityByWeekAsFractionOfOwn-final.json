@@ -1,0 +1,265 @@
+{
+  "url": "/datapushdemo/3f701cc8-7adf-4f35-bc61-6ec3c19df464activityByWeekAsFractionOfOwn.svg",
+  "elementType": "xrayPlot",
+  "elementName": "activityByWeekAsFractionOfOwn",
+  "dimensions": {
+    "height": 600,
+    "width": 1200
+  },
+  "customData": {
+    "myTimeOnTask": [
+      {
+        "participantId": 68265,
+        "activityDate": "2015-03-04",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 68265,
+        "activityDate": "2015-07-21",
+        "timeSpent": 10.5833,
+        "courseId": 8
+      },
+      {
+        "participantId": 68265,
+        "activityDate": "2015-08-12",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 2585,
+        "activityDate": "2015-03-10",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 68464,
+        "activityDate": "2014-10-16",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 68413,
+        "activityDate": "2014-11-04",
+        "timeSpent": 6.9833,
+        "courseId": 8
+      },
+      {
+        "participantId": 26,
+        "activityDate": "2014-11-13",
+        "timeSpent": 2.6833,
+        "courseId": 8
+      },
+      {
+        "participantId": 73172,
+        "activityDate": "2014-10-24",
+        "timeSpent": 4.1833,
+        "courseId": 8
+      },
+      {
+        "participantId": 42,
+        "activityDate": "2015-03-25",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 68713,
+        "activityDate": "2014-10-08",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 63,
+        "activityDate": "2015-08-10",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 43,
+        "activityDate": "2014-10-08",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 68553,
+        "activityDate": "2015-02-25",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 1312,
+        "activityDate": "2015-02-09",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 1312,
+        "activityDate": "2015-08-14",
+        "timeSpent": 5.8333,
+        "courseId": 8
+      },
+      {
+        "participantId": 74702,
+        "activityDate": "2014-10-08",
+        "timeSpent": 2.9833,
+        "courseId": 8
+      },
+      {
+        "participantId": 3787,
+        "activityDate": "2014-10-08",
+        "timeSpent": 2.0167,
+        "courseId": 8
+      },
+      {
+        "participantId": 59603,
+        "activityDate": "2015-05-13",
+        "timeSpent": 6.6333,
+        "courseId": 8
+      },
+      {
+        "participantId": 73173,
+        "activityDate": "2014-10-08",
+        "timeSpent": 23.45,
+        "courseId": 8
+      },
+      {
+        "participantId": 73173,
+        "activityDate": "2015-02-11",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 72665,
+        "activityDate": "2014-10-08",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 1456,
+        "activityDate": "2015-04-22",
+        "timeSpent": 2.0167,
+        "courseId": 8
+      },
+      {
+        "participantId": 68649,
+        "activityDate": "2015-08-23",
+        "timeSpent": 2.8667,
+        "courseId": 8
+      },
+      {
+        "participantId": 75,
+        "activityDate": "2015-01-05",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 58122,
+        "activityDate": "2015-08-17",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 68558,
+        "activityDate": "2014-09-26",
+        "timeSpent": 2.9,
+        "courseId": 8
+      },
+      {
+        "participantId": 71,
+        "activityDate": "2015-08-17",
+        "timeSpent": 2.2833,
+        "courseId": 8
+      },
+      {
+        "participantId": 58,
+        "activityDate": "2015-01-09",
+        "timeSpent": 2.1333,
+        "courseId": 8
+      },
+      {
+        "participantId": 65,
+        "activityDate": "2014-09-24",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 65,
+        "activityDate": "2014-09-29",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 65,
+        "activityDate": "2014-10-08",
+        "timeSpent": 7.55,
+        "courseId": 8
+      },
+      {
+        "participantId": 65,
+        "activityDate": "2014-12-11",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 102120,
+        "activityDate": "2015-12-09",
+        "timeSpent": 4,
+        "courseId": 8
+      },
+      {
+        "participantId": 102119,
+        "activityDate": "2015-10-30",
+        "timeSpent": 3.7333,
+        "courseId": 8
+      },
+      {
+        "participantId": 3781,
+        "activityDate": "2014-10-08",
+        "timeSpent": 2.0167,
+        "courseId": 8
+      },
+      {
+        "participantId": 3798,
+        "activityDate": "2014-10-08",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 3798,
+        "activityDate": "2014-11-13",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 3773,
+        "activityDate": "2014-10-08",
+        "timeSpent": 2,
+        "courseId": 8
+      },
+      {
+        "participantId": 3812,
+        "activityDate": "2014-10-08",
+        "timeSpent": 4.0333,
+        "courseId": 8
+      },
+      {
+        "participantId": 14079,
+        "activityDate": "2014-12-21",
+        "timeSpent": 2.0167,
+        "courseId": 8
+      }
+    ],
+    "courseInfo": {
+      ".xData": {},
+      "class": "xrayCourseInfo"
+    }
+  },
+  "uuid": "3f701cc8-7adf-4f35-bc61-6ec3c19df464activityByWeekAsFractionOfOwn.svg",
+  "title": "Relative Activity Compared to Self",
+  "legend": "Dots represent student activity. Bigger dots indicate more activity relative to that student's \n                      activity during the course term.",
+  "mapping": [],
+  "tooltip": "Dots represent student activity. Bigger dots indicate more activity relative to that student's \n                      activity during the course term.",
+  "filename": "activityByWeekAsFractionOfOwn.svg",
+  "plotType": "svg",
+  "reportId": []
+}

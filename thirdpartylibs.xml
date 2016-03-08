@@ -21,4 +21,11 @@
         <license>MIT</license>
         <licenseversion></licenseversion>
     </library>
+    <library>
+        <location>vendor/justinrainbow/json-schema</location>
+        <name>justinrainbow/json-schema</name>
+        <version>1.6.1</version>
+        <license>BSD-3-Clause</license>
+        <licenseversion>1.0</licenseversion>
+    </library>
 </libraries>
