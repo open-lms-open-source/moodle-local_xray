@@ -23,6 +23,7 @@
  */
 
 namespace local_xray\tests;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -51,7 +52,6 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * Setup test data.
      */
     public function setUp() {
-        $this->resetAfterTest();
         $this->course = $this->getDataGenerator()->create_course();
 
         // Set correct setting for xray plugin.
@@ -67,10 +67,19 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * Check if data returned by webservice is correct for show in headline.
      */
     public function test_get_correct_data() {
+        $this->resetAfterTest();
 
-        $dashboard_data = \local_xray\dashboard\dashboard::get($this->course->id);
+        $baseurl = "http://xrayunitest";
+        $basecourse = $baseurl.'/test/course/'.$this->course->id;
+        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+        \local_xray\local\api\testhelper::push_pair($baseurl.'/user/login', 'user-login-final.json');
+        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+        \local_xray\local\api\testhelper::push_pair($basecourse.'/dashboard', 'course-report-dashboard-final.json');
+
+        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+        $dashboarddata = \local_xray\dashboard\dashboard::get($this->course->id);
         // This must be an instance of dashboard_data.
-        $this->assertInstanceOf('\local_xray\dashboard\dashboard_data', $dashboard_data);
+        $this->assertInstanceOf('\local_xray\dashboard\dashboard_data', $dashboarddata);
     }
 
     /**
@@ -85,9 +94,10 @@ class local_xray_headline_testcase extends \advanced_testcase {
         // Set clientid, with clientid "error", webservice class send us error when phpunit is running.
         set_config("xrayclientid", "error", self::PLUGIN_NAME);
 
-        $dashboard_data = \local_xray\dashboard\dashboard::get($this->course->id);
+        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+        $dashboarddata = \local_xray\dashboard\dashboard::get($this->course->id);
         // This must return false.
-        $this->assertFalse($dashboard_data);
+        $this->assertFalse($dashboarddata);
     }
 
 

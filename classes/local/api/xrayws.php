@@ -42,6 +42,7 @@ class xrayws {
     const HTTP_DELETE  = 'DELETE';
 
     const ERR_UNKNOWN  = 1010;
+    const ERR_JSON     = 1020;
     const PLUGIN       = 'local_xray';
     const COOKIE       = 'local_xray_cookie';
 
@@ -289,6 +290,8 @@ class xrayws {
      * @throws nourl_exception
      */
     public function request($url, $method, array $custheaders = array(), array $options = array()) {
+        global $CFG;
+
         if (empty($url)) {
             throw new nourl_exception();
         }
@@ -299,7 +302,7 @@ class xrayws {
         /*
          * Running behat test.
          */
-        if (PHPUNIT_TEST || defined('BEHAT_SITE_RUNNING')) {
+        if (defined('BEHAT_SITE_RUNNING')) {
 
             $result = ""; // Return json from file or empty.
             $parse = parse_url($url);
@@ -309,20 +312,20 @@ class xrayws {
                 // With this name of instance, we simulate a error in connection to xray.
                 $this->errorno     = self::ERR_UNKNOWN;
                 $this->errorstring = 'error_generic';
-                $this->error       = get_string("error_behat_instancefail", "local_xray");
+                $this->error       = get_string("error_behat_instancefail", self::PLUGIN);
 
             } else {
 
                 // Get filename of json to return.
                 $filename = $this->behat_getjsonfile($params);
-
-                // Get json file.
-                if (file_exists(__DIR__ . "/../../../tests/fixtures/$filename")) {
-                    $result = file_get_contents(__DIR__ . "/../../../tests/fixtures/$filename");
-
-                    // Call to user/login, set cookie required.
-                    if (isset($params[1]) && isset($params[2]) && $params[1] == "user" && $params[2]  == "login") {
-                        $this->setcookie("behat_test");
+                if (!empty($filename)) {
+                    // Get json file.
+                    $result = file_get_contents($CFG->dirroot."/local/xray/tests/fixtures/$filename");
+                    if ($result) {
+                        // Call to user/login, set cookie required.
+                        if (isset($params[1]) && isset($params[2]) && ($params[1] == "user") && ($params[2] == "login")) {
+                            $this->setcookie("behat_test");
+                        }
                     }
                 }
 
@@ -390,7 +393,15 @@ class xrayws {
         }
 
         if ($response) {
-            $this->cache->set($url, $this->rawresponse);
+            $result = validationhelper::validate_schema($this->rawresponse, $url);
+            if (!empty($result)) {
+                $this->errorno     = self::ERR_JSON;
+                $this->error       = "Unexpected JSON format: " . implode(', ', $result);
+                $this->errorstring = 'xrayws_error_server';
+                $response = false;
+            } else {
+                $this->cache->set($url, $this->rawresponse);
+            }
         }
 
         return $response;
@@ -411,7 +422,7 @@ class xrayws {
         if (isset($params[2]) && $params[2] == "course" ) {
 
             if (isset($params[4]) && $params[4] == "forum" &&
-                isset($params[6]) && $params[6] == "discussion"){
+                isset($params[6]) && $params[6] == "discussion") {
                 // Call to discussion individual forum.
                 $filename = "course-report-discussionreportindividualforum-final.json";
             }
@@ -445,8 +456,9 @@ class xrayws {
             $filename = sprintf("data-accessible-%s-final.json", $params[4]);
         }
 
-        // Call to user/login or user/accesstoken
-        if (isset($params[1]) && isset($params[2]) && $params[1] == "user" && ($params[2] == "accesstoken" || $params[2] == "login")) {
+        // Call to user/login or user/accesstoken.
+        if (isset($params[1]) && isset($params[2]) && ($params[1] == "user") &&
+            ($params[2] == "accesstoken" || $params[2] == "login")) {
             $filename = sprintf('%s-%s-final.json', $params[1], $params[2]);
         }
 
@@ -642,10 +654,12 @@ class xrayws {
      * @return null|string
      */
     public function getcookie() {
-        if (empty($this->cookie)) {
-            $value = $this->cache->get(self::COOKIE);
-            if (!empty($value)) {
-                $this->cookie = $value;
+        if (!PHPUNIT_TEST) {
+            if (empty($this->cookie)) {
+                $value = $this->cache->get(self::COOKIE);
+                if (!empty($value)) {
+                    $this->cookie = $value;
+                }
             }
         }
         return $this->cookie;
@@ -656,7 +670,7 @@ class xrayws {
         $this->cookie = null;
     }
 
-    protected function setcookie($value) {
+    public function setcookie($value) {
         if (!empty($value)) {
             $this->cache->set(self::COOKIE, $value);
             $this->cookie = $value;

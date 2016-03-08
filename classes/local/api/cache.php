@@ -44,6 +44,9 @@ class cache {
     protected $muc = null;
 
     public function __construct() {
+        if (PHPUNIT_TEST) {
+            return;
+        }
         $this->muc = \cache::make('local_xray', 'request');
     }
 
@@ -91,6 +94,13 @@ class cache {
      * @return bool|string
      */
     public function get($param) {
+        if (PHPUNIT_TEST) {
+            $result = testhelper::get_fixture_data($param);
+            if ($result) {
+                xrayws::instance()->setcookie('connect.sid=somecookievalue');
+            }
+            return $result;
+        }
         $result = false;
         if (self::cache_timeout() == 0) {
             return $result;
@@ -116,6 +126,9 @@ class cache {
      * @return void
      */
     public function set($param, $val) {
+        if (PHPUNIT_TEST) {
+            return;
+        }
         if (self::cache_timeout() > 0) {
             list($key, $created) = $this->getkeys($param);
             $this->muc->set_many([$key => serialize($val), $created => time()]);
@@ -127,6 +140,9 @@ class cache {
      * @return int
      */
     public function delete($param) {
+        if (PHPUNIT_TEST) {
+            return 0;
+        }
         return $this->muc->delete_many($this->getkeys($param));
     }
 
@@ -134,6 +150,9 @@ class cache {
      * @return bool
      */
     public function refresh() {
+        if (PHPUNIT_TEST) {
+            return false;
+        }
         return $this->muc->purge();
     }
 }
