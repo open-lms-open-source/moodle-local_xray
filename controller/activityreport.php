@@ -133,6 +133,11 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
         global $PAGE;
         $data = array();
+        // Check if dataformat is defined.
+        $dataformat = false;
+        if (isset($response->dataFormat)) {
+            $dataformat = true;
+        }
         $activityreportind = get_string('activityreportindividual', $this->component);
         foreach ($response->data as $row) {
 
@@ -152,7 +157,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
             // Format of response for columns.
             if (!empty($response->columnOrder)) {
                 foreach ($response->columnOrder as $column) {
-                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
+                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat);
                 }
             }
             $data[] = $r;

@@ -312,13 +312,18 @@ class local_xray_controller_reports extends mr_controller {
     private function processdataforresponsedatatable($response) {
 
         $data = array();
+        // Check if dataformat is defined.
+        $dataformat = false;
+        if (isset($response->dataFormat)) {
+            $dataformat = true;
+        }
         foreach ($response->data as $row) {
 
             $r = new stdClass();
             // Format of response for columns(if return has columnorder).
             if (!empty($response->columnOrder) && is_array($response->columnOrder)) {
                 foreach ($response->columnOrder as $column) {
-                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column);
+                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat);
                 }
             } else if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
                 $c = get_object_vars($response->columnHeaders);
@@ -338,9 +343,10 @@ class local_xray_controller_reports extends mr_controller {
      * @param  float $value
      * @param  string $table The elementname of the table
      * @param  string $column
+     * @param  string $dateformat
      * @return string
      */
-    public function show_intuitive_value($value, $table, $column) {
+    public function show_intuitive_value($value, $table, $column, $dateformat) {
         $plugin = 'local_xray';
         switch ($table) {
             case 'riskMeasures':
@@ -348,7 +354,12 @@ class local_xray_controller_reports extends mr_controller {
                 switch ($column) {
                     case 'timeOnTask':
                         // Column Time spent in course (hours).
-                        return $this->show_time_hours_minutes($value);
+                        // Check if timerange is defined.
+                        $minutes = false;
+                        if (isset($dateformat->{$column}) && $dateformat->{$column} == self::XRAYTIMERANGEMINUTE) {
+                            $minutes = true;
+                        }
+                        return $this->show_time_hours_minutes($value, $minutes);
                         break;
                     case 'fail':
                         // Column Academic risk.
@@ -396,7 +407,12 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'timeOnTask':
                         // Column Time spent in course (hours).
-                        return $this->show_time_hours_minutes($value);
+                        // Check if timerange is defined.
+                        $minutes = false;
+                        if (isset($dateformat->{$column}) && $dateformat->{$column} == self::XRAYTIMERANGEMINUTE) {
+                            $minutes = true;
+                        }
+                        return $this->show_time_hours_minutes($value, $minutes);
                         break;
                     case 'weeklyRegularity':
                         // Column Visit regularity (weekly).
