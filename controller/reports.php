@@ -313,10 +313,8 @@ class local_xray_controller_reports extends mr_controller {
 
         $data = array();
         // Check if dataformat is defined.
-        $dataformat = false;
-        if (isset($response->dataFormat)) {
-            $dataformat = true;
-        }
+        $dataformat = (isset($response->dataFormat) ? $response->dataFormat : false);
+
         foreach ($response->data as $row) {
 
             $r = new stdClass();
@@ -639,7 +637,7 @@ class local_xray_controller_reports extends mr_controller {
      * @return mixed|string
      */
     public function show_time_hours_minutes($time, $minutes = false) {
-        if (is_numeric($time) && $minutes >= 0) {
+        if (is_numeric($time) && $time >= 0) {
             if ($minutes) { // Time range is sent in minutes.
                 // Get hours from minutes
                 $hours = floor($time / 60);
@@ -653,6 +651,9 @@ class local_xray_controller_reports extends mr_controller {
                 // Get the remaining minutes.
                 $remainingminutes = $minutes % 60;
             }
+            // Two digits.
+            $hours = sprintf("%02d", $hours);
+            $remainingminutes = sprintf("%02d", $remainingminutes);
             // Return the time range in format.
             $timeformat = str_ireplace('%M', $remainingminutes, str_ireplace('%H', $hours, get_string('strftimehoursminutes', 'local_xray')));
             return $timeformat;

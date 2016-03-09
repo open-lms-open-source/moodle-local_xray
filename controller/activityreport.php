@@ -134,10 +134,8 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
         global $PAGE;
         $data = array();
         // Check if dataformat is defined.
-        $dataformat = false;
-        if (isset($response->dataFormat)) {
-            $dataformat = true;
-        }
+        $dataformat = (isset($response->dataFormat) ? $response->dataFormat : false);
+
         $activityreportind = get_string('activityreportindividual', $this->component);
         foreach ($response->data as $row) {
 

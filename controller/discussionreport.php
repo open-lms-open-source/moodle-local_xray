@@ -172,10 +172,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         global $PAGE;
         $data = array();
         // Check if dataformat is defined.
-        $dataformat = false;
-        if (isset($response->dataFormat)) {
-            $dataformat = true;
-        }
+        $dataformat = (isset($response->dataFormat) ? $response->dataFormat : false);
+
         $discussionreportind = get_string('discussionreportindividual', $this->component);
         foreach ($response->data as $row) {
             $r = new stdClass();
