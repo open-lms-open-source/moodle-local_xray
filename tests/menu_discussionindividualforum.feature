@@ -46,9 +46,9 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
   @javascript
   Scenario: Menu xray with link to Discussion Report Individual Forum is displayed in forum view-page, hsforum view-page and in discussion view-page.
     Given the following "activities" exist:
-      | activity   | name      | intro      | type     | course | idnumber     |
-      | forum      | Forum1    | intro test | general  | C1     | forum1       |
-      | hsuforum   | HSUForum1 | intro test | general  | C1     | hsforum1     |
+      | activity   | name      | intro      | type          | course | idnumber     |
+      | forum      | Forum1    | intro test | <forum_type>  | C1     | forum1       |
+      | hsuforum   | HSUForum1 | intro test | <forum_type>  | C1     | hsforum1     |
 
     # I create posts for forums.
     And I log in as "admin"
@@ -78,16 +78,18 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I follow "Discussion1hsu"
     And I expand "X-Ray Learning Analytics" node
     Then I should see "Discussion Report Individual Forum"
-
-    # TODO: I need to add check for forum type "single".
+    Examples:
+    | forum_type |
+    | general    |
+    | single     |
 
 
   @javascript
-  Scenario: Menu xray with link to Discussion Report Individual Forum is not displayed in forum view-page, hsforum view-page and in discussion view-page.
+  Scenario Outline: Menu xray with link to Discussion Report Individual Forum is not displayed in forum view-page, hsforum view-page and in discussion view-page.
     Given the following "activities" exist:
-      | activity   | name      | intro      | type     | course | idnumber     |
-      | forum      | Forum1    | intro test | general  | C1     | forum1       |
-      | hsuforum   | HSUForum1 | intro test | general  | C1     | hsforum1     |
+      | activity   | name      | intro      | type          | course | idnumber     |
+      | forum      | Forum1    | intro test | <forum_type>  | C1     | forum1       |
+      | hsuforum   | HSUForum1 | intro test | <forum_type>  | C1     | hsforum1     |
     # I create posts for forums.
     And I log in as "admin"
     And I am on site homepage
@@ -113,27 +115,25 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     Then I should not see "X-Ray Learning Analytics"
     And I follow "Discussion1hsu"
     Then I should not see "X-Ray Learning Analytics"
-
-    # TODO: I need to add check for forum type "single".
+    Examples:
+    | forum_type |
+    | general    |
+    | single     |
 
   @javascript
-  Scenario: Menu xray with link to Discussion Report Individual Forum is not displayed in quiz pages.
+  Scenario Outline: Menu xray with link to Discussion Report Individual Forum is not displayed in quiz pages.
     Given  the following "activities" exist:
       | activity   | name   | intro              | course | idnumber |
       | quiz       | Quiz1  | Quiz 1 description | C1     | quiz1    |
-    # Check like teacher.
-    And I log in as "user2teacher"
+    And I log in as "<user>"
     And I am on site homepage
     And I follow "Course1"
     And I follow "Quiz1"
     Then I should not see "X-Ray Learning Analytics"
-    And I log out
-    # Check like student.
-    And I log in as "user1student"
-    And I am on site homepage
-    And I follow "Course1"
-    And I follow "Quiz1"
-    Then I should not see "X-Ray Learning Analytics"
+  Examples:
+  | user         |
+  | user1student |
+  | user2teacher |
 
   @javascript
   Scenario: Check if breadcrum is working correctly when user go to Accessible Version of some graph in Discussion Report Individual Forum.
