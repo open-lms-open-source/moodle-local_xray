@@ -44,7 +44,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | user2teacher | C1 | editingteacher |
 
   @javascript
-  Scenario: Menu xray with link to Discussion Report Individual Forum is displayed in forum view-page, hsforum view-page and in discussion view-page.
+  Scenario Outline: Menu xray with link to Discussion Report Individual Forum is displayed in forum view-page, hsforum view-page and in discussion view-page.
     Given the following "activities" exist:
       | activity   | name      | intro      | type          | course | idnumber     |
       | forum      | Forum1    | intro test | <forum_type>  | C1     | forum1       |
