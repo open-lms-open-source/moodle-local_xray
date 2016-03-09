@@ -480,3 +480,6 @@ $string['partc2_desc'] = 'Define cut-off point between "medium" and "high" range
 /* Behat test */
 $string['error_behat_getjson'] = 'Error to get json file "{$a}" from folder local/xray/tests/fixtures for simulate call to X-Ray Learning Analytics webservice when you are running behat test.';
 $string['error_behat_instancefail'] = 'This is an instance configured for fail with behat tests.';
+
+/* Format for time range value */
+$string['strftimehoursminutes'] = '%H:%M';

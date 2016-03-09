@@ -249,8 +249,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                             // Average time to respond (hours).
                             $avglag[$col->week->value] = '';
                             if (isset($col->avgLag->value)) {
+                                // Check if timerange is defined.
+                                $minutes = false;
+                                if (isset($response->dataFormat->avgLag) && $response->dataFormat->avgLag == self::XRAYTIMERANGEMINUTE) {
+                                    $minutes = true;
+                                }
                                 // Set time to HH:MM.
-                                $avglag[$col->week->value] = $this->show_time_hours_minutes($col->avgLag->value);
+                                $avglag[$col->week->value] = $this->show_time_hours_minutes($col->avgLag->value, $minutes);
                             }
                             // Average word count.
                             $avgwordcount[$col->week->value] = '';

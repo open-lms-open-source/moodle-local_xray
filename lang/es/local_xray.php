@@ -496,3 +496,6 @@ $string['partc2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto
 /* Behat test */
 $string['error_behat_getjson'] = 'Error al traer archivo "{$a}" de carpeta local/xray/tests/fixtures para simular llamada a X-Ray Learning Analytics webservice cuando se esta corriendo behat test.';
 $string['error_behat_instancefail'] = 'Esta es una instancia configurada para fallar al correr behat tests.';
+
+/* Format for time range value */
+$string['strftimehoursminutes'] = '%H:%M';

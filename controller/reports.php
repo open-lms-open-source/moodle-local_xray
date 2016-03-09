@@ -38,6 +38,10 @@ use local_xray\event\get_report_failed;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_controller_reports extends mr_controller {
+
+    // Time range in minutes from xray side.
+    const XRAYTIMERANGEMINUTE = 'timerangeminute';
+
     /**
      * Course id
      * @var integer
@@ -614,18 +618,28 @@ class local_xray_controller_reports extends mr_controller {
         }
     }
     /**
-     * Show time in format hours:minutes
-     * @param int $minutes
-     * @return string
+     * @param $time seconds by default or minutes if $minutes is true
+     * @param bool|false $minutes
+     * @return mixed|string
      */
-    public static function show_time_hours_minutes($minutes) {
-        if (is_numeric($minutes) && $minutes >= 0) {
-            // Get hours
-            $hours = floor($minutes / 60);
-            // Get the remaining minutes.
-            $remainingminutes = $minutes % 60;
-            // Return hours:minutes.
-            return $hours.':'.$remainingminutes;
+    public function show_time_hours_minutes($time, $minutes = false) {
+        if (is_numeric($time) && $minutes >= 0) {
+            if ($minutes) { // Time range is sent in minutes.
+                // Get hours from minutes
+                $hours = floor($time / 60);
+                // Get the remaining minutes.
+                $remainingminutes = $time % 60;
+            } else { // Time range is sent in seconds.
+                // Get minutes from seconds
+                $minutes = floor($time / 60);
+                // Get hours from seconds
+                $hours = floor($minutes / 60);
+                // Get the remaining minutes.
+                $remainingminutes = $minutes % 60;
+            }
+            // Return the time range in format.
+            $timeformat = str_ireplace('%M', $remainingminutes, str_ireplace('%H', $hours, get_string('strftimehoursminutes', 'local_xray')));
+            return $timeformat;
         } else {
             return '-';
         }
