@@ -636,7 +636,7 @@ class local_xray_controller_reports extends mr_controller {
      * @param bool|false $minutes
      * @return mixed|string
      */
-    public function show_time_hours_minutes($time, $minutes = false) {
+    public static function show_time_hours_minutes($time, $minutes = false) {
         if (is_numeric($time) && $time >= 0) {
             if ($minutes) { // Time range is sent in minutes.
                 // Get hours from minutes
