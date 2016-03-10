@@ -51,13 +51,13 @@ class local_xray_show_time_testcase extends \advanced_testcase {
      * Method show_time_hours_minutes.
      * Test result when $time is in seconds.
      * Test result being with two digits format.
-     * Test values highers than 24 hours.
+     * Test positive values higher than 24 hours.
      */
     public function test_seconds_param() {
         // Create a value with seconds, representing 24 hours.
         $secondsparam = 24 * 60 * 60;
-        // Add 90 additional seconds (The result will be 1 minutes, because the remaining 30 seconds are not taken).
-        $secondsparam = $secondsparam + 60;
+        // Add 90 additional seconds (The result will be 1 minute, because we don't use remaining seconds minor than one minute).
+        $secondsparam = $secondsparam + 90;
 
         $result = \local_xray_controller_reports::show_time_hours_minutes($secondsparam);
         $time = explode(":", $result);
@@ -73,63 +73,43 @@ class local_xray_show_time_testcase extends \advanced_testcase {
      * Test result when $time is in minutes.
      * Test result being with two digits format.
      * Test positive values lower than 24 hours.
+     * Test positive values equal to 24 hours.
+     * Test positive values higher than 24 hours.
      */
     public function test_minutes_param() {
-        // Create a value with minutes, representing 23 hours.
+        // Create a value with minutes. 23 hours.
         $minutesparam = 23 * 60;
-        // Add 59 additional minutes.
-        $minutesparam = $minutesparam + 59;
-
-        $result = \local_xray_controller_reports::show_time_hours_minutes($minutesparam, true);
-        $time = explode(":", $result);
-        $hours = $time[0];
-        $minutes = $time[1];
-
+        // Add additional minutes.
+        $minutesparamlower = $minutesparam + 59;// Lower than 24 hours.
+        $minutesparamequal = $minutesparam + 60;// Equal to 24 hours.
+        $minutesparamhigher = $minutesparam + 61;// Higher than 24 hours.
+        // Test positive values lower than 24 hours.
+        $resultlower = \local_xray_controller_reports::show_time_hours_minutes($minutesparamlower, true);
+        $timelower = explode(":", $resultlower);
+        $hours = $timelower[0];
+        $minutes = $timelower[1];
         $this->assertSame("23", $hours);
         $this->assertSame("59", $minutes);
-    }
-
-
-    /**
-     * Method show_time_hours_minutes
-     * Test positive values lower than 24 hours.
-     *//*
-    public function test_positive_lower_values() {
-        $this->resetAfterTest(true);
-        global $CFG;
-        require_once($CFG->dirroot.'/local/xray/controller/reports.php');
-        // Create a higher value than 24 hours.
-        $highervalue = 60 * 12;
-
-        $result = \local_xray_controller_reports::show_time_hours_minutes($highervalue);
-        $time = explode(":", $result);
-        $hours = $time[0];
-
-        $this->assertEquals(12, $hours);
-    }
-
-    /**
-     * Method show_time_hours_minutes
-     * Test values highers than 24 hours.
-     *//*
-    public function test_high_values() {
-        $this->resetAfterTest(true);
-        global $CFG;
-        require_once($CFG->dirroot.'/local/xray/controller/reports.php');
-        // Create a higher value than 24 hours.
-        $highervalue = 60 * 25;
-
-        $result = \local_xray_controller_reports::show_time_hours_minutes($highervalue);
-        $time = explode(":", $result);
-        $hours = $time[0];
-
-        $this->assertEquals(25, $hours);
+        // Test positive values equal to 24 hours.
+        $resultequal = \local_xray_controller_reports::show_time_hours_minutes($minutesparamequal, true);
+        $timeequal = explode(":", $resultequal);
+        $hours = $timeequal[0];
+        $minutes = $timeequal[1];
+        $this->assertSame("24", $hours);
+        $this->assertSame("00", $minutes);
+        // Test positive values higher than 24 hours.
+        $resulthigher = \local_xray_controller_reports::show_time_hours_minutes($minutesparamhigher, true);
+        $timehigher = explode(":", $resulthigher);
+        $hours = $timehigher[0];
+        $minutes = $timehigher[1];
+        $this->assertSame("24", $hours);
+        $this->assertSame("01", $minutes);
     }
 
     /**
      * Method show_time_hours_minutes
      * Test negative values.
-     *//*
+     */
     public function test_negative_values() {
         $this->resetAfterTest(true);
         global $CFG;
@@ -145,7 +125,7 @@ class local_xray_show_time_testcase extends \advanced_testcase {
     /**
      * Method show_time_hours_minutes
      * Test non numeric values.
-     *//*
+     */
     public function test_non_numeric_values() {
         $this->resetAfterTest(true);
         global $CFG;
@@ -156,5 +136,5 @@ class local_xray_show_time_testcase extends \advanced_testcase {
         $result = \local_xray_controller_reports::show_time_hours_minutes($nonnumeric);
 
         $this->assertSame('-', $result);
-    }*/
+    }
 }
