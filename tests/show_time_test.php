@@ -111,14 +111,9 @@ class local_xray_show_time_testcase extends \advanced_testcase {
      * Test negative values.
      */
     public function test_negative_values() {
-        $this->resetAfterTest(true);
-        global $CFG;
-        require_once($CFG->dirroot.'/local/xray/controller/reports.php');
         // Create a negative value.
         $negativevalue = -1;
-
         $result = \local_xray_controller_reports::show_time_hours_minutes($negativevalue);
-
         $this->assertSame('-', $result);
     }
 
@@ -127,14 +122,9 @@ class local_xray_show_time_testcase extends \advanced_testcase {
      * Test non numeric values.
      */
     public function test_non_numeric_values() {
-        $this->resetAfterTest(true);
-        global $CFG;
-        require_once($CFG->dirroot.'/local/xray/controller/reports.php');
         // Create a not number value.
         $nonnumeric = 'break';
-
         $result = \local_xray_controller_reports::show_time_hours_minutes($nonnumeric);
-
         $this->assertSame('-', $result);
     }
 }
