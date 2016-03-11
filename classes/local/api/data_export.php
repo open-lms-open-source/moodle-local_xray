@@ -190,8 +190,12 @@ class data_export {
      * @return void
      */
     public static function dispatch_query($sqlbase, $params, $method, $dir) {
+        $counter = 0;
         foreach ($params as $query) {
-            self::do_export($sqlbase.$query['sql'], self::default_params($query['params']), $method, $dir);
+            $ccounter = self::do_export($sqlbase.$query['sql'], self::default_params($query['params']), $method, $dir, $counter);
+            if ($ccounter > $counter) {
+                $counter = $ccounter;
+            }
         }
     }
 
@@ -675,23 +679,25 @@ class data_export {
      * can not rely only on last read record id but always take into account updated timemodified field if it is
      * available.
      *
-     * @param string $sql
-     * @param array  $params
-     * @param string $filename
-     * @param string $dir
-     * @return bool
+     * @param  string $sql       - SQL query to execute
+     * @param  array  $params    - Query parameters
+     * @param  string $filename  - Base filename and table for export
+     * @param  string $dir       - Export location
+     * @param  int    $prevcount - Since do_export can be called multiple times for the same table we need to preserve file counter
+     * @return int
+     * @throws \moodle_exception - in case of db error or export file error
      */
-    public static function do_export($sql, $params = null, $filename, $dir) {
+    public static function do_export($sql, $params = null, $filename, $dir, $prevcount = 0) {
         global $DB;
 
         if (!timer::within_time()) {
-            return;
+            return 0;
         }
 
         $count     = self::get_max_record_count();
         $pos       = 0;
         $counter   = 0;
-        $fcount    = 1;
+        $fcount    = $prevcount;
         $recordset = null;
         $lastid    = null;
         $maxdate   = null;
@@ -702,6 +708,8 @@ class data_export {
         $lastidstore = get_config(self::PLUGIN, $filename);
         if (!empty($lastidstore)) {
             $lastid = $lastidstore;
+        } else {
+            $lastidstore = 0;
         }
 
         do {
@@ -716,6 +724,7 @@ class data_export {
                 break;
             }
 
+            $fcount   += 1;
             $filenamer = sprintf('%s_%08d.csv', $filename, $fcount);
             $exportf   = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filenamer);
             $file      = new csv_file($exportf);
@@ -746,7 +755,6 @@ class data_export {
             self::$meta[] = (object)['name' => $filenamer, 'table' => $filename];
 
             $pos    += $count;
-            $fcount += 1;
 
         } while (($counter >= $pos) && timer::within_time());
 
@@ -756,6 +764,8 @@ class data_export {
         if (!empty($maxdate)) {
             self::$counters[] = ['setting' => self::get_maxdate_setting($filename), 'value' => $maxdate];
         }
+
+        return $fcount;
     }
 
     /**
@@ -874,6 +884,12 @@ class data_export {
         }
     }
 
+    protected static function mtrace($text) {
+        if (!PHPUNIT_TEST) {
+            mtrace($text);
+        }
+    }
+
     /**
      * @param int $timest
      * @param int $timeend
@@ -901,19 +917,19 @@ class data_export {
         if (array_key_exists('legacy', $logstores)) {
             self::accesslog($timest, $timeend, $dir);
         } else {
-            mtrace('Legacy logstore not installed. Skipping.');
+            self::mtrace('Legacy logstore not installed. Skipping.');
         }
         if (array_key_exists('standard', $logstores)) {
             self::standardlog($timest, $timeend, $dir);
         } else {
-            mtrace('Standard logstore not installed. Skipping.');
+            self::mtrace('Standard logstore not installed. Skipping.');
         }
         if (array_key_exists('forum', $plugins)) {
             self::forums($timest, $timeend, $dir);
             self::threads($timest, $timeend, $dir);
             self::posts($timest, $timeend, $dir);
         } else {
-            mtrace('Forum activity not installed. Skipping.');
+            self::mtrace('Forum activity not installed. Skipping.');
         }
         // Since Advanced Forum is not core plugin we check for it's presence.
         if (array_key_exists('hsuforum', $plugins)) {
@@ -921,18 +937,18 @@ class data_export {
             self::hsuthreads($timest, $timeend, $dir);
             self::hsuposts($timest, $timeend, $dir);
         } else {
-            mtrace('Advanced forum activity not installed. Skipping.');
+            self::mtrace('Advanced forum activity not installed. Skipping.');
         }
         if (array_key_exists('quiz', $plugins)) {
             self::quiz($timest, $timeend, $dir);
         } else {
-            mtrace('Quiz activity not installed. Skipping.');
+            self::mtrace('Quiz activity not installed. Skipping.');
         }
         self::grades($timest, $timeend, $dir);
 
         self::export_metadata($dir);
 
-        mtrace("Export data execution time: ".timer::end()." sec.");
+        self::mtrace("Export data execution time: ".timer::end()." sec.");
     }
 
     /**

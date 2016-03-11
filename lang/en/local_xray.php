@@ -100,6 +100,8 @@ $string['error_xray'] = 'Can’t connect to X-Ray Learning Analytics, please try
 $string['error_compress'] = 'Unable to create compressed file. Please contact your system administrator.';
 
 $string['error_generic'] = '{$a}';
+$string['error_fexists'] = 'File {$a} already exists!';
+$string['error_fnocreate'] = 'Unable to create {$a} file!';
 
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';
