@@ -99,6 +99,8 @@ $string['error_xray'] = 'Error al conectar con X-Ray Learning Analytics, por fav
 $string['error_compress'] = 'No fue possible crear archivo comprimido. Por favor contacta con el administrador del sitio.';
 
 $string['error_generic'] = '{$a}';
+$string['error_fexists'] = 'Archivo {$a} existe!';
+$string['error_fnocreate'] = 'No puedo crear archivo {$a}!';
 
 /* Settings */
 $string['xrayclientid'] = 'Identificador de cliente';
