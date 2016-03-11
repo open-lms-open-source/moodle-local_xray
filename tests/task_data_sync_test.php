@@ -45,29 +45,39 @@ class local_xray_task_data_sync_testcase extends advanced_testcase {
     }
 
     /**
-     * @param int $nr
-     * @param int $timecreated
+     * @param int $nr - number of courses
+     * @param int $timecreated - optional timestamp of creation
      */
     protected function addcourses($nr, $timecreated = null) {
         if (empty($timecreated)) {
             $timecreated = time();
         }
 
-        $record['timecreated'] = $timecreated;
-        $record['startdate'] = $timecreated;
+        $record = [
+            'timecreated' => $timecreated,
+            'startdate'   => $timecreated
+        ];
 
-        // Create 5 courses.
+        // Create course(s).
         $datagen = $this->getDataGenerator();
         for ($count = 0; $count < $nr; $count++) {
             $datagen->create_course($record);
         }
     }
 
+    /**
+     * @param int    $timeend - Export until timestamp
+     * @param string $dir - export location
+     * @return void
+     */
     protected function export($timeend, $dir) {
         local_xray\local\api\data_export::export_csv(0, $timeend, $dir);
         local_xray\local\api\data_export::store_counters();
     }
 
+    /**
+     * @return void
+     */
     public function test_export() {
         $this->timezone();
         $this->resetAfterTest();

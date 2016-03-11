@@ -20,36 +20,69 @@ defined('MOODLE_INTERNAL') || die();
  * Class csv_fileiterator
  */
 class csv_fileiterator implements Iterator {
+
+    /**
+     * @var resource - file handle
+     */
     protected $file;
+
+    /**
+     * @var int
+     */
     protected $key = 0;
+
+    /**
+     * @var array
+     */
     protected $current;
 
+    /**
+     * @param string $file - path to existing file
+     */
     public function __construct($file) {
         $this->file = fopen($file, 'r');
+        if ($file === false) {
+            print_error('cannotopenfile', 'core_error', '', $file);
+        }
     }
 
     public function __destruct() {
         fclose($this->file);
     }
 
+    /**
+     * @return void
+     */
     public function rewind() {
         rewind($this->file);
         $this->current = fgetcsv($this->file);
         $this->key = 0;
     }
 
+    /**
+     * @return bool
+     */
     public function valid() {
         return !feof($this->file);
     }
 
+    /**
+     * @return int
+     */
     public function key() {
         return $this->key;
     }
 
+    /**
+     * @return array
+     */
     public function current() {
         return $this->current;
     }
 
+    /**
+     * @return void
+     */
     public function next() {
         $this->current = fgetcsv($this->file);
         $this->key++;
