@@ -99,9 +99,7 @@ class local_xray_task_data_sync_testcase extends advanced_testcase {
         $exportfile = $storagedir.DIRECTORY_SEPARATOR.'courseinfo_00000001.csv';
         $this->assertFileExists($exportfile);
 
-        $dtime = new DateTime('now', new DateTimeZone('UTC'));
-        $dtime->setTimestamp($timepast);
-        $expected = $dtime->format('Y-m-d H:i:s');
+        $expected = gmdate('Y-m-d H:i:s', $timepast);
         $count = 5;
         $first = true;
         $iterator = new csv_fileiterator($exportfile);
