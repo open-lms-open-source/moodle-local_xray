@@ -45,5 +45,25 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070324, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070327) {
+        $task = \core\task\manager::get_scheduled_task('local_xray\task\data_sync');
+        if (!empty($task)) {
+            $minute = $task->get_minute();
+            $hour = $task->get_hour();
+            if (($hour == '*/12') and ($minute == '*')) {
+                $task->set_minute('0');
+                $task->set_customised(false);
+                try {
+                    \core\task\manager::configure_scheduled_task($task);
+                } catch (Exception $e) {
+                    // This should not happen but we will let it pass.
+                    ($task);
+                }
+            }
+        }
+
+        upgrade_plugin_savepoint(true, 2015070327, 'local', 'xray');
+    }
+
     return true;
 }
