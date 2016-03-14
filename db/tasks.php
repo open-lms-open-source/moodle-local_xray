@@ -29,7 +29,7 @@ $tasks = [
     [
         'classname' => 'local_xray\task\data_sync',
         'blocking'  => 0,
-        'minute'    => '*',
+        'minute'    => '0',
         'hour'      => '*/12',
         'day'       => '*',
         'dayofweek' => '*',
