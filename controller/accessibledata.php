@@ -65,15 +65,35 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
     private $graphname;
 
     /**
+     * Cmid.
+     * @var integer
+     */
+    private $cmid;
+
+    /**
+     * Forum id
+     * @var integer
+     */
+    private $forum;
+
+    /**
+     * Discussion id.
+     * @var integer
+     */
+    private $d;
+
+    /**
      * Init
      */
     public function init() {
-        // Dont need userid because each element is different for each user(
         $this->origincontroller = required_param("origincontroller", PARAM_ALPHANUMEXT);
         $this->reportid = required_param("reportid", PARAM_ALPHANUMEXT);
         $this->elementname = required_param("elementname", PARAM_ALPHANUMEXT);
         $this->graphname = get_string($this->origincontroller."_".$this->elementname, $this->component);
         $this->userid = optional_param("userid", null, PARAM_ALPHANUMEXT);
+        $this->cmid = optional_param("cmid", null, PARAM_ALPHANUMEXT);
+        $this->forum = optional_param("forum", null, PARAM_ALPHANUMEXT);
+        $this->d = optional_param("d", null, PARAM_ALPHANUMEXT);
     }
 
     /**
@@ -92,12 +112,21 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         global $PAGE;
 
         $output = "";
-
+        $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         // Add nav to return to report.
         $paramsurl = array("controller" => $this->origincontroller,
             "courseid" => $this->courseid);
         if(!empty($this->userid)) {
             $paramsurl["userid"] = $this->userid;
+        }
+        if(!empty($this->cmid)) {
+            $paramsurl["cmid"] = $this->cmid;
+        }
+        if(!empty($this->forum)) {
+            $paramsurl["forum"] = $this->forum;
+        }
+        if(!empty($this->d)) {
+            $paramsurl["d"] = $this->d;
         }
         $PAGE->navbar->add(get_string($this->origincontroller, $this->component),
             new moodle_url('/local/xray/view.php',$paramsurl));
