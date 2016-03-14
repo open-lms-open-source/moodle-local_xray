@@ -74,7 +74,10 @@ class auto_clean {
         foreach ($exportfiles as $file) {
             unlink($this->directory.DIRECTORY_SEPARATOR.$file);
         }
-        rmdir($this->directory);
+        $exportfiles = array_diff(scandir($this->directory), array('..', '.'));
+        if (empty($exportfiles)) {
+            rmdir($this->directory);
+        }
         $this->directory = '';
     }
 

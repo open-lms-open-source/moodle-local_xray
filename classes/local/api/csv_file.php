@@ -52,9 +52,12 @@ class csv_file {
      * @param string $path
      */
     public function __construct($path) {
+        if (file_exists($path)) {
+            print_error('error_fexists', 'local_xray', '', $path);
+        }
         $res = fopen($path, 'w');
         if ($res === false) {
-            throw new \RuntimeException('Unable to create file!');
+            print_error('error_fnocreate', 'local_xray', '', $path);
         }
         $this->resource = $res;
     }
