@@ -458,4 +458,51 @@ abstract class wsapi {
         $url = sprintf('%s/%s/data/%s/%s/accessible', $baseurl, $domain, $reportid, $elementname);
         return self::generic_getcall($url);
     }
+
+    /**
+     * Create complete url to xray image and check if url is available using token.
+     *
+     * @param $uuid - Element with path to image in xray side.
+     * @return bool|\moodle_url
+     * @throws \moodle_exception
+     */
+    public static function get_imgurl_xray($uuid) {
+
+        if (defined('BEHAT_SITE_RUNNING')) {
+            global $OUTPUT;
+            // Return X-ray logo for behat test.
+            $imgurl = $OUTPUT->pix_url("xray-logo", "local_xray");
+            return $imgurl;
+        }
+
+        $result = false;
+        $cfgxray = get_config('local_xray');
+        $imgurl = new \moodle_url(sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $uuid));
+        $imgurl->param('accesstoken', self::accesstoken());
+
+        $curlopts = array(
+            'CURLOPT_TIMEOUT' => 2,
+            'CURLOPT_CONNECTTIMEOUT' => 2
+        );
+
+        if (isset($cfgxray->connecttimeout) && !empty($cfgxray->connecttimeout)) {
+            $curlopts['CURLOPT_CONNECTTIMEOUT'] = $cfgxray->connecttimeout;
+        }
+
+        if (isset($cfgxray->timeout) && !empty($cfgxray->timeout)) {
+            $curlopts['CURLOPT_TIMEOUT'] = $cfgxray->timeout;
+        }
+
+        $ch = new \curl(['debug' => false]);
+        $ch->head($imgurl, $curlopts);
+        if (!empty($ch->get_errno())) {
+            print_error('xrayws_error_curl', 'local_xray', '', $ch->response);
+        }
+
+        if (!empty($ch->info['content_type']) && preg_match('#^image/.*#', $ch->info['content_type'])) {
+            $result = $imgurl;
+        }
+
+        return $result;
+    }
 }
