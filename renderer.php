@@ -105,7 +105,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $urlaccessible = new moodle_url("/local/xray/view.php", $paramsurl);
 
             $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
-                array("target" => "_blank",
+                array("target" => "_accessibledata",
                     "class" => "xray-accessible-view-data"));
             $output .= html_writer::tag('span', $linkaccessibleversion);
         }
@@ -129,7 +129,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Show Graph.
         // Get Tooltip.
-        if (!empty($urlimg)) {
+        if (!empty($imgurl)) {
             $output .= html_writer::start_tag('div', array('id' => $element->elementName, 'class' => 'xray-graph-background'));
             $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
 

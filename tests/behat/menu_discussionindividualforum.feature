@@ -125,7 +125,15 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I am on site homepage
     And I follow "Course1"
     And I follow "Forum1"
-    And I navigate to "Discussion Report Individual Forum" node in "Forum administration > X-Ray Learning Analytics > Discussion Report Individual Forum"
-    And I follow "View Data"
-
-    # TODO: I need to add fixture for Discussion Report Individual Forum.
+    And I navigate to "Discussion Report Individual Forum" node in "Forum administration > X-Ray Learning Analytics"
+    # Open graph.
+    And I click on "a.xray-graph-box-link" "css_element"
+    # Close graph.
+    And I click on "a.xray-close-link" "css_element"
+    # Go to Accessible data.
+    And I click on "a.xray-accessible-view-data" "css_element"
+    And I switch to "_accessibledata" window
+    And I wait until the page is ready
+    And I follow visible link "Discussion Report Individual Forum"
+    And I wait "3" seconds
+    Then I should see "Discussion Report Individual Forum" in the "#region-main" "css_element"
