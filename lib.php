@@ -55,9 +55,16 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
         ]
     ];
 
-    if (in_array($page->pagetype, ['mod-quiz-view', 'mod-forum-view', 'mod-hsuforum-view'])) {
+    if (in_array($page->pagetype, ['mod-forum-view', 'mod-hsuforum-view',
+        'mod-forum-discuss', 'mod-hsuforum-discuss'])) {
         $extraparams['cmid' ] = $context->instanceid;
         $extraparams['forum'] = $page->cm->instance;
+
+        // Support for discussion of forum/hsforum.
+        $d = $page->url->get_param('d');
+        if (!empty($d)) {
+            $extraparams['d'] = $d;
+        }
         $reportlist = [
             'modulesettings' => [
                 'discussionreportindividualforum' => 'local/xray:discussionreportindividualforum_view',

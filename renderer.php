@@ -63,61 +63,35 @@ class local_xray_renderer extends plugin_renderer_base {
     /**
      * Show Graph.
      *
-     * @param  string $name
-     * @param  stdClass $element
-     * @param  integer $reportid - Id of report, we need this to get accessible data from webservice.
-     * @param  boolean - Show help for graph or not.
+     * @param $name
+     * @param $element
+     * @param $reportid - Id of report, we need this to get accessible data from webservice.
+     * @param array $extraparamurlaccessible
+     * @param bool|true $hashelp - Show help for graph or not.
      * @return string
      */
-
-    public function show_graph($name, $element, $reportid, $extraparamurlaccessible = array(), $has_help = true) {
+    public function show_graph($name, $element, $reportid, $extraparamurlaccessible = array(), $hashelp = true) {
 
         global $PAGE, $COURSE, $OUTPUT;
         $plugin = "local_xray";
-        $cfgxray = get_config('local_xray');
-        $imgurl = sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $element->uuid);
-        // Access Token.
-        $accesstoken = local_xray\local\api\wsapi::accesstoken();
-        $imgurl = new moodle_url($imgurl, array('accesstoken' => $accesstoken));
+
         $output = "";
         // List Graph.
         $title = get_string($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
         $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
         $output .= html_writer::tag('h3', $title, array("class" => "xray-reportsname"));
 
-        // Validate if exist and is available image in xray side.
-        $existimg = false;
+        $imgurl = false;
         try {
-            $curlopts = array(
-                'CURLOPT_TIMEOUT' => 2,
-                'CURLOPT_CONNECTTIMEOUT' => 2
-            );
-
-            $connecttimeout = get_config('local_xray', 'connecttimeout');
-            if ($connecttimeout !== false) {
-                $curlopts['CURLOPT_CONNECTTIMEOUT'] = $connecttimeout;
-            }
-
-            $timeout = get_config('local_xray', 'timeout');
-            if ($timeout !== false) {
-                $curlopts['CURLOPT_TIMEOUT'] = $timeout;
-            }
-
-            $ch = new curl(['debug' => false]);
-            $ch->head($imgurl, $curlopts);
-            if (!empty($ch->get_errno())) {
-                print_error('xrayws_error_curl', 'local_xray', '', $ch->response);
-            }
-            if (!empty($ch->info['content_type']) && preg_match('#^image/.*#', $ch->info['content_type'])) {
-                $existimg = true;
-            }
+            // Validate if exist and is available image in xray side.
+            $imgurl = local_xray\local\api\wsapi::get_imgurl_xray($element->uuid);
         }
         catch (Exception $e) {
             get_report_failed::create_from_exception($e, $PAGE->context, "renderer_show_graph")->trigger();
         }
 
         // Link to accessible version.
-        if($existimg) {
+        if (!empty($imgurl)) {
 
             $paramsurl = array("controller" => "accessibledata",
                 "origincontroller" => $PAGE->url->get_param("controller"),
@@ -125,19 +99,19 @@ class local_xray_renderer extends plugin_renderer_base {
                 "reportid" => $reportid,
                 "elementname" => $element->elementName,
                 "courseid" => $COURSE->id);
-            if(!empty($extraparamurlaccessible)) {
+            if (!empty($extraparamurlaccessible)) {
                 $paramsurl = array_merge($paramsurl, $extraparamurlaccessible);
             }
             $urlaccessible = new moodle_url("/local/xray/view.php", $paramsurl);
 
             $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
-                array("target" => "_blank",
+                array("target" => "_accessibledata",
                     "class" => "xray-accessible-view-data"));
             $output .= html_writer::tag('span', $linkaccessibleversion);
         }
 
         // Show image.
-        if ($existimg) {
+        if (!empty($imgurl)) {
             // Show image.
             $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName , 'class' => 'xray-graph-box-link'));
             $output .= html_writer::start_tag('span',
@@ -155,12 +129,12 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Show Graph.
         // Get Tooltip.
-        if ($existimg) {
+        if (!empty($imgurl)) {
             $output .= html_writer::start_tag('div', array('id' => $element->elementName, 'class' => 'xray-graph-background'));
             $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
 
             $helpicon = "";
-            if($has_help) {
+            if ($hashelp) {
                 $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
             }
             $output .= html_writer::tag('h6', $title.$helpicon, array('class' => 'xray-graph-caption-text'));
@@ -174,7 +148,6 @@ class local_xray_renderer extends plugin_renderer_base {
                 'href' => '#',
                 'class' => 'xray-close-link',
                 'title' => get_string('close', 'local_xray')));
-
 
             $output .= html_writer::end_tag('div');
         }

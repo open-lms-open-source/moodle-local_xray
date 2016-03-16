@@ -1,0 +1,600 @@
+{
+  "status": "OK",
+  "data": [
+    {
+      "Word": "testing",
+      "Frequency": 86,
+      "_row": "testing"
+    },
+    {
+      "Word": "testinghere",
+      "Frequency": 78,
+      "_row": "testinghere"
+    },
+    {
+      "Word": "friday",
+      "Frequency": 18,
+      "_row": "friday"
+    },
+    {
+      "Word": "new",
+      "Frequency": 18,
+      "_row": "new"
+    },
+    {
+      "Word": "days",
+      "Frequency": 13,
+      "_row": "days"
+    },
+    {
+      "Word": "closet",
+      "Frequency": 12,
+      "_row": "closet"
+    },
+    {
+      "Word": "get",
+      "Frequency": 12,
+      "_row": "get"
+    },
+    {
+      "Word": "rid",
+      "Frequency": 12,
+      "_row": "rid"
+    },
+    {
+      "Word": "wear",
+      "Frequency": 12,
+      "_row": "wear"
+    },
+    {
+      "Word": "something",
+      "Frequency": 10,
+      "_row": "something"
+    },
+    {
+      "Word": "according",
+      "Frequency": 9,
+      "_row": "according"
+    },
+    {
+      "Word": "americans",
+      "Frequency": 9,
+      "_row": "americans"
+    },
+    {
+      "Word": "area",
+      "Frequency": 9,
+      "_row": "area"
+    },
+    {
+      "Word": "areas",
+      "Frequency": 9,
+      "_row": "areas"
+    },
+    {
+      "Word": "arkansas",
+      "Frequency": 9,
+      "_row": "arkansas"
+    },
+    {
+      "Word": "barreling",
+      "Frequency": 9,
+      "_row": "barreling"
+    },
+    {
+      "Word": "big",
+      "Frequency": 9,
+      "_row": "big"
+    },
+    {
+      "Word": "blizzard",
+      "Frequency": 9,
+      "_row": "blizzard"
+    },
+    {
+      "Word": "carolinas",
+      "Frequency": 9,
+      "_row": "carolinas"
+    },
+    {
+      "Word": "cities",
+      "Frequency": 9,
+      "_row": "cities"
+    },
+    {
+      "Word": "city",
+      "Frequency": 9,
+      "_row": "city"
+    },
+    {
+      "Word": "coast",
+      "Frequency": 9,
+      "_row": "coast"
+    },
+    {
+      "Word": "covered",
+      "Frequency": 9,
+      "_row": "covered"
+    },
+    {
+      "Word": "eastern",
+      "Frequency": 9,
+      "_row": "eastern"
+    },
+    {
+      "Word": "england",
+      "Frequency": 9,
+      "_row": "england"
+    },
+    {
+      "Word": "every",
+      "Frequency": 9,
+      "_row": "every"
+    },
+    {
+      "Word": "extreme",
+      "Frequency": 9,
+      "_row": "extreme"
+    },
+    {
+      "Word": "feet",
+      "Frequency": 9,
+      "_row": "feet"
+    },
+    {
+      "Word": "force",
+      "Frequency": 9,
+      "_row": "force"
+    },
+    {
+      "Word": "four",
+      "Frequency": 9,
+      "_row": "four"
+    },
+    {
+      "Word": "freezing",
+      "Frequency": 9,
+      "_row": "freezing"
+    },
+    {
+      "Word": "gale",
+      "Frequency": 9,
+      "_row": "gale"
+    },
+    {
+      "Word": "historic",
+      "Frequency": 9,
+      "_row": "historic"
+    },
+    {
+      "Word": "impassable",
+      "Frequency": 9,
+      "_row": "impassable"
+    },
+    {
+      "Word": "least",
+      "Frequency": 9,
+      "_row": "least"
+    },
+    {
+      "Word": "midatlantic",
+      "Frequency": 9,
+      "_row": "midatlantic"
+    },
+    {
+      "Word": "million",
+      "Frequency": 9,
+      "_row": "million"
+    },
+    {
+      "Word": "morning",
+      "Frequency": 9,
+      "_row": "morning"
+    },
+    {
+      "Word": "one",
+      "Frequency": 9,
+      "_row": "one"
+    },
+    {
+      "Word": "outages",
+      "Frequency": 9,
+      "_row": "outages"
+    },
+    {
+      "Word": "people",
+      "Frequency": 9,
+      "_row": "people"
+    },
+    {
+      "Word": "potentially",
+      "Frequency": 9,
+      "_row": "potentially"
+    },
+    {
+      "Word": "power",
+      "Frequency": 9,
+      "_row": "power"
+    },
+    {
+      "Word": "rain",
+      "Frequency": 9,
+      "_row": "rain"
+    },
+    {
+      "Word": "roadwaysas",
+      "Frequency": 9,
+      "_row": "roadwaysas"
+    },
+    {
+      "Word": "roughly",
+      "Frequency": 9,
+      "_row": "roughly"
+    },
+    {
+      "Word": "shut",
+      "Frequency": 9,
+      "_row": "shut"
+    },
+    {
+      "Word": "snow",
+      "Frequency": 9,
+      "_row": "snow"
+    },
+    {
+      "Word": "snowstorm",
+      "Frequency": 9,
+      "_row": "snowstorm"
+    },
+    {
+      "Word": "southern",
+      "Frequency": 9,
+      "_row": "southern"
+    },
+    {
+      "Word": "states",
+      "Frequency": 9,
+      "_row": "states"
+    },
+    {
+      "Word": "storm",
+      "Frequency": 9,
+      "_row": "storm"
+    },
+    {
+      "Word": "threatening",
+      "Frequency": 9,
+      "_row": "threatening"
+    },
+    {
+      "Word": "two",
+      "Frequency": 9,
+      "_row": "two"
+    },
+    {
+      "Word": "warnings",
+      "Frequency": 9,
+      "_row": "warnings"
+    },
+    {
+      "Word": "whipped",
+      "Frequency": 9,
+      "_row": "whipped"
+    },
+    {
+      "Word": "widespread",
+      "Frequency": 9,
+      "_row": "widespread"
+    },
+    {
+      "Word": "winds",
+      "Frequency": 9,
+      "_row": "winds"
+    },
+    {
+      "Word": "winter",
+      "Frequency": 9,
+      "_row": "winter"
+    },
+    {
+      "Word": "york",
+      "Frequency": 9,
+      "_row": "york"
+    },
+    {
+      "Word": "around",
+      "Frequency": 8,
+      "_row": "around"
+    },
+    {
+      "Word": "hanger",
+      "Frequency": 8,
+      "_row": "hanger"
+    },
+    {
+      "Word": "worn",
+      "Frequency": 8,
+      "_row": "worn"
+    },
+    {
+      "Word": "weathercoma",
+      "Frequency": 7,
+      "_row": "weathercoma"
+    },
+    {
+      "Word": "anything",
+      "Frequency": 4,
+      "_row": "anything"
+    },
+    {
+      "Word": "apply",
+      "Frequency": 4,
+      "_row": "apply"
+    },
+    {
+      "Word": "bring",
+      "Frequency": 4,
+      "_row": "bring"
+    },
+    {
+      "Word": "can",
+      "Frequency": 4,
+      "_row": "can"
+    },
+    {
+      "Word": "challenge",
+      "Frequency": 4,
+      "_row": "challenge"
+    },
+    {
+      "Word": "chances",
+      "Frequency": 4,
+      "_row": "chances"
+    },
+    {
+      "Word": "clothes",
+      "Frequency": 4,
+      "_row": "clothes"
+    },
+    {
+      "Word": "dump",
+      "Frequency": 4,
+      "_row": "dump"
+    },
+    {
+      "Word": "eliminate",
+      "Frequency": 4,
+      "_row": "eliminate"
+    },
+    {
+      "Word": "first",
+      "Frequency": 4,
+      "_row": "first"
+    },
+    {
+      "Word": "fit",
+      "Frequency": 4,
+      "_row": "fit"
+    },
+    {
+      "Word": "flip",
+      "Frequency": 4,
+      "_row": "flip"
+    },
+    {
+      "Word": "focus",
+      "Frequency": 4,
+      "_row": "focus"
+    },
+    {
+      "Word": "getting",
+      "Frequency": 4,
+      "_row": "getting"
+    },
+    {
+      "Word": "goal",
+      "Frequency": 4,
+      "_row": "goal"
+    },
+    {
+      "Word": "handle",
+      "Frequency": 4,
+      "_row": "handle"
+    },
+    {
+      "Word": "hangers",
+      "Frequency": 4,
+      "_row": "hangers"
+    },
+    {
+      "Word": "help",
+      "Frequency": 4,
+      "_row": "help"
+    },
+    {
+      "Word": "ittry",
+      "Frequency": 4,
+      "_row": "ittry"
+    },
+    {
+      "Word": "ituse",
+      "Frequency": 4,
+      "_row": "ituse"
+    },
+    {
+      "Word": "joy",
+      "Frequency": 4,
+      "_row": "joy"
+    },
+    {
+      "Word": "konmari",
+      "Frequency": 4,
+      "_row": "konmari"
+    },
+    {
+      "Word": "last",
+      "Frequency": 4,
+      "_row": "last"
+    },
+    {
+      "Word": "loveapply",
+      "Frequency": 4,
+      "_row": "loveapply"
+    },
+    {
+      "Word": "make",
+      "Frequency": 4,
+      "_row": "make"
+    },
+    {
+      "Word": "method",
+      "Frequency": 4,
+      "_row": "method"
+    },
+    {
+      "Word": "months",
+      "Frequency": 4,
+      "_row": "months"
+    },
+    {
+      "Word": "needs",
+      "Frequency": 4,
+      "_row": "needs"
+    },
+    {
+      "Word": "next",
+      "Frequency": 4,
+      "_row": "next"
+    },
+    {
+      "Word": "oneyear",
+      "Frequency": 4,
+      "_row": "oneyear"
+    },
+    {
+      "Word": "overflowing",
+      "Frequency": 4,
+      "_row": "overflowing"
+    },
+    {
+      "Word": "pare",
+      "Frequency": 4,
+      "_row": "pare"
+    },
+    {
+      "Word": "pieces",
+      "Frequency": 4,
+      "_row": "pieces"
+    },
+    {
+      "Word": "really",
+      "Frequency": 4,
+      "_row": "really"
+    },
+    {
+      "Word": "reverse",
+      "Frequency": 4,
+      "_row": "reverse"
+    },
+    {
+      "Word": "right",
+      "Frequency": 4,
+      "_row": "right"
+    },
+    {
+      "Word": "rule",
+      "Frequency": 4,
+      "_row": "rule"
+    },
+    {
+      "Word": "sentimental",
+      "Frequency": 4,
+      "_row": "sentimental"
+    },
+    {
+      "Word": "seven",
+      "Frequency": 4,
+      "_row": "seven"
+    },
+    {
+      "Word": "since",
+      "Frequency": 4,
+      "_row": "since"
+    },
+    {
+      "Word": "six",
+      "Frequency": 4,
+      "_row": "six"
+    },
+    {
+      "Word": "space",
+      "Frequency": 4,
+      "_row": "space"
+    },
+    {
+      "Word": "special",
+      "Frequency": 4,
+      "_row": "special"
+    },
+    {
+      "Word": "stained",
+      "Frequency": 4,
+      "_row": "stained"
+    },
+    {
+      "Word": "still",
+      "Frequency": 4,
+      "_row": "still"
+    },
+    {
+      "Word": "tactic",
+      "Frequency": 4,
+      "_row": "tactic"
+    },
+    {
+      "Word": "things",
+      "Frequency": 4,
+      "_row": "things"
+    },
+    {
+      "Word": "torn",
+      "Frequency": 4,
+      "_row": "torn"
+    },
+    {
+      "Word": "turn",
+      "Frequency": 4,
+      "_row": "turn"
+    },
+    {
+      "Word": "unless",
+      "Frequency": 4,
+      "_row": "unless"
+    },
+    {
+      "Word": "value",
+      "Frequency": 4,
+      "_row": "value"
+    },
+    {
+      "Word": "way",
+      "Frequency": 4,
+      "_row": "way"
+    },
+    {
+      "Word": "week",
+      "Frequency": 4,
+      "_row": "week"
+    },
+    {
+      "Word": "wore",
+      "Frequency": 4,
+      "_row": "wore"
+    },
+    {
+      "Word": "year",
+      "Frequency": 4,
+      "_row": "year"
+    }
+  ]
+}

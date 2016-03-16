@@ -1,0 +1,20 @@
+{
+  "status": "OK",
+  "data": [
+    {
+      "From": "C Green",
+      "To": "teacher01 teacher01son",
+      "Interaction": 1
+    },
+    {
+      "From": "C Green",
+      "To": "teacher03 teacher03son",
+      "Interaction": 2
+    },
+    {
+      "From": "teacher01 teacher01son",
+      "To": "C Green",
+      "Interaction": 1
+    }
+  ]
+}
