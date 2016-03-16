@@ -1385,7 +1385,7 @@
         }
       ],
       "uuid": "dd46106d-1e49-4f16-8b16-f14c32743bcfriskScatterPlot.svg",
-      "title": "Academic Versus Social Risk",
+      "title": "Academic versus Social Risk",
       "legend": "Social risk is determined by discussion forum interaction; academic risk is determined \n                      by grade data. Each dot represents a student; red dots indicate students at risk, green dots indicate \n                      students not at risk. Shows how at risk a student is socially and academically. The black line plots \n                      the relationship between social and academic risk. The shaded area indicates the calculation confidence range.",
       "mapping": [],
       "tooltip": "Social risk is determined by discussion forum interaction; academic risk is determined \n                      by grade data. Each dot represents a student; red dots indicate students at risk, green dots indicate \n                      students not at risk. Shows how at risk a student is socially and academically. The black line plots \n                      the relationship between social and academic risk. The shaded area indicates the calculation confidence range.",
