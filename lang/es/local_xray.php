@@ -309,7 +309,7 @@ $string['activityreport_firstloginPiechartAdjusted_help'] = 'El diagrama muestra
     ' vea aquí puede dar un indicio del compromiso futuro.';
 
 /* Graphs Activity Individual report*/
-$string['activityreportindividual_activityLevelTimeline'] = 'Actividad por Fecha';
+$string['activityreportindividual_activityLevelTimeline'] = 'Actividad por fecha';
 $string['activityreportindividual_barplotOfActivityByWeekday'] = 'Actividad de las últimas dos semanas por día de la semana';
 $string['activityreportindividual_barplotOfActivityWholeWeek'] = 'Actividad durante las últimas semanas';
 
@@ -417,7 +417,7 @@ $string['discussionreport_discussionSuggestedGrades_help'] = 'Este diagrama de b
 /* Graphs Discussion report individual*/
 $string['discussionreportindividual_wordcloud'] = 'Palabras más utilizadas';
 $string['discussionreportindividual_socialStructure'] = 'Análisis de interacción';
-$string['discussionreportindividual_wordHistogram'] = 'Regularidad de Palabras más utilizadas';
+$string['discussionreportindividual_wordHistogram'] = 'Regularidad de palabras más utilizadas';
 
 /* Help Graphs Discussion report individual*/
 $string['discussionreportindividual_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
@@ -433,7 +433,7 @@ $string['discussionreportindividual_wordHistogram_help'] = 'Este histograma mues
 /* Graphs Discussion report individual forum*/
 $string['discussionreportindividualforum_wordcloud'] = 'Palabras más utilizadas';
 $string['discussionreportindividualforum_socialStructure'] = 'Análisis de interacción';
-$string['discussionreportindividualforum_wordHistogram'] = 'Regularidad de Palabras más utilizadas';
+$string['discussionreportindividualforum_wordHistogram'] = 'Regularidad de palabras más utilizadas';
 
 /* Help Graphs Discussion report individual forum*/
 $string['discussionreportindividualforum_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
