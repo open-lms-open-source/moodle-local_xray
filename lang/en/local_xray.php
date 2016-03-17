@@ -233,7 +233,7 @@ $string['activityreport_nonStarters'] = 'Inactive Students';// Activity report.
 $string['activityreport_studentList'] = 'Activity Metrics'; // Activity report.
 $string['risk_nonStarters'] = 'Inactive Students'; // Risk report.
 $string['risk_riskMeasures'] = 'Risk Metrics'; // Risk report.
-$string['gradebookreport_element2'] = 'Student grades'; // Gradebook report.
+$string['gradebookreport_element2'] = 'Student Grades'; // Gradebook report.
 $string['gradebookreport_element4'] = 'Summary of Quizzes'; // Gradebook report.
 $string['discussionreport_discussionMetrics'] = 'Participation Metrics'; // Discussion report.
 $string['discussionreport_discussionActivityByWeek'] = 'Activity by Week'; // Discussion report.
@@ -327,7 +327,7 @@ $string['activityreportindividual_barplotOfActivityWholeWeek_help'] = 'The chart
 
 /* Graphs Risk report*/
 $string['risk_riskDensity'] = 'Total Risk Profile';
-$string['risk_riskScatterPlot'] = 'Academic Versus Social Risk';
+$string['risk_riskScatterPlot'] = 'Academic versus Social Risk';
 
 /* Help Graphs Risk report*/
 $string['risk_riskDensity_help'] = 'This graphic shows the distribution of estimated risk in the course. '.
