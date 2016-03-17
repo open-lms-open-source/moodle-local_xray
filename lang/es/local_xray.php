@@ -84,7 +84,7 @@ $string['discussiongrading'] = 'Calificaciones de discusión';
 $string['gradebookreport'] = 'Calificaciones';
 
 /* Columns reports */
-$string['reportdate'] = 'Fecha de Reporte';
+$string['reportdate'] = 'Fecha de reporte';
 $string['weeks'] = 'Semanas';
 $string['week'] = 'Semana';
 
