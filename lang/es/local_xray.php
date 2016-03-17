@@ -42,17 +42,17 @@ $string['debuginfo'] = 'Información';
 $string['cachedef_request'] = 'X-Ray caché de los pedidos';
 
 /* Capabilities */
-$string['xray:activityreportindividual_view'] = 'Ver Reporte de Métricas de Actividad Individuales';
-$string['xray:activityreport_view'] = 'Ver Reporte de Actividad';
+$string['xray:activityreportindividual_view'] = 'Ver reporte de métricas de actividad individuales';
+$string['xray:activityreport_view'] = 'Ver reporte de actividad';
 $string['xray:dashboard_view'] = 'Ver interfaz de reportes';
-$string['xray:discussionreport_view'] = 'Ver Reporte de discusiones';
-$string['xray:discussionreportindividual_view'] = 'Ver Reporte de Discusión - Individual';
-$string['xray:discussionreportindividualforum_view'] = 'Ver Reporte individual de discusiones en foros';
-$string['xray:discussionendogenicplagiarism_view'] = 'Ver Reporte de Superposición de Palabras';
-$string['xray:discussiongrading_view'] = 'Ver Reporte de Calificaciones de Discusión';
-$string['xray:gradebookreport_view'] = 'Ver Reporte de Calificaciones';
-$string['xray:gradebookreportindividualquiz_view'] = 'Ver Reporte individual de calificaciones para quiz';
-$string['xray:risk_view'] = 'Ver Reporte de Estado de riesgo';
+$string['xray:discussionreport_view'] = 'Ver reporte de discusiones';
+$string['xray:discussionreportindividual_view'] = 'Ver discusión - Reporte individual';
+$string['xray:discussionreportindividualforum_view'] = 'Ver reporte individual de discusiones en foros';
+$string['xray:discussionendogenicplagiarism_view'] = 'Ver reporte de superposición de palabras';
+$string['xray:discussiongrading_view'] = 'Ver reporte de calificaciones de discusión';
+$string['xray:gradebookreport_view'] = 'Ver reporte de calificaciones';
+$string['xray:gradebookreportindividualquiz_view'] = 'Ver reporte individual de calificaciones para quiz';
+$string['xray:risk_view'] = 'Ver reporte de estado de riesgo';
 $string['xray:view'] = 'Ver X-Ray Learning Analytics';
 
 /* Categories for numbers values */
@@ -67,11 +67,11 @@ $string['regular'] = 'Regular';
 /* Report Activity Report*/
 $string['activityreport'] = 'Actividad';
 /* Report Activity Report Individual*/
-$string['activityreportindividual'] = 'Métricas de Actividad Individuales';
+$string['activityreportindividual'] = 'Métricas de actividad individuales';
 /* Discussion report*/
 $string['discussionreport'] = 'Discusiones';
 /* Discussion report individual*/
-$string['discussionreportindividual'] = 'Reporte de Discusión - Individual';
+$string['discussionreportindividual'] = 'Discusión - Reporte individual';
 /* Discussion report individual forum*/
 $string['discussionreportindividualforum'] = 'Reporte individual de discusiones en foros';
 /* Discussion report Endogenic Plagiarism*/
