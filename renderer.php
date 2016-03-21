@@ -567,9 +567,10 @@ class local_xray_renderer extends plugin_renderer_base {
 
         global $PAGE, $COURSE, $OUTPUT;
         $displaymenu = get_config('local_xray', 'displaymenu');
-        $menu = '';
+        $menu = '';;
         if ($displaymenu) {
             if (!empty($reports)) {
+                $classes = 'clearfix'
                 $menuitems = [];
                 foreach ($reports as $nodename => $reportsublist) {
                     foreach ($reportsublist as $reportstring => $url) {
@@ -584,6 +585,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 }
                 $title = '';
                 if (empty($reportcontroller)) {
+                    $classes .= " block"; // Structure of headline in frontpage will be like block.
                     $pluginname = get_string('pluginname', 'local_xray');
                     $icon = $OUTPUT->pix_icon('xray-logo', $pluginname, 'local_xray', array("class" => "x-ray-icon-title"));
                     $title = html_writer::tag('h4', $icon.$pluginname);
@@ -604,7 +606,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 }
 
                 $menu = html_writer::div($title . $navmenu. $headerdata,
-                    'clearfix',
+                    $classes,
                     array('id' => 'js-xraymenu', 'role' => 'region'));
 
             }
