@@ -462,18 +462,22 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param string $text
      * @param string $linkurl
      * @param string $text_link
-     * @param string $style_status
+     * @param array $style_status - Array with class and lang for status.
      * @return string
      */
     private function headline_column($number, $text, $linkurl, $textweekbefore, $style_status) {
 
         // Link with Number and icon.
-        $icon = html_writer::span('', $style_status."-icon xray-headline-icon");
+        $icon = html_writer::span('', $style_status[0]."-icon xray-headline-icon");
         $number = html_writer::tag("p", $number.$icon, array("class" => "xray-headline-number"));
         $link = html_writer::link($linkurl, $number, array("class" => "xray-headline-link", "title" => get_string('link_gotoreport', 'local_xray')));
+
+        // Text only for reader screens.
+        $arrowreader = html_writer::tag("span", "", array("class" => "xray-headline-status-hide", "title" => $style_status[1]));
         // Text for description and text of week before.
-        $text_desc = html_writer::tag("p", $text, array("class" => "xray-headline-desc"));
-        $textweekbefore = html_writer::tag("span", $textweekbefore, array("class" => "xray-headline-textweekbefore {$style_status}"));
+        $text_desc = html_writer::tag("p", $text.$arrowreader, array("class" => "xray-headline-desc"));
+
+        $textweekbefore = html_writer::tag("span", $textweekbefore, array("class" => "xray-headline-textweekbefore {$style_status[0]}"));
 
         return $link.$text_desc.$textweekbefore;
 
@@ -482,6 +486,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
     /**
      * Calculate colour and arrow for headline (compare current value and value in the previous week).
+     * Return array with class and string for reader.
      *
      * Same value = return class for yellow colour.
      * Increment value = return class for green colour.
@@ -489,23 +494,25 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * @param $valuenow
      * @param $valuepreviousweek
-     * @return string
+     * @return array
      */
     private function headline_status($valuenow, $valuepreviousweek) {
-
         // Default, same value.
         $style_status = "xray-headline-yellow";
+        $lang_status = get_string("arrow_same", "local_xray");
 
         if($valuenow < $valuepreviousweek) {
             // Decrement.
             $style_status = "xray-headline-red";
+            $lang_status = get_string("arrow_decrease", "local_xray");
         }
         elseif ($valuenow > $valuepreviousweek) {
             // Increment.
             $style_status = "xray-headline-green";
+            $lang_status = get_string("arrow_increase", "local_xray");
         }
 
-        return $style_status;
+        return array($style_status, $lang_status);
     }
     /**
      * Calculate colour and arrow for headline (compare current value and value in the previous week).
@@ -517,23 +524,26 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * @param $valuenow
      * @param $valuepreviousweek
-     * @return string
+     * @return array
      */
     private function headline_status_risk($valuenow, $valuepreviousweek) {
 
         // Default, same value.
         $style_status = "xray-headline-yellow";
+        $lang_status = get_string("arrow_same", "local_xray");
 
         if($valuenow > $valuepreviousweek) {
             // Decrement.
             $style_status = "xray-headline-red-caserisk";
+            $lang_status = get_string("arrow_decrease", "local_xray");
         }
         elseif ($valuenow < $valuepreviousweek) {
             // Increment.
             $style_status = "xray-headline-green-caserisk";
+            $lang_status = get_string("arrow_increase", "local_xray");
         }
 
-        return $style_status;
+        return array($style_status, $lang_status);
     }
 
     /**

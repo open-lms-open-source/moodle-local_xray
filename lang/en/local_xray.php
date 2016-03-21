@@ -197,7 +197,9 @@ $string['headline_loggedstudents'] = '<b>Logged in</b> students in the last 7 da
 $string['headline_posts'] = '<b>Posts</b> in the last 7 days';
 $string['headline_average'] = '<b>Average Grade</b> yesterday';
 $string['link_gotoreport'] = 'Go to report';
-
+$string['arrow_increase'] = 'This is an increase.';
+$string['arrow_decrease'] = 'This is a decrease.';
+$string['arrow_same'] = 'This stays the same.';
 
 /* Jquery Tables (with plugin datatables) */
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. '.

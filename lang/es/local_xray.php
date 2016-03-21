@@ -187,12 +187,16 @@ $string['atrisk'] = 'En riesgo';
 $string['dashboard'] = 'Interfaz';
 $string['fromlastweek'] = '{$a}% de cambio desde la ultima semana';
 $string['lastweekwas'] = 'Semana anterior fueron';
+$string['averageofweek'] = 'Promedio de la semana anterior fue';
 $string['of'] = ' de ';
-$string['headline_studentatrisk'] = 'Estudiantes en <b>Riesgo</b> en los últimos 7 dias';
+$string['headline_studentatrisk'] = 'Estudiantes en <b>Riesgo</b> ayer';
 $string['headline_loggedstudents'] = 'Estudiantes <b>Logueados</b> en los últimos 7 dias';
 $string['headline_posts'] = '<b>Posts</b> en los últimos 7 dias';
-$string['headline_average'] = '<b>Promedio de calificaciones</b> en quizzes en los últimos 7 dias';
+$string['headline_average'] = '<b>Promedio de calificaciones</b> ayer';
 $string['link_gotoreport'] = 'Ir al reporte';
+$string['arrow_increase'] = 'Esto es un incremento.';
+$string['arrow_decrease'] = 'Esto es una disminucion.';
+$string['arrow_same'] = 'Esto esta igual.';
 
 // Jquery Tables (with plugin datatables).
 $string['error_datatables'] = 'Error al traer datos para esta tabla. Por favor intenta nuevamente recargando la '.
