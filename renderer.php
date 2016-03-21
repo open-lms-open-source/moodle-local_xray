@@ -384,10 +384,11 @@ class local_xray_renderer extends plugin_renderer_base {
         $plugin = "local_xray";
         $output = "";
         $string_lastweek = get_string("lastweekwas", $plugin);
+        $stringaverageweek = get_string("averageofweek", $plugin);
         $string_of = get_string("of", $plugin);
 
         // Number of students at risk in the last 7 days.
-        $text_link = "{$string_lastweek} {$data->usersinrisklastsevendays_previousweek} {$string_of} {$data->totalstudents}";
+        $text_link = "{$stringaverageweek} {$data->usersinrisklastsevendays_previousweek} {$string_of} {$data->totalstudents}";
         // To risk metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
@@ -415,7 +416,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $status_class);
 
         // Number of average grades in the last 7 days.
-        $text_link = "{$string_lastweek} {$data->averagegradeslastsevendays_previousweek} %";
+        $text_link = "{$stringaverageweek} {$data->averagegradeslastsevendays_previousweek} %";
         // To students grades.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "element2");
@@ -570,7 +571,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $menu = '';;
         if ($displaymenu) {
             if (!empty($reports)) {
-                $classes = 'clearfix'
+                $classes = 'clearfix';
                 $menuitems = [];
                 foreach ($reports as $nodename => $reportsublist) {
                     foreach ($reportsublist as $reportstring => $url) {

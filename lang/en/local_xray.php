@@ -190,11 +190,12 @@ $string['atrisk'] = 'At risk';
 $string['dashboard'] = 'Dashboard';
 $string['fromlastweek'] = '{$a}% change from last week';
 $string['lastweekwas'] = 'Week before was';
+$string['averageofweek'] = 'Average of the week before was';
 $string['of'] = ' of ';
-$string['headline_studentatrisk'] = 'Students at <b>Risk</b> in the last 7 days';
+$string['headline_studentatrisk'] = 'Students at <b>Risk</b> yesterday';
 $string['headline_loggedstudents'] = '<b>Logged in</b> students in the last 7 days';
 $string['headline_posts'] = '<b>Posts</b> in the last 7 days';
-$string['headline_average'] = '<b>Average Grade</b> in quizzes in the last 7 days';
+$string['headline_average'] = '<b>Average Grade</b> yesterday';
 $string['link_gotoreport'] = 'Go to report';
 
 
