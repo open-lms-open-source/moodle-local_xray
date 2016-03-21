@@ -445,10 +445,10 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Menu list.
         $list = html_writer::start_tag("ul", array("class" => "xray-headline"));
-        $list .= html_writer::tag("li", $column1, array("id" => "xray-headline-risk"));
-        $list .= html_writer::tag("li", $column2, array("id" => "xray-headline-activity"));
-        $list .= html_writer::tag("li", $column3, array("id" => "xray-headline-gradebook"));
-        $list .= html_writer::tag("li", $column4, array("id" => "xray-headline-discussion"));
+        $list .= html_writer::tag("li", $column1, array("id" => "xray-headline-risk", "tabindex" => 0));
+        $list .= html_writer::tag("li", $column2, array("id" => "xray-headline-activity", "tabindex" => 0));
+        $list .= html_writer::tag("li", $column3, array("id" => "xray-headline-gradebook", "tabindex" => 0));
+        $list .= html_writer::tag("li", $column4, array("id" => "xray-headline-discussion", "tabindex" => 0));
         $list .= html_writer::end_tag("ul");
 
         $output .= html_writer::tag("nav", $list, array("id" => "xray-nav-headline"));
@@ -470,7 +470,7 @@ class local_xray_renderer extends plugin_renderer_base {
         // Link with Number and icon.
         $icon = html_writer::span('', $style_status[0]."-icon xray-headline-icon");
         $number = html_writer::tag("p", $number.$icon, array("class" => "xray-headline-number"));
-        $link = html_writer::link($linkurl, $number, array("class" => "xray-headline-link", "title" => get_string('link_gotoreport', 'local_xray')));
+        $link = html_writer::link($linkurl, $number, array("tabindex" => -1, "class" => "xray-headline-link", "title" => get_string('link_gotoreport', 'local_xray')));
 
         // Text only for reader screens.
         $arrowreader = html_writer::tag("span", "", array("class" => "xray-headline-status-hide", "title" => $style_status[1]));
