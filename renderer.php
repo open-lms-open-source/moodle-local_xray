@@ -578,7 +578,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         global $PAGE, $COURSE, $OUTPUT;
         $displaymenu = get_config('local_xray', 'displaymenu');
-        $menu = '';;
+        $menu = '';
         if ($displaymenu) {
             if (!empty($reports)) {
                 $classes = 'clearfix';
