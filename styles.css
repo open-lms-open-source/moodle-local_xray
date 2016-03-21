@@ -171,9 +171,10 @@ a.xray-headline-link:hover {
 .xray-headline-icon {
     background-repeat: no-repeat;
     display: inline-block;
-    height: 26px;
+    height: 32px;
     margin-left: 5px;
-    width: 26px;
+    margin-bottom: -4px;
+    width: 32px;
 }
 
 .xray-headline-red-icon {
