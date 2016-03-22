@@ -383,12 +383,12 @@ class local_xray_renderer extends plugin_renderer_base {
         global $COURSE;
         $plugin = "local_xray";
         $output = "";
-        $string_lastweek = get_string("lastweekwas", $plugin);
-        $stringaverageweek = get_string("averageofweek", $plugin);
-        $string_of = get_string("of", $plugin);
 
         // Number of students at risk in the last 7 days.
-        $text_link = "{$stringaverageweek} {$data->usersinrisklastsevendays_previousweek} {$string_of} {$data->totalstudents}";
+        $a = new stdClass();
+        $a->current = $data->usersinrisklastsevendays_previousweek;
+        $a->total = $data->totalstudents;
+        $text_link = get_string("lastweekwasof", $plugin, $a);
         // To risk metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
@@ -402,7 +402,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $status_class);
 
         // Number of students logged in in last 7 days.
-        $text_link = "{$string_lastweek} {$data->studentsloggedlastsevendays_previousweek}";
+        $text_link = get_string("lastweekwas", $plugin, $data->studentsloggedlastsevendays_previousweek);
         // To activity metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "activityreport", "courseid" => $COURSE->id, "header" => 1), "studentList");
@@ -416,7 +416,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $status_class);
 
         // Number of average grades in the last 7 days.
-        $text_link = "{$stringaverageweek} {$data->averagegradeslastsevendays_previousweek} %";
+        $text_link = get_string("averageofweek", $plugin, $data->averagegradeslastsevendays_previousweek);
         // To students grades.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "element2");
@@ -430,7 +430,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $status_class);
 
         // Number of posts in the last 7 days.
-        $text_link = "{$string_lastweek} {$data->postslastsevendays_previousweek}";
+        $text_link = get_string("lastweekwas", $plugin, $data->postslastsevendays_previousweek);
         // To participation metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "discussionreport", "courseid" => $COURSE->id, "header" => 1), "discussionMetrics");
@@ -598,7 +598,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 if (empty($reportcontroller)) {
                     $classes .= " block"; // Structure of headline in frontpage will be like block.
                     $pluginname = get_string('pluginname', 'local_xray');
-                    $icon = $OUTPUT->pix_icon('xray-logo', $pluginname, 'local_xray', array("class" => "x-ray-icon-title"));
+                    $icon = $OUTPUT->pix_icon('xray-logo', $pluginname, 'local_xray', array("tabindex" => -1, "class" => "x-ray-icon-title"));
                     $title = html_writer::tag('h4', $icon.$pluginname);
                 }
                 $amenu = html_writer::alist($menuitems, array('class' => 'xray-reports-links'));
