@@ -41,6 +41,9 @@ class local_xray_controller_reports extends mr_controller {
 
     // Time range in minutes from xray side.
     const XRAYTIMERANGEMINUTE = 'timerangeminute';
+    const XRAYGREENCOLOR = 'green';
+    const XRAYREDCOLOR = 'red';
+    const XRAYYELLOWCOLOR = 'yellow';
 
     /**
      * Course id
@@ -373,11 +376,11 @@ class local_xray_controller_reports extends mr_controller {
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
-                            if ($xraycategory == 'red') {
+                            if ($xraycategory == self::XRAYREDCOLOR) {
                                 $category = html_writer::span(get_string('high', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == 'green') {
+                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
                                 $category = html_writer::span(get_string('low', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == 'yellow') {
+                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
                                 $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
                             } else {
                                 return $roundvalue . '%';
@@ -417,11 +420,11 @@ class local_xray_controller_reports extends mr_controller {
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
-                            if ($xraycategory == 'red') {
+                            if ($xraycategory == self::XRAYREDCOLOR) {
                                 $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == 'green') {
+                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
                                 $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == 'yellow') {
+                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
                                 $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
                             } else {
                                 return $roundvalue;
@@ -457,11 +460,11 @@ class local_xray_controller_reports extends mr_controller {
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
-                            if ($xraycategory == 'red') {
+                            if ($xraycategory == self::XRAYREDCOLOR) {
                                 $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == 'green') {
+                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
                                 $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == 'yellow') {
+                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
                                 $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
                             } else {
                                 return $roundvalue . '%';
@@ -478,11 +481,11 @@ class local_xray_controller_reports extends mr_controller {
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
-                            if ($xraycategory == 'red') {
+                            if ($xraycategory == self::XRAYREDCOLOR) {
                                 $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == 'green') {
+                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
                                 $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == 'yellow') {
+                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
                                 $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
                             } else {
                                 return $roundvalue;
@@ -518,11 +521,11 @@ class local_xray_controller_reports extends mr_controller {
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
-                            if ($xraycategory == 'red') {
+                            if ($xraycategory == self::XRAYREDCOLOR) {
                                 $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == 'green') {
+                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
                                 $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == 'yellow') {
+                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
                                 $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
                             } else {
                                 return $roundvalue . '%';
@@ -537,11 +540,11 @@ class local_xray_controller_reports extends mr_controller {
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
-                            if ($xraycategory == 'red') {
+                            if ($xraycategory == self::XRAYREDCOLOR) {
                                 $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == 'green') {
+                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
                                 $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == 'yellow') {
+                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
                                 $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
                             } else {
                                 return $roundvalue;
