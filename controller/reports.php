@@ -373,22 +373,8 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Social risk.
                     case 'DWF':
                         // Column Total risk.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            if ($xraycategory == self::XRAYREDCOLOR) {
-                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
-                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
-                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
-                            } else {
-                                return $roundvalue . '%';
-                            }
-                            return $category . ' ' . $roundvalue . '%';
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        $this->add_category($value, $xraycategory, true, false, true);
                         break;
                     default:
                         return $value;
@@ -417,22 +403,8 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'weeklyRegularity':
                         // Column Visit regularity (weekly).
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            if ($xraycategory == self::XRAYREDCOLOR) {
-                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
-                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
-                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
-                            } else {
-                                return $roundvalue;
-                            }
-                            return $category . ' ' . $roundvalue;
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
@@ -457,43 +429,15 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Average original contribution.
                     case 'ctc':
                         // Column Average critical thought.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            if ($xraycategory == self::XRAYREDCOLOR) {
-                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
-                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
-                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
-                            } else {
-                                return $roundvalue . '%';
-                            }
-                            return $category . ' ' . $roundvalue . '%';
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        $this->add_category($value, $xraycategory, true);
                         break;
                     case 'regularityContrib':
                         // Column Regularity of original contribution.
                     case 'regularityCTC':
                         // Column Regularity of critical thought.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            if ($xraycategory == self::XRAYREDCOLOR) {
-                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
-                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
-                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
-                            } else {
-                                return $roundvalue;
-                            }
-                            return $category . ' ' . $roundvalue;
-                        } else {
-                            return '-';
-                        }
+                    // Add category.
+                    $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
@@ -518,41 +462,13 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'ctc':
                         // Column CTC.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            if ($xraycategory == self::XRAYREDCOLOR) {
-                                $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
-                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
-                                $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
-                            } else {
-                                return $roundvalue . '%';
-                            }
-                            return $category . ' ' . $roundvalue . '%';
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        $this->add_category($value, $xraycategory, true);
                         break;
                     case 'regularityContrib':
                         // Column Regularity of contributions.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            if ($xraycategory == self::XRAYREDCOLOR) {
-                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                            } else if ($xraycategory == self::XRAYGREENCOLOR) {
-                                $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                            } else if ($xraycategory == self::XRAYYELLOWCOLOR) {
-                                $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
-                            } else {
-                                return $roundvalue;
-                            }
-                            return $category . ' ' . $roundvalue;
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
@@ -631,7 +547,7 @@ class local_xray_controller_reports extends mr_controller {
      * @return float|string
      */
 
-    public function add_categories ($value, $xraycategory, $percentage = false, $regularity = false, $inverted = false) {
+    public function add_category ($value, $xraycategory, $percentage = false, $regularity = false, $inverted = false) {
         // Check if the value is a number.
         if (!isset($value) || !is_numeric(trim($value))) {
             return '-';
