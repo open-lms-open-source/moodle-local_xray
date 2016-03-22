@@ -619,6 +619,56 @@ class local_xray_controller_reports extends mr_controller {
                 return $value;
         }
     }
+
+    /**
+     * Add categories in the values.
+     *
+     * @param $value
+     * @param $xraycategory
+     * @param bool|false $percentage
+     * @param bool|false $regularity
+     * @param bool|false $inverted
+     * @return float|string
+     */
+
+    public function add_categories ($value, $xraycategory, $percentage = false, $regularity = false, $inverted = false) {
+        // Check if the value is a number.
+        if (!isset($value) || !is_numeric(trim($value))) {
+            return '-';
+        }
+        // Get the correct string.
+        if ($regularity) {
+            $danger = get_string('irregular', 'local_xray');
+            $warning = get_string('regular', 'local_xray');
+            $success = get_string('highlyregular', 'local_xray');
+        } else if ($inverted) {
+            $danger = get_string('high', 'local_xray');
+            $warning = get_string('medium', 'local_xray');
+            $success = get_string('low', 'local_xray');
+        } else {
+            $danger = get_string('low', 'local_xray');
+            $warning = get_string('medium', 'local_xray');
+            $success = get_string('high', 'local_xray');
+        }
+        // Round value and check if it needs percentage sign.
+        $value = round($value, 2);
+        if ($percentage) {
+            $value = $value . '%';
+        }
+        // Add category.
+        switch ($xraycategory) {
+            case self::XRAYREDCOLOR:
+                $category = html_writer::span($danger, 'label label-danger');
+            case self::XRAYYELLOWCOLOR:
+                $category = html_writer::span($warning, 'label label-warning');
+            case self::XRAYGREENCOLOR:
+                $category = html_writer::span($success, 'label label-success');
+            default:
+                return $value;
+        }
+        return $category . ' ' . $value;
+    }
+
     /**
      * @param $time seconds by default or minutes if $minutes is true
      * @param bool|false $minutes
