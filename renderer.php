@@ -311,7 +311,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $columns = array();
         $columns[] = new local_xray\datatables\datatablescolumns('weeks', get_string('weeks', 'local_xray'), false, false);
         foreach ($element->data as $column) {
-            $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value, false, false);
+            if (isset($column->week->value) && is_string($column->week->value)) {
+                $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value, false, false);
+            }
         }
 
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
@@ -348,7 +350,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $columns = array();
         $columns[] = new local_xray\datatables\datatablescolumns('weeks', get_string('week', 'local_xray'));
         foreach ($element->data as $column) {
-            $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value);
+            if (isset($column->week->value) && is_string($column->week->value)) {
+                $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value);
+            }
         }
 
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
