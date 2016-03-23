@@ -343,7 +343,7 @@ class local_xray_controller_reports extends mr_controller {
     }
 
     /**
-     * Set Categories for difficult values in tables
+     * Show intuituve values
      *
      * @param  float $value
      * @param  string $table The elementname of the table
@@ -374,7 +374,7 @@ class local_xray_controller_reports extends mr_controller {
                     case 'DWF':
                         // Column Total risk.
                         // Add category.
-                        $this->add_category($value, $xraycategory, true, false, true);
+                        return $this->add_category($value, $xraycategory, true, false, true);
                         break;
                     default:
                         return $value;
@@ -404,7 +404,7 @@ class local_xray_controller_reports extends mr_controller {
                     case 'weeklyRegularity':
                         // Column Visit regularity (weekly).
                         // Add category.
-                        $this->add_category($value, $xraycategory, false, true);
+                        return $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
@@ -430,14 +430,14 @@ class local_xray_controller_reports extends mr_controller {
                     case 'ctc':
                         // Column Average critical thought.
                         // Add category.
-                        $this->add_category($value, $xraycategory, true);
+                        return $this->add_category($value, $xraycategory, true);
                         break;
                     case 'regularityContrib':
                         // Column Regularity of original contribution.
                     case 'regularityCTC':
                         // Column Regularity of critical thought.
-                    // Add category.
-                    $this->add_category($value, $xraycategory, false, true);
+                        // Add category.
+                        return $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
@@ -463,12 +463,12 @@ class local_xray_controller_reports extends mr_controller {
                     case 'ctc':
                         // Column CTC.
                         // Add category.
-                        $this->add_category($value, $xraycategory, true);
+                        return $this->add_category($value, $xraycategory, true);
                         break;
                     case 'regularityContrib':
                         // Column Regularity of contributions.
                         // Add category.
-                        $this->add_category($value, $xraycategory, false, true);
+                        return $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
