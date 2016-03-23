@@ -92,8 +92,12 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     $output .= $this->output->standard_table((array)$datatable);
 
                     // Special Table with variable columns.
-                    $output .= $this->output->discussionreport_discussion_activity_by_week($this->courseid,
-                        $response->elements->discussionActivityByWeek);
+                    $jsonurlresponse = new moodle_url("rest.php",
+                        array("controller" => "discussionreport",
+                            "action" => "jsonweekdiscussion",
+                            "courseid" => $this->courseid));
+                    $output .= $this->output->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek,
+                        $jsonurlresponse);
 
                     $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud, $response->id);
                     $output .= $this->output->show_graph("avgWordPerPost", $response->elements->avgWordPerPost, $response->id);

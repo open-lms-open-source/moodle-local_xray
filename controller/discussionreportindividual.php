@@ -75,9 +75,13 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 $output .= $this->output->standard_table((array)$datatable);
 
                 // Special Table with variable columns.
-                $output .= $this->output->discussionreportindividual_discussion_activity_by_week($this->courseid,
-                    $this->userid,
-                    $response->elements->discussionActivityByWeek);
+                $jsonurlresponse = new moodle_url("rest.php",
+                    array("controller" => "discussionreportindividual",
+                        "action" => "jsonweekdiscussionindividual",
+                        "courseid" => $this->courseid,
+                        "userid" => $this->userid));
+                $output .= $this->output->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek,
+                    $jsonurlresponse);
 
                 // Graphs.
                 $extraparamaccessible = array("userid" => $this->userid);
@@ -156,7 +160,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                             if (isset($col->avgLag->value)) {
                                 // Check if timerange is defined.
                                 $minutes = false;
-                                if (isset($response->dataFormat->avgLag) && $response->dataFormat->avgLag == self::XRAYTIMERANGEMINUTE) {
+                                if (isset($response->dataFormat->avgLag) &&
+                                    $response->dataFormat->avgLag == self::XRAYTIMERANGEMINUTE) {
                                     $minutes = true;
                                 }
                                 // Set time to HH:MM.

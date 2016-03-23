@@ -49,11 +49,6 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
     private $course;
 
     /**
-     * User created for test.
-     */
-    private $user;
-
-    /**
      * Renderer local_xray.
      */
     private $renderer;
@@ -67,15 +62,15 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
         $this->resetAfterTest(true);
         $this->config_set_ok();
         $this->course = $this->getDataGenerator()->create_course();
-        $this->user = $this->getDataGenerator()->create_user();
 
         // Set url of discussionreport.
-        $PAGE->set_url('/local/xray/view.php', array('id' => $this->course->id, 'controller' => 'discussionreport', 'action' => 'view'));
+        $PAGE->set_url('/local/xray/view.php',
+            array('id' => $this->course->id, 'controller' => 'discussionreport', 'action' => 'view'));
         $this->renderer = $PAGE->get_renderer(self::PLUGIN_NAME);
     }
 
     /**
-     * Method for test discussionreport_discussion_activity_by_week()
+     * Method for test table_inverse_discussion_activity_by_week()
      * Check if data returned by method with json with data is correct.
      */
     public function test_discussionreport_column_creation_from_json_with_data() {
@@ -88,14 +83,14 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
 
         // Get response for discussion report.
         $response = \local_xray\local\api\wsapi::course($this->course->id, "discussion");
-        $tableoutput = $this->renderer->discussionreport_discussion_activity_by_week($this->course->id,
-            $response->elements->discussionActivityByWeek);
+        $urljson = new moodle_url(); // We don't need set valid url.
+        $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek, $urljson);
 
         $this->assertStringStartsWith('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
     }
 
     /**
-     * Method for test discussionreport_discussion_activity_by_week()
+     * Method for test table_inverse_discussion_activity_by_week()
      * Check if data returned by method with json without data is correct.
      */
     public function test_discussionreport_column_creation_from_json_empty() {
@@ -108,49 +103,10 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
 
         // Get response for discussion report.
         $response = \local_xray\local\api\wsapi::course($this->course->id, "discussion");
-        $tableoutput = $this->renderer->discussionreport_discussion_activity_by_week($this->course->id,
-            $response->elements->discussionActivityByWeek);
+        $urljson = new moodle_url(); // We don't need set valid url.
+        $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek, $urljson);
 
         $this->assertStringStartsWith('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
     }
 
-    /**
-     * Method for test discussionreportindividual_discussion_activity_by_week()
-     * Check if data returned by method with json with data is correct.
-     */
-    public function test_discussionreportindividual_column_creation_from_json_with_data() {
-
-        // Tell the cache to load specific fixture for discussion report.
-        $url = 'http://xrayserver.foo.com/demo/course/'.$this->course->id.'/discussion';
-        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-        \local_xray\local\api\testhelper::push_pair($url,
-            'course-report-discussion-final-withdiscussionActivityByWeekWithData.json');
-
-        // Get response for discussion report.
-        $response = \local_xray\local\api\wsapi::course($this->course->id, "discussion");
-        $tableoutput = $this->renderer->discussionreportindividual_discussion_activity_by_week($this->course->id,
-            $response->elements->discussionActivityByWeek);
-
-        $this->assertStringStartsWith('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
-    }
-
-    /**
-     * Method for test discussionreportindividual_discussion_activity_by_week()
-     * Check if data returned by method with json without data is correct.
-     */
-    public function test_discussionreportindividual_column_creation_from_json_empty() {
-
-        // Tell the cache to load specific fixture for discussion report.
-        $url = 'http://xrayserver.foo.com/demo/course/'.$this->course->id.'/discussion';
-        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-        \local_xray\local\api\testhelper::push_pair($url,
-            'course-report-discussion-final-withdiscussionActivityByWeekEmpty.json');
-
-        // Get response for discussion report.
-        $response = \local_xray\local\api\wsapi::course($this->course->id, "discussion");
-        $tableoutput = $this->renderer->discussionreportindividual_discussion_activity_by_week($this->course->id,
-            $response->elements->discussionActivityByWeek);
-
-        $this->assertStringStartsWith('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
-    }
 }
