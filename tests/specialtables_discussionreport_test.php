@@ -83,7 +83,7 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
 
         // Get response for discussion report.
         $response = \local_xray\local\api\wsapi::course($this->course->id, "discussion");
-        $urljson = new moodle_url(); // We don't need set valid url.
+        $urljson = new moodle_url("test.php"); // We don't need set valid url.
         $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek, $urljson);
 
         $this->assertStringStartsWith('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
@@ -103,7 +103,7 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
 
         // Get response for discussion report.
         $response = \local_xray\local\api\wsapi::course($this->course->id, "discussion");
-        $urljson = new moodle_url(); // We don't need set valid url.
+        $urljson = new moodle_url("test.php"); // We don't need set valid url.
         $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek, $urljson);
 
         $this->assertStringStartsWith('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
