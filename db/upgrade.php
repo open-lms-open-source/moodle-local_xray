@@ -69,8 +69,8 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         // Deprecated settings to be deleted.
         $deprecated = array('risk1', 'risk2', 'visitreg1', 'visitreg2', 'partreg1', 'partreg2', 'partc1', 'partc2');
 
-        $params = array();
-        $select = 'plugin = local_xray AND (';
+        $params = array('plugin' => 'local_xray');
+        $select = 'plugin = :plugin AND (';
         $count = 0;
         foreach ($deprecated as $name) {
             if (get_config('local_xray', $name)) {
