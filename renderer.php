@@ -383,11 +383,12 @@ class local_xray_renderer extends plugin_renderer_base {
         global $COURSE;
         $plugin = "local_xray";
         $output = "";
-        $string_lastweek = get_string("lastweekwas", $plugin);
-        $string_of = get_string("of", $plugin);
 
         // Number of students at risk in the last 7 days.
-        $text_link = "{$string_lastweek} {$data->usersinrisklastsevendays_previousweek} {$string_of} {$data->totalstudents}";
+        $a = new stdClass();
+        $a->current = $data->usersinrisklastsevendays_previousweek;
+        $a->total = $data->totalstudents;
+        $text_link = get_string("lastweekwasof", $plugin, $a);
         // To risk metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
@@ -401,7 +402,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $status_class);
 
         // Number of students logged in in last 7 days.
-        $text_link = "{$string_lastweek} {$data->studentsloggedlastsevendays_previousweek}";
+        $text_link = get_string("lastweekwas", $plugin, $data->studentsloggedlastsevendays_previousweek);
         // To activity metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "activityreport", "courseid" => $COURSE->id, "header" => 1), "studentList");
@@ -415,7 +416,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $status_class);
 
         // Number of average grades in the last 7 days.
-        $text_link = "{$string_lastweek} {$data->averagegradeslastsevendays_previousweek} %";
+        $text_link = get_string("averageofweek", $plugin, $data->averagegradeslastsevendays_previousweek);
         // To students grades.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "element2");
@@ -429,7 +430,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $status_class);
 
         // Number of posts in the last 7 days.
-        $text_link = "{$string_lastweek} {$data->postslastsevendays_previousweek}";
+        $text_link = get_string("lastweekwas", $plugin, $data->postslastsevendays_previousweek);
         // To participation metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "discussionreport", "courseid" => $COURSE->id, "header" => 1), "discussionMetrics");
@@ -444,10 +445,10 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Menu list.
         $list = html_writer::start_tag("ul", array("class" => "xray-headline"));
-        $list .= html_writer::tag("li", $column1, array("id" => "xray-headline-risk"));
-        $list .= html_writer::tag("li", $column2, array("id" => "xray-headline-activity"));
-        $list .= html_writer::tag("li", $column3, array("id" => "xray-headline-gradebook"));
-        $list .= html_writer::tag("li", $column4, array("id" => "xray-headline-discussion"));
+        $list .= html_writer::tag("li", $column1, array("id" => "xray-headline-risk", "tabindex" => 0));
+        $list .= html_writer::tag("li", $column2, array("id" => "xray-headline-activity", "tabindex" => 0));
+        $list .= html_writer::tag("li", $column3, array("id" => "xray-headline-gradebook", "tabindex" => 0));
+        $list .= html_writer::tag("li", $column4, array("id" => "xray-headline-discussion", "tabindex" => 0));
         $list .= html_writer::end_tag("ul");
 
         $output .= html_writer::tag("nav", $list, array("id" => "xray-nav-headline"));
@@ -461,18 +462,22 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param string $text
      * @param string $linkurl
      * @param string $text_link
-     * @param string $style_status
+     * @param array $style_status - Array with class and lang for status.
      * @return string
      */
     private function headline_column($number, $text, $linkurl, $textweekbefore, $style_status) {
 
         // Link with Number and icon.
-        $icon = html_writer::span('', $style_status."-icon xray-headline-icon");
+        $icon = html_writer::span('', $style_status[0]."-icon xray-headline-icon");
         $number = html_writer::tag("p", $number.$icon, array("class" => "xray-headline-number"));
-        $link = html_writer::link($linkurl, $number, array("class" => "xray-headline-link", "title" => get_string('link_gotoreport', 'local_xray')));
+        $link = html_writer::link($linkurl, $number, array("tabindex" => -1, "class" => "xray-headline-link", "title" => get_string('link_gotoreport', 'local_xray')));
+
+        // Text only for reader screens.
+        $arrowreader = html_writer::tag("span", "", array("class" => "xray-headline-status-hide", "title" => $style_status[1]));
         // Text for description and text of week before.
-        $text_desc = html_writer::tag("p", $text, array("class" => "xray-headline-desc"));
-        $textweekbefore = html_writer::tag("span", $textweekbefore, array("class" => "xray-headline-textweekbefore {$style_status}"));
+        $text_desc = html_writer::tag("p", $text.$arrowreader, array("class" => "xray-headline-desc"));
+
+        $textweekbefore = html_writer::tag("span", $textweekbefore, array("class" => "xray-headline-textweekbefore {$style_status[0]}"));
 
         return $link.$text_desc.$textweekbefore;
 
@@ -481,6 +486,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
     /**
      * Calculate colour and arrow for headline (compare current value and value in the previous week).
+     * Return array with class and string for reader.
      *
      * Same value = return class for yellow colour.
      * Increment value = return class for green colour.
@@ -488,23 +494,25 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * @param $valuenow
      * @param $valuepreviousweek
-     * @return string
+     * @return array
      */
     private function headline_status($valuenow, $valuepreviousweek) {
-
         // Default, same value.
         $style_status = "xray-headline-yellow";
+        $lang_status = get_string("arrow_same", "local_xray");
 
         if($valuenow < $valuepreviousweek) {
             // Decrement.
             $style_status = "xray-headline-red";
+            $lang_status = get_string("arrow_decrease", "local_xray");
         }
         elseif ($valuenow > $valuepreviousweek) {
             // Increment.
             $style_status = "xray-headline-green";
+            $lang_status = get_string("arrow_increase", "local_xray");
         }
 
-        return $style_status;
+        return array($style_status, $lang_status);
     }
     /**
      * Calculate colour and arrow for headline (compare current value and value in the previous week).
@@ -516,23 +524,26 @@ class local_xray_renderer extends plugin_renderer_base {
      *
      * @param $valuenow
      * @param $valuepreviousweek
-     * @return string
+     * @return array
      */
     private function headline_status_risk($valuenow, $valuepreviousweek) {
 
         // Default, same value.
         $style_status = "xray-headline-yellow";
+        $lang_status = get_string("arrow_same", "local_xray");
 
         if($valuenow > $valuepreviousweek) {
             // Decrement.
             $style_status = "xray-headline-red-caserisk";
+            $lang_status = get_string("arrow_decrease", "local_xray");
         }
         elseif ($valuenow < $valuepreviousweek) {
             // Increment.
             $style_status = "xray-headline-green-caserisk";
+            $lang_status = get_string("arrow_increase", "local_xray");
         }
 
-        return $style_status;
+        return array($style_status, $lang_status);
     }
 
     /**
@@ -570,6 +581,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $menu = '';
         if ($displaymenu) {
             if (!empty($reports)) {
+                $classes = 'clearfix';
                 $menuitems = [];
                 foreach ($reports as $nodename => $reportsublist) {
                     foreach ($reportsublist as $reportstring => $url) {
@@ -584,8 +596,9 @@ class local_xray_renderer extends plugin_renderer_base {
                 }
                 $title = '';
                 if (empty($reportcontroller)) {
+                    $classes .= " block"; // Structure of headline in frontpage will be like block.
                     $pluginname = get_string('pluginname', 'local_xray');
-                    $icon = $OUTPUT->pix_icon('xray-logo', $pluginname, 'local_xray', array("class" => "x-ray-icon-title"));
+                    $icon = $OUTPUT->pix_icon('xray-logo', $pluginname, 'local_xray', array("tabindex" => -1, "class" => "x-ray-icon-title"));
                     $title = html_writer::tag('h4', $icon.$pluginname);
                 }
                 $amenu = html_writer::alist($menuitems, array('class' => 'xray-reports-links'));
@@ -604,7 +617,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 }
 
                 $menu = html_writer::div($title . $navmenu. $headerdata,
-                    'clearfix',
+                    $classes,
                     array('id' => 'js-xraymenu', 'role' => 'region'));
 
             }

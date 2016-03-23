@@ -189,14 +189,17 @@ $string['getreportfailed'] = 'Error to get report from X-Ray Learning Analytics'
 $string['atrisk'] = 'At risk';
 $string['dashboard'] = 'Dashboard';
 $string['fromlastweek'] = '{$a}% change from last week';
-$string['lastweekwas'] = 'Week before was';
-$string['of'] = ' of ';
-$string['headline_studentatrisk'] = 'Students at <b>Risk</b> in the last 7 days';
-$string['headline_loggedstudents'] = '<b>Logged in</b> students in the last 7 days';
-$string['headline_posts'] = '<b>Posts</b> in the last 7 days';
-$string['headline_average'] = '<b>Average Grade</b> in quizzes in the last 7 days';
+$string['lastweekwas'] = 'Week before was {$a}.';
+$string['averageofweek'] = 'Average of the week before was {$a} %.';
+$string['lastweekwasof'] = 'Week before was {$a->current} of {$a->total}.';
+$string['headline_studentatrisk'] = 'Students at <b>Risk</b> yesterday.';
+$string['headline_loggedstudents'] = '<b>Logged in</b> students in the last 7 days.';
+$string['headline_posts'] = '<b>Posts</b> in the last 7 days.';
+$string['headline_average'] = '<b>Average Grade</b> in quizzes yesterday.';
 $string['link_gotoreport'] = 'Go to report';
-
+$string['arrow_increase'] = 'This is an increase.';
+$string['arrow_decrease'] = 'This is a decrease.';
+$string['arrow_same'] = 'This stays the same.';
 
 /* Jquery Tables (with plugin datatables) */
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. '.

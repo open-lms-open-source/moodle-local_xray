@@ -186,13 +186,17 @@ $string['synclogexplanation'] = 'Entrada de registro regular para sincronizar da
 $string['atrisk'] = 'En riesgo';
 $string['dashboard'] = 'Interfaz';
 $string['fromlastweek'] = '{$a}% de cambio desde la ultima semana';
-$string['lastweekwas'] = 'Semana anterior fueron';
-$string['of'] = ' de ';
-$string['headline_studentatrisk'] = 'Estudiantes en <b>Riesgo</b> en los últimos 7 dias';
-$string['headline_loggedstudents'] = 'Estudiantes <b>Logueados</b> en los últimos 7 dias';
-$string['headline_posts'] = '<b>Posts</b> en los últimos 7 dias';
-$string['headline_average'] = '<b>Promedio de calificaciones</b> en quizzes en los últimos 7 dias';
+$string['lastweekwas'] = 'Semana anterior fueron {$a}.';
+$string['averageofweek'] = 'Promedio de la semana anterior fue {$a} %.';
+$string['lastweekwasof'] = 'Semana anterior fueron {$a->current} de {$a->total}.';
+$string['headline_studentatrisk'] = 'Estudiantes en <b>Riesgo</b> ayer.';
+$string['headline_loggedstudents'] = 'Estudiantes <b>Logueados</b> en los últimos 7 dias.';
+$string['headline_posts'] = '<b>Posts</b> en los últimos 7 dias.';
+$string['headline_average'] = '<b>Promedio de calificaciones</b> en exámenes ayer.';
 $string['link_gotoreport'] = 'Ir al reporte';
+$string['arrow_increase'] = 'Esto es un incremento.';
+$string['arrow_decrease'] = 'Esto es una disminucion.';
+$string['arrow_same'] = 'Esto esta igual.';
 
 // Jquery Tables (with plugin datatables).
 $string['error_datatables'] = 'Error al traer datos para esta tabla. Por favor intenta nuevamente recargando la '.
