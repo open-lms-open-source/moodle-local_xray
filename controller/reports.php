@@ -575,10 +575,13 @@ class local_xray_controller_reports extends mr_controller {
         switch ($xraycategory) {
             case self::XRAYREDCOLOR:
                 $category = html_writer::span($danger, 'label label-danger');
+                break;
             case self::XRAYYELLOWCOLOR:
                 $category = html_writer::span($warning, 'label label-warning');
+                break;
             case self::XRAYGREENCOLOR:
                 $category = html_writer::span($success, 'label label-success');
+                break;
             default:
                 return $value;
         }
