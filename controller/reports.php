@@ -547,7 +547,7 @@ class local_xray_controller_reports extends mr_controller {
      * @return float|string
      */
 
-    public function add_category ($value, $xraycategory, $percentage = false, $regularity = false, $inverted = false) {
+    public static function add_category ($value, $xraycategory, $percentage = false, $regularity = false, $inverted = false) {
         // Check if the value is a number.
         if (!isset($value) || !is_numeric(trim($value))) {
             return '-';
