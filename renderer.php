@@ -299,63 +299,32 @@ class local_xray_renderer extends plugin_renderer_base {
     }
     /************************** End General elements for Reports **************************/
 
-    /************************** Elements for Report Discussion **************************/
-    /**
-     * Graphic Discussion Activity by Week (TABLE) - Special case table.
-     * @param int $courseid
-     * @param stdClass $element
-     * @return string
-     */
-    public function discussionreport_discussion_activity_by_week($courseid, $element) {
-        // Create standard table.
-        $columns = array();
-        $columns[] = new local_xray\datatables\datatablescolumns('weeks', get_string('weeks', 'local_xray'), false, false);
-        foreach ($element->data as $column) {
-            $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value, false, false);
-        }
-
-        $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
-
-        $datatable = new local_xray\datatables\datatables($element,
-            "rest.php?controller='discussionreport'&action='jsonweekdiscussion'&courseid=" . $courseid . "&count=" . $numberofweeks,
-            $columns,
-            false,
-            false, // We don't need pagination because we have only four rows.
-            '<"xray_table_scrool"t>', // Only the table.
-            array(10, 50, 100),
-            false); // This table has not sortable.
-
-        // Create standard table. This table has not icon.
-        $output = $this->standard_table((array)$datatable, false);
-
-        return $output;
-    }
-
-    /************************** End Elements for Report Discussion **************************/
-
-
-    /************************** Elements for Report Discussion for an individual **************************/
+    /************************** Elements for tabla Discussion activity by Week (Inversetable) **************************/
 
     /**
-     * Graphic Discussion Activity by Week (TABLE) - Special case table.
-     * @param int $courseid
-     * @param int $userid
-     * @param object $element
+     * Table for:
+     * Discussion Report - Activity by Week (TABLE) - Special case table.
+     * Discussion Individual Report - Activity by Week (TABLE) - Special case table.
+     *
+     * @param $element
+     * @param moodle_url $jsonurl
      * @return string
      */
-    public function discussionreportindividual_discussion_activity_by_week($courseid, $userid, $element) {
+    public function table_inverse_discussion_activity_by_week($element, moodle_url $jsonurl) {
         // Create standard table.
         $columns = array();
         $columns[] = new local_xray\datatables\datatablescolumns('weeks', get_string('week', 'local_xray'));
         foreach ($element->data as $column) {
-            $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value);
+            if (isset($column->week->value) && is_string($column->week->value)) {
+                $columns[] = new local_xray\datatables\datatablescolumns($column->week->value, $column->week->value);
+            }
         }
 
         $numberofweeks = count($columns) - 1; // Get number of weeks - we need to rest the "week" title column.
+        $jsonurl->param("count", $numberofweeks);
 
         $datatable = new local_xray\datatables\datatables($element,
-            "rest.php?controller='discussionreportindividual'&action='jsonweekdiscussionindividual'&courseid=" .
-            $courseid . "&userid=" . $userid . "&count=" . $numberofweeks,
+            $jsonurl->out(false),
             $columns,
             false,
             false, // We don't need pagination because we have only four rows.
@@ -368,7 +337,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $output;
     }
-    /************************** End Elements for Report Discussion for an individual **************************/
+    /************************** End Elements for tabla Discussion activity by Week (Inversetable) **************************/
 
     /************************** Course Header **************************/
 
