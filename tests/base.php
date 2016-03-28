@@ -36,20 +36,26 @@ abstract class local_xray_base_testcase extends advanced_testcase {
      * @return void
      */
     protected function config_set_ok() {
-        set_config('xrayusername', 'someuser@domain.com'      , self::PLUGIN);
-        set_config('xraypassword', 'somepass'                 , self::PLUGIN);
-        set_config('xrayurl'     , 'http://xrayserver.foo.com', self::PLUGIN);
-        set_config('xrayclientid', 'demo'                     , self::PLUGIN);
+        set_config('xrayusername'   , 'someuser@domain.com'      , self::PLUGIN);
+        set_config('xraypassword'   , 'somepass'                 , self::PLUGIN);
+        set_config('xrayurl'        , 'http://xrayserver.foo.com', self::PLUGIN);
+        set_config('xrayclientid'   , 'demo'                     , self::PLUGIN);
+        set_config('xrayadmin'      , 'someuser@domain.com'      , self::PLUGIN);
+        set_config('xrayadminkey'   , '1234'                     , self::PLUGIN);
+        set_config('xrayadminserver', 'http://xrayserver.foo.com', self::PLUGIN);
     }
 
     /**
      * @return void
      */
     protected function config_cleanup() {
-        unset_config('xrayusername', self::PLUGIN);
-        unset_config('xraypassword', self::PLUGIN);
-        unset_config('xrayurl'     , self::PLUGIN);
-        unset_config('xrayclientid', self::PLUGIN);
+        unset_config('xrayusername'   , self::PLUGIN);
+        unset_config('xraypassword'   , self::PLUGIN);
+        unset_config('xrayurl'        , self::PLUGIN);
+        unset_config('xrayclientid'   , self::PLUGIN);
+        unset_config('xrayadmin'      , self::PLUGIN);
+        unset_config('xrayadminkey'   , self::PLUGIN);
+        unset_config('xrayadminserver', self::PLUGIN);
     }
 
 }

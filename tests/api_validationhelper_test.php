@@ -50,4 +50,28 @@ class local_xray_api_validationhelper_testcase extends advanced_testcase {
         $this->assertNotEmpty($emsgs);
     }
 
+    /**
+     * @return void
+     */
+    public function test_schema_accesskey_ok() {
+        $this->resetAfterTest(true);
+
+        $requesturl = 'http://foo.com/user/accesstoken';
+        $json = file_get_contents(__DIR__.'/fixtures/user-accesstoken-final.json');
+        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $requesturl);
+        $this->assertEmpty($emsgs);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_schema_accesskey_fail() {
+        $this->resetAfterTest(true);
+
+        $requesturl = 'http://foo.com/user/accesstoken';
+        $json = file_get_contents(__DIR__.'/fixtures/data-accessible-wordHistogram-final.json');
+        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $requesturl);
+        $this->assertNotEmpty($emsgs);
+    }
+
 }
