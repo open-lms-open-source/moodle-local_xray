@@ -197,6 +197,7 @@ $string['link_gotoreport'] = 'Ir al reporte';
 $string['arrow_increase'] = 'Esto es un incremento.';
 $string['arrow_decrease'] = 'Esto es una disminucion.';
 $string['arrow_same'] = 'Esto esta igual.';
+$string['of'] = 'de';
 
 // Jquery Tables (with plugin datatables).
 $string['error_datatables'] = 'Error al traer datos para esta tabla. Por favor intenta nuevamente recargando la '.
