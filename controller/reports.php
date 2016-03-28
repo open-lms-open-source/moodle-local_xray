@@ -41,6 +41,9 @@ class local_xray_controller_reports extends mr_controller {
 
     // Time range in minutes from xray side.
     const XRAYTIMERANGEMINUTE = 'timerangeminute';
+    const XRAYGREENCOLOR = 'green';
+    const XRAYREDCOLOR = 'red';
+    const XRAYYELLOWCOLOR = 'yellow';
 
     /**
      * Course id
@@ -321,7 +324,11 @@ class local_xray_controller_reports extends mr_controller {
             // Format of response for columns(if return has columnorder).
             if (!empty($response->columnOrder) && is_array($response->columnOrder)) {
                 foreach ($response->columnOrder as $column) {
-                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat);
+                    $category = false;
+                    if (isset($row->{$column}->colorCode)) {
+                        $category = $row->{$column}->colorCode;
+                    }
+                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat, $category);
                 }
             } else if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
                 $c = get_object_vars($response->columnHeaders);
@@ -336,15 +343,16 @@ class local_xray_controller_reports extends mr_controller {
     }
 
     /**
-     * Set Categories for difficult values in tables
+     * Show intuituve values
      *
      * @param  float $value
      * @param  string $table The elementname of the table
      * @param  string $column
      * @param  string $dateformat
+     * @param  string/boolean $xraycategory
      * @return string
      */
-    public function show_intuitive_value($value, $table, $column, $dateformat) {
+    public function show_intuitive_value($value, $table, $column, $dateformat, $xraycategory = false) {
         $plugin = 'local_xray';
         switch ($table) {
             case 'riskMeasures':
@@ -365,27 +373,8 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Social risk.
                     case 'DWF':
                         // Column Total risk.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            $risk1 = get_config($plugin, 'risk1');
-                            $risk1 = floatval($risk1);
-                            $risk2 = get_config($plugin, 'risk2');
-                            $risk2 = floatval($risk2);
-                            if (($risk1 !== false) && ($risk2 !== false)) {
-                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-danger');
-                                if ($roundvalue < $risk1) {
-                                    $category = html_writer::span(get_string('low', 'local_xray'), 'label label-success');
-                                } else if ($roundvalue < $risk2) {
-                                    $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
-                                }
-                                return $category . ' ' . $roundvalue . '%';
-                            } else {
-                                return $roundvalue . '%';
-                            }
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        return $this->add_category($value, $xraycategory, true, false, true);
                         break;
                     default:
                         return $value;
@@ -414,25 +403,8 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'weeklyRegularity':
                         // Column Visit regularity (weekly).
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            $visitreg1 = get_config($plugin, 'visitreg1');
-                            $visitreg2 = get_config($plugin, 'visitreg2');
-                            if (($visitreg1 !== false) && ($visitreg2 !== false)) {
-                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                                if ($roundvalue < $visitreg1) {
-                                    $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                                } else if ($roundvalue < $visitreg2) {
-                                    $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
-                                }
-                                return $category . ' ' . $roundvalue;
-                            } else {
-                                return $roundvalue;
-                            }
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        return $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
@@ -457,49 +429,15 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Average original contribution.
                     case 'ctc':
                         // Column Average critical thought.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            $partc1 = get_config($plugin, 'partc1');
-                            $partc2 = get_config($plugin, 'partc2');
-                            if (($partc1 !== false) && ($partc2 !== false)) {
-                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                                if ($roundvalue < $partc1) {
-                                    $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                                } else if ($roundvalue < $partc2) {
-                                    $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
-                                }
-                                return $category . ' ' . $roundvalue . '%';
-                            } else {
-                                return $roundvalue . '%';
-                            }
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        return $this->add_category($value, $xraycategory, true);
                         break;
                     case 'regularityContrib':
                         // Column Regularity of original contribution.
                     case 'regularityCTC':
                         // Column Regularity of critical thought.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            $partreg1 = get_config($plugin, 'partreg1');
-                            $partreg2 = get_config($plugin, 'partreg2');
-                            if (($partreg1 !== false) and ($partreg2 !== false)) {
-                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                                if ($roundvalue < $partreg1) {
-                                    $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                                } else if ($roundvalue < $partreg2) {
-                                    $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
-                                }
-                                return $category . ' ' . $roundvalue;
-                            } else {
-                                return $roundvalue;
-                            }
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        return $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
@@ -524,47 +462,13 @@ class local_xray_controller_reports extends mr_controller {
                         break;
                     case 'ctc':
                         // Column CTC.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            $partc1 = get_config($plugin, 'partc1');
-                            $partc2 = get_config($plugin, 'partc2');
-                            if (($partc1 !== false) && ($partc2 !== false)) {
-                                $category = html_writer::span(get_string('high', 'local_xray'), 'label label-success');
-                                if ($roundvalue < $partc1) {
-                                    $category = html_writer::span(get_string('low', 'local_xray'), 'label label-danger');
-                                } else if ($roundvalue < $partc2) {
-                                    $category = html_writer::span(get_string('medium', 'local_xray'), 'label label-warning');
-                                }
-                                return $category . ' ' . $roundvalue . '%';
-                            } else {
-                                return $roundvalue . '%';
-                            }
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        return $this->add_category($value, $xraycategory, true);
                         break;
                     case 'regularityContrib':
                         // Column Regularity of contributions.
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            $partreg1 = get_config($plugin, 'partreg1');
-                            $partreg2 = get_config($plugin, 'partreg2');
-                            if (($partreg1 !== false) and ($partreg2 !== false)) {
-                                $category = html_writer::span(get_string('irregular', 'local_xray'), 'label label-danger');
-                                if ($roundvalue < $partreg1) {
-                                    $category = html_writer::span(get_string('highlyregular', 'local_xray'), 'label label-success');
-                                } else if ($roundvalue < $partreg2) {
-                                    $category = html_writer::span(get_string('regular', 'local_xray'), 'label label-warning');
-                                }
-                                return $category . ' ' . $roundvalue;
-                            } else {
-                                return $roundvalue;
-                            }
-                        } else {
-                            return '-';
-                        }
+                        // Add category.
+                        return $this->add_category($value, $xraycategory, false, true);
                         break;
                     default:
                         return $value;
@@ -631,6 +535,59 @@ class local_xray_controller_reports extends mr_controller {
                 return $value;
         }
     }
+
+    /**
+     * Add categories in the values.
+     *
+     * @param $value
+     * @param $xraycategory
+     * @param bool|false $percentage
+     * @param bool|false $regularity
+     * @param bool|false $inverted
+     * @return float|string
+     */
+
+    public static function add_category ($value, $xraycategory, $percentage = false, $regularity = false, $inverted = false) {
+        // Check if the value is a number.
+        if (!isset($value) || !is_numeric(trim($value))) {
+            return '-';
+        }
+        // Get the correct string.
+        if ($regularity) {
+            $danger = get_string('irregular', 'local_xray');
+            $warning = get_string('regular', 'local_xray');
+            $success = get_string('highlyregular', 'local_xray');
+        } else if ($inverted) {
+            $danger = get_string('high', 'local_xray');
+            $warning = get_string('medium', 'local_xray');
+            $success = get_string('low', 'local_xray');
+        } else {
+            $danger = get_string('low', 'local_xray');
+            $warning = get_string('medium', 'local_xray');
+            $success = get_string('high', 'local_xray');
+        }
+        // Round value and check if it needs percentage sign.
+        $value = round($value, 2);
+        if ($percentage) {
+            $value = $value . '%';
+        }
+        // Add category.
+        switch ($xraycategory) {
+            case self::XRAYREDCOLOR:
+                $category = html_writer::span($danger, 'label label-danger');
+                break;
+            case self::XRAYYELLOWCOLOR:
+                $category = html_writer::span($warning, 'label label-warning');
+                break;
+            case self::XRAYGREENCOLOR:
+                $category = html_writer::span($success, 'label label-success');
+                break;
+            default:
+                return $value;
+        }
+        return $category . ' ' . $value;
+    }
+
     /**
      * @param $time seconds by default or minutes if $minutes is true
      * @param bool|false $minutes

@@ -197,7 +197,11 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
             // Format of response for columns.
             if (!empty($response->columnOrder)) {
                 foreach ($response->columnOrder as $column) {
-                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat);
+                    $category = false;
+                    if (isset($row->{$column}->colorCode)) {
+                        $category = $row->{$column}->colorCode;
+                    }
+                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat, $category);
                 }
                 $data[] = $r;
             }

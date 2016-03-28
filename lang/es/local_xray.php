@@ -450,55 +450,6 @@ $string['discussionreportindividualforum_socialStructure_help'] = 'Este diagrama
 $string['discussionreportindividualforum_wordHistogram_help'] ='Este histograma muestra la frecuencia en la que los'.
     ' estudiantes postean las 10 palabras más utilizadas en los foros de discusión.';
 
-/* Cut-off points settings */
-/* Header Title */
-$string['cutoff_title'] = 'Valores de los puntos de corte entre cada rango';
-$string['cutoff_desc'] = 'En esta sección tu puedes definir los valores de los puntos de corte entre cada rango. '.
-                         'Estos rangos serán utilizados para mostrar resultados más intuitivos en las tablas de los reportes.';
-/* Risk Report */
-/* low - medium - high */
-$string['risk1_name'] = 'Punto de corte entre los rangos Bajo y Medio para el Reporte de riesgo';
-$string['risk1_desc'] = 'Defina el punto de corte entre los rangos Bajo y Medio. Por ejemplo, '.
-                        'si el punto de corte es 0.2, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.
-                        'Esta configuración afecta las columnas Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
-$string['risk2_name'] = 'Punto de corte entre los rangos Medio y Alto para el Reporte de riesgo';
-$string['risk2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto. Por ejemplo, '.
-                        'si el punto de corte es 0.3, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
-                        'Esta configuración afecta las columnas  Riesgo Académico, Riesgo Social y Riesgo Total en la tabla Medidas de Riesgo del Reporte de riesgo.';
-/* Activity Report */
-/* Alta regularidad - regular - irregular */
-$string['visitreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regular para el Reporte de actividad';
-$string['visitreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regular. Por ejemplo, '.
-                            'si el punto de corte es 1, cualquier valor igual o mayor será de Regular y cualquier valor menor será de Alta regularidad. '.
-                            'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
-$string['visitreg2_name'] = 'Punto de corte entre los rangos Regular e Irregular para el Reporte de actividad';
-$string['visitreg2_desc'] = 'Defina el punto de corte entre los rangos Regular e Irregular. Por ejemplo, '.
-                            'si el punto de corte es 2, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regular. '.
-                            'Esta configuración afecta la columna Regularidad de visitas (mensualmente) en la tabla de Actividad del Estudiante del Reporte de actividad.';
-/* Discussion Report */
-/* Alta regularidad - regular - irregular */
-$string['partreg1_name'] = 'Punto de corte entre los rangos Alta regularidad y Regular para el Reporte de discusiones';
-$string['partreg1_desc'] = 'Defina el punto de corte entre los rangos Alta regularidad y Regular. Por ejemplo, '.
-                           'si el punto de corte es 2, cualquier valor igual o mayor será de Regular y cualquier valor menor será de Alta regularidad. '.
-                           'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
-                           'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
-$string['partreg2_name'] = 'Punto de corte entre los rangos Regular e Irregular para el Reporte de discusiones';
-$string['partreg2_desc'] = 'Defina el punto de corte entre los rangos Regular e Irregular. Por ejemplo, '.
-                           'si el punto de corte es 4, cualquier valor igual o mayor será Irregular y cualquier valor menor será de Regular. '.
-                           'Esta configuración afecta las columnas Regularidad de Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
-                           'y la columna Regularidad de Contribuciones en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
-/* Bajo - Medio - Alto */
-$string['partc1_name'] = 'Punto de corte entre los rangos Bajo y Medio para el Reporte de discusiones';
-$string['partc1_desc'] = 'Defina el punto de corte entre los rangos Bajo y Medio. Por ejemplo, '.
-                         'si el punto de corte es 33, cualquier valor igual o mayor será Medio y cualquier valor menor será Bajo. '.
-                         'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
-                         'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
-$string['partc2_name'] = 'Punto de corte entre los rangos Medio y Alto para el Reporte de discusiones';
-$string['partc2_desc'] = 'Defina el punto de corte entre los rangos Medio y Alto. Por ejemplo, '.
-                         'si el punto de corte es 66, cualquier valor igual o mayor será Alto y cualquier valor menor será Medio. '.
-                         'Esta configuración afecta las columnas Contribuciones y Coeficiente de Pensamiento Crítico (CPC) en la Tabla Métricas de Participación '.
-                         'y la columna Coeficiente de Pensamiento Crítico (CPC) en la tabla Calificaciones del Estudiante basado en las discusiones, ambas del Reporte de discusiones.';
-
 /* Behat test */
 $string['error_behat_getjson'] = 'Error al traer archivo "{$a}" de carpeta local/xray/tests/fixtures para simular llamada a X-Ray Learning Analytics webservice cuando se esta corriendo behat test.';
 $string['error_behat_instancefail'] = 'Esta es una instancia configurada para fallar al correr behat tests.';

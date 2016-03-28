@@ -65,5 +65,31 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070327, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070328) {
+        // Deprecated settings to be deleted.
+        $deprecated = array('risk1', 'risk2', 'visitreg1', 'visitreg2', 'partreg1', 'partreg2', 'partc1', 'partc2');
+
+        $params = array('plugin' => 'local_xray');
+        $select = 'plugin = :plugin AND (';
+        $count = 0;
+        foreach ($deprecated as $name) {
+            if (get_config('local_xray', $name)) {
+                $params[$name] = $name;
+                if ($count > 0) {
+                    $select .= ' OR ';
+                }
+                $select .= 'name = :'.$name;
+                $count++;
+            }
+        }
+
+        if ($count) {
+            $select .= ')';
+            $DB->delete_records_select('config_plugins', $select, $params);
+        }
+
+        upgrade_plugin_savepoint(true, 2015070328, 'local', 'xray');
+    }
+
     return true;
 }
