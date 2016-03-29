@@ -230,6 +230,7 @@ $string['accessible_view_data'] = 'View data';
 $string['accessible_emptydata'] = 'Without data available for Accessible version.';
 $string['accessible_error'] = 'Accessible version for this graph was not found in X-Ray Learning Analytics.';
 $string['reports_help'] = 'Help';
+$string['accessibledata_of'] = 'Accessible Data of {$a}';
 
 /* Tables names all report*/
 $string['activityreport_nonStarters'] = 'Inactive Students';// Activity report.

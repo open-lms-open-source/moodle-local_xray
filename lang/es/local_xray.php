@@ -227,6 +227,7 @@ $string['accessible_view_data'] = 'Ver datos';
 $string['accessible_emptydata'] = 'No hay datos disponibles para version accesible.';
 $string['accessible_error'] = 'Versión accesible para este gráfico no fue encontrada en X-Ray Learning Analytics.';
 $string['reports_help'] = 'Ayuda';
+$string['accessibledata_of'] = 'Datos accesibles de {$a}';
 
 /* Tables names all report*/
 $string['activityreport_nonStarters'] = 'Estudiantes inactivos';// Activity and risk report.

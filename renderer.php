@@ -354,10 +354,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = "";
 
         // Number of students at risk in the last 7 days.
-        $a = new stdClass();
-        $a->current = $data->usersinrisklastsevendays_previousweek;
-        $a->total = $data->totalstudents;
-        $text_link = get_string("lastweekwasof", $plugin, $a);
+        $text_link = get_string("averageofweek", $plugin, $data->usersinrisklastsevendays_previousweek);
         // To risk metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
