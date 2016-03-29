@@ -90,4 +90,31 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
 
         $this->assertFalse(\local_xray\local\api\wsapi::accesstoken());
     }
+
+    /**
+     * @return void
+     */
+    public function test_domaininfo_ok() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo', 'domain-final.json');
+        $expected = json_decode(file_get_contents(__DIR__.'/fixtures/domain-final.json'));
+        $this->assertEquals($expected, \local_xray\local\api\wsapi::domaininfo());
+    }
+
+    /**
+     * @return void
+     */
+    public function test_domaininfo_fail() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo', 'user-accesstoken-final.json');
+        $expected = json_decode(file_get_contents(__DIR__.'/fixtures/domain-final.json'));
+        $this->assertNotEquals($expected, \local_xray\local\api\wsapi::domaininfo());
+    }
+
 }
