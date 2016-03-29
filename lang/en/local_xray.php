@@ -200,7 +200,6 @@ $string['link_gotoreport'] = 'Go to report';
 $string['arrow_increase'] = 'This is an increase.';
 $string['arrow_decrease'] = 'This is a decrease.';
 $string['arrow_same'] = 'This stays the same.';
-$string['of'] = 'of';
 
 /* Jquery Tables (with plugin datatables) */
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. '.
@@ -231,6 +230,7 @@ $string['accessible_view_data'] = 'View data';
 $string['accessible_emptydata'] = 'Without data available for Accessible version.';
 $string['accessible_error'] = 'Accessible version for this graph was not found in X-Ray Learning Analytics.';
 $string['reports_help'] = 'Help';
+$string['accessibledata_of'] = 'Accessible Data of {$a}';
 
 /* Tables names all report*/
 $string['activityreport_nonStarters'] = 'Inactive Students';// Activity report.

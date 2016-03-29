@@ -131,8 +131,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $PAGE->navbar->add(get_string($this->origincontroller, $this->component),
             new moodle_url('/local/xray/view.php',$paramsurl));
         // Set title.
-        $of = get_string("of", $this->component);
-        $title = format_string(get_string($this->name, $this->component)." {$of} ".$this->graphname);
+        $title = get_string("accessibledata_of", $this->component, $this->graphname);
         $PAGE->set_title($title);
         $PAGE->navbar->add($title);
         $this->heading->text = $title;
