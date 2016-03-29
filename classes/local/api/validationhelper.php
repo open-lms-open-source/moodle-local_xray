@@ -60,14 +60,12 @@ abstract class validationhelper {
     protected static function url_replace(array $replacement, $url) {
         $subject = parse_url($url, PHP_URL_PATH);
         $pattern = [
-            '#^/([^/]+)/course/0/([^/]+)$#',
             '#^/([^/]+)/course/([^/]+)/([^/]+)$#',
-            '#^/([^/]+)/course/0/([^/]+)/elements/([^/]+)$#',
             '#^/([^/]+)/course/([^/]+)/([^/]+)/elements/([^/]+)$#',
-            '#^/([^/]+)/data/0/([^/]+)/accessible$#',
             '#^/([^/]+)/data/([^/]+)/([^/]+)/accessible$#',
             '#^/user/login$#',
-            '#^/user/accesstoken$#'
+            '#^/user/accesstoken$#',
+            '#^/((?!(course|data))[^/]+)$#'
         ];
 
         return self::replace($pattern, $replacement, $subject);
@@ -79,14 +77,12 @@ abstract class validationhelper {
      */
     public static function generate_schema_name($url) {
         $replacement = [
-            'course-report-${3}-schema-error.json',
             'course-report-${3}-schema.json',
-            'course-element-${3}-${4}-schema-error.json',
             'course-element-${3}-${4}-schema.json',
-            'data-accessible-${2}-${3}-schema-error.json',
             'data-accessible-${2}-${3}-schema.json',
             'user-login-schema.json',
-            'user-accesstoken-schema.json'
+            'user-accesstoken-schema.json',
+            'domain-schema.json'
         ];
 
         return self::url_replace($replacement, $url);
