@@ -307,8 +307,7 @@ $string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Each dot in this
     ' spent in your course in a given week compared to other weeks. Bigger dots indicate more activity.';
 $string['activityreport_firstloginPiechartAdjusted_help'] = 'The diagram shows you when students logged into your course'.
     ' and how many haven\'t yet. The first day of the course may not be the scheduled start date. It starts the day the'.
-    ' first participant accessed the course. This includes the instructor. The pattern seen here may be an indication of'.
-    ' future engagement.';
+    ' first participant accessed the course. The pattern seen here may be an indication of future engagement.';
 
 /* Graphs Activity Individual report*/
 $string['activityreportindividual_activityLevelTimeline'] = 'Activity by Date';
@@ -334,11 +333,13 @@ $string['risk_riskScatterPlot'] = 'Academic versus Social Risk';
 
 /* Help Graphs Risk report*/
 $string['risk_riskDensity_help'] = 'This graphic shows the distribution of estimated risk in the course. '.
-    'Green represents those who are not considered at risk. Red shows those who are at risk.';
+    'Green represents those who are not considered at risk. Red shows those who are at high risk, and yellow those'.
+    ' who are at medium risk.';
 $string['risk_riskScatterPlot_help'] = 'Each dot in this scatterplot represents a student. Where the student is on'.
     ' the graph shows their level of social and academic risk. The black line shows the expected relationship between'.
     ' social and academic risk. The shaded area (confidence interval) gives a range for the expected relationship.'.
-    ' Color is used to help you determine risk potential quickly. Green is not at risk. Red is at risk. ';
+    ' Color is used to help you determine risk potential quickly. Green is not at risk. Red is at high risk, yellow'.
+    ' at medium.';
 
 /* Graphs Risk report*/
 $string['gradebookreport_studentScoreDistribution'] = 'Distribution of Scores';
@@ -384,25 +385,35 @@ $string['discussionreport_avgWordPerPost_help'] = 'This graph shows the average 
 $string['discussionreport_socialStructure_help'] = 'This diagram shows you who your students are replying to. Color'.
     ' shows how connected a student is to the rest of the class. Blue shows the student has an average or a above'.
     ' average connection to the rest of the class. Yellow shows a below average connection. Red shows the student'.
-    ' has not connected with the rest of the class yet. ';
+    ' has not connected with the rest of the class yet. \'inst\' in brackets indicates the instructor(s) of the course,'.
+    ' and names in parentheses indicate persons, who participated in the forum(s), but are not registered as students'.
+    ' for this course.';
 $string['discussionreport_socialStructureWordCount_help'] = 'This diagram shows you who your students are talking to'.
     ' and how much they are saying. This is based on the number of words exchanged between two students in discussion'.
-    ' posts. Thicker lines indicate more words being used.';
+    ' posts. Thicker lines indicate more words being used. \'inst\' in brackets indicates the instructor(s) of the course,'.
+    ' and names in parentheses indicate persons, who participated in the forum(s), but are not registered as students'.
+    ' for this course.';
 $string['discussionreport_socialStructureWordContribution_help'] = 'This diagram shows you who your students are'.
     ' talking to and the quality of their contribution. Original contribution is based on a word count with stop'.
     ' words filtered out to determine the ratio of unique words used. Thicker lines indicate more unique words'.
-    ' being used.';
+    ' being used. \'inst\' in brackets indicates the instructor(s) of the course,'.
+    ' and names in parentheses indicate persons, who participated in the forum(s), but are not registered as students'.
+    ' for this course.';
 $string['discussionreport_socialStructureWordCTC_help'] = 'This diagram shows you which replies between students'.
-    ' are showing evidence of critical thought. This is based on the number of reflective statements used.';
+    ' are showing evidence of critical thought. This is based on the number of reflective statements used. \'inst\' in'.
+    ' brackets indicates the instructor(s) of the course, and names in parentheses indicate persons, who participated'.
+    ' in the forum(s), but are not registered as students for this course.';
 $string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'The heatmaps show how similiar student posts'.
     ' are to others in the class. It shows who the knowlege source is and who is copying them. Original posts are'.
     ' determined by time stamps. Lower values indicate less similarity between posts. Review the posts of students'.
-    ' with higher values, they may be quoting other students or plagiarising their work.';
+    ' with higher values, they may be quoting other students or plagiarising their work. Names in parentheses'.
+    ' indicate persons, who participated in the forum(s), but are not registered as students for this course.';
 $string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'The heatmaps show how similiar student posts are to'.
     ' others in the class, including the instructor. It shows who the knowlege source is and who is copying'.
     ' them. Original posts are determined by time stamps. Lower values indicate less similarity between posts. Review'.
     ' the posts of students with higher values, they may be quoting other students and instructor or plagiarising'.
-    ' their work. ';
+    ' their work. Names in parentheses indicate persons, who participated in the forum(s), but are not registered as'.
+    ' students for this course.';
 $string['discussionreport_discussionSuggestedGrades_help'] = 'This bar plot shows the distribution of suggested'.
     ' grades for the participation in discussion groups. The solid line shows an expected distribution of'.
     ' grades with a class average grade of C. The dotted line shows the distribution with a class average grade'.
