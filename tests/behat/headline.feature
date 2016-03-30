@@ -48,6 +48,7 @@ Feature: The headline data should be present in the course page for manager, edi
   @javascript
   Scenario: Headline is displayed.
     Given I log in as "teacher1"
+    # Test the Risk report link in Headline.
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
@@ -58,6 +59,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And "h2.xray-report-page-title" "css_element" should exist
     And "#table_riskMeasures" "css_element" should exist
     And ".sorting:nth-child(6).sorting_desc" "css_element" should exist
+    # Test the Activity report link in Headline.
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
@@ -68,6 +70,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And "h2.xray-report-page-title" "css_element" should exist
     And "#table_studentList" "css_element" should exist
     And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
+    # Test the Discussion report link in Headline.
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
@@ -78,6 +81,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And "h2.xray-report-page-title" "css_element" should exist
     And "#table_discussionMetrics" "css_element" should exist
     And ".sorting:nth-child(5).sorting_desc" "css_element" should exist
+    # Test the Gradebook report link in Headline.
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
@@ -88,23 +92,24 @@ Feature: The headline data should be present in the course page for manager, edi
     And "#table_element2" "css_element" should exist
     # This not will be implemented in headline
     # And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
+    # Test Headline in all themes, formats and templates.
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
     And I test Headline view "xray1"
-      | theme | formats | type |
-      | clean | weeks,topics,folderview,onetopic,social,topcoll | theme |
-      | more | weeks,topics,folderview,onetopic,social,topcoll | theme |
-      | snap | weeks,topics | theme |
-      | express | flexpage,weeks,topics,folderview,onetopic,social,topcoll | theme |
-      | minimal | weeks,topics,folderview,onetopic,social,topcoll | template |
-      | cherub | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
+      | theme      | formats                                                  | type     |
+      | clean      | weeks,topics,folderview,onetopic,social,topcoll          | theme    |
+      | more       | weeks,topics,folderview,onetopic,social,topcoll          | theme    |
+      | snap       | weeks,topics                                             | theme    |
+      | express    | flexpage,weeks,topics,folderview,onetopic,social,topcoll | theme    |
+      | minimal    | weeks,topics,folderview,onetopic,social,topcoll          | template |
+      | cherub     | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
       | dropshadow | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | future | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | joule | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | simple | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | sleek | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | topslide | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
+      | future     | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
+      | joule      | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
+      | simple     | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
+      | sleek      | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
+      | topslide   | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
 
   @javascript
   Scenario: Headline is not displayed for students.
@@ -114,10 +119,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
     And "h4 .x-ray-icon-title" "css_element" should not exist
-    And "#xray-headline-risk p.xray-headline-number" "css_element" should not exist
-    And "#xray-headline-activity p.xray-headline-number" "css_element" should not exist
-    And "#xray-headline-gradebook p.xray-headline-number" "css_element" should not exist
-    And "#xray-headline-discussion p.xray-headline-number" "css_element" should not exist
+    And "#course-header" "css_element" should exist
 
   @javascript
   Scenario: Headline conection error and disabled menu.
