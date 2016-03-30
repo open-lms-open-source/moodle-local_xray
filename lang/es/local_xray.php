@@ -141,6 +141,8 @@ $string['export_progress_desc'] = 'Durante exportacion de los datos, informacion
 $string['curlcache'] = 'Expiracion de Web service caché';
 $string['curlcache_desc'] = 'Determina por cuanto tiempo guardar respuestas de Web service.'.
                             'Puesto en cero caché seria apagado. Para aclarar - solo respuestas exitosas se guardaran.';
+$string['enableschemavalidation'] = 'Validacion de esquema de JSON';
+$string['enableschemavalidation_desc'] = 'Determina si JSON entrante sea validado o no.';
 
 $string['xrayadminserver'] = 'Servidor de administración X-Ray Learning Analytics';
 $string['xrayadminserver_desc'] = 'Locación del servidor.';

@@ -1,0 +1,496 @@
+{
+  "date": "2016-03-30",
+  "scheduleid": 0,
+  "attachments": [],
+  "datecreated": "2016-03-30T00:00:00.000Z",
+  "oldid": null,
+  "notifications": {
+    "attributes": {
+      "row.names": {
+        "attributes": {},
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      "names": {
+        "attributes": {},
+        "value": [
+          "domain",
+          "report",
+          "courseId",
+          "participantId",
+          "forumId",
+          "type",
+          "severity",
+          "text",
+          "date"
+        ],
+        "type": "character"
+      },
+      "class": {
+        "attributes": {},
+        "value": [
+          "data.frame"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {},
+        "value": [
+          "xray2qa"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "xrayActivityReport"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          190
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "NA"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "No notifications"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {
+          "class": {
+            "attributes": {},
+            "value": [
+              "Date"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          16890
+        ],
+        "type": "double"
+      }
+    ],
+    "type": "list"
+  },
+  "datapoints_plain": {
+    "studentList": [
+      {
+        "participantId": "3479",
+        "firstname": "Christin",
+        "lastname": "Skidmore"
+      }
+    ]
+  },
+  "datapoints": {
+    "attributes": {
+      "names": {
+        "attributes": {},
+        "value": [
+          "studentList"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [
+              2
+            ],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [
+              "participantId",
+              "lastname",
+              "firstname",
+              "last_activity",
+              "discussion_posts",
+              "loggedThisWeek",
+              "last_activity_readable",
+              "discussion_posts_last_week",
+              "timeOnTask",
+              "weeklyRegularity"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          {
+            "attributes": {},
+            "value": [
+              "3479"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "Skidmore"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "Christin"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          }
+        ],
+        "type": "list"
+      }
+    ],
+    "type": "list"
+  },
+  "id": 108440,
+  "courseid": 190,
+  "participantid": 0,
+  "type": "activity",
+  "subtype": "",
+  "reportdate": "2016-03-30T00:00:00.000Z",
+  "forumid": 0,
+  "elements": {
+    "activityByWeekAsFractionOfOwn": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/activity/2016-03-30/activityByWeekAsFractionOfOwn.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/activity/2016-03-30/activityByWeekAsFractionOfOwn.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/activity/2016-03-30/activityByWeekAsFractionOfOwn.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/activity/2016-03-30/activityByWeekAsFractionOfOwn.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "activityByWeekAsFractionOfOwn",
+      "dimensions": {
+        "height": 600,
+        "width": 1200
+      },
+      "customData": {
+        "myTimeOnTask": [],
+        "courseInfo": {
+          ".xData": [],
+          "class": "xrayCourseInfo"
+        }
+      },
+      "uuid": "d920acf5-4968-4da7-a187-d2f1f73bd273activityByWeekAsFractionOfOwn.svg",
+      "title": "Relative Activity Compared to Self",
+      "legend": "Dots represent student activity. Bigger dots indicate more activity \n                      relative to that student's activity during the course term.",
+      "mapping": [],
+      "tooltip": "Dots represent student activity. Bigger dots indicate more activity \n                      relative to that student's activity during the course term.",
+      "filename": "activityByWeekAsFractionOfOwn.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "activityByWeekAsFractionOfTotal": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/activity/2016-03-30/activityByWeekAsFractionOfTotal.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/activity/2016-03-30/activityByWeekAsFractionOfTotal.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/activity/2016-03-30/activityByWeekAsFractionOfTotal.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/activity/2016-03-30/activityByWeekAsFractionOfTotal.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "activityByWeekAsFractionOfTotal",
+      "dimensions": {
+        "height": 600,
+        "width": 1200
+      },
+      "customData": {
+        "myTimeOnTask": [],
+        "courseInfo": {
+          ".xData": [],
+          "class": "xrayCourseInfo"
+        }
+      },
+      "uuid": "4b39346d-897d-4d59-9e8c-e132b992cd57activityByWeekAsFractionOfTotal.svg",
+      "title": "Relative Activity Compared to Other Students in Class",
+      "legend": "Dots represent student activity. Bigger dots indicate more activity.",
+      "mapping": [],
+      "tooltip": "Dots represent student activity. Bigger dots indicate more activity.",
+      "filename": "activityByWeekAsFractionOfTotal.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "barplotOfActivityByWeekday": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/activity/2016-03-30/barplotOfActivityByWeekday.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/activity/2016-03-30/barplotOfActivityByWeekday.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/activity/2016-03-30/barplotOfActivityByWeekday.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/activity/2016-03-30/barplotOfActivityByWeekday.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "barplotOfActivityByWeekday",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "activityByWeekday": []
+      },
+      "uuid": "39d1892d-2546-4855-8937-bc928e48c1a2barplotOfActivityByWeekday.svg",
+      "title": "Activity Over Last Two Weeks by Weekday",
+      "legend": "Daily activity over the last seven days compared to the seven days before \n                      that.",
+      "mapping": [],
+      "tooltip": "Daily activity over the last seven days compared to the seven days before \n                      that.",
+      "filename": "barplotOfActivityByWeekday.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "barplotOfActivityWholeWeek": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/activity/2016-03-30/barplotOfActivityWholeWeek.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/activity/2016-03-30/barplotOfActivityWholeWeek.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/activity/2016-03-30/barplotOfActivityWholeWeek.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/activity/2016-03-30/barplotOfActivityWholeWeek.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "barplotOfActivityWholeWeek",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "activityByWeekday": []
+      },
+      "uuid": "ca1d28e2-3744-486e-bf67-341b1e6cb0b7barplotOfActivityWholeWeek.svg",
+      "title": "Activity Over Last Two Weeks",
+      "legend": "Cumulative activity over the last seven days compared to the seven days \n                      before that.",
+      "mapping": [],
+      "tooltip": "Cumulative activity over the last seven days compared to the seven days \n                      before that.",
+      "filename": "barplotOfActivityWholeWeek.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "compassTimeDiagram": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/activity/2016-03-30/compassTimeDiagram.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/activity/2016-03-30/compassTimeDiagram.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/activity/2016-03-30/compassTimeDiagram.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/activity/2016-03-30/compassTimeDiagram.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "compassTimeDiagram",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "aggregatedDataByHour": []
+      },
+      "uuid": "b7b1cbfc-7192-4c78-ba77-df14a7a9a40dcompassTimeDiagram.svg",
+      "title": "Activity by Time of Day",
+      "legend": "The activity level is higher as the blue line approaches the edge \n                      of the graph.",
+      "mapping": [],
+      "tooltip": "The activity level is higher as the blue line approaches the edge \n                      of the graph.",
+      "filename": "compassTimeDiagram.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "activityLevelTimeline": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/activity/2016-03-30/activityLevelTimeline.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/activity/2016-03-30/activityLevelTimeline.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/activity/2016-03-30/activityLevelTimeline.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/activity/2016-03-30/activityLevelTimeline.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "activityLevelTimeline",
+      "dimensions": {
+        "height": 600,
+        "width": 1200
+      },
+      "customData": {
+        "myData": []
+      },
+      "uuid": "8e3551fb-9b53-4f31-94fc-006bb92d7dafactivityLevelTimeline.svg",
+      "title": "Course Activity by Date",
+      "legend": "This graph shows total daily time spent in the course (blue line), the \n                      forecasted activity levels (dotted line), and the estimated potential range in \n                      active hours (thick gray line). Extreme values are highlighted with red circles.",
+      "mapping": [],
+      "tooltip": "This graph shows total daily time spent in the course (blue line), the \n                      forecasted activity levels (dotted line), and the estimated potential range in \n                      active hours (thick gray line). Extreme values are highlighted with red circles.",
+      "filename": "activityLevelTimeline.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "studentList": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "last_activity_readable": "Last activity",
+        "weeklyRegularity": "Visit regularity (weekly)",
+        "discussion_posts": "Total discussion posts",
+        "loggedThisWeek": "Logged in during previous week",
+        "timeOnTask": "Time spent in course (HH:MM)",
+        "firstname": "Given Name",
+        "lastname": "Surname"
+      },
+      "enableGraph": true,
+      "elementType": "xrayTable",
+      "elementName": "studentList",
+      "data": [
+        {
+          "discussion_posts_last_week": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": {}
+          },
+          "last_activity_readable": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": {}
+          },
+          "lastname": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": "Skidmore"
+          },
+          "firstname": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": "Christin"
+          },
+          "timeOnTask": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": "NaNh NaNm"
+          },
+          "last_activity": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": {}
+          },
+          "participantId": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": "3479"
+          },
+          "loggedThisWeek": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": {}
+          },
+          "discussion_posts": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": {}
+          },
+          "weeklyRegularity": {
+            "link": "/xray2qa/course/190/3479/activity",
+            "value": {}
+          }
+        }
+      ],
+      "uuid": "c6a2fb63-fcbe-4431-a4ff-a6cb9ae7c613",
+      "title": "Activity Metrics",
+      "legend": "A small number for regularity means, that there is a regular pattern.",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": {
+        "timeOnTask": "timerangeminute"
+      },
+      "columnOrder": [
+        "lastname",
+        "firstname",
+        "loggedThisWeek",
+        "last_activity_readable",
+        "discussion_posts",
+        "timeOnTask",
+        "weeklyRegularity"
+      ]
+    },
+    "element1": {
+      "sectionLevel": 1,
+      "instructors": "Nicholas Hemmert",
+      "elementType": "xraySectionHeader",
+      "elementName": "element1",
+      "courseName": "Robertsdale Elementary Teachers",
+      "title": "Activity Report",
+      "date": "2016-03-30"
+    }
+  }
+}

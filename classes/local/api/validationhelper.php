@@ -60,12 +60,13 @@ abstract class validationhelper {
     protected static function url_replace(array $replacement, $url) {
         $subject = parse_url($url, PHP_URL_PATH);
         $pattern = [
+            '#^/([^/]+)/course$#',
             '#^/([^/]+)/course/([^/]+)/([^/]+)$#',
             '#^/([^/]+)/course/([^/]+)/([^/]+)/elements/([^/]+)$#',
             '#^/([^/]+)/data/([^/]+)/([^/]+)/accessible$#',
             '#^/user/login$#',
             '#^/user/accesstoken$#',
-            '#^/((?!(course|data))[^/]+)$#'
+            '#^/([^/]+)$#'
         ];
 
         return self::replace($pattern, $replacement, $subject);
@@ -77,6 +78,7 @@ abstract class validationhelper {
      */
     public static function generate_schema_name($url) {
         $replacement = [
+            'courses-schema.json',
             'course-report-${3}-schema.json',
             'course-element-${3}-${4}-schema.json',
             'data-accessible-${2}-${3}-schema.json',
@@ -102,7 +104,10 @@ abstract class validationhelper {
         return $result;
     }
 
+    // @codingStandardsIgnoreStart
     /**
+     * Validate JSON using provided schema, due to non standard library used we disbale coding standards for this method.
+     *
      * @param  string  $json - json incoming data
      * @param  string  $url - url that was used
      * @return string[]
@@ -131,6 +136,11 @@ abstract class validationhelper {
             $retriever = new \JsonSchema\Uri\UriRetriever;
             $schema = $retriever->retrieve('file://' . $file);
 
+            // Increase depth to be able to handle more complex JSON we use.
+            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+            /* @noinspection PhpUndefinedClassInspection */
+            \JsonSchema\RefResolver::$maxDepth = 10;
+
             /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
             /* @noinspection PhpUndefinedClassInspection */
             $refresolver = new \JsonSchema\RefResolver();
@@ -153,14 +163,27 @@ abstract class validationhelper {
             if (!empty($resultarr)) {
                 foreach ($resultarr as $error) {
                     $result[] = 'Property: '.$error['property'].
-                        ' Message: '.$error['message'].
-                        ' Constraint: '.$error['constraint'];
+                                ' Message: '.$error['message'].
+                                ' Constraint: '.$error['constraint'];
                 }
             }
         } catch (\Exception $e) {
             $result = ['Exception: '.$e->getMessage()];
         }
 
+        return $result;
+    }
+    // @codingStandardsIgnoreEnd
+
+    /**
+     * @param  string[] $items
+     * @return string
+     */
+    public static function generate_message(array $items) {
+        $result = '';
+        if (!empty($items)) {
+            $result = implode(PHP_EOL, $items);
+        }
         return $result;
     }
 }

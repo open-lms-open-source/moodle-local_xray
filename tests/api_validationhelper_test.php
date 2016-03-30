@@ -25,82 +25,57 @@ require_once(__DIR__.'/base.php');
 class local_xray_api_validationhelper_testcase extends advanced_testcase {
 
     /**
-     * @return void
+     * @return array
      */
-    public function test_schema_login_ok() {
-        $this->resetAfterTest(true);
-
-        $requesturl = 'http://foo.com/user/login';
-        // Load correct fixture.
-        $json = file_get_contents(__DIR__.'/fixtures/user-login-final.json');
-        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $requesturl);
-        $this->assertEmpty($emsgs);
+    public function ws_schema_provider_ok() {
+        return [
+            '/user/login ok' => ['http://foo.com/user/login', 'user-login-schema.json', 'user-login-final.json', true ],
+            '/user/login error' => ['http://foo.com/user/login', 'user-login-schema.json', 'user-accesstoken-final.json', false],
+            '/user/accesstoken ok' => ['http://foo.com/user/accesstoken', 'user-accesstoken-schema.json',
+                                       'user-accesstoken-final.json', true],
+            '/user/accesstoken error' => ['http://foo.com/user/accesstoken', 'user-accesstoken-schema.json',
+                                         'data-accessible-wordHistogram-final.json', false],
+            '/somedomain ok' => ['http://foo.com/somedomain', 'domain-schema.json', 'domain-final.json', true],
+            '/somedomain error' => ['http://foo.com/somedomain', 'domain-schema.json',
+                                    'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course ok' => ['http://foo.com/somedomain/course', 'courses-schema.json', 'courses-final.json', true],
+            '/somedomain/course error' => ['http://foo.com/somedomain/course', 'courses-schema.json',
+                                           'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course/123/activity ok' => ['http://foo.com/somedomain/course/123/activity',
+                                                     'course-report-activity-schema.json',
+                                                     'course-report-activity-final_v2.json', true],
+            '/somedomain/course/123/activity error' => ['http://foo.com/somedomain/course/123/activity',
+                                                        'course-report-activity-schema.json',
+                                                        'data-accessible-wordHistogram-final.json', false],
+        ];
     }
 
     /**
+     * Central method that tests all json validations for web service methods
+     *
+     * @param  string $url
+     * @param  string $schemafile
+     * @param  string $jsonfile
+     * @param  bool   $noerror
      * @return void
+     *
+     * @dataProvider ws_schema_provider_ok
      */
-    public function test_schema_login_fail() {
-        $this->resetAfterTest(true);
+    public function test_webservice_schemas($url, $schemafile, $jsonfile, $noerror) {
+        $schemafilegot = \local_xray\local\api\validationhelper::generate_schema_name($url);
+        $this->assertEquals($schemafile, $schemafilegot);
 
-        $requesturl = 'http://foo.com/user/login';
-        // Load unexpected fixture.
-        $json = file_get_contents(__DIR__.'/fixtures/user-accesstoken-final.json');
-        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $requesturl);
-        $this->assertNotEmpty($emsgs);
-    }
+        $file = __DIR__.'/fixtures/'.$jsonfile;
+        $this->assertFileExists($file);
 
-    /**
-     * @return void
-     */
-    public function test_schema_accesskey_ok() {
-        $this->resetAfterTest(true);
-
-        $requesturl = 'http://foo.com/user/accesstoken';
-        $json = file_get_contents(__DIR__.'/fixtures/user-accesstoken-final.json');
-        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $requesturl);
-        $this->assertEmpty($emsgs);
-    }
-
-    /**
-     * @return void
-     */
-    public function test_schema_accesskey_fail() {
-        $this->resetAfterTest(true);
-
-        $requesturl = 'http://foo.com/user/accesstoken';
-        $json = file_get_contents(__DIR__.'/fixtures/data-accessible-wordHistogram-final.json');
-        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $requesturl);
-        $this->assertNotEmpty($emsgs);
-    }
-
-    /**
-     * @return void
-     */
-    public function test_schema_domaininfo_ok() {
-        $this->resetAfterTest(true);
-
-        $requesturl = 'http://foo.com/somedomain';
-        $json = file_get_contents(__DIR__.'/fixtures/domain-final.json');
-        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $requesturl);
-        $this->assertEmpty($emsgs);
-    }
-
-    /**
-     * @return void
-     */
-    public function test_schema_domaininfo_fail() {
-        $this->resetAfterTest(true);
-
-        $requesturl = 'http://foo.com/somedomain';
-
-        // To ensure we actually have the correct schema filename.
-        $schemafile = \local_xray\local\api\validationhelper::generate_schema_name($requesturl);
-        $this->assertEquals('domain-schema.json', $schemafile);
-
-        $json = file_get_contents(__DIR__.'/fixtures/data-accessible-wordHistogram-final.json');
-        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $requesturl);
-        $this->assertNotEmpty($emsgs);
+        $json  = file_get_contents($file);
+        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $url);
+        $msg   = \local_xray\local\api\validationhelper::generate_message($emsgs);
+        if ($noerror) {
+            $this->assertEmpty($emsgs, $msg);
+        } else {
+            $this->assertNotEmpty($emsgs, $msg);
+        }
     }
 
 }

@@ -393,13 +393,18 @@ class xrayws {
         }
 
         if ($response) {
-            $result = validationhelper::validate_schema($this->rawresponse, $url);
-            if (!empty($result)) {
-                $this->errorno     = self::ERR_JSON;
-                $this->error       = "Unexpected JSON format: " . implode(', ', $result);
-                $this->errorstring = 'xrayws_error_server';
-                $response = false;
-            } else {
+            $validate = get_config('local_xray', 'enableschemavalidation');
+            if ($validate) {
+                $result = validationhelper::validate_schema($this->rawresponse, $url);
+                if (!empty($result)) {
+                    $this->errorno = self::ERR_JSON;
+                    $this->error = "Unexpected JSON format: " . validationhelper::generate_message($result);
+                    $this->errorstring = 'xrayws_error_server';
+                    $response = false;
+                }
+            }
+
+            if ($response) {
                 $this->cache->set($url, $this->rawresponse);
             }
         }
