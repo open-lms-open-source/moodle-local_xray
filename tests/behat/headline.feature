@@ -39,11 +39,11 @@ Feature: The headline data should be present in the course page for manager, edi
       | student1 | Student | 1 | student1@example.com |
     And the following "courses" exist:
       | fullname | shortname | format |
-      | Xray Course 01 | xray1 | weeks |
+      | Xray Course 01 | xraycourse1 | weeks |
     And the following "course enrolments" exist:
       | user | course | role |
-      | teacher1 | xray1 | editingteacher |
-      | student1 | xray1 | student |
+      | teacher1 | xraycourse1 | editingteacher |
+      | student1 | xraycourse1 | student |
 
   @javascript
   Scenario: Headline is displayed.
@@ -96,7 +96,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
-    And I test Headline view "xray1"
+    And I test Headline view "xraycourse1"
       | theme      | formats                                                  | type     |
       | clean      | weeks,topics,folderview,onetopic,social,topcoll          | theme    |
       | more       | weeks,topics,folderview,onetopic,social,topcoll          | theme    |
@@ -123,6 +123,7 @@ Feature: The headline data should be present in the course page for manager, edi
 
   @javascript
   Scenario: Headline conection error and disabled menu.
+    # Test the conection error.
     Given the following config values are set as admin:
       | xrayclientid | error | local_xray |
     And I log in as "admin"
@@ -132,12 +133,14 @@ Feature: The headline data should be present in the course page for manager, edi
     Then ".xray-headline-errortoconnect" "css_element" should exist
     And "h4 .x-ray-icon-title" "css_element" should exist
     And "#xray-nav-headline" "css_element" should not exist
+    # Headline is displayed.
     Then the following config values are set as admin:
       | xrayclientid | datapushdemo | local_xray |
     And I reload the page
     Then ".xray-headline-errortoconnect" "css_element" should not exist
     And "h4 .x-ray-icon-title" "css_element" should exist
     And "#xray-nav-headline" "css_element" should exist
+    # Disabled menu.
     Then the following config values are set as admin:
       | displaymenu | 0 | local_xray |
     And I reload the page
