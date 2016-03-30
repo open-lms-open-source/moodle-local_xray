@@ -394,22 +394,22 @@ $string['discussionreport_avgWordPerPost_help'] = 'Este gráfico muestra el prom
 $string['discussionreport_socialStructure_help'] = 'Este diagrama muestra a quiénes están respondiendo sus'.
     ' estudiantes. El color demuestra cuán conectados están sus estudiantes con el resto de la clase. El'.
     ' azul muestra mucha interacción con otros estudiantes, el amarillo por debajo del promedio de interacción'.
-    ' y el rojo es de nula interacción. \'inst\' entre paréntesis es el instructor(es) del curso, y los nombres entre'.
+    ' y el rojo es de nula interacción. "inst" entre paréntesis es el instructor(es) del curso, y los nombres entre'.
     ' paréntesis son individuos que participaron en los foros, pero no están registrados como estudiantes del curso.';
 $string['discussionreport_socialStructureWordCount_help'] = 'Este diagrama muestra a quién habla cada estudiante'.
     ' y lo mucho que está diciendo. Estos valores se obtienen del conteo de palabras intercambiadas entre los'.
     ' estudiantes. Las líneas más gruesas indican mayor utilización de palabras en el intercambio de'.
-    ' posteos. \'inst\' entre paréntesis es el instructor(es) del curso, y los nombres entre paréntesis son individuos'.
+    ' posteos. "inst" entre paréntesis es el instructor(es) del curso, y los nombres entre paréntesis son individuos'.
     ' que participaron en los foros, pero no están registrados como estudiantes del curso.';
 $string['discussionreport_socialStructureWordContribution_help'] = 'Este diagrama muestra quién habla a quién entre'.
     ' los estudiantes, junto con la calidad de su contribución. La contribución original se obtiene del conteo'.
     ' de palabras filtradas como únicas en cuanto a su nivel de utilización. Las líneas más gruesas indican'.
-    ' la cantidad de palabras únicas utilizadas. \'inst\' entre paréntesis es el instructor(es) del curso, y los'.
+    ' la cantidad de palabras únicas utilizadas. "inst" entre paréntesis es el instructor(es) del curso, y los'.
     ' nombres entre paréntesis son individuos que participaron en los foros, pero no están registrados como'.
     ' estudiantes del curso.';
 $string['discussionreport_socialStructureWordCTC_help'] = 'Este diagrama muestra en cuáles de las respuestas de los'.
-    ' estudiantes se observa un pensamiento crítico. Esto está basado en el número de posteos reflexivos. \'inst\' '.
-    'entre paréntesis es el instructor(es) del curso, y los nombres entre paréntesis son individuos que participaron'.
+    ' estudiantes se observa un pensamiento crítico. Esto está basado en el número de posteos reflexivos. "inst"'.
+    ' entre paréntesis es el instructor(es) del curso, y los nombres entre paréntesis son individuos que participaron'.
     ' en los foros, pero no están registrados como estudiantes del curso.';
 $string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'Los mapas de temperatura muestran cuán'.
     ' similares son los posteos entre los estudiantes de la clase. Este esquema demuestra quién fue la fuente'.
