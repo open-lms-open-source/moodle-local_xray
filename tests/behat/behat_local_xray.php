@@ -128,6 +128,7 @@ class behat_local_xray extends behat_base {
         }
         // Test themes.
         foreach ($themes as $theme => $formats) {
+            var_dump($theme);
             $this->local_xray_test_headline_themes($theme, $formats, $shortname);
         }
         // Test express templates.
@@ -137,7 +138,7 @@ class behat_local_xray extends behat_base {
             $admincontext->the_following_config_values_are_set_as_admin($table);
         }
         foreach ($templates as $template => $formats) {
-            $this->local_xray_test_headline_themes($template, $formats, $shortname, false, true);
+            $this->local_xray_test_headline_themes($template, $formats, $shortname, false);
         }
     }
 
