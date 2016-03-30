@@ -25,22 +25,22 @@ Feature: The tree menu xray will visible or not in each place.
 
   Background:
     Given the following config values are set as admin:
-      | xrayurl | http://xrayurltest.com | local_xray |
-      | xrayusername | xrayuser@test.com | local_xray |
-      | xraypassword | xraypass | local_xray |
-      | xrayclientid | testclient | local_xray |
-      | displaymenu | 1 | local_xray |
+      | xrayurl      | http://xrayurltest.com | local_xray |
+      | xrayusername | xrayuser@test.com      | local_xray |
+      | xraypassword | xraypass               | local_xray |
+      | xrayclientid | testclient             | local_xray |
+      | displaymenu  | 1                      | local_xray |
     And the following "courses" exist:
       | fullname | shortname | format |
-      | Course1 | C1 | weeks |
+      | Course1  | C1        | weeks  |
     And the following "users" exist:
-      | username | firstname | lastname | email |
+      | username     | firstname | lastname | email |
       | user1student | user1 | student  | user1@example.com |
       | user2teacher | user2 | teacher  | user2@example.com |
     And the following "course enrolments" exist:
-      | user | course | role |
-      | user1student | C1 | student |
-      | user2teacher | C1 | editingteacher |
+      | user         | course | role           |
+      | user1student | C1     | student        |
+      | user2teacher | C1     | editingteacher |
 
   @javascript @local_xray_menu_visibility_courses_format_teacher
   Scenario Outline: Menu xray will visible for teachers in all course with all formats, except format "singleactivity".
