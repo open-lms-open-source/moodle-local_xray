@@ -36,7 +36,6 @@ Feature: The headline data should be present in the course page for manager, edi
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
-      | teacher2 | Teacher | 2 | teacher2@example.com |
       | student1 | Student | 1 | student1@example.com |
     And the following "courses" exist:
       | fullname | shortname | format |
@@ -44,7 +43,6 @@ Feature: The headline data should be present in the course page for manager, edi
     And the following "course enrolments" exist:
       | user | course | role |
       | teacher1 | xray1 | editingteacher |
-      | teacher2 | xray1 | teacher |
       | student1 | xray1 | student |
 
   @javascript
