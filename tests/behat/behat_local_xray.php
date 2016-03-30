@@ -106,18 +106,15 @@ class behat_local_xray extends behat_base {
     /**
      * Test Headline.
      *
-     * @Given /^I test Headline view "(?P<shortname_string>(?:[^"]|\\")*)" "(?P<view_string>[^"]*)"$/
+     * @Given /^I test Headline view "(?P<shortname_string>(?:[^"]|\\")*)"$/
      * @param string $shortname
      * @return void
      */
-    public function i_test_headline_view($shortname, $view) {
+
+    public function i_test_headline_view($shortname) {
         global $DB;
         $this->courseshortname = $shortname;
-        // Check if the headline shoould be displayed.
-        $positive = true;
-        if ($view == 'notdisplayed') {
-            $positive = false;
-        }
+
         // Add themes and the course format for each one.
         $themes = array();
         $themes['clean'] = array('topics', 'folderview', 'onetopic', 'social', 'topcoll');
@@ -135,23 +132,16 @@ class behat_local_xray extends behat_base {
         $templates['sleek'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
         $templates['topslide'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
 
-        $steps = array();
         // Test default theme clean and default week format.
-        $steps1 = $this->local_xray_test_headline_themes('clean', $themes['clean'], $shortname, $positive);
-        if ($positive) {
-            // Test the other themes.
-            foreach ($themes as $theme => $formats) {
-                $steps2 = $this->local_xray_test_headline_themes($theme, $formats, $shortname, $positive);
-            }
-            // Test express templates.
-            foreach ($templates as $template => $formats) {
-                $steps3 = $this->local_xray_test_headline_themes($template, $formats, $shortname, $positive, false, true);
-            }
-            $steps = array_merge($steps1, $steps2, $steps3);
-        } else {
-            $steps = $steps1;
+        $this->local_xray_test_headline_themes('clean', $themes['clean'], $shortname);
+        // Test the other themes.
+        foreach ($themes as $theme => $formats) {
+            $this->local_xray_test_headline_themes($theme, $formats, $shortname);
         }
-        return $steps;
+        // Test express templates.
+        foreach ($templates as $template => $formats) {
+            $this->local_xray_test_headline_themes($template, $formats, $shortname, false, true);
+        }
     }
 
     /**
@@ -163,52 +153,82 @@ class behat_local_xray extends behat_base {
      * @param bool|false $template
      * @return array
      */
-    private function local_xray_test_headline_themes($theme, $formats, $shortname, $positive = true, $default = false, $template = false) {
+    private function local_xray_test_headline_themes($theme, $formats, $shortname, $default = false, $template = false) {
+        $generalcontext = behat_context_helper::get('behat_general');
+        $admincontext = behat_context_helper::get('behat_admin');
+
         if (!$default){
             if ($template) {
                 // Express theme should be activated for this option.
-                $steps[] = new Given('I use express template "'.$theme.'" for xray');
+                $this->i_use_express_template_for_xray($theme);
             } else {
                 // Add theme.
                 $table = new \Behat\Gherkin\Node\TableNode("| theme | $theme |");
-                $steps[] = new Given('the following config values are set as admin:', $table);
+                $admincontext->the_following_config_values_are_set_as_admin($table);
             }
             // Add format weeks.
-            $steps[] = new Given('I set course format "weeks" in course "'.$shortname.'" for xray');
+            $this->i_set_course_format_in_course_for_xray('weeks', $shortname);
         }
-        if ($positive) {
-            // Test headline is present.
-            $steps[] = new Given('"#xray-nav-headline" "css_element" should exist');
-            $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should exist');
-        } else {
-            // Test headline is not present.
-            $steps[] = new Given('"#xray-nav-headline" "css_element" should not exist');
-            $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should not exist');
-        }
+        $this->headline_elements(true);
         // Tests theme clean with the other formats.
         foreach ($formats as $format) {
-            $steps[] = new Given('I set course format "'.$format.'" in course "'.$shortname.'" for xray');
-            $steps[] = new Given('I reload the page');
-            $steps[] = new Given('I wait until the page is ready');
-            if ($positive) {
-                $steps[] = new Given('"#xray-nav-headline" "css_element" should exist');
-                $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should exist');
-                $steps[] = new Given('I click on "#xray-headline-risk p.xray-headline-number" "css_element"');
-                $steps[] = new Given('I wait until the page is ready');
-                $steps[] = new Given('"#xray-nav-headline" "css_element" should not exist');
-                $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should not exist');
-                $steps[] = new Given('"h2.xray-report-page-title" "css_element" should exist');
-                $steps[] = new Given('"#table_riskMeasures" "css_element" should exist');
-                $steps[] = new Given('".sorting:nth-child(6).sorting_desc" "css_element" should exist');
-                $steps[] = new Given('I scroll until "'.$this->courseshortname.'" "text" is visible');
-                $steps[] = new Given('I follow "'.$this->courseshortname.'"');
-                $steps[] = new Given('I wait until the page is ready');
-            } else {
-                $steps[] = new Given('"#xray-nav-headline" "css_element" should not exist');
-                $steps[] = new Given('"h4 .x-ray-icon-title" "css_element" should not exist');
+            $this->i_set_course_format_in_course_for_xray($format, $shortname);
+            $generalcontext->reload();
+            $generalcontext->wait_until_the_page_is_ready();
+            $this->headline_elements(true);
+            // Test headline in flexpages.
+            if ($theme == 'express' && $format == 'flexpage') {
+                $this->add_flexpage();
+                $this->headline_elements(true);
             }
         }
-        return $steps;
+    }
+
+    /**
+     * Add a Flexpage
+     */
+
+    private function add_flexpage () {
+        $generalcontext = behat_context_helper::get('behat_general');
+        $behatformscontext = behat_context_helper::get('behat_forms');
+
+        $generalcontext->click_link("Turn editing on");
+        $generalcontext->wait_until_the_page_is_ready();
+        $generalcontext->i_click_on("Add", "link", "#format_flexpage_actionbar_ul", "css_element");
+        $generalcontext->i_wait_seconds("3");
+        $generalcontext->i_click_on("Add flexpages", "link", "#format_flexpage_actionbar_ul", "css_element");
+        $generalcontext->i_wait_seconds("3");
+        $behatformscontext->i_set_the_field_to("name[]", "Xray Flexpage 01");
+        $behatformscontext->press_button("Add flexpages");
+        $generalcontext->wait_until_the_page_is_ready();
+        $generalcontext->i_click_on(".action-icon", "css_element", "#format_flexpage_nextpage", "css_element");
+        $generalcontext->wait_until_the_page_is_ready();
+    }
+
+    /**
+     * See all Headline Elements
+     *
+     * @param bool $positive
+     * @throws
+     */
+
+    private function headline_elements ($positive) {
+        $generalcontext = behat_context_helper::get('behat_general');
+        if ($positive) {// Test headline is present.
+            $generalcontext->should_exist("#xray-nav-headline", "css_element");
+            $generalcontext->should_exist("h4 .x-ray-icon-title", "css_element");
+            $generalcontext->should_exist("#xray-headline-risk p.xray-headline-number", "css_element");
+            $generalcontext->should_exist("#xray-headline-activity p.xray-headline-number", "css_element");
+            $generalcontext->should_exist("#xray-headline-gradebook p.xray-headline-number", "css_element");
+            $generalcontext->should_exist("#xray-headline-discussion p.xray-headline-number", "css_element");
+        } else { // Test headline is not present.
+            $generalcontext->should_not_exist("#xray-nav-headline", "css_element");
+            $generalcontext->should_not_exist("h4 .x-ray-icon-title", "css_element");
+            $generalcontext->should_not_exist("#xray-headline-risk p.xray-headline-number", "css_element");
+            $generalcontext->should_not_exist("#xray-headline-activity p.xray-headline-number", "css_element");
+            $generalcontext->should_not_exist("#xray-headline-gradebook p.xray-headline-number", "css_element");
+            $generalcontext->should_not_exist("#xray-headline-discussion p.xray-headline-number", "css_element");
+        }
     }
 
     /**

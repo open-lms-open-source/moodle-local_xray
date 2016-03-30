@@ -47,13 +47,55 @@ Feature: The headline data should be present in the course page for manager, edi
       | teacher2 | xray1 | teacher |
       | student1 | xray1 | student |
 
+
+
   @javascript
   Scenario: Headline is displayed.
     Given I log in as "teacher1"
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
-    And I test Headline view "xray1" "displayed"
+    And I test Headline view "xray1"
+    Then the following config values are set as admin:
+      | theme | clean |
+    And I set course format "weeks" in course "xray1" for xray
+    And I click on "#xray-headline-risk p.xray-headline-number" "css_element"
+    And I wait until the page is ready
+    Then "#xray-nav-headline" "css_element" should not exist
+    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "h2.xray-report-page-title" "css_element" should exist
+    And "#table_riskMeasures" "css_element" should exist
+    And ".sorting:nth-child(6).sorting_desc" "css_element" should exist
+    And I am on site homepage
+    And I follow "Xray Course 01"
+    And I wait until the page is ready
+    And I click on "#xray-headline-activity p.xray-headline-number" "css_element"
+    And I wait until the page is ready
+    Then "#xray-nav-headline" "css_element" should not exist
+    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "h2.xray-report-page-title" "css_element" should exist
+    And "#table_studentList" "css_element" should exist
+    And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
+    And I am on site homepage
+    And I follow "Xray Course 01"
+    And I wait until the page is ready
+    And I click on "#xray-headline-discussion p.xray-headline-number" "css_element"
+    And I wait until the page is ready
+    Then "#xray-nav-headline" "css_element" should not exist
+    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "h2.xray-report-page-title" "css_element" should exist
+    And "#table_discussionMetrics" "css_element" should exist
+    And ".sorting:nth-child(5).sorting_desc" "css_element" should exist
+    And I am on site homepage
+    And I follow "Xray Course 01"
+    And I wait until the page is ready
+    And I click on "#xray-headline-gradebook p.xray-headline-number" "css_element"
+    And I wait until the page is ready
+    Then "#xray-nav-headline" "css_element" should not exist
+    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "#table_element2" "css_element" should exist
+    # This not will be implemented in headline
+    # And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
 
   @javascript
   Scenario: Headline is not displayed for students.
@@ -61,7 +103,12 @@ Feature: The headline data should be present in the course page for manager, edi
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
-    And I test Headline view "xray1" "notdisplayed"
+    Then "#xray-nav-headline" "css_element" should not exist
+    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "#xray-headline-risk p.xray-headline-number" "css_element" should not exist
+    And "#xray-headline-activity p.xray-headline-number" "css_element" should not exist
+    And "#xray-headline-gradebook p.xray-headline-number" "css_element" should not exist
+    And "#xray-headline-discussion p.xray-headline-number" "css_element" should not exist
 
   @javascript
   Scenario: Headline conection error and disabled menu.
