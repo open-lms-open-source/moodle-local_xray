@@ -137,7 +137,7 @@ class behat_local_xray extends behat_base {
             $admincontext->the_following_config_values_are_set_as_admin($table);
         }
         foreach ($templates as $template => $formats) {
-            $this->local_xray_test_headline_themes($template, $formats, $shortname, false);
+            $this->local_xray_test_headline_themes($template, $formats, $shortname, true);
         }
     }
 
