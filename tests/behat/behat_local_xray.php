@@ -27,6 +27,7 @@
 
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
+use Behat\Gherkin\Node\TableNode as TableNode;
 use Behat\Behat\Context\Step\Given,
     Behat\Mink\Exception\ExpectationException as ExpectationException;
 
@@ -111,34 +112,30 @@ class behat_local_xray extends behat_base {
      * @return void
      */
 
-    public function i_test_headline_view($shortname) {
+    public function i_test_headline_view($shortname, TableNode $pages) {
         global $DB;
+        $admincontext = behat_context_helper::get('behat_admin');
         $this->courseshortname = $shortname;
-
-        // Add themes and the course format for each one.
+        // Get themes and the course format for each one.
         $themes = array();
-        $themes['clean'] = array('topics', 'folderview', 'onetopic', 'social', 'topcoll');
-        $themes['more'] = array('topics', 'folderview', 'onetopic', 'social', 'topcoll');
-        $themes['snap'] = array('topics');
-        $themes['express'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
-        // Add express templates and the course format for each one.
         $templates = array();
-        $templates['minimal'] = array('topics', 'folderview', 'onetopic', 'social', 'topcoll');
-        $templates['cherub'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
-        $templates['dropshadow'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
-        $templates['future'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
-        $templates['joule'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
-        $templates['simple'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
-        $templates['sleek'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
-        $templates['topslide'] = array('topics', 'flexpage', 'folderview', 'onetopic', 'social', 'topcoll');
-
-        // Test default theme clean and default week format.
-        $this->local_xray_test_headline_themes('clean', $themes['clean'], $shortname);
-        // Test the other themes.
+        foreach ($pages->getHash() as $elementdata) {
+            if ($elementdata['type'] == 'template') {
+                $templates[$elementdata['theme']] = explode(',', $elementdata['formats']);
+            } else {
+                $themes[$elementdata['theme']] = explode(',', $elementdata['formats']);
+            }
+        }
+        // Test themes.
         foreach ($themes as $theme => $formats) {
             $this->local_xray_test_headline_themes($theme, $formats, $shortname);
         }
         // Test express templates.
+        // Add express template.
+        if (get_config('core', 'theme') != 'express') {
+            $table = new \Behat\Gherkin\Node\TableNode("| theme | express |");
+            $admincontext->the_following_config_values_are_set_as_admin($table);
+        }
         foreach ($templates as $template => $formats) {
             $this->local_xray_test_headline_themes($template, $formats, $shortname, false, true);
         }
@@ -148,29 +145,23 @@ class behat_local_xray extends behat_base {
      * @param $theme
      * @param $formats
      * @param $shortname
-     * @param bool|true $positive
-     * @param bool|false $default
      * @param bool|false $template
      * @return array
      */
-    private function local_xray_test_headline_themes($theme, $formats, $shortname, $default = false, $template = false) {
+    private function local_xray_test_headline_themes($theme, $formats, $shortname, $template = false) {
         $generalcontext = behat_context_helper::get('behat_general');
         $admincontext = behat_context_helper::get('behat_admin');
 
-        if (!$default){
-            if ($template) {
-                // Express theme should be activated for this option.
-                $this->i_use_express_template_for_xray($theme);
-            } else {
-                // Add theme.
-                $table = new \Behat\Gherkin\Node\TableNode("| theme | $theme |");
-                $admincontext->the_following_config_values_are_set_as_admin($table);
-            }
-            // Add format weeks.
-            $this->i_set_course_format_in_course_for_xray('weeks', $shortname);
+        if ($template) {
+            // Express theme should be activated for this option.
+            $this->i_use_express_template_for_xray($theme);
+        } else {
+            // Add theme.
+            $table = new \Behat\Gherkin\Node\TableNode("| theme | $theme |");
+            $admincontext->the_following_config_values_are_set_as_admin($table);
         }
-        $this->headline_elements(true);
-        // Tests theme clean with the other formats.
+
+        // Tests formats.
         foreach ($formats as $format) {
             $this->i_set_course_format_in_course_for_xray($format, $shortname);
             $generalcontext->reload();
