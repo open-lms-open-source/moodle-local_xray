@@ -187,6 +187,7 @@ $string['atrisk'] = 'En riesgo';
 $string['dashboard'] = 'Interfaz';
 $string['fromlastweek'] = '{$a}% de cambio desde la ultima semana';
 $string['lastweekwas'] = 'Semana anterior fueron {$a}.';
+$string['averageofweek_integer'] = 'Promedio de la semana anterior fue {$a}.';
 $string['averageofweek'] = 'Promedio de la semana anterior fue {$a} %.';
 $string['lastweekwasof'] = 'Semana anterior fueron {$a->current} de {$a->total}.';
 $string['headline_studentatrisk'] = 'Estudiantes en <b>Riesgo</b> ayer.';
