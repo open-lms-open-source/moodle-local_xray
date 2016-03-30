@@ -309,8 +309,8 @@ $string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Cada punto en es
     ' que un estudiante permanece activo comparado con otras semanas. Los puntos más grandes representan mayor actividad.';
 $string['activityreport_firstloginPiechartAdjusted_help'] = 'El diagrama muestra cuántos estudiantes ingresaron al'.
     ' curso y cuántos aún no. El primer día del curso no se establece en un momento programado, este comienza el'.
-    ' día en el que el primer participante acceda al mismo, incluyendo al docente o instructor. El patrón que se'.
-    ' vea aquí puede dar un indicio del compromiso futuro.';
+    ' día en el que el primer participante acceda al mismo. El patrón que se vea aquí puede dar un indicio del'.
+    ' compromiso futuro.';
 
 /* Graphs Activity Individual report*/
 $string['activityreportindividual_activityLevelTimeline'] = 'Actividad por fecha';
@@ -337,11 +337,13 @@ $string['risk_riskScatterPlot'] = 'Riesgo académico versus riesgo social';
 
 /* Help Graphs Risk report*/
 $string['risk_riskDensity_help'] = 'Este gráfico muestra la distribución del riesgo estimado en el curso. El color'.
-    ' verde representa a los estudiantes fuera de riesgo. En rojo los que están en riesgo.';
+    ' verde representa a los estudiantes fuera de riesgo. En rojo se observan aquellos en alto riesgo y en amarillo'.
+    ' los de riesgo medio.';
 $string['risk_riskScatterPlot_help'] = 'Cada punto en este diagrama de dispersión representa un estudiante. Dependiendo'.
     ' de la posición del estudiante en el gráfico, se observa su nivel social y su riesgo académico. La línea negra'.
     ' muestra la relación esperada entre el riesgo social y el académico. El área sombreada (intervalo de confianza)'.
-    ' nos provee un rango de relación esperada. El color es utilizado para ayudar a determinar el riesgo potencial'.' de forma rápida. Verde significa fuera de riesgo. Rojo en riesgo. ';
+    ' nos provee un rango de relación esperada. El color es utilizado para ayudar a determinar el riesgo potencial'.
+    ' de forma rápida. Verde significa fuera de riesgo, rojo en alto riesgo y amarillo en riesgo medio.';
 
 /* Graphs Risk report*/
 $string['gradebookreport_studentScoreDistribution'] = 'Distribución de puntajes';
@@ -392,27 +394,37 @@ $string['discussionreport_avgWordPerPost_help'] = 'Este gráfico muestra el prom
 $string['discussionreport_socialStructure_help'] = 'Este diagrama muestra a quiénes están respondiendo sus'.
     ' estudiantes. El color demuestra cuán conectados están sus estudiantes con el resto de la clase. El'.
     ' azul muestra mucha interacción con otros estudiantes, el amarillo por debajo del promedio de interacción'.
-    ' y el rojo es de nula interacción.';
+    ' y el rojo es de nula interacción. \'inst\' entre paréntesis es el instructor(es) del curso, y los nombres entre'.
+    ' paréntesis son individuos que participaron en los foros, pero no están registrados como estudiantes del curso.';
 $string['discussionreport_socialStructureWordCount_help'] = 'Este diagrama muestra a quién habla cada estudiante'.
     ' y lo mucho que está diciendo. Estos valores se obtienen del conteo de palabras intercambiadas entre los'.
-    ' estudiantes. Las líneas más gruesas indican mayor utilización de palabras en el intercambio de posteos. ';
+    ' estudiantes. Las líneas más gruesas indican mayor utilización de palabras en el intercambio de'.
+    ' posteos. \'inst\' entre paréntesis es el instructor(es) del curso, y los nombres entre paréntesis son individuos'.
+    ' que participaron en los foros, pero no están registrados como estudiantes del curso.';
 $string['discussionreport_socialStructureWordContribution_help'] = 'Este diagrama muestra quién habla a quién entre'.
     ' los estudiantes, junto con la calidad de su contribución. La contribución original se obtiene del conteo'.
     ' de palabras filtradas como únicas en cuanto a su nivel de utilización. Las líneas más gruesas indican'.
-    ' la cantidad de palabras únicas utilizadas. ';
+    ' la cantidad de palabras únicas utilizadas. \'inst\' entre paréntesis es el instructor(es) del curso, y los'.
+    ' nombres entre paréntesis son individuos que participaron en los foros, pero no están registrados como'.
+    ' estudiantes del curso.';
 $string['discussionreport_socialStructureWordCTC_help'] = 'Este diagrama muestra en cuáles de las respuestas de los'.
-    ' estudiantes se observa un pensamiento crítico. Esto está basado en el número de posteos reflexivos.';
+    ' estudiantes se observa un pensamiento crítico. Esto está basado en el número de posteos reflexivos. \'inst\' '.
+    'entre paréntesis es el instructor(es) del curso, y los nombres entre paréntesis son individuos que participaron'.
+    ' en los foros, pero no están registrados como estudiantes del curso.';
 $string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'Los mapas de temperatura muestran cuán'.
     ' similares son los posteos entre los estudiantes de la clase. Este esquema demuestra quién fue la fuente'.
     ' de un profundo conocimiento y quién está copiando los posteos de otros. Los posteos originales están'.
     ' determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante revisar'.
-    ' los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros estudiantes.';
+    ' los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros estudiantes.'.
+    ' Los nombres entre paréntesis son individuos que participaron en los foros, pero no están registrados como'.
+    ' estudiantes del curso.';
 $string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'Los mapas de temperatura muestran cuán similares'.
     ' son los posteos entre los estudiantes de la clase, incluyendo al instructor. Este esquema demuestra quién'.
     ' fue la fuente de un profundo conocimiento y quién está copiando los posteos de otros. Los posteos originales'.
     ' están determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante'.
     ' revisar los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros'.
-    ' estudiantes y al instructor.';
+    ' estudiantes y al instructor. Los nombres entre paréntesis son individuos que participaron en los foros, pero'.
+    ' no están registrados como estudiantes del curso.';
 $string['discussionreport_discussionSuggestedGrades_help'] = 'Este diagrama de barras muestra la distribución'.
     ' de las calificaciones sugeridas para la participación grupos de discusión. La línea continua muestra la'.
     ' distribución esperada de las calificaciones, con una calificación promedio de C. La línea de puntos muestra'.
