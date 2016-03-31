@@ -448,6 +448,12 @@ class local_xray_controller_reports extends mr_controller {
                 switch ($column) {
                     case 'letterGrade':
                         // Column Grade recommendation.
+                        // Check if the value exists.
+                        if (isset($value)) {
+                            return $value;
+                        } else {
+                            return '-';
+                        }
                     case 'posts':
                         // Column Total posts.
                     case 'wc':
