@@ -191,6 +191,8 @@ if ($pathSchema{0} == '/') {
     $pathSchema = 'file://' . $pathSchema;
 }
 
+JsonSchema\RefResolver::$maxDepth = 10;
+
 $resolver = new JsonSchema\Uri\UriResolver();
 $retriever = new JsonSchema\Uri\UriRetriever();
 try {

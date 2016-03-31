@@ -1,0 +1,489 @@
+{
+  "date": "2016-03-31",
+  "scheduleid": 0,
+  "attachments": [],
+  "datecreated": "2016-03-31T00:00:00.000Z",
+  "oldid": null,
+  "notifications": {
+    "attributes": {
+      "row.names": {
+        "attributes": {},
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      "names": {
+        "attributes": {},
+        "value": [
+          "domain",
+          "report",
+          "courseId",
+          "participantId",
+          "forumId",
+          "type",
+          "severity",
+          "text",
+          "date"
+        ],
+        "type": "character"
+      },
+      "class": {
+        "attributes": {},
+        "value": [
+          "data.frame"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {},
+        "value": [
+          "xray2qa"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "xrayGradebookReport"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          7546
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "NA"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "No notifications"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {
+          "class": {
+            "attributes": {},
+            "value": [
+              "Date"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          16891
+        ],
+        "type": "double"
+      }
+    ],
+    "type": "list"
+  },
+  "datapoints_plain": [],
+  "datapoints": {
+    "attributes": {
+      "names": {
+        "attributes": {},
+        "value": [
+          "grades",
+          "studentScore",
+          "gradebook",
+          "meanScore"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [
+              "courseId",
+              "quizId",
+              "participantId",
+              "name",
+              "attempts",
+              "grade",
+              "rawGrade",
+              "finalGrade"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          {
+            "attributes": {},
+            "value": [],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [],
+            "type": "double"
+          }
+        ],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      }
+    ],
+    "type": "list"
+  },
+  "id": 117150,
+  "courseid": 7546,
+  "participantid": 0,
+  "type": "gradebook",
+  "subtype": "",
+  "reportdate": "2016-03-31T00:00:00.000Z",
+  "forumid": 0,
+  "elements": {
+    "itemsHeatmap": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/7546/gradebook/2016-03-31/itemsHeatmap.svg/timeMachine",
+        "forumContext": "/xray2qa/course/7546/gradebook/2016-03-31/itemsHeatmap.svg/forumContext",
+        "participantContext": "/xray2qa/course/7546/gradebook/2016-03-31/itemsHeatmap.svg/participantContext",
+        "courseContext": "/xray2qa/course/7546/gradebook/2016-03-31/itemsHeatmap.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "itemsHeatmap",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": [],
+      "uuid": "12358626-fb79-4ee8-b82c-0da1ff7767daitemsHeatmap.svg",
+      "title": "Comparison of Quiz Scores",
+      "legend": "Darker colors represent higher quiz scores.",
+      "mapping": [],
+      "tooltip": "Darker colors represent higher quiz scores.",
+      "filename": "itemsHeatmap.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "scatterPlot": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/7546/gradebook/2016-03-31/scatterPlot.svg/timeMachine",
+        "forumContext": "/xray2qa/course/7546/gradebook/2016-03-31/scatterPlot.svg/forumContext",
+        "participantContext": "/xray2qa/course/7546/gradebook/2016-03-31/scatterPlot.svg/participantContext",
+        "courseContext": "/xray2qa/course/7546/gradebook/2016-03-31/scatterPlot.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "scatterPlot",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": [],
+      "uuid": "24b2cfc3-6e6e-4395-9269-2a5c2ddbf354scatterPlot.svg",
+      "title": "Automatic discussion forum grading versus quiz results",
+      "legend": "Each dot represents the values for a student. The gray line plots the \n                              relationship between the two grading methods. The shaded area around \n                              the line is the confidence range for the line.",
+      "mapping": [],
+      "tooltip": "Each dot represents the values for a student. The gray line plots the \n                              relationship between the two grading methods. The shaded area around \n                              the line is the confidence range for the line.",
+      "filename": "scatterPlot.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "scoreDistributionByItem": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/7546/gradebook/2016-03-31/scoreDistributionByItem.svg/timeMachine",
+        "forumContext": "/xray2qa/course/7546/gradebook/2016-03-31/scoreDistributionByItem.svg/forumContext",
+        "participantContext": "/xray2qa/course/7546/gradebook/2016-03-31/scoreDistributionByItem.svg/participantContext",
+        "courseContext": "/xray2qa/course/7546/gradebook/2016-03-31/scoreDistributionByItem.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "scoreDistributionByItem",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": [],
+      "uuid": "80fa725a-53b5-4b9f-a8d2-52be1af46d1fscoreDistributionByItem.svg",
+      "title": "Distribution of Quiz Scores",
+      "legend": "This is a boxplot graph of quiz scores. Each dot is a student score.\n                      The thickest line shows the average score for that quiz.\n                      The vertical lines above and below the box show the top and lowest percent ranges.\n                      See help for more detailed explanation of boxplots.",
+      "mapping": [],
+      "tooltip": "This is a boxplot graph of quiz scores. Each dot is a student score.\n                      The thickest line shows the average score for that quiz.\n                      The vertical lines above and below the box show the top and lowest percent ranges.\n                      See help for more detailed explanation of boxplots.",
+      "filename": "scoreDistributionByItem.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "element4": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "finalGradeCorrelation": "Relationship with Current Total course grade (%)",
+        "standarScore": "Average score (%)",
+        "nStudents": "Number of students",
+        "earnScore": "Average score (Points)",
+        "quizId": "Quiz ID",
+        "grade": "Possible Points",
+        "name": "Quiz name"
+      },
+      "enableGraph": true,
+      "elementType": "xrayTable",
+      "elementName": "element4",
+      "data": [
+        {
+          "finalGradeCorrelation": {
+            "value": {}
+          },
+          "standarScore": {
+            "value": {}
+          },
+          "nStudents": {
+            "value": {}
+          },
+          "earnScore": {
+            "value": {}
+          },
+          "quizId": {
+            "value": {}
+          },
+          "grade": {
+            "value": {}
+          },
+          "name": {
+            "value": {}
+          }
+        }
+      ],
+      "uuid": "8adcd290-0a07-4e11-a119-0dfa0ec67624",
+      "title": "Summary of Quizzes",
+      "legend": "This chart displays student performance data for each quiz in the course.",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": [],
+      "columnOrder": [
+        "quizId",
+        "name",
+        "grade",
+        "nStudents",
+        "earnScore",
+        "standarScore",
+        "finalGradeCorrelation"
+      ]
+    },
+    "studentScoreDistribution": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/7546/gradebook/2016-03-31/studentScoreDistribution.svg/timeMachine",
+        "forumContext": "/xray2qa/course/7546/gradebook/2016-03-31/studentScoreDistribution.svg/forumContext",
+        "participantContext": "/xray2qa/course/7546/gradebook/2016-03-31/studentScoreDistribution.svg/participantContext",
+        "courseContext": "/xray2qa/course/7546/gradebook/2016-03-31/studentScoreDistribution.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "studentScoreDistribution",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": [],
+      "uuid": "73368cec-eed2-4c21-b7a2-260968740f74studentScoreDistribution.svg",
+      "title": "Distribution of Scores",
+      "legend": "Peaks show scores where there are a large number of students.",
+      "mapping": [],
+      "tooltip": "Peaks show scores where there are a large number of students.",
+      "filename": "studentScoreDistribution.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "element2": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "standarScore": "Quiz scores (%)",
+        "courseGrade": "Course grade",
+        "finalGrade": "Quiz scores (Points)",
+        "firstname": "Given name",
+        "lastname": "Surname"
+      },
+      "enableGraph": true,
+      "elementType": "xrayTable",
+      "elementName": "element2",
+      "data": [
+        {
+          "standarScore": {
+            "value": {}
+          },
+          "courseGrade": {
+            "value": {}
+          },
+          "finalGrade": {
+            "value": {}
+          },
+          "firstname": {
+            "value": {}
+          },
+          "lastname": {
+            "value": {}
+          }
+        }
+      ],
+      "uuid": "e1faff54-0fac-44d8-81ca-5acc964d58b8",
+      "title": "Student Grades",
+      "legend": "Standardized scores range between 0 and 100%.",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": [],
+      "columnOrder": [
+        "lastname",
+        "firstname",
+        "finalGrade",
+        "courseGrade",
+        "standarScore"
+      ]
+    },
+    "element1": {
+      "sectionLevel": 1,
+      "instructors": [
+        "teacher01 teacher01son",
+        "teacher02 teacher02son",
+        "teacher03 teacher03son",
+        "Teacher User"
+      ],
+      "elementType": "xraySectionHeader",
+      "elementName": "element1",
+      "courseName": "AGT",
+      "title": "Gradebook Report",
+      "date": "2016-03-31"
+    }
+  }
+}

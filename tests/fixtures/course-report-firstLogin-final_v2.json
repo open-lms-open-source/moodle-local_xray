@@ -1,0 +1,488 @@
+{
+  "date": "2016-03-30",
+  "scheduleid": 0,
+  "attachments": [],
+  "datecreated": "2016-03-30T00:00:00.000Z",
+  "oldid": null,
+  "notifications": {
+    "attributes": {
+      "row.names": {
+        "attributes": {},
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      "names": {
+        "attributes": {},
+        "value": [
+          "domain",
+          "report",
+          "courseId",
+          "participantId",
+          "forumId",
+          "type",
+          "severity",
+          "text",
+          "date"
+        ],
+        "type": "character"
+      },
+      "class": {
+        "attributes": {},
+        "value": [
+          "data.frame"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {},
+        "value": [
+          "xray2qa"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "xrayFirstLoginReport"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          190
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          20
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "NA"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "No participants"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {
+          "class": {
+            "attributes": {},
+            "value": [
+              "Date"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          16890
+        ],
+        "type": "double"
+      }
+    ],
+    "type": "list"
+  },
+  "datapoints_plain": [],
+  "datapoints": {
+    "attributes": {
+      "names": {
+        "attributes": {},
+        "value": [
+          "nonStarters",
+          "observedStartDate",
+          "startDateIssue",
+          "probStartDate",
+          "estStartDate",
+          "studentList"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [
+              1
+            ],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [
+              "participantId",
+              "courseId",
+              "roleId",
+              "firstname",
+              "lastname",
+              "deleted",
+              "suspended",
+              "inactive",
+              "firstlogin",
+              "firstLoginUnix",
+              "firstLogin"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          {
+            "attributes": {},
+            "value": [
+              3479
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              190
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              5
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "Christin"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "Skidmore"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              0
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              0
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              true
+            ],
+            "type": "logical"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {
+              "class": {
+                "attributes": {},
+                "value": [
+                  "Date"
+                ],
+                "type": "character"
+              }
+            },
+            "value": [
+              "NA"
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          }
+        ],
+        "type": "list"
+      },
+      {
+        "attributes": {},
+        "value": [
+          null
+        ],
+        "type": "logical"
+      },
+      {
+        "attributes": {},
+        "value": [
+          false
+        ],
+        "type": "logical"
+      },
+      {
+        "attributes": {},
+        "value": [
+          null
+        ],
+        "type": "logical"
+      },
+      {
+        "attributes": {},
+        "value": [
+          null
+        ],
+        "type": "logical"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      }
+    ],
+    "type": "list"
+  },
+  "id": 108441,
+  "courseid": 190,
+  "participantid": 0,
+  "type": "firstLogin",
+  "subtype": "",
+  "reportdate": "2016-03-30T00:00:00.000Z",
+  "forumid": 0,
+  "elements": {
+    "firstloginPiechartAdjusted": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/firstLogin/2016-03-30/firstloginPiechartAdjusted.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/firstLogin/2016-03-30/firstloginPiechartAdjusted.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/firstLogin/2016-03-30/firstloginPiechartAdjusted.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/firstLogin/2016-03-30/firstloginPiechartAdjusted.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "firstloginPiechartAdjusted",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "observedStartDate": {},
+        "studentList": [],
+        "nonStarters": [
+          {
+            "firstLoginUnix": {},
+            "participantId": 3479,
+            "firstlogin": {},
+            "roleId": 5,
+            "deleted": 0,
+            "courseId": 190,
+            "inactive": true,
+            "lastname": "Skidmore",
+            "firstname": "Christin",
+            "suspended": 0,
+            "firstLogin": {}
+          }
+        ]
+      },
+      "uuid": "bd5b4c20-5c2d-4288-94ef-a1865e9030dffirstloginPiechartAdjusted.svg",
+      "title": "Pie Chart of First Time Access Distribution",
+      "legend": "Shows when students first accessed the course. The first day starts when the course is first \n                      accessed by any participant.",
+      "mapping": [],
+      "tooltip": "Shows when students first accessed the course. The first day starts when the course is first \n                      accessed by any participant.",
+      "filename": "firstloginPiechartAdjusted.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "observedStartDate": {
+      "tooltipOrder": [
+        "interpretation",
+        "expectedRange",
+        "comment",
+        "help"
+      ],
+      "elementType": "xrayList",
+      "elementName": "observedStartDate",
+      "subtitle": [],
+      "comment": [],
+      "title": "Observed Startdate",
+      "items": [
+        {
+          "value": "2011-09-02",
+          "name": "Formal startdate"
+        },
+        {
+          "value": {},
+          "name": "Observed startdate"
+        },
+        {
+          "value": {},
+          "name": "Difference"
+        }
+      ],
+      "uuid": "e71a7cd3-6490-4b33-911d-5bd7e5518a88"
+    },
+    "nonStarters": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "firstname": "Given Name",
+        "lastname": "Surname"
+      },
+      "enableGraph": false,
+      "elementType": "xrayTable",
+      "elementName": "nonStarters",
+      "data": [
+        {
+          "firstLoginUnix": {
+            "value": {}
+          },
+          "participantId": {
+            "value": 3479
+          },
+          "firstlogin": {
+            "value": {}
+          },
+          "roleId": {
+            "value": 5
+          },
+          "deleted": {
+            "value": 0
+          },
+          "courseId": {
+            "value": 190
+          },
+          "inactive": {
+            "value": true
+          },
+          "lastname": {
+            "value": "Skidmore"
+          },
+          "firstname": {
+            "value": "Christin"
+          },
+          "suspended": {
+            "value": 0
+          },
+          "firstLogin": {
+            "value": {}
+          }
+        }
+      ],
+      "uuid": "0c839efc-70de-4b14-a7ad-b2acc506847d",
+      "title": "Inactive Students",
+      "legend": "Students who are enrolled, but never logged in.",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": [],
+      "columnOrder": {
+        "className": "ANY",
+        "field": "columnOrder",
+        "class": "uninitializedField"
+      }
+    },
+    "studentList": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "firstLogin": "First time accessed",
+        "firstname": "Given Name",
+        "lastname": "Surname"
+      },
+      "enableGraph": false,
+      "elementType": "xrayTable",
+      "elementName": "studentList",
+      "data": [
+        {
+          "firstLogin": {
+            "value": {}
+          },
+          "firstname": {
+            "value": {}
+          },
+          "lastname": {
+            "value": {}
+          }
+        }
+      ],
+      "uuid": "469d7085-9685-425c-9651-44b8b79b1777",
+      "title": "Active Students",
+      "legend": "Students who logged in at least once.",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": [],
+      "columnOrder": {
+        "className": "ANY",
+        "field": "columnOrder",
+        "class": "uninitializedField"
+      }
+    },
+    "element1": {
+      "sectionLevel": 1,
+      "instructors": "Nicholas Hemmert",
+      "elementType": "xraySectionHeader",
+      "elementName": "element1",
+      "courseName": "Robertsdale Elementary Teachers",
+      "title": "First Login Report",
+      "date": "2016-03-30"
+    }
+  }
+}

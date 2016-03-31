@@ -1,0 +1,706 @@
+{
+  "date": "2016-03-31",
+  "scheduleid": 0,
+  "attachments": [],
+  "datecreated": "2016-03-31T00:00:00.000Z",
+  "oldid": null,
+  "notifications": {
+    "attributes": {
+      "row.names": {
+        "attributes": {},
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      "names": {
+        "attributes": {},
+        "value": [
+          "domain",
+          "report",
+          "courseId",
+          "participantId",
+          "forumId",
+          "type",
+          "severity",
+          "text",
+          "date"
+        ],
+        "type": "character"
+      },
+      "class": {
+        "attributes": {},
+        "value": [
+          "data.frame"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {},
+        "value": [
+          "xray2qa"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "xrayPlagiarismReport"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          7546
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "NA"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "No notifications"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {
+          "class": {
+            "attributes": {},
+            "value": [
+              "Date"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          16891
+        ],
+        "type": "double"
+      }
+    ],
+    "type": "list"
+  },
+  "datapoints_plain": [],
+  "datapoints": {
+    "attributes": {
+      "names": {
+        "attributes": {},
+        "value": [
+          "endogenicPlagiarismMatrix",
+          "plagiarismPercentage",
+          "EPMresults",
+          "endogenicPlagiarismMatrixNoInstructor",
+          "EPMresultsNoInstructor",
+          "participantList",
+          "studentList",
+          "actors"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {},
+        "value": {},
+        "type": "NULL"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              13,
+              9,
+              10,
+              11,
+              12,
+              14
+            ],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [
+              "courseId",
+              "participantId",
+              "roleId",
+              "firstname",
+              "lastname",
+              "deleted",
+              "suspended",
+              "inactive"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          {
+            "attributes": {},
+            "value": [
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546,
+              7546
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              102213,
+              102217,
+              102218,
+              102221,
+              102220,
+              102219,
+              102216,
+              102222,
+              102120,
+              102236,
+              102235,
+              102234,
+              102232,
+              102233,
+              102237,
+              102238,
+              102231,
+              102223,
+              102227,
+              102251,
+              102252,
+              102244,
+              102224,
+              102225,
+              102226,
+              102119,
+              102245
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              4,
+              3,
+              3,
+              3,
+              3,
+              1
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "Dan The Purple People Eater",
+              "louise lucky lovely lady",
+              "Janet",
+              "Dean",
+              "Michele",
+              "June",
+              "Richie",
+              "Dylan",
+              "Student",
+              "Austin",
+              "Austin",
+              "Austin",
+              "Jon",
+              "Jon",
+              "Sara",
+              "Sarah",
+              "Jon",
+              "Chance",
+              "Chase",
+              "Jane",
+              "Jane",
+              "Non-Editing",
+              "teacher01",
+              "teacher02",
+              "teacher03",
+              "Teacher",
+              "Man"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "peeples",
+              "branson",
+              "Brent",
+              "DeLancey",
+              "Jo",
+              "Jones",
+              "Just Some Last Name",
+              "O'Reily",
+              "User",
+              "Black",
+              "Brown",
+              "Jones",
+              "Lewis",
+              "Ngata",
+              "Ogden",
+              "Ogden",
+              "Reed",
+              "DeLaCroix",
+              "MacDonald",
+              "Stern",
+              "Stern",
+              "Teacher",
+              "teacher01son",
+              "teacher02son",
+              "teacher03son",
+              "User",
+              "Ager"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              false,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "type": "logical"
+          }
+        ],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [],
+        "type": "list"
+      }
+    ],
+    "type": "list"
+  },
+  "id": 117149,
+  "courseid": 7546,
+  "participantid": 0,
+  "type": "discussionEndogenicPlagiarism",
+  "subtype": "",
+  "reportdate": "2016-03-31T00:00:00.000Z",
+  "forumid": 0,
+  "elements": {
+    "endogenicPlagiarismHeatmap": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/7546/discussionEndogenicPlagiarism/2016-03-31/endogenicPlagiarismHeatmap.svg/timeMachine",
+        "forumContext": "/xray2qa/course/7546/discussionEndogenicPlagiarism/2016-03-31/endogenicPlagiarismHeatmap.svg/forumContext",
+        "participantContext": "/xray2qa/course/7546/discussionEndogenicPlagiarism/2016-03-31/endogenicPlagiarismHeatmap.svg/participantContext",
+        "courseContext": "/xray2qa/course/7546/discussionEndogenicPlagiarism/2016-03-31/endogenicPlagiarismHeatmap.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "endogenicPlagiarismHeatmap",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": {
+        "participants": [],
+        "mat2": [],
+        "mat": []
+      },
+      "uuid": "d1d018d4-0cde-4529-adf7-c152299eec2eendogenicPlagiarismHeatmap.svg",
+      "title": "Word Overlap With Teacher Included",
+      "legend": "Lower values and lighter colors indicate less similarity.",
+      "mapping": [],
+      "tooltip": "Lower values and lighter colors indicate less similarity.",
+      "filename": "endogenicPlagiarismHeatmap.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "endogenicPlagiarismStudentsHeatmap": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/7546/discussionEndogenicPlagiarism/2016-03-31/endogenicPlagiarismStudentsHeatmap.svg/timeMachine",
+        "forumContext": "/xray2qa/course/7546/discussionEndogenicPlagiarism/2016-03-31/endogenicPlagiarismStudentsHeatmap.svg/forumContext",
+        "participantContext": "/xray2qa/course/7546/discussionEndogenicPlagiarism/2016-03-31/endogenicPlagiarismStudentsHeatmap.svg/participantContext",
+        "courseContext": "/xray2qa/course/7546/discussionEndogenicPlagiarism/2016-03-31/endogenicPlagiarismStudentsHeatmap.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "endogenicPlagiarismStudentsHeatmap",
+      "dimensions": {
+        "height": 500,
+        "width": 600
+      },
+      "customData": [],
+      "uuid": "89eeaaf7-e5fa-4044-8c0f-2e77448f9216endogenicPlagiarismStudentsHeatmap.svg",
+      "title": "Word Overlap Between Students",
+      "legend": "Lower values and lighter colors indicate less similarity.",
+      "mapping": [],
+      "tooltip": "Lower values and lighter colors indicate less similarity.",
+      "filename": "endogenicPlagiarismStudentsHeatmap.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "plagiarismSummary": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "endogenic_plagiarism": "Endogenic Plagiarism",
+        "self_plagiarism": "Self Plagiarism",
+        "plagiarized": "Plagiarized",
+        "firstname": "Given Name",
+        "lastname": "Surname"
+      },
+      "enableGraph": true,
+      "elementType": "xrayTable",
+      "elementName": "plagiarismSummary",
+      "data": [
+        {
+          "endogenic_plagiarism": {
+            "value": {}
+          },
+          "self_plagiarism": {
+            "value": {}
+          },
+          "plagiarized": {
+            "value": {}
+          },
+          "firstname": {
+            "value": {}
+          },
+          "lastname": {
+            "value": {}
+          }
+        }
+      ],
+      "uuid": "64326b27-9727-41c8-bb42-51082849a5ec",
+      "title": "Incidence of plagiarism by type and student",
+      "legend": "Incidence of plagiarism by type and student",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": [],
+      "columnOrder": [
+        "lastname",
+        "firstname",
+        "endogenic_plagiarism",
+        "self_plagiarism",
+        "plagiarized"
+      ]
+    },
+    "element1": {
+      "sectionLevel": 1,
+      "instructors": [
+        "teacher01 teacher01son",
+        "teacher02 teacher02son",
+        "teacher03 teacher03son",
+        "Teacher User"
+      ],
+      "elementType": "xraySectionHeader",
+      "elementName": "element1",
+      "courseName": "AGT",
+      "title": "Endogenic Plagiarism",
+      "date": "2016-03-31"
+    }
+  }
+}

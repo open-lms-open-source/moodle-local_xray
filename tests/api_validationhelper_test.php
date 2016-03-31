@@ -47,6 +47,68 @@ class local_xray_api_validationhelper_testcase extends advanced_testcase {
             '/somedomain/course/123/activity error' => ['http://foo.com/somedomain/course/123/activity',
                                                         'course-report-activity-schema.json',
                                                         'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course/123/firstLogin ok' => ['http://foo.com/somedomain/course/123/firstLogin',
+                                                       'course-report-firstLogin-schema.json',
+                                                       'course-report-firstLogin-final_v2.json', true],
+            '/somedomain/course/123/firstLogin error' => ['http://foo.com/somedomain/course/123/firstLogin',
+                                                          'course-report-firstLogin-schema.json',
+                                                          'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course/123/risk ok' => ['http://foo.com/somedomain/course/123/risk',
+                                                 'course-report-risk-schema.json',
+                                                 'course-report-risk-final_v2.json', true],
+            '/somedomain/course/123/risk error' => ['http://foo.com/somedomain/course/123/risk',
+                                                    'course-report-risk-schema.json',
+                                                    'data-accessible-wordHistogram-final.json', false],
+            // We place here two correct tests of different size to ensure validation is ok.
+            '/somedomain/course/123/discussion ok' => ['http://foo.com/somedomain/course/123/discussion',
+                                                       'course-report-discussion-schema.json',
+                                                       'course-report-discussion-final_v2.json', true],
+            '/somedomain/course/123/discussion ok 2' => ['http://foo.com/somedomain/course/123/discussion',
+                                                       'course-report-discussion-schema.json',
+                                                       'course-report-discussion-final_v3.json', true],
+            '/somedomain/course/123/discussion error' => ['http://foo.com/somedomain/course/123/discussion',
+                                                          'course-report-discussion-schema.json',
+                                                          'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course/123/discussionEndogenicPlagiarism ok' =>
+                ['http://foo.com/somedomain/course/123/discussionEndogenicPlagiarism',
+                 'course-report-discussionEndogenicPlagiarism-schema.json',
+                 'course-report-discussionEndogenicPlagiarism-final_v2.json', true],
+            '/somedomain/course/123/discussionEndogenicPlagiarism error' =>
+                ['http://foo.com/somedomain/course/123/discussionEndogenicPlagiarism',
+                 'course-report-discussionEndogenicPlagiarism-schema.json',
+                 'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course/123/discussionGrading ok' =>
+                ['http://foo.com/somedomain/course/123/discussionGrading',
+                 'course-report-discussionGrading-schema.json',
+                 'course-report-discussionGrading-final_v2.json', true],
+            '/somedomain/course/123/discussionGrading error' =>
+                ['http://foo.com/somedomain/course/123/discussionGrading',
+                 'course-report-discussionGrading-schema.json',
+                 'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course/123/gradebook ok' =>
+                ['http://foo.com/somedomain/course/123/gradebook',
+                 'course-report-gradebook-schema.json',
+                 'course-report-gradebook-final_v2.json', true],
+            '/somedomain/course/123/gradebook error' =>
+                ['http://foo.com/somedomain/course/123/gradebook',
+                 'course-report-gradebook-schema.json',
+                 'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course/123/133/activity ok' =>
+                ['http://foo.com/somedomain/course/123/133/activity',
+                 'course-report-activity-user-schema.json',
+                 'course-report-activity-user-final.json', true],
+            '/somedomain/course/123/133/activity error' =>
+                ['http://foo.com/somedomain/course/123/133/activity',
+                 'course-report-activity-user-schema.json',
+                 'data-accessible-wordHistogram-final.json', false],
+            '/somedomain/course/123/133/discussion ok' =>
+                ['http://foo.com/somedomain/course/123/133/discussion',
+                 'course-report-discussion-user-schema.json',
+                 'course-report-discussion-user-final.json', true],
+            '/somedomain/course/123/133/discussion error' =>
+                ['http://foo.com/somedomain/course/123/133/discussion',
+                 'course-report-discussion-user-schema.json',
+                 'data-accessible-wordHistogram-final.json', false],
         ];
     }
 
@@ -62,14 +124,20 @@ class local_xray_api_validationhelper_testcase extends advanced_testcase {
      * @dataProvider ws_schema_provider_ok
      */
     public function test_webservice_schemas($url, $schemafile, $jsonfile, $noerror) {
+        // Check if url is correctly recognized and schema name checks.
         $schemafilegot = \local_xray\local\api\validationhelper::generate_schema_name($url);
-        $this->assertEquals($schemafile, $schemafilegot);
+        $this->assertEquals($schemafile, $schemafilegot, "No schema file pattern for {$url}!");
 
+        // Check if schema file is present.
+        $schemareal = \local_xray\local\api\validationhelper::get_schema($url);
+        $this->assertNotEmpty($schemareal, "{$schemafile} does not exist!");
+
+        // Check if fixture exists.
         $file = __DIR__.'/fixtures/'.$jsonfile;
         $this->assertFileExists($file);
 
         $json  = file_get_contents($file);
-        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $url);
+        $emsgs = \local_xray\local\api\validationhelper::validate_schema($json, $url, false);
         $msg   = \local_xray\local\api\validationhelper::generate_message($emsgs);
         if ($noerror) {
             $this->assertEmpty($emsgs, $msg);

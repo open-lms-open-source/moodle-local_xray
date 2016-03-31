@@ -61,6 +61,7 @@ abstract class validationhelper {
         $subject = parse_url($url, PHP_URL_PATH);
         $pattern = [
             '#^/([^/]+)/course$#',
+            '#^/([^/]+)/course/([1-9][0-9]*?)/([1-9][0-9]*?)/([^/]+)$#',
             '#^/([^/]+)/course/([^/]+)/([^/]+)$#',
             '#^/([^/]+)/course/([^/]+)/([^/]+)/elements/([^/]+)$#',
             '#^/([^/]+)/data/([^/]+)/([^/]+)/accessible$#',
@@ -79,6 +80,7 @@ abstract class validationhelper {
     public static function generate_schema_name($url) {
         $replacement = [
             'courses-schema.json',
+            'course-report-${4}-user-schema.json',
             'course-report-${3}-schema.json',
             'course-element-${3}-${4}-schema.json',
             'data-accessible-${2}-${3}-schema.json',
@@ -99,7 +101,10 @@ abstract class validationhelper {
         $filename = self::generate_schema_name($url);
         $result = null;
         if (!empty($filename)) {
-            $result = realpath($CFG->dirroot.'/local/xray/schemas/'.$filename);
+            $file = realpath($CFG->dirroot.'/local/xray/schemas/'.$filename);
+            if ($file !== false) {
+                $result = $file;
+            }
         }
         return $result;
     }
@@ -110,9 +115,10 @@ abstract class validationhelper {
      *
      * @param  string  $json - json incoming data
      * @param  string  $url - url that was used
+     * @param  bool    $limiterr - return only sample of errors if true
      * @return string[]
      */
-    public static function validate_schema($json, $url) {
+    public static function validate_schema($json, $url, $limiterr = true) {
         global $CFG;
 
         /* @noinspection PhpIncludeInspection */
@@ -161,7 +167,11 @@ abstract class validationhelper {
             $validator   = null;
 
             if (!empty($resultarr)) {
+                $count = 0;
                 foreach ($resultarr as $error) {
+                    if ($limiterr and (++$count >= 10)) {
+                        break;
+                    }
                     $result[] = 'Property: '.$error['property'].
                                 ' Message: '.$error['message'].
                                 ' Constraint: '.$error['constraint'];
@@ -177,13 +187,31 @@ abstract class validationhelper {
 
     /**
      * @param  string[] $items
+     * @param  string   $splitter
+     * @return string
+     */
+    public static function generate_message_fmt(array $items, $splitter = PHP_EOL) {
+        $result = '';
+        if (!empty($items)) {
+            $result = implode($splitter, $items);
+        }
+        return $result;
+    }
+
+    /**
+     * @param  string[] $items
      * @return string
      */
     public static function generate_message(array $items) {
         $result = '';
         if (!empty($items)) {
-            $result = implode(PHP_EOL, $items);
+            $splitter = PHP_EOL;
+            if (!CLI_SCRIPT and !AJAX_SCRIPT and !PHPUNIT_TEST) {
+                $splitter = \html_writer::empty_tag('br');
+            }
+            $result = self::generate_message_fmt($items, $splitter);
         }
         return $result;
     }
+
 }

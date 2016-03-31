@@ -1,0 +1,462 @@
+{
+  "date": "2016-03-30",
+  "scheduleid": 0,
+  "attachments": [],
+  "datecreated": "2016-03-30T00:00:00.000Z",
+  "oldid": null,
+  "notifications": {
+    "attributes": {
+      "row.names": {
+        "attributes": {},
+        "value": [
+          1
+        ],
+        "type": "integer"
+      },
+      "names": {
+        "attributes": {},
+        "value": [
+          "domain",
+          "report",
+          "courseId",
+          "participantId",
+          "forumId",
+          "type",
+          "severity",
+          "text",
+          "date"
+        ],
+        "type": "character"
+      },
+      "class": {
+        "attributes": {},
+        "value": [
+          "data.frame"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {},
+        "value": [
+          "xray2qa"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "xrayRiskReport"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          190
+        ],
+        "type": "integer"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "3479"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          0
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          100
+        ],
+        "type": "double"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "NA"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {},
+        "value": [
+          "Christin Skidmore"
+        ],
+        "type": "character"
+      },
+      {
+        "attributes": {
+          "class": {
+            "attributes": {},
+            "value": [
+              "Date"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          16890
+        ],
+        "type": "double"
+      }
+    ],
+    "type": "list"
+  },
+  "datapoints_plain": [],
+  "datapoints": {
+    "attributes": {
+      "names": {
+        "attributes": {},
+        "value": [
+          "studentList",
+          "riskCutoff"
+        ],
+        "type": "character"
+      }
+    },
+    "value": [
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [
+              1
+            ],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [
+              "participantId",
+              "firstname",
+              "lastname",
+              "timeOnTask",
+              "fail",
+              "courseId",
+              "DW",
+              "DWF",
+              "DWF_code",
+              "fail.colorCode",
+              "DW.colorCode",
+              "DWF.colorCode"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          {
+            "attributes": {},
+            "value": [
+              "3479"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "Christin"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "Skidmore"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "NA"
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              190
+            ],
+            "type": "integer"
+          },
+          {
+            "attributes": {},
+            "value": [
+              26.2
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              100
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "red"
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              null
+            ],
+            "type": "character"
+          },
+          {
+            "attributes": {},
+            "value": [
+              "red"
+            ],
+            "type": "character"
+          }
+        ],
+        "type": "list"
+      },
+      {
+        "attributes": {
+          "row.names": {
+            "attributes": {},
+            "value": [
+              1
+            ],
+            "type": "integer"
+          },
+          "names": {
+            "attributes": {},
+            "value": [
+              "medium",
+              "high"
+            ],
+            "type": "character"
+          },
+          "class": {
+            "attributes": {},
+            "value": [
+              "data.frame"
+            ],
+            "type": "character"
+          }
+        },
+        "value": [
+          {
+            "attributes": {},
+            "value": [
+              20
+            ],
+            "type": "double"
+          },
+          {
+            "attributes": {},
+            "value": [
+              30
+            ],
+            "type": "double"
+          }
+        ],
+        "type": "list"
+      }
+    ],
+    "type": "list"
+  },
+  "id": 108511,
+  "courseid": 190,
+  "participantid": 0,
+  "type": "risk",
+  "subtype": "",
+  "reportdate": "2016-03-30T00:00:00.000Z",
+  "forumid": 0,
+  "elements": {
+    "riskScatterPlot": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/risk/2016-03-30/riskScatterPlot.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/risk/2016-03-30/riskScatterPlot.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/risk/2016-03-30/riskScatterPlot.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/risk/2016-03-30/riskScatterPlot.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "riskScatterPlot",
+      "dimensions": {
+        "height": 600,
+        "width": 1200
+      },
+      "customData": [
+        {
+          "studentList": {
+            "fail.colorCode": null,
+            "participantId": "3479",
+            "DWF.colorCode": "red",
+            "DW.colorCode": null,
+            "DW": 26.2,
+            "DWF": 100,
+            "fail": null,
+            "DWF_code": "red",
+            "courseId": 190,
+            "lastname": "Skidmore",
+            "firstname": "Christin",
+            "timeOnTask": null
+          }
+        }
+      ],
+      "uuid": "ba853ef8-ebe5-4bab-9311-52bdcc6a5214riskScatterPlot.svg",
+      "title": "Academic Versus Social Risk",
+      "legend": "Social risk is determined by discussion forum interaction; academic risk \n                              is determined by grade data. Each dot represents a student; red dots \n                              indicate students at high risk, yellow dots indicate students at medium risk, \n                              green dots indicate students not at risk. Shows \n                              how at risk a student is socially and academically. The black line plots \n                              the relationship between social and academic risk. The shaded area indicates \n                              the calculation confidence range.",
+      "mapping": [],
+      "tooltip": "Social risk is determined by discussion forum interaction; academic risk \n                              is determined by grade data. Each dot represents a student; red dots \n                              indicate students at high risk, yellow dots indicate students at medium risk, \n                              green dots indicate students not at risk. Shows \n                              how at risk a student is socially and academically. The black line plots \n                              the relationship between social and academic risk. The shaded area indicates \n                              the calculation confidence range.",
+      "filename": "riskScatterPlot.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "riskDensity": {
+      "contexts": {
+        "timeMachine": "/xray2qa/course/190/risk/2016-03-30/riskDensity.svg/timeMachine",
+        "forumContext": "/xray2qa/course/190/risk/2016-03-30/riskDensity.svg/forumContext",
+        "participantContext": "/xray2qa/course/190/risk/2016-03-30/riskDensity.svg/participantContext",
+        "courseContext": "/xray2qa/course/190/risk/2016-03-30/riskDensity.svg/courseContext"
+      },
+      "elementType": "xrayPlot",
+      "elementName": "riskDensity",
+      "dimensions": {
+        "height": 600,
+        "width": 1200
+      },
+      "customData": [
+        {
+          "studentList": {
+            "fail.colorCode": null,
+            "participantId": "3479",
+            "DWF.colorCode": "red",
+            "DW.colorCode": null,
+            "DW": 26.2,
+            "DWF": 100,
+            "fail": null,
+            "DWF_code": "red",
+            "courseId": 190,
+            "lastname": "Skidmore",
+            "firstname": "Christin",
+            "timeOnTask": null
+          },
+          "cutoff": {
+            "medium": 20,
+            "high": 30
+          }
+        }
+      ],
+      "uuid": "348782e0-2315-44f7-a688-2d836b0e92f5riskDensity.svg",
+      "title": "Total Risk Profile",
+      "legend": "Red shaded areas indicate students at high risk; yellow indicates students \n                              at medium risk; green indicates students not at risk.",
+      "mapping": [],
+      "tooltip": "Red shaded areas indicate students at high risk; yellow indicates students \n                              at medium risk; green indicates students not at risk.",
+      "filename": "riskDensity.svg",
+      "plotType": "svg",
+      "reportId": []
+    },
+    "riskMeasures": {
+      "colorCodesSpecs": [],
+      "columnHeaders": {
+        "timeOnTask": "Time spent in course (HH:MM)",
+        "firstname": "Given Name",
+        "lastname": "Surname",
+        "fail": "Academic risk",
+        "DWF": "Total risk",
+        "DW": "Social risk"
+      },
+      "enableGraph": true,
+      "elementType": "xrayTable",
+      "elementName": "riskMeasures",
+      "data": [
+        {
+          "participantId": {
+            "value": "3479"
+          },
+          "DW": {
+            "colorCode": {},
+            "value": "26.200"
+          },
+          "DWF": {
+            "colorCode": "red",
+            "value": 100
+          },
+          "fail": {
+            "colorCode": {},
+            "value": {}
+          },
+          "DWF_code": {
+            "value": "red"
+          },
+          "courseId": {
+            "value": 190
+          },
+          "lastname": {
+            "value": "Skidmore"
+          },
+          "firstname": {
+            "value": "Christin"
+          },
+          "timeOnTask": {
+            "value": "NaNh NaNm"
+          }
+        }
+      ],
+      "uuid": "84e246ff-4e9f-4ef3-add8-3ac4d79ac012",
+      "title": "Risk Metrics",
+      "legend": "Risk measures range between 0 and 100%. Lower values indicate smaller \n                      risk of failure. Academic risk is based on time spent in the course, social \n                      risk is based on discussion activity, and total is a combination of the two.",
+      "comment": [],
+      "inverted": false,
+      "dataFormat": {
+        "timeOnTask": "timerangeminute"
+      },
+      "columnOrder": [
+        "lastname",
+        "firstname",
+        "timeOnTask",
+        "fail",
+        "DW",
+        "DWF"
+      ]
+    },
+    "element1": {
+      "sectionLevel": 1,
+      "instructors": "Nicholas Hemmert",
+      "elementType": "xraySectionHeader",
+      "elementName": "element1",
+      "courseName": "Robertsdale Elementary Teachers",
+      "title": "Risk Report",
+      "date": "2016-03-30"
+    }
+  }
+}
