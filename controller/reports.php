@@ -449,7 +449,7 @@ class local_xray_controller_reports extends mr_controller {
                     case 'letterGrade':
                         // Column Grade recommendation.
                         // Check if the value exists.
-                        if (isset($value)) {
+                        if (!empty($value)) {
                             return $value;
                         } else {
                             return '-';
