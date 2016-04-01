@@ -28,40 +28,57 @@ defined('MOODLE_INTERNAL') || die();
 class dashboard_data {
 
     /**
-     * Users in risk last seven days.
+     * Is the number of persons in the risk metrics table, which are in the total risk category yellow or red.
      * @var integer
      */
-    public $usersinrisklastsevendays;
+    public $usersinrisk;
 
     /**
-     * Users in risk previous week.
+     * Is the total number of persons in the risk metrics table.
      * @var integer
      */
-    public $usersinrisklastsevendays_previousweek;
+    public $risktotal;
 
     /**
-     * Students logged last 7 days.
+     * Is the average of the number of persons at risk during the seven days before day before yesterday.
+     * It cannot be seen in the current reports.
      * @var integer
      */
-    public $studentsloggedlastsevendays;
+    public $averagerisksevendaybefore;
 
     /**
-     * Students logged previous week.
+     * Is the maximum of the total number of persons in the risk metrics table during the seven days before day
+     * before yesterday. It cannot be seen in the current reports.
      * @var integer
      */
-    public $studentsloggedlastsevendays_previousweek;
+    public $maximumtotalrisksevendaybefore;
 
     /**
-     * Posts last seven days.
+     * Is the number of 'yes' in the activity metrics table in column 'Logged in during previous week'.
      * @var integer
      */
-    public $postslastsevendays;
+    public $usersloggedinpreviousweek;
 
     /**
-     * Posts last previous week.
+     * Is the maximum of the total number of persons in the activity metrics table during the last seven days.
+     * It cannot be seen in the current reports.
      * @var integer
      */
-    public $postslastsevendays_previousweek;
+    public $usersactivitytotal;
+
+    /**
+     * Is the number of 'yes' in the activity metrics table in column 'Logged in during previous week' from
+     * the report seven days ago. It cannot be seen in the current reports.
+     * @var integer
+     */
+    public $averageuserslastsevendays;
+
+    /**
+     * Is the maximum of the total number of persons in the activity metrics table during the previous seven days.
+     * It cannot be seen in the current reports.
+     * @var integer
+     */
+    public $userstotalprevioussevendays;
 
     /**
      * Displays student average grade last 7 days.
@@ -73,46 +90,60 @@ class dashboard_data {
      * Displays student average grade previous week.
      * @var integer
      */
-    public $averagegradeslastsevendays_previousweek;
+    public $averagegradeslastsevendayspreviousweek;
 
     /**
-     * Displays total of students.
+     * Posts last seven days.
      * @var integer
      */
-    public $totalstudents;
+    public $postslastsevendays;
+
+    /**
+     * Posts last previous week.
+     * @var integer
+     */
+    public $postslastsevendayspreviousweek;
 
     /**
      * Construct
-     * @param integer $usersinrisklastsevendays
-     * @param integer $usersinrisklastsevendays_previousweek
-     * @param integer $studentsloggedlastsevendays
-     * @param integer $studentsloggedlastsevendays_previousweek
-     * @param integer $postslastsevendays
-     * @param integer $postslastsevendays_previousweek
+     *
+     * @param integer $usersinrisk
+     * @param integer $risktotal
+     * @param integer $averagerisksevendaybefore
+     * @param integer $maximumtotalrisksevendaybefore
+     * @param integer $usersloggedinpreviousweek
+     * @param integer $usersactivitytotal
+     * @param integer $averageuserslastsevendays
+     * @param integer $userstotalprevioussevendays
      * @param integer $averagegradeslastsevendays
-     * @param integer $averagegradeslastsevendays_previousweek
-     * @param integer $totalstudents
+     * @param integer $averagegradeslastsevendayspreviousweek
+     * @param integer $postslastsevendays
+     * @param integer $postslastsevendayspreviousweek
      */
-    public function __construct($usersinrisklastsevendays,
-                                $usersinrisklastsevendays_previousweek,
-                                $studentsloggedlastsevendays,
-                                $studentsloggedlastsevendays_previousweek,
-                                $postslastsevendays,
-                                $postslastsevendays_previousweek,
+    public function __construct($usersinrisk,
+                                $risktotal,
+                                $averagerisksevendaybefore,
+                                $maximumtotalrisksevendaybefore,
+                                $usersloggedinpreviousweek,
+                                $usersactivitytotal,
+                                $averageuserslastsevendays,
+                                $userstotalprevioussevendays,
                                 $averagegradeslastsevendays,
-                                $averagegradeslastsevendays_previousweek,
-                                $totalstudents) {
+                                $averagegradeslastsevendayspreviousweek,
+                                $postslastsevendays,
+                                $postslastsevendayspreviousweek) {
 
-
-        $this->usersinrisklastsevendays = $usersinrisklastsevendays;
-        $this->usersinrisklastsevendays_previousweek = $usersinrisklastsevendays_previousweek;
-        $this->studentsloggedlastsevendays = $studentsloggedlastsevendays;
-        $this->studentsloggedlastsevendays_previousweek = $studentsloggedlastsevendays_previousweek;
-        $this->postslastsevendays = $postslastsevendays;
-        $this->postslastsevendays_previousweek = $postslastsevendays_previousweek;
+        $this->usersinrisk = $usersinrisk;
+        $this->risktotal = $risktotal;
+        $this->averagerisksevendaybefore = $averagerisksevendaybefore;
+        $this->maximumtotalrisksevendaybefore = $maximumtotalrisksevendaybefore;
+        $this->usersloggedinpreviousweek = $usersloggedinpreviousweek;
+        $this->usersactivitytotal = $usersactivitytotal;
+        $this->averageuserslastsevendays = $averageuserslastsevendays;
+        $this->userstotalprevioussevendays = $userstotalprevioussevendays;
         $this->averagegradeslastsevendays = $averagegradeslastsevendays;
-        $this->averagegradeslastsevendays_previousweek = $averagegradeslastsevendays_previousweek;
-        $this->totalstudents = $totalstudents;
-
+        $this->averagegradeslastsevendayspreviousweek = $averagegradeslastsevendayspreviousweek;
+        $this->postslastsevendays = $postslastsevendays;
+        $this->postslastsevendayspreviousweek = $postslastsevendayspreviousweek;
     }
 }
