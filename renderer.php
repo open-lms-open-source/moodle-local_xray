@@ -360,15 +360,15 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Number of students at risk in the last 7 days.
         $a = new stdClass();
-        $a->previous = $data->maximumtotalrisksevendaybefore;
-        $a->total = $data->usersloggedinpreviousweek;
+        $a->previous = $data->averagerisksevendaybefore;
+        $a->total = $data->maximumtotalrisksevendaybefore;
         $textlink = get_string("averageofweek_integer", $plugin, $a);
 
         // To risk metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
         // Calculate colour status.
-        $statusclass = $this->headline_status_risk($data->usersinrisk, $data->maximumtotalrisksevendaybefore);
+        $statusclass = $this->headline_status_risk($data->usersinrisk, $data->averagerisksevendaybefore);
         $column1 = $this->headline_column($risknumber,
             get_string('headline_studentatrisk', $plugin),
             $url,
@@ -403,7 +403,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $gradebooknumber = get_string('headline_number_percentage', $plugin, $data->averagegradeslastsevendays);
 
         // Number of average grades in the last 7 days.
-        $textlink = get_string("averageofweek_gradebook", $plugin, $data->averagegradeslastsevendays);
+        $textlink = get_string("averageofweek_gradebook", $plugin, $data->averagegradeslastsevendayspreviousweek);
         // To students grades.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "element2");
