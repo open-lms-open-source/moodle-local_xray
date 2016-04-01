@@ -39,7 +39,8 @@ defined('MOODLE_INTERNAL') || die();
 function local_xray_navigationlinks(moodle_page $page, context $context) {
     // Small caching to prevent double calculation call since we need the same information in both calls.
     static $reports = null;
-    if (($reports !== null) || ($context->contextlevel < CONTEXT_COURSE) || !has_capability('local/xray:view', $context)) {
+    if (($reports !== null) || $page->course->format == "singleactivity" || ($context->contextlevel < CONTEXT_COURSE) ||
+        !has_capability('local/xray:view', $context)) {
         return $reports;
     }
 
