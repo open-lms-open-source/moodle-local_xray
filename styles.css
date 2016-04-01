@@ -139,8 +139,9 @@
     padding:0 0.5%;
 }
 .xray-headline-number {
-    font-size: 40px;
+    font-size: 30px;
     margin-bottom: 5px;
+    display: block;
 }
 a.xray-headline-link:hover {
     text-decoration: none !important;

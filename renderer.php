@@ -377,13 +377,13 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Number for activity.
         $a = new stdClass();
-        $a->current = $data->usersloggedinpreviousweek;
-        $a->total = $data->usersactivitytotal;
+        $a->first = $data->usersloggedinpreviousweek;
+        $a->second = $data->usersactivitytotal;
         $activitynumber = get_string('headline_number_of', $plugin, $a);
 
         // Number of students logged in in last 7 days.
         $a = new stdClass();
-        $a->previous = $data->averageuserslastsevendays;
+        $a->current = $data->averageuserslastsevendays;
         $a->total = $data->userstotalprevioussevendays;
         $textlink = get_string("headline_lastweekwasof_activity", $plugin, $a);
 
@@ -400,7 +400,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $statusclass);
 
         // Number for gradebook.
-        $gradebooknumber = get_string('headline_number_percentage', $data->averagegradeslastsevendays);
+        $gradebooknumber = get_string('headline_number_percentage', $plugin, $data->averagegradeslastsevendays);
 
         // Number of average grades in the last 7 days.
         $textlink = get_string("averageofweek_gradebook", $plugin, $data->averagegradeslastsevendays);
