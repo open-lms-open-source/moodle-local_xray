@@ -306,17 +306,17 @@ class data_export {
         $sql = "
                 SELECT
                            l.id AS id,
-                           c.instanceid AS courseid,
+                           ctx.instanceid AS courseid,
                            l.roleid,
                            l.userid AS participantid,
                            {$timemodified},
                            l.timemodified AS traw
                 FROM       {role_assignments} l
-                INNER JOIN {context}          c  ON l.contextid = c.id AND c.contextlevel= 50
+                INNER JOIN {context}          ctx  ON l.contextid = ctx.id AND ctx.contextlevel= 50
                 WHERE
                            EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = 0)
                            AND
-                           EXISTS (SELECT c.id FROM {course} c WHERE c.instanceid = c.id AND c.category <> 0)
+                           EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
                            AND
                            ";
 
@@ -825,7 +825,7 @@ class data_export {
             $basefile = self::generate_filename($clientid);
             $archivefile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
             $destfile = $clientid . '/' . $basefile;
-
+            /* @var \tgz_packer $tgzpacker */
             $tgzpacker = get_file_packer('application/x-gzip');
             $result = $tgzpacker->archive_to_pathname($files, $archivefile);
             if (!$result) {
