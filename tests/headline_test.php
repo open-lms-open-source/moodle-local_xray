@@ -21,9 +21,6 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-namespace local_xray\tests;
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -87,8 +84,8 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * Data returned by webservice is incorrect for show headline.
      */
     public function test_get_incorrect_data() {
-        // Reset this setting after current test.
-        $this->resetAfterTest(true);
+
+        $this->resetAfterTest();
 
         // Set clientid, with clientid "error", webservice class send us error when phpunit is running.
         set_config("xrayclientid", "error", self::PLUGIN_NAME);
@@ -103,18 +100,19 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * Test correct attributes of class dashboard_data.
      */
     public function test_attributes_class_dashboard_data() {
-        $this->assertClassHasAttribute("usersinrisk", "dashboard_data");
-        $this->assertClassHasAttribute("risktotal", "dashboard_data");
-        $this->assertClassHasAttribute("averagerisksevendaybefore", "dashboard_data");
-        $this->assertClassHasAttribute("maximumtotalrisksevendaybefore", "dashboard_data");
-        $this->assertClassHasAttribute("usersloggedinpreviousweek", "dashboard_data");
-        $this->assertClassHasAttribute("usersactivitytotal", "dashboard_data");
-        $this->assertClassHasAttribute("averageuserslastsevendays", "dashboard_data");
-        $this->assertClassHasAttribute("usersactivitytotal", "dashboard_data");
-        $this->assertClassHasAttribute("averageuserslastsevendays", "dashboard_data");
-        $this->assertClassHasAttribute("averagegradeslastsevendays", "dashboard_data");
-        $this->assertClassHasAttribute("postslastsevendays", "dashboard_data");
-        $this->assertClassHasAttribute("postslastsevendayspreviousweek", "dashboard_data");
+        $dashboadrobj = new \local_xray\dashboard\dashboard_data(1,2,3,4,5,6,7,8,9,10,11,12);
+        $this->assertObjectHasAttribute("usersinrisk", $dashboadrobj);
+        $this->assertClassHasAttribute("risktotal", $dashboadrobj);
+        $this->assertClassHasAttribute("averagerisksevendaybefore", $dashboadrobj);
+        $this->assertClassHasAttribute("maximumtotalrisksevendaybefore", $dashboadrobj);
+        $this->assertClassHasAttribute("usersloggedinpreviousweek", $dashboadrobj);
+        $this->assertClassHasAttribute("usersactivitytotal", $dashboadrobj);
+        $this->assertClassHasAttribute("averageuserslastsevendays", $dashboadrobj);
+        $this->assertClassHasAttribute("usersactivitytotal", $dashboadrobj);
+        $this->assertClassHasAttribute("averageuserslastsevendays", $dashboadrobj);
+        $this->assertClassHasAttribute("averagegradeslastsevendays", $dashboadrobj);
+        $this->assertClassHasAttribute("postslastsevendays", $dashboadrobj);
+        $this->assertClassHasAttribute("postslastsevendayspreviousweek", $dashboadrobj);
     }
 
     /**
@@ -122,6 +120,8 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * This function return class to use in headline checking the values of each column.
      */
     public function test_get_status_simple() {
+
+        $this->resetAfterTest();
 
         // Return arrow class decrement (red).
         $result = \local_xray\dashboard\dashboard_data::get_status_simple(1, 2);
@@ -152,6 +152,8 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * This function return class to use in headline checking the average of values of each column.
      */
     public function test_get_status_with_average() {
+
+        $this->resetAfterTest();
 
         // Return arrow class decrement (red), 0.50 vs 0.75.
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average(1, 2, 3, 4);
