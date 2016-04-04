@@ -146,4 +146,101 @@ class dashboard_data {
         $this->postslastsevendays = $postslastsevendays;
         $this->postslastsevendayspreviousweek = $postslastsevendayspreviousweek;
     }
+
+    /**
+     * Calculate colour and arrow for headline (compare current value and value in the previous week).
+     * Return array with class and string for reader.
+     *
+     * Same value = return class for yellow colour.
+     * Increment value = return class for green colour.
+     * Decrement value = return class for red colour.
+     *
+     * @param $valuenow
+     * @param $valuepreviousweek
+     * @return array
+     */
+    public static function get_status_simple($valuenow, $valuepreviousweek) {
+
+        // Default, same value.
+        $stylestatus = "xray-headline-yellow";
+        $arrow = "arrow_same";
+
+        if ($valuenow < $valuepreviousweek) {
+            // Decrement.
+            $stylestatus = "xray-headline-red";
+            $arrow = "arrow_decrease";
+        } else if ($valuenow > $valuepreviousweek) {
+            // Increment.
+            $stylestatus = "xray-headline-green";
+            $arrow = "arrow_increase";
+        }
+        $langstatus = get_string($arrow, "local_xray");
+        return array($stylestatus, $langstatus);
+    }
+
+    /**
+     * Calculate colour and arrow for headline comparing  current values and values in the previous week.
+     * Return array with class and string for reader.
+     * This case is used in Activity and risk columns..
+     *
+     * Same value = return class for yellow colour.
+     * Decrement value = return class for green colour.
+     * Increment value = return class for red colour.
+     *
+     * If you use $inversebehavior, you will have inverse behavior in the arrow (special for risk column).
+     *
+     * @param string $valuenow1
+     * @param string $valuenow2
+     * @param string $valuepreviousweek
+     * @param string $valuepreviousweek2
+     * @param boolean $inversebehavior - Arrow will have inverse behavior (increment/decrement). Used by risk.
+     * @return array
+     */
+    public static function get_status_with_average($valuenow1,
+                                                   $valuenow2,
+                                                   $valuepreviousweek,
+                                                   $valuepreviousweek2,
+                                                   $inversebehavior = false) {
+
+        $firstaverage = 0;
+        // Value can be null or "-" too.
+        if (!empty($valuenow1) && !empty($valuenow2) && is_number($valuenow1) && is_number($valuenow2)) {
+            $firstaverage = $valuenow1 / $valuenow2;
+        }
+        $secondaverage = 0;
+        if (!empty($valuepreviousweek) && !empty($valuepreviousweek2) &&
+            is_number($valuepreviousweek) && is_number($valuepreviousweek2)) {
+            $secondaverage = $valuepreviousweek / $valuepreviousweek2;
+        }
+
+        // Default, same value.
+        $stylestatus = "xray-headline-yellow";
+        $arrow = "arrow_same";
+
+        if ($firstaverage < $secondaverage) {
+
+            // Decrement.
+            $stylestatus = "xray-headline-red";
+            $arrow = "arrow_decrease";
+            if ($inversebehavior) {
+                // Increment.
+                $stylestatus = "xray-headline-green-caserisk";
+                $arrow = "arrow_increase";
+            }
+
+        } else if ($firstaverage > $secondaverage) {
+
+            // Increment.
+            $stylestatus = "xray-headline-green";
+            $arrow = "arrow_increase";
+            if ($inversebehavior) {
+                // Decrement.
+                $stylestatus = "xray-headline-red-caserisk";
+                $arrow = "arrow_decrease";
+            }
+        }
+
+        $langstatus = get_string($arrow, "local_xray");
+        return array($stylestatus, $langstatus);
+    }
 }

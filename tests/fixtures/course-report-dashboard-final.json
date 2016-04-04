@@ -1,78 +1,29 @@
 {
-  "id": 108239,
-  "courseid": 8,
+  "id": 11026,
+  "courseid": 1,
   "participantid": 0,
   "type": "dashboard",
   "subtype": "",
-  "reportdate": "2016-03-30T00:00:00.000Z",
+  "reportdate": "2016-04-01T00:00:00.000Z",
   "forumid": 0,
   "elements": {
     "element1": {
-      "date": "2016-03-30",
+      "date": "2016-04-01",
       "title": "Dashboard",
-      "courseName": "BCHS Teachers",
+      "courseName": "UMOnline",
       "elementName": "element1",
       "elementType": "xraySectionHeader",
-      "instructors": [
-        "Janice Simon",
-        "Teacher User",
-        "Bryan howard"
-      ],
+      "instructors": "Lisa Marie Hyslop",
       "sectionLevel": 1
     },
     "element3": {
-      "uuid": "16f92760-a81e-43ba-bb72-1b3672f1714c",
+      "uuid": "a980f06c-c8a4-493e-a68c-fbf44c921bcc",
       "items": [
-        {
-          "code": "CS001",
-          "help": "",
-          "name": "Number of students visiting during last 7 days:",
-          "value": "30",
-          "comment": "",
-          "expectedRange": "",
-          "interpretation": ""
-        },
-        {
-          "code": "CS002",
-          "help": "",
-          "name": "Number of students visiting during the previous 7 days:",
-          "value": "25",
-          "comment": "",
-          "expectedRange": "",
-          "interpretation": ""
-        },
-        {
-          "code": "CS003",
-          "help": "",
-          "name": "Number of students enrolled:",
-          "value": "88",
-          "comment": "",
-          "expectedRange": "",
-          "interpretation": ""
-        },
-        {
-          "code": "CS004",
-          "help": "",
-          "name": "Number of newly active:",
-          "value": "3",
-          "comment": "",
-          "expectedRange": "",
-          "interpretation": ""
-        },
-        {
-          "code": "CS005",
-          "help": "",
-          "name": "Number of no shows:",
-          "value": "55",
-          "comment": "",
-          "expectedRange": "",
-          "interpretation": ""
-        },
         {
           "code": "CS006",
           "help": "",
           "name": "Number of students at risk:",
-          "value": "15",
+          "value": "22",
           "comment": "",
           "expectedRange": "",
           "interpretation": ""
@@ -81,25 +32,61 @@
           "code": "CS007",
           "help": "",
           "name": "Number of students at risk last week:",
-          "value": "13",
+          "value": "30",
           "comment": "",
           "expectedRange": "",
           "interpretation": ""
         },
         {
-          "code": "CS008",
+          "code": "CS003",
           "help": "",
-          "name": "Number of posts last week:",
-          "value": "20",
+          "name": "Number of students enrolled:",
+          "value": "35",
           "comment": "",
           "expectedRange": "",
           "interpretation": ""
         },
         {
-          "code": "CS009",
+          "code": "CS004",
           "help": "",
-          "name": "Number of posts previous week:",
-          "value": "25",
+          "name": "Number of students enrolled week before yesterday:",
+          "value": "45",
+          "comment": "",
+          "expectedRange": "",
+          "interpretation": ""
+        },
+        {
+          "code": "CS001",
+          "help": "",
+          "name": "Number of students visiting during last 7 days:",
+          "value": "23",
+          "comment": "",
+          "expectedRange": "",
+          "interpretation": ""
+        },
+        {
+          "code": "CS002",
+          "help": "",
+          "name": "Number of students visiting during the previous 7 days:",
+          "value": "11",
+          "comment": "",
+          "expectedRange": "",
+          "interpretation": ""
+        },
+        {
+          "code": "CS005",
+          "help": "",
+          "name": "Number of students enrolled last week:",
+          "value": "33",
+          "comment": "",
+          "expectedRange": "",
+          "interpretation": ""
+        },
+        {
+          "code": "CS012",
+          "help": "",
+          "name": "Number of students enrolled previous week:",
+          "value": "21",
           "comment": "",
           "expectedRange": "",
           "interpretation": ""
@@ -118,6 +105,24 @@
           "help": "",
           "name": "Average grade last week:",
           "value": "-",
+          "comment": "",
+          "expectedRange": "",
+          "interpretation": ""
+        },
+        {
+          "code": "CS008",
+          "help": "",
+          "name": "Number of posts last week:",
+          "value": "65",
+          "comment": "",
+          "expectedRange": "",
+          "interpretation": ""
+        },
+        {
+          "code": "CS009",
+          "help": "",
+          "name": "Number of posts previous week:",
+          "value": "75",
           "comment": "",
           "expectedRange": "",
           "interpretation": ""
@@ -146,65 +151,125 @@
     "type": "list",
     "value": [
       {
-        "type": "character",
+        "type": "integer",
         "value": [
-          "xray2qa"
+          1
+        ],
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "factor"
+            ],
+            "attributes": {}
+          },
+          "levels": {
+            "type": "character",
+            "value": [
+              "moodlemiguel"
+            ],
+            "attributes": {}
+          }
+        }
+      },
+      {
+        "type": "integer",
+        "value": [
+          1
+        ],
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "factor"
+            ],
+            "attributes": {}
+          },
+          "levels": {
+            "type": "character",
+            "value": [
+              "xrayDashboardReport"
+            ],
+            "attributes": {}
+          }
+        }
+      },
+      {
+        "type": "double",
+        "value": [
+          1
         ],
         "attributes": {}
       },
       {
-        "type": "character",
+        "type": "double",
         "value": [
-          "xrayDashboardReport"
+          0
+        ],
+        "attributes": {}
+      },
+      {
+        "type": "double",
+        "value": [
+          0
+        ],
+        "attributes": {}
+      },
+      {
+        "type": "double",
+        "value": [
+          0
         ],
         "attributes": {}
       },
       {
         "type": "integer",
         "value": [
-          8
+          1
         ],
-        "attributes": {}
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "factor"
+            ],
+            "attributes": {}
+          },
+          "levels": {
+            "type": "character",
+            "value": [
+              "NA"
+            ],
+            "attributes": {}
+          }
+        }
+      },
+      {
+        "type": "integer",
+        "value": [
+          1
+        ],
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "factor"
+            ],
+            "attributes": {}
+          },
+          "levels": {
+            "type": "character",
+            "value": [
+              "No notifications"
+            ],
+            "attributes": {}
+          }
+        }
       },
       {
         "type": "double",
         "value": [
-          0
-        ],
-        "attributes": {}
-      },
-      {
-        "type": "double",
-        "value": [
-          0
-        ],
-        "attributes": {}
-      },
-      {
-        "type": "double",
-        "value": [
-          0
-        ],
-        "attributes": {}
-      },
-      {
-        "type": "character",
-        "value": [
-          "NA"
-        ],
-        "attributes": {}
-      },
-      {
-        "type": "character",
-        "value": [
-          "No notifications"
-        ],
-        "attributes": {}
-      },
-      {
-        "type": "double",
-        "value": [
-          16890
+          16892
         ],
         "attributes": {
           "class": {
@@ -250,8 +315,8 @@
     }
   },
   "oldid": null,
-  "datecreated": "2016-03-30T00:00:00.000Z",
+  "datecreated": "2016-04-01T00:00:00.000Z",
   "attachments": [],
   "scheduleid": 0,
-  "date": "2016-03-30"
+  "date": "2016-04-01"
 }

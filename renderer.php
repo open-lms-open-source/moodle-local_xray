@@ -368,7 +368,12 @@ class local_xray_renderer extends plugin_renderer_base {
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
         // Calculate colour status.
-        $statusclass = $this->headline_status_risk($data->usersinrisk, $data->averagerisksevendaybefore);
+        $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($data->usersinrisk,
+            $data->risktotal,
+            $data->averagerisksevendaybefore,
+            $data->maximumtotalrisksevendaybefore,
+            true); // This arrow will be inverse to all.
+
         $column1 = $this->headline_column($risknumber,
             get_string('headline_studentatrisk', $plugin),
             $url,
@@ -391,7 +396,10 @@ class local_xray_renderer extends plugin_renderer_base {
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "activityreport", "courseid" => $COURSE->id, "header" => 1), "studentList");
         // Calculate colour status.
-        $statusclass = $this->headline_status($data->usersloggedinpreviousweek, $data->averageuserslastsevendays);
+        $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($data->usersloggedinpreviousweek,
+            $data->usersactivitytotal,
+            $data->averageuserslastsevendays,
+            $data->userstotalprevioussevendays);
 
         $column2 = $this->headline_column($activitynumber,
             get_string('headline_loggedstudents', 'local_xray'),
@@ -408,7 +416,8 @@ class local_xray_renderer extends plugin_renderer_base {
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "element2");
         // Calculate colour status.
-        $statusclass = $this->headline_status($data->averagegradeslastsevendays, $data->averagegradeslastsevendayspreviousweek);
+        $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($data->averagegradeslastsevendays,
+            $data->averagegradeslastsevendayspreviousweek);
 
         $column3 = $this->headline_column($gradebooknumber,
             get_string('headline_average', $plugin),
@@ -422,7 +431,8 @@ class local_xray_renderer extends plugin_renderer_base {
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "discussionreport", "courseid" => $COURSE->id, "header" => 1), "discussionMetrics");
         // Calculate colour status.
-        $statusclass = $this->headline_status($data->postslastsevendays, $data->postslastsevendayspreviousweek);
+        $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($data->postslastsevendays,
+            $data->postslastsevendayspreviousweek);
 
         $column4 = $this->headline_column($data->postslastsevendays,
             get_string('headline_posts', 'local_xray'),
@@ -473,66 +483,6 @@ class local_xray_renderer extends plugin_renderer_base {
             array("class" => "xray-headline-textweekbefore {$stylestatus[0]}"));
 
         return $link.$textdesc.$textweekbefore;
-    }
-
-    /**
-     * Calculate colour and arrow for headline (compare current value and value in the previous week).
-     * Return array with class and string for reader.
-     *
-     * Same value = return class for yellow colour.
-     * Increment value = return class for green colour.
-     * Decrement value = return class for red colour.
-     *
-     * @param $valuenow
-     * @param $valuepreviousweek
-     * @return array
-     */
-    private function headline_status($valuenow, $valuepreviousweek) {
-        // Default, same value.
-        $stylestatus = "xray-headline-yellow";
-        $langstatus = get_string("arrow_same", "local_xray");
-
-        if ($valuenow < $valuepreviousweek) {
-            // Decrement.
-            $stylestatus = "xray-headline-red";
-            $langstatus = get_string("arrow_decrease", "local_xray");
-        } else if ($valuenow > $valuepreviousweek) {
-            // Increment.
-            $stylestatus = "xray-headline-green";
-            $langstatus = get_string("arrow_increase", "local_xray");
-        }
-
-        return array($stylestatus, $langstatus);
-    }
-    /**
-     * Calculate colour and arrow for headline (compare current value and value in the previous week).
-     * This case is only for RISK column.
-     *
-     * Same value = return class for yellow colour.
-     * Decrement value = return class for green colour.
-     * Increment value = return class for red colour.
-     *
-     * @param $valuenow
-     * @param $valuepreviousweek
-     * @return array
-     */
-    private function headline_status_risk($valuenow, $valuepreviousweek) {
-
-        // Default, same value.
-        $stylestatus = "xray-headline-yellow";
-        $langstatus = get_string("arrow_same", "local_xray");
-
-        if ($valuenow > $valuepreviousweek) {
-            // Decrement.
-            $stylestatus = "xray-headline-red-caserisk";
-            $langstatus = get_string("arrow_decrease", "local_xray");
-        } else if ($valuenow < $valuepreviousweek) {
-            // Increment.
-            $stylestatus = "xray-headline-green-caserisk";
-            $langstatus = get_string("arrow_increase", "local_xray");
-        }
-
-        return array($stylestatus, $langstatus);
     }
 
     /************************** End Course Header **************************/
