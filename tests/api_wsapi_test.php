@@ -69,4 +69,78 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
         $this->assertFalse( \local_xray\local\api\wsapi::login() );
     }
 
+    /**
+     * @return void
+     */
+    public function test_accesstoken_ok() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/keylogin', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/accesstoken', 'user-accesstoken-final.json');
+        $this->assertEquals('z291TD', \local_xray\local\api\wsapi::accesstoken());
+    }
+
+    /**
+     * @return void
+     */
+    public function test_accesstoken_fail() {
+        $this->resetAfterTest(true);
+        $this->config_cleanup();
+
+        $this->assertFalse(\local_xray\local\api\wsapi::accesstoken());
+    }
+
+    /**
+     * @return void
+     */
+    public function test_domaininfo_ok() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo', 'domain-final.json');
+        $expected = json_decode(file_get_contents(__DIR__.'/fixtures/domain-final.json'));
+        $this->assertEquals($expected, \local_xray\local\api\wsapi::domaininfo());
+    }
+
+    /**
+     * @return void
+     */
+    public function test_domaininfo_fail() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo', 'user-accesstoken-final.json');
+        $expected = json_decode(file_get_contents(__DIR__.'/fixtures/domain-final.json'));
+        $this->assertNotEquals($expected, \local_xray\local\api\wsapi::domaininfo());
+    }
+
+    /**
+     * @return void
+     */
+    public function test_courses_ok() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo/course', 'courses-final.json');
+        $expected = json_decode(file_get_contents(__DIR__.'/fixtures/courses-final.json'));
+        $this->assertEquals($expected, \local_xray\local\api\wsapi::courses());
+    }
+
+    /**
+     * @return void
+     */
+    public function test_courses_fail() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo/course', 'domain-final.json');
+        $expected = json_decode(file_get_contents(__DIR__.'/fixtures/courses-final.json'));
+        $this->assertNotEquals($expected, \local_xray\local\api\wsapi::courses());
+    }
+
 }

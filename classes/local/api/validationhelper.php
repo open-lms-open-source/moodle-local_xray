@@ -60,14 +60,14 @@ abstract class validationhelper {
     protected static function url_replace(array $replacement, $url) {
         $subject = parse_url($url, PHP_URL_PATH);
         $pattern = [
-            '#^/([^/]+)/course/0/([^/]+)$#',
+            '#^/([^/]+)/course$#',
+            '#^/([^/]+)/course/([1-9][0-9]*?)/([1-9][0-9]*?)/([^/]+)$#',
             '#^/([^/]+)/course/([^/]+)/([^/]+)$#',
-            '#^/([^/]+)/course/0/([^/]+)/elements/([^/]+)$#',
             '#^/([^/]+)/course/([^/]+)/([^/]+)/elements/([^/]+)$#',
-            '#^/([^/]+)/data/0/([^/]+)/accessible$#',
             '#^/([^/]+)/data/([^/]+)/([^/]+)/accessible$#',
             '#^/user/login$#',
-            '#^/user/accesstoken$#'
+            '#^/user/accesstoken$#',
+            '#^/([^/]+)$#'
         ];
 
         return self::replace($pattern, $replacement, $subject);
@@ -79,14 +79,14 @@ abstract class validationhelper {
      */
     public static function generate_schema_name($url) {
         $replacement = [
-            'course-report-${3}-schema-error.json',
+            'courses-schema.json',
+            'course-report-${4}-user-schema.json',
             'course-report-${3}-schema.json',
-            'course-element-${3}-${4}-schema-error.json',
             'course-element-${3}-${4}-schema.json',
-            'data-accessible-${2}-${3}-schema-error.json',
             'data-accessible-${2}-${3}-schema.json',
             'user-login-schema.json',
-            'user-accesstoken-schema.json'
+            'user-accesstoken-schema.json',
+            'domain-schema.json'
         ];
 
         return self::url_replace($replacement, $url);
@@ -101,17 +101,24 @@ abstract class validationhelper {
         $filename = self::generate_schema_name($url);
         $result = null;
         if (!empty($filename)) {
-            $result = realpath($CFG->dirroot.'/local/xray/schemas/'.$filename);
+            $file = realpath($CFG->dirroot.'/local/xray/schemas/'.$filename);
+            if ($file !== false) {
+                $result = $file;
+            }
         }
         return $result;
     }
 
+    // @codingStandardsIgnoreStart
     /**
+     * Validate JSON using provided schema, due to non standard library used we disbale coding standards for this method.
+     *
      * @param  string  $json - json incoming data
      * @param  string  $url - url that was used
+     * @param  bool    $limiterr - return only sample of errors if true
      * @return string[]
      */
-    public static function validate_schema($json, $url) {
+    public static function validate_schema($json, $url, $limiterr = true) {
         global $CFG;
 
         /* @noinspection PhpIncludeInspection */
@@ -135,6 +142,11 @@ abstract class validationhelper {
             $retriever = new \JsonSchema\Uri\UriRetriever;
             $schema = $retriever->retrieve('file://' . $file);
 
+            // Increase depth to be able to handle more complex JSON we use.
+            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+            /* @noinspection PhpUndefinedClassInspection */
+            \JsonSchema\RefResolver::$maxDepth = 10;
+
             /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
             /* @noinspection PhpUndefinedClassInspection */
             $refresolver = new \JsonSchema\RefResolver();
@@ -155,10 +167,14 @@ abstract class validationhelper {
             $validator   = null;
 
             if (!empty($resultarr)) {
+                $count = 0;
                 foreach ($resultarr as $error) {
+                    if ($limiterr and (++$count >= 10)) {
+                        break;
+                    }
                     $result[] = 'Property: '.$error['property'].
-                        ' Message: '.$error['message'].
-                        ' Constraint: '.$error['constraint'];
+                                ' Message: '.$error['message'].
+                                ' Constraint: '.$error['constraint'];
                 }
             }
         } catch (\Exception $e) {
@@ -167,4 +183,35 @@ abstract class validationhelper {
 
         return $result;
     }
+    // @codingStandardsIgnoreEnd
+
+    /**
+     * @param  string[] $items
+     * @param  string   $splitter
+     * @return string
+     */
+    public static function generate_message_fmt(array $items, $splitter = PHP_EOL) {
+        $result = '';
+        if (!empty($items)) {
+            $result = implode($splitter, $items);
+        }
+        return $result;
+    }
+
+    /**
+     * @param  string[] $items
+     * @return string
+     */
+    public static function generate_message(array $items) {
+        $result = '';
+        if (!empty($items)) {
+            $splitter = PHP_EOL;
+            if (!CLI_SCRIPT and !AJAX_SCRIPT and !PHPUNIT_TEST) {
+                $splitter = \html_writer::empty_tag('br');
+            }
+            $result = self::generate_message_fmt($items, $splitter);
+        }
+        return $result;
+    }
+
 }
