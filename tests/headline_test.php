@@ -93,19 +93,21 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * Test correct attributes of class dashboard_data.
      */
     public function test_attributes_class_dashboard_data() {
+
+        $this->resetAfterTest();
         $dashboadrobj = new \local_xray\dashboard\dashboard_data(1,2,3,4,5,6,7,8,9,10,11,12);
         $this->assertObjectHasAttribute("usersinrisk", $dashboadrobj);
-        $this->assertClassHasAttribute("risktotal", $dashboadrobj);
-        $this->assertClassHasAttribute("averagerisksevendaybefore", $dashboadrobj);
-        $this->assertClassHasAttribute("maximumtotalrisksevendaybefore", $dashboadrobj);
-        $this->assertClassHasAttribute("usersloggedinpreviousweek", $dashboadrobj);
-        $this->assertClassHasAttribute("usersactivitytotal", $dashboadrobj);
-        $this->assertClassHasAttribute("averageuserslastsevendays", $dashboadrobj);
-        $this->assertClassHasAttribute("usersactivitytotal", $dashboadrobj);
-        $this->assertClassHasAttribute("averageuserslastsevendays", $dashboadrobj);
-        $this->assertClassHasAttribute("averagegradeslastsevendays", $dashboadrobj);
-        $this->assertClassHasAttribute("postslastsevendays", $dashboadrobj);
-        $this->assertClassHasAttribute("postslastsevendayspreviousweek", $dashboadrobj);
+        $this->assertObjectHasAttribute("risktotal", $dashboadrobj);
+        $this->assertObjectHasAttribute("averagerisksevendaybefore", $dashboadrobj);
+        $this->assertObjectHasAttribute("maximumtotalrisksevendaybefore", $dashboadrobj);
+        $this->assertObjectHasAttribute("usersloggedinpreviousweek", $dashboadrobj);
+        $this->assertObjectHasAttribute("usersactivitytotal", $dashboadrobj);
+        $this->assertObjectHasAttribute("averageuserslastsevendays", $dashboadrobj);
+        $this->assertObjectHasAttribute("usersactivitytotal", $dashboadrobj);
+        $this->assertObjectHasAttribute("averageuserslastsevendays", $dashboadrobj);
+        $this->assertObjectHasAttribute("averagegradeslastsevendays", $dashboadrobj);
+        $this->assertObjectHasAttribute("postslastsevendays", $dashboadrobj);
+        $this->assertObjectHasAttribute("postslastsevendayspreviousweek", $dashboadrobj);
     }
 
     /**
