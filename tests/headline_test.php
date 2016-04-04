@@ -87,7 +87,6 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * Data returned by webservice is incorrect for show headline.
      */
     public function test_get_incorrect_data() {
-
         // Reset this setting after current test.
         $this->resetAfterTest(true);
 
@@ -100,5 +99,93 @@ class local_xray_headline_testcase extends \advanced_testcase {
         $this->assertFalse($dashboarddata);
     }
 
+    /**
+     * Test correct attributes of class dashboard_data.
+     */
+    public function test_attributes_class_dashboard_data() {
+        $this->assertClassHasAttribute("usersinrisk", "dashboard_data");
+        $this->assertClassHasAttribute("risktotal", "dashboard_data");
+        $this->assertClassHasAttribute("averagerisksevendaybefore", "dashboard_data");
+        $this->assertClassHasAttribute("maximumtotalrisksevendaybefore", "dashboard_data");
+        $this->assertClassHasAttribute("usersloggedinpreviousweek", "dashboard_data");
+        $this->assertClassHasAttribute("usersactivitytotal", "dashboard_data");
+        $this->assertClassHasAttribute("averageuserslastsevendays", "dashboard_data");
+        $this->assertClassHasAttribute("usersactivitytotal", "dashboard_data");
+        $this->assertClassHasAttribute("averageuserslastsevendays", "dashboard_data");
+        $this->assertClassHasAttribute("averagegradeslastsevendays", "dashboard_data");
+        $this->assertClassHasAttribute("postslastsevendays", "dashboard_data");
+        $this->assertClassHasAttribute("postslastsevendayspreviousweek", "dashboard_data");
+    }
 
+    /**
+     * Check correct return of get_status_simple() in class dashboard_data.
+     * This function return class to use in headline checking the values of each column.
+     */
+    public function test_get_status_simple() {
+
+        // Return arrow class decrement (red).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple(1, 2);
+        $this->assertEquals("xray-headline-red", $result[0]);
+
+        // Return arrow class same (yellow).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple(2, 2);
+        $this->assertEquals("xray-headline-yellow", $result[0]);
+
+        // Return arrow class increment (green).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple(5, 2);
+        $this->assertEquals("xray-headline-green", $result[0]);
+
+        // Check if webservice sent null or "-" (This is same than 0).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple("-", 2);
+        $this->assertEquals("xray-headline-red", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple("-", "-");
+        $this->assertEquals("xray-headline-yellow", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple(2, "-");
+        $this->assertEquals("xray-headline-green", $result[0]);
+
+    }
+
+    /**
+     * Check correct return of test_get_status_with_average() in class dashboard_data.
+     * This function return class to use in headline checking the average of values of each column.
+     */
+    public function test_get_status_with_average() {
+
+        // Return arrow class decrement (red), 0.50 vs 0.75.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(1, 2, 3, 4);
+        $this->assertEquals("xray-headline-red", $result[0]);
+
+        // Return arrow class same (yellow).
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 4, 4);
+        $this->assertEquals("xray-headline-yellow", $result[0]);
+
+        // Return arrow class increment (green) 1 vs 0.50.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(4, 4, 2, 4);
+        $this->assertEquals("xray-headline-green", $result[0]);
+
+        // Inverse case, return arrow class decrement (green), 0.50 vs 0.75.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(1, 2, 3, 4, true);
+        $this->assertEquals("xray-headline-green-caserisk", $result[0]);
+
+        // Inverse case, return arrow class same (yellow).
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 4, 4, true);
+        $this->assertEquals("xray-headline-yellow", $result[0]);
+
+        // Inverse case, return arrow class increment (red) 1 vs 0.50.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 2, 4, true);
+        $this->assertEquals("xray-headline-red-caserisk", $result[0]);
+
+        // Check if webservice sent null or "-" (This is same than 0).
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average("-", "-", 3, 4);
+        $this->assertEquals("xray-headline-red", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, "-", 4);
+        $this->assertEquals("xray-headline-green", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average("-", "-", "-", "-");
+        $this->assertEquals("xray-headline-yellow", $result[0]);
+
+    }
 }

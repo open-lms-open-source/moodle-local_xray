@@ -161,6 +161,14 @@ class dashboard_data {
      */
     public static function get_status_simple($valuenow, $valuepreviousweek) {
 
+        // Value can be null or "-" too.
+        if (empty($valuenow1) && !is_number($valuenow)) {
+            $valuenow = 0;
+        }
+        if (empty($valuepreviousweek) && !is_number($valuepreviousweek)) {
+            $valuepreviousweek = 0;
+        }
+
         // Default, same value.
         $stylestatus = "xray-headline-yellow";
         $arrow = "arrow_same";
