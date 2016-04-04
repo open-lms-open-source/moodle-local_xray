@@ -74,6 +74,19 @@ class data_export {
     }
 
     /**
+     * @return string
+     */
+    public static function special_join() {
+        global $DB;
+        $result = '';
+        $family = $DB->get_dbfamily();
+        if ($family == 'mysql') {
+            $result = 'STRAIGHT_JOIN';
+        }
+        return $result;
+    }
+
+    /**
      * @param $fieldname
      * @param bool|true $doalias
      * @param null $alias - If alias is null original fieldname is used
@@ -427,16 +440,20 @@ class data_export {
 
         $sql = "
             SELECT
-                   f.id,
-                   f.course AS courseid,
-                   f.type,
-                   f.name,
-                   f.intro,
-                   {$timemodified},
-                   f.timemodified AS traw
-            FROM   {forum} f
+                       f.id,
+                       cm.id    AS activityid,
+                       f.course AS courseid,
+                       f.type,
+                       f.name,
+                       f.intro,
+                       {$timemodified},
+                       f.timemodified AS traw
+            FROM       {forum} f
+            INNER JOIN {course_modules} cm ON cm.instance = f.id
             WHERE
-                   EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
+                   EXISTS (SELECT c.id FROM {course}   c WHERE f.course = c.id    AND c.category <> 0)
+                   AND
+                   EXISTS (SELECT mo.id FROM {modules} mo WHERE mo.name = 'forum' AND cm.module = mo.id)
                    AND
                    ";
 
@@ -520,16 +537,20 @@ class data_export {
 
         $sql = "
             SELECT
-                   f.id,
-                   f.course AS courseid,
-                   f.type,
-                   f.name,
-                   f.intro,
-                   {$timemodified},
-                   f.timemodified AS traw
-            FROM   {hsuforum} f
+                       f.id,
+                       cm.id    AS activityid,
+                       f.course AS courseid,
+                       f.type,
+                       f.name,
+                       f.intro,
+                       {$timemodified},
+                       f.timemodified AS traw
+            FROM       {hsuforum} f
+            INNER JOIN {course_modules} cm ON cm.instance = f.id
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
+                   AND
+                   EXISTS (SELECT mo.id FROM {modules} mo WHERE mo.name = 'hsuforum' AND cm.module = mo.id)
                    AND
                    ";
 
@@ -612,16 +633,20 @@ class data_export {
         $timemodified = self::to_timestamp('q.timemodified', true, 'timemodified');
         $sql = "
             SELECT
-                   q.id,
-                   q.course AS courseid,
-                   q.name,
-                   q.attempts,
-                   q.grade,
-                   {$timemodified},
-                   q.timemodified AS traw
-            FROM   {quiz} q
+                       q.id,
+                       cm.id    AS activityid,
+                       q.course AS courseid,
+                       q.name,
+                       q.attempts,
+                       q.grade,
+                       {$timemodified},
+                       q.timemodified AS traw
+            FROM       {quiz} q
+            INNER JOIN {course_modules} cm ON cm.instance = q.id
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE q.course = c.id AND c.category <> 0)
+                   AND
+                   EXISTS (SELECT mo.id FROM {modules} mo WHERE mo.name = 'quiz' AND cm.module = mo.id)
                    AND
                    ";
 
@@ -636,23 +661,37 @@ class data_export {
     public static function grades($timest, $timeend, $dir) {
         $wherecond = self::range_where('gg.timemodified', 'gg.timecreated', $timest, $timeend, __FUNCTION__, 'gg.id');
 
+        $special = self::special_join();
+
         $sql = "
-          SELECT
+          SELECT $special
                      gg.id,
                      gg.userid AS participantid,
-                     gi.iteminstance AS quizid,
+                     cm.id AS activityid,
+                     gi.courseid,
+                     gi.itemname,
+                     CASE
+                          WHEN gi.itemtype = 'course' THEN gi.itemtype
+                          WHEN gi.itemtype = 'mod'    THEN gi.itemmodule
+                     END AS itemtype,
+                     gg.rawgrademax,
+                     gg.rawgrademin,
                      gg.rawgrade,
                      gg.finalgrade,
                      gg.locktime,
                      gg.timecreated,
                      gg.timemodified,
                      CASE
-                          WHEN gg.timemodified = 0 THEN gg.timecreated
+                          WHEN COALESCE(gg.timemodified, 0) = 0 THEN gg.timecreated
                           ELSE gg.timemodified
                      END AS traw
-          FROM       {grade_grades} gg
-          INNER JOIN {grade_items}  gi ON gi.id = gg.itemid AND gi.itemmodule = 'quiz'
+          FROM       {grade_grades}   gg
+          INNER JOIN {grade_items}    gi ON gi.id       = gg.itemid       AND gi.itemtype IN('mod', 'course')
+          LEFT  JOIN {modules}        mo ON mo.name     = gi.itemmodule   AND gi.itemtype = 'mod'
+          LEFT  JOIN {course_modules} cm ON cm.instance = gi.iteminstance AND cm.module   = mo.id AND gi.itemtype = 'mod'
           WHERE
+                 gg.finalgrade IS NOT NULL
+                 AND
                      ";
 
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
