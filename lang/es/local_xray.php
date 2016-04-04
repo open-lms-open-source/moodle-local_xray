@@ -435,7 +435,7 @@ $string['discussionreport_discussionSuggestedGrades_help'] = 'Este diagrama de b
 /* Graphs Discussion report individual*/
 $string['discussionreportindividual_wordcloud'] = 'Palabras más utilizadas';
 $string['discussionreportindividual_socialStructure'] = 'Análisis de interacción';
-$string['discussionreportindividual_wordHistogram'] = 'Regularidad de palabras más utilizadas';
+$string['discussionreportindividual_wordHistogram'] = 'Frecuencia de palabras más utilizadas';
 
 /* Help Graphs Discussion report individual*/
 $string['discussionreportindividual_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
@@ -451,7 +451,7 @@ $string['discussionreportindividual_wordHistogram_help'] = 'Este histograma mues
 /* Graphs Discussion report individual forum*/
 $string['discussionreportindividualforum_wordcloud'] = 'Palabras más utilizadas';
 $string['discussionreportindividualforum_socialStructure'] = 'Análisis de interacción';
-$string['discussionreportindividualforum_wordHistogram'] = 'Regularidad de palabras más utilizadas';
+$string['discussionreportindividualforum_wordHistogram'] = 'Frecuencia de palabras más utilizadas';
 
 /* Help Graphs Discussion report individual forum*/
 $string['discussionreportindividualforum_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
