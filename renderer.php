@@ -466,9 +466,9 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Link with Number and icon.
         $icon = html_writer::span('', $stylestatus[0]."-icon xray-headline-icon");
-        $number = html_writer::tag("p", $number.$icon, array("class" => "xray-headline-number"));
+        $number = html_writer::tag("p", $number, array("class" => "xray-headline-number"));
         $link = html_writer::link($linkurl,
-            $number,
+            $number.$icon,
             array("tabindex" => -1,
                 "class" => "xray-headline-link",
                 "title" => get_string('link_gotoreport', 'local_xray')));

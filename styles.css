@@ -140,8 +140,9 @@
 }
 .xray-headline-number {
     font-size: 30px;
-    margin-bottom: 5px;
-    display: block;
+    margin-bottom: 0;
+    margin-right: 5px;
+    display: inline;
 }
 a.xray-headline-link:hover {
     text-decoration: none !important;
@@ -156,6 +157,8 @@ a.xray-headline-link:hover {
 }
 
 .xray-headline-link {
+    display: inline-block;
+    margin-bottom: 5px;
 }
 
 .xray-headline-red,
@@ -170,12 +173,13 @@ a.xray-headline-link:hover {
 }
 
 .xray-headline-icon {
+    background-position: center center;
     background-repeat: no-repeat;
+    background-size: 100% auto;
     display: inline-block;
-    height: 32px;
-    margin-left: 5px;
-    margin-bottom: -4px;
-    width: 32px;
+    height: 30px;
+    margin-bottom: -5px;
+    width: 30px;
 }
 
 .xray-headline-red-icon {
