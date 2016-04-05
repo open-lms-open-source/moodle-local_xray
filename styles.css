@@ -128,7 +128,6 @@
 .xray-headline {
     display: inline-block;
     width:100%;
-    line-height: 1;
     margin:0;
     padding:0;
 }
@@ -137,6 +136,7 @@
     float:left;
     width: 24%;
     padding:0 0.5%;
+    line-height: normal;
 }
 .xray-headline-number {
     font-size: 30px;
