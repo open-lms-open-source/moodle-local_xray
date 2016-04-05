@@ -6,6 +6,19 @@ TODO - make express specific? */
     float:left;
 }
 
+.xray-headline-number {
+    font-size: 25px;
+    margin-right: 3px;
+}
+
+.xray-headline-icon {
+    height: 25px;
+    width: 25px;
+    margin-bottom: -3px;
+}
+
+
+
 /* Background Colours - Styles from bootstrap */
 .xray-toggleable-table .label{display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em}
 .xray-toggleable-table .label-default{background-color:#777}
