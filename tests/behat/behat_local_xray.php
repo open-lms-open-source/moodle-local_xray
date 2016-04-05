@@ -55,8 +55,8 @@ class behat_local_xray extends behat_base {
         require_once("$CFG->dirroot/blocks/express/model/design.php");
 
         // Create express paths.
-        mkdir("$CFG->behat_dataroot/express/");
-        mkdir("$CFG->behat_dataroot/express/tmp/");
+        make_upload_directory('express');
+        make_upload_directory('express/tmp');
 
         // Add design at site context.
         $context_course = context_course::instance(SITEID);
