@@ -61,7 +61,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                         "rest.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=".$this->courseid);
                     // If the user comes from header.
                     if ($this->header) {
-                        $datatable->default_field_sort = 4; // Sort by column "Average grades".
+                        $datatable->default_field_sort = 3; // Sort by column "Course Grade".
                         $datatable->sort_order = "desc";
                     }
                     $output .= $this->output->standard_table((array)$datatable);
