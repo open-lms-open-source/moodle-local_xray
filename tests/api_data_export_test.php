@@ -34,6 +34,8 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Creates courses needed for test
+     *
      * @param int $nr
      * @param int $timecreated
      * @return array
@@ -59,6 +61,8 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Creates forums and discussions needed for the test for specified type of forum
+     *
      * @param int $nr
      * @param array $courses
      * @param string $module
@@ -98,6 +102,8 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Add specified ammount of quizzes
+     *
      * @param int $nr
      * @param array $courses
      * @return array
@@ -115,6 +121,8 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Export data to csv files
+     *
      * @param $timeend
      * @param $dir
      */
@@ -124,6 +132,8 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Set the student account
+     * 
      * @param array $courses
      * @param string $module
      */
@@ -160,6 +170,8 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Add's 5 forums with some content, exports them in csv and checks the export format.
+     *
      * @return void
      */
     public function test_forums_export() {
@@ -203,6 +215,7 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Add's 5 advanced forums with some content, exports them in csv and checks the export format.
      * @return void
      */
     public function test_hsuforums_export() {
@@ -246,6 +259,7 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Add's 5 quizes with some content, exports them in csv and checks the export format.
      * @return void
      */
     public function test_quiz_export() {
@@ -288,6 +302,7 @@ class local_xray_api_data_export_testcase extends advanced_testcase {
     }
 
     /**
+     * Add's 5 quizzes with some grades, exports them in csv and checks the export format.
      * @return void
      */
     public function test_grades_export() {
