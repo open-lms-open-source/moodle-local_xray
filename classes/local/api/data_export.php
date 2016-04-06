@@ -325,7 +325,7 @@ class data_export {
                            {$timemodified},
                            l.timemodified AS traw
                 FROM       {role_assignments} l
-                INNER JOIN {context}          ctx  ON l.contextid = ctx.id AND ctx.contextlevel= 50
+                JOIN       {context}          ctx  ON l.contextid = ctx.id AND ctx.contextlevel= 50
                 WHERE
                            EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = 0)
                            AND
@@ -363,8 +363,8 @@ class data_export {
             WHERE
                    EXISTS (
                         SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
-                        FROM       {role_assignments} ra
-                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
+                        FROM {role_assignments} ra
+                        JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
                         WHERE
                               EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
                               AND
@@ -410,8 +410,8 @@ class data_export {
             WHERE
                    EXISTS (
                         SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
-                        FROM       {role_assignments} ra
-                        INNER JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
+                        FROM {role_assignments} ra
+                        JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
                         WHERE
                               EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
                               AND
@@ -449,7 +449,7 @@ class data_export {
                        {$timemodified},
                        f.timemodified AS traw
             FROM       {forum} f
-            INNER JOIN {course_modules} cm ON cm.instance = f.id
+            JOIN       {course_modules} cm ON cm.instance = f.id
             WHERE
                    EXISTS (SELECT c.id FROM {course}   c WHERE f.course = c.id    AND c.category <> 0)
                    AND
@@ -546,7 +546,7 @@ class data_export {
                        {$timemodified},
                        f.timemodified AS traw
             FROM       {hsuforum} f
-            INNER JOIN {course_modules} cm ON cm.instance = f.id
+            JOIN       {course_modules} cm ON cm.instance = f.id
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
@@ -642,7 +642,7 @@ class data_export {
                        {$timemodified},
                        q.timemodified AS traw
             FROM       {quiz} q
-            INNER JOIN {course_modules} cm ON cm.instance = q.id
+            JOIN       {course_modules} cm ON cm.instance = q.id
             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE q.course = c.id AND c.category <> 0)
                    AND
@@ -686,9 +686,9 @@ class data_export {
                           ELSE gg.timemodified
                      END AS traw
           FROM       {grade_grades}   gg
-          INNER JOIN {grade_items}    gi ON gi.id       = gg.itemid       AND gi.itemtype IN('mod', 'course')
-          LEFT  JOIN {modules}        mo ON mo.name     = gi.itemmodule   AND gi.itemtype = 'mod'
-          LEFT  JOIN {course_modules} cm ON cm.instance = gi.iteminstance AND cm.module   = mo.id AND gi.itemtype = 'mod'
+          JOIN       {grade_items}    gi ON gi.id       = gg.itemid       AND gi.itemtype IN('mod', 'course')
+          LEFT JOIN  {modules}        mo ON mo.name     = gi.itemmodule   AND gi.itemtype = 'mod'
+          LEFT JOIN  {course_modules} cm ON cm.instance = gi.iteminstance AND cm.module   = mo.id AND gi.itemtype = 'mod'
           WHERE
                  gg.finalgrade IS NOT NULL
                  AND
