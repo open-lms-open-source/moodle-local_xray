@@ -155,8 +155,8 @@ class dashboard_data {
      * Increment value = return class for green colour.
      * Decrement value = return class for red colour.
      *
-     * @param $valuenow
-     * @param $valuepreviousweek
+     * @param null|string|int $valuenow - Webservice can return "-" or null.
+     * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
      * @return array
      */
     public static function get_status_simple($valuenow, $valuepreviousweek) {
@@ -170,19 +170,19 @@ class dashboard_data {
         }
 
         // Default, same value.
-        $stylestatus = "xray-headline-yellow";
-        $arrow = "arrow_same";
+        $stylestatus = "xray-headline-same";
+        $status_lang = "arrow_same";
 
         if ($valuenow < $valuepreviousweek) {
             // Decrement.
-            $stylestatus = "xray-headline-red";
-            $arrow = "arrow_decrease";
+            $stylestatus = "xray-headline-decrease";
+            $status_lang = "arrow_decrease";
         } else if ($valuenow > $valuepreviousweek) {
             // Increment.
-            $stylestatus = "xray-headline-green";
-            $arrow = "arrow_increase";
+            $stylestatus = "xray-headline-increase";
+            $status_lang = "arrow_increase";
         }
-        $langstatus = get_string($arrow, "local_xray");
+        $langstatus = get_string($status_lang, "local_xray");
         return array($stylestatus, $langstatus);
     }
 
@@ -197,10 +197,10 @@ class dashboard_data {
      *
      * If you use $inversebehavior, you will have inverse behavior in the arrow (special for risk column).
      *
-     * @param string $valuenow1
-     * @param string $valuenow2
-     * @param string $valuepreviousweek
-     * @param string $valuepreviousweek2
+     * @param null|string|int $valuenow1 - Webservice can return "-" or null.
+     * @param null|string|int $valuenow2 - Webservice can return "-" or null.
+     * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
+     * @param null|string|int $valuepreviousweek2 - Webservice can return "-" or null.
      * @param boolean $inversebehavior - Arrow will have inverse behavior (increment/decrement). Used by risk.
      * @return array
      */
@@ -222,33 +222,31 @@ class dashboard_data {
         }
 
         // Default, same value.
-        $stylestatus = "xray-headline-yellow";
-        $arrow = "arrow_same";
+        $stylestatus = "xray-headline-same";
+        $status_lang = "arrow_same";
 
         if ($firstaverage < $secondaverage) {
 
             // Decrement.
-            $stylestatus = "xray-headline-red";
-            $arrow = "arrow_decrease";
+            $stylestatus = "xray-headline-decrease";
+            $status_lang = "arrow_decrease";
             if ($inversebehavior) {
-                // Increment.
-                $stylestatus = "xray-headline-green-caserisk";
-                $arrow = "arrow_increase";
+                // Arrow will be inverse.
+                $stylestatus = "xray-headline-increase-caserisk";
             }
 
         } else if ($firstaverage > $secondaverage) {
 
             // Increment.
-            $stylestatus = "xray-headline-green";
-            $arrow = "arrow_increase";
+            $stylestatus = "xray-headline-increase";
+            $status_lang = "arrow_increase";
             if ($inversebehavior) {
-                // Decrement.
-                $stylestatus = "xray-headline-red-caserisk";
-                $arrow = "arrow_decrease";
+                // Arrow will be inverse.
+                $stylestatus = "xray-headline-decrease-caserisk";
             }
         }
 
-        $langstatus = get_string($arrow, "local_xray");
+        $langstatus = get_string($status_lang, "local_xray");
         return array($stylestatus, $langstatus);
     }
 }

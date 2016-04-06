@@ -120,25 +120,25 @@ class local_xray_headline_testcase extends \advanced_testcase {
 
         // Return arrow class decrement (red).
         $result = \local_xray\dashboard\dashboard_data::get_status_simple(1, 2);
-        $this->assertEquals("xray-headline-red", $result[0]);
+        $this->assertEquals("xray-headline-decrease", $result[0]);
 
         // Return arrow class same (yellow).
         $result = \local_xray\dashboard\dashboard_data::get_status_simple(2, 2);
-        $this->assertEquals("xray-headline-yellow", $result[0]);
+        $this->assertEquals("xray-headline-same", $result[0]);
 
         // Return arrow class increment (green).
         $result = \local_xray\dashboard\dashboard_data::get_status_simple(5, 2);
-        $this->assertEquals("xray-headline-green", $result[0]);
+        $this->assertEquals("xray-headline-increase", $result[0]);
 
         // Check if webservice sent null or "-" (This is same than 0).
         $result = \local_xray\dashboard\dashboard_data::get_status_simple("-", 2);
-        $this->assertEquals("xray-headline-red", $result[0]);
+        $this->assertEquals("xray-headline-decrease", $result[0]);
 
         $result = \local_xray\dashboard\dashboard_data::get_status_simple("-", "-");
-        $this->assertEquals("xray-headline-yellow", $result[0]);
+        $this->assertEquals("xray-headline-same", $result[0]);
 
         $result = \local_xray\dashboard\dashboard_data::get_status_simple(2, "-");
-        $this->assertEquals("xray-headline-green", $result[0]);
+        $this->assertEquals("xray-headline-increase", $result[0]);
 
     }
 
@@ -152,37 +152,37 @@ class local_xray_headline_testcase extends \advanced_testcase {
 
         // Return arrow class decrement (red), 0.50 vs 0.75.
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average(1, 2, 3, 4);
-        $this->assertEquals("xray-headline-red", $result[0]);
+        $this->assertEquals("xray-headline-decrease", $result[0]);
 
         // Return arrow class same (yellow).
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 4, 4);
-        $this->assertEquals("xray-headline-yellow", $result[0]);
+        $this->assertEquals("xray-headline-same", $result[0]);
 
         // Return arrow class increment (green) 1 vs 0.50.
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average(4, 4, 2, 4);
-        $this->assertEquals("xray-headline-green", $result[0]);
+        $this->assertEquals("xray-headline-increase", $result[0]);
 
         // Inverse case, return arrow class decrement (green), 0.50 vs 0.75.
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average(1, 2, 3, 4, true);
-        $this->assertEquals("xray-headline-green-caserisk", $result[0]);
+        $this->assertEquals("xray-headline-increase-caserisk", $result[0]);
 
         // Inverse case, return arrow class same (yellow).
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 4, 4, true);
-        $this->assertEquals("xray-headline-yellow", $result[0]);
+        $this->assertEquals("xray-headline-same", $result[0]);
 
         // Inverse case, return arrow class increment (red) 1 vs 0.50.
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 2, 4, true);
-        $this->assertEquals("xray-headline-red-caserisk", $result[0]);
+        $this->assertEquals("xray-headline-decrease-caserisk", $result[0]);
 
         // Check if webservice sent null or "-" (This is same than 0).
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average("-", "-", 3, 4);
-        $this->assertEquals("xray-headline-red", $result[0]);
+        $this->assertEquals("xray-headline-decrease", $result[0]);
 
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, "-", 4);
-        $this->assertEquals("xray-headline-green", $result[0]);
+        $this->assertEquals("xray-headline-increase", $result[0]);
 
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average("-", "-", "-", "-");
-        $this->assertEquals("xray-headline-yellow", $result[0]);
+        $this->assertEquals("xray-headline-same", $result[0]);
 
     }
 }
