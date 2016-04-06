@@ -28,53 +28,53 @@ defined('MOODLE_INTERNAL') || die();
 class dashboard_data {
 
     /**
-     * Is the number of persons in the risk metrics table, which are in the total risk category yellow or red.
+     * The number of persons in the risk metrics table, which are in the total risk category yellow or red.
      * @var integer
      */
     public $usersinrisk;
 
     /**
-     * Is the total number of persons in the risk metrics table.
+     * The total number of persons in the risk metrics table.
      * @var integer
      */
     public $risktotal;
 
     /**
-     * Is the average of the number of persons at risk during the seven days before day before yesterday.
+     * The average of the number of persons at risk during the seven days before day before yesterday.
      * It cannot be seen in the current reports.
      * @var integer
      */
     public $averagerisksevendaybefore;
 
     /**
-     * Is the maximum of the total number of persons in the risk metrics table during the seven days before day
+     * The maximum of the total number of persons in the risk metrics table during the seven days before day
      * before yesterday. It cannot be seen in the current reports.
      * @var integer
      */
     public $maximumtotalrisksevendaybefore;
 
     /**
-     * Is the number of 'yes' in the activity metrics table in column 'Logged in during previous week'.
+     * The number of 'yes' in the activity metrics table in column 'Logged in during previous week'.
      * @var integer
      */
     public $usersloggedinpreviousweek;
 
     /**
-     * Is the maximum of the total number of persons in the activity metrics table during the last seven days.
+     * The maximum of the total number of persons in the activity metrics table during the last seven days.
      * It cannot be seen in the current reports.
      * @var integer
      */
     public $usersactivitytotal;
 
     /**
-     * Is the number of 'yes' in the activity metrics table in column 'Logged in during previous week' from
+     * The number of 'yes' in the activity metrics table in column 'Logged in during previous week' from
      * the report seven days ago. It cannot be seen in the current reports.
      * @var integer
      */
     public $averageuserslastsevendays;
 
     /**
-     * Is the maximum of the total number of persons in the activity metrics table during the previous seven days.
+     * The maximum of the total number of persons in the activity metrics table during the previous seven days.
      * It cannot be seen in the current reports.
      * @var integer
      */
