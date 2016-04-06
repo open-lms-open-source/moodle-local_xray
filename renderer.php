@@ -206,7 +206,7 @@ class local_xray_renderer extends plugin_renderer_base {
             'tabindex' => '0'));
         // Table jquery datatables for show reports.
         $output .= html_writer::start_tag("table",
-            array("id" => "table_{$datatable['id']}",
+            array("id" => "js-xray-table-{$datatable['id']}",
                 "class" => "xraydatatable display"));
 
         // Help icon for tables.

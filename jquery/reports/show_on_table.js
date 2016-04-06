@@ -12,12 +12,12 @@ function local_xray_show_on_table(YUI, data) {
         // Disable warning native.
         $.fn.dataTable.ext.errMode = 'none';
 
-        // Error to load data in datatables. Show message error and hide table.
-        $("#table_" + data.id).on('error.dt', function (e, settings, techNote, message) {
-            $("#table_" + data.id + "_wrapper").html("<p class='xray_error_datatables'>" + data.errorMessage + "</p>");
+        // Error to load data in datatables. Show message error and hide table. js-xray-table-
+        $("#js-xray-table-" + data.id).on('error.dt', function (e, settings, techNote, message) {
+            $("#js-xray-table-" + data.id + "_wrapper").html("<p class='xray_error_datatables'>" + data.errorMessage + "</p>");
         });
 
-        $("#table_" + data.id).dataTable({
+        $("#js-xray-table-" + data.id).dataTable({
             "jQueryUI": true,
             "bProcessing": true,
             "bServerSide": true,
@@ -62,10 +62,10 @@ function local_xray_show_on_table(YUI, data) {
             },
             "fnDrawCallback": function( oSettings ,aoData) {
                 // INT-8289, not show paginate when pager is 1.
-                if($("#table_" + data.id).DataTable().rows().data().length == oSettings._iRecordsTotal) {
-                    $("#table_" + data.id +"_paginate").hide();
+                if($("#js-xray-table-" + data.id).DataTable().rows().data().length == oSettings._iRecordsTotal) {
+                    $("#js-xray-table-" + data.id +"_paginate").hide();
                 } else {
-                    $("#table_" + data.id +"_paginate").show();
+                    $("#js-xray-table-" + data.id +"_paginate").show();
                 }
             }
         });
