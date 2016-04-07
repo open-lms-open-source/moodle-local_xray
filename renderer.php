@@ -56,7 +56,8 @@ class local_xray_renderer extends plugin_renderer_base {
         }
         $date = new DateTime($reportdate);
         $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
-        $output .= html_writer::tag("p", get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'inforeport'));
+        $output .= html_writer::tag("p",
+            get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'inforeport'));
         return $output;
     }
 
@@ -85,8 +86,7 @@ class local_xray_renderer extends plugin_renderer_base {
         try {
             // Validate if exist and is available image in xray side.
             $imgurl = local_xray\local\api\wsapi::get_imgurl_xray($element->uuid);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $PAGE->context, "renderer_show_graph")->trigger();
         }
 
@@ -156,9 +156,9 @@ class local_xray_renderer extends plugin_renderer_base {
 
     /**
      * Show accessibledata in table.
-     * @param Array $data
-     * @param Array $rows
-     * @param String $title
+     * @param array $columnsnames
+     * @param array $rows
+     * @param string $title
      * @return string
      */
     public function accessibledata(array $columnsnames, array $rows, $title = "") {
@@ -183,9 +183,9 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param  boolean - Show help for table or not.
      * @return string
      */
-    public function standard_table(array $datatable, $has_help = true) {
+    public function standard_table(array $datatable, $hashelp = true) {
 
-        global $PAGE, $OUTPUT, $PAGE;
+        global $OUTPUT, $PAGE;
         // Load Jquery.
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
@@ -211,7 +211,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Help icon for tables.
         $helpicon = "";
-        if($has_help) {
+        if ($hashelp) {
             $helpicon = $OUTPUT->help_icon($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
         }
 
@@ -286,14 +286,13 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function help_icon_external_url($title, $url) {
-        global $CFG;
 
-        // first get the help image icon
+        // First get the help image icon.
         $src = $this->pix_url('help');
-        $attributes = array('src'=>$src, 'class'=>'iconhelp');
+        $attributes = array('src' => $src, 'class' => 'iconhelp');
         $output = html_writer::empty_tag('img', $attributes);
 
-        $attributes = array('href' => $url, 'title' => $title, 'aria-haspopup' => 'true', 'target'=>'_blank');
+        $attributes = array('href' => $url, 'title' => $title, 'aria-haspopup' => 'true', 'target' => '_blank');
         $output = html_writer::tag('a', $output, $attributes);
         return html_writer::tag('span', $output);
     }
@@ -330,7 +329,7 @@ class local_xray_renderer extends plugin_renderer_base {
             false, // We don't need pagination because we have only four rows.
             '<"xray_table_scrool"t>',
             array(10, 50, 100),
-            false); // without sortable.
+            false); // Without sortable.
 
         // Create standard table.This tables has not icon help.
         $output = $this->standard_table((array)$datatable, false);
@@ -353,64 +352,93 @@ class local_xray_renderer extends plugin_renderer_base {
         $plugin = "local_xray";
         $output = "";
 
+        // Number for risk.
+        $a = new stdClass();
+        $a->first = $data->usersinrisk;
+        $a->second = $data->risktotal;
+        $risknumber = get_string('headline_number_of', $plugin, $a);
+
         // Number of students at risk in the last 7 days.
         $a = new stdClass();
-        $a->previous = $data->usersinrisklastsevendays_previousweek;
-        $a->total = $data->totalstudents;
-        $text_link = get_string("averageofweek_integer", $plugin, $a);
+        $a->previous = $data->averagerisksevendaybefore;
+        $a->total = $data->maximumtotalrisksevendaybefore;
+        $textlink = get_string("averageofweek_integer", $plugin, $a);
+
         // To risk metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
         // Calculate colour status.
-        $status_class = $this->headline_status_risk($data->usersinrisklastsevendays, $data->usersinrisklastsevendays_previousweek);
+        $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($data->usersinrisk,
+            $data->risktotal,
+            $data->averagerisksevendaybefore,
+            $data->maximumtotalrisksevendaybefore,
+            true); // This arrow will be inverse to all.
 
-        $column1 = $this->headline_column($data->usersinrisklastsevendays,
-            get_string('headline_studentatrisk', 'local_xray'),
+        $column1 = $this->headline_column($risknumber,
+            get_string('headline_studentatrisk', $plugin),
             $url,
-            $text_link,
-            $status_class);
+            $textlink,
+            $statusclass);
+
+        // Number for activity.
+        $a = new stdClass();
+        $a->first = $data->usersloggedinpreviousweek;
+        $a->second = $data->usersactivitytotal;
+        $activitynumber = get_string('headline_number_of', $plugin, $a);
 
         // Number of students logged in in last 7 days.
-        $text_link = get_string("lastweekwas", $plugin, $data->studentsloggedlastsevendays_previousweek);
+        $a = new stdClass();
+        $a->current = $data->averageuserslastsevendays;
+        $a->total = $data->userstotalprevioussevendays;
+        $textlink = get_string("headline_lastweekwasof_activity", $plugin, $a);
+
         // To activity metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "activityreport", "courseid" => $COURSE->id, "header" => 1), "studentList");
         // Calculate colour status.
-        $status_class = $this->headline_status($data->studentsloggedlastsevendays, $data->studentsloggedlastsevendays_previousweek);
+        $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($data->usersloggedinpreviousweek,
+            $data->usersactivitytotal,
+            $data->averageuserslastsevendays,
+            $data->userstotalprevioussevendays);
 
-        $column2 = $this->headline_column($data->studentsloggedlastsevendays,
+        $column2 = $this->headline_column($activitynumber,
             get_string('headline_loggedstudents', 'local_xray'),
             $url,
-            $text_link,
-            $status_class);
+            $textlink,
+            $statusclass);
+
+        // Number for gradebook.
+        $gradebooknumber = get_string('headline_number_percentage', $plugin, $data->averagegradeslastsevendays);
 
         // Number of average grades in the last 7 days.
-        $text_link = get_string("averageofweek", $plugin, $data->averagegradeslastsevendays_previousweek);
+        $textlink = get_string("averageofweek_gradebook", $plugin, $data->averagegradeslastsevendayspreviousweek);
         // To students grades.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "element2");
         // Calculate colour status.
-        $status_class = $this->headline_status($data->averagegradeslastsevendays, $data->averagegradeslastsevendays_previousweek);
+        $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($data->averagegradeslastsevendays,
+            $data->averagegradeslastsevendayspreviousweek);
 
-        $column3 = $this->headline_column($data->averagegradeslastsevendays." %",
-            get_string('headline_average', 'local_xray'),
+        $column3 = $this->headline_column($gradebooknumber,
+            get_string('headline_average', $plugin),
             $url,
-            $text_link,
-            $status_class);
+            $textlink,
+            $statusclass);
 
         // Number of posts in the last 7 days.
-        $text_link = get_string("lastweekwas", $plugin, $data->postslastsevendays_previousweek);
+        $textlink = get_string("headline_lastweekwas_discussion", $plugin, $data->postslastsevendayspreviousweek);
         // To participation metrics.
         $url = new moodle_url("/local/xray/view.php",
             array("controller" => "discussionreport", "courseid" => $COURSE->id, "header" => 1), "discussionMetrics");
         // Calculate colour status.
-        $status_class = $this->headline_status($data->postslastsevendays, $data->postslastsevendays_previousweek);
+        $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($data->postslastsevendays,
+            $data->postslastsevendayspreviousweek);
 
         $column4 = $this->headline_column($data->postslastsevendays,
             get_string('headline_posts', 'local_xray'),
             $url,
-            $text_link,
-            $status_class);
+            $textlink,
+            $statusclass);
 
         // Menu list.
         $list = html_writer::start_tag("ul", array("class" => "xray-headline"));
@@ -430,108 +458,31 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param integer $number
      * @param string $text
      * @param string $linkurl
-     * @param string $text_link
-     * @param array $style_status - Array with class and lang for status.
+     * @param string $textweekbefore
+     * @param array $stylestatus - Array with class and lang for status.
      * @return string
      */
-    private function headline_column($number, $text, $linkurl, $textweekbefore, $style_status) {
+    private function headline_column($number, $text, $linkurl, $textweekbefore, $stylestatus) {
 
         // Link with Number and icon.
-        $icon = html_writer::span('', $style_status[0]."-icon xray-headline-icon");
-        $number = html_writer::tag("p", $number.$icon, array("class" => "xray-headline-number"));
-        $link = html_writer::link($linkurl, $number, array("tabindex" => -1, "class" => "xray-headline-link", "title" => get_string('link_gotoreport', 'local_xray')));
+        $icon = html_writer::span('', $stylestatus[0]."-icon xray-headline-icon");
+        $number = html_writer::tag("p", $number, array("class" => "xray-headline-number"));
+        $link = html_writer::link($linkurl,
+            $number.$icon,
+            array("tabindex" => -1,
+                "class" => "xray-headline-link",
+                "title" => get_string('link_gotoreport', 'local_xray')));
 
         // Text only for reader screens.
-        $arrowreader = html_writer::tag("span", "", array("class" => "xray-headline-status-hide", "title" => $style_status[1]));
+        $arrowreader = html_writer::tag("span", "", array("class" => "xray-headline-status-hide", "title" => $stylestatus[1]));
         // Text for description and text of week before.
-        $text_desc = html_writer::tag("p", $text.$arrowreader, array("class" => "xray-headline-desc"));
+        $textdesc = html_writer::tag("p", $text.$arrowreader, array("class" => "xray-headline-desc"));
 
-        $textweekbefore = html_writer::tag("span", $textweekbefore, array("class" => "xray-headline-textweekbefore {$style_status[0]}"));
+        $textweekbefore = html_writer::tag("span",
+            $textweekbefore,
+            array("class" => "xray-headline-textweekbefore {$stylestatus[0]}"));
 
-        return $link.$text_desc.$textweekbefore;
-
-
-    }
-
-    /**
-     * Calculate colour and arrow for headline (compare current value and value in the previous week).
-     * Return array with class and string for reader.
-     *
-     * Same value = return class for yellow colour.
-     * Increment value = return class for green colour.
-     * Decrement value = return class for red colour.
-     *
-     * @param $valuenow
-     * @param $valuepreviousweek
-     * @return array
-     */
-    private function headline_status($valuenow, $valuepreviousweek) {
-        // Default, same value.
-        $style_status = "xray-headline-yellow";
-        $lang_status = get_string("arrow_same", "local_xray");
-
-        if($valuenow < $valuepreviousweek) {
-            // Decrement.
-            $style_status = "xray-headline-red";
-            $lang_status = get_string("arrow_decrease", "local_xray");
-        }
-        elseif ($valuenow > $valuepreviousweek) {
-            // Increment.
-            $style_status = "xray-headline-green";
-            $lang_status = get_string("arrow_increase", "local_xray");
-        }
-
-        return array($style_status, $lang_status);
-    }
-    /**
-     * Calculate colour and arrow for headline (compare current value and value in the previous week).
-     * This case is only for RISK column.
-     *
-     * Same value = return class for yellow colour.
-     * Decrement value = return class for green colour.
-     * Increment value = return class for red colour.
-     *
-     * @param $valuenow
-     * @param $valuepreviousweek
-     * @return array
-     */
-    private function headline_status_risk($valuenow, $valuepreviousweek) {
-
-        // Default, same value.
-        $style_status = "xray-headline-yellow";
-        $lang_status = get_string("arrow_same", "local_xray");
-
-        if($valuenow > $valuepreviousweek) {
-            // Decrement.
-            $style_status = "xray-headline-red-caserisk";
-            $lang_status = get_string("arrow_decrease", "local_xray");
-        }
-        elseif ($valuenow < $valuepreviousweek) {
-            // Increment.
-            $style_status = "xray-headline-green-caserisk";
-            $lang_status = get_string("arrow_increase", "local_xray");
-        }
-
-        return array($style_status, $lang_status);
-    }
-
-    /**
-     * Renderer (copy of print_teacher_profile in renderer.php of snap theme).
-     * @param stdClass $user
-     * @return string
-     */
-    private function print_student_profile($user) {
-        global $CFG;
-
-        $userpicture = new user_picture($user);
-        $userpicture->link = false;
-        $userpicture->alttext = false;
-        $userpicture->size = 30;
-        $picture = $this->render($userpicture);
-        $fullname = html_writer::tag("a",
-            format_string(fullname($user)),
-            array("href" => $CFG->wwwroot . '/user/profile.php?id=' . $user->id));
-        return html_writer::div("{$picture} {$fullname}", array("class" => "dashboard_xray_users_profile"));
+        return $link.$textdesc.$textweekbefore;
     }
 
     /************************** End Course Header **************************/
@@ -567,7 +518,10 @@ class local_xray_renderer extends plugin_renderer_base {
                 if (empty($reportcontroller)) {
                     $classes .= " block"; // Structure of headline in frontpage will be like block.
                     $pluginname = get_string('pluginname', 'local_xray');
-                    $icon = $OUTPUT->pix_icon('xray-logo', $pluginname, 'local_xray', array("tabindex" => -1, "class" => "x-ray-icon-title"));
+                    $icon = $OUTPUT->pix_icon('xray-logo',
+                        $pluginname,
+                        'local_xray',
+                        array("tabindex" => -1, "class" => "x-ray-icon-title"));
                     $title = html_writer::tag('h4', $icon.$pluginname);
                 }
                 $amenu = html_writer::alist($menuitems, array('class' => 'xray-reports-links'));
@@ -578,7 +532,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
 
                     $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id);
-                    if($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
+                    if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
                         $headerdata .= $this->dashboard_xray_output($dashboarddata);
                     } else {
                         $headerdata .= html_writer::div(get_string('error_xray', 'local_xray'), 'xray-headline-errortoconnect');

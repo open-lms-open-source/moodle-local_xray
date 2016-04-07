@@ -17,6 +17,7 @@
 namespace local_xray\dashboard;
 defined('MOODLE_INTERNAL') || die();
 use local_xray\event\get_report_failed;
+use local_xray\local\api;
 
 /**
  * Communication with xray to get data for dashboard
@@ -40,81 +41,113 @@ class dashboard {
         try {
 
             $report = "dashboard";
-            $response = \local_xray\local\api\wsapi::course($courseid, $report);
-
+            $response = api\wsapi::course($courseid, $report);
             if (!$response) {
 
                 // Fail response of webservice.
-                \local_xray\local\api\xrayws::instance()->print_error();
+                api\xrayws::instance()->print_error();
 
             } else {
 
                 // Default value. This is because webservice when is 0 return "NA" string or not return value.(depend case).
-                $usersinrisklastsevendays = "-";
-                $usersinrisklastsevendays_previousweek= "-";
-                $studentsloggedlastsevendays= "-";
-                $studentsloggedlastsevendays_previousweek= "-";
-                $postslastsevendays= "-";
-                $postslastsevendays_previousweek= "-";
-                $averagegradeslastsevendays= "-";
-                $averagegradeslastsevendays_previousweek= "-";
-                $totalstudents = "-";
+                $usersinrisk = "-";
+                $risktotal = "-";
+                $averagerisksevendaybefore = "-";
+                $maximumtotalrisksevendaybefore = "-";
+                $usersloggedinpreviousweek = "-";
+                $usersactivitytotal = "-";
+                $averageuserslastsevendays = "-";
+                $userstotalprevioussevendays = "-";
+                $averagegradeslastsevendays = "-";
+                $averagegradeslastsevendayspreviousweek = "-";
+                $postslastsevendays = "-";
+                $postslastsevendayspreviousweek = "-";
 
-                // Get users in risk last 7 days.
-                if(isset($response->elements->element3->items[5]->value) && is_number($response->elements->element3->items[5]->value)) {
-                    $usersinrisklastsevendays = $response->elements->element3->items[5]->value;
+                // The number of persons in the risk metrics table, which are in the total risk (Headline Risk).
+                $usersinriskisset = isset($response->elements->element3->items[0]->value);
+                if ($usersinriskisset && is_number($response->elements->element3->items[0]->value)) {
+                    $usersinrisk = $response->elements->element3->items[0]->value;
                 }
 
-                // Risk previous 7 days.
-                if(isset($response->elements->element3->items[6]->value) && is_number($response->elements->element3->items[6]->value)) {
-                    $usersinrisklastsevendays_previousweek = $response->elements->element3->items[6]->value;
+                // The total number of persons in the risk metrics table (Headline Risk).
+                $risktotalisset = isset($response->elements->element3->items[2]->value);
+                if ($risktotalisset && is_number($response->elements->element3->items[2]->value)) {
+                    $risktotal = $response->elements->element3->items[2]->value;
                 }
 
-                // Posts last 7 days.
-                if(isset($response->elements->element3->items[7]->value) && is_number($response->elements->element3->items[7]->value)) {
-                    $postslastsevendays = $response->elements->element3->items[7]->value;
+                // The average of the number of persons at risk during the seven days before (Headline Risk).
+                $averagerisksevendaybeforeisset = isset($response->elements->element3->items[1]->value);
+                if ($averagerisksevendaybeforeisset && is_number($response->elements->element3->items[1]->value)) {
+                    $averagerisksevendaybefore = $response->elements->element3->items[1]->value;
                 }
 
-                // Posts previous 7 days.
-                if(isset($response->elements->element3->items[8]->value) && is_number($response->elements->element3->items[8]->value)) {
-                    $postslastsevendays_previousweek = $response->elements->element3->items[8]->value;
+                // Maximum of the total number of persons in the risk metrics table seven days before (Headline Risk).
+                $maximumtotalrisksevendaybeforeisset = isset($response->elements->element3->items[3]->value);
+                if ($maximumtotalrisksevendaybeforeisset && is_number($response->elements->element3->items[3]->value)) {
+                    $maximumtotalrisksevendaybefore = $response->elements->element3->items[3]->value;
                 }
 
-                // Visits last 7 days.
-                if(isset($response->elements->element3->items[0]->value) && is_number($response->elements->element3->items[0]->value)) {
-                    $studentsloggedlastsevendays = $response->elements->element3->items[0]->value;
+                // The number of 'yes' in the activity metrics table (Headline Activity).
+                $usersloggedinpreviousweekisset = isset($response->elements->element3->items[4]->value);
+                if ($usersloggedinpreviousweekisset && is_number($response->elements->element3->items[4]->value)) {
+                    $usersloggedinpreviousweek = $response->elements->element3->items[4]->value;
                 }
 
-                // Visits previous 7 days.
-                if(isset($response->elements->element3->items[1]->value) && is_number($response->elements->element3->items[1]->value)) {
-                    $studentsloggedlastsevendays_previousweek = $response->elements->element3->items[1]->value;
+                // The maximum of the total number of persons in the activity metrics (Headline Activity).
+                $usersactivitytotalisset = isset($response->elements->element3->items[6]->value);
+                if ($usersactivitytotalisset && is_number($response->elements->element3->items[6]->value)) {
+                    $usersactivitytotal = $response->elements->element3->items[6]->value;
                 }
 
-                // Average grades last 7 days.
-                if(isset($response->elements->element3->items[9]->value) && is_number($response->elements->element3->items[9]->value)) {
-                    $averagegradeslastsevendays = $response->elements->element3->items[9]->value;
+                // The number of 'yes' in the activity metrics table (Headline Activity).
+                $averageuserslastsevendaysisset = isset($response->elements->element3->items[5]->value);
+                if ($averageuserslastsevendaysisset && is_number($response->elements->element3->items[5]->value)) {
+                    $averageuserslastsevendays = $response->elements->element3->items[5]->value;
                 }
 
-                // Average grades previous 7 days.
-                if(isset($response->elements->element3->items[10]->value) && is_number($response->elements->element3->items[10]->value)) {
-                    $averagegradeslastsevendays_previousweek = $response->elements->element3->items[10]->value;
+                // The maximum of the total number of persons in the activity metrics(Headline Activity).
+                $userstotalprevioussevendaysisset = isset($response->elements->element3->items[7]->value);
+                if ($userstotalprevioussevendaysisset &&  is_number($response->elements->element3->items[7]->value)) {
+                    $userstotalprevioussevendays = $response->elements->element3->items[7]->value;
                 }
 
-                // Total of students enrolled actives.
-                if(isset($response->elements->element3->items[2]->value) && is_number($response->elements->element3->items[2]->value)) {
-                    $totalstudents = $response->elements->element3->items[2]->value;
+                // Average grades last 7 days (Headline Gradebook).
+                $avgradeslastsevendaysisset = isset($response->elements->element3->items[8]->value);
+                if ($avgradeslastsevendaysisset && is_number($response->elements->element3->items[8]->value)) {
+                    $averagegradeslastsevendays = $response->elements->element3->items[8]->value;
+                }
+
+                // Average grades previous 7 days (Headline Gradebook).
+                $avlastsevendayspreviousweekisset = isset($response->elements->element3->items[9]->value);
+                if ($avlastsevendayspreviousweekisset && is_number($response->elements->element3->items[9]->value)) {
+                    $averagegradeslastsevendayspreviousweek = $response->elements->element3->items[9]->value;
+                }
+
+                // Posts last 7 days (Headline Discussions).
+                $postslastsevendaysisset = isset($response->elements->element3->items[10]->value);
+                if ($postslastsevendaysisset && is_number($response->elements->element3->items[10]->value)) {
+                    $postslastsevendays = $response->elements->element3->items[10]->value;
+                }
+
+                // Posts previous 7 days (Headline Discussions).
+                $postspreviousweekisset = isset($response->elements->element3->items[11]->value);
+                if ($postspreviousweekisset && is_number($response->elements->element3->items[11]->value)) {
+                    $postslastsevendayspreviousweek = $response->elements->element3->items[11]->value;
                 }
 
                 // Return dashboard_data object.
-                $result = new dashboard_data($usersinrisklastsevendays,
-                    $usersinrisklastsevendays_previousweek,
-                    $studentsloggedlastsevendays,
-                    $studentsloggedlastsevendays_previousweek,
-                    $postslastsevendays,
-                    $postslastsevendays_previousweek,
+                $result = new dashboard_data($usersinrisk,
+                    $risktotal,
+                    $averagerisksevendaybefore,
+                    $maximumtotalrisksevendaybefore,
+                    $usersloggedinpreviousweek,
+                    $usersactivitytotal,
+                    $averageuserslastsevendays,
+                    $userstotalprevioussevendays,
                     $averagegradeslastsevendays,
-                    $averagegradeslastsevendays_previousweek,
-                    $totalstudents);
+                    $averagegradeslastsevendayspreviousweek,
+                    $postslastsevendays,
+                    $postslastsevendayspreviousweek);
 
             }
         } catch (\moodle_exception $e) {

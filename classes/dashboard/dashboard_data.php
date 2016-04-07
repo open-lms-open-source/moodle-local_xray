@@ -28,40 +28,57 @@ defined('MOODLE_INTERNAL') || die();
 class dashboard_data {
 
     /**
-     * Users in risk last seven days.
+     * The number of persons in the risk metrics table, which are in the total risk category yellow or red.
      * @var integer
      */
-    public $usersinrisklastsevendays;
+    public $usersinrisk;
 
     /**
-     * Users in risk previous week.
+     * The total number of persons in the risk metrics table.
      * @var integer
      */
-    public $usersinrisklastsevendays_previousweek;
+    public $risktotal;
 
     /**
-     * Students logged last 7 days.
+     * The average of the number of persons at risk during the seven days before day before yesterday.
+     * It cannot be seen in the current reports.
      * @var integer
      */
-    public $studentsloggedlastsevendays;
+    public $averagerisksevendaybefore;
 
     /**
-     * Students logged previous week.
+     * The maximum of the total number of persons in the risk metrics table during the seven days before day
+     * before yesterday. It cannot be seen in the current reports.
      * @var integer
      */
-    public $studentsloggedlastsevendays_previousweek;
+    public $maximumtotalrisksevendaybefore;
 
     /**
-     * Posts last seven days.
+     * The number of 'yes' in the activity metrics table in column 'Logged in during previous week'.
      * @var integer
      */
-    public $postslastsevendays;
+    public $usersloggedinpreviousweek;
 
     /**
-     * Posts last previous week.
+     * The maximum of the total number of persons in the activity metrics table during the last seven days.
+     * It cannot be seen in the current reports.
      * @var integer
      */
-    public $postslastsevendays_previousweek;
+    public $usersactivitytotal;
+
+    /**
+     * The number of 'yes' in the activity metrics table in column 'Logged in during previous week' from
+     * the report seven days ago. It cannot be seen in the current reports.
+     * @var integer
+     */
+    public $averageuserslastsevendays;
+
+    /**
+     * The maximum of the total number of persons in the activity metrics table during the previous seven days.
+     * It cannot be seen in the current reports.
+     * @var integer
+     */
+    public $userstotalprevioussevendays;
 
     /**
      * Displays student average grade last 7 days.
@@ -73,46 +90,163 @@ class dashboard_data {
      * Displays student average grade previous week.
      * @var integer
      */
-    public $averagegradeslastsevendays_previousweek;
+    public $averagegradeslastsevendayspreviousweek;
 
     /**
-     * Displays total of students.
+     * Posts last seven days.
      * @var integer
      */
-    public $totalstudents;
+    public $postslastsevendays;
+
+    /**
+     * Posts last previous week.
+     * @var integer
+     */
+    public $postslastsevendayspreviousweek;
 
     /**
      * Construct
-     * @param integer $usersinrisklastsevendays
-     * @param integer $usersinrisklastsevendays_previousweek
-     * @param integer $studentsloggedlastsevendays
-     * @param integer $studentsloggedlastsevendays_previousweek
-     * @param integer $postslastsevendays
-     * @param integer $postslastsevendays_previousweek
+     *
+     * @param integer $usersinrisk
+     * @param integer $risktotal
+     * @param integer $averagerisksevendaybefore
+     * @param integer $maximumtotalrisksevendaybefore
+     * @param integer $usersloggedinpreviousweek
+     * @param integer $usersactivitytotal
+     * @param integer $averageuserslastsevendays
+     * @param integer $userstotalprevioussevendays
      * @param integer $averagegradeslastsevendays
-     * @param integer $averagegradeslastsevendays_previousweek
-     * @param integer $totalstudents
+     * @param integer $averagegradeslastsevendayspreviousweek
+     * @param integer $postslastsevendays
+     * @param integer $postslastsevendayspreviousweek
      */
-    public function __construct($usersinrisklastsevendays,
-                                $usersinrisklastsevendays_previousweek,
-                                $studentsloggedlastsevendays,
-                                $studentsloggedlastsevendays_previousweek,
-                                $postslastsevendays,
-                                $postslastsevendays_previousweek,
+    public function __construct($usersinrisk,
+                                $risktotal,
+                                $averagerisksevendaybefore,
+                                $maximumtotalrisksevendaybefore,
+                                $usersloggedinpreviousweek,
+                                $usersactivitytotal,
+                                $averageuserslastsevendays,
+                                $userstotalprevioussevendays,
                                 $averagegradeslastsevendays,
-                                $averagegradeslastsevendays_previousweek,
-                                $totalstudents) {
+                                $averagegradeslastsevendayspreviousweek,
+                                $postslastsevendays,
+                                $postslastsevendayspreviousweek) {
 
-
-        $this->usersinrisklastsevendays = $usersinrisklastsevendays;
-        $this->usersinrisklastsevendays_previousweek = $usersinrisklastsevendays_previousweek;
-        $this->studentsloggedlastsevendays = $studentsloggedlastsevendays;
-        $this->studentsloggedlastsevendays_previousweek = $studentsloggedlastsevendays_previousweek;
-        $this->postslastsevendays = $postslastsevendays;
-        $this->postslastsevendays_previousweek = $postslastsevendays_previousweek;
+        $this->usersinrisk = $usersinrisk;
+        $this->risktotal = $risktotal;
+        $this->averagerisksevendaybefore = $averagerisksevendaybefore;
+        $this->maximumtotalrisksevendaybefore = $maximumtotalrisksevendaybefore;
+        $this->usersloggedinpreviousweek = $usersloggedinpreviousweek;
+        $this->usersactivitytotal = $usersactivitytotal;
+        $this->averageuserslastsevendays = $averageuserslastsevendays;
+        $this->userstotalprevioussevendays = $userstotalprevioussevendays;
         $this->averagegradeslastsevendays = $averagegradeslastsevendays;
-        $this->averagegradeslastsevendays_previousweek = $averagegradeslastsevendays_previousweek;
-        $this->totalstudents = $totalstudents;
+        $this->averagegradeslastsevendayspreviousweek = $averagegradeslastsevendayspreviousweek;
+        $this->postslastsevendays = $postslastsevendays;
+        $this->postslastsevendayspreviousweek = $postslastsevendayspreviousweek;
+    }
 
+    /**
+     * Calculate colour and arrow for headline (compare current value and value in the previous week).
+     * Return array with class and string for reader.
+     *
+     * Same value = return class for yellow colour.
+     * Increment value = return class for green colour.
+     * Decrement value = return class for red colour.
+     *
+     * @param null|string|int $valuenow - Webservice can return "-" or null.
+     * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
+     * @return array
+     */
+    public static function get_status_simple($valuenow, $valuepreviousweek) {
+
+        // Value can be null or "-" too.
+        if (empty($valuenow1) && !is_number($valuenow)) {
+            $valuenow = 0;
+        }
+        if (empty($valuepreviousweek) && !is_number($valuepreviousweek)) {
+            $valuepreviousweek = 0;
+        }
+
+        // Default, same value.
+        $stylestatus = "xray-headline-same";
+        $status_lang = "arrow_same";
+
+        if ($valuenow < $valuepreviousweek) {
+            // Decrement.
+            $stylestatus = "xray-headline-decrease";
+            $status_lang = "arrow_decrease";
+        } else if ($valuenow > $valuepreviousweek) {
+            // Increment.
+            $stylestatus = "xray-headline-increase";
+            $status_lang = "arrow_increase";
+        }
+        $langstatus = get_string($status_lang, "local_xray");
+        return array($stylestatus, $langstatus);
+    }
+
+    /**
+     * Calculate colour and arrow for headline comparing  current values and values in the previous week.
+     * Return array with class and string for reader.
+     * This case is used in Activity and risk columns..
+     *
+     * Same value = return class for yellow colour.
+     * Decrement value = return class for green colour.
+     * Increment value = return class for red colour.
+     *
+     * If you use $inversebehavior, you will have inverse behavior in the arrow (special for risk column).
+     *
+     * @param null|string|int $valuenow1 - Webservice can return "-" or null.
+     * @param null|string|int $valuenow2 - Webservice can return "-" or null.
+     * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
+     * @param null|string|int $valuepreviousweek2 - Webservice can return "-" or null.
+     * @param boolean $inversebehavior - Arrow will have inverse behavior (increment/decrement). Used by risk.
+     * @return array
+     */
+    public static function get_status_with_average($valuenow1,
+                                                   $valuenow2,
+                                                   $valuepreviousweek,
+                                                   $valuepreviousweek2,
+                                                   $inversebehavior = false) {
+
+        $firstaverage = 0;
+        // Value can be null or "-" too.
+        if (!empty($valuenow1) && !empty($valuenow2) && is_number($valuenow1) && is_number($valuenow2)) {
+            $firstaverage = $valuenow1 / $valuenow2;
+        }
+        $secondaverage = 0;
+        if (!empty($valuepreviousweek) && !empty($valuepreviousweek2) &&
+            is_number($valuepreviousweek) && is_number($valuepreviousweek2)) {
+            $secondaverage = $valuepreviousweek / $valuepreviousweek2;
+        }
+
+        // Default, same value.
+        $stylestatus = "xray-headline-same";
+        $status_lang = "arrow_same";
+
+        if ($firstaverage < $secondaverage) {
+
+            // Decrement.
+            $stylestatus = "xray-headline-decrease";
+            $status_lang = "arrow_decrease";
+            if ($inversebehavior) {
+                // Arrow will be inverse.
+                $stylestatus = "xray-headline-increase-caserisk";
+            }
+
+        } else if ($firstaverage > $secondaverage) {
+
+            // Increment.
+            $stylestatus = "xray-headline-increase";
+            $status_lang = "arrow_increase";
+            if ($inversebehavior) {
+                // Arrow will be inverse.
+                $stylestatus = "xray-headline-decrease-caserisk";
+            }
+        }
+
+        $langstatus = get_string($status_lang, "local_xray");
+        return array($stylestatus, $langstatus);
     }
 }

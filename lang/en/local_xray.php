@@ -190,19 +190,20 @@ $string['getreportfailed'] = 'Error to get report from X-Ray Learning Analytics'
 /* Course Header */
 $string['atrisk'] = 'At risk';
 $string['dashboard'] = 'Dashboard';
-$string['fromlastweek'] = '{$a}% change from last week';
-$string['lastweekwas'] = 'Week before was {$a}.';
+$string['headline_lastweekwas_discussion'] = 'Week before was {$a}.';
 $string['averageofweek_integer'] = 'Average of the week before was {$a->previous} of {$a->total}.';
-$string['averageofweek'] = 'Average of the week before was {$a}%.';
-$string['lastweekwasof'] = 'Week before was {$a->current} of {$a->total}.';
+$string['averageofweek_gradebook'] = 'Average of the week before was {$a}%.';
+$string['headline_lastweekwasof_activity'] = 'Week before was {$a->current} of {$a->total}.';
 $string['headline_studentatrisk'] = 'Students at <b>Risk</b> yesterday.';
 $string['headline_loggedstudents'] = '<b>Logged in</b> students in the last 7 days.';
 $string['headline_posts'] = '<b>Posts</b> in the last 7 days.';
-$string['headline_average'] = '<b>Average Grade</b> in quizzes yesterday.';
+$string['headline_average'] = '<b>Average course grade</b> yesterday.';
 $string['link_gotoreport'] = 'Go to report';
 $string['arrow_increase'] = 'This is an increase.';
 $string['arrow_decrease'] = 'This is a decrease.';
 $string['arrow_same'] = 'This stays the same.';
+$string['headline_number_of'] = '{$a->first} of {$a->second}';
+$string['headline_number_percentage'] = '{$a}%';
 
 /* Jquery Tables (with plugin datatables) */
 $string['error_datatables'] = 'Error to get data for this table. Please try again reloading the page. '.

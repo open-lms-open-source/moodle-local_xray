@@ -14,16 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Headline implementation tests
- *
- * @package   local_xray
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-namespace local_xray\tests;
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -33,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
  * @package   local_xray
  * @group local_xray
  * @group local_xray_headline
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_headline_testcase extends \advanced_testcase {
@@ -88,8 +78,7 @@ class local_xray_headline_testcase extends \advanced_testcase {
      */
     public function test_get_incorrect_data() {
 
-        // Reset this setting after current test.
-        $this->resetAfterTest(true);
+        $this->resetAfterTest();
 
         // Set clientid, with clientid "error", webservice class send us error when phpunit is running.
         set_config("xrayclientid", "error", self::PLUGIN_NAME);
@@ -100,5 +89,100 @@ class local_xray_headline_testcase extends \advanced_testcase {
         $this->assertFalse($dashboarddata);
     }
 
+    /**
+     * Test correct attributes of class dashboard_data.
+     */
+    public function test_attributes_class_dashboard_data() {
 
+        $this->resetAfterTest();
+        $dashboadrobj = new \local_xray\dashboard\dashboard_data(1,2,3,4,5,6,7,8,9,10,11,12);
+        $this->assertObjectHasAttribute("usersinrisk", $dashboadrobj);
+        $this->assertObjectHasAttribute("risktotal", $dashboadrobj);
+        $this->assertObjectHasAttribute("averagerisksevendaybefore", $dashboadrobj);
+        $this->assertObjectHasAttribute("maximumtotalrisksevendaybefore", $dashboadrobj);
+        $this->assertObjectHasAttribute("usersloggedinpreviousweek", $dashboadrobj);
+        $this->assertObjectHasAttribute("usersactivitytotal", $dashboadrobj);
+        $this->assertObjectHasAttribute("averageuserslastsevendays", $dashboadrobj);
+        $this->assertObjectHasAttribute("usersactivitytotal", $dashboadrobj);
+        $this->assertObjectHasAttribute("averageuserslastsevendays", $dashboadrobj);
+        $this->assertObjectHasAttribute("averagegradeslastsevendays", $dashboadrobj);
+        $this->assertObjectHasAttribute("postslastsevendays", $dashboadrobj);
+        $this->assertObjectHasAttribute("postslastsevendayspreviousweek", $dashboadrobj);
+    }
+
+    /**
+     * Check correct return of get_status_simple() in class dashboard_data.
+     * This function return class to use in headline checking the values of each column.
+     */
+    public function test_get_status_simple() {
+
+        $this->resetAfterTest();
+
+        // Return arrow class decrement (red).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple(1, 2);
+        $this->assertEquals("xray-headline-decrease", $result[0]);
+
+        // Return arrow class same (yellow).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple(2, 2);
+        $this->assertEquals("xray-headline-same", $result[0]);
+
+        // Return arrow class increment (green).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple(5, 2);
+        $this->assertEquals("xray-headline-increase", $result[0]);
+
+        // Check if webservice sent null or "-" (This is same than 0).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple("-", 2);
+        $this->assertEquals("xray-headline-decrease", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple("-", "-");
+        $this->assertEquals("xray-headline-same", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple(2, "-");
+        $this->assertEquals("xray-headline-increase", $result[0]);
+
+    }
+
+    /**
+     * Check correct return of test_get_status_with_average() in class dashboard_data.
+     * This function return class to use in headline checking the average of values of each column.
+     */
+    public function test_get_status_with_average() {
+
+        $this->resetAfterTest();
+
+        // Return arrow class decrement (red), 0.50 vs 0.75.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(1, 2, 3, 4);
+        $this->assertEquals("xray-headline-decrease", $result[0]);
+
+        // Return arrow class same (yellow).
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 4, 4);
+        $this->assertEquals("xray-headline-same", $result[0]);
+
+        // Return arrow class increment (green) 1 vs 0.50.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(4, 4, 2, 4);
+        $this->assertEquals("xray-headline-increase", $result[0]);
+
+        // Inverse case, return arrow class decrement (green), 0.50 vs 0.75.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(1, 2, 3, 4, true);
+        $this->assertEquals("xray-headline-increase-caserisk", $result[0]);
+
+        // Inverse case, return arrow class same (yellow).
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 4, 4, true);
+        $this->assertEquals("xray-headline-same", $result[0]);
+
+        // Inverse case, return arrow class increment (red) 1 vs 0.50.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, 2, 4, true);
+        $this->assertEquals("xray-headline-decrease-caserisk", $result[0]);
+
+        // Check if webservice sent null or "-" (This is same than 0).
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average("-", "-", 3, 4);
+        $this->assertEquals("xray-headline-decrease", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average(2, 2, "-", 4);
+        $this->assertEquals("xray-headline-increase", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average("-", "-", "-", "-");
+        $this->assertEquals("xray-headline-same", $result[0]);
+
+    }
 }

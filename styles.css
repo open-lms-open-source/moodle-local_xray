@@ -128,7 +128,6 @@
 .xray-headline {
     display: inline-block;
     width:100%;
-    line-height: 1;
     margin:0;
     padding:0;
 }
@@ -137,10 +136,13 @@
     float:left;
     width: 24%;
     padding:0 0.5%;
+    line-height: normal;
 }
 .xray-headline-number {
-    font-size: 40px;
-    margin-bottom: 5px;
+    font-size: 30px;
+    margin-bottom: 0;
+    margin-right: 5px;
+    display: inline;
 }
 a.xray-headline-link:hover {
     text-decoration: none !important;
@@ -155,45 +157,37 @@ a.xray-headline-link:hover {
 }
 
 .xray-headline-link {
-}
-
-.xray-headline-red,
-.xray-headline-red-caserisk{
-}
-
-.xray-headline-green,
-.xray-headline-green-caserisk{
-}
-
-.xray-headline-yellow {
+    display: inline-block;
+    margin-bottom: 5px;
 }
 
 .xray-headline-icon {
+    background-position: center center;
     background-repeat: no-repeat;
+    background-size: 100% auto;
     display: inline-block;
-    height: 32px;
-    margin-left: 5px;
-    margin-bottom: -4px;
-    width: 32px;
+    height: 30px;
+    margin-bottom: -5px;
+    width: 30px;
 }
 
-.xray-headline-red-icon {
+.xray-headline-decrease-icon {
     background-image: url([[pix:local_xray|arrow_red]]);
 }
 
-.xray-headline-green-icon {
+.xray-headline-increase-icon {
     background-image: url([[pix:local_xray|arrow_green]]);
 }
 
-.xray-headline-yellow-icon {
+.xray-headline-same-icon {
     background-image: url([[pix:local_xray|arrow_yellow]]);
 }
 /* Risk work with inverse arrows */
-.xray-headline-red-caserisk-icon{
-    background-image: url([[pix:local_xray|arrow_red_risk]]);
-}
-.xray-headline-green-caserisk-icon{
+.xray-headline-increase-caserisk-icon{
     background-image: url([[pix:local_xray|arrow_green_risk]]);
+}
+.xray-headline-decrease-caserisk-icon{
+    background-image: url([[pix:local_xray|arrow_red_risk]]);
 }
 /* End Risk work with inverse arrows */
 
