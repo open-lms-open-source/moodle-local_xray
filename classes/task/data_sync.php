@@ -81,8 +81,10 @@ class data_sync extends scheduled_task {
 
             sync_log::create_msg("Start data sync.")->trigger();
 
+            /* @noinspection PhpIncludeInspection */
             require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
 
+            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
             $s3 = new \Aws\S3\S3Client([
                 'version' => '2006-03-01',
                 'region'  => $config->s3bucketregion,
