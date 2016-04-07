@@ -427,7 +427,7 @@ $string['discussionreport_discussionSuggestedGrades_help'] = 'This bar plot show
 /* Graphs Discussion report individual*/
 $string['discussionreportindividual_wordcloud'] = 'Most Used Words';
 $string['discussionreportindividual_socialStructure'] = 'Interaction Analysis';
-$string['discussionreportindividual_wordHistogram'] = 'Regularity of Most Used Words';
+$string['discussionreportindividual_wordHistogram'] = 'Frequency of Most Used Words';
 
 /* Help Graphs Discussion report individual*/
 $string['discussionreportindividual_wordcloud_help'] = 'This word cloud shows the words used most often in'.
@@ -440,7 +440,7 @@ $string['discussionreportindividual_wordHistogram_help'] = 'This histogram shows
 /* Graphs Discussion report individual forum*/
 $string['discussionreportindividualforum_wordcloud'] = 'Most Used Words';
 $string['discussionreportindividualforum_socialStructure'] = 'Regularity of Most Used Words';
-$string['discussionreportindividualforum_wordHistogram'] = 'Histogram of Main Terms';
+$string['discussionreportindividualforum_wordHistogram'] = 'Frequency of Most Used Words';
 
 /* Help Graphs Discussion report individual forum*/
 $string['discussionreportindividualforum_wordcloud_help'] = 'This word cloud shows the words used most often in discussions.'.
