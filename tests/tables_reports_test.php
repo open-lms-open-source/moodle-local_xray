@@ -91,8 +91,8 @@ class local_xray_tables_reports_testcase extends local_xray_base_testcase {
         // Check if exist div with class toggletable.
         $this->assertContains('<div id="studentDiscussionGrades" class="xray-toggleable-table"', $tableoutput);
 
-        // Check if id start with "js-xray-table-".
-        $this->assertContains('<table id="js-xray-table-studentDiscussionGrades', $tableoutput);
+        // Check if id start with "xray-js-table-".
+        $this->assertContains('<table id="xray-js-table-studentDiscussionGrades', $tableoutput);
 
         // Check if exist button for close the table.
         $this->assertContains('<div class="xray-closetable"><a href="#">Close table</a></div>', $tableoutput);

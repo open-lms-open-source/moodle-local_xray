@@ -21,7 +21,7 @@ TODO - make express specific? */
 .xray-toggleable-table .label-danger{background-color:#d9534f}
 .xray-toggleable-table .label-danger[href]:focus,.label-danger[href]:hover{background-color:#c9302c}
 
-#js-xraymenu {
+#xray-js-menu {
     padding:0 15px;
     /*We are using class .block in this div too, but we need to be sure that width will be 100%.*/
     float: inherit !important;

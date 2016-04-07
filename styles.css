@@ -214,16 +214,13 @@ a.xray-headline-link:hover {
 
 /**************** End Course Headline data  *********************************/
 /**************** Navigation reports  *********************************/
-#js-xraymenu {
-}
-
-#js-xraymenu h4 {
+#xray-js-menu h4 {
     margin:10px 0;
     font-size:30px;
     text-align: left;
 }
 
-#js-xraymenu h4 img.x-ray-icon-title {
+#xray-js-menu h4 img.x-ray-icon-title {
     display: inline-block;
     height: 30px;
     margin-right: 5px;
