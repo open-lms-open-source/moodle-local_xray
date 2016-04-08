@@ -480,7 +480,7 @@ class local_xray_controller_reports extends mr_controller {
                         return $value;
                         break;
                 }
-            case 'element2':
+            case 'courseGradeTable':
                 // Table Student Grades from Gradebook Report.
                 switch ($column) {
                     // Column Quiz scores (Points).
@@ -506,7 +506,7 @@ class local_xray_controller_reports extends mr_controller {
                     default:
                         return $value;
                 }
-            case 'element4':
+            case 'gradableItemsTable':
                 // Table Summary of Quizzes from Gradebook Report.
                 switch ($column) {
                     case 'grade':

@@ -57,7 +57,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                     $output .= $this->print_top();
                     $output .= $this->output->inforeport($response->reportdate);
                     // Its a table, I will get info with new call.
-                    $datatable = new local_xray\datatables\datatables($response->elements->element2,
+                    $datatable = new local_xray\datatables\datatables($response->elements->courseGradeTable,
                         "rest.php?controller='gradebookreport'&action='jsonstudentgrades'&courseid=".$this->courseid);
                     // If the user comes from header.
                     if ($this->header) {
@@ -70,7 +70,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                         $response->elements->studentScoreDistribution, $response->id);
 
                     // Its a table, I will get info with new call.
-                    $datatable = new local_xray\datatables\datatables($response->elements->element4,
+                    $datatable = new local_xray\datatables\datatables($response->elements->gradableItemsTable,
                         "rest.php?controller='gradebookreport'&action='jsonsummaryquizzes'&courseid=".$this->courseid);
                     $output .= $this->output->standard_table((array)$datatable);
 
@@ -97,7 +97,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
      * @return string
      */
     public function jsonstudentgrades_action() {
-        return $this->genericresponsejsonfordatatables("gradebook", "element2");
+        return $this->genericresponsejsonfordatatables("gradebook", "courseGradeTable");
     }
 
     /**
@@ -105,6 +105,6 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
      * @return string
      */
     public function jsonsummaryquizzes_action() {
-        return $this->genericresponsejsonfordatatables("gradebook", "element4");
+        return $this->genericresponsejsonfordatatables("gradebook", "gradableItemsTable");
     }
 }
