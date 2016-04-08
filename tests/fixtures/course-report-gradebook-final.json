@@ -3299,7 +3299,7 @@
       "colorCodesSpecs": [],
       "columnHeaders": {
         "courseGradeCorrelation": "Relationship with Current Total course grade (%)",
-        "standarScore": "Average score (%)",
+        "standardScore": "Average score (%)",
         "nStudents": "Number of students",
         "itemname": "Quiz name"
       },
