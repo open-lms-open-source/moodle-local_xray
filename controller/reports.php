@@ -488,7 +488,7 @@ class local_xray_controller_reports extends mr_controller {
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
-                            return $roundvalue;
+                            return $roundvalue . '%';
                         } else {
                             return '-';
                         }
