@@ -79,5 +79,10 @@ function local_xray_show_on_table(YUI, data) {
                 $('html, body').scrollTop(targetOffset);
             }
         });
+
+        // Close table.
+        $("#" + data.id + " .xray-closetable").click(function() {
+            $("#" + data.id).addClass("xray-toggleable-table");
+        });
     });
 }
