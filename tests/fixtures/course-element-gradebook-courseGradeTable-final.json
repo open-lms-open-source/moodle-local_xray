@@ -1,0 +1,166 @@
+{
+  "itemCount": 10,
+  "url": "/demo/c3075401-bb3f-48ce-a605-62fcb1ee4172",
+  "colorCodesSpecs": [],
+  "columnHeaders": {
+    "courseGrade": "Current course grade",
+    "firstname": "Given name",
+    "lastname": "Surname"
+  },
+  "enableGraph": true,
+  "elementType": "xrayTable",
+  "elementName": "courseGradeTable",
+  "data": [
+    {
+      "participantId": {
+        "value": 256
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Shawn"
+      },
+      "lastname": {
+        "value": "Payne"
+      }
+    },
+    {
+      "participantId": {
+        "value": 276
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Bryan"
+      },
+      "lastname": {
+        "value": "Duncan"
+      }
+    },
+    {
+      "participantId": {
+        "value": 304
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Marvin"
+      },
+      "lastname": {
+        "value": "Guzman"
+      }
+    },
+    {
+      "participantId": {
+        "value": 470
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Charlie"
+      },
+      "lastname": {
+        "value": "Stevenson"
+      }
+    },
+    {
+      "participantId": {
+        "value": 687
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Anna"
+      },
+      "lastname": {
+        "value": "Bailey"
+      }
+    },
+    {
+      "participantId": {
+        "value": 688
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Jonathan"
+      },
+      "lastname": {
+        "value": "Kim"
+      }
+    },
+    {
+      "participantId": {
+        "value": 689
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Theresa"
+      },
+      "lastname": {
+        "value": "Snyder"
+      }
+    },
+    {
+      "participantId": {
+        "value": 690
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Debbie"
+      },
+      "lastname": {
+        "value": "Pearson"
+      }
+    },
+    {
+      "participantId": {
+        "value": 692
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Beth"
+      },
+      "lastname": {
+        "value": "Singh"
+      }
+    },
+    {
+      "participantId": {
+        "value": 693
+      },
+      "courseGrade": {
+        "value": "20"
+      },
+      "firstname": {
+        "value": "Jeanne"
+      },
+      "lastname": {
+        "value": "Figueroa"
+      }
+    }
+  ],
+  "uuid": "c3075401-bb3f-48ce-a605-62fcb1ee4172",
+  "title": "Student Grades",
+  "legend": "Standardized scores range between 0 and 100%.",
+  "comment": [],
+  "inverted": false,
+  "dataFormat": [],
+  "columnOrder": [
+    "lastname",
+    "firstname",
+    "courseGrade"
+  ]
+}
