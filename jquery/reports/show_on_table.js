@@ -12,6 +12,9 @@ function local_xray_show_on_table(YUI, data) {
         // Disable warning native.
         $.fn.dataTable.ext.errMode = 'none';
 
+        // Themes with header overlayed.
+        var themewithheaderoverlayed = ['bootstrapbase', 'charter', 'clean', 'more', 'snap'];
+
         // Error to load data in datatables. Show message error and hide table. xray-js-table-
         $("#xray-js-table-" + data.id).on('error.dt', function (e, settings, techNote, message) {
             $("#xray-js-table-" + data.id + "_wrapper").html("<p class='xray_error_datatables'>" + data.errorMessage + "</p>");
@@ -67,6 +70,13 @@ function local_xray_show_on_table(YUI, data) {
                 } else {
                     $("#xray-js-table-" + data.id +"_paginate").show();
                 }
+
+                // To load table, show table on top(40 is for prevent problem with header of moodle).
+                var targetOffset = $("#table_" + data.id + "_wrapper").offset().top;
+                if($.inArray(M.cfg.theme, themewithheaderoverlayed) != -1) {
+                    targetOffset = targetOffset - 40;
+                }
+                $('html, body').scrollTop(targetOffset);
             }
         });
     });
