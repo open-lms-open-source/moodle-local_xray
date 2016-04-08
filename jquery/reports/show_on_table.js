@@ -72,7 +72,7 @@ function local_xray_show_on_table(YUI, data) {
                 }
 
                 // To load table, show table on top(40 is for prevent problem with header of moodle).
-                var targetOffset = $("#table_" + data.id + "_wrapper").offset().top;
+                var targetOffset = $("#xray-js-table-" + data.id + "_wrapper").offset().top;
                 if($.inArray(M.cfg.theme, themewithheaderoverlayed) != -1) {
                     targetOffset = targetOffset - 40;
                 }
