@@ -90,7 +90,7 @@ Feature: The headline data should be present in the course page for manager, edi
     Then "#xray-nav-headline" "css_element" should not exist
     And "h4 .x-ray-icon-title" "css_element" should not exist
     And "#table_courseGradeTable" "css_element" should exist
-    And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
+    And ".sorting:nth-child(3).sorting_desc" "css_element" should exist
     # Test Headline in all themes, formats and templates.
     And I am on site homepage
     And I follow "Xray Course 01"
