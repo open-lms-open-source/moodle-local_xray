@@ -206,7 +206,7 @@ class local_xray_renderer extends plugin_renderer_base {
             'tabindex' => '0'));
         // Table jquery datatables for show reports.
         $output .= html_writer::start_tag("table",
-            array("id" => "table_{$datatable['id']}",
+            array("id" => "xray-js-table-{$datatable['id']}",
                 "class" => "xraydatatable display"));
 
         // Help icon for tables.
@@ -541,7 +541,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 $menu = html_writer::div($title . $navmenu. $headerdata,
                     $classes,
-                    array('id' => 'js-xraymenu', 'role' => 'region'));
+                    array('id' => 'xray-js-menu', 'role' => 'region'));
 
             }
         }
