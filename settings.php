@@ -59,14 +59,6 @@ if ($hassiteconfig) {
                                                  new lang_string("curlcache_desc", $plugin),
                                                  ['h' => 1, 'm' => 0]));
 
-    // Enables incoming JSON format validation. By default it is disabled until format is fully stabilized.
-    // Enabling this option enforces format structure for each web service call.
-    // Failure to comply with present format will generate error.
-    $settings->add( new admin_setting_configcheckbox("{$plugin}/enableschemavalidation",
-                                                     new lang_string("enableschemavalidation", $plugin),
-                                                     new lang_string("enableschemavalidation_desc", $plugin),
-                                                     '0'));
-
     // Settings for displaying content inline course front page.
     $settings->add( new admin_setting_heading("{$plugin}/xraydisplayheading",
                                               new lang_string("xraydisplayheading", $plugin),

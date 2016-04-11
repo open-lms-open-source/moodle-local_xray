@@ -143,8 +143,6 @@ $string['export_progress_desc'] = 'During export progress of the currently expor
 $string['curlcache'] = 'Web service cache timeout';
 $string['curlcache_desc'] = 'Determines for how long to store cached web service responses.'.
     ' If set to 0 no caching is performed. Note - only successful responses are cached.';
-$string['enableschemavalidation'] = 'JSON schema validation';
-$string['enableschemavalidation_desc'] = 'Determines if incoming JSON format is validated or not.';
 
 $string['xrayadminserver'] = 'X-Ray Learning Analytics Administration server';
 $string['xrayadminserver_desc'] = 'Server location.';
