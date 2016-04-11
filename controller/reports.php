@@ -480,21 +480,11 @@ class local_xray_controller_reports extends mr_controller {
                         return $value;
                         break;
                 }
-            case 'element2':
+            case 'courseGradeTable':
                 // Table Student Grades from Gradebook Report.
                 switch ($column) {
-                    // Column Quiz scores (Points).
-                    case 'finalGrade':
-                        // It should be numeric.
-                        if (isset($value) && is_numeric(trim($value))) {
-                            $roundvalue = round($value, 2);
-                            return $roundvalue;
-                        } else {
-                            return '-';
-                        }
-                        break;
-                    case 'standarScore':
-                        // Column Quiz scores (%) (ex Standardized score).
+                    // Column Current course grade.
+                    case 'courseGrade':
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
@@ -506,26 +496,22 @@ class local_xray_controller_reports extends mr_controller {
                     default:
                         return $value;
                 }
-            case 'element4':
+            case 'gradableItemsTable':
                 // Table Summary of Quizzes from Gradebook Report.
                 switch ($column) {
-                    case 'grade':
-                        // Column Possible Points.
                     case 'nStudents':
                         // Column Number of students.
-                    case 'earnScore':
-                        // Column Average score (Points) - (ex Average score).
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
-                            return round($value, 2);
+                            return $value;
                         } else {
                             return '-';
                         }
                         break;
-                    case 'standarScore':
-                        // Column Average score (%) - (ex Average standardized score).
-                    case 'finalGradeCorrelation':
-                        // Column Relationship with current total course grade - (ex Correlation between final score and score from this quiz).
+                    case 'standardScore':
+                        // Column Average score.
+                    case 'courseGradeCorrelation':
+                        // Column Relationship with course grade
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);

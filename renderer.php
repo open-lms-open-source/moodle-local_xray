@@ -414,7 +414,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $textlink = get_string("averageofweek_gradebook", $plugin, $data->averagegradeslastsevendayspreviousweek);
         // To students grades.
         $url = new moodle_url("/local/xray/view.php",
-            array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "element2");
+            array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "courseGradeTable");
         // Calculate colour status.
         $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($data->averagegradeslastsevendays,
             $data->averagegradeslastsevendayspreviousweek);

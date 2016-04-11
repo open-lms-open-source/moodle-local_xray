@@ -1,0 +1,140 @@
+{
+  "itemCount": 8,
+  "url": "/demo/23d5c730-6650-4f01-b097-d8dce62a5644",
+  "colorCodesSpecs": [],
+  "columnHeaders": {
+    "courseGradeCorrelation": "Relationship with Current Total course grade (%)",
+    "standardScore": "Average score (%)",
+    "nStudents": "Number of students",
+    "itemname": "Quiz name"
+  },
+  "enableGraph": true,
+  "elementType": "xrayTable",
+  "elementName": "gradableItemsTable",
+  "data": [
+    {
+      "itemname": {
+        "value": "Exercise 1"
+      },
+      "nStudents": {
+        "value": "7"
+      },
+      "standardScore": {
+        "value": "81.5714285714286"
+      },
+      "courseGradeCorrelation": {
+        "value": "77.4"
+      }
+    },
+    {
+      "itemname": {
+        "value": "Exercise 2"
+      },
+      "nStudents": {
+        "value": "8"
+      },
+      "standardScore": {
+        "value": "67.5"
+      },
+      "courseGradeCorrelation": {
+        "value": "77.2"
+      }
+    },
+    {
+      "itemname": {
+        "value": "Exercise 3"
+      },
+      "nStudents": {
+        "value": "8"
+      },
+      "standardScore": {
+        "value": "65"
+      },
+      "courseGradeCorrelation": {
+        "value": "65.8"
+      }
+    },
+    {
+      "itemname": {
+        "value": "Exercise 4"
+      },
+      "nStudents": {
+        "value": "7"
+      },
+      "standardScore": {
+        "value": "78.1428571428571"
+      },
+      "courseGradeCorrelation": {
+        "value": "59.8"
+      }
+    },
+    {
+      "itemname": {
+        "value": "Exercise 5"
+      },
+      "nStudents": {
+        "value": "8"
+      },
+      "standardScore": {
+        "value": "43.75"
+      },
+      "courseGradeCorrelation": {
+        "value": "52.3"
+      }
+    },
+    {
+      "itemname": {
+        "value": "Exercise 6"
+      },
+      "nStudents": {
+        "value": "8"
+      },
+      "standardScore": {
+        "value": "56.25"
+      },
+      "courseGradeCorrelation": {
+        "value": "36.6"
+      }
+    },
+    {
+      "itemname": {
+        "value": "Exercise 7"
+      },
+      "nStudents": {
+        "value": "7"
+      },
+      "standardScore": {
+        "value": "75.7142857142857"
+      },
+      "courseGradeCorrelation": {
+        "value": "71"
+      }
+    },
+    {
+      "itemname": {
+        "value": "Exercise 8"
+      },
+      "nStudents": {
+        "value": "7"
+      },
+      "standardScore": {
+        "value": "35.4285714285714"
+      },
+      "courseGradeCorrelation": {
+        "value": "42.6"
+      }
+    }
+  ],
+  "uuid": "23d5c730-6650-4f01-b097-d8dce62a5644",
+  "title": "Summary of Quizzes",
+  "legend": "This chart displays student performance data for each quiz in the course.",
+  "comment": [],
+  "inverted": false,
+  "dataFormat": [],
+  "columnOrder": [
+    "itemname",
+    "nStudents",
+    "standardScore",
+    "courseGradeCorrelation"
+  ]
+}

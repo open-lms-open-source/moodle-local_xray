@@ -241,8 +241,8 @@ $string['activityreport_nonStarters'] = 'Inactive Students';// Activity report.
 $string['activityreport_studentList'] = 'Activity Metrics'; // Activity report.
 $string['risk_nonStarters'] = 'Inactive Students'; // Risk report.
 $string['risk_riskMeasures'] = 'Risk Metrics'; // Risk report.
-$string['gradebookreport_element2'] = 'Student Grades'; // Gradebook report.
-$string['gradebookreport_element4'] = 'Summary of Quizzes'; // Gradebook report.
+$string['gradebookreport_courseGradeTable'] = 'Student Grades'; // Gradebook report.
+$string['gradebookreport_gradableItemsTable'] = 'Summary of Quizzes'; // Gradebook report.
 $string['discussionreport_discussionMetrics'] = 'Participation Metrics'; // Discussion report.
 $string['discussionreport_discussionActivityByWeek'] = 'Activity by Week'; // Discussion report.
 $string['discussionreport_studentDiscussionGrades'] = 'Grade Recommendation'; // Discussion report.
@@ -259,10 +259,10 @@ $string['risk_nonStarters_help'] = 'The following students have not been active 
 $string['risk_riskMeasures_help'] = 'This table helps you identify the students who are at risk of droping out,'.
     ' withdrawing from, or failing in your course. Higher numbers indicate greater risk. The total risk is based'.
     ' on a student\'s grades (academic) as well as their participation in course discussions (social).'; // Risk report.
-$string['gradebookreport_element2_help'] = 'This table shows you how well students are doing on the quizzes in the'.
+$string['gradebookreport_courseGradeTable_help'] = 'This table shows you how well students are doing on the quizzes in the'.
     ' course. A standardize score is given to each student. It shows how well a student has done on the quizzes'.
     ' compared to the average of the class.'; // Gradebook report.
-$string['gradebookreport_element4_help'] = 'This table shows how students have done on average on each quiz. It also'.
+$string['gradebookreport_gradableItemsTable_help'] = 'This table shows how students have done on average on each quiz. It also'.
     ' shows you the relationship of this quiz to the student\'s accumulative score so far. High percentages could'.
     ' indicate strong students. '; // Gradebook report.
 $string['discussionreport_discussionMetrics_help'] = 'This table shows how a student participates in'.

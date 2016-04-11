@@ -57,7 +57,7 @@ Feature: The headline data should be present in the course page for manager, edi
     Then "#xray-nav-headline" "css_element" should not exist
     And "h4 .x-ray-icon-title" "css_element" should not exist
     And "h2.xray-report-page-title" "css_element" should exist
-    And "#table_riskMeasures" "css_element" should exist
+    And "#riskMeasures" "css_element" should exist
     And ".sorting:nth-child(6).sorting_desc" "css_element" should exist
     # Test the Activity report link in Headline.
     And I am on site homepage
@@ -68,7 +68,7 @@ Feature: The headline data should be present in the course page for manager, edi
     Then "#xray-nav-headline" "css_element" should not exist
     And "h4 .x-ray-icon-title" "css_element" should not exist
     And "h2.xray-report-page-title" "css_element" should exist
-    And "#table_studentList" "css_element" should exist
+    And "#studentList" "css_element" should exist
     And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
     # Test the Discussion report link in Headline.
     And I am on site homepage
@@ -79,7 +79,7 @@ Feature: The headline data should be present in the course page for manager, edi
     Then "#xray-nav-headline" "css_element" should not exist
     And "h4 .x-ray-icon-title" "css_element" should not exist
     And "h2.xray-report-page-title" "css_element" should exist
-    And "#table_discussionMetrics" "css_element" should exist
+    And "#discussionMetrics" "css_element" should exist
     And ".sorting:nth-child(5).sorting_desc" "css_element" should exist
     # Test the Gradebook report link in Headline.
     And I am on site homepage
@@ -89,8 +89,8 @@ Feature: The headline data should be present in the course page for manager, edi
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
     And "h4 .x-ray-icon-title" "css_element" should not exist
-    And "#table_element2" "css_element" should exist
-    And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
+    And "#courseGradeTable" "css_element" should exist
+    And ".sorting:nth-child(3).sorting_desc" "css_element" should exist
     # Test Headline in all themes, formats and templates.
     And I am on site homepage
     And I follow "Xray Course 01"
