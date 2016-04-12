@@ -184,5 +184,16 @@ class local_xray_headline_testcase extends \advanced_testcase {
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average("-", "-", "-", "-");
         $this->assertEquals("xray-headline-same", $result[0]);
 
+        // Check float string values.
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average("4.0", "8.0", "2.5", "2.5");
+        $this->assertEquals("xray-headline-decrease", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average("2.5", "2.5", "4.0", "8.0");
+        $this->assertEquals("xray-headline-increase", $result[0]);
+
+        $result = \local_xray\dashboard\dashboard_data::get_status_with_average("2.5", "2.5", "2.5", "2.5");
+        $this->assertEquals("xray-headline-same", $result[0]);
+
+
     }
 }
