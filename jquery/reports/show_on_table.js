@@ -67,7 +67,16 @@ function local_xray_show_on_table(YUI, data) {
                 } else {
                     $("#xray-js-table-" + data.id +"_paginate").show();
                 }
+
+                // To load table, show table on top.
+                var targetOffset = $("#" + data.id).offset().top;
+                $('html, body').scrollTop(targetOffset);
             }
+        });
+
+        // Close table.
+        $("#" + data.id + " .xray-closetable").click(function() {
+            $("#" + data.id).addClass("xray-toggleable-table");
         });
     });
 }
