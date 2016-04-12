@@ -47,19 +47,17 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
             if (has_capability("local/xray:activityreport_view", $this->get_context())) {
 
+                $inactivestudents = '';
                 $report = "firstLogin";
                 $responsefirstlogin = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$responsefirstlogin) {
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-                    $output .= $this->print_top();
-                    $output .= $this->output->inforeport($responsefirstlogin->reportdate);
-
                     // We need show table first in activity report.(INT-8186).
                     $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
                         "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
-                    $output .= $this->output->standard_table((array)$datatable);
+                    $inactivestudents .= $this->output->standard_table((array)$datatable);
                 }
 
                 $report = "activity";
@@ -68,7 +66,11 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
-
+                    // Report date.
+                    $output .= $this->print_top();
+                    $output .= $this->output->inforeport($response->reportdate);
+                    // Inactive Students table from firstLogin Report.
+                    $output .= $inactivestudents;
                     // Show table Activity report.
                     $datatable = new local_xray\datatables\datatables($response->elements->studentList,
                         "rest.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,

@@ -44,19 +44,17 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         $output = '';
         try {
             // INT-8186 (add non-active students from firstlogin in this report. This is available in activity report too).
+            $inactivestudents = '';
             $report = "firstLogin";
             $responsefirstlogin = \local_xray\local\api\wsapi::course($this->courseid, $report);
             if (!$responsefirstlogin) {
                 // Fail response of webservice.
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
-                $output  = $this->print_top();
-                $output .= $this->output->inforeport($responsefirstlogin->reportdate);
-
                 // Show graphs. We need show table first in activity report.
                 $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
                         "rest.php?controller='risk'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
-                $output .= $this->output->standard_table((array)$datatable);
+                $inactivestudents .= $this->output->standard_table((array)$datatable);
             }
 
             $report = "risk";
@@ -65,6 +63,11 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 // Fail response of webservice.
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
+                // Report date.
+                $output  = $this->print_top();
+                $output .= $this->output->inforeport($response->reportdate);
+                // Inactive Students table from firstLogin Report.
+                $output .= $inactivestudents;
                 // Show table.
                 $datatable = new local_xray\datatables\datatables($response->elements->riskMeasures,
                         "rest.php?controller='risk'&action='jsonriskmeasures'&courseid=" . $this->courseid);
