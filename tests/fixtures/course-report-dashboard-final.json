@@ -95,7 +95,7 @@
           "code": "CS010",
           "help": "",
           "name": "Average grade:",
-          "value": "-",
+          "value": "36.5",
           "comment": "",
           "expectedRange": "",
           "interpretation": ""
@@ -104,7 +104,7 @@
           "code": "CS011",
           "help": "",
           "name": "Average grade last week:",
-          "value": "-",
+          "value": "36.5",
           "comment": "",
           "expectedRange": "",
           "interpretation": ""
