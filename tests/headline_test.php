@@ -140,6 +140,20 @@ class local_xray_headline_testcase extends \advanced_testcase {
         $result = \local_xray\dashboard\dashboard_data::get_status_simple(2, "-");
         $this->assertEquals("xray-headline-increase", $result[0]);
 
+        // Check float string values.
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple("2.0", "4.0");
+        $this->assertEquals("xray-headline-decrease", $result[0]);
+
+        // Return arrow class same (yellow).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple("4.5", "4.5");
+        $this->assertEquals("xray-headline-same", $result[0]);
+
+        // Return arrow class increment (green).
+        $result = \local_xray\dashboard\dashboard_data::get_status_simple("3.5", "2.5");
+        $this->assertEquals("xray-headline-increase", $result[0]);
+
+
+
     }
 
     /**
