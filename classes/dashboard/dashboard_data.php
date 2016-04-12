@@ -162,10 +162,10 @@ class dashboard_data {
     public static function get_status_simple($valuenow, $valuepreviousweek) {
 
         // Value can be null or "-" too.
-        if (empty($valuenow1) && !is_number($valuenow)) {
+        if (empty($valuenow1) && !is_numeric($valuenow)) {
             $valuenow = 0;
         }
-        if (empty($valuepreviousweek) && !is_number($valuepreviousweek)) {
+        if (empty($valuepreviousweek) && !is_numeric($valuepreviousweek)) {
             $valuepreviousweek = 0;
         }
 
@@ -212,12 +212,12 @@ class dashboard_data {
 
         $firstaverage = 0;
         // Value can be null or "-" too.
-        if (!empty($valuenow1) && !empty($valuenow2) && is_number($valuenow1) && is_number($valuenow2)) {
+        if (!empty($valuenow1) && !empty($valuenow2) && is_numeric($valuenow1) && is_numeric($valuenow2)) {
             $firstaverage = $valuenow1 / $valuenow2;
         }
         $secondaverage = 0;
         if (!empty($valuepreviousweek) && !empty($valuepreviousweek2) &&
-            is_number($valuepreviousweek) && is_number($valuepreviousweek2)) {
+            is_numeric($valuepreviousweek) && is_numeric($valuepreviousweek2)) {
             $secondaverage = $valuepreviousweek / $valuepreviousweek2;
         }
 
