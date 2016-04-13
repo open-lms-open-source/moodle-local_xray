@@ -235,6 +235,28 @@ class data_export {
     }
 
     /**
+     * Deleted course categories
+     * @param int $timest
+     * @param int $timeend
+     * @param string $dir
+     */
+    public static function coursecategories_delete($timest, $timeend, $dir) {
+        $timedeleted = self::to_timestamp('timedeleted');
+
+        $sql = "
+                SELECT
+                       id,
+                       category,
+                       {$timedeleted},
+                       timedeleted AS traw
+                FROM   {local_xray_coursecat}
+                WHERE
+                       ";
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
      * @param int $timest
      * @param int $timeend
      * @param string $dir
@@ -271,6 +293,29 @@ class data_export {
     }
 
     /**
+     * Deleted courses
+     *
+     * @param int $timest
+     * @param int $timeend
+     * @param string $dir
+     */
+    public static function courseinfo_delete($timest, $timeend, $dir) {
+        $timedeleted = self::to_timestamp('timedeleted');
+
+        $sql = "
+                SELECT
+                       id,
+                       course,
+                       {$timedeleted},
+                       timedeleted AS traw
+                FROM   {local_xray_course}
+                WHERE
+                       ";
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
      * @param int $timest
      * @param int $timeend
      * @param string $dir
@@ -300,8 +345,6 @@ class data_export {
                        END AS traw
                 FROM   {user}
                 WHERE
-                       deleted = 0
-                       AND
                        ";
 
         $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
@@ -333,6 +376,30 @@ class data_export {
                            AND
                            ";
 
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * Removed role assignments within a course
+     * @param int $timest
+     * @param int $timeend
+     * @param string $dir
+     */
+    public static function enrolment_delete($timest, $timeend, $dir) {
+        $timedeleted = self::to_timestamp('timedeleted');
+
+        $sql = "
+                SELECT
+                       id,
+                       role,
+                       userid,
+                       course,
+                       {$timedeleted},
+                       timedeleted AS traw
+                FROM   {local_xray_roleunas}
+                WHERE
+                       ";
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
@@ -487,6 +554,30 @@ class data_export {
     }
 
     /**
+     * Deleted discussions
+     *
+     * @param int $timest
+     * @param int $timeend
+     * @param string $dir
+     */
+    public static function threads_delete($timest, $timeend, $dir) {
+        $timedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT
+                   id,
+                   discussion,
+                   cm AS activityid,
+                   {$timedeleted},
+                   timedeleted AS traw
+            FROM   {local_xray_disc}
+            WHERE
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
      * @param int $timest
      * @param int $timeend
      * @param string $dir
@@ -521,6 +612,30 @@ class data_export {
                              fp.discussion = fd.id
                    )
                    AND
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * Posts delete
+     * @param $timest
+     * @param $timeend
+     * @param $dir
+     */
+    public static function posts_delete($timest, $timeend, $dir) {
+        $timedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT
+                   id,
+                   post,
+                   discussion,
+                   cm AS activityid,
+                   {$timedeleted},
+                   timedeleted AS traw
+            FROM   {local_xray_post}
+            WHERE
                    ";
 
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
@@ -584,6 +699,30 @@ class data_export {
     }
 
     /**
+     * Advanced forums discussion delete
+     *
+     * @param int $timest
+     * @param int $timeend
+     * @param string $dir
+     */
+    public static function hsuthreads_delete($timest, $timeend, $dir) {
+        $timedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT
+                   id,
+                   discussion,
+                   cm AS activityid,
+                   {$timedeleted},
+                   timedeleted AS traw
+            FROM   {local_xray_hsudisc}
+            WHERE
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
      * @param int $timest
      * @param int $timeend
      * @param string $dir
@@ -618,6 +757,31 @@ class data_export {
                              fp.discussion = fd.id
                    )
                    AND
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * Deleted advanced forum posts
+     *
+     * @param int $timest
+     * @param int $timeend
+     * @param string $dir
+     */
+    public static function hsuposts_delete($timest, $timeend, $dir) {
+        $timedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT
+                   id,
+                   post,
+                   discussion,
+                   cm AS activityid,
+                   {$timedeleted},
+                   timedeleted AS traw
+            FROM   {local_xray_hsupost}
+            WHERE
                    ";
 
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
@@ -949,9 +1113,12 @@ class data_export {
 
         // Order of export matters. Do not change unless sure.
         self::coursecategories($timest, $timeend, $dir);
+        self::coursecategories_delete($timest, $timeend, $dir);
         self::courseinfo($timest, $timeend, $dir);
+        self::courseinfo_delete($timest, $timeend, $dir);
         self::userlist($timest, $timeend, $dir);
         self::enrolment($timest, $timeend, $dir);
+        self::enrolment_delete($timest, $timeend, $dir);
         // Unfortunately log stores can be uninstalled so we check for that case.
         if (array_key_exists('legacy', $logstores)) {
             self::accesslog($timest, $timeend, $dir);
@@ -966,7 +1133,9 @@ class data_export {
         if (array_key_exists('forum', $plugins)) {
             self::forums($timest, $timeend, $dir);
             self::threads($timest, $timeend, $dir);
+            self::threads_delete($timest, $timeend, $dir);
             self::posts($timest, $timeend, $dir);
+            self::posts_delete($timest, $timeend, $dir);
         } else {
             self::mtrace('Forum activity not installed. Skipping.');
         }
@@ -974,7 +1143,9 @@ class data_export {
         if (array_key_exists('hsuforum', $plugins)) {
             self::hsuforums($timest, $timeend, $dir);
             self::hsuthreads($timest, $timeend, $dir);
+            self::hsuthreads_delete($timest, $timeend, $dir);
             self::hsuposts($timest, $timeend, $dir);
+            self::hsuposts_delete($timest, $timeend, $dir);
         } else {
             self::mtrace('Advanced forum activity not installed. Skipping.');
         }

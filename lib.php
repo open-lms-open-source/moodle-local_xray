@@ -208,3 +208,131 @@ function local_xray_extend_settings_navigation(settings_navigation $settings, co
 function local_xray_extend_navigation(global_navigation $nav) {
     local_xray_extends_navigation($nav);
 }
+
+/**
+ * Listener for course delete event
+ *
+ * @param \core\event\course_deleted $event
+ */
+function local_xray_course_deleted(\core\event\course_deleted $event) {
+    global $DB;
+    $data = (object)[
+        'course'      => $event->courseid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record('local_xray_course', $data);
+}
+
+/**
+ * Listener for course category delete
+ *
+ * @param \core\event\course_category_deleted $event
+ */
+function local_xray_course_category_deleted(\core\event\course_category_deleted $event) {
+    global $DB;
+    $data = (object)[
+        'category'    => $event->objectid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record('local_xray_coursecat', $data);
+}
+
+/**
+ * Listener for Advanced forum discussion delete
+ *
+ * @param \mod_hsuforum\event\discussion_deleted $event
+ */
+function local_xray_hsu_discussion_deleted(\mod_hsuforum\event\discussion_deleted $event) {
+    global $DB;
+    $data = (object)[
+        'discussion'  => $event->objectid,
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record('local_xray_hsudisc', $data);
+}
+
+/**
+ * Listener for Advanced forum post delete
+ *
+ * @param \mod_hsuforum\event\post_deleted $event
+ */
+function local_xray_hsu_post_deleted(\mod_hsuforum\event\post_deleted $event) {
+    global $DB;
+    $data = (object)[
+        'post'        => $event->objectid,
+        'discussion'  => $event->other['discussionid'],
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record('local_xray_hsupost', $data);
+}
+
+/**
+ * Listener for forum discussion delete
+ *
+ * @param \mod_forum\event\discussion_deleted $event
+ */
+function local_xray_discussion_deleted(\mod_forum\event\discussion_deleted $event) {
+    global $DB;
+    $data = (object)[
+        'discussion'  => $event->objectid,
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record('local_xray_disc', $data);
+}
+
+/**
+ * Listener for forum post delete
+ *
+ * @param \mod_forum\event\post_deleted $event
+ */
+function local_xray_post_deleted(\mod_forum\event\post_deleted $event) {
+    global $DB;
+    $data = (object)[
+        'post'        => $event->objectid,
+        'discussion'  => $event->other['discussionid'],
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record('local_xray_post', $data);
+}
+
+/**
+ * Listener for activity delete from course
+ *
+ * @param \core\event\course_module_deleted $event
+ */
+function local_xray_course_module_deleted(\core\event\course_module_deleted $event) {
+    global $DB;
+    // We handle only gradable activities.
+    if (plugin_supports('mod', $event->other['modulename'], FEATURE_GRADE_HAS_GRADE, false)) {
+        $data = (object)[
+            'cm'          => $event->objectid,
+            'course'      => $event->courseid,
+            'timedeleted' => $event->timecreated
+        ];
+        $DB->insert_record('local_xray_cm', $data);
+    }
+}
+
+/**
+ * Listener for role unasignment on a course context ONLY!
+ *
+ * @param \core\event\role_unassigned $event
+ * @throws coding_exception
+ */
+function local_xray_role_unassigned(\core\event\role_unassigned $event) {
+    global $DB;
+    $cc = context_course::instance_by_id($event->contextid, IGNORE_MISSING);
+    if ($cc) {
+        $data = (object)[
+            'role'        => $event->objectid,
+            'user'        => $event->relateduserid,
+            'course'      => $cc->instanceid,
+            'timedeleted' => $event->timecreated
+        ];
+        $DB->insert_record('local_xray_roleunas', $data);
+    }
+}

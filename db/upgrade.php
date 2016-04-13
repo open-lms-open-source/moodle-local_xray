@@ -91,5 +91,22 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070328, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070329) {
+        $xmlfile = core_component::get_component_directory('local_xray').'/db/install.xml';
+
+        // The reason this is done table by table is to avoid any issues with any future changes,
+        // that may occur in the install.xml.
+        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_course'   );
+        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_coursecat');
+        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_hsudisc'  );
+        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_hsupost'  );
+        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_disc'     );
+        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_post'     );
+        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_cm'       );
+        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_roleunas' );
+
+        upgrade_plugin_savepoint(true, 2015070329, 'local', 'xray');
+    }
+
     return true;
 }
