@@ -20,7 +20,7 @@ require_once(__DIR__.'/api_data_export_base.php');
 
 /**
  * Class local_xray_api_data_export_delete_testcase
- * @group local_xray1
+ * @group local_xray
  */
 class local_xray_api_data_export_delete_testcase extends local_xray_api_data_export_base_testcase {
 

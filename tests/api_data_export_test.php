@@ -184,6 +184,7 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
 
         $exportfile = $storagedir.DIRECTORY_SEPARATOR.'grades_00000001.csv';
         $this->assertFileExists($exportfile);
+        copy($exportfile, '/tmp/grades_1a.csv');
 
         $first = true;
         $iterator = new csv_fileiterator($exportfile);
@@ -192,7 +193,7 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
                 $first = false;
                 continue;
             }
-            // Expect 7 items.
+            // Expect 13 items.
             $this->assertEquals(13, count($item));
             $this->assertInternalType('numeric', $item[0]);
             $this->assertInternalType('numeric', $item[1]);
@@ -216,12 +217,12 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
             }
             $this->assertInternalType('numeric', $item[12]);
             $this->assertRegExp('/^(quiz|course)$/', $item[5]);
-            $this->assertEquals(100.0 , $item[6]);
-            $this->assertEquals(0.0   , $item[7]);
+            $this->assertEquals(($item[5] == 'course') ? 500.0 : 100.0 , (float)$item[6]);
+            $this->assertEquals(0.0   , (float)$item[7]);
             if (!empty($item[8])) {
                 $this->assertEquals(80.0, $item[8]);
             }
-            $this->assertEquals(80.0  , $item[9]);
+            $this->assertEquals(($item[5] == 'course') ? 400.0 : 80.0 , (float)$item[9]);
             $this->assertEquals(0     , $item[10]);
         }
     }

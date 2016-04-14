@@ -183,7 +183,9 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         $courses = [];
         $count = 0;
         while ($count++ < $nr) {
-            $courses[] = $datagen->create_course($record);
+            $course = $datagen->create_course($record);
+            grade_regrade_final_grades($course->id);
+            $courses[] = $course;
         }
 
         return $courses;
@@ -292,6 +294,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
             foreach ($gitems as $gitem) {
                 $gitem->update_raw_grade($student->id, 80.0, null, false, FORMAT_MOODLE, null, $timenow, $timenow);
             }
+            grade_regrade_final_grades($course->id);
         }
 
         return $student;
