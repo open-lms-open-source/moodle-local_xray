@@ -818,6 +818,30 @@ class data_export {
     }
 
     /**
+     * Deleted course modules (activities)
+     *
+     * @param int $timest
+     * @param int $timeend
+     * @param string $dir
+     */
+    public static function activity_delete($timest, $timeend, $dir) {
+        $timedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT
+                   id,
+                   cm as activityid,
+                   course,
+                   {$timedeleted},
+                   timedeleted AS traw
+            FROM   {local_xray_cm}
+            WHERE
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
      * @param int $timest
      * @param int $timeend
      * @param string $dir
@@ -1113,12 +1137,9 @@ class data_export {
 
         // Order of export matters. Do not change unless sure.
         self::coursecategories($timest, $timeend, $dir);
-        self::coursecategories_delete($timest, $timeend, $dir);
         self::courseinfo($timest, $timeend, $dir);
-        self::courseinfo_delete($timest, $timeend, $dir);
         self::userlist($timest, $timeend, $dir);
         self::enrolment($timest, $timeend, $dir);
-        self::enrolment_delete($timest, $timeend, $dir);
         // Unfortunately log stores can be uninstalled so we check for that case.
         if (array_key_exists('legacy', $logstores)) {
             self::accesslog($timest, $timeend, $dir);
@@ -1133,9 +1154,7 @@ class data_export {
         if (array_key_exists('forum', $plugins)) {
             self::forums($timest, $timeend, $dir);
             self::threads($timest, $timeend, $dir);
-            self::threads_delete($timest, $timeend, $dir);
             self::posts($timest, $timeend, $dir);
-            self::posts_delete($timest, $timeend, $dir);
         } else {
             self::mtrace('Forum activity not installed. Skipping.');
         }
@@ -1143,9 +1162,7 @@ class data_export {
         if (array_key_exists('hsuforum', $plugins)) {
             self::hsuforums($timest, $timeend, $dir);
             self::hsuthreads($timest, $timeend, $dir);
-            self::hsuthreads_delete($timest, $timeend, $dir);
             self::hsuposts($timest, $timeend, $dir);
-            self::hsuposts_delete($timest, $timeend, $dir);
         } else {
             self::mtrace('Advanced forum activity not installed. Skipping.');
         }
@@ -1155,6 +1172,21 @@ class data_export {
             self::mtrace('Quiz activity not installed. Skipping.');
         }
         self::grades($timest, $timeend, $dir);
+
+        // Deleted records go here.
+        self::coursecategories_delete($timest, $timeend, $dir);
+        self::courseinfo_delete($timest, $timeend, $dir);
+        self::enrolment_delete($timest, $timeend, $dir);
+        self::activity_delete($timest, $timeend, $dir);
+        if (array_key_exists('forum', $plugins)) {
+            self::threads_delete($timest, $timeend, $dir);
+            self::posts_delete($timest, $timeend, $dir);
+        }
+
+        if (array_key_exists('hsuforum', $plugins)) {
+            self::hsuthreads_delete($timest, $timeend, $dir);
+            self::hsuposts_delete($timest, $timeend, $dir);
+        }
 
         self::export_metadata($dir);
 

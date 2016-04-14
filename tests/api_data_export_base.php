@@ -138,6 +138,31 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     }
 
     /**
+     * @param int  $nr
+     * @param int $timecreated
+     * @return coursecat[]
+     */
+    protected function addcategories($nr, $timecreated = null) {
+        if (empty($timecreated)) {
+            $timecreated = time();
+        }
+
+        $record = [
+            'timecreated' => $timecreated,
+            'startdate'   => $timecreated
+        ];
+        // Create course(s).
+        $datagen = $this->getDataGenerator();
+        $categories = [];
+        $count = 0;
+        while ($count++ < $nr) {
+            $categories[] = $datagen->create_category($record);
+        }
+
+        return $categories;
+    }
+
+    /**
      * Creates courses needed for test
      *
      * @param int $nr
@@ -224,12 +249,14 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @throws coding_exception
      */
     protected function addquizzes($nr, $courses) {
-        ($nr);
         /* @var mod_quiz_generator $quizgen */
         $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
         $instances = [];
         foreach ($courses as $course) {
-            $instances[] = $quizgen->create_instance(['course' => $course]);
+            $lnr = $nr;
+            while ($lnr-- > 0) {
+                $instances[] = $quizgen->create_instance(['course' => $course]);
+            }
         }
         return $instances;
     }
@@ -250,6 +277,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      *
      * @param array $courses
      * @param string $module
+     * @return stdClass
      */
     protected function user_set($courses, $module) {
         global $DB;
@@ -265,6 +293,22 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
                 $gitem->update_raw_grade($student->id, 80.0, null, false, FORMAT_MOODLE, null, $timenow, $timenow);
             }
         }
+
+        return $student;
+    }
+
+    /**
+     * @param  int $nr
+     * @param  int $timemodified
+     * @return stdClass[]
+     */
+    protected function addusers($nr) {
+        $datagen = $this->getDataGenerator();
+        $users = [];
+        for ($pos = 0; $pos < $nr; $pos++) {
+            $users[] = $datagen->create_user(['username' => 'testuser'.$pos, 'deleted' => 0]);
+        }
+        return $users;
     }
 
     /**

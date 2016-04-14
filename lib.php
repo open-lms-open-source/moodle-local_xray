@@ -325,12 +325,13 @@ function local_xray_course_module_deleted(\core\event\course_module_deleted $eve
  */
 function local_xray_role_unassigned(\core\event\role_unassigned $event) {
     global $DB;
-    $cc = context_course::instance_by_id($event->contextid, IGNORE_MISSING);
-    if ($cc) {
+    // Strangely can not use course_context::instance_by_id since it throws exception...
+    $courseid = $DB->get_field('context', 'instanceid', ['id' => $event->contextid, 'contextlevel' => CONTEXT_COURSE]);
+    if ($courseid) {
         $data = (object)[
             'role'        => $event->objectid,
-            'user'        => $event->relateduserid,
-            'course'      => $cc->instanceid,
+            'userid'      => $event->relateduserid,
+            'course'      => $courseid,
             'timedeleted' => $event->timecreated
         ];
         $DB->insert_record('local_xray_roleunas', $data);
