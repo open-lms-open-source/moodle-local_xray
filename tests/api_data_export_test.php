@@ -184,7 +184,6 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
 
         $exportfile = $storagedir.DIRECTORY_SEPARATOR.'grades_00000001.csv';
         $this->assertFileExists($exportfile);
-        copy($exportfile, '/tmp/grades_1a.csv');
 
         $first = true;
         $iterator = new csv_fileiterator($exportfile);
