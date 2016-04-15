@@ -92,18 +92,102 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
     }
 
     if ($oldversion < 2015070329) {
-        $xmlfile = core_component::get_component_directory('local_xray').'/db/install.xml';
+        $table = new xmldb_table('local_xray_course');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('course', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
 
-        // The reason this is done table by table is to avoid any issues with any future changes,
-        // that may occur in the install.xml.
-        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_course'   );
-        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_coursecat');
-        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_hsudisc'  );
-        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_hsupost'  );
-        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_disc'     );
-        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_post'     );
-        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_cm'       );
-        $dbman->install_one_table_from_xmldb_file($xmlfile, 'local_xray_roleunas' );
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        $table = new xmldb_table('local_xray_coursecat');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('category', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        $table = new xmldb_table('local_xray_hsudisc');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('discussion', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('cm', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        $table = new xmldb_table('local_xray_hsupost');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('post', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('discussion', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('cm', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        $table = new xmldb_table('local_xray_disc');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('discussion', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('cm', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        $table = new xmldb_table('local_xray_post');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('post', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('discussion', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('cm', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        $table = new xmldb_table('local_xray_cm');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('cm', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('course', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        $table = new xmldb_table('local_xray_roleunas');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('role', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('course', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
 
         upgrade_plugin_savepoint(true, 2015070329, 'local', 'xray');
     }

@@ -38,6 +38,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
         if (!$this->plugin_present('mod_forum')) {
             $this->markTestSkipped('Forum not present!');
         }
+        global $DB;
 
         $this->resetAfterTest();
 
@@ -105,6 +106,10 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
             $this->assertInternalType('string' , $item[4]);
         }
 
+        // Check data pruning.
+        $task = new \local_xray\task\data_prune_task();
+        $task->execute();
+        $this->assertEquals(0, $DB->count_records('local_xray_disc'));
     }
 
     /**
@@ -114,6 +119,8 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
         if (!$this->plugin_present('mod_hsuforum')) {
             $this->markTestSkipped('Advanced Forum not present!');
         }
+
+        global $DB;
 
         $this->resetAfterTest();
 
@@ -181,12 +188,18 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
             $this->assertInternalType('string' , $item[4]);
         }
 
+        // Check data pruning.
+        $task = new \local_xray\task\data_prune_task();
+        $task->execute();
+        $this->assertEquals(0, $DB->count_records('local_xray_hsudisc'));
     }
 
     /**
      * test course delete export
      */
     public function test_course_delete_export() {
+        global $DB;
+
         $this->resetAfterTest();
 
         $timenow = time();
@@ -221,6 +234,11 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
             $this->assertInternalType('string' , $item[2]);
             $counter++;
         }
+
+        // Check data pruning.
+        $task = new \local_xray\task\data_prune_task();
+        $task->execute();
+        $this->assertEquals(0, $DB->count_records('local_xray_course'));
     }
 
     /**
@@ -229,6 +247,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
      * @throws moodle_exception
      */
     public function test_coursecategory_delete_export() {
+        global $DB;
         $this->resetAfterTest();
 
         $timenow = time();
@@ -263,6 +282,11 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
             $this->assertInternalType('string' , $item[2]);
             $counter++;
         }
+
+        // Check data pruning.
+        $task = new \local_xray\task\data_prune_task();
+        $task->execute();
+        $this->assertEquals(0, $DB->count_records('local_xray_coursecat'));
     }
 
     /**
@@ -309,6 +333,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
             $this->assertInternalType('string' , $item[9]);
             $this->assertInternalType('string' , $item[10]);
         }
+
     }
 
     /**
@@ -319,6 +344,8 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
         if (!$this->plugin_present('mod_quiz')) {
             $this->markTestSkipped('Quiz not present!');
         }
+
+        global $DB;
 
         $this->resetAfterTest();
 
@@ -358,8 +385,12 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
             $this->assertTrue(in_array($item[1], $deleted));
             $this->assertInternalType('numeric', $item[2]);
             $this->assertInternalType('string' , $item[3]);
-
         }
+
+        // Check data pruning.
+        $task = new \local_xray\task\data_prune_task();
+        $task->execute();
+        $this->assertEquals(0, $DB->count_records('local_xray_cm'));
     }
 
     /**
@@ -367,6 +398,8 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
      * @throws coding_exception
      */
     public function test_enrol_delete_export() {
+        global $DB;
+
         $this->resetAfterTest();
 
         $timenow = time();
@@ -411,6 +444,11 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
             $this->assertInternalType('string' , $item[4]);
 
         }
+
+        // Check data pruning.
+        $task = new \local_xray\task\data_prune_task();
+        $task->execute();
+        $this->assertEquals(0, $DB->count_records('local_xray_roleunas'));
     }
 
 }

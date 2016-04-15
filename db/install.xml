@@ -13,9 +13,6 @@
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
-      <INDEXES>
-        <INDEX NAME="idx_tmdeleted" UNIQUE="false" FIELDS="timedeleted"/>
-      </INDEXES>
     </TABLE>
     <TABLE NAME="local_xray_coursecat" COMMENT="Deleted course categories">
       <FIELDS>
@@ -26,9 +23,6 @@
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
-      <INDEXES>
-        <INDEX NAME="tidx_ccdeleted_id" UNIQUE="false" FIELDS="timedeleted"/>
-      </INDEXES>
     </TABLE>
     <TABLE NAME="local_xray_hsudisc" COMMENT="Deleted Advanced forum discussions">
       <FIELDS>
