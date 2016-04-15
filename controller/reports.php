@@ -285,8 +285,16 @@ class local_xray_controller_reports extends mr_controller {
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 $data = array();
+                // Xray ws return a phantom row empty when tables is empty.
+                // Xray side can not change this response, so they added emptyData property to check if table is empty.
+                if (isset($response->emptyData) && !empty($response->emptyData)) {
+                    // Table is empty, return 0 and table will show standard message.
+                    $response->data = array();
+                    $response->itemCount = 0;
+                }
+
                 if (!empty($response->data)) {
-                    if(!empty($functiontoprocessdata) && method_exists($this, $functiontoprocessdata)) {
+                    if (!empty($functiontoprocessdata) && method_exists($this, $functiontoprocessdata)) {
                         // Specific method to process data.
                         $data = $this->{$functiontoprocessdata}($response);
                     } else {
