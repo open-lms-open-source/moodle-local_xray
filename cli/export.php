@@ -28,14 +28,14 @@ require_once($CFG->libdir.'/clilib.php');
 try {
     $DB->set_debug(($CFG->debug == DEBUG_DEVELOPER) && $CFG->debugdisplay);
     $timeend = time() - (2 * HOURSECS);
-    echo 'Starting export.', PHP_EOL;
+    mtrace('Starting export.');
     $base = uniqid('doexport');
     $outdir = make_temp_directory($base);
     data_export::export_csv(0, $timeend, $outdir);
     list($compfile, $destfile) = data_export::compress($CFG->tempdir, $base);
     $DB->set_debug(false);
-    echo 'Finished.', PHP_EOL;
-    echo 'Export file is: ', $compfile, PHP_EOL;
+    mtrace('Finished.');
+    mtrace('Export file is: '.$compfile);
 } catch (Exception $e) {
     cli_error($e->getMessage(), $e->getCode());
 }

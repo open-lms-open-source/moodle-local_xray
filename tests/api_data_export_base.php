@@ -151,7 +151,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
             'timecreated' => $timecreated,
             'startdate'   => $timecreated
         ];
-        // Create course(s).
+        // Create categories.
         $datagen = $this->getDataGenerator();
         $categories = [];
         $count = 0;
