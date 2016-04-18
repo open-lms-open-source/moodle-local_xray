@@ -5,7 +5,7 @@
   "description": "X-Ray web service gradebook method schema",
   "oneOf" : [
     {"$ref" : "base_schema_ref.json#/definitions/base_response"}
-   ,{
+  ,{
       "id"         : "http://xray.com/somedomain/course/123/gradebook/okresponse",
       "required": [
         "reportdate",
@@ -168,8 +168,8 @@
         "elements": {
           "required": [
             "element1",
-            "element2",
-            "element4",
+            "courseGradeTable",
+            "gradableItemsTable",
             "scoreDistributionByItem",
             "studentScoreDistribution",
             "itemsHeatmap",
@@ -215,7 +215,7 @@
                 }
               }
             },
-            "element2": {
+            "courseGradeTable": {
               "required": [
                 "comment",
                 "elementName",
@@ -265,27 +265,19 @@
                 },
                 "columnHeaders": {
                   "required": [
-                    "standarScore",
-                    "finalGrade",
-                    "lastname",
+                    "courseGrade",
                     "firstname",
-                    "courseGrade"
+                    "lastname"
                   ],
                   "type": "object",
                   "properties": {
-                    "standarScore": {
-                      "type": "string"
-                    },
                     "courseGrade": {
-                      "type": "string"
+                      "type": ["object", "string"]
                     },
                     "firstname": {
                       "type": "string"
                     },
                     "lastname": {
-                      "type": "string"
-                    },
-                    "finalGrade": {
                       "type": "string"
                     }
                   }
@@ -296,33 +288,20 @@
                 "data": {
                   "items": {
                     "required": [
-                      "standarScore",
-                      "finalGrade",
-                      "lastname",
+                      "courseGrade",
                       "firstname",
-                      "courseGrade"
+                      "lastname"
                     ],
                     "type": "object",
                     "properties": {
-                      "standarScore": {
-                        "required": [
-                          "value"
-                        ],
-                        "type": "object",
-                        "properties": {
-                          "value": {
-                            "type": "object"
-                          }
-                        }
-                      },
                       "courseGrade": {
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "string"],
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "string"]
                           }
                         }
                       },
@@ -333,7 +312,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": "string"
                           }
                         }
                       },
@@ -344,18 +323,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
-                          }
-                        }
-                      },
-                      "finalGrade": {
-                        "required": [
-                          "value"
-                        ],
-                        "type": "object",
-                        "properties": {
-                          "value": {
-                            "type": "object"
+                            "type": "string"
                           }
                         }
                       }
@@ -368,7 +336,7 @@
                 }
               }
             },
-            "element4": {
+            "gradableItemsTable": {
               "required": [
                 "comment",
                 "elementName",
@@ -418,36 +386,24 @@
                 },
                 "columnHeaders": {
                   "required": [
-                    "name",
-                    "grade",
-                    "finalGradeCorrelation",
-                    "earnScore",
+                    "itemname",
+                    "courseGradeCorrelation",
                     "nStudents",
-                    "standarScore",
-                    "quizId"
+                    "standardScore"
                   ],
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "itemname": {
                       "type": "string"
                     },
-                    "grade": {
-                      "type": "string"
-                    },
-                    "finalGradeCorrelation": {
-                      "type": "string"
-                    },
-                    "earnScore": {
-                      "type": "string"
+                    "courseGradeCorrelation": {
+                      "type": ["object", "string"]
                     },
                     "nStudents": {
-                      "type": "string"
+                      "type": ["object", "integer", "string"]
                     },
-                    "standarScore": {
-                      "type": "string"
-                    },
-                    "quizId": {
-                      "type": "string"
+                    "standardScore": {
+                      "type": ["object", "string"]
                     }
                   }
                 },
@@ -457,57 +413,32 @@
                 "data": {
                   "items": {
                     "required": [
-                      "name",
-                      "grade",
-                      "finalGradeCorrelation",
-                      "earnScore",
+                      "itemname",
+                      "courseGradeCorrelation",
                       "nStudents",
-                      "standarScore",
-                      "quizId"
+                      "standardScore"
                     ],
                     "type": "object",
                     "properties": {
-                      "name": {
+                      "itemname": {
                         "required": [
                           "value"
                         ],
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": "string"
                           }
                         }
                       },
-                      "grade": {
+                      "courseGradeCorrelation": {
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "string"],
                         "properties": {
                           "value": {
-                            "type": "object"
-                          }
-                        }
-                      },
-                      "finalGradeCorrelation": {
-                        "required": [
-                          "value"
-                        ],
-                        "type": "object",
-                        "properties": {
-                          "value": {
-                            "type": "object"
-                          }
-                        }
-                      },
-                      "earnScore": {
-                        "required": [
-                          "value"
-                        ],
-                        "type": "object",
-                        "properties": {
-                          "value": {
-                            "type": "object"
+                            "type": ["object", "string"]
                           }
                         }
                       },
@@ -515,32 +446,21 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "integer", "string"],
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "integer", "string"]
                           }
                         }
                       },
-                      "standarScore": {
+                      "standardScore": {
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "string"],
                         "properties": {
                           "value": {
-                            "type": "object"
-                          }
-                        }
-                      },
-                      "quizId": {
-                        "required": [
-                          "value"
-                        ],
-                        "type": "object",
-                        "properties": {
-                          "value": {
-                            "type": "object"
+                            "type": ["object", "string"]
                           }
                         }
                       }
@@ -798,7 +718,7 @@
                   }
                 },
                 "customData": {
-                  "type": "array"
+                  "type": "object"
                 },
                 "mapping": {
                   "type": "array"
