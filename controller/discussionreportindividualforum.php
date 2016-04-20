@@ -68,9 +68,12 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     }
 
-	/**
-	 * View Discussion individual forum.
-	 */
+    /**
+     * View Discussion individual forum.
+     * We have support for forum an hsuforum in same controller.
+     * In xray side, they have different url for each type(forum and advancedforum).
+     * This controller identify forum type and get correct report.
+     */
     public function view_action() {
         global $PAGE, $DB;
 
@@ -99,28 +102,43 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
             $PAGE->navbar->add(format_string($discussion), new moodle_url("/mod/".$modulename."/discuss.php",
                 array("d" => $this->d)));
         }
-		$PAGE->navbar->add(get_string("navigation_xray", $this->component));
+        $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         $PAGE->navbar->add($PAGE->title);
         $this->addiconhelp();
         $output = "";
 
         try {
             $report = "discussion";
-            $response = \local_xray\local\api\wsapi::course($this->courseid, $report, "forum/" . $this->forumid);
+            $forumnameinxray = "forum";
+            if ($modulename == "hsuforum") {
+                // Hsforum is called advancedforum in xray side.
+                $forumnameinxray = "advancedforum";
+            }
+
+            $response = \local_xray\local\api\wsapi::course($this->courseid, $report, "{$forumnameinxray}/{$this->forumid}");
             if (!$response) {
                 // Fail response of webservice.
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
                 // Show graphs.
-				$paramsaccessible = array("cmid" => $this->cmid, "forum" => $this->forumid);
-				if (!empty($this->d)) {
-					$paramsaccessible["d"] = $this->d;
-				}
+                $paramsaccessible = array("cmid" => $this->cmid, "forum" => $this->forumid);
+                if (!empty($this->d)) {
+                    $paramsaccessible["d"] = $this->d;
+                }
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate);
-                $output .= $this->output->show_graph("wordHistogram", $response->elements->wordHistogram, $response->id, $paramsaccessible);
-                $output .= $this->output->show_graph("socialStructure", $response->elements->socialStructure, $response->id, $paramsaccessible);
-                $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud, $response->id, $paramsaccessible);
+                $output .= $this->output->show_graph("wordHistogram",
+                    $response->elements->wordHistogram,
+                    $response->id,
+                    $paramsaccessible);
+                $output .= $this->output->show_graph("socialStructure",
+                    $response->elements->socialStructure,
+                    $response->id,
+                    $paramsaccessible);
+                $output .= $this->output->show_graph("wordcloud",
+                    $response->elements->wordcloud,
+                    $response->id,
+                    $paramsaccessible);
             }
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();
