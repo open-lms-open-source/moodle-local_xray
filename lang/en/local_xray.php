@@ -376,7 +376,7 @@ $string['discussionreport_socialStructure'] = 'Interaction Analysis (with instru
 $string['discussionreport_socialStructureWordCount'] = 'Interaction Analysis with Word Count (with instructor)';
 $string['discussionreport_socialStructureWordContribution'] = 'Interaction Analysis with Original Contributions (with instructor)';
 $string['discussionreport_socialStructureWordCTC'] = 'Interaction Analysis with  Critical Thought (with instructor)';
-$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = 'Word Overlap between Students';
+$string['discussionreport_endogenicPlagiarismStudentsHeatmap'] = 'Word Overlap between Posts (without instructor)';
 $string['discussionreport_endogenicPlagiarismHeatmap'] = 'Word Overlap (with instructor)';
 $string['discussionreport_discussionSuggestedGrades'] = 'Distribution of Recommended Grades';
 
@@ -437,16 +437,20 @@ $string['discussionreportindividual_wordHistogram_help'] = 'This histogram shows
 
 /* Graphs Discussion report individual forum*/
 $string['discussionreportindividualforum_wordcloud'] = 'Most Used Words';
-$string['discussionreportindividualforum_socialStructure'] = 'Regularity of Most Used Words';
+$string['discussionreportindividualforum_socialStructure'] = 'Interaction Analysis';
 $string['discussionreportindividualforum_wordHistogram'] = 'Frequency of Most Used Words';
 
 /* Help Graphs Discussion report individual forum*/
-$string['discussionreportindividualforum_wordcloud_help'] = 'This word cloud shows the words used most often in discussions.'.
-    ' It is based on a word count of unique words used.  Bigger words indicate more use.  ';
-$string['discussionreportindividualforum_socialStructure_help'] = 'This diagram shows who this student is talking to. Color'.
-    ' show how connected a student is to the rest of the class. Blue shows an average or a above average connection.'.
-    ' Yellow shows a below average connection. Red shows that there has been no connection with that student yet. ';
-$string['discussionreportindividualforum_wordHistogram_help'] = 'This histogram shows how often a student\'s 10 most used words are used.';
+$string['discussionreportindividualforum_wordcloud_help'] = 'This word cloud shows the words used most often in'.
+    ' discussions. It is based on a word count of unique words used. Bigger words indicate more use.';
+$string['discussionreportindividualforum_socialStructure_help'] = 'This diagram shows you who your students are'.
+    ' replying to. Color shows how connected a student is to the rest of the class. Blue shows the student has'.
+    ' an average or a above average connection to the rest of the class. Yellow shows a below average connection.'.
+    ' Red shows the student has not connected with the rest of the class yet. "inst" in brackets indicates the'.
+    ' instructor(s) of the course, and names in parentheses indicate persons, who participated in the forum(s), but'.
+    ' are not registered as students for this course.';
+$string['discussionreportindividualforum_wordHistogram_help'] = 'This histogram displays the frequency of the most'.
+    ' used words in the forum. Words with a frequency of less than 10 have been excluded.';
 
 /* Behat test */
 $string['error_behat_getjson'] = 'Error to get json file "{$a}" from folder local/xray/tests/fixtures for simulate call to X-Ray Learning Analytics webservice when you are running behat test.';
