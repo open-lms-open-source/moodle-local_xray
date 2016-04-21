@@ -219,8 +219,7 @@ class local_xray_controller_reports extends mr_controller {
         global $CFG;
         $baserr = get_string($errorstring, $this->component);
         if (!empty($debuginfo) && isset($CFG->debugdisplay) && $CFG->debugdisplay && ($CFG->debug == DEBUG_DEVELOPER)) {
-            $baserr .= print_collapsible_region($debuginfo, '', 'error_xray',
-                                                get_string('debuginfo', $this->component), '', true, true);
+            $baserr .= $debuginfo;
         }
         $output = $this->output->error_text($baserr);
         return $output;
