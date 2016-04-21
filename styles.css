@@ -191,8 +191,8 @@ a.xray-headline-link:hover {
     color:#F86B69 !important;
     padding:5px;
 }
-
-.xray-headline-status-hide {
+/* Class to use in element shown only in screen readers. */
+.xray-screen-reader-only {
     position: absolute !important;
     clip: rect(1px, 1px, 1px, 1px);
     height: 1px;

@@ -104,7 +104,8 @@ class local_xray_renderer extends plugin_renderer_base {
             }
             $urlaccessible = new moodle_url("/local/xray/view.php", $paramsurl);
             // Part of titiel for accessible data, show title of graph, only visible for screenreaders.
-            $titleforreader = html_writer::span(get_string("accessible_view_data_for", $plugin, $title), "sr-only");
+            $titleforreader = html_writer::span(get_string("accessible_view_data_for", $plugin, $title),
+                "xray-screen-reader-only");
             //  Title visible of link to accessible data.
             $visibletitleaccessible = get_string("accessible_view_data", $plugin);
             $linkaccessibleversion = html_writer::link($urlaccessible, $visibletitleaccessible.$titleforreader,
@@ -477,7 +478,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 "title" => get_string('link_gotoreport', 'local_xray')));
 
         // Text only for reader screens.
-        $arrowreader = html_writer::tag("span", "", array("class" => "xray-headline-status-hide", "title" => $stylestatus[1]));
+        $arrowreader = html_writer::tag("span", "", array("class" => "xray-screen-reader-only", "title" => $stylestatus[1]));
         // Text for description and text of week before.
         $textdesc = html_writer::tag("p", $text.$arrowreader, array("class" => "xray-headline-desc"));
 
