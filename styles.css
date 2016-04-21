@@ -90,6 +90,16 @@
     margin: auto;
     padding: 100px 10px;
 }
+/* Force to tables to left align and padding 10px in all themes. */
+#page-local-xray-view .dataTable th {
+    padding: 10px !important;
+    text-align: left !important;
+}
+
+#page-local-xray-view .dataTable td {
+    padding: 10px !important;
+    text-align: left !important;
+}
 /** End Wrapper Datatables**/
 
 /**************** Styles for specific reports****************/
