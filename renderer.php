@@ -103,8 +103,11 @@ class local_xray_renderer extends plugin_renderer_base {
                 $paramsurl = array_merge($paramsurl, $extraparamurlaccessible);
             }
             $urlaccessible = new moodle_url("/local/xray/view.php", $paramsurl);
-
-            $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
+            // Part of titiel for accessible data, show title of graph, only visible for screenreaders.
+            $titleforreader = html_writer::span(get_string("accessible_view_data_for", $plugin, $title), "sr-only");
+            //  Title visible of link to accessible data.
+            $visibletitleaccessible = get_string("accessible_view_data", $plugin);
+            $linkaccessibleversion = html_writer::link($urlaccessible, $visibletitleaccessible.$titleforreader,
                 array("target" => "_accessibledata",
                     "class" => "xray-accessible-view-data"));
             $output .= html_writer::tag('span', $linkaccessibleversion);

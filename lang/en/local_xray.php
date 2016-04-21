@@ -229,6 +229,7 @@ $string['closetable'] = 'Close table';
 /*Accessible data */
 $string['accessibledata'] = 'Accessible Data';
 $string['accessible_view_data'] = 'View data';
+$string['accessible_view_data_for'] = 'for {$a}';
 $string['accessible_emptydata'] = 'Without data available for Accessible version.';
 $string['accessible_error'] = 'Accessible version for this graph was not found in X-Ray Learning Analytics.';
 $string['reports_help'] = 'Help';
