@@ -144,7 +144,7 @@ class datatables {
      */
     public function __construct($element, $jsonurl, $columns = array(), $columnaction = false, $paging=true, $dom = '<"top">rt<"bottom"flp><"clear">',
                                 $lengthMenu = array(10, 50, 100), $sort = true, $default_field_sort = 0, $sort_order = "asc") {
-        
+        global $OUTPUT;
         $this->id = $element->elementName;
         $this->title = $element->title;
         $this->jsonurl = $jsonurl;
@@ -177,7 +177,7 @@ class datatables {
         $this->sProcessing = get_string('sProcessing', 'local_xray');
         $this->sZeroRecords = get_string('sZeroRecords', 'local_xray');
              
-        $this->errorMessage = get_string('error_datatables','local_xray');
+        $this->errorMessage = $OUTPUT->notification(get_string('error_datatables','local_xray'));
     }
     
     /**

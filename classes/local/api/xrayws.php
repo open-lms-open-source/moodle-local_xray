@@ -497,7 +497,6 @@ class xrayws {
      * @return string
      */
     public function errorinfo($extrainfoondebug = true) {
-        global $OUTPUT;
         $lasterrormsg = $this->geterrormsg();
         // In case debug mode is on show extra debug information.
         if ($extrainfoondebug) {
@@ -520,30 +519,25 @@ class xrayws {
                         $lasterrormsg .= "\n";
                     }
                 } else {
-                    $information  = \html_writer::span($this->geterrormsg()) . \html_writer::empty_tag('br');
-                    $information .= \html_writer::span($lasterrorcode) . \html_writer::empty_tag('br');
+                    $lasterrormsg  = \html_writer::span($this->geterrormsg()) . \html_writer::empty_tag('br');
+                    $lasterrormsg .= \html_writer::span($lasterrorcode) . \html_writer::empty_tag('br');
                     $calltitle = \html_writer::span('Web Service request time:');
                     $calltime = \html_writer::span(" ".$this->curlinfo['total_time']." s");
-                    $information .= \html_writer::div($calltitle . $calltime);
-                    $debuginfo = \html_writer::tag('strong', get_string('debuginfo', 'local_xray') . \html_writer::empty_tag('br'));
-                    $lasterrormsg = $OUTPUT->notification($debuginfo . $information);
+                    $lasterrormsg .= \html_writer::div($calltitle . $calltime);
                     $requestheaders = $this->request_headers();
                     if (!empty($requestheaders)) {
                         $lasterrormsg .= \html_writer::empty_tag('br');
                         $rtitle = \html_writer::span('Request headers:');
-                        $request = \html_writer::tag('div', s($this->request_headers()), array('title' => 'Request headers', 'class' => 'xray-error-linebreaks'));
-                        $rnotification = $OUTPUT->notification($request);
-                        $lasterrormsg .= \html_writer::div($rtitle . $rnotification);
+                        $request = \html_writer::tag('pre', s($this->request_headers()), array('title' => 'Request headers'));
+                        $lasterrormsg .= \html_writer::div($rtitle . $request);
                         $lasterrormsg .= \html_writer::empty_tag('br');
                         $rstitle = \html_writer::span('Response headers:');
-                        $response = \html_writer::tag('div', s($this->response_headers()), array('title' => 'Response headers', 'class' => 'xray-error-linebreaks'));
-                        $rsnotification = $OUTPUT->notification($response);
-                        $lasterrormsg .= \html_writer::div($rstitle . $rsnotification);
+                        $response = \html_writer::tag('pre', s($this->response_headers()), array('title' => 'Response headers'));
+                        $lasterrormsg .= \html_writer::div($rstitle . $response);
                         $lasterrormsg .= \html_writer::empty_tag('br');
-                        $responsebody = \html_writer::tag('div', s($this->lastresponse()), array('title' => 'Response body', 'class' => 'xray-error-linebreaks'));
-                        $rsbodynotification = $OUTPUT->notification($responsebody);
+                        $responsebody = \html_writer::tag('pre', s($this->lastresponse()), array('title' => 'Response body'));
                         $rsbodytitle = \html_writer::span('Response body:');
-                        $lasterrormsg .= \html_writer::div($rsbodytitle . $rsbodynotification);
+                        $lasterrormsg .= \html_writer::div($rsbodytitle . $responsebody);
                     }
                 }
             }
