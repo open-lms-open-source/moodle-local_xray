@@ -412,10 +412,3 @@ a.disabled {
     color: #d6d6d6 !important;
 }
 /**************** End styles for DataTables ****************/
-/*********************** X-ray Errors **********************/
-
-.xray-notification {
-    margin-top: 15px;
-}
-
-/**************** End styles for X-ray Errors **************/
