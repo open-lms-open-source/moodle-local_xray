@@ -3552,7 +3552,11 @@
       "columnHeaders": {
         "courseGrade": "Current course grade",
         "firstname": "Given name",
-        "lastname": "Surname"
+        "lastname": "Surname",
+        "meanQuiz": "Average grade in quizzes",
+        "meanAssign": "Average grade in assignments",
+        "meanForum": "Average grade in forums",
+        "meanOther": "Average grade in other graded items"
       },
       "enableGraph": true,
       "elementType": "xrayTable",
@@ -3708,7 +3712,11 @@
       "columnOrder": [
         "lastname",
         "firstname",
-        "courseGrade"
+        "courseGrade",
+        "meanQuiz",
+        "meanAssign",
+        "meanForum",
+        "meanOther"
       ]
     },
     "element1": {
