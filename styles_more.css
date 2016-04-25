@@ -17,7 +17,19 @@ TODO - make express specific? */
     margin-bottom: -3px;
 }
 
-
+/* Resolve problem using target to other element, in themes with header with position fixed.*/
+.xray-col-4:target:before {
+    content: " ";
+    display: block;
+    height: 3em; /* fixed header height*/
+}
+.xray-reportsname:target:before {
+    content: " ";
+    display: block;
+    height: 3em; /* fixed header height*/
+    margin-top:-3em; /* negative fixed header height */
+}
+/* End Resolve problem usign target.*/
 
 /* Background Colours - Styles from bootstrap */
 .xray-toggleable-table .label{display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em}

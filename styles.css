@@ -10,7 +10,7 @@
   margin: 0;
 }
 
-/* Name elements (tables and graphs) */
+/* Name elements (tables and graphs)  */
 .xray-reportsname {
     /* h3 for screenreaders, but needs to be smaller visually */
     font-size: 1.1em;
@@ -24,14 +24,9 @@
      text-align: left;
  }
 
-/* Toogle tables */
-.xray-table-title-link.xray-reportsname {
+.xray-table-title-link {
     background: transparent url([[pix:local_xray|plus]]) 0 0 no-repeat;
     padding-left: 2em;
-}
-
-.xray-reportsname:target {
-    margin-top: 3em !important;
 }
 
 .xray-toggleable-table {

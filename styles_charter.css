@@ -1,15 +1,4 @@
-.xray-headline-number {
-    font-size: 26px;
-    margin-right: 3px;
-}
-
-.xray-headline-icon {
-    height: 26px;
-    width: 26px;
-    margin-bottom: -3px;
-}
-
-/* Resolve problem with header fixed to use target.*/
+/* Resolve problem using target to other element, in themes with header with position fixed.*/
 .xray-col-4:target:before {
     content: " ";
     display: block;
@@ -21,3 +10,4 @@
     height: 3em; /* fixed header height*/
     margin-top:-3em; /* negative fixed header height */
 }
+/* End Resolve problem usign target.*/
