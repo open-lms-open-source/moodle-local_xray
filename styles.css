@@ -30,6 +30,10 @@
     padding-left: 2em;
 }
 
+.xray-reportsname:target {
+    margin-top: 3em !important;
+}
+
 .xray-toggleable-table {
     display: none;
     margin-bottom:12px;
