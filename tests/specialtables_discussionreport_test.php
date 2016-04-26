@@ -75,6 +75,10 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
      */
     public function test_discussionreport_column_creation_from_json_with_data() {
 
+        // Tell the cache to load specific fixture for login.
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo', 'domain-final.json');
+
         // Tell the cache to load specific fixture for discussion report.
         $url = 'http://xrayserver.foo.com/demo/course/'.$this->course->id.'/discussion';
         /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -86,7 +90,7 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
         $urljson = new moodle_url("test.php"); // We don't need set valid url.
         $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek, $urljson);
 
-        $this->assertStringStartsWith('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
+        $this->assertStringStartsWith('<h3 class="xray-reportsname"', $tableoutput);
     }
 
     /**
@@ -94,6 +98,10 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
      * Check if data returned by method with json without data is correct.
      */
     public function test_discussionreport_column_creation_from_json_empty() {
+
+        // Tell the cache to load specific fixture for login.
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo', 'domain-final.json');
 
         // Tell the cache to load specific fixture for discussion report.
         $url = 'http://xrayserver.foo.com/demo/course/'.$this->course->id.'/discussion';
@@ -106,7 +114,7 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
         $urljson = new moodle_url("test.php"); // We don't need set valid url.
         $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek, $urljson);
 
-        $this->assertStringStartsWith('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
+        $this->assertStringStartsWith('<h3 class="xray-reportsname"', $tableoutput);
     }
 
 }
