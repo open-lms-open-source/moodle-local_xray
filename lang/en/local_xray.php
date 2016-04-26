@@ -389,33 +389,33 @@ $string['discussionreport_socialStructure_help'] = 'This diagram shows you who y
     ' shows how connected a student is to the rest of the class. Blue shows the student has an average or a above'.
     ' average connection to the rest of the class. Yellow shows a below average connection. Red shows the student'.
     ' has not connected with the rest of the class yet. "inst" in brackets indicates the instructor(s) of the course,'.
-    ' and names in parentheses indicate persons, who participated in the forum(s), but are not registered as students'.
+    ' and names in parentheses indicate persons, who participated in the forum(s), but are not enrolled as students'.
     ' for this course.';
 $string['discussionreport_socialStructureWordCount_help'] = 'This diagram shows you who your students are talking to'.
     ' and how much they are saying. This is based on the number of words exchanged between two students in discussion'.
     ' posts. Thicker lines indicate more words being used. "inst" in brackets indicates the instructor(s) of the course,'.
-    ' and names in parentheses indicate persons, who participated in the forum(s), but are not registered as students'.
+    ' and names in parentheses indicate persons, who participated in the forum(s), but are not enrolled as students'.
     ' for this course.';
 $string['discussionreport_socialStructureWordContribution_help'] = 'This diagram shows you who your students are'.
     ' talking to and the quality of their contribution. Original contribution is based on a word count with stop'.
     ' words filtered out to determine the ratio of unique words used. Thicker lines indicate more unique words'.
     ' being used. "inst" in brackets indicates the instructor(s) of the course,'.
-    ' and names in parentheses indicate persons, who participated in the forum(s), but are not registered as students'.
+    ' and names in parentheses indicate persons, who participated in the forum(s), but are not enrolled as students'.
     ' for this course.';
 $string['discussionreport_socialStructureWordCTC_help'] = 'This diagram shows you which replies between students'.
     ' are showing evidence of critical thought. This is based on the number of reflective statements used. "inst" in'.
     ' brackets indicates the instructor(s) of the course, and names in parentheses indicate persons, who participated'.
-    ' in the forum(s), but are not registered as students for this course.';
+    ' in the forum(s), but are not enrolled as students for this course.';
 $string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'The heatmaps show how similiar student posts'.
     ' are to others in the class. It shows who the knowlege source is and who is copying them. Original posts are'.
     ' determined by time stamps. Lower values indicate less similarity between posts. Review the posts of students'.
     ' with higher values, they may be quoting other students or plagiarising their work. Names in parentheses'.
-    ' indicate persons, who participated in the forum(s), but are not registered as students for this course.';
+    ' indicate persons, who participated in the forum(s), but are not enrolled as students for this course.';
 $string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'The heatmaps show how similiar student posts are to'.
     ' others in the class, including the instructor. It shows who the knowlege source is and who is copying'.
     ' them. Original posts are determined by time stamps. Lower values indicate less similarity between posts. Review'.
     ' the posts of students with higher values, they may be quoting other students and instructor or plagiarising'.
-    ' their work. Names in parentheses indicate persons, who participated in the forum(s), but are not registered as'.
+    ' their work. Names in parentheses indicate persons, who participated in the forum(s), but are not enrolled as'.
     ' students for this course.';
 $string['discussionreport_discussionSuggestedGrades_help'] = 'This bar plot shows the distribution of suggested'.
     ' grades for the participation in discussion groups. The solid line shows an expected distribution of'.
@@ -448,7 +448,7 @@ $string['discussionreportindividualforum_socialStructure_help'] = 'This diagram 
     ' an average or a above average connection to the rest of the class. Yellow shows a below average connection.'.
     ' Red shows the student has not connected with the rest of the class yet. "inst" in brackets indicates the'.
     ' instructor(s) of the course, and names in parentheses indicate persons, who participated in the forum(s), but'.
-    ' are not registered as students for this course.';
+    ' are not enrolled as students for this course.';
 $string['discussionreportindividualforum_wordHistogram_help'] = 'This histogram displays the frequency of the most'.
     ' used words in the forum. Words with a frequency of less than 10 have been excluded.';
 
