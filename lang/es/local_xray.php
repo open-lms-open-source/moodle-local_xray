@@ -398,28 +398,28 @@ $string['discussionreport_socialStructure_help'] = 'Este diagrama muestra a qui�
     ' estudiantes. El color demuestra cuán conectados están sus estudiantes con el resto de la clase. El'.
     ' azul muestra mucha interacción con otros estudiantes, el amarillo por debajo del promedio de interacción'.
     ' y el rojo es de nula interacción. "inst" entre paréntesis es el instructor(es) del curso, y los nombres entre'.
-    ' paréntesis son individuos que participaron en los foros, pero no están registrados como estudiantes del curso.';
+    ' paréntesis son individuos que participaron en los foros, pero no están enrolados como estudiantes del curso.';
 $string['discussionreport_socialStructureWordCount_help'] = 'Este diagrama muestra a quién habla cada estudiante'.
     ' y lo mucho que está diciendo. Estos valores se obtienen del conteo de palabras intercambiadas entre los'.
     ' estudiantes. Las líneas más gruesas indican mayor utilización de palabras en el intercambio de'.
     ' posteos. "inst" entre paréntesis es el instructor(es) del curso, y los nombres entre paréntesis son individuos'.
-    ' que participaron en los foros, pero no están registrados como estudiantes del curso.';
+    ' que participaron en los foros, pero no están enrolados como estudiantes del curso.';
 $string['discussionreport_socialStructureWordContribution_help'] = 'Este diagrama muestra quién habla a quién entre'.
     ' los estudiantes, junto con la calidad de su contribución. La contribución original se obtiene del conteo'.
     ' de palabras filtradas como únicas en cuanto a su nivel de utilización. Las líneas más gruesas indican'.
     ' la cantidad de palabras únicas utilizadas. "inst" entre paréntesis es el instructor(es) del curso, y los'.
-    ' nombres entre paréntesis son individuos que participaron en los foros, pero no están registrados como'.
+    ' nombres entre paréntesis son individuos que participaron en los foros, pero no están enrolados como'.
     ' estudiantes del curso.';
 $string['discussionreport_socialStructureWordCTC_help'] = 'Este diagrama muestra en cuáles de las respuestas de los'.
     ' estudiantes se observa un pensamiento crítico. Esto está basado en el número de posteos reflexivos. "inst"'.
     ' entre paréntesis es el instructor(es) del curso, y los nombres entre paréntesis son individuos que participaron'.
-    ' en los foros, pero no están registrados como estudiantes del curso.';
+    ' en los foros, pero no están enrolados como estudiantes del curso.';
 $string['discussionreport_endogenicPlagiarismStudentsHeatmap_help'] = 'Los mapas de temperatura muestran cuán'.
     ' similares son los posteos entre los estudiantes de la clase. Este esquema demuestra quién fue la fuente'.
     ' de un profundo conocimiento y quién está copiando los posteos de otros. Los posteos originales están'.
     ' determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante revisar'.
     ' los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros estudiantes.'.
-    ' Los nombres entre paréntesis son individuos que participaron en los foros, pero no están registrados como'.
+    ' Los nombres entre paréntesis son individuos que participaron en los foros, pero no están enrolados como'.
     ' estudiantes del curso.';
 $string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'Los mapas de temperatura muestran cuán similares'.
     ' son los posteos entre los estudiantes de la clase, incluyendo al instructor. Este esquema demuestra quién'.
@@ -427,7 +427,7 @@ $string['discussionreport_endogenicPlagiarismHeatmap_help'] = 'Los mapas de temp
     ' están determinadas por las marcas de tiempo. Los valores más bajos indican menos similitud. Es importante'.
     ' revisar los posteos de estudiantes con valores más altos ya que pueden estar citando o plagiando a otros'.
     ' estudiantes y al instructor. Los nombres entre paréntesis son individuos que participaron en los foros, pero'.
-    ' no están registrados como estudiantes del curso.';
+    ' no están enrolados como estudiantes del curso.';
 $string['discussionreport_discussionSuggestedGrades_help'] = 'Este diagrama de barras muestra la distribución'.
     ' de las calificaciones sugeridas para la participación grupos de discusión. La línea continua muestra la'.
     ' distribución esperada de las calificaciones, con una calificación promedio de C. La línea de puntos muestra'.
@@ -447,7 +447,7 @@ $string['discussionreportindividual_socialStructure_help'] = 'Este diagrama repr
     ' estudiantes que están por arriba o dentro del promedio de interacción. En amarillo vemos los que se encuentran'.
     ' un poco por debajo de ese promedio y en rojo observamos a aquellos estudiantes con un nivel de interacción muy'.
     ' bajo, o aún no han interactuado con el resto de la clase. "inst" entre paréntesis indica "instructor(es)", y'.
-    ' los nombres en paréntesis indican personas que participaron en el foro de discusión pero no se han registrado'.
+    ' los nombres en paréntesis indican personas que participaron en el foro de discusión pero no se han enrolado'.
     ' en el curso.';
 $string['discussionreportindividual_wordHistogram_help'] = 'Este histograma representa la frecuenta de palabras más'.
     ' utilizadas en el foro. Las palabras con una frecuencia menor a 10 han sido excluidas.';
