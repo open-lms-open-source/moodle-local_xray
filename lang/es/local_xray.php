@@ -237,7 +237,7 @@ $string['activityreport_studentList'] = 'Métricas de actividad'; // Activity re
 $string['risk_nonStarters'] = 'Estudiantes inactivos'; // Risk report.
 $string['risk_riskMeasures'] = 'Métricas de riesgo'; // Risk report.
 $string['gradebookreport_courseGradeTable'] = 'Calificaciones de los estudiantes'; // Gradebook report.
-$string['gradebookreport_gradableItemsTable'] = 'Resumen de ejercicios'; // Gradebook report.
+$string['gradebookreport_gradableItemsTable'] = 'Resumen de items calificables'; // Gradebook report.
 $string['discussionreport_discussionMetrics'] = 'Métricas de participación'; // Discussion report.
 $string['discussionreport_discussionActivityByWeek'] = 'Actividad semanal'; // Discussion report.
 $string['discussionreport_studentDiscussionGrades'] = 'Calificaciones recomendadas'; // Discussion report.
@@ -255,12 +255,12 @@ $string['risk_riskMeasures_help'] = 'Esta tabla ayuda a identificar a los estudi
     ' de dejar el curso, retirarse de la clase o abandonar la escuela. Los números más altos indican mayor riesgo.'.
     ' El riesgo total está basado en las calificaciones de los estudiantes (Riesgo Académico), así como también en'.
     ' su participación en los foros de discusión (Riesgo Social).'; // Risk report.
-$string['gradebookreport_courseGradeTable_help'] = 'Esta tabla muestra el desempeño de los estudiantes en los exámenes y'.
-    ' ejercicios del curso. Se provee un puntaje estandarizado para cada estudiante. Esto demuestra la performance'.
-    ' del mismo en comparación con la media de la clase. '; // Gradebook report.
-$string['gradebookreport_gradableItemsTable_help'] = 'Esta tabla muestra el desempeño promedio de los estudiantes para'.
-    ' cada examen o ejercicio. Se observa la puntuación de ese examen comparada con el puntaje acumulado hasta el'.
-    ' momento. Los porcentajes más altos indican estudiantes con mejor rendimiento.'; // Gradebook report.
+$string['gradebookreport_courseGradeTable_help'] = 'Esta tabla nos muestra el desempeño de los estudiantes en los'.
+    ' items calificables del curso. Para cada estudiante se muestra un puntaje porcentual comparado con el puntaje'.
+    ' promedio de la clase para ese item.'; // Gradebook report.
+$string['gradebookreport_gradableItemsTable_help'] = 'Esta tabla muestra el desempeño de los estudiantes con un'.
+    ' porcentaje para cada item. Además nos muestra la relación entre ese item con el desempeño general del'.
+    ' estudiante hasta el momento.'; // Gradebook report.
 $string['discussionreport_discussionMetrics_help'] = 'Esta tabla muestra cuánto participa un estudiante en las'.
     ' discusiones. Los puntajes para la contribución original y el pensamiento crítico, están determinados por'.
     ' el análisis de las palabras utilizadas por los estudiantes. La contribución original se basa en el conteo'.
