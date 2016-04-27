@@ -216,11 +216,12 @@ class local_xray_controller_reports extends mr_controller {
      * @return string
      */
     public function print_error($errorstring, $debuginfo = null) {
-        global $CFG;
-        $baserr = get_string($errorstring, $this->component);
+        global $CFG, $OUTPUT;
+
+        $baserr = get_string($errorstring, $this->component) . \html_writer::empty_tag('br') . \html_writer::empty_tag('br');
         if (!empty($debuginfo) && isset($CFG->debugdisplay) && $CFG->debugdisplay && ($CFG->debug == DEBUG_DEVELOPER)) {
-            $baserr .= print_collapsible_region($debuginfo, '', 'error_xray',
-                                                get_string('debuginfo', $this->component), '', true, true);
+            $debuginfotitle = \html_writer::tag('strong', get_string('debuginfo', $this->component)) . \html_writer::empty_tag('br');
+            $baserr .= $OUTPUT->notification($debuginfotitle . $debuginfo);
         }
         $output = $this->output->error_text($baserr);
         return $output;

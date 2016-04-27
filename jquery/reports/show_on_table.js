@@ -14,7 +14,7 @@ function local_xray_show_on_table(YUI, data) {
 
         // Error to load data in datatables. Show message error and hide table. xray-js-table-
         $("#xray-js-table-" + data.id).on('error.dt', function (e, settings, techNote, message) {
-            $("#xray-js-table-" + data.id + "_wrapper").html("<p class='xray_error_datatables'>" + data.errorMessage + "</p>");
+            $("#xray-js-table-" + data.id + "_wrapper").html(data.errorMessage);
         });
 
         $("#xray-js-table-" + data.id).dataTable({

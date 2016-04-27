@@ -535,7 +535,7 @@ class local_xray_renderer extends plugin_renderer_base {
                     if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
                         $headerdata .= $this->dashboard_xray_output($dashboarddata);
                     } else {
-                        $headerdata .= html_writer::div(get_string('error_xray', 'local_xray'), 'xray-headline-errortoconnect');
+                        $headerdata .= $OUTPUT->notification(get_string('error_xray', 'local_xray'));
                     }
                 }
 

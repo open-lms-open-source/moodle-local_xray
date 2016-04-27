@@ -38,7 +38,7 @@ $string['displaymenu'] = 'Mostrar menu de reportes.';
 $string['displaymenu_desc'] = 'Controlar la visualización del menu de reportes en página principal del curso.';
 $string['displayheaderdata'] = 'Mostrar Análisis';
 $string['displayheaderdata_desc'] = 'Controla la visualización de Análisis del curso en la página principal del curso.';
-$string['debuginfo'] = 'Información';
+$string['debuginfo'] = 'Información:';
 $string['cachedef_request'] = 'X-Ray caché de los pedidos';
 
 /* Capabilities */
