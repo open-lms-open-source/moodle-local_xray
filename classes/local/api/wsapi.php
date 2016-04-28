@@ -73,7 +73,6 @@ abstract class wsapi {
             }
         }
 
-        /* @var bool $result */
         return $result;
     }
 
@@ -96,7 +95,6 @@ abstract class wsapi {
             }
         }
 
-        /* @var bool $result */
         return $result;
     }
 

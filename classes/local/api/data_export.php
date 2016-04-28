@@ -50,7 +50,7 @@ class data_export {
     protected static $counters = array();
 
     /**
-     * @param string $base
+     * @param  string $base
      * @return string
      */
     public static function get_maxdate_setting($base) {
@@ -87,9 +87,9 @@ class data_export {
     }
 
     /**
-     * @param $fieldname
-     * @param bool|true $doalias
-     * @param null $alias - If alias is null original fieldname is used
+     * @param  string $fieldname
+     * @param  bool   $doalias
+     * @param  null   $alias - If alias is null original fieldname is used
      * @return string
      */
     public static function to_timestamp($fieldname, $doalias = true, $alias = null) {
@@ -125,7 +125,7 @@ class data_export {
     }
 
     /**
-     * @param array $addmore
+     * @param  array $addmore
      * @return array
      */
     public static function default_params($addmore = null) {
@@ -137,12 +137,12 @@ class data_export {
     }
 
     /**
-     * @param string      $field1
-     * @param null|string $field2
-     * @param int         $from
-     * @param null|int    $to
-     * @param string      $fn
-     * @param null|string $idfield
+     * @param  string $field1
+     * @param  string $field2
+     * @param  int    $from
+     * @param  int    $to
+     * @param  string $fn
+     * @param  string $idfield
      * @return array
      */
     public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id') {
@@ -213,8 +213,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function coursecategories($timest, $timeend, $dir) {
@@ -235,8 +235,8 @@ class data_export {
 
     /**
      * Deleted course categories
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function coursecategories_delete($timest, $timeend, $dir) {
@@ -255,8 +255,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function courseinfo($timest, $timeend, $dir) {
@@ -292,8 +292,8 @@ class data_export {
     /**
      * Deleted courses
      *
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function courseinfo_delete($timest, $timeend, $dir) {
@@ -312,8 +312,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function userlist($timest, $timeend, $dir) {
@@ -347,8 +347,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function enrolment($timest, $timeend, $dir) {
@@ -375,8 +375,8 @@ class data_export {
 
     /**
      * Removed role assignments within a course
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function enrolment_delete($timest, $timeend, $dir) {
@@ -492,8 +492,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function forums($timest, $timeend, $dir) {
@@ -522,8 +522,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function threads($timest, $timeend, $dir) {
@@ -549,8 +549,8 @@ class data_export {
     /**
      * Deleted discussions
      *
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function threads_delete($timest, $timeend, $dir) {
@@ -570,8 +570,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function posts($timest, $timeend, $dir) {
@@ -610,9 +610,9 @@ class data_export {
 
     /**
      * Posts delete
-     * @param $timest
-     * @param $timeend
-     * @param $dir
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
      */
     public static function posts_delete($timest, $timeend, $dir) {
         $sqltimedeleted = self::to_timestamp('timedeleted');
@@ -632,8 +632,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function hsuforums($timest, $timeend, $dir) {
@@ -662,8 +662,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function hsuthreads($timest, $timeend, $dir) {
@@ -689,8 +689,8 @@ class data_export {
     /**
      * Advanced forums discussion delete
      *
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function hsuthreads_delete($timest, $timeend, $dir) {
@@ -710,8 +710,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function hsuposts($timest, $timeend, $dir) {
@@ -751,8 +751,8 @@ class data_export {
     /**
      * Deleted advanced forum posts
      *
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function hsuposts_delete($timest, $timeend, $dir) {
@@ -773,8 +773,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function quiz($timest, $timeend, $dir) {
@@ -804,8 +804,8 @@ class data_export {
     /**
      * Deleted course modules (activities)
      *
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function activity_delete($timest, $timeend, $dir) {
@@ -825,8 +825,8 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function grades($timest, $timeend, $dir) {
@@ -839,6 +839,7 @@ class data_export {
                  gg.id,
                  gg.userid AS participantid,
                  cm.id AS activityid,
+                 gi.id AS gradeitemid,
                  gi.courseid,
                  gi.itemname,
                  CASE
@@ -1035,7 +1036,7 @@ class data_export {
             $basefile = self::generate_filename($clientid);
             $archivefile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
             $destfile = $clientid . '/' . $basefile;
-            /* @var \tgz_packer $tgzpacker */
+            /** @var \tgz_packer $tgzpacker */
             $tgzpacker = get_file_packer('application/x-gzip');
             $result = $tgzpacker->archive_to_pathname($files, $archivefile);
             if (!$result) {
@@ -1094,6 +1095,9 @@ class data_export {
         }
     }
 
+    /**
+     * @param string $text
+     */
     protected static function mtrace($text) {
         if (!PHPUNIT_TEST) {
             mtrace($text);
@@ -1101,20 +1105,22 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function export_csv($timest, $timeend, $dir) {
         self::$meta = array();
 
-        /* @var array $plugins */
+        /** @var array $plugins */
         $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
-        /* @var array $logstores */
+        /** @var array $logstores */
         $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
 
-        $timeframe = (int)get_config(self::PLUGIN, 'exporttime_hours') * HOURSECS +
-                     (int)get_config(self::PLUGIN, 'exporttime_minutes') * MINSECS;
+        $hours = (int)get_config(self::PLUGIN, 'exporttime_hours');
+        $minutes = (int)get_config(self::PLUGIN, 'exporttime_minutes');
+        $timeframe = ($hours * HOURSECS) + ($minutes * MINSECS);
+
         // In case timeframe is 0 - there would be no limit to the execution.
         timer::start($timeframe);
 

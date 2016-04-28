@@ -192,37 +192,38 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
                 $first = false;
                 continue;
             }
-            // Expect 13 items.
-            $this->assertEquals(13, count($item));
+            // Expect 14 items.
+            $this->assertEquals(14, count($item));
             $this->assertInternalType('numeric', $item[0]);
             $this->assertInternalType('numeric', $item[1]);
             if (!empty($item[2])) {
                 $this->assertInternalType('numeric', $item[2]);
             }
             $this->assertInternalType('numeric', $item[3]);
-            if (!empty($item[4])) {
-                $this->assertInternalType('string', $item[4]);
+            $this->assertInternalType('numeric', $item[4]);
+            if (!empty($item[5])) {
+                $this->assertInternalType('string', $item[5]);
             }
-            $this->assertInternalType('string' , $item[5]);
-            $this->assertInternalType('numeric', $item[6]);
+            $this->assertInternalType('string' , $item[6]);
             $this->assertInternalType('numeric', $item[7]);
-            if (!empty($item[8])) {
-                $this->assertInternalType('numeric', $item[8]);
+            $this->assertInternalType('numeric', $item[8]);
+            if (!empty($item[9])) {
+                $this->assertInternalType('numeric', $item[9]);
             }
-            $this->assertInternalType('numeric', $item[9]);
             $this->assertInternalType('numeric', $item[10]);
-            if (!empty($item[11])) {
-                $this->assertInternalType('numeric', $item[11]);
+            $this->assertInternalType('numeric', $item[11]);
+            if (!empty($item[12])) {
+                $this->assertInternalType('numeric', $item[12]);
             }
-            $this->assertInternalType('numeric', $item[12]);
-            $this->assertRegExp('/^(quiz|course)$/', $item[5]);
-            $this->assertEquals(($item[5] == 'course') ? 500.0 : 100.0 , (float)$item[6]);
-            $this->assertEquals(0.0   , (float)$item[7]);
-            if (!empty($item[8])) {
-                $this->assertEquals(80.0, $item[8]);
+            $this->assertInternalType('numeric', $item[13]);
+            $this->assertRegExp('/^(quiz|course)$/', $item[6]);
+            $this->assertEquals(($item[6] == 'course') ? 500.0 : 100.0 , (float)$item[7]);
+            $this->assertEquals(0.0   , (float)$item[8]);
+            if (!empty($item[9])) {
+                $this->assertEquals(80.0, $item[9]);
             }
-            $this->assertEquals(($item[5] == 'course') ? 400.0 : 80.0 , (float)$item[9]);
-            $this->assertEquals(0     , $item[10]);
+            $this->assertEquals(($item[6] == 'course') ? 400.0 : 80.0 , (float)$item[10]);
+            $this->assertEquals(0     , $item[11]);
         }
     }
 
