@@ -129,14 +129,14 @@ Feature: The headline data should be present in the course page for manager, edi
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
-    Then ".xray-headline-errortoconnect" "css_element" should exist
+    Then I should see "Can’t connect to X-Ray Learning Analytics, please try reloading the page. If you still can’t connect, contact your system administrator."
     And "h4 .x-ray-icon-title" "css_element" should exist
     And "#xray-nav-headline" "css_element" should not exist
     # Headline is displayed.
     Then the following config values are set as admin:
       | xrayclientid | datapushdemo | local_xray |
     And I reload the page
-    Then ".xray-headline-errortoconnect" "css_element" should not exist
+    Then I should not see "Can’t connect to X-Ray Learning Analytics, please try reloading the page. If you still can’t connect, contact your system administrator."
     And "h4 .x-ray-icon-title" "css_element" should exist
     And "#xray-nav-headline" "css_element" should exist
     # Disabled menu.
