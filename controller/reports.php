@@ -494,6 +494,10 @@ class local_xray_controller_reports extends mr_controller {
                 switch ($column) {
                     // Column Current course grade.
                     case 'courseGrade':
+                    case 'meanQuiz':
+                    case 'meanAssign':
+                    case 'meanForum':
+                    case 'meanOther':
                         // It should be numeric.
                         if (isset($value) && is_numeric(trim($value))) {
                             $roundvalue = round($value, 2);
