@@ -86,7 +86,7 @@ class local_xray_tables_reports_testcase extends local_xray_base_testcase {
         $tableoutput = $this->renderer->standard_table((array) $datatable);
 
         // Check if h3 element contains class "xray-table-title-link xray-reportsname".
-        $this->assertContains('<h3 class="xray-table-title-link xray-reportsname">', $tableoutput);
+        $this->assertContains('<h3 class="xray-reportsname"', $tableoutput);
 
         // Check if exist div with class toggletable.
         $this->assertContains('<div id="studentDiscussionGrades" class="xray-toggleable-table"', $tableoutput);
@@ -95,7 +95,7 @@ class local_xray_tables_reports_testcase extends local_xray_base_testcase {
         $this->assertContains('<table id="xray-js-table-studentDiscussionGrades', $tableoutput);
 
         // Check if exist button for close the table.
-        $this->assertContains('<div class="xray-closetable"><a href="#">Close table</a></div>', $tableoutput);
+        $this->assertContains('<div class="xray-closetable"><a href="#studentDiscussionGrades-toggle">Close table</a></div>', $tableoutput);
 
     }
 }

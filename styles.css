@@ -10,7 +10,7 @@
   margin: 0;
 }
 
-/* Name elements (tables and graphs) */
+/* Name elements (tables and graphs)  */
 .xray-reportsname {
     /* h3 for screenreaders, but needs to be smaller visually */
     font-size: 1.1em;
@@ -24,8 +24,7 @@
      text-align: left;
  }
 
-/* Toogle tables */
-.xray-table-title-link.xray-reportsname {
+.xray-table-title-link {
     background: transparent url([[pix:local_xray|plus]]) 0 0 no-repeat;
     padding-left: 2em;
 }
@@ -89,6 +88,16 @@
     font-size: 11px;
     margin: auto;
     padding: 100px 10px;
+}
+/* Force to tables to left align and padding 10px in all themes. */
+#page-local-xray-view .dataTable th {
+    padding: 10px !important;
+    text-align: left !important;
+}
+
+#page-local-xray-view .dataTable td {
+    padding: 10px !important;
+    text-align: left !important;
 }
 /** End Wrapper Datatables**/
 
@@ -191,8 +200,8 @@ a.xray-headline-link:hover {
     color:#F86B69 !important;
     padding:5px;
 }
-
-.xray-headline-status-hide {
+/* Class to use in element shown only in screen readers. */
+.xray-screen-reader-only {
     position: absolute !important;
     clip: rect(1px, 1px, 1px, 1px);
     height: 1px;

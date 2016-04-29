@@ -79,7 +79,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = "";
         // List Graph.
         $title = get_string($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
-        $output .= html_writer::start_tag('div', array('class' => 'xray-col-4 '.$element->elementName));
+        $output .= html_writer::start_tag('div', array('class' => 'xray-col-4', 'id' => $element->elementName));
         $output .= html_writer::tag('h3', $title, array("class" => "xray-reportsname"));
 
         $imgurl = false;
@@ -103,8 +103,12 @@ class local_xray_renderer extends plugin_renderer_base {
                 $paramsurl = array_merge($paramsurl, $extraparamurlaccessible);
             }
             $urlaccessible = new moodle_url("/local/xray/view.php", $paramsurl);
-
-            $linkaccessibleversion = html_writer::link($urlaccessible, get_string("accessible_view_data", $plugin),
+            // Part of titiel for accessible data, show title of graph, only visible for screenreaders.
+            $titleforreader = html_writer::span(get_string("accessible_view_data_for", $plugin, $title),
+                "xray-screen-reader-only");
+            //  Title visible of link to accessible data.
+            $visibletitleaccessible = get_string("accessible_view_data", $plugin);
+            $linkaccessibleversion = html_writer::link($urlaccessible, $visibletitleaccessible.$titleforreader,
                 array("target" => "_accessibledata",
                     "class" => "xray-accessible-view-data"));
             $output .= html_writer::tag('span', $linkaccessibleversion);
@@ -112,8 +116,9 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Show image.
         if (!empty($imgurl)) {
-            // Show image.
-            $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName , 'class' => 'xray-graph-box-link'));
+            // Show image (will open in a tooltip).
+            $output .= html_writer::start_tag('a', array('href' => '#'.$element->elementName."-tooltip" ,
+                'class' => 'xray-graph-box-link'));
             $output .= html_writer::start_tag('span',
                 array('class' => 'xray-graph-small-image',
                     'style' => 'background-image: url('.$imgurl.');'));
@@ -127,10 +132,11 @@ class local_xray_renderer extends plugin_renderer_base {
 
         $output .= html_writer::end_tag('div');
 
-        // Show Graph.
+        // Show Graph (in tooltip).
         // Get Tooltip.
         if (!empty($imgurl)) {
-            $output .= html_writer::start_tag('div', array('id' => $element->elementName, 'class' => 'xray-graph-background'));
+            $output .= html_writer::start_tag('div', array('id' => $element->elementName."-tooltip",
+                'class' => 'xray-graph-background'));
             $output .= html_writer::start_tag('div', array('class' => 'xray-graph-view'));
 
             $helpicon = "";
@@ -145,7 +151,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $output .= html_writer::img($imgurl, '', array('class' => 'xray-graph-image'));
             $output .= html_writer::end_tag('div');
             $output .= html_writer::tag('a', '' , array(
-                'href' => '#',
+                'href' => '#'.$element->elementName,
                 'class' => 'xray-close-link',
                 'title' => get_string('close', 'local_xray')));
 
@@ -196,8 +202,10 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Table Title with link to open it.
         $title = get_string($PAGE->url->get_param("controller")."_".$datatable['id'], 'local_xray');
-        $link = html_writer::tag("a", $title, array('href' => "#{$datatable['id']}"));
-        $output .= html_writer::tag('h3', $link, array('class' => 'xray-table-title-link xray-reportsname'));
+        $link = html_writer::tag("a", $title, array('href' => "#{$datatable['id']}", 'class' => 'xray-table-title-link'));
+        $output .= html_writer::tag('h3',
+            $link,
+            array('class' => 'xray-reportsname', 'id' => "{$datatable['id']}-toggle"));
 
         // Table.
         $output .= html_writer::start_tag('div', array(
@@ -226,7 +234,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::end_tag("table");
         // Close Table button.
         $output .= html_writer::start_tag('div', array('class' => 'xray-closetable'));
-        $output .= html_writer::tag('a', get_string('closetable', 'local_xray'), array('href' => "#"));
+        $output .= html_writer::tag('a',
+            get_string('closetable', 'local_xray'),
+            array('href' => "#{$datatable['id']}-toggle")); // To close, go to original div.
         $output .= html_writer::end_tag('div');
         $output .= html_writer::end_tag('div');
         // End Table.
@@ -474,7 +484,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 "title" => get_string('link_gotoreport', 'local_xray')));
 
         // Text only for reader screens.
-        $arrowreader = html_writer::tag("span", "", array("class" => "xray-headline-status-hide", "title" => $stylestatus[1]));
+        $arrowreader = html_writer::tag("span", "", array("class" => "xray-screen-reader-only", "title" => $stylestatus[1]));
         // Text for description and text of week before.
         $textdesc = html_writer::tag("p", $text.$arrowreader, array("class" => "xray-headline-desc"));
 
