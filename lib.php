@@ -208,3 +208,132 @@ function local_xray_extend_settings_navigation(settings_navigation $settings, co
 function local_xray_extend_navigation(global_navigation $nav) {
     local_xray_extends_navigation($nav);
 }
+
+/**
+ * Listener for course delete event
+ *
+ * @param \core\event\course_deleted $event
+ */
+function local_xray_course_deleted(\core\event\course_deleted $event) {
+    global $DB;
+    $data = [
+        'course'      => $event->courseid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_course', $data, false);
+}
+
+/**
+ * Listener for course category delete
+ *
+ * @param \core\event\course_category_deleted $event
+ */
+function local_xray_course_category_deleted(\core\event\course_category_deleted $event) {
+    global $DB;
+    $data = [
+        'category'    => $event->objectid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_coursecat', $data, false);
+}
+
+/**
+ * Listener for Advanced forum discussion delete
+ *
+ * @param \mod_hsuforum\event\discussion_deleted $event
+ */
+function local_xray_hsu_discussion_deleted(\mod_hsuforum\event\discussion_deleted $event) {
+    global $DB;
+    $data = [
+        'discussion'  => $event->objectid,
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_hsudisc', $data, false);
+}
+
+/**
+ * Listener for Advanced forum post delete
+ *
+ * @param \mod_hsuforum\event\post_deleted $event
+ */
+function local_xray_hsu_post_deleted(\mod_hsuforum\event\post_deleted $event) {
+    global $DB;
+    $data = [
+        'post'        => $event->objectid,
+        'discussion'  => $event->other['discussionid'],
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_hsupost', $data, false);
+}
+
+/**
+ * Listener for forum discussion delete
+ *
+ * @param \mod_forum\event\discussion_deleted $event
+ */
+function local_xray_discussion_deleted(\mod_forum\event\discussion_deleted $event) {
+    global $DB;
+    $data = [
+        'discussion'  => $event->objectid,
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_disc', $data, false);
+}
+
+/**
+ * Listener for forum post delete
+ *
+ * @param \mod_forum\event\post_deleted $event
+ */
+function local_xray_post_deleted(\mod_forum\event\post_deleted $event) {
+    global $DB;
+    $data = [
+        'post'        => $event->objectid,
+        'discussion'  => $event->other['discussionid'],
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_post', $data, false);
+}
+
+/**
+ * Listener for activity delete from course
+ *
+ * @param \core\event\course_module_deleted $event
+ */
+function local_xray_course_module_deleted(\core\event\course_module_deleted $event) {
+    global $DB;
+    // We handle only gradable activities.
+    if (plugin_supports('mod', $event->other['modulename'], FEATURE_GRADE_HAS_GRADE, false)) {
+        $data = [
+            'cm'          => $event->objectid,
+            'course'      => $event->courseid,
+            'timedeleted' => $event->timecreated
+        ];
+        $DB->insert_record_raw('local_xray_cm', $data, false);
+    }
+}
+
+/**
+ * Listener for role unasignment on a course context ONLY!
+ *
+ * @param \core\event\role_unassigned $event
+ * @throws coding_exception
+ */
+function local_xray_role_unassigned(\core\event\role_unassigned $event) {
+    global $DB;
+    // Strangely can not use course_context::instance_by_id since it throws exception...
+    $courseid = $DB->get_field('context', 'instanceid', ['id' => $event->contextid, 'contextlevel' => CONTEXT_COURSE]);
+    if ($courseid) {
+        $data = [
+            'role'        => $event->objectid,
+            'userid'      => $event->relateduserid,
+            'course'      => $courseid,
+            'timedeleted' => $event->timecreated
+        ];
+        $DB->insert_record_raw('local_xray_roleunas', $data, false);
+    }
+}

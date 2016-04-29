@@ -35,4 +35,13 @@ $tasks = [
         'dayofweek' => '*',
         'month'     => '*'
     ],
+    [
+        'classname' => 'local_xray\task\data_prune_task',
+        'blocking'  => 0,
+        'minute'    => '0',
+        'hour'      => '3',
+        'day'       => '*',
+        'dayofweek' => '6',
+        'month'     => '*'
+    ],
 ];

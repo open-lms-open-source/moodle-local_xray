@@ -181,6 +181,7 @@ $string['unexperror'] = 'Error inesperado';
 $string['syncfailedexplanation'] = 'Fallo al sincronizar datos con X-Ray Learning Analytics.';
 $string['synclog'] = 'Mensaje de información de sincronización de datos con X-Ray Learning Analytics';
 $string['synclogexplanation'] = 'Entrada de registro regular para sincronizar datos.';
+$string['dataprune'] = 'Limpieza de datos obsoletos';
 
 // Course Header.
 $string['atrisk'] = 'En riesgo';

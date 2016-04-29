@@ -50,7 +50,7 @@ class data_export {
     protected static $counters = array();
 
     /**
-     * @param string $base
+     * @param  string $base
      * @return string
      */
     public static function get_maxdate_setting($base) {
@@ -87,9 +87,9 @@ class data_export {
     }
 
     /**
-     * @param $fieldname
-     * @param bool|true $doalias
-     * @param null $alias - If alias is null original fieldname is used
+     * @param  string $fieldname
+     * @param  bool   $doalias
+     * @param  null   $alias - If alias is null original fieldname is used
      * @return string
      */
     public static function to_timestamp($fieldname, $doalias = true, $alias = null) {
@@ -125,7 +125,7 @@ class data_export {
     }
 
     /**
-     * @param array $addmore
+     * @param  array $addmore
      * @return array
      */
     public static function default_params($addmore = null) {
@@ -137,12 +137,12 @@ class data_export {
     }
 
     /**
-     * @param string      $field1
-     * @param null|string $field2
-     * @param int         $from
-     * @param null|int    $to
-     * @param string      $fn
-     * @param null|string $idfield
+     * @param  string $field1
+     * @param  string $field2
+     * @param  int    $from
+     * @param  int    $to
+     * @param  string $fn
+     * @param  string $idfield
      * @return array
      */
     public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id') {
@@ -213,55 +213,74 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function coursecategories($timest, $timeend, $dir) {
-        $timemodified = self::to_timestamp('timemodified');
+        $sqltimemodified = self::to_timestamp('timemodified');
 
         $sql = "
-                SELECT
-                       id,
+                SELECT id,
                        name,
                        description,
-                       {$timemodified},
+                       {$sqltimemodified},
                        timemodified AS traw
-                FROM   {course_categories}
-                WHERE
+                  FROM {course_categories}
+                 WHERE
                        ";
         $wherecond = self::range_where('timemodified', null, $timest, $timeend, __FUNCTION__);
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * Deleted course categories
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function coursecategories_delete($timest, $timeend, $dir) {
+        $sqltimedeleted = self::to_timestamp('timedeleted');
+
+        $sql = "
+                SELECT id,
+                       category,
+                       {$sqltimedeleted},
+                       timedeleted AS traw
+                  FROM {local_xray_coursecat}
+                 WHERE
+                       ";
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function courseinfo($timest, $timeend, $dir) {
-        $startdate = self::to_timestamp('startdate');
-        $timecreated = self::to_timestamp('timecreated');
-        $timemodified = self::to_timestamp('timemodified');
+        $sqlstartdate = self::to_timestamp('startdate');
+        $sqltimecreated = self::to_timestamp('timecreated');
+        $sqltimemodified = self::to_timestamp('timemodified');
 
         $sql = "
-            SELECT
-                   id,
+            SELECT id,
                    fullname,
                    shortname,
                    summary,
                    category,
                    format,
                    visible,
-                   {$startdate},
-                   {$timecreated},
-                   {$timemodified},
+                   {$sqlstartdate},
+                   {$sqltimecreated},
+                   {$sqltimemodified},
                    CASE
                         WHEN timemodified = 0 THEN timecreated
                         ELSE timemodified
                    END AS traw
-           FROM    {course}
-           WHERE
+              FROM {course}
+             WHERE
                    (category <> 0)
                    AND
                    ";
@@ -271,37 +290,56 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * Deleted courses
+     *
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function courseinfo_delete($timest, $timeend, $dir) {
+        $sqltimedeleted = self::to_timestamp('timedeleted');
+
+        $sql = "
+                SELECT id,
+                       course,
+                       {$sqltimedeleted},
+                       timedeleted AS traw
+                  FROM {local_xray_course}
+                 WHERE
+                       ";
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function userlist($timest, $timeend, $dir) {
-        $timecreated = self::to_timestamp('timecreated');
-        $timemodified = self::to_timestamp('timemodified');
-        $firstaccess = self::to_timestamp('firstaccess');
-        $lastaccess = self::to_timestamp('lastaccess');
+        $sqltimecreated = self::to_timestamp('timecreated');
+        $sqltimemodified = self::to_timestamp('timemodified');
+        $sqlfirstaccess = self::to_timestamp('firstaccess');
+        $sqllastaccess = self::to_timestamp('lastaccess');
 
         $sql = "
-                SELECT
-                       id,
+                SELECT id,
                        firstname,
                        lastname,
                        '' AS gender,
                        email,
                        suspended,
                        deleted,
-                       {$timecreated},
-                       {$timemodified},
-                       {$firstaccess},
-                       {$lastaccess},
+                       {$sqltimecreated},
+                       {$sqltimemodified},
+                       {$sqlfirstaccess},
+                       {$sqllastaccess},
                        CASE
                             WHEN timemodified = 0 THEN timecreated
                             ELSE timemodified
                        END AS traw
-                FROM   {user}
-                WHERE
-                       deleted = 0
-                       AND
+                  FROM {user}
+                 WHERE
                        ";
 
         $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
@@ -309,30 +347,52 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function enrolment($timest, $timeend, $dir) {
         $wherecond = self::range_where('l.timemodified', null, $timest, $timeend, __FUNCTION__, 'l.id');
-        $timemodified = self::to_timestamp('l.timemodified', true, 'timemodified');
+        $sqltimemodified = self::to_timestamp('l.timemodified', true, 'timemodified');
         $sql = "
-                SELECT
-                           l.id AS id,
-                           ctx.instanceid AS courseid,
-                           l.roleid,
-                           l.userid AS participantid,
-                           {$timemodified},
-                           l.timemodified AS traw
-                FROM       {role_assignments} l
-                JOIN       {context}          ctx  ON l.contextid = ctx.id AND ctx.contextlevel= 50
-                WHERE
-                           EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = 0)
-                           AND
-                           EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
-                           AND
+                SELECT l.id AS id,
+                       ctx.instanceid AS courseid,
+                       l.roleid,
+                       l.userid AS participantid,
+                       {$sqltimemodified},
+                       l.timemodified AS traw
+                  FROM {role_assignments} l
+                  JOIN {context}          ctx  ON l.contextid = ctx.id AND ctx.contextlevel= 50
+                 WHERE
+                       EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = 0)
+                       AND
+                       EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
+                       AND
                            ";
 
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * Removed role assignments within a course
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function enrolment_delete($timest, $timeend, $dir) {
+        $sqltimedeleted = self::to_timestamp('timedeleted');
+
+        $sql = "
+                SELECT id,
+                       role,
+                       userid,
+                       course,
+                       {$sqltimedeleted},
+                       timedeleted AS traw
+                  FROM {local_xray_roleunas}
+                 WHERE
+                       ";
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
@@ -344,35 +404,36 @@ class data_export {
      * @param string $dir
      */
     public static function accesslog($timest, $timeend, $dir) {
-        $time = self::to_timestamp('l.time', true, 'time');
+        $sqltime = self::to_timestamp('l.time', true, 'time');
         $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id');
 
         $sql = "
-            SELECT
-                   l.id,
+            SELECT l.id,
                    l.userid AS participantid,
                    l.course AS courseid,
-                   {$time},
+                   {$sqltime},
                    l.ip,
                    l.action,
                    l.info,
                    l.module,
                    l.url,
                    l.time AS traw
-            FROM   {log} l
-            WHERE
+              FROM {log} l
+             WHERE
                    EXISTS (
-                        SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
-                        FROM {role_assignments} ra
-                        JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
-                        WHERE
-                              EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
-                              AND
-                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = 0)
-                              AND
-                              ctx.instanceid = l.course
-                              AND
-                              ra.userid = l.userid
+                        SELECT DISTINCT
+                               ra.userid,
+                               ctx.instanceid AS courseid
+                          FROM {role_assignments} ra
+                          JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
+                         WHERE
+                               EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
+                               AND
+                               EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = 0)
+                               AND
+                               ctx.instanceid = l.course
+                               AND
+                               ra.userid = l.userid
                    )
                    AND
           ";
@@ -389,15 +450,14 @@ class data_export {
      * @param string $dir
      */
     public static function standardlog($timest, $timeend, $dir) {
-        $time = self::to_timestamp('l.timecreated', true, 'time');
+        $sqltime = self::to_timestamp('l.timecreated', true, 'time');
         $wherecond = self::range_where('l.timecreated', null, $timest, $timeend, __FUNCTION__, 'l.id');
 
         $sql = "
-            SELECT
-                   l.id,
+            SELECT l.id,
                    l.userid AS participantid,
                    l.courseid AS courseid,
-                   {$time},
+                   {$sqltime},
                    l.ip,
                    l.action,
                    l.other AS info,
@@ -406,22 +466,24 @@ class data_export {
                    l.objecttable,
                    l.objectid,
                    l.timecreated AS traw
-            FROM   {logstore_standard_log} l
-            WHERE
+              FROM {logstore_standard_log} l
+             WHERE
                    EXISTS (
-                        SELECT DISTINCT ra.userid, ctx.instanceid AS courseid
-                        FROM {role_assignments} ra
-                        JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
-                        WHERE
-                              EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
-                              AND
-                              EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = 0)
-                              AND
-                              ctx.instanceid = l.courseid
-                              AND
-                              ra.userid = l.userid
-                              AND
-                              l.courseid <> 0
+                        SELECT DISTINCT
+                               ra.userid,
+                               ctx.instanceid AS courseid
+                          FROM {role_assignments} ra
+                          JOIN {context}          ctx ON ra.contextid = ctx.id AND ctx.contextlevel = 50
+                         WHERE
+                               EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
+                               AND
+                               EXISTS (SELECT u.id FROM {user}   u WHERE ra.userid = u.id      AND u.deleted = 0)
+                               AND
+                               ctx.instanceid = l.courseid
+                               AND
+                               ra.userid = l.userid
+                               AND
+                               l.courseid <> 0
                    )
                    AND
           ";
@@ -430,27 +492,26 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function forums($timest, $timeend, $dir) {
-        $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
+        $sqltimemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
         $wherecond = self::range_where('f.timemodified', null, $timest, $timeend, __FUNCTION__, 'f.id');
 
         $sql = "
-            SELECT
-                       f.id,
-                       cm.id    AS activityid,
-                       f.course AS courseid,
-                       f.type,
-                       f.name,
-                       f.intro,
-                       {$timemodified},
-                       f.timemodified AS traw
-            FROM       {forum} f
-            JOIN       {course_modules} cm ON cm.instance = f.id
-            WHERE
+            SELECT f.id,
+                   cm.id    AS activityid,
+                   f.course AS courseid,
+                   f.type,
+                   f.name,
+                   f.intro,
+                   {$sqltimemodified},
+                   f.timemodified AS traw
+              FROM {forum} f
+              JOIN {course_modules} cm ON cm.instance = f.id
+             WHERE
                    EXISTS (SELECT c.id FROM {course}   c WHERE f.course = c.id    AND c.category <> 0)
                    AND
                    EXISTS (SELECT mo.id FROM {modules} mo WHERE mo.name = 'forum' AND cm.module = mo.id)
@@ -461,24 +522,23 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function threads($timest, $timeend, $dir) {
-        $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
+        $sqltimemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
         $wherecond = self::range_where('f.timemodified', null, $timest, $timeend, __FUNCTION__, 'f.id');
         $sql = "
-            SELECT
-                   f.id,
+            SELECT f.id,
                    f.forum AS forumid,
                    f.name,
                    f.userid AS participantid,
                    f.groupid,
-                   {$timemodified},
+                   {$sqltimemodified},
                    f.timemodified AS traw
-            FROM   {forum_discussions} f
-            WHERE
+              FROM {forum_discussions} f
+             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    ";
@@ -487,35 +547,57 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * Deleted discussions
+     *
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function threads_delete($timest, $timeend, $dir) {
+        $sqltimedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT id,
+                   discussion,
+                   cm AS activityid,
+                   {$sqltimedeleted},
+                   timedeleted AS traw
+              FROM {local_xray_disc}
+             WHERE
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function posts($timest, $timeend, $dir) {
-        $created = self::to_timestamp('fp.created', true, 'created');
-        $modified = self::to_timestamp('fp.modified', true, 'modified');
+        $sqlcreated = self::to_timestamp('fp.created', true, 'created');
+        $sqlmodified = self::to_timestamp('fp.modified', true, 'modified');
         $wherecond = self::range_where('fp.modified', 'fp.created', $timest, $timeend, __FUNCTION__, 'fp.id');
 
         $sql = "
-            SELECT
-                   fp.id,
+            SELECT fp.id,
                    fp.parent,
                    fp.discussion AS threadid,
                    fp.userid AS participantid,
-                   {$created},
-                   {$modified},
+                   {$sqlcreated},
+                   {$sqlmodified},
                    fp.subject,
                    fp.message,
                    CASE
                         WHEN fp.modified = 0 THEN fp.created
                         ELSE fp.modified
                    END AS traw
-            FROM   {forum_posts} fp
-            WHERE
+              FROM {forum_posts} fp
+             WHERE
                    EXISTS (
                       SELECT fd.id
-                      FROM   {forum_discussions} fd
-                      WHERE
+                        FROM {forum_discussions} fd
+                       WHERE
                              EXISTS (SELECT c.id FROM {course} c WHERE fd.course = c.id AND c.category <> 0)
                              AND
                              fp.discussion = fd.id
@@ -527,27 +609,49 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * Posts delete
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function posts_delete($timest, $timeend, $dir) {
+        $sqltimedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT id,
+                   post,
+                   discussion,
+                   cm AS activityid,
+                   {$sqltimedeleted},
+                   timedeleted AS traw
+              FROM {local_xray_post}
+             WHERE
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function hsuforums($timest, $timeend, $dir) {
-        $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
+        $sqltimemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
         $wherecond = self::range_where('f.timemodified', null, $timest, $timeend, __FUNCTION__, 'f.id');
 
         $sql = "
-            SELECT
-                       f.id,
-                       cm.id    AS activityid,
-                       f.course AS courseid,
-                       f.type,
-                       f.name,
-                       f.intro,
-                       {$timemodified},
-                       f.timemodified AS traw
-            FROM       {hsuforum} f
-            JOIN       {course_modules} cm ON cm.instance = f.id
-            WHERE
+            SELECT f.id,
+                   cm.id    AS activityid,
+                   f.course AS courseid,
+                   f.type,
+                   f.name,
+                   f.intro,
+                   {$sqltimemodified},
+                   f.timemodified AS traw
+              FROM {hsuforum} f
+              JOIN {course_modules} cm ON cm.instance = f.id
+             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    EXISTS (SELECT mo.id FROM {modules} mo WHERE mo.name = 'hsuforum' AND cm.module = mo.id)
@@ -558,24 +662,23 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function hsuthreads($timest, $timeend, $dir) {
-        $timemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
+        $sqltimemodified = self::to_timestamp('f.timemodified', true, 'timemodified');
         $wherecond = self::range_where('f.timemodified', null, $timest, $timeend, __FUNCTION__, 'f.id');
         $sql = "
-            SELECT
-                   f.id,
+            SELECT f.id,
                    f.forum AS forumid,
                    f.name,
                    f.userid AS participantid,
                    f.groupid,
-                   {$timemodified},
+                   {$sqltimemodified},
                    f.timemodified AS traw
-            FROM   {hsuforum_discussions} f
-            WHERE
+              FROM {hsuforum_discussions} f
+             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE f.course = c.id AND c.category <> 0)
                    AND
                    ";
@@ -584,35 +687,57 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * Advanced forums discussion delete
+     *
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function hsuthreads_delete($timest, $timeend, $dir) {
+        $sqltimedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT id,
+                   discussion,
+                   cm AS activityid,
+                   {$sqltimedeleted},
+                   timedeleted AS traw
+              FROM {local_xray_hsudisc}
+             WHERE
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function hsuposts($timest, $timeend, $dir) {
-        $created = self::to_timestamp('fp.created', true, 'created');
-        $modified = self::to_timestamp('fp.modified', true, 'modified');
+        $sqlcreated = self::to_timestamp('fp.created', true, 'created');
+        $sqlmodified = self::to_timestamp('fp.modified', true, 'modified');
         $wherecond = self::range_where('fp.modified', 'fp.created', $timest, $timeend, __FUNCTION__, 'fp.id');
 
         $sql = "
-            SELECT
-                   fp.id,
+            SELECT fp.id,
                    fp.parent,
                    fp.discussion AS threadid,
                    fp.userid AS participantid,
-                   {$created},
-                   {$modified},
+                   {$sqlcreated},
+                   {$sqlmodified},
                    fp.subject,
                    fp.message,
                    CASE
                         WHEN fp.modified = 0 THEN fp.created
                         ELSE fp.modified
                    END AS traw
-            FROM   {hsuforum_posts} fp
-            WHERE
+              FROM {hsuforum_posts} fp
+             WHERE
                    EXISTS (
                       SELECT fd.id
-                      FROM   {hsuforum_discussions} fd
-                      WHERE
+                        FROM {hsuforum_discussions} fd
+                       WHERE
                              EXISTS (SELECT c.id FROM {course} c WHERE fd.course = c.id AND c.category <> 0)
                              AND
                              fp.discussion = fd.id
@@ -624,26 +749,49 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * Deleted advanced forum posts
+     *
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function hsuposts_delete($timest, $timeend, $dir) {
+        $sqltimedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT id,
+                   post,
+                   discussion,
+                   cm AS activityid,
+                   {$sqltimedeleted},
+                   timedeleted AS traw
+              FROM {local_xray_hsupost}
+             WHERE
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function quiz($timest, $timeend, $dir) {
         $wherecond = self::range_where('q.timemodified', 'q.timecreated', $timest, $timeend, __FUNCTION__, 'q.id');
-        $timemodified = self::to_timestamp('q.timemodified', true, 'timemodified');
+        $sqltimemodified = self::to_timestamp('q.timemodified', true, 'timemodified');
         $sql = "
-            SELECT
-                       q.id,
-                       cm.id    AS activityid,
-                       q.course AS courseid,
-                       q.name,
-                       q.attempts,
-                       q.grade,
-                       {$timemodified},
-                       q.timemodified AS traw
-            FROM       {quiz} q
-            JOIN       {course_modules} cm ON cm.instance = q.id
-            WHERE
+            SELECT q.id,
+                   cm.id    AS activityid,
+                   q.course AS courseid,
+                   q.name,
+                   q.attempts,
+                   q.grade,
+                   {$sqltimemodified},
+                   q.timemodified AS traw
+              FROM {quiz} q
+              JOIN {course_modules} cm ON cm.instance = q.id
+             WHERE
                    EXISTS (SELECT c.id FROM {course} c WHERE q.course = c.id AND c.category <> 0)
                    AND
                    EXISTS (SELECT mo.id FROM {modules} mo WHERE mo.name = 'quiz' AND cm.module = mo.id)
@@ -654,8 +802,31 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * Deleted course modules (activities)
+     *
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function activity_delete($timest, $timeend, $dir) {
+        $sqltimedeleted = self::to_timestamp('timedeleted');
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $sql = "
+            SELECT id,
+                   cm as activityid,
+                   course,
+                   {$sqltimedeleted},
+                   timedeleted AS traw
+              FROM {local_xray_cm}
+             WHERE
+                   ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function grades($timest, $timeend, $dir) {
@@ -665,31 +836,32 @@ class data_export {
 
         $sql = "
           SELECT $special
-                     gg.id,
-                     gg.userid AS participantid,
-                     cm.id AS activityid,
-                     gi.courseid,
-                     gi.itemname,
-                     CASE
-                          WHEN gi.itemtype = 'course' THEN gi.itemtype
-                          WHEN gi.itemtype = 'mod'    THEN gi.itemmodule
-                     END AS itemtype,
-                     gg.rawgrademax,
-                     gg.rawgrademin,
-                     gg.rawgrade,
-                     gg.finalgrade,
-                     gg.locktime,
-                     gg.timecreated,
-                     gg.timemodified,
-                     CASE
-                          WHEN COALESCE(gg.timemodified, 0) = 0 THEN gg.timecreated
-                          ELSE gg.timemodified
-                     END AS traw
-          FROM       {grade_grades}   gg
-          JOIN       {grade_items}    gi ON gi.id       = gg.itemid       AND gi.itemtype IN('mod', 'course')
-          LEFT JOIN  {modules}        mo ON mo.name     = gi.itemmodule   AND gi.itemtype = 'mod'
-          LEFT JOIN  {course_modules} cm ON cm.instance = gi.iteminstance AND cm.module   = mo.id AND gi.itemtype = 'mod'
-          WHERE
+                 gg.id,
+                 gg.userid AS participantid,
+                 cm.id AS activityid,
+                 gi.id AS gradeitemid,
+                 gi.courseid,
+                 gi.itemname,
+                 CASE
+                      WHEN gi.itemtype = 'course' THEN gi.itemtype
+                      WHEN gi.itemtype = 'mod'    THEN gi.itemmodule
+                 END AS itemtype,
+                 gg.rawgrademax,
+                 gg.rawgrademin,
+                 gg.rawgrade,
+                 gg.finalgrade,
+                 gg.locktime,
+                 gg.timecreated,
+                 gg.timemodified,
+                 CASE
+                      WHEN COALESCE(gg.timemodified, 0) = 0 THEN gg.timecreated
+                      ELSE gg.timemodified
+                 END AS traw
+            FROM {grade_grades}   gg
+            JOIN {grade_items}    gi ON gi.id       = gg.itemid       AND gi.itemtype IN('mod', 'course')
+       LEFT JOIN {modules}        mo ON mo.name     = gi.itemmodule   AND gi.itemtype = 'mod'
+       LEFT JOIN {course_modules} cm ON cm.instance = gi.iteminstance AND cm.module   = mo.id AND gi.itemtype = 'mod'
+           WHERE
                  gg.finalgrade IS NOT NULL
                  AND
                      ";
@@ -864,7 +1036,7 @@ class data_export {
             $basefile = self::generate_filename($clientid);
             $archivefile = $dirbase . DIRECTORY_SEPARATOR . $basefile;
             $destfile = $clientid . '/' . $basefile;
-            /* @var \tgz_packer $tgzpacker */
+            /** @var \tgz_packer $tgzpacker */
             $tgzpacker = get_file_packer('application/x-gzip');
             $result = $tgzpacker->archive_to_pathname($files, $archivefile);
             if (!$result) {
@@ -923,6 +1095,9 @@ class data_export {
         }
     }
 
+    /**
+     * @param string $text
+     */
     protected static function mtrace($text) {
         if (!PHPUNIT_TEST) {
             mtrace($text);
@@ -930,20 +1105,22 @@ class data_export {
     }
 
     /**
-     * @param int $timest
-     * @param int $timeend
+     * @param int    $timest
+     * @param int    $timeend
      * @param string $dir
      */
     public static function export_csv($timest, $timeend, $dir) {
         self::$meta = array();
 
-        /* @var array $plugins */
+        /** @var array $plugins */
         $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
-        /* @var array $logstores */
+        /** @var array $logstores */
         $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
 
-        $timeframe = (int)get_config(self::PLUGIN, 'exporttime_hours') * HOURSECS +
-                     (int)get_config(self::PLUGIN, 'exporttime_minutes') * MINSECS;
+        $hours = (int)get_config(self::PLUGIN, 'exporttime_hours');
+        $minutes = (int)get_config(self::PLUGIN, 'exporttime_minutes');
+        $timeframe = ($hours * HOURSECS) + ($minutes * MINSECS);
+
         // In case timeframe is 0 - there would be no limit to the execution.
         timer::start($timeframe);
 
@@ -984,6 +1161,21 @@ class data_export {
             self::mtrace('Quiz activity not installed. Skipping.');
         }
         self::grades($timest, $timeend, $dir);
+
+        // Deleted records go here.
+        self::coursecategories_delete($timest, $timeend, $dir);
+        self::courseinfo_delete($timest, $timeend, $dir);
+        self::enrolment_delete($timest, $timeend, $dir);
+        self::activity_delete($timest, $timeend, $dir);
+        if (array_key_exists('forum', $plugins)) {
+            self::threads_delete($timest, $timeend, $dir);
+            self::posts_delete($timest, $timeend, $dir);
+        }
+
+        if (array_key_exists('hsuforum', $plugins)) {
+            self::hsuthreads_delete($timest, $timeend, $dir);
+            self::hsuposts_delete($timest, $timeend, $dir);
+        }
 
         self::export_metadata($dir);
 
