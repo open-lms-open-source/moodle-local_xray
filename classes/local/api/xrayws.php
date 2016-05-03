@@ -426,10 +426,14 @@ class xrayws {
         // Call to course reports / course element report / individual reports.
         if (isset($params[2]) && $params[2] == "course" ) {
 
-            if (isset($params[4]) && $params[4] == "forum" &&
-                isset($params[6]) && $params[6] == "discussion") {
+            if (isset($params[4]) && $params[4] == "forum" && isset($params[6]) && $params[6] == "discussion") {
                 // Call to discussion individual forum.
                 $filename = "course-report-discussionreportindividualforum-final.json";
+            }
+
+            if (isset($params[4]) && $params[4] == "advancedforum" && isset($params[6]) && $params[6] == "discussion") {
+                // Call to discussion individual forum for activity hsuforum.
+                $filename = "course-report-discussionreportindividualforum-hsuforum-final.json";
             }
 
             if (isset($params[5])) {
