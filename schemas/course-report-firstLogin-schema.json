@@ -5,7 +5,7 @@
   "description": "X-Ray web service firstLogin method schema",
   "oneOf" : [
     {"$ref" : "base_schema_ref.json#/definitions/base_response"}
-   ,{
+  ,{
       "id"         : "http://xray.com/somedomain/course/123/firstLogin/okresponse",
       "required": [
         "reportdate",
@@ -37,7 +37,7 @@
           "type": "number"
         },
         "datapoints_plain": {
-          "type": "array"
+          "type": ["array", "object"]
         },
         "attachments": {
           "type": "array"
@@ -64,10 +64,10 @@
                     "type",
                     "value"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "attributes": {
-                      "type": "object"
+                      "type": ["object", "null"]
                     },
                     "type": {
                       "type": "string"
@@ -86,10 +86,10 @@
                     "type",
                     "value"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "attributes": {
-                      "type": "object"
+                      "type": ["object", "null"]
                     },
                     "type": {
                       "type": "string"
@@ -111,7 +111,7 @@
                   "type": "object",
                   "properties": {
                     "attributes": {
-                      "type": "object"
+                      "type": ["object", "null"]
                     },
                     "type": {
                       "type": "string"
@@ -139,7 +139,7 @@
                 "type": "object",
                 "properties": {
                   "attributes": {
-                    "type": "object"
+                    "type": ["object", "null"]
                   },
                   "type": {
                     "type": "string"
@@ -186,7 +186,7 @@
                 "tooltipOrder",
                 "elementType"
               ],
-              "type": "object",
+              "type": ["object", "null"],
               "properties": {
                 "comment": {
                   "type": "array"
@@ -209,7 +209,7 @@
                       "name",
                       "value"
                     ],
-                    "type": "object",
+                    "type": ["object", "null"],
                     "properties": {
                       "name": {
                         "type": "string"
@@ -248,7 +248,7 @@
                 "data",
                 "columnHeaders"
               ],
-              "type": "object",
+              "type": ["object", "null"],
               "properties": {
                 "comment": {
                   "type": "array"
@@ -271,7 +271,7 @@
                     "field",
                     "class"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "className": {
                       "type": "string"
@@ -298,7 +298,7 @@
                     "lastname",
                     "firstname"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "lastname": {
                       "type": "string"
@@ -332,10 +332,10 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -343,7 +343,7 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
                             "type": "number"
@@ -354,7 +354,7 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
                             "type": "string"
@@ -365,7 +365,7 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
                             "type": "number"
@@ -376,10 +376,10 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -390,7 +390,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -398,7 +398,7 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
                             "type": "number"
@@ -420,7 +420,7 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
                             "type": "number"
@@ -431,7 +431,7 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
                             "type": "number"
@@ -442,7 +442,7 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
                             "type": "string"
@@ -484,7 +484,7 @@
                     "width",
                     "height"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "width": {
                       "type": "number"
@@ -504,7 +504,7 @@
                     "timeMachine",
                     "participantContext"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "courseContext": {
                       "type": "string"
@@ -526,13 +526,13 @@
                     "studentList",
                     "nonStarters"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "observedStartDate": {
-                      "type": "object"
+                      "type": ["object", "string", "null"]
                     },
                     "studentList": {
-                      "type": "array"
+                      "type": ["array", "null"]
                     },
                     "nonStarters": {
                       "items": {
@@ -549,25 +549,25 @@
                           "lastname",
                           "roleId"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "firstlogin": {
-                            "type": "object"
+                            "type": ["object", "string", "null"]
                           },
                           "participantId": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           },
                           "firstname": {
                             "type": "string"
                           },
                           "deleted": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           },
                           "firstLoginUnix": {
-                            "type": "object"
+                            "type": ["object", "string", "null"]
                           },
                           "firstLogin": {
-                            "type": "object"
+                            "type": ["object", "string", "null"]
                           },
                           "courseId": {
                             "type": "number"
@@ -715,7 +715,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": "string"
                           }
                         }
                       },
@@ -726,7 +726,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "string", "null"]
                           }
                         }
                       },
@@ -737,7 +737,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": "string"
                           }
                         }
                       }
@@ -775,7 +775,7 @@
                   "type": "string"
                 },
                 "instructors": {
-                  "type": "string"
+                  "type": ["array", "string"]
                 },
                 "date": {
                   "type": "string"

@@ -5,7 +5,7 @@
   "description": "X-Ray web service discussionEndogenicPlagiarism method schema",
   "oneOf" : [
     {"$ref" : "base_schema_ref.json#/definitions/base_response"}
-   ,{
+  ,{
       "id"         : "http://xray.com/somedomain/course/123/discussionEndogenicPlagiarism/okresponse",
       "required": [
         "reportdate",
@@ -275,7 +275,7 @@
                   }
                 },
                 "customData": {
-                  "type": "array"
+                  "type": ["array", "null"]
                 },
                 "mapping": {
                   "type": "array"
@@ -399,7 +399,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "integer"]
                           }
                         }
                       },
@@ -410,7 +410,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "integer"]
                           }
                         }
                       },
@@ -421,7 +421,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "integer"]
                           }
                         }
                       },
@@ -432,7 +432,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "string"]
                           }
                         }
                       },
@@ -443,7 +443,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "object"
+                            "type": ["object", "string"]
                           }
                         }
                       }
@@ -524,7 +524,7 @@
                     "mat2",
                     "mat"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "participants": {
                       "type": "array"

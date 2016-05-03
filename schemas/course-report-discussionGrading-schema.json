@@ -5,7 +5,7 @@
   "description": "X-Ray web service discussionGrading method schema",
   "oneOf" : [
     {"$ref" : "base_schema_ref.json#/definitions/base_response"}
-   ,{
+  ,{
       "id"         : "http://xray.com/somedomain/course/123/discussionGrading/okresponse",
       "required": [
         "reportdate",
@@ -279,7 +279,7 @@
                     "field",
                     "class"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "className": {
                       "type": "string"
@@ -482,7 +482,6 @@
                       },
                       "ctc": {
                         "required": [
-                          "colorCode",
                           "value"
                         ],
                         "type": "object",
@@ -508,7 +507,6 @@
                       },
                       "regularityContrib": {
                         "required": [
-                          "colorCode",
                           "value"
                         ],
                         "type": "object",
@@ -523,16 +521,15 @@
                       },
                       "regularityCTC": {
                         "required": [
-                          "colorCode",
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "colorCode": {
                             "type": ["string", "object", "number", "null"]
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -582,7 +579,6 @@
                       },
                       "contrib": {
                         "required": [
-                          "colorCode",
                           "value"
                         ],
                         "type": "object",

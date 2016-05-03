@@ -5,7 +5,7 @@
   "description": "X-Ray web service discussion method schema",
   "oneOf" : [
     {"$ref" : "base_schema_ref.json#/definitions/base_response"}
-   ,{
+  ,{
       "id"         : "http://xray.com/somedomain/course/123/discussion/okresponse",
       "required": [
         "reportdate",
@@ -168,8 +168,6 @@
         "elements": {
           "required": [
             "element1",
-            "element4",
-            "element6",
             "discussionMetrics",
             "socialStructure",
             "socialStructureWordCTC",
@@ -452,7 +450,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
@@ -473,7 +471,6 @@
                       },
                       "ctc": {
                         "required": [
-                          "colorCode",
                           "link",
                           "value"
                         ],
@@ -507,7 +504,6 @@
                       },
                       "regularityContrib": {
                         "required": [
-                          "colorCode",
                           "link",
                           "value"
                         ],
@@ -520,13 +516,12 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
                       "regularityCTC": {
                         "required": [
-                          "colorCode",
                           "link",
                           "value"
                         ],
@@ -539,7 +534,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -605,7 +600,6 @@
                       },
                       "contrib": {
                         "required": [
-                          "colorCode",
                           "link",
                           "value"
                         ],
@@ -714,7 +708,7 @@
                     "field",
                     "class"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "className": {
                       "type": "string"
@@ -821,7 +815,7 @@
                     "field",
                     "class"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "className": {
                       "type": "string"
@@ -928,7 +922,7 @@
                     "field",
                     "class"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "className": {
                       "type": "string"
@@ -1034,17 +1028,17 @@
                     "required": [
                       "rterms"
                     ],
-                    "type": "object",
+                    "type": ["object", "null"],
                     "properties": {
                       "rterms": {
                         "items": {
                           "type": "number"
                         },
-                        "type": "array"
+                        "type": ["array", "null"]
                       }
                     }
                   },
-                  "type": "array"
+                  "type": ["array", "null"]
                 },
                 "mapping": {
                   "type": "array"
@@ -1140,7 +1134,7 @@
                     "expectedValues",
                     "courseInfo"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "diPostsByWeek": {
                       "items": {
@@ -1159,7 +1153,7 @@
                             "type": "number"
                           },
                           "posts": {
-                            "type": ["number", "object"]
+                            "type": ["number", "object", "null"]
                           },
                           "avgLag": {
                             "type": "number"
@@ -1345,10 +1339,10 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
-                            "type": ["number", "object"]
+                            "type": ["number", "object", "null"]
                           }
                         }
                       },
@@ -1356,7 +1350,7 @@
                         "required": [
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                           "value": {
                             "type": "string"
@@ -1398,7 +1392,7 @@
                     "width",
                     "height"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "width": {
                       "type": "number"
@@ -1418,7 +1412,7 @@
                     "timeMachine",
                     "participantContext"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "courseContext": {
                       "type": "string"
@@ -1440,7 +1434,7 @@
                     "field",
                     "class"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "className": {
                       "type": "string"
@@ -1496,7 +1490,7 @@
               "required": [
                 "names"
               ],
-              "type": "object",
+              "type": ["object", "null"],
               "properties": {
                 "names": {
                   "required": [
@@ -1504,7 +1498,7 @@
                     "type",
                     "value"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "attributes": {
                       "type": "object"

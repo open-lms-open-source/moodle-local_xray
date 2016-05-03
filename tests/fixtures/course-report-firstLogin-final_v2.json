@@ -453,13 +453,13 @@
       "data": [
         {
           "firstLogin": {
-            "value": {}
+            "value": ""
           },
           "firstname": {
-            "value": {}
+            "value": ""
           },
           "lastname": {
-            "value": {}
+            "value": ""
           }
         }
       ],

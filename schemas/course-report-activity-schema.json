@@ -5,7 +5,7 @@
   "description": "X-Ray web service activity method schema",
   "oneOf" : [
     {"$ref" : "base_schema_ref.json#/definitions/base_response"}
-   ,{
+  ,{
       "id"         : "http://xray.com/somedomain/course/123/activity/okresponse",
       "required": [
         "reportdate",
@@ -40,7 +40,7 @@
           "required": [
             "studentList"
           ],
-          "type": "object",
+          "type": ["object", "array"],
           "properties": {
             "studentList": {
               "items": {
@@ -271,10 +271,10 @@
                   "required": [
                     "activityByWeekday"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "activityByWeekday": {
-                      "type": "array"
+                      "type": ["array", "object"]
                     }
                   }
                 },
@@ -310,7 +310,6 @@
                 "elementName",
                 "title",
                 "courseName",
-                "instructors",
                 "date",
                 "elementType"
               ],
@@ -326,9 +325,6 @@
                   "type": "string"
                 },
                 "courseName": {
-                  "type": "string"
-                },
-                "instructors": {
                   "type": "string"
                 },
                 "date": {
@@ -406,10 +402,10 @@
                     "myTimeOnTask",
                     "courseInfo"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "myTimeOnTask": {
-                      "type": "array"
+                      "type": ["array", "object"]
                     },
                     "courseInfo": {
                       "required": [
@@ -419,7 +415,7 @@
                       "type": "object",
                       "properties": {
                         ".xData": {
-                          "type": "array"
+                          "type": ["array", "object"]
                         },
                         "class": {
                           "type": "string"
@@ -575,7 +571,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -635,7 +631,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -665,7 +661,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -680,7 +676,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -695,7 +691,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -710,7 +706,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       }
@@ -790,10 +786,10 @@
                     "myTimeOnTask",
                     "courseInfo"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "myTimeOnTask": {
-                      "type": "array"
+                      "type": ["array", "object"]
                     },
                     "courseInfo": {
                       "required": [
@@ -803,7 +799,7 @@
                       "type": "object",
                       "properties": {
                         ".xData": {
-                          "type": "array"
+                          "type": ["array", "object"]
                         },
                         "class": {
                           "type": "string"
@@ -904,10 +900,10 @@
                   "required": [
                     "myData"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "myData": {
-                      "type": "array"
+                      "type": ["array", "object"]
                     }
                   }
                 },
@@ -1003,10 +999,10 @@
                   "required": [
                     "aggregatedDataByHour"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "aggregatedDataByHour": {
-                      "type": "array"
+                      "type": ["array", "object"]
                     }
                   }
                 },
@@ -1102,10 +1098,10 @@
                   "required": [
                     "activityByWeekday"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "activityByWeekday": {
-                      "type": "array"
+                      "type": ["array", "object"]
                     }
                   }
                 },

@@ -5,7 +5,7 @@
   "description": "X-Ray web service discussion user method schema",
   "oneOf" : [
     {"$ref" : "base_schema_ref.json#/definitions/base_response"}
-   ,{
+  ,{
       "id"         : "http://xray.com/somedomain/course/123/133/discussion/okresponse",
       "required": [
         "reportdate",
@@ -74,7 +74,7 @@
                     },
                     "value": {
                       "items": {
-                        "type": "number"
+                        "type": ["number", "null"]
                       },
                       "type": "array"
                     }
@@ -298,7 +298,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
@@ -309,7 +309,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
@@ -407,7 +407,7 @@
                       }
                     }
                   },
-                  "type": "array"
+                  "type": ["array", "null"]
                 },
                 "mapping": {
                   "type": "array"
@@ -504,7 +504,7 @@
                     "actors",
                     "participantId"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "rterms": {
                       "items": {
@@ -526,10 +526,10 @@
                         "type": "object",
                         "properties": {
                           "lastname": {
-                            "type": ["string", "object"]
+                            "type": ["string", "object", "null"]
                           },
                           "participantId": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           },
                           "firstname": {
                             "type": ["string", "object"]
@@ -542,7 +542,7 @@
                       "type": "array"
                     },
                     "participantId": {
-                      "type": "number"
+                      "type": ["number", "null"]
                     }
                   }
                 },
@@ -639,7 +639,7 @@
                       "type": "string"
                     },
                     "lastname": {
-                      "type": "string"
+                      "type": ["string", "null"]
                     },
                     "posts": {
                       "type": "string"
@@ -685,7 +685,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
@@ -696,7 +696,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
@@ -707,7 +707,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           }
                         }
                       },
@@ -718,7 +718,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
@@ -729,13 +729,12 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
                       "ctc": {
                         "required": [
-                          "colorCode",
                           "value"
                         ],
                         "type": "object",
@@ -744,7 +743,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
@@ -755,13 +754,12 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
                       "regularityContrib": {
                         "required": [
-                          "colorCode",
                           "value"
                         ],
                         "type": "object",
@@ -770,13 +768,12 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
                       "regularityCTC": {
                         "required": [
-                          "colorCode",
                           "value"
                         ],
                         "type": "object",
@@ -785,7 +782,7 @@
                             "type": "string"
                           },
                           "value": {
-                            "type": "object"
+                            "type": ["object", "null"]
                           }
                         }
                       },
@@ -807,7 +804,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       },
@@ -818,13 +815,12 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           }
                         }
                       },
                       "contrib": {
                         "required": [
-                          "colorCode",
                           "value"
                         ],
                         "type": "object",
@@ -844,7 +840,7 @@
                         "type": "object",
                         "properties": {
                           "value": {
-                            "type": "number"
+                            "type": ["number", "null"]
                           }
                         }
                       }
@@ -925,7 +921,7 @@
                     "field",
                     "class"
                   ],
-                  "type": "object",
+                  "type": ["object", "null"],
                   "properties": {
                     "className": {
                       "type": "string"
@@ -975,13 +971,13 @@
             "type",
             "value"
           ],
-          "type": "object",
+          "type": ["array", "object"],
           "properties": {
             "attributes": {
               "required": [
                 "names"
               ],
-              "type": "object",
+              "type": ["array", "object"],
               "properties": {
                 "names": {
                   "required": [
@@ -989,10 +985,10 @@
                     "type",
                     "value"
                   ],
-                  "type": "object",
+                  "type": ["array", "object"],
                   "properties": {
                     "attributes": {
-                      "type": "object"
+                      "type": ["array", "object"]
                     },
                     "type": {
                       "type": "string"
@@ -1001,7 +997,7 @@
                       "items": {
                         "type": "string"
                       },
-                      "type": "array"
+                      "type": ["array", "object"]
                     }
                   }
                 }
@@ -1017,13 +1013,13 @@
                   "type",
                   "value"
                 ],
-                "type": "object",
+                "type": ["array", "object"],
                 "properties": {
                   "attributes": {
                     "required": [
                       "names"
                     ],
-                    "type": "object",
+                    "type": ["object", "array"],
                     "properties": {
                       "names": {
                         "required": [
@@ -1031,10 +1027,10 @@
                           "type",
                           "value"
                         ],
-                        "type": "object",
+                        "type": ["object", "array"],
                         "properties": {
                           "attributes": {
-                            "type": "object"
+                            "type": ["array", "object"]
                           },
                           "type": {
                             "type": "string"
@@ -1043,7 +1039,7 @@
                             "items": {
                               "type": "string"
                             },
-                            "type": "array"
+                            "type": ["object", "array"]
                           }
                         }
                       }
@@ -1054,13 +1050,13 @@
                   },
                   "value": {
                     "items": {
-                      "type": ["number", "object", "string"]
+                      "type": ["number", "object", "string", "null"]
                     },
-                    "type": "array"
+                    "type": ["array", "object"]
                   }
                 }
               },
-              "type": "array"
+              "type": ["array", "object"]
             }
           }
         },
