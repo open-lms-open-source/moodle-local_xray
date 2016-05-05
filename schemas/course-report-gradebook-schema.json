@@ -6,24 +6,24 @@
   "oneOf" : [
     {"$ref" : "base_schema_ref.json#/definitions/base_response"}
   ,{
-      "id"         : "http://xray.com/somedomain/course/123/gradebook/okresponse",
       "required": [
         "reportdate",
         "scheduleid",
         "forumid",
         "datapoints_plain",
-        "attachments",
-        "subtype",
+        "participantid",
+        "notifications",
         "courseid",
         "datecreated",
-        "notifications",
+        "subtype",
+        "hsuforumid",
         "elements",
         "oldid",
         "datapoints",
         "date",
         "type",
         "id",
-        "participantid"
+        "attachments"
       ],
       "type": "object",
       "properties": {
@@ -39,8 +39,17 @@
         "datapoints_plain": {
           "type": "array"
         },
-        "attachments": {
-          "type": "array"
+        "participantid": {
+          "type": "number"
+        },
+        "subtype": {
+          "type": "string"
+        },
+        "courseid": {
+          "type": "number"
+        },
+        "datecreated": {
+          "type": "string"
         },
         "notifications": {
           "required": [
@@ -52,13 +61,13 @@
           "properties": {
             "attributes": {
               "required": [
+                "row.names",
                 "class",
-                "names",
-                "row.names"
+                "names"
               ],
               "type": "object",
               "properties": {
-                "row.names": {
+                "names": {
                   "required": [
                     "attributes",
                     "type",
@@ -74,7 +83,7 @@
                     },
                     "value": {
                       "items": {
-                        "type": "number"
+                        "type": "string"
                       },
                       "type": "array"
                     }
@@ -102,7 +111,7 @@
                     }
                   }
                 },
-                "names": {
+                "row.names": {
                   "required": [
                     "attributes",
                     "type",
@@ -118,7 +127,7 @@
                     },
                     "value": {
                       "items": {
-                        "type": "string"
+                        "type": "number"
                       },
                       "type": "array"
                     }
@@ -146,7 +155,7 @@
                   },
                   "value": {
                     "items": {
-                      "type": ["string", "number", "null", "boolean"]
+                      "type": ["number", "string", "null"]
                     },
                     "type": "array"
                   }
@@ -156,24 +165,18 @@
             }
           }
         },
-        "courseid": {
+        "hsuforumid": {
           "type": "number"
-        },
-        "datecreated": {
-          "type": "string"
-        },
-        "subtype": {
-          "type": "string"
         },
         "elements": {
           "required": [
             "element1",
-            "courseGradeTable",
-            "gradableItemsTable",
             "scoreDistributionByItem",
             "studentScoreDistribution",
             "itemsHeatmap",
-            "scatterPlot"
+            "scatterPlot",
+            "courseGradeTable",
+            "gradableItemsTable"
           ],
           "type": "object",
           "properties": {
@@ -215,29 +218,315 @@
                 }
               }
             },
+            "scoreDistributionByItem": {
+              "required": [
+                "elementName",
+                "uuid",
+                "title",
+                "contexts",
+                "customData",
+                "mapping",
+                "tooltip",
+                "filename",
+                "dimensions",
+                "plotType",
+                "elementType",
+                "legend",
+                "reportId"
+              ],
+              "type": "object",
+              "properties": {
+                "elementName": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "reportId": {
+                  "type": "array"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "contexts": {
+                  "required": [
+                    "courseContext",
+                    "advancedForumContext",
+                    "forumContext",
+                    "timeMachine",
+                    "participantContext"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "courseContext": {
+                      "type": "string"
+                    },
+                    "advancedForumContext": {
+                      "type": "string"
+                    },
+                    "forumContext": {
+                      "type": "string"
+                    },
+                    "timeMachine": {
+                      "type": "string"
+                    },
+                    "participantContext": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "customData": {
+                  "type": "null"
+                },
+                "mapping": {
+                  "type": "array"
+                },
+                "tooltip": {
+                  "type": "string"
+                },
+                "filename": {
+                  "type": "string"
+                },
+                "plotType": {
+                  "type": "string"
+                },
+                "elementType": {
+                  "type": "string"
+                },
+                "legend": {
+                  "type": "string"
+                },
+                "dimensions": {
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "studentScoreDistribution": {
+              "required": [
+                "elementName",
+                "uuid",
+                "title",
+                "contexts",
+                "customData",
+                "mapping",
+                "tooltip",
+                "filename",
+                "dimensions",
+                "plotType",
+                "elementType",
+                "legend",
+                "reportId"
+              ],
+              "type": "object",
+              "properties": {
+                "elementName": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "reportId": {
+                  "type": "array"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "contexts": {
+                  "required": [
+                    "courseContext",
+                    "advancedForumContext",
+                    "forumContext",
+                    "timeMachine",
+                    "participantContext"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "courseContext": {
+                      "type": "string"
+                    },
+                    "advancedForumContext": {
+                      "type": "string"
+                    },
+                    "forumContext": {
+                      "type": "string"
+                    },
+                    "timeMachine": {
+                      "type": "string"
+                    },
+                    "participantContext": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "customData": {
+                  "type": "null"
+                },
+                "mapping": {
+                  "type": "array"
+                },
+                "tooltip": {
+                  "type": "string"
+                },
+                "filename": {
+                  "type": "string"
+                },
+                "plotType": {
+                  "type": "string"
+                },
+                "elementType": {
+                  "type": "string"
+                },
+                "legend": {
+                  "type": "string"
+                },
+                "dimensions": {
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "itemsHeatmap": {
+              "required": [
+                "elementName",
+                "uuid",
+                "title",
+                "contexts",
+                "customData",
+                "mapping",
+                "tooltip",
+                "filename",
+                "dimensions",
+                "plotType",
+                "elementType",
+                "legend",
+                "reportId"
+              ],
+              "type": "object",
+              "properties": {
+                "elementName": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "reportId": {
+                  "type": "array"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "contexts": {
+                  "required": [
+                    "courseContext",
+                    "advancedForumContext",
+                    "forumContext",
+                    "timeMachine",
+                    "participantContext"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "courseContext": {
+                      "type": "string"
+                    },
+                    "advancedForumContext": {
+                      "type": "string"
+                    },
+                    "forumContext": {
+                      "type": "string"
+                    },
+                    "timeMachine": {
+                      "type": "string"
+                    },
+                    "participantContext": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "customData": {
+                  "type": "null"
+                },
+                "mapping": {
+                  "type": "array"
+                },
+                "tooltip": {
+                  "type": "string"
+                },
+                "filename": {
+                  "type": "string"
+                },
+                "plotType": {
+                  "type": "string"
+                },
+                "elementType": {
+                  "type": "string"
+                },
+                "legend": {
+                  "type": "string"
+                },
+                "dimensions": {
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
             "courseGradeTable": {
               "required": [
                 "comment",
-                "elementName",
+                "emptyData",
                 "enableGraph",
                 "uuid",
                 "title",
                 "columnOrder",
-                "legend",
+                "elementName",
                 "inverted",
                 "dataFormat",
                 "colorCodesSpecs",
+                "columnHeaders",
                 "elementType",
                 "data",
-                "columnHeaders"
+                "legend"
               ],
               "type": "object",
               "properties": {
                 "comment": {
                   "type": "array"
                 },
-                "elementName": {
-                  "type": "string"
+                "emptyData": {
+                  "type": "number"
                 },
                 "enableGraph": {
                   "type": "boolean"
@@ -254,8 +543,14 @@
                   },
                   "type": "array"
                 },
+                "elementName": {
+                  "type": "string"
+                },
                 "inverted": {
                   "type": "boolean"
+                },
+                "legend": {
+                  "type": "string"
                 },
                 "dataFormat": {
                   "type": "array"
@@ -263,45 +558,33 @@
                 "colorCodesSpecs": {
                   "type": "array"
                 },
-                "columnHeaders": {
-                  "required": [
-                    "courseGrade",
-                    "firstname",
-                    "lastname"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "courseGrade": {
-                      "type": ["object", "string"]
-                    },
-                    "firstname": {
-                      "type": "string"
-                    },
-                    "lastname": {
-                      "type": "string"
-                    }
-                  }
-                },
                 "elementType": {
                   "type": "string"
                 },
                 "data": {
                   "items": {
                     "required": [
-                      "courseGrade",
+                      "participantId",
                       "firstname",
-                      "lastname"
+                      "courseId",
+                      "lastname",
+                      "courseGrade",
+                      "meanAssign",
+                      "meanQuiz",
+                      "meanOther",
+                      "meanForum",
+                      "standardScore"
                     ],
                     "type": "object",
                     "properties": {
-                      "courseGrade": {
+                      "participantId": {
                         "required": [
                           "value"
                         ],
-                        "type": ["object", "string"],
+                        "type": "object",
                         "properties": {
                           "value": {
-                            "type": ["object", "string"]
+                            "type": "number"
                           }
                         }
                       },
@@ -316,6 +599,17 @@
                           }
                         }
                       },
+                      "courseId": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "number"
+                          }
+                        }
+                      },
                       "lastname": {
                         "required": [
                           "value"
@@ -326,39 +620,233 @@
                             "type": "string"
                           }
                         }
+                      },
+                      "meanForum": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      "meanOther": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      "meanQuiz": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": ["string", "null"]
+                          }
+                        }
+                      },
+                      "meanAssign": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      "courseGrade": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": ["string", "null"]
+                          }
+                        }
+                      },
+                      "standardScore": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": ["number", "null"]
+                          }
+                        }
                       }
                     }
                   },
                   "type": "array"
                 },
+                "columnHeaders": {
+                  "required": [
+                    "firstname",
+                    "lastname",
+                    "courseGrade",
+                    "meanAssign",
+                    "meanQuiz",
+                    "meanOther",
+                    "meanForum"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "firstname": {
+                      "type": "string"
+                    },
+                    "lastname": {
+                      "type": "string"
+                    },
+                    "meanForum": {
+                      "type": "string"
+                    },
+                    "meanOther": {
+                      "type": "string"
+                    },
+                    "meanQuiz": {
+                      "type": "string"
+                    },
+                    "meanAssign": {
+                      "type": "string"
+                    },
+                    "courseGrade": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "scatterPlot": {
+              "required": [
+                "elementName",
+                "uuid",
+                "title",
+                "contexts",
+                "customData",
+                "mapping",
+                "tooltip",
+                "filename",
+                "dimensions",
+                "plotType",
+                "elementType",
+                "legend",
+                "reportId"
+              ],
+              "type": "object",
+              "properties": {
+                "elementName": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "reportId": {
+                  "type": "array"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "contexts": {
+                  "required": [
+                    "courseContext",
+                    "advancedForumContext",
+                    "forumContext",
+                    "timeMachine",
+                    "participantContext"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "courseContext": {
+                      "type": "string"
+                    },
+                    "advancedForumContext": {
+                      "type": "string"
+                    },
+                    "forumContext": {
+                      "type": "string"
+                    },
+                    "timeMachine": {
+                      "type": "string"
+                    },
+                    "participantContext": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "customData": {
+                  "type": "null"
+                },
+                "mapping": {
+                  "type": "array"
+                },
+                "tooltip": {
+                  "type": "string"
+                },
+                "filename": {
+                  "type": "string"
+                },
+                "plotType": {
+                  "type": "string"
+                },
+                "elementType": {
+                  "type": "string"
+                },
                 "legend": {
                   "type": "string"
+                },
+                "dimensions": {
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    }
+                  }
                 }
               }
             },
             "gradableItemsTable": {
               "required": [
                 "comment",
-                "elementName",
+                "emptyData",
                 "enableGraph",
                 "uuid",
                 "title",
                 "columnOrder",
-                "legend",
+                "elementName",
                 "inverted",
                 "dataFormat",
                 "colorCodesSpecs",
+                "columnHeaders",
                 "elementType",
                 "data",
-                "columnHeaders"
+                "legend"
               ],
               "type": "object",
               "properties": {
                 "comment": {
                   "type": "array"
                 },
-                "elementName": {
-                  "type": "string"
+                "emptyData": {
+                  "type": "number"
                 },
                 "enableGraph": {
                   "type": "boolean"
@@ -375,8 +863,14 @@
                   },
                   "type": "array"
                 },
+                "elementName": {
+                  "type": "string"
+                },
                 "inverted": {
                   "type": "boolean"
+                },
+                "legend": {
+                  "type": "string"
                 },
                 "dataFormat": {
                   "type": "array"
@@ -384,43 +878,22 @@
                 "colorCodesSpecs": {
                   "type": "array"
                 },
-                "columnHeaders": {
-                  "required": [
-                    "itemname",
-                    "courseGradeCorrelation",
-                    "nStudents",
-                    "standardScore"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "itemname": {
-                      "type": "string"
-                    },
-                    "courseGradeCorrelation": {
-                      "type": ["object", "string"]
-                    },
-                    "nStudents": {
-                      "type": ["object", "integer", "string"]
-                    },
-                    "standardScore": {
-                      "type": ["object", "string"]
-                    }
-                  }
-                },
                 "elementType": {
                   "type": "string"
                 },
                 "data": {
                   "items": {
                     "required": [
-                      "itemname",
+                      "category",
                       "courseGradeCorrelation",
+                      "activityId",
                       "nStudents",
-                      "standardScore"
+                      "standardScore",
+                      "itemname"
                     ],
                     "type": "object",
                     "properties": {
-                      "itemname": {
+                      "category": {
                         "required": [
                           "value"
                         ],
@@ -435,10 +908,21 @@
                         "required": [
                           "value"
                         ],
-                        "type": ["object", "string"],
+                        "type": "object",
                         "properties": {
                           "value": {
-                            "type": ["object", "string"]
+                            "type": "null"
+                          }
+                        }
+                      },
+                      "activityId": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "number"
                           }
                         }
                       },
@@ -446,10 +930,10 @@
                         "required": [
                           "value"
                         ],
-                        "type": ["object", "integer", "string"],
+                        "type": "object",
                         "properties": {
                           "value": {
-                            "type": ["object", "integer", "string"]
+                            "type": "number"
                           }
                         }
                       },
@@ -457,10 +941,21 @@
                         "required": [
                           "value"
                         ],
-                        "type": ["object", "string"],
+                        "type": "object",
                         "properties": {
                           "value": {
-                            "type": ["object", "string"]
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "itemname": {
+                        "required": [
+                          "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string"
                           }
                         }
                       }
@@ -468,372 +963,32 @@
                   },
                   "type": "array"
                 },
-                "legend": {
-                  "type": "string"
-                }
-              }
-            },
-            "scoreDistributionByItem": {
-              "required": [
-                "elementName",
-                "dimensions",
-                "reportId",
-                "title",
-                "contexts",
-                "customData",
-                "mapping",
-                "tooltip",
-                "filename",
-                "plotType",
-                "elementType",
-                "legend",
-                "uuid"
-              ],
-              "type": "object",
-              "properties": {
-                "elementName": {
-                  "type": "string"
-                },
-                "dimensions": {
+                "columnHeaders": {
                   "required": [
-                    "width",
-                    "height"
+                    "category",
+                    "standardScore",
+                    "nStudents",
+                    "itemname",
+                    "courseGradeCorrelation"
                   ],
                   "type": "object",
                   "properties": {
-                    "width": {
-                      "type": "number"
-                    },
-                    "height": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "title": {
-                  "type": "string"
-                },
-                "contexts": {
-                  "required": [
-                    "courseContext",
-                    "forumContext",
-                    "timeMachine",
-                    "participantContext"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "courseContext": {
+                    "category": {
                       "type": "string"
                     },
-                    "forumContext": {
+                    "standardScore": {
                       "type": "string"
                     },
-                    "timeMachine": {
+                    "nStudents": {
                       "type": "string"
                     },
-                    "participantContext": {
+                    "itemname": {
+                      "type": "string"
+                    },
+                    "courseGradeCorrelation": {
                       "type": "string"
                     }
                   }
-                },
-                "customData": {
-                  "type": "array"
-                },
-                "mapping": {
-                  "type": "array"
-                },
-                "tooltip": {
-                  "type": "string"
-                },
-                "filename": {
-                  "type": "string"
-                },
-                "reportId": {
-                  "type": "array"
-                },
-                "uuid": {
-                  "type": "string"
-                },
-                "elementType": {
-                  "type": "string"
-                },
-                "legend": {
-                  "type": "string"
-                },
-                "plotType": {
-                  "type": "string"
-                }
-              }
-            },
-            "studentScoreDistribution": {
-              "required": [
-                "elementName",
-                "dimensions",
-                "reportId",
-                "title",
-                "contexts",
-                "customData",
-                "mapping",
-                "tooltip",
-                "filename",
-                "plotType",
-                "elementType",
-                "legend",
-                "uuid"
-              ],
-              "type": "object",
-              "properties": {
-                "elementName": {
-                  "type": "string"
-                },
-                "dimensions": {
-                  "required": [
-                    "width",
-                    "height"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "width": {
-                      "type": "number"
-                    },
-                    "height": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "title": {
-                  "type": "string"
-                },
-                "contexts": {
-                  "required": [
-                    "courseContext",
-                    "forumContext",
-                    "timeMachine",
-                    "participantContext"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "courseContext": {
-                      "type": "string"
-                    },
-                    "forumContext": {
-                      "type": "string"
-                    },
-                    "timeMachine": {
-                      "type": "string"
-                    },
-                    "participantContext": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "customData": {
-                  "type": "array"
-                },
-                "mapping": {
-                  "type": "array"
-                },
-                "tooltip": {
-                  "type": "string"
-                },
-                "filename": {
-                  "type": "string"
-                },
-                "reportId": {
-                  "type": "array"
-                },
-                "uuid": {
-                  "type": "string"
-                },
-                "elementType": {
-                  "type": "string"
-                },
-                "legend": {
-                  "type": "string"
-                },
-                "plotType": {
-                  "type": "string"
-                }
-              }
-            },
-            "itemsHeatmap": {
-              "required": [
-                "elementName",
-                "dimensions",
-                "reportId",
-                "title",
-                "contexts",
-                "customData",
-                "mapping",
-                "tooltip",
-                "filename",
-                "plotType",
-                "elementType",
-                "legend",
-                "uuid"
-              ],
-              "type": "object",
-              "properties": {
-                "elementName": {
-                  "type": "string"
-                },
-                "dimensions": {
-                  "required": [
-                    "width",
-                    "height"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "width": {
-                      "type": "number"
-                    },
-                    "height": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "title": {
-                  "type": "string"
-                },
-                "contexts": {
-                  "required": [
-                    "courseContext",
-                    "forumContext",
-                    "timeMachine",
-                    "participantContext"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "courseContext": {
-                      "type": "string"
-                    },
-                    "forumContext": {
-                      "type": "string"
-                    },
-                    "timeMachine": {
-                      "type": "string"
-                    },
-                    "participantContext": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "customData": {
-                  "type": "object"
-                },
-                "mapping": {
-                  "type": "array"
-                },
-                "tooltip": {
-                  "type": "string"
-                },
-                "filename": {
-                  "type": "string"
-                },
-                "reportId": {
-                  "type": "array"
-                },
-                "uuid": {
-                  "type": "string"
-                },
-                "elementType": {
-                  "type": "string"
-                },
-                "legend": {
-                  "type": "string"
-                },
-                "plotType": {
-                  "type": "string"
-                }
-              }
-            },
-            "scatterPlot": {
-              "required": [
-                "elementName",
-                "dimensions",
-                "reportId",
-                "title",
-                "contexts",
-                "customData",
-                "mapping",
-                "tooltip",
-                "filename",
-                "plotType",
-                "elementType",
-                "legend",
-                "uuid"
-              ],
-              "type": "object",
-              "properties": {
-                "elementName": {
-                  "type": "string"
-                },
-                "dimensions": {
-                  "required": [
-                    "width",
-                    "height"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "width": {
-                      "type": "number"
-                    },
-                    "height": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "title": {
-                  "type": "string"
-                },
-                "contexts": {
-                  "required": [
-                    "courseContext",
-                    "forumContext",
-                    "timeMachine",
-                    "participantContext"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "courseContext": {
-                      "type": "string"
-                    },
-                    "forumContext": {
-                      "type": "string"
-                    },
-                    "timeMachine": {
-                      "type": "string"
-                    },
-                    "participantContext": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "customData": {
-                  "type": "array"
-                },
-                "mapping": {
-                  "type": "array"
-                },
-                "tooltip": {
-                  "type": "string"
-                },
-                "filename": {
-                  "type": "string"
-                },
-                "reportId": {
-                  "type": "array"
-                },
-                "uuid": {
-                  "type": "string"
-                },
-                "elementType": {
-                  "type": "string"
-                },
-                "legend": {
-                  "type": "string"
-                },
-                "plotType": {
-                  "type": "string"
                 }
               }
             }
@@ -894,13 +1049,13 @@
                 "properties": {
                   "attributes": {
                     "required": [
+                      "row.names",
                       "class",
-                      "names",
-                      "row.names"
+                      "names"
                     ],
                     "type": "object",
                     "properties": {
-                      "row.names": {
+                      "names": {
                         "required": [
                           "attributes",
                           "type",
@@ -915,6 +1070,9 @@
                             "type": "string"
                           },
                           "value": {
+                            "items": {
+                              "type": "string"
+                            },
                             "type": "array"
                           }
                         }
@@ -941,7 +1099,7 @@
                           }
                         }
                       },
-                      "names": {
+                      "row.names": {
                         "required": [
                           "attributes",
                           "type",
@@ -956,6 +1114,9 @@
                             "type": "string"
                           },
                           "value": {
+                            "items": {
+                              "type": "number"
+                            },
                             "type": "array"
                           }
                         }
@@ -966,6 +1127,28 @@
                     "type": "string"
                   },
                   "value": {
+                    "items": {
+                      "required": [
+                        "attributes",
+                        "type",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "attributes": {
+                          "type": "object"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "items": {
+                            "type": ["number", "string", "null"]
+                          },
+                          "type": "array"
+                        }
+                      }
+                    },
                     "type": "array"
                   }
                 }
@@ -983,8 +1166,8 @@
         "id": {
           "type": "number"
         },
-        "participantid": {
-          "type": "number"
+        "attachments": {
+          "type": "array"
         }
       }
     }
