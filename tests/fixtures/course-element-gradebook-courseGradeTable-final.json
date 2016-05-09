@@ -1,287 +1,337 @@
 {
-  "itemCount": 10,
-  "url": "/demo/c3075401-bb3f-48ce-a605-62fcb1ee4172",
-  "colorCodesSpecs": [],
-  "columnHeaders": {
-    "courseGrade": "Current course grade",
-    "firstname": "Given name",
-    "lastname": "Surname",
-    "meanQuiz": "Average grade in quizzes",
-    "meanAssign": "Average grade in assignments",
-    "meanForum": "Average grade in forums",
-    "meanOther": "Average grade in other graded items"
-  },
-  "enableGraph": true,
-  "elementType": "xrayTable",
-  "elementName": "courseGradeTable",
   "data": [
     {
-      "participantId": {
-        "value": 256
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Shawn"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Payne"
+        "value": "branson"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "louise lucky lovely lady"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102217
+      },
+      "standardScore": {
+        "value": null
       }
     },
     {
-      "participantId": {
-        "value": 276
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Bryan"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Duncan"
+        "value": "Brent"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "Janet"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102218
+      },
+      "standardScore": {
+        "value": null
       }
     },
     {
-      "participantId": {
-        "value": 304
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Marvin"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Guzman"
+        "value": "DeLancey"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "Dean"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102221
+      },
+      "standardScore": {
+        "value": null
       }
     },
     {
-      "participantId": {
-        "value": 470
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Charlie"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Stevenson"
+        "value": "Jo"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "Michele"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102220
+      },
+      "standardScore": {
+        "value": null
       }
     },
     {
-      "participantId": {
-        "value": 687
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Anna"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Bailey"
+        "value": "Jones"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "June"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102219
+      },
+      "standardScore": {
+        "value": null
       }
     },
     {
-      "participantId": {
-        "value": 688
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Jonathan"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Kim"
+        "value": "Just Some Last Name"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "Richie"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102216
+      },
+      "standardScore": {
+        "value": null
       }
     },
     {
-      "participantId": {
-        "value": 689
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Theresa"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Snyder"
+        "value": "O'Reily"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "Dylan"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102222
+      },
+      "standardScore": {
+        "value": null
       }
     },
     {
-      "participantId": {
-        "value": 690
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Debbie"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Pearson"
+        "value": "peeples"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "Dan The Purple People Eater"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102213
+      },
+      "standardScore": {
+        "value": null
       }
     },
     {
-      "participantId": {
-        "value": 692
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Beth"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Singh"
+        "value": "peoples"
       },
       "meanQuiz": {
-        "value": 0
+        "value": 21.4
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "Claire"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": 14.3
+      },
+      "participantId": {
+        "value": 102214
+      },
+      "standardScore": {
+        "value": 14.2857
       }
     },
     {
-      "participantId": {
-        "value": 693
-      },
-      "courseGrade": {
-        "value": "20"
-      },
-      "firstname": {
-        "value": "Jeanne"
+      "courseId": {
+        "value": 7544
       },
       "lastname": {
-        "value": "Figueroa"
+        "value": "wally"
       },
       "meanQuiz": {
-        "value": 0
+        "value": null
       },
-      "meanAssign": {
-        "value": 0
+      "firstname": {
+        "value": "Apple"
       },
       "meanForum": {
-        "value": 0
+        "value": null
       },
       "meanOther": {
-        "value": 0
+        "value": null
+      },
+      "meanAssign": {
+        "value": null
+      },
+      "courseGrade": {
+        "value": null
+      },
+      "participantId": {
+        "value": 102215
+      },
+      "standardScore": {
+        "value": null
       }
     }
   ],
-  "uuid": "c3075401-bb3f-48ce-a605-62fcb1ee4172",
-  "title": "Student Grades",
-  "legend": "Standardized scores range between 0 and 100%.",
-  "comment": [],
+  "uuid": "ee3f9649-7631-4152-b861-cd3df89c2952",
+  "title": "Course Grades",
+  "legend": "Grades range between 0 and 100%.",
+  "comment": [
+
+  ],
   "inverted": false,
-  "dataFormat": [],
+  "emptyData": 0,
+  "dataFormat": [
+
+  ],
   "columnOrder": [
     "lastname",
     "firstname",
@@ -290,5 +340,22 @@
     "meanAssign",
     "meanForum",
     "meanOther"
-  ]
+  ],
+  "elementName": "courseGradeTable",
+  "elementType": "xrayTable",
+  "enableGraph": true,
+  "columnHeaders": {
+    "lastname": "Surname",
+    "meanQuiz": "Average grade in quizzes",
+    "firstname": "Given name",
+    "meanForum": "Average grade in forums",
+    "meanOther": "Average grade in other graded items",
+    "meanAssign": "Average grade in assignments",
+    "courseGrade": "Course grade"
+  },
+  "colorCodesSpecs": [
+
+  ],
+  "url": "/xray2qa/ee3f9649-7631-4152-b861-cd3df89c2952",
+  "itemCount": 10
 }

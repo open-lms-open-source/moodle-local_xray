@@ -1,140 +1,83 @@
 {
-  "itemCount": 8,
-  "url": "/demo/23d5c730-6650-4f01-b097-d8dce62a5644",
-  "colorCodesSpecs": [],
-  "columnHeaders": {
-    "courseGradeCorrelation": "Relationship with Current Total course grade (%)",
-    "standardScore": "Average score (%)",
-    "nStudents": "Number of students",
-    "itemname": "Quiz name"
-  },
-  "enableGraph": true,
-  "elementType": "xrayTable",
-  "elementName": "gradableItemsTable",
   "data": [
     {
+      "category": {
+        "value": "Quiz"
+      },
       "itemname": {
-        "value": "Exercise 1"
+        "value": "First quiz"
       },
       "nStudents": {
-        "value": "7"
+        "value": 1
+      },
+      "activityId": {
+        "value": 736264
+      },
+      "gradeitemid": {
+        "value": 0
       },
       "standardScore": {
-        "value": "81.5714285714286"
+        "value": 28.6
       },
       "courseGradeCorrelation": {
-        "value": "77.4"
+        "value": null
       }
     },
     {
+      "category": {
+        "value": "Quiz"
+      },
       "itemname": {
-        "value": "Exercise 2"
+        "value": "Second Quiz for Testing"
       },
       "nStudents": {
-        "value": "8"
+        "value": 1
+      },
+      "activityId": {
+        "value": 736270
+      },
+      "gradeitemid": {
+        "value": 0
       },
       "standardScore": {
-        "value": "67.5"
+        "value": 14.3
       },
       "courseGradeCorrelation": {
-        "value": "77.2"
-      }
-    },
-    {
-      "itemname": {
-        "value": "Exercise 3"
-      },
-      "nStudents": {
-        "value": "8"
-      },
-      "standardScore": {
-        "value": "65"
-      },
-      "courseGradeCorrelation": {
-        "value": "65.8"
-      }
-    },
-    {
-      "itemname": {
-        "value": "Exercise 4"
-      },
-      "nStudents": {
-        "value": "7"
-      },
-      "standardScore": {
-        "value": "78.1428571428571"
-      },
-      "courseGradeCorrelation": {
-        "value": "59.8"
-      }
-    },
-    {
-      "itemname": {
-        "value": "Exercise 5"
-      },
-      "nStudents": {
-        "value": "8"
-      },
-      "standardScore": {
-        "value": "43.75"
-      },
-      "courseGradeCorrelation": {
-        "value": "52.3"
-      }
-    },
-    {
-      "itemname": {
-        "value": "Exercise 6"
-      },
-      "nStudents": {
-        "value": "8"
-      },
-      "standardScore": {
-        "value": "56.25"
-      },
-      "courseGradeCorrelation": {
-        "value": "36.6"
-      }
-    },
-    {
-      "itemname": {
-        "value": "Exercise 7"
-      },
-      "nStudents": {
-        "value": "7"
-      },
-      "standardScore": {
-        "value": "75.7142857142857"
-      },
-      "courseGradeCorrelation": {
-        "value": "71"
-      }
-    },
-    {
-      "itemname": {
-        "value": "Exercise 8"
-      },
-      "nStudents": {
-        "value": "7"
-      },
-      "standardScore": {
-        "value": "35.4285714285714"
-      },
-      "courseGradeCorrelation": {
-        "value": "42.6"
+        "value": null
       }
     }
   ],
-  "uuid": "23d5c730-6650-4f01-b097-d8dce62a5644",
-  "title": "Summary of Quizzes",
-  "legend": "This chart displays student performance data for each quiz in the course.",
-  "comment": [],
+  "uuid": "9240a6cc-5120-487a-b0a2-ad4f65049b0d",
+  "title": "Summary of Graded Items",
+  "legend": "This chart displays student performance data for each gradable item in the course.",
+  "comment": [
+
+  ],
   "inverted": false,
-  "dataFormat": [],
+  "emptyData": 0,
+  "dataFormat": [
+
+  ],
   "columnOrder": [
     "itemname",
+    "category",
     "nStudents",
     "standardScore",
     "courseGradeCorrelation"
-  ]
+  ],
+  "elementName": "gradableItemsTable",
+  "elementType": "xrayTable",
+  "enableGraph": true,
+  "columnHeaders": {
+    "category": "Category",
+    "itemname": "Item name",
+    "nStudents": "Submissions graded",
+    "standardScore": "Average score",
+    "courseGradeCorrelation": "Relationship with course grade"
+  },
+  "colorCodesSpecs": [
+
+  ],
+  "url": "/xray2qa/9240a6cc-5120-487a-b0a2-ad4f65049b0d",
+  "itemCount": 2
 }

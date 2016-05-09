@@ -1,20 +1,1617 @@
 {
-  "date": "2016-02-20",
-  "scheduleid": 0,
-  "attachments": [],
-  "datecreated": "2016-02-20T00:00:00.000Z",
-  "oldid": null,
-  "notifications": {
-    "attributes": {
-      "row.names": {
-        "attributes": {},
+  "id": 338556,
+  "courseid": 7544,
+  "participantid": 0,
+  "type": "gradebook",
+  "subtype": "",
+  "reportdate": "2016-05-04T00:00:00.000Z",
+  "forumid": 0,
+  "elements": {
+    "element1": {
+      "date": "2016-05-04",
+      "title": "Gradebook Report",
+      "courseName": "03212016",
+      "elementName": "element1",
+      "elementType": "xraySectionHeader",
+      "instructors": [
+        "Chance DeLaCroix",
+        "teacher02 teacher02son",
+        "teacher03 teacher03son",
+        "teacher01 teacher01son"
+      ],
+      "sectionLevel": 1
+    },
+    "courseGradeTable": {
+      "data": [
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "peoples"
+          },
+          "meanQuiz": {
+            "value": "21.400"
+          },
+          "firstname": {
+            "value": "Claire"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": "14.300"
+          },
+          "participantId": {
+            "value": 102214
+          },
+          "standardScore": {
+            "value": 14.2857
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "peeples"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "Dan The Purple People Eater"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102213
+          },
+          "standardScore": {
+            "value": null
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "O'Reily"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "Dylan"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102222
+          },
+          "standardScore": {
+            "value": null
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "branson"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "louise lucky lovely lady"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102217
+          },
+          "standardScore": {
+            "value": null
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "DeLancey"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "Dean"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102221
+          },
+          "standardScore": {
+            "value": null
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "Brent"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "Janet"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102218
+          },
+          "standardScore": {
+            "value": null
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "Just Some Last Name"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "Richie"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102216
+          },
+          "standardScore": {
+            "value": null
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "wally"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "Apple"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102215
+          },
+          "standardScore": {
+            "value": null
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "Jo"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "Michele"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102220
+          },
+          "standardScore": {
+            "value": null
+          }
+        },
+        {
+          "courseId": {
+            "value": 7544
+          },
+          "lastname": {
+            "value": "Jones"
+          },
+          "meanQuiz": {
+            "value": null
+          },
+          "firstname": {
+            "value": "June"
+          },
+          "meanForum": {
+            "value": null
+          },
+          "meanOther": {
+            "value": null
+          },
+          "meanAssign": {
+            "value": null
+          },
+          "courseGrade": {
+            "value": null
+          },
+          "participantId": {
+            "value": 102219
+          },
+          "standardScore": {
+            "value": null
+          }
+        }
+      ],
+      "uuid": "5ebe8476-52ce-4aa4-bf6b-32dc01149a37",
+      "title": "Course Grades",
+      "legend": "Grades range between 0 and 100%.",
+      "comment": [
+
+      ],
+      "inverted": false,
+      "emptyData": 0,
+      "dataFormat": [
+
+      ],
+      "columnOrder": [
+        "lastname",
+        "firstname",
+        "courseGrade",
+        "meanQuiz",
+        "meanAssign",
+        "meanForum",
+        "meanOther"
+      ],
+      "elementName": "courseGradeTable",
+      "elementType": "xrayTable",
+      "enableGraph": true,
+      "columnHeaders": {
+        "lastname": "Surname",
+        "meanQuiz": "Average grade in quizzes",
+        "firstname": "Given name",
+        "meanForum": "Average grade in forums",
+        "meanOther": "Average grade in other graded items",
+        "meanAssign": "Average grade in assignments",
+        "courseGrade": "Course grade"
+      },
+      "colorCodesSpecs": [
+
+      ]
+    },
+    "studentScoreDistribution": {
+      "uuid": "b3dbe4ed-7809-4e28-93b0-9064455b254bstudentScoreDistribution.svg",
+      "title": "Distribution of Grades",
+      "legend": "Peaks show scores where there are a large number of students.",
+      "mapping": [
+
+      ],
+      "tooltip": "Peaks show scores where there are a large number of students.",
+      "filename": "studentScoreDistribution.svg",
+      "plotType": "svg",
+      "reportId": [
+
+      ],
+      "customData": null,
+      "dimensions": {
+        "width": 600,
+        "height": 500
+      },
+      "elementName": "studentScoreDistribution",
+      "elementType": "xrayPlot",
+      "contexts": {
+        "courseContext": "/xray2qa/course/7544/gradebook/2016-05-04/studentScoreDistribution.svg/courseContext",
+        "participantContext": "/xray2qa/course/7544/gradebook/2016-05-04/studentScoreDistribution.svg/participantContext",
+        "forumContext": "/xray2qa/course/7544/gradebook/2016-05-04/studentScoreDistribution.svg/forumContext",
+        "advancedForumContext": "/xray2qa/course/7544/gradebook/2016-05-04/studentScoreDistribution.svg/advancedForumContext",
+        "timeMachine": "/xray2qa/course/7544/gradebook/2016-05-04/studentScoreDistribution.svg/timeMachine"
+      }
+    },
+    "gradableItemsTable": {
+      "data": [
+        {
+          "category": {
+            "value": "Quiz"
+          },
+          "itemname": {
+            "value": "Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz 1234567890"
+          },
+          "nStudents": {
+            "value": 1
+          },
+          "activityId": {
+            "value": 736264
+          },
+          "standardScore": {
+            "value": "28.600"
+          },
+          "courseGradeCorrelation": {
+            "value": null
+          }
+        },
+        {
+          "category": {
+            "value": "Quiz"
+          },
+          "itemname": {
+            "value": "Second Quiz for Testing"
+          },
+          "nStudents": {
+            "value": 1
+          },
+          "activityId": {
+            "value": 736270
+          },
+          "standardScore": {
+            "value": "14.300"
+          },
+          "courseGradeCorrelation": {
+            "value": null
+          }
+        }
+      ],
+      "uuid": "d609ffd5-900c-4d7a-8be4-0f5c658c41b1",
+      "title": "Summary of Graded Items",
+      "legend": "This chart displays student performance data for each gradable item in the \n                               course.",
+      "comment": [
+
+      ],
+      "inverted": false,
+      "emptyData": 0,
+      "dataFormat": [
+
+      ],
+      "columnOrder": [
+        "itemname",
+        "category",
+        "nStudents",
+        "standardScore",
+        "courseGradeCorrelation"
+      ],
+      "elementName": "gradableItemsTable",
+      "elementType": "xrayTable",
+      "enableGraph": true,
+      "columnHeaders": {
+        "category": "Category",
+        "itemname": "Item name",
+        "nStudents": "Submissions graded",
+        "standardScore": "Average score",
+        "courseGradeCorrelation": "Relationship with course grade"
+      },
+      "colorCodesSpecs": [
+
+      ]
+    },
+    "scoreDistributionByItem": {
+      "uuid": "02c7b9ab-4da0-4446-be9f-7e16bf797645scoreDistributionByItem.svg",
+      "title": "Distribution of Scores",
+      "legend": "This is a boxplot graph of graded item scores. Each diamond is a student score.\n                      The thickest line shows the average score for that graded item.\n                      The vertical lines above and below the box show the top and lowest percent ranges.\n                      See help for more detailed explanation of boxplots.",
+      "mapping": [
+
+      ],
+      "tooltip": "This is a boxplot graph of graded item scores. Each diamond is a student score.\n                      The thickest line shows the average score for that graded item.\n                      The vertical lines above and below the box show the top and lowest percent ranges.\n                      See help for more detailed explanation of boxplots.",
+      "filename": "scoreDistributionByItem.svg",
+      "plotType": "svg",
+      "reportId": [
+
+      ],
+      "customData": null,
+      "dimensions": {
+        "width": 600,
+        "height": 500
+      },
+      "elementName": "scoreDistributionByItem",
+      "elementType": "xrayPlot",
+      "contexts": {
+        "courseContext": "/xray2qa/course/7544/gradebook/2016-05-04/scoreDistributionByItem.svg/courseContext",
+        "participantContext": "/xray2qa/course/7544/gradebook/2016-05-04/scoreDistributionByItem.svg/participantContext",
+        "forumContext": "/xray2qa/course/7544/gradebook/2016-05-04/scoreDistributionByItem.svg/forumContext",
+        "advancedForumContext": "/xray2qa/course/7544/gradebook/2016-05-04/scoreDistributionByItem.svg/advancedForumContext",
+        "timeMachine": "/xray2qa/course/7544/gradebook/2016-05-04/scoreDistributionByItem.svg/timeMachine"
+      }
+    },
+    "scatterPlot": {
+      "uuid": "1dffc84b-eeda-4b6a-91da-10862d29b943scatterPlot.svg",
+      "title": "Automatic Discussion Forum Grading versus Course Grade",
+      "legend": "Each dot represents the values for a student. The gray line plots the \n                              relationship between the two grading methods. The shaded area around \n                              the line is the confidence range for the line.",
+      "mapping": [
+
+      ],
+      "tooltip": "Each dot represents the values for a student. The gray line plots the \n                              relationship between the two grading methods. The shaded area around \n                              the line is the confidence range for the line.",
+      "filename": "scatterPlot.svg",
+      "plotType": "svg",
+      "reportId": [
+
+      ],
+      "customData": null,
+      "dimensions": {
+        "width": 600,
+        "height": 500
+      },
+      "elementName": "scatterPlot",
+      "elementType": "xrayPlot",
+      "contexts": {
+        "courseContext": "/xray2qa/course/7544/gradebook/2016-05-04/scatterPlot.svg/courseContext",
+        "participantContext": "/xray2qa/course/7544/gradebook/2016-05-04/scatterPlot.svg/participantContext",
+        "forumContext": "/xray2qa/course/7544/gradebook/2016-05-04/scatterPlot.svg/forumContext",
+        "advancedForumContext": "/xray2qa/course/7544/gradebook/2016-05-04/scatterPlot.svg/advancedForumContext",
+        "timeMachine": "/xray2qa/course/7544/gradebook/2016-05-04/scatterPlot.svg/timeMachine"
+      }
+    },
+    "itemsHeatmap": {
+      "uuid": "517f5791-0051-49a4-ad1d-93077d279472itemsHeatmap.svg",
+      "title": "Comparison of Scores",
+      "legend": "Student scores are represented by the colors green, yellow, orange, and red \n                              in descending order.",
+      "mapping": [
+
+      ],
+      "tooltip": "Student scores are represented by the colors green, yellow, orange, and red \n                              in descending order.",
+      "filename": "itemsHeatmap.svg",
+      "plotType": "svg",
+      "reportId": [
+
+      ],
+      "customData": null,
+      "dimensions": {
+        "width": 600,
+        "height": 500
+      },
+      "elementName": "itemsHeatmap",
+      "elementType": "xrayPlot",
+      "contexts": {
+        "courseContext": "/xray2qa/course/7544/gradebook/2016-05-04/itemsHeatmap.svg/courseContext",
+        "participantContext": "/xray2qa/course/7544/gradebook/2016-05-04/itemsHeatmap.svg/participantContext",
+        "forumContext": "/xray2qa/course/7544/gradebook/2016-05-04/itemsHeatmap.svg/forumContext",
+        "advancedForumContext": "/xray2qa/course/7544/gradebook/2016-05-04/itemsHeatmap.svg/advancedForumContext",
+        "timeMachine": "/xray2qa/course/7544/gradebook/2016-05-04/itemsHeatmap.svg/timeMachine"
+      }
+    }
+  },
+  "datapoints": {
+    "type": "list",
+    "value": [
+      {
+        "type": "list",
         "value": [
-          1
+          {
+            "type": "double",
+            "value": [
+              102214,
+              102213,
+              102222,
+              102217,
+              102221,
+              102218,
+              102216,
+              102215,
+              102220,
+              102219
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              7544,
+              7544,
+              7544,
+              7544,
+              7544,
+              7544,
+              7544,
+              7544,
+              7544,
+              7544
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              14.28571,
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              14.3,
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              "Claire",
+              "Dan The Purple People Eater",
+              "Dylan",
+              "louise lucky lovely lady",
+              "Dean",
+              "Janet",
+              "Richie",
+              "Apple",
+              "Michele",
+              "June"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              "peoples",
+              "peeples",
+              "O'Reily",
+              "branson",
+              "DeLancey",
+              "Brent",
+              "Just Some Last Name",
+              "wally",
+              "Jo",
+              "Jones"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              21.4,
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA"
+            ],
+            "attributes": {
+
+            }
+          }
         ],
-        "type": "integer"
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "data.frame"
+            ],
+            "attributes": {
+
+            }
+          },
+          "names": {
+            "type": "character",
+            "value": [
+              "participantId",
+              "courseId",
+              "standardScore",
+              "courseGrade",
+              "firstname",
+              "lastname",
+              "meanQuiz",
+              "meanAssign",
+              "meanForum",
+              "meanOther"
+            ],
+            "attributes": {
+
+            }
+          },
+          "row.names": {
+            "type": "integer",
+            "value": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "attributes": {
+
+            }
+          }
+        }
+      },
+      {
+        "type": "list",
+        "value": [
+          {
+            "type": "double",
+            "value": [
+              5920809,
+              5920978
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              102214,
+              102214
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              28.57143,
+              14.28571
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              28.57143,
+              14.28571
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              0,
+              0
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              1458836815,
+              1459451139
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              1458836815,
+              1459451139
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              581952,
+              581967
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              736264,
+              736270
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              7544,
+              7544
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              "Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz 1234567890",
+              "Second Quiz for Testing"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              "quiz",
+              "quiz"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              100,
+              100
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              0,
+              0
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              0,
+              0
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              28.57143,
+              14.28571
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "integer",
+            "value": [
+              1,
+              1
+            ],
+            "attributes": {
+              "class": {
+                "type": "character",
+                "value": [
+                  "factor"
+                ],
+                "attributes": {
+
+                }
+              },
+              "levels": {
+                "type": "character",
+                "value": [
+                  "Quiz",
+                  "Assignment",
+                  "Forum",
+                  "Other"
+                ],
+                "attributes": {
+
+                }
+              }
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              1,
+              1
+            ],
+            "attributes": {
+
+            }
+          }
+        ],
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "data.frame"
+            ],
+            "attributes": {
+
+            }
+          },
+          "names": {
+            "type": "character",
+            "value": [
+              "id",
+              "participantId",
+              "rawGrade",
+              "finalGrade",
+              "locktime",
+              "timecreated",
+              "timemodified",
+              "datafile_id",
+              "activityId",
+              "courseId",
+              "itemname",
+              "itemtype",
+              "rawgrademax",
+              "rawgrademin",
+              "gradeitemid",
+              "standardScore",
+              "category",
+              "x"
+            ],
+            "attributes": {
+
+            }
+          },
+          "row.names": {
+            "type": "integer",
+            "value": [
+              2,
+              3
+            ],
+            "attributes": {
+
+            }
+          }
+        }
+      },
+      {
+        "type": "list",
+        "value": [
+          {
+            "type": "double",
+            "value": [
+              736264,
+              736270
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              28.6,
+              14.3
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              1,
+              1
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              "Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz Adding a new Quiz 1234567890",
+              "Second Quiz for Testing"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "integer",
+            "value": [
+              1,
+              1
+            ],
+            "attributes": {
+              "class": {
+                "type": "character",
+                "value": [
+                  "factor"
+                ],
+                "attributes": {
+
+                }
+              },
+              "levels": {
+                "type": "character",
+                "value": [
+                  "Quiz",
+                  "Assignment",
+                  "Forum",
+                  "Other"
+                ],
+                "attributes": {
+
+                }
+              }
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              "NA",
+              "NA"
+            ],
+            "attributes": {
+
+            }
+          }
+        ],
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "data.frame"
+            ],
+            "attributes": {
+
+            }
+          },
+          "names": {
+            "type": "character",
+            "value": [
+              "activityId",
+              "standardScore",
+              "nStudents",
+              "itemname",
+              "category",
+              "courseGradeCorrelation"
+            ],
+            "attributes": {
+
+            }
+          },
+          "row.names": {
+            "type": "integer",
+            "value": [
+              1,
+              2
+            ],
+            "attributes": {
+
+            }
+          }
+        }
+      },
+      {
+        "type": "list",
+        "value": [
+          {
+            "type": "double",
+            "value": [
+              102213,
+              102214,
+              102215,
+              102216,
+              102217,
+              102218,
+              102219,
+              102220,
+              102221,
+              102222
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "logical",
+            "value": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "logical",
+            "value": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "logical",
+            "value": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "logical",
+            "value": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "logical",
+            "value": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              null,
+              "Claire",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              null,
+              "peoples",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "double",
+            "value": [
+              "NA",
+              14.3,
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA",
+              "NA"
+            ],
+            "attributes": {
+
+            }
+          }
+        ],
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "data.frame"
+            ],
+            "attributes": {
+
+            }
+          },
+          "names": {
+            "type": "character",
+            "value": [
+              "participantId",
+              "ctc",
+              "contrib",
+              "wc",
+              "numberGrade",
+              "letterGrade",
+              "firstname",
+              "lastname",
+              "courseGrade"
+            ],
+            "attributes": {
+
+            }
+          },
+          "row.names": {
+            "type": "integer",
+            "value": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "attributes": {
+
+            }
+          }
+        }
+      },
+      {
+        "type": "list",
+        "value": [
+          {
+            "type": "double",
+            "value": [
+              102213,
+              102222,
+              102214,
+              102217,
+              102221,
+              102218,
+              102216,
+              102215,
+              102220,
+              102219
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              "Dan The Purple People Eater",
+              "Dylan",
+              "Claire",
+              "louise lucky lovely lady",
+              "Dean",
+              "Janet",
+              "Richie",
+              "Apple",
+              "Michele",
+              "June"
+            ],
+            "attributes": {
+
+            }
+          },
+          {
+            "type": "character",
+            "value": [
+              "peeples",
+              "O'Reily",
+              "peoples",
+              "branson",
+              "DeLancey",
+              "Brent",
+              "Just Some Last Name",
+              "wally",
+              "Jo",
+              "Jones"
+            ],
+            "attributes": {
+
+            }
+          }
+        ],
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "data.frame"
+            ],
+            "attributes": {
+
+            }
+          },
+          "names": {
+            "type": "character",
+            "value": [
+              "participantId",
+              "firstname",
+              "lastname"
+            ],
+            "attributes": {
+
+            }
+          },
+          "row.names": {
+            "type": "integer",
+            "value": [
+              2,
+              5,
+              10,
+              11,
+              12,
+              14,
+              16,
+              17,
+              18,
+              19
+            ],
+            "attributes": {
+
+            }
+          }
+        }
+      }
+    ],
+    "attributes": {
+      "names": {
+        "type": "character",
+        "value": [
+          "courseGradeDf",
+          "gradebook",
+          "meanScore",
+          "grades",
+          "participantsStud"
+        ],
+        "attributes": {
+
+        }
+      }
+    }
+  },
+  "datapoints_plain": [
+
+  ],
+  "notifications": {
+    "type": "list",
+    "value": [
+      {
+        "type": "character",
+        "value": [
+          "xray2qa"
+        ],
+        "attributes": {
+
+        }
+      },
+      {
+        "type": "character",
+        "value": [
+          "xrayGradebookReport"
+        ],
+        "attributes": {
+
+        }
+      },
+      {
+        "type": "integer",
+        "value": [
+          7544
+        ],
+        "attributes": {
+
+        }
+      },
+      {
+        "type": "double",
+        "value": [
+          0
+        ],
+        "attributes": {
+
+        }
+      },
+      {
+        "type": "double",
+        "value": [
+          0
+        ],
+        "attributes": {
+
+        }
+      },
+      {
+        "type": "double",
+        "value": [
+          0
+        ],
+        "attributes": {
+
+        }
+      },
+      {
+        "type": "character",
+        "value": [
+          "NA"
+        ],
+        "attributes": {
+
+        }
+      },
+      {
+        "type": "character",
+        "value": [
+          "No notifications"
+        ],
+        "attributes": {
+
+        }
+      },
+      {
+        "type": "double",
+        "value": [
+          16925
+        ],
+        "attributes": {
+          "class": {
+            "type": "character",
+            "value": [
+              "Date"
+            ],
+            "attributes": {
+
+            }
+          }
+        }
+      }
+    ],
+    "attributes": {
+      "class": {
+        "type": "character",
+        "value": [
+          "data.frame"
+        ],
+        "attributes": {
+
+        }
       },
       "names": {
-        "attributes": {},
+        "type": "character",
         "value": [
           "domain",
           "report",
@@ -26,3710 +1623,27 @@
           "text",
           "date"
         ],
-        "type": "character"
-      },
-      "class": {
-        "attributes": {},
-        "value": [
-          "data.frame"
-        ],
-        "type": "character"
-      }
-    },
-    "value": [
-      {
         "attributes": {
-          "levels": {
-            "attributes": {},
-            "value": [
-              "demo"
-            ],
-            "type": "character"
-          },
-          "class": {
-            "attributes": {},
-            "value": [
-              "factor"
-            ],
-            "type": "character"
-          }
-        },
+
+        }
+      },
+      "row.names": {
+        "type": "integer",
         "value": [
           1
         ],
-        "type": "integer"
-      },
-      {
         "attributes": {
-          "levels": {
-            "attributes": {},
-            "value": [
-              "xrayGradebookReport"
-            ],
-            "type": "character"
-          },
-          "class": {
-            "attributes": {},
-            "value": [
-              "factor"
-            ],
-            "type": "character"
-          }
-        },
-        "value": [
-          1
-        ],
-        "type": "integer"
-      },
-      {
-        "attributes": {},
-        "value": [
-          3
-        ],
-        "type": "double"
-      },
-      {
-        "attributes": {},
-        "value": [
-          0
-        ],
-        "type": "double"
-      },
-      {
-        "attributes": {},
-        "value": [
-          0
-        ],
-        "type": "double"
-      },
-      {
-        "attributes": {},
-        "value": [
-          0
-        ],
-        "type": "double"
-      },
-      {
-        "attributes": {
-          "levels": {
-            "attributes": {},
-            "value": [
-              "NA"
-            ],
-            "type": "character"
-          },
-          "class": {
-            "attributes": {},
-            "value": [
-              "factor"
-            ],
-            "type": "character"
-          }
-        },
-        "value": [
-          1
-        ],
-        "type": "integer"
-      },
-      {
-        "attributes": {
-          "levels": {
-            "attributes": {},
-            "value": [
-              "No notifications"
-            ],
-            "type": "character"
-          },
-          "class": {
-            "attributes": {},
-            "value": [
-              "factor"
-            ],
-            "type": "character"
-          }
-        },
-        "value": [
-          1
-        ],
-        "type": "integer"
-      },
-      {
-        "attributes": {
-          "class": {
-            "attributes": {},
-            "value": [
-              "Date"
-            ],
-            "type": "character"
-          }
-        },
-        "value": [
-          16851
-        ],
-        "type": "double"
+
+        }
       }
-    ],
-    "type": "list"
-  },
-  "datapoints_plain": [],
-  "datapoints": {
-    "attributes": {
-      "names": {
-        "attributes": {},
-        "value": [
-          "grades",
-          "studentScore",
-          "gradebook",
-          "meanScore"
-        ],
-        "type": "character"
-      }
-    },
-    "value": [
-      {
-        "attributes": {
-          "row.names": {
-            "attributes": {},
-            "value": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9,
-              10
-            ],
-            "type": "integer"
-          },
-          "names": {
-            "attributes": {},
-            "value": [
-              "participantId",
-              "ctc",
-              "contrib",
-              "wc",
-              "numberGrade",
-              "letterGrade",
-              "firstname",
-              "lastname",
-              "finalGrade",
-              "standarScore"
-            ],
-            "type": "character"
-          },
-          "class": {
-            "attributes": {},
-            "value": [
-              "data.frame"
-            ],
-            "type": "character"
-          }
-        },
-        "value": [
-          {
-            "attributes": {},
-            "value": [
-              256,
-              276,
-              304,
-              470,
-              687,
-              688,
-              689,
-              690,
-              692,
-              693
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              0.987,
-              0.138,
-              0.961,
-              0.267,
-              "NA",
-              0.024,
-              0.042,
-              0.998,
-              0.595,
-              0.317
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              1,
-              0.0546875,
-              0.6328125,
-              0.0703125,
-              "NA",
-              0.03125,
-              0.05859375,
-              0.765625,
-              0.89453125,
-              0.32421875
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              0.998,
-              0.138,
-              0.958,
-              0.278,
-              "NA",
-              0.017,
-              0.032,
-              0.92,
-              0.565,
-              0.282
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              1.23975,
-              0.15167188,
-              1.11845313,
-              0.28732813,
-              "NA",
-              0.0300625,
-              0.05414844,
-              1.16990625,
-              0.81113281,
-              0.38930469
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              "A+",
-              "D",
-              "A+",
-              "C-",
-              null,
-              "F",
-              "F",
-              "A+",
-              "A-",
-              "C+"
-            ],
-            "type": "character"
-          },
-          {
-            "attributes": {},
-            "value": [
-              "Shawn",
-              "Bryan",
-              "Marvin",
-              "Charlie",
-              "Anna",
-              "Jonathan",
-              "Theresa",
-              "Debbie",
-              "Beth",
-              "Jeanne"
-            ],
-            "type": "character"
-          },
-          {
-            "attributes": {},
-            "value": [
-              "Payne",
-              "Duncan",
-              "Guzman",
-              "Stevenson",
-              "Bailey",
-              "Kim",
-              "Snyder",
-              "Pearson",
-              "Singh",
-              "Figueroa"
-            ],
-            "type": "character"
-          },
-          {
-            "attributes": {},
-            "value": [
-              383,
-              282,
-              301,
-              235,
-              "NA",
-              "NA",
-              15,
-              325,
-              227,
-              314
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              87.04545455,
-              64.09090909,
-              68.40909091,
-              53.40909091,
-              "NA",
-              "NA",
-              3.40909091,
-              73.86363636,
-              51.59090909,
-              71.36363636
-            ],
-            "type": "double"
-          }
-        ],
-        "type": "list"
-      },
-      {
-        "attributes": {
-          "row.names": {
-            "attributes": {},
-            "value": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9,
-              10
-            ],
-            "type": "integer"
-          },
-          "names": {
-            "attributes": {},
-            "value": [
-              "participantId",
-              "firstname",
-              "lastname",
-              "finalGrade",
-              "standarScore"
-            ],
-            "type": "character"
-          },
-          "class": {
-            "attributes": {},
-            "value": [
-              "data.frame"
-            ],
-            "type": "character"
-          }
-        },
-        "value": [
-          {
-            "attributes": {},
-            "value": [
-              256,
-              276,
-              304,
-              470,
-              687,
-              688,
-              689,
-              690,
-              692,
-              693
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              "Shawn",
-              "Bryan",
-              "Marvin",
-              "Charlie",
-              "Anna",
-              "Jonathan",
-              "Theresa",
-              "Debbie",
-              "Beth",
-              "Jeanne"
-            ],
-            "type": "character"
-          },
-          {
-            "attributes": {},
-            "value": [
-              "Payne",
-              "Duncan",
-              "Guzman",
-              "Stevenson",
-              "Bailey",
-              "Kim",
-              "Snyder",
-              "Pearson",
-              "Singh",
-              "Figueroa"
-            ],
-            "type": "character"
-          },
-          {
-            "attributes": {},
-            "value": [
-              383,
-              282,
-              301,
-              235,
-              "NA",
-              "NA",
-              15,
-              325,
-              227,
-              314
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              87.04545455,
-              64.09090909,
-              68.40909091,
-              53.40909091,
-              "NA",
-              "NA",
-              3.40909091,
-              73.86363636,
-              51.59090909,
-              71.36363636
-            ],
-            "type": "double"
-          }
-        ],
-        "type": "list"
-      },
-      {
-        "attributes": {
-          "row.names": {
-            "attributes": {},
-            "value": [
-              2,
-              5,
-              7,
-              8,
-              9,
-              10,
-              11,
-              12,
-              13,
-              14,
-              15,
-              16,
-              17,
-              18,
-              19,
-              20,
-              21,
-              22,
-              23,
-              24,
-              25,
-              26,
-              27,
-              28,
-              29,
-              30,
-              31,
-              32,
-              33,
-              34,
-              35,
-              36,
-              37,
-              38,
-              39,
-              40,
-              41,
-              42,
-              43,
-              44,
-              45,
-              46,
-              47,
-              48,
-              49,
-              50,
-              51,
-              52,
-              53,
-              54,
-              55,
-              56,
-              57,
-              58,
-              59,
-              60,
-              61,
-              62,
-              63,
-              64
-            ],
-            "type": "integer"
-          },
-          "names": {
-            "attributes": {},
-            "value": [
-              "courseId",
-              "quizId",
-              "participantId",
-              "name",
-              "attempts",
-              "grade",
-              "rawGrade",
-              "finalGrade",
-              "standarScore",
-              "x"
-            ],
-            "type": "character"
-          },
-          "class": {
-            "attributes": {},
-            "value": [
-              "data.frame"
-            ],
-            "type": "character"
-          }
-        },
-        "value": [
-          {
-            "attributes": {},
-            "value": [
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              2,
-              2,
-              2,
-              1,
-              2,
-              2,
-              1,
-              3,
-              1,
-              1,
-              1,
-              4,
-              3,
-              6,
-              7,
-              3,
-              5,
-              8,
-              3,
-              3,
-              4,
-              2,
-              4,
-              4,
-              4,
-              1,
-              3,
-              4,
-              6,
-              7,
-              5,
-              6,
-              8,
-              6,
-              6,
-              6,
-              7,
-              7,
-              7,
-              7,
-              8,
-              2,
-              5,
-              3,
-              5,
-              6,
-              5,
-              5,
-              2,
-              1,
-              3,
-              5,
-              4,
-              8,
-              6,
-              8,
-              7,
-              5,
-              8,
-              8
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              470,
-              304,
-              256,
-              470,
-              693,
-              276,
-              693,
-              693,
-              256,
-              304,
-              276,
-              693,
-              470,
-              693,
-              693,
-              304,
-              693,
-              693,
-              256,
-              276,
-              470,
-              692,
-              256,
-              304,
-              276,
-              692,
-              692,
-              692,
-              692,
-              692,
-              692,
-              470,
-              692,
-              304,
-              256,
-              276,
-              470,
-              256,
-              304,
-              276,
-              256,
-              689,
-              276,
-              689,
-              470,
-              689,
-              689,
-              304,
-              690,
-              690,
-              690,
-              256,
-              690,
-              276,
-              690,
-              470,
-              690,
-              690,
-              304,
-              690
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              "Exercise 2",
-              "Exercise 2",
-              "Exercise 2",
-              "Exercise 1",
-              "Exercise 2",
-              "Exercise 2",
-              "Exercise 1",
-              "Exercise 3",
-              "Exercise 1",
-              "Exercise 1",
-              "Exercise 1",
-              "Exercise 4",
-              "Exercise 3",
-              "Exercise 6",
-              "Exercise 7",
-              "Exercise 3",
-              "Exercise 5",
-              "Exercise 8",
-              "Exercise 3",
-              "Exercise 3",
-              "Exercise 4",
-              "Exercise 2",
-              "Exercise 4",
-              "Exercise 4",
-              "Exercise 4",
-              "Exercise 1",
-              "Exercise 3",
-              "Exercise 4",
-              "Exercise 6",
-              "Exercise 7",
-              "Exercise 5",
-              "Exercise 6",
-              "Exercise 8",
-              "Exercise 6",
-              "Exercise 6",
-              "Exercise 6",
-              "Exercise 7",
-              "Exercise 7",
-              "Exercise 7",
-              "Exercise 7",
-              "Exercise 8",
-              "Exercise 2",
-              "Exercise 5",
-              "Exercise 3",
-              "Exercise 5",
-              "Exercise 6",
-              "Exercise 5",
-              "Exercise 5",
-              "Exercise 2",
-              "Exercise 1",
-              "Exercise 3",
-              "Exercise 5",
-              "Exercise 4",
-              "Exercise 8",
-              "Exercise 6",
-              "Exercise 8",
-              "Exercise 7",
-              "Exercise 5",
-              "Exercise 8",
-              "Exercise 8"
-            ],
-            "type": "character"
-          },
-          {
-            "attributes": {},
-            "value": [
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              10,
-              10,
-              10,
-              100,
-              10,
-              10,
-              100,
-              10,
-              100,
-              100,
-              100,
-              100,
-              10,
-              10,
-              100,
-              10,
-              10,
-              100,
-              10,
-              10,
-              100,
-              10,
-              100,
-              100,
-              100,
-              100,
-              10,
-              100,
-              10,
-              100,
-              10,
-              10,
-              100,
-              10,
-              10,
-              10,
-              100,
-              100,
-              100,
-              100,
-              100,
-              10,
-              10,
-              10,
-              10,
-              10,
-              10,
-              10,
-              10,
-              100,
-              10,
-              10,
-              100,
-              100,
-              10,
-              100,
-              100,
-              10,
-              100,
-              100
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              5,
-              6,
-              9,
-              62,
-              7,
-              9,
-              88,
-              6,
-              92,
-              78,
-              78,
-              90,
-              3,
-              6,
-              100,
-              7,
-              4,
-              13,
-              9,
-              9,
-              62,
-              5,
-              75,
-              81,
-              79,
-              80,
-              4,
-              64,
-              2,
-              24,
-              7,
-              0,
-              41,
-              8,
-              10,
-              3,
-              64,
-              83,
-              79,
-              82,
-              100,
-              4,
-              4,
-              4,
-              5,
-              6,
-              1,
-              6,
-              9,
-              93,
-              10,
-              5,
-              96,
-              18,
-              10,
-              34,
-              98,
-              3,
-              36,
-              6
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              5,
-              6,
-              9,
-              62,
-              7,
-              9,
-              88,
-              6,
-              92,
-              78,
-              78,
-              90,
-              3,
-              6,
-              100,
-              7,
-              4,
-              13,
-              9,
-              9,
-              62,
-              5,
-              75,
-              81,
-              79,
-              80,
-              4,
-              64,
-              2,
-              24,
-              7,
-              0,
-              41,
-              8,
-              10,
-              3,
-              64,
-              83,
-              79,
-              82,
-              100,
-              4,
-              4,
-              4,
-              5,
-              6,
-              1,
-              6,
-              9,
-              93,
-              10,
-              5,
-              96,
-              18,
-              10,
-              34,
-              98,
-              3,
-              36,
-              6
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              50,
-              60,
-              90,
-              62,
-              70,
-              90,
-              88,
-              60,
-              92,
-              78,
-              78,
-              90,
-              30,
-              60,
-              100,
-              70,
-              40,
-              13,
-              90,
-              90,
-              62,
-              50,
-              75,
-              81,
-              79,
-              80,
-              40,
-              64,
-              20,
-              24,
-              70,
-              0,
-              41,
-              80,
-              100,
-              30,
-              64,
-              83,
-              79,
-              82,
-              100,
-              40,
-              40,
-              40,
-              50,
-              60,
-              10,
-              60,
-              90,
-              93,
-              100,
-              50,
-              96,
-              18,
-              100,
-              34,
-              98,
-              30,
-              36,
-              6
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1
-            ],
-            "type": "double"
-          }
-        ],
-        "type": "list"
-      },
-      {
-        "attributes": {
-          "row.names": {
-            "attributes": {},
-            "value": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8
-            ],
-            "type": "integer"
-          },
-          "names": {
-            "attributes": {},
-            "value": [
-              "quizId",
-              "earnScore",
-              "standarScore",
-              "nStudents",
-              "grade",
-              "name",
-              "attempts",
-              "finalGradeCorrelation",
-              "standarGradeCorrelation"
-            ],
-            "type": "character"
-          },
-          "class": {
-            "attributes": {},
-            "value": [
-              "data.frame"
-            ],
-            "type": "character"
-          }
-        },
-        "value": [
-          {
-            "attributes": {},
-            "value": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              81.57142857,
-              6.75,
-              6.5,
-              78.14285714,
-              4.375,
-              5.625,
-              75.71428571,
-              35.42857143
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              81.57142857,
-              67.5,
-              65,
-              78.14285714,
-              43.75,
-              56.25,
-              75.71428571,
-              35.42857143
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              7,
-              8,
-              8,
-              7,
-              8,
-              8,
-              7,
-              7
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              100,
-              10,
-              10,
-              100,
-              10,
-              10,
-              100,
-              100
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              "Exercise 1",
-              "Exercise 2",
-              "Exercise 3",
-              "Exercise 4",
-              "Exercise 5",
-              "Exercise 6",
-              "Exercise 7",
-              "Exercise 8"
-            ],
-            "type": "character"
-          },
-          {
-            "attributes": {},
-            "value": [
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              0.77430659,
-              0.77176263,
-              0.65808021,
-              0.59834597,
-              0.52305511,
-              0.36556099,
-              0.70982472,
-              0.42586302
-            ],
-            "type": "double"
-          },
-          {
-            "attributes": {},
-            "value": [
-              0.77430659,
-              0.77176263,
-              0.65808021,
-              0.59834597,
-              0.52305511,
-              0.36556099,
-              0.70982472,
-              0.42586302
-            ],
-            "type": "double"
-          }
-        ],
-        "type": "list"
-      }
-    ],
-    "type": "list"
-  },
-  "id": 1914,
-  "courseid": 3,
-  "participantid": 0,
-  "type": "gradebook",
-  "subtype": "",
-  "reportdate": "2016-02-20T00:00:00.000Z",
-  "forumid": 0,
-  "elements": {
-    "itemsHeatmap": {
-      "contexts": {
-        "courseContext": "/demo/course/3/gradebook/2016-02-20/itemsHeatmap.svg/courseContext",
-        "timeMachine": "/demo/course/3/gradebook/2016-02-20/itemsHeatmap.svg/timeMachine",
-        "forumContext": "",
-        "participantContext": ""
-      },
-      "elementType": "xrayPlot",
-      "elementName": "itemsHeatmap",
-      "dimensions": {
-        "height": 500,
-        "width": 600
-      },
-      "customData": {
-        "studentScore": [
-          {
-            "participantId": 256,
-            "standarScore": 87.0455,
-            "finalGrade": 383,
-            "firstname": "Shawn",
-            "lastname": "Payne"
-          },
-          {
-            "participantId": 276,
-            "standarScore": 64.0909,
-            "finalGrade": 282,
-            "firstname": "Bryan",
-            "lastname": "Duncan"
-          },
-          {
-            "participantId": 304,
-            "standarScore": 68.4091,
-            "finalGrade": 301,
-            "firstname": "Marvin",
-            "lastname": "Guzman"
-          },
-          {
-            "participantId": 470,
-            "standarScore": 53.4091,
-            "finalGrade": 235,
-            "firstname": "Charlie",
-            "lastname": "Stevenson"
-          },
-          {
-            "participantId": 687,
-            "standarScore": {},
-            "finalGrade": {},
-            "firstname": "Anna",
-            "lastname": "Bailey"
-          },
-          {
-            "participantId": 688,
-            "standarScore": {},
-            "finalGrade": {},
-            "firstname": "Jonathan",
-            "lastname": "Kim"
-          },
-          {
-            "participantId": 689,
-            "standarScore": 3.4091,
-            "finalGrade": 15,
-            "firstname": "Theresa",
-            "lastname": "Snyder"
-          },
-          {
-            "participantId": 690,
-            "standarScore": 73.8636,
-            "finalGrade": 325,
-            "firstname": "Debbie",
-            "lastname": "Pearson"
-          },
-          {
-            "participantId": 692,
-            "standarScore": 51.5909,
-            "finalGrade": 227,
-            "firstname": "Beth",
-            "lastname": "Singh"
-          },
-          {
-            "participantId": 693,
-            "standarScore": 71.3636,
-            "finalGrade": 314,
-            "firstname": "Jeanne",
-            "lastname": "Figueroa"
-          }
-        ],
-        "gradebook": [
-          {
-            "participantId": 470,
-            "standarScore": 50,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 5,
-            "finalGrade": 5
-          },
-          {
-            "participantId": 304,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          },
-          {
-            "participantId": 256,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          },
-          {
-            "participantId": 470,
-            "standarScore": 62,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 62,
-            "finalGrade": 62
-          },
-          {
-            "participantId": 693,
-            "standarScore": 70,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 7,
-            "finalGrade": 7
-          },
-          {
-            "participantId": 276,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          },
-          {
-            "participantId": 693,
-            "standarScore": 88,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 88,
-            "finalGrade": 88
-          },
-          {
-            "participantId": 693,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          },
-          {
-            "participantId": 256,
-            "standarScore": 92,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 92,
-            "finalGrade": 92
-          },
-          {
-            "participantId": 304,
-            "standarScore": 78,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 78,
-            "finalGrade": 78
-          },
-          {
-            "participantId": 276,
-            "standarScore": 78,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 78,
-            "finalGrade": 78
-          },
-          {
-            "participantId": 693,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 90,
-            "finalGrade": 90
-          },
-          {
-            "participantId": 470,
-            "standarScore": 30,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 3,
-            "finalGrade": 3
-          },
-          {
-            "participantId": 693,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          },
-          {
-            "participantId": 693,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 100,
-            "finalGrade": 100
-          },
-          {
-            "participantId": 304,
-            "standarScore": 70,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 7,
-            "finalGrade": 7
-          },
-          {
-            "participantId": 693,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          },
-          {
-            "participantId": 693,
-            "standarScore": 13,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 13,
-            "finalGrade": 13
-          },
-          {
-            "participantId": 256,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          },
-          {
-            "participantId": 276,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          },
-          {
-            "participantId": 470,
-            "standarScore": 62,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 62,
-            "finalGrade": 62
-          },
-          {
-            "participantId": 692,
-            "standarScore": 50,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 5,
-            "finalGrade": 5
-          },
-          {
-            "participantId": 256,
-            "standarScore": 75,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 75,
-            "finalGrade": 75
-          },
-          {
-            "participantId": 304,
-            "standarScore": 81,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 81,
-            "finalGrade": 81
-          },
-          {
-            "participantId": 276,
-            "standarScore": 79,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 79,
-            "finalGrade": 79
-          },
-          {
-            "participantId": 692,
-            "standarScore": 80,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 80,
-            "finalGrade": 80
-          },
-          {
-            "participantId": 692,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          },
-          {
-            "participantId": 692,
-            "standarScore": 64,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 64,
-            "finalGrade": 64
-          },
-          {
-            "participantId": 692,
-            "standarScore": 20,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 2,
-            "finalGrade": 2
-          },
-          {
-            "participantId": 692,
-            "standarScore": 24,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 24,
-            "finalGrade": 24
-          },
-          {
-            "participantId": 692,
-            "standarScore": 70,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 7,
-            "finalGrade": 7
-          },
-          {
-            "participantId": 470,
-            "standarScore": 0,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 0,
-            "finalGrade": 0
-          },
-          {
-            "participantId": 692,
-            "standarScore": 41,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 41,
-            "finalGrade": 41
-          },
-          {
-            "participantId": 304,
-            "standarScore": 80,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 8,
-            "finalGrade": 8
-          },
-          {
-            "participantId": 256,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 10,
-            "finalGrade": 10
-          },
-          {
-            "participantId": 276,
-            "standarScore": 30,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 3,
-            "finalGrade": 3
-          },
-          {
-            "participantId": 470,
-            "standarScore": 64,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 64,
-            "finalGrade": 64
-          },
-          {
-            "participantId": 256,
-            "standarScore": 83,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 83,
-            "finalGrade": 83
-          },
-          {
-            "participantId": 304,
-            "standarScore": 79,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 79,
-            "finalGrade": 79
-          },
-          {
-            "participantId": 276,
-            "standarScore": 82,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 82,
-            "finalGrade": 82
-          },
-          {
-            "participantId": 256,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 100,
-            "finalGrade": 100
-          },
-          {
-            "participantId": 689,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          },
-          {
-            "participantId": 276,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          },
-          {
-            "participantId": 689,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          },
-          {
-            "participantId": 470,
-            "standarScore": 50,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 5,
-            "finalGrade": 5
-          },
-          {
-            "participantId": 689,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          },
-          {
-            "participantId": 689,
-            "standarScore": 10,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 1,
-            "finalGrade": 1
-          },
-          {
-            "participantId": 304,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          },
-          {
-            "participantId": 690,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          },
-          {
-            "participantId": 690,
-            "standarScore": 93,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 93,
-            "finalGrade": 93
-          },
-          {
-            "participantId": 690,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 10,
-            "finalGrade": 10
-          },
-          {
-            "participantId": 256,
-            "standarScore": 50,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 5,
-            "finalGrade": 5
-          },
-          {
-            "participantId": 690,
-            "standarScore": 96,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 96,
-            "finalGrade": 96
-          },
-          {
-            "participantId": 276,
-            "standarScore": 18,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 18,
-            "finalGrade": 18
-          },
-          {
-            "participantId": 690,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 10,
-            "finalGrade": 10
-          },
-          {
-            "participantId": 470,
-            "standarScore": 34,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 34,
-            "finalGrade": 34
-          },
-          {
-            "participantId": 690,
-            "standarScore": 98,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 98,
-            "finalGrade": 98
-          },
-          {
-            "participantId": 690,
-            "standarScore": 30,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 3,
-            "finalGrade": 3
-          },
-          {
-            "participantId": 304,
-            "standarScore": 36,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 36,
-            "finalGrade": 36
-          },
-          {
-            "participantId": 690,
-            "standarScore": 6,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          }
-        ]
-      },
-      "uuid": "d295c7ae-d85d-4b9d-becf-1d521d6e84afitemsHeatmap.svg",
-      "title": "Comparison of Quiz Scores",
-      "legend": "Darker colors represent higher quiz scores.",
-      "mapping": [],
-      "tooltip": "Darker colors represent higher quiz scores.",
-      "filename": "itemsHeatmap.svg",
-      "plotType": "svg",
-      "reportId": []
-    },
-    "scatterPlot": {
-      "contexts": {
-        "timeMachine": "/demo/course/3/gradebook/2016-02-20/scatterPlot.svg/timeMachine",
-        "forumContext": "",
-        "participantContext": "",
-        "courseContext": "/demo/course/3/gradebook/2016-02-20/scatterPlot.svg/courseContext"
-      },
-      "elementType": "xrayPlot",
-      "elementName": "scatterPlot",
-      "dimensions": {
-        "height": 500,
-        "width": 600
-      },
-      "customData": [
-        {
-          "grades": {
-            "participantId": 256,
-            "standarScore": 87.0455,
-            "wc": 0.998,
-            "ctc": 0.987,
-            "contrib": 1,
-            "lastname": "Payne",
-            "firstname": "Shawn",
-            "finalGrade": 383,
-            "letterGrade": "A+",
-            "numberGrade": 1.2397
-          }
-        },
-        {
-          "grades": {
-            "participantId": 276,
-            "standarScore": 64.0909,
-            "wc": 0.138,
-            "ctc": 0.138,
-            "contrib": 0.0547,
-            "lastname": "Duncan",
-            "firstname": "Bryan",
-            "finalGrade": 282,
-            "letterGrade": "D",
-            "numberGrade": 0.1517
-          }
-        },
-        {
-          "grades": {
-            "participantId": 304,
-            "standarScore": 68.4091,
-            "wc": 0.958,
-            "ctc": 0.961,
-            "contrib": 0.6328,
-            "lastname": "Guzman",
-            "firstname": "Marvin",
-            "finalGrade": 301,
-            "letterGrade": "A+",
-            "numberGrade": 1.1185
-          }
-        },
-        {
-          "grades": {
-            "participantId": 470,
-            "standarScore": 53.4091,
-            "wc": 0.278,
-            "ctc": 0.267,
-            "contrib": 0.0703,
-            "lastname": "Stevenson",
-            "firstname": "Charlie",
-            "finalGrade": 235,
-            "letterGrade": "C-",
-            "numberGrade": 0.2873
-          }
-        },
-        {
-          "grades": {
-            "participantId": 687,
-            "standarScore": null,
-            "wc": null,
-            "ctc": null,
-            "contrib": null,
-            "lastname": "Bailey",
-            "firstname": "Anna",
-            "finalGrade": null,
-            "letterGrade": null,
-            "numberGrade": null
-          }
-        },
-        {
-          "grades": {
-            "participantId": 688,
-            "standarScore": null,
-            "wc": 0.017,
-            "ctc": 0.024,
-            "contrib": 0.0312,
-            "lastname": "Kim",
-            "firstname": "Jonathan",
-            "finalGrade": null,
-            "letterGrade": "F",
-            "numberGrade": 0.0301
-          }
-        },
-        {
-          "grades": {
-            "participantId": 689,
-            "standarScore": 3.4091,
-            "wc": 0.032,
-            "ctc": 0.042,
-            "contrib": 0.0586,
-            "lastname": "Snyder",
-            "firstname": "Theresa",
-            "finalGrade": 15,
-            "letterGrade": "F",
-            "numberGrade": 0.0541
-          }
-        },
-        {
-          "grades": {
-            "participantId": 690,
-            "standarScore": 73.8636,
-            "wc": 0.92,
-            "ctc": 0.998,
-            "contrib": 0.7656,
-            "lastname": "Pearson",
-            "firstname": "Debbie",
-            "finalGrade": 325,
-            "letterGrade": "A+",
-            "numberGrade": 1.1699
-          }
-        },
-        {
-          "grades": {
-            "participantId": 692,
-            "standarScore": 51.5909,
-            "wc": 0.565,
-            "ctc": 0.595,
-            "contrib": 0.8945,
-            "lastname": "Singh",
-            "firstname": "Beth",
-            "finalGrade": 227,
-            "letterGrade": "A-",
-            "numberGrade": 0.8111
-          }
-        },
-        {
-          "grades": {
-            "participantId": 693,
-            "standarScore": 71.3636,
-            "wc": 0.282,
-            "ctc": 0.317,
-            "contrib": 0.3242,
-            "lastname": "Figueroa",
-            "firstname": "Jeanne",
-            "finalGrade": 314,
-            "letterGrade": "C+",
-            "numberGrade": 0.3893
-          }
-        }
-      ],
-      "uuid": "a8d8f9d9-4903-408a-94ad-2184b19f1c58scatterPlot.svg",
-      "title": "Automatic discussion forum grading versus quiz results",
-      "legend": "Each dot represents the values for a student. The gray line plots the \n                              relationship between the two grading methods. The shaded area around \n                              the line is the confidence range for the line.",
-      "mapping": [],
-      "tooltip": "Each dot represents the values for a student. The gray line plots the \n                              relationship between the two grading methods. The shaded area around \n                              the line is the confidence range for the line.",
-      "filename": "scatterPlot.svg",
-      "plotType": "svg",
-      "reportId": []
-    },
-    "scoreDistributionByItem": {
-      "contexts": {
-        "forumContext": "",
-        "courseContext": "/demo/course/3/gradebook/2016-02-20/scoreDistributionByItem.svg/courseContext",
-        "participantContext": "",
-        "timeMachine": "/demo/course/3/gradebook/2016-02-20/scoreDistributionByItem.svg/timeMachine"
-      },
-      "elementType": "xrayPlot",
-      "elementName": "scoreDistributionByItem",
-      "dimensions": {
-        "height": 500,
-        "width": 600
-      },
-      "customData": [
-        {
-          "gradebook": {
-            "participantId": 470,
-            "standarScore": 50,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 5,
-            "finalGrade": 5
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 304,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 256,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 470,
-            "standarScore": 62,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 62,
-            "finalGrade": 62
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 693,
-            "standarScore": 70,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 7,
-            "finalGrade": 7
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 276,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 693,
-            "standarScore": 88,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 88,
-            "finalGrade": 88
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 693,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 256,
-            "standarScore": 92,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 92,
-            "finalGrade": 92
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 304,
-            "standarScore": 78,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 78,
-            "finalGrade": 78
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 276,
-            "standarScore": 78,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 78,
-            "finalGrade": 78
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 693,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 90,
-            "finalGrade": 90
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 470,
-            "standarScore": 30,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 3,
-            "finalGrade": 3
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 693,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 693,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 100,
-            "finalGrade": 100
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 304,
-            "standarScore": 70,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 7,
-            "finalGrade": 7
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 693,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 693,
-            "standarScore": 13,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 13,
-            "finalGrade": 13
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 256,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 276,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 470,
-            "standarScore": 62,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 62,
-            "finalGrade": 62
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 692,
-            "standarScore": 50,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 5,
-            "finalGrade": 5
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 256,
-            "standarScore": 75,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 75,
-            "finalGrade": 75
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 304,
-            "standarScore": 81,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 81,
-            "finalGrade": 81
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 276,
-            "standarScore": 79,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 79,
-            "finalGrade": 79
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 692,
-            "standarScore": 80,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 80,
-            "finalGrade": 80
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 692,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 692,
-            "standarScore": 64,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 64,
-            "finalGrade": 64
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 692,
-            "standarScore": 20,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 2,
-            "finalGrade": 2
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 692,
-            "standarScore": 24,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 24,
-            "finalGrade": 24
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 692,
-            "standarScore": 70,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 7,
-            "finalGrade": 7
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 470,
-            "standarScore": 0,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 0,
-            "finalGrade": 0
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 692,
-            "standarScore": 41,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 41,
-            "finalGrade": 41
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 304,
-            "standarScore": 80,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 8,
-            "finalGrade": 8
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 256,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 10,
-            "finalGrade": 10
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 276,
-            "standarScore": 30,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 3,
-            "finalGrade": 3
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 470,
-            "standarScore": 64,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 64,
-            "finalGrade": 64
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 256,
-            "standarScore": 83,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 83,
-            "finalGrade": 83
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 304,
-            "standarScore": 79,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 79,
-            "finalGrade": 79
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 276,
-            "standarScore": 82,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 82,
-            "finalGrade": 82
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 256,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 100,
-            "finalGrade": 100
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 689,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 276,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 689,
-            "standarScore": 40,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 4,
-            "finalGrade": 4
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 470,
-            "standarScore": 50,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 5,
-            "finalGrade": 5
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 689,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 689,
-            "standarScore": 10,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 1,
-            "finalGrade": 1
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 304,
-            "standarScore": 60,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 690,
-            "standarScore": 90,
-            "x": 1,
-            "name": "Exercise 2",
-            "grade": 10,
-            "quizId": 2,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 9,
-            "finalGrade": 9
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 690,
-            "standarScore": 93,
-            "x": 1,
-            "name": "Exercise 1",
-            "grade": 100,
-            "quizId": 1,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 93,
-            "finalGrade": 93
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 690,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 3",
-            "grade": 10,
-            "quizId": 3,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 10,
-            "finalGrade": 10
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 256,
-            "standarScore": 50,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 5,
-            "finalGrade": 5
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 690,
-            "standarScore": 96,
-            "x": 1,
-            "name": "Exercise 4",
-            "grade": 100,
-            "quizId": 4,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 96,
-            "finalGrade": 96
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 276,
-            "standarScore": 18,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 18,
-            "finalGrade": 18
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 690,
-            "standarScore": 100,
-            "x": 1,
-            "name": "Exercise 6",
-            "grade": 10,
-            "quizId": 6,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 10,
-            "finalGrade": 10
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 470,
-            "standarScore": 34,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 34,
-            "finalGrade": 34
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 690,
-            "standarScore": 98,
-            "x": 1,
-            "name": "Exercise 7",
-            "grade": 100,
-            "quizId": 7,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 98,
-            "finalGrade": 98
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 690,
-            "standarScore": 30,
-            "x": 1,
-            "name": "Exercise 5",
-            "grade": 10,
-            "quizId": 5,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 3,
-            "finalGrade": 3
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 304,
-            "standarScore": 36,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 36,
-            "finalGrade": 36
-          }
-        },
-        {
-          "gradebook": {
-            "participantId": 690,
-            "standarScore": 6,
-            "x": 1,
-            "name": "Exercise 8",
-            "grade": 100,
-            "quizId": 8,
-            "attempts": 1,
-            "courseId": 3,
-            "rawGrade": 6,
-            "finalGrade": 6
-          }
-        }
-      ],
-      "uuid": "23684bcd-0175-4031-b60a-c9e22ba3ea67scoreDistributionByItem.svg",
-      "title": "Distribution of Quiz Scores",
-      "legend": "This is a boxplot graph of quiz scores. Each dot is a student score.\n                      The thickest line shows the average score for that quiz.\n                      The vertical lines above and below the box show the top and lowest percent ranges.\n                      See help for more detailed explanation of boxplots.",
-      "mapping": [],
-      "tooltip": "This is a boxplot graph of quiz scores. Each dot is a student score.\n                      The thickest line shows the average score for that quiz.\n                      The vertical lines above and below the box show the top and lowest percent ranges.\n                      See help for more detailed explanation of boxplots.",
-      "filename": "scoreDistributionByItem.svg",
-      "plotType": "svg",
-      "reportId": []
-    },
-    "gradableItemsTable": {
-      "colorCodesSpecs": [],
-      "columnHeaders": {
-        "courseGradeCorrelation": "Relationship with Current Total course grade (%)",
-        "standardScore": "Average score (%)",
-        "nStudents": "Number of students",
-        "itemname": "Quiz name"
-      },
-      "enableGraph": true,
-      "elementType": "xrayTable",
-      "elementName": "gradableItemsTable",
-      "data": [
-        {
-          "itemname": {
-            "value": "Exercise 1"
-          },
-          "nStudents": {
-            "value": "7"
-          },
-          "standardScore": {
-            "value": "81.5714285714286"
-          },
-          "courseGradeCorrelation": {
-            "value": "77.4"
-          }
-        },
-        {
-          "itemname": {
-            "value": "Exercise 2"
-          },
-          "nStudents": {
-            "value": "8"
-          },
-          "standardScore": {
-            "value": "67.5"
-          },
-          "courseGradeCorrelation": {
-            "value": "77.2"
-          }
-        },
-        {
-          "itemname": {
-            "value": "Exercise 3"
-          },
-          "nStudents": {
-            "value": "8"
-          },
-          "standardScore": {
-            "value": "65"
-          },
-          "courseGradeCorrelation": {
-            "value": "65.8"
-          }
-        },
-        {
-          "itemname": {
-            "value": "Exercise 4"
-          },
-          "nStudents": {
-            "value": "7"
-          },
-          "standardScore": {
-            "value": "78.1428571428571"
-          },
-          "courseGradeCorrelation": {
-            "value": "59.8"
-          }
-        },
-        {
-          "itemname": {
-            "value": "Exercise 5"
-          },
-          "nStudents": {
-            "value": "8"
-          },
-          "standardScore": {
-            "value": "43.75"
-          },
-          "courseGradeCorrelation": {
-            "value": "52.3"
-          }
-        },
-        {
-          "itemname": {
-            "value": "Exercise 6"
-          },
-          "nStudents": {
-            "value": "8"
-          },
-          "standardScore": {
-            "value": "56.25"
-          },
-          "courseGradeCorrelation": {
-            "value": "36.6"
-          }
-        },
-        {
-          "itemname": {
-            "value": "Exercise 7"
-          },
-          "nStudents": {
-            "value": "7"
-          },
-          "standardScore": {
-            "value": "75.7142857142857"
-          },
-          "courseGradeCorrelation": {
-            "value": "71"
-          }
-        },
-        {
-          "itemname": {
-            "value": "Exercise 8"
-          },
-          "nStudents": {
-            "value": "7"
-          },
-          "standardScore": {
-            "value": "35.4285714285714"
-          },
-          "courseGradeCorrelation": {
-            "value": "42.6"
-          }
-        }
-      ],
-      "uuid": "23d5c730-6650-4f01-b097-d8dce62a5644",
-      "title": "Summary of Quizzes",
-      "legend": "This chart displays student performance data for each quiz in the course.",
-      "comment": [],
-      "inverted": false,
-      "dataFormat": [],
-      "columnOrder": [
-        "itemname",
-        "nStudents",
-        "standardScore",
-        "courseGradeCorrelation"
-      ]
-    },
-    "studentScoreDistribution": {
-      "contexts": {
-        "timeMachine": "/demo/course/3/gradebook/2016-02-20/studentScoreDistribution.svg/timeMachine",
-        "participantContext": "",
-        "forumContext": "",
-        "courseContext": "/demo/course/3/gradebook/2016-02-20/studentScoreDistribution.svg/courseContext"
-      },
-      "elementType": "xrayPlot",
-      "elementName": "studentScoreDistribution",
-      "dimensions": {
-        "height": 500,
-        "width": 600
-      },
-      "customData": [
-        {
-          "studentScore": {
-            "participantId": 256,
-            "standarScore": 87.0455,
-            "finalGrade": 383,
-            "firstname": "Shawn",
-            "lastname": "Payne"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 276,
-            "standarScore": 64.0909,
-            "finalGrade": 282,
-            "firstname": "Bryan",
-            "lastname": "Duncan"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 304,
-            "standarScore": 68.4091,
-            "finalGrade": 301,
-            "firstname": "Marvin",
-            "lastname": "Guzman"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 470,
-            "standarScore": 53.4091,
-            "finalGrade": 235,
-            "firstname": "Charlie",
-            "lastname": "Stevenson"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 687,
-            "standarScore": null,
-            "finalGrade": null,
-            "firstname": "Anna",
-            "lastname": "Bailey"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 688,
-            "standarScore": null,
-            "finalGrade": null,
-            "firstname": "Jonathan",
-            "lastname": "Kim"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 689,
-            "standarScore": 3.4091,
-            "finalGrade": 15,
-            "firstname": "Theresa",
-            "lastname": "Snyder"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 690,
-            "standarScore": 73.8636,
-            "finalGrade": 325,
-            "firstname": "Debbie",
-            "lastname": "Pearson"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 692,
-            "standarScore": 51.5909,
-            "finalGrade": 227,
-            "firstname": "Beth",
-            "lastname": "Singh"
-          }
-        },
-        {
-          "studentScore": {
-            "participantId": 693,
-            "standarScore": 71.3636,
-            "finalGrade": 314,
-            "firstname": "Jeanne",
-            "lastname": "Figueroa"
-          }
-        }
-      ],
-      "uuid": "482c43cd-6434-4bb5-97c8-d3b06eede1f1studentScoreDistribution.svg",
-      "title": "Distribution of Scores",
-      "legend": "The peak shows the score for the majority of students.",
-      "mapping": [],
-      "tooltip": "The peak shows the score for the majority of students.",
-      "filename": "studentScoreDistribution.svg",
-      "plotType": "svg",
-      "reportId": []
-    },
-    "courseGradeTable": {
-      "colorCodesSpecs": [],
-      "columnHeaders": {
-        "courseGrade": "Current course grade",
-        "firstname": "Given name",
-        "lastname": "Surname",
-        "meanQuiz": "Average grade in quizzes",
-        "meanAssign": "Average grade in assignments",
-        "meanForum": "Average grade in forums",
-        "meanOther": "Average grade in other graded items"
-      },
-      "enableGraph": true,
-      "elementType": "xrayTable",
-      "elementName": "courseGradeTable",
-      "data": [
-        {
-          "participantId": {
-            "value": 256
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Shawn"
-          },
-          "lastname": {
-            "value": "Payne"
-          }
-        },
-        {
-          "participantId": {
-            "value": 276
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Bryan"
-          },
-          "lastname": {
-            "value": "Duncan"
-          }
-        },
-        {
-          "participantId": {
-            "value": 304
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Marvin"
-          },
-          "lastname": {
-            "value": "Guzman"
-          }
-        },
-        {
-          "participantId": {
-            "value": 470
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Charlie"
-          },
-          "lastname": {
-            "value": "Stevenson"
-          }
-        },
-        {
-          "participantId": {
-            "value": 687
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Anna"
-          },
-          "lastname": {
-            "value": "Bailey"
-          }
-        },
-        {
-          "participantId": {
-            "value": 688
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Jonathan"
-          },
-          "lastname": {
-            "value": "Kim"
-          }
-        },
-        {
-          "participantId": {
-            "value": 689
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Theresa"
-          },
-          "lastname": {
-            "value": "Snyder"
-          }
-        },
-        {
-          "participantId": {
-            "value": 690
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Debbie"
-          },
-          "lastname": {
-            "value": "Pearson"
-          }
-        },
-        {
-          "participantId": {
-            "value": 692
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Beth"
-          },
-          "lastname": {
-            "value": "Singh"
-          }
-        },
-        {
-          "participantId": {
-            "value": 693
-          },
-          "courseGrade": {
-            "value": "20"
-          },
-          "firstname": {
-            "value": "Jeanne"
-          },
-          "lastname": {
-            "value": "Figueroa"
-          }
-        }
-      ],
-      "uuid": "c3075401-bb3f-48ce-a605-62fcb1ee4172",
-      "title": "Student Grades",
-      "legend": "Standardized scores range between 0 and 100%.",
-      "comment": [],
-      "inverted": false,
-      "dataFormat": [],
-      "columnOrder": [
-        "lastname",
-        "firstname",
-        "courseGrade",
-        "meanQuiz",
-        "meanAssign",
-        "meanForum",
-        "meanOther"
-      ]
-    },
-    "element1": {
-      "sectionLevel": 1,
-      "instructors": [
-        "William Wilson",
-        "Maria Taylor"
-      ],
-      "elementType": "xraySectionHeader",
-      "elementName": "element1",
-      "courseName": "Sociology 101",
-      "title": "Gradebook Report",
-      "date": "2016-02-20"
     }
-  }
+  },
+  "oldid": null,
+  "datecreated": "2016-05-04T00:00:00.000Z",
+  "attachments": [
+
+  ],
+  "scheduleid": 0,
+  "hsuforumid": 0,
+  "date": "2016-05-04"
 }
