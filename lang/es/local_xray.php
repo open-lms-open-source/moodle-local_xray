@@ -351,10 +351,10 @@ $string['risk_riskScatterPlot_help'] = 'Cada punto en este diagrama de dispersi�
     ' de forma rápida. Verde significa fuera de riesgo, rojo en alto riesgo y amarillo en riesgo medio.';
 
 /* Graphs Risk report*/
-$string['gradebookreport_studentScoreDistribution'] = 'Distribución de puntajes';
-$string['gradebookreport_scoreDistributionByItem'] = 'Distribución de puntajes de ejercicios';
-$string['gradebookreport_scatterPlot'] = 'Calificación automática de los foros de discusión versus resultado de ejercicios';
-$string['gradebookreport_itemsHeatmap'] = 'Comparación de los puntajes de ejercicios';
+$string['gradebookreport_studentScoreDistribution'] = 'Distribución de calificaciones';
+$string['gradebookreport_scoreDistributionByItem'] = 'Distribución de puntajes';
+$string['gradebookreport_scatterPlot'] = 'Calificación automática de los foros de discusión versus calificación del curso';
+$string['gradebookreport_itemsHeatmap'] = 'Comparación de puntajes';
 
 /* Help Graphs Gradebook report*/
 $string['gradebookreport_studentScoreDistribution_help'] = 'Este gráfico muestra la distribución de los puntajes'.

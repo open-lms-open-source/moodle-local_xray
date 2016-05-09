@@ -346,10 +346,10 @@ $string['risk_riskScatterPlot_help'] = 'Each dot in this scatterplot represents 
     ' at medium.';
 
 /* Graphs Risk report*/
-$string['gradebookreport_studentScoreDistribution'] = 'Distribution of Scores';
-$string['gradebookreport_scoreDistributionByItem'] = 'Distribution of Quiz Scores';
-$string['gradebookreport_scatterPlot'] = 'Automatic Discussion Forum Grading versus Quiz Results';
-$string['gradebookreport_itemsHeatmap'] = 'Comparison of Quiz Scores';
+$string['gradebookreport_studentScoreDistribution'] = 'Distribution of Grades';
+$string['gradebookreport_scoreDistributionByItem'] = 'Distribution of Scores';
+$string['gradebookreport_scatterPlot'] = 'Automatic Discussion Forum Grading versus Course Grade';
+$string['gradebookreport_itemsHeatmap'] = 'Comparison of Scores';
 
 /* Help Graphs Gradebook report*/
 $string['gradebookreport_studentScoreDistribution_help'] = 'This graph shows how the scores are distributed'.
