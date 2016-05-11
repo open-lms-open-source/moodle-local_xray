@@ -260,8 +260,8 @@ $string['risk_riskMeasures_help'] = 'This table helps you identify the students 
     ' withdrawing from, or failing in your course. Higher numbers indicate greater risk. The total risk is based'.
     ' on a student\'s grades (academic) as well as their participation in course discussions (social).'; // Risk report.
 $string['gradebookreport_courseGradeTable_help'] = 'This table shows you how well students are doing on the graded'.
-    ' items in the course. The percentage score is shown for each student, compared to the average of the class'.
-    ' for that item.'; // Gradebook report.
+    ' items in the course. The percentage score for the course grade and the average score in different type'.
+    ' of graded items is shown for each student.'; // Gradebook report.
 $string['gradebookreport_gradableItemsTable_help'] = 'This table shows how students have done as a percentage on each'.
     ' item. It also shows you the relationship of this item to the student\'s overall course grade so far.'; // Gradebook report.
 $string['discussionreport_discussionMetrics_help'] = 'This table shows how a student participates in'.
@@ -306,9 +306,11 @@ $string['activityreport_barplotOfActivityWholeWeek_help'] = 'This chart shows th
     ' over a week. The blue bars represent the activity from the last seven days. The yellow bars show what'.
     ' the activity was like the seven days before. ';
 $string['activityreport_activityByWeekAsFractionOfTotal_help'] = 'Each dot in this chart represents the time a student'.
-    ' spent in your course in a given week compared to other students. Bigger dots indicate more activity. ';
+    ' spent in your course in a given week compared to other students. Bigger dots indicate more activity.'.
+    ' Names in parentheses indicate persons, who are not enrolled currently as students for this course.';
 $string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Each dot in this chart represents the time a student'.
-    ' spent in your course in a given week compared to other weeks. Bigger dots indicate more activity.';
+    ' spent in your course in a given week compared to other weeks. Bigger dots indicate more activity. Names in parentheses'.
+    ' indicate persons, who are not enrolled currently as students for this course.';
 $string['activityreport_firstloginPiechartAdjusted_help'] = 'The diagram shows you when students logged into your course'.
     ' and how many haven\'t yet. The first day of the course may not be the scheduled start date. It starts the day the'.
     ' first participant accessed the course. The pattern seen here may be an indication of future engagement.';
@@ -352,24 +354,26 @@ $string['gradebookreport_scatterPlot'] = 'Automatic Discussion Forum Grading ver
 $string['gradebookreport_itemsHeatmap'] = 'Comparison of Scores';
 
 /* Help Graphs Gradebook report*/
-$string['gradebookreport_studentScoreDistribution_help'] = 'This graph shows how the scores are distributed'.
-    ' over your students. The peak shows what the majority of students are getting. A bell shaped distribution pattern'.
-    ' could indicate that there was no bias or inconsistencies. Different distribution patterns may indicate'.
-    ' significant differences in the difficulty level of the quizzes.';
+$string['gradebookreport_studentScoreDistribution_help'] = 'This graph shows how scores are distributed'.
+    ' over your students. Peak(s) show what grades the majority of students are getting overall, with separate lines'.
+    ' for each type of gradable item. A bell shaped distribution pattern could indicate that there was no bias or'.
+    ' inconsistencies. Different distribution patterns may indicate significant differences in the difficulty'.
+    ' level of the graded items.';
 $string['gradebookreport_scoreDistributionByItem_help'] = 'This boxplot shows the distribution of student scores on'.
-    ' a quiz. A quiz is represented by a box and any vertical lines above and below it. Dots are student scores. The'.
-    ' thick horizontal line shows the average score on the quiz. There are four grade ranges represented for each quiz.'.
-    ' The top 25% (vertical line on top of the box), the 25% above average (area of the box above the average score),'.
-    ' the 25% below average (area of the box below the average score), and the bottom 25% (vertical line below the box).'.
-    ' The longer or taller the range the more spread out the scores are in it. ';
+    ' graded items or item categories. A graded item or category is represented by a box and any vertical lines above and'.
+    ' below it. Diamonds are student scores. The thick horizontal line shows the average score on the graded item. There are'.
+    ' four grade ranges represented for each graded item. The top 25% (vertical line on top of the box), the 25% above average'.
+    ' (area of the box above the average score), the 25% below average (area of the box below the average score), and the'.
+    ' bottom 25% (vertical line below the box). The longer or taller the range the more spread out the scores are in it.';
 $string['gradebookreport_scatterPlot_help'] = 'This graph shows a comparison of the automatic X-Ray grading on'.
-    ' the basis of the quality of the discussion posts and results from quizzes. Each dot in this diagram represents'.
-    ' the values for a student. The black line shows the estimated relationship between the two grading methods.'.
-    ' The shaded area (confidence interval) gives a range for the estimated relationship. If all dots are close'.
-    ' to the black line, the two grading methods are consistent.';
-$string['gradebookreport_itemsHeatmap_help'] = 'This heatmap shows how each student did on a quiz compared to the rest'.
-    ' of the class. Darker colors indicate higher scores. If you have too many of one shade it may indicate that'.
-    ' the quiz is too easy or too difficult.';
+    ' the basis of the quality of the discussion posts to grades on all graded items. Each dot in this diagram represents the'.
+    ' values for a student. The black line shows the estimated relationship between the two grading methods. The shaded area'.
+    ' (confidence interval) gives a range for the estimated relationship. If all dots are close to the black line, the two'.
+    ' grading methods are consistent.';
+$string['gradebookreport_itemsHeatmap_help'] = 'This heatmap shows how each student did on a graded item or'.
+    ' item category compared to the rest of the class. Darker colors indicate higher scores. If you have too many of'.
+    ' one shade it may indicate that the graded item or category is too easy or too difficult. Names in parentheses indicate'.
+    ' persons, who participated in the graded items, but are not enrolled (currently) as students for this course.';
 
 $string['discussionreport_wordcloud'] = 'Most Used Words';
 $string['discussionreport_avgWordPerPost'] = 'Weekly Average Word Count per Post';
