@@ -451,7 +451,7 @@ $string['discussionreportindividual_socialStructure_help'] = 'Este diagrama repr
     ' bajo, o aún no han interactuado con el resto de la clase. "inst" entre paréntesis indica "instructor(es)", y'.
     ' los nombres en paréntesis indican personas que participaron en el foro de discusión pero no se han enrolado'.
     ' en el curso.';
-$string['discussionreportindividual_wordHistogram_help'] = 'Este histograma representa la frecuenta de palabras más'.
+$string['discussionreportindividual_wordHistogram_help'] = 'Este histograma representa la frecuencia de palabras más'.
     ' utilizadas en el foro. Las palabras con una frecuencia menor a 10 han sido excluidas.';
 
 /* Graphs Discussion report individual forum*/
@@ -460,15 +460,18 @@ $string['discussionreportindividualforum_socialStructure'] = 'Análisis de inter
 $string['discussionreportindividualforum_wordHistogram'] = 'Frecuencia de palabras más utilizadas';
 
 /* Help Graphs Discussion report individual forum*/
-$string['discussionreportindividualforum_wordcloud_help'] = 'Esta nube de palabras muestra las palabras que se usan con'.
-    ' mayor frecuencia en las discusiones. Se basa en un conteo único de cada palabra. Las palabras más'.
-    ' grandes son las más utilizadas.';
-$string['discussionreportindividualforum_socialStructure_help'] = 'Este diagrama muestra a quién le está hablando este'.
-    ' estudiante. Los colores muestran su conexión con el resto de la clase. El azul muestra relación'.
-    ' por encima del promedio. El amarillo muestra una conexión inferior a la media. Y el rojo muestra que'.
-    ' no tiene ninguna conexión con ese estudiante todavía.';
-$string['discussionreportindividualforum_wordHistogram_help'] ='Este histograma muestra la frecuencia en la que los'.
-    ' estudiantes postean las 10 palabras más utilizadas en los foros de discusión.';
+$string['discussionreportindividualforum_wordcloud_help'] = 'Esta nube de palabras representa las palabras utilizadas'.
+    ' con más frecuencia a lo largo de las discusiones. Se basa en el conteo de palabras únicas utilizadas. Las'.
+    ' de mayor tamaño indican mayor uso.';
+$string['discussionreportindividualforum_socialStructure_help'] = 'Este diagrama representa a quiénes responden sus'.
+    ' estudiantes. El color muestra la conexión de un estudiante con el resto de la clase. El azul muestra a los'.
+    ' estudiantes que están por arriba o dentro del promedio de interacción. En amarillo vemos los que se encuentran'.
+    ' un poco por debajo de ese promedio y en rojo observamos a aquellos estudiantes con un nivel de interacción muy'.
+    ' bajo, o aún no han interactuado con el resto de la clase. "inst" entre paréntesis indica "instructor(es)", y'.
+    ' los nombres en paréntesis indican personas que participaron en el foro de discusión pero no se han enrolado'.
+    ' en el curso.';
+$string['discussionreportindividualforum_wordHistogram_help'] = 'Este histograma representa la frecuencia de palabras más'.
+    ' utilizadas en el foro. Las palabras con una frecuencia menor a 10 han sido excluidas.';
 
 /* Behat test */
 $string['error_behat_getjson'] = 'Error al traer archivo "{$a}" de carpeta local/xray/tests/fixtures para simular llamada a X-Ray Learning Analytics webservice cuando se esta corriendo behat test.';
