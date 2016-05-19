@@ -122,7 +122,7 @@
 
 /** Horizontal Scroll for tables (Table) **/
 
-.xray_table_scrool {
+.xray-table-scroll {
     overflow: auto;
 }
 
@@ -276,10 +276,6 @@ a.xray-headline-link:hover {
 }
 .xray-reports-links .discussionreport {
     background-image: url([[pix:local_xray|xray-discussions]]);
-}
-
-.xray_dashboard_users_risk_hidden {
-    display: none;
 }
 /**************** End Navigation reports  *********************************/
 

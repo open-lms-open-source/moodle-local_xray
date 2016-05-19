@@ -337,7 +337,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $columns,
             false,
             false, // We don't need pagination because we have only four rows.
-            '<"xray_table_scrool"t>',
+            '<"xray-table-scroll"t>',
             array(10, 50, 100),
             false); // Without sortable.
 
