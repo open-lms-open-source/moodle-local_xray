@@ -121,41 +121,65 @@ class local_xray_controller_reports extends mr_controller {
         switch($this->name) {
             case "activityreport":
             case "activityreportindividual":
-                $report = "Activity_Report";
+                $report = 'https://redirects.blackboard.com/005_008';
                 break;
             case "discussionreport":
             case "discussionreportindividual":
             case "discussionreportindividualforum":
-                $report = "Discussions_Report";
+                $report = 'https://redirects.blackboard.com/005_009';
                 break;
             case "gradebookreport":
-                $report = "Gradebook_Report";
+                $report = 'https://redirects.blackboard.com/005_010';
                 break;
             case "risk":
-                $report = "Risk_Status_Report";
+                $report = 'https://redirects.blackboard.com/005_011';
                 break;
             default:
-                $report = "";
+                $report = 'https://redirects.blackboard.com/005_007';
         }
 
-        // Set url lang.
-        switch(current_language()) {
-            case "es":
-                $lang = "es-es";
-                break;
-            default:
-                // All languages except spanish will have link to english help in blackboard site.
-                $lang = "en-us";
-                break;
-        }
-        $baseurl = "https://%s.help.blackboard.com/Moodlerooms/Teacher/Track_Progress/X-Ray_Learning_Analytics/%s";
-        $helpurl = sprintf($baseurl, $lang, $report);
+        $helpurl = $report.$this->resolve_language_key();
 
         // Add icon for help of report. Link redirect to external url.
         $newheading = $PAGE->title.$this->output->help_icon_external_url(get_string('reports_help', $this->component),
                 $helpurl);
 
         $this->heading->text = $newheading;
+    }
+
+    /**
+     * Given a Moodle language code, return the language and country code for the knowledge base.
+     *
+     * @param string $lang The current language (defaults to user's language).
+     * @return string
+     */
+    private function resolve_language_key($lang = null) {
+        if (is_null($lang)) {
+            $lang = current_language();
+        }
+
+        // Avoid doing too much dynamic work here as the KB doesn't have every language available.  So we must fallback to
+        // the English translation if no known translation exists.
+        switch ($lang) {
+            case 'cs':
+                return 'cs_CZ';
+            case 'ja':
+                return 'ja_JP';
+            case 'pt_br':
+                return 'pt_BR';
+            case 'zh_tw':
+                return 'zh_TW';
+            case 'de':
+            case 'es':
+            case 'fi':
+            case 'fr':
+            case 'it':
+            case 'nl':
+            case 'pl':
+                return $lang.'_'.\core_text::strtoupper($lang);
+        }
+
+        return 'en_US';
     }
 
     /**
