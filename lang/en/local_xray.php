@@ -463,3 +463,7 @@ $string['error_behat_instancefail'] = 'This is an instance configured for fail w
 
 /* Format for time range value */
 $string['strftimehoursminutes'] = '%H:%M';
+
+/* Empties reports */
+$string['xray_course_report_empty'] = 'There is not enough data for this report. Please try again when there is more'.
+    ' user activity in your course.';

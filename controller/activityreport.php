@@ -54,6 +54,13 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
+
+                    // If report is empty, show only message. No graphs/tables empties.
+                    if (isset($responsefirstlogin->elements->reportHeader->emptyReport) &&
+                        $responsefirstlogin->elements->reportHeader->emptyReport) {
+                        return $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                    }
+
                     // We need show table first in activity report.(INT-8186).
                     $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
                         "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);

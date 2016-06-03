@@ -120,6 +120,13 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                 // Fail response of webservice.
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
+
+                // If report is empty, show only message. No graphs/tables empties.
+                if (isset($response->elements->reportHeader->emptyReport) &&
+                    $response->elements->reportHeader->emptyReport) {
+                    return $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                }
+
                 // Show graphs.
                 $paramsaccessible = array("cmid" => $this->cmid, "forum" => $this->forumid);
                 if (!empty($this->d)) {

@@ -63,6 +63,13 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 // Fail response of webservice.
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
+
+                // If report is empty, show only message. No graphs/tables empties.
+                if (isset($response->elements->reportHeader->emptyReport) &&
+                    $response->elements->reportHeader->emptyReport) {
+                    return $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                }
+
                 // Show graphs.
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate,

@@ -64,6 +64,13 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 \local_xray\local\api\xrayws::instance()->print_error();
 
             } else {
+
+                // If report is empty, show only message. No graphs/tables empties.
+                if (isset($response->elements->reportHeader->emptyReport) &&
+                    $response->elements->reportHeader->emptyReport) {
+                    return $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                }
+
                 $output .= $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate,
                     $DB->get_record('user', array('id' => $this->userid)));
