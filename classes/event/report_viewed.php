@@ -56,7 +56,7 @@ class report_viewed extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "The user with id '$this->userid' viewed the X-Ray report for the course with id '$this->courseid'.";
+        return "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'.";
     }
 
     /**
