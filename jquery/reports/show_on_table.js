@@ -61,7 +61,7 @@ function local_xray_show_on_table(YUI, data) {
                 })
             },
             "fnDrawCallback": function( oSettings ,aoData) {
-                // INT-8289, not show paginate when pager is 1.
+                // Not show paginate when pager is 1.
                 if($("#xray-js-table-" + data.id).DataTable().rows().data().length == oSettings._iRecordsTotal) {
                     $("#xray-js-table-" + data.id +"_paginate").hide();
                 } else {

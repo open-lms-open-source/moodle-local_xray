@@ -43,7 +43,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
      * Require capabilities
      */
     public function require_capability() {
-        // Change INT-8194 , this report show 3 differents reports.
+        // This report show 3 differents reports.
         $ctx = $this->get_context();
         if (!has_capability("local/xray:discussionreport_view", $ctx) &&
             !has_capability("local/xray:discussionendogenicplagiarism_view", $ctx) &&

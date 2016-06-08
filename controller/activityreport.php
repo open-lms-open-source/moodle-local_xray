@@ -77,7 +77,7 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                             \local_xray\local\api\xrayws::instance()->print_error();
                         } else {
 
-                            // We need show table first in activity report.(INT-8186).
+                            // We need show table first in activity report.
                             $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
                                 "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
                             $output .= $this->output->standard_table((array)$datatable);
