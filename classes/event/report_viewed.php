@@ -56,7 +56,11 @@ class report_viewed extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'.";
+        if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
+            return "The user with id '$this->userid' viewed the Accessible Data of the graph called ".$this->other['graphname']." in the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'.";
+        } else {
+            return "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'.";
+        }
     }
 
     /**
@@ -65,9 +69,35 @@ class report_viewed extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/local/xray/view.php', array(
+
+        $params = array(
             'controller'    => $this->other['reportname'],
             'courseid' => $this->courseid
-        ));
+        );
+
+        // Individual Reports.
+        if ($this->other['reportname'] == 'activityreportindividual' || $this->other['reportname'] == 'discussionreportindividual') {
+            $params['userid'] = $this->relateduserid;
+        }
+
+        // Discussion individual Forum Report.
+        if ($this->other['reportname'] == 'discussionreportindividualforum') {
+            $params['cmid'] = $this->cmid;
+            $params['forumid'] = $this->forumid;
+        }
+
+        // Accessible Data.
+        if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
+            $params = array(
+                'controller'    => 'accessibledata',
+                'origincontroller' => $this->other['reportname'],
+                'graphname' => $this->other['graphname'],
+                'reportid' => $this->other['reportid'],
+                'elementname' => $this->other['elementname'],
+                'courseid' => $this->courseid
+            );
+        }
+
+        return new \moodle_url('/local/xray/view.php', $params);
     }
 }

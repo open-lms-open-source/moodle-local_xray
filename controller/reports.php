@@ -657,7 +657,8 @@ class local_xray_controller_reports extends mr_controller {
         // Add code for calling event, must execute only for non-ajax views.
         if (!AJAX_SCRIPT) {
             $event = \local_xray\event\report_viewed::create(array(
-                'context' => $this->get_context(), 'relateduserid' => $this->userid,
+                'context' => $this->get_context(),
+                'relateduserid' => $this->userid,
                 'other' => array('reportname' => $this->name)));
             $event->trigger();
         }
