@@ -47,37 +47,37 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
 
             if (has_capability("local/xray:activityreport_view", $this->get_context())) {
 
-                $inactivestudents = '';
-                $report = "firstLogin";
-                $responsefirstlogin = \local_xray\local\api\wsapi::course($this->courseid, $report);
-                if (!$responsefirstlogin) {
-                    // Fail response of webservice.
-                    \local_xray\local\api\xrayws::instance()->print_error();
-                } else {
-
-                    // If report is empty, show only message. No graphs/tables empties.
-                    if (isset($responsefirstlogin->elements->reportHeader->emptyReport) &&
-                        $responsefirstlogin->elements->reportHeader->emptyReport) {
-                        return $this->output->notification(get_string("xray_course_report_empty", $this->component));
-                    }
-
-                    // We need show table first in activity report.(INT-8186).
-                    $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
-                        "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
-                    $inactivestudents .= $this->output->standard_table((array)$datatable);
-                }
-
                 $report = "activity";
                 $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
                     // Fail response of webservice.
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
+
+                    // If report is empty, show only message. No graphs/tables empties.
+                    if (isset($response->elements->reportHeader->emptyReport) &&
+                        $response->elements->reportHeader->emptyReport) {
+                        return $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                    }
+
                     // Report date.
                     $output .= $this->print_top();
                     $output .= $this->output->inforeport($response->reportdate);
+
                     // Inactive Students table from firstLogin Report.
-                    $output .= $inactivestudents;
+                    $report = "firstLogin";
+                    $responsefirstlogin = \local_xray\local\api\wsapi::course($this->courseid, $report);
+                    if (!$responsefirstlogin) {
+                        // Fail response of webservice.
+                        \local_xray\local\api\xrayws::instance()->print_error();
+                    } else {
+
+                        // We need show table first in activity report.(INT-8186).
+                        $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
+                            "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
+                        $output .= $this->output->standard_table((array)$datatable);
+                    }
+
                     // Show table Activity report.
                     $datatable = new local_xray\datatables\datatables($response->elements->studentList,
                         "rest.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,
