@@ -161,17 +161,15 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 
     public function print_footer() {
         parent::print_footer();
-        // Add code for calling event, must execute only for non-ajax views.
-        if (!AJAX_SCRIPT) {
-            $event = \local_xray\event\report_viewed::create(array(
-                'context' => $this->get_context(), 'relateduserid' => $this->userid,
-                'other' => array(
-                    'reportname' => $this->reportname,
-                    'cmid' => $this->cmid,
-                    'forumid' => $this->forumid
-                )
-            ));
-            $event->trigger();
-        }
+        // Call Report Viewed Event.
+        $data = array(
+            'context' => $this->get_context(), 'relateduserid' => $this->userid,
+            'other' => array(
+                'reportname' => $this->name,
+                'cmid' => $this->cmid,
+                'forumid' => $this->forumid
+            )
+        );
+        $this->trigger_report_viewed_event($data);
     }
 }

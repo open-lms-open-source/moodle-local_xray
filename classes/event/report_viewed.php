@@ -56,11 +56,14 @@ class report_viewed extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
-            return "The user with id '$this->userid' viewed the Accessible Data of the graph called ".$this->other['graphname']." in the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'.";
-        } else {
-            return "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'.";
+        $description = "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'";
+        // Add description for special cases.
+        if ($this->other['reportname'] == 'discussionreportindividualforum') {
+            $description .= " for the forum with id '".$this->other['forumid']."'.";
+        } else if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
+            $description = "The user with id '$this->userid' viewed the Accessible Data of the graph called ".$this->other['graphname']." in the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'.";
         }
+        return $description;
     }
 
     /**
@@ -69,23 +72,20 @@ class report_viewed extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-
+        // Basic Reports.
         $params = array(
-            'controller'    => $this->other['reportname'],
+            'controller' => $this->other['reportname'],
             'courseid' => $this->courseid
         );
-
         // Individual Reports.
         if ($this->other['reportname'] == 'activityreportindividual' || $this->other['reportname'] == 'discussionreportindividual') {
             $params['userid'] = $this->relateduserid;
         }
-
         // Discussion individual Forum Report.
         if ($this->other['reportname'] == 'discussionreportindividualforum') {
-            $params['cmid'] = $this->cmid;
-            $params['forumid'] = $this->forumid;
+            $params['cmid'] = $this->other['cmid'];
+            $params['forumid'] = $this->other['forumid'];
         }
-
         // Accessible Data.
         if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
             $params = array(
@@ -97,7 +97,6 @@ class report_viewed extends \core\event\base {
                 'courseid' => $this->courseid
             );
         }
-
         return new \moodle_url('/local/xray/view.php', $params);
     }
 }
