@@ -51,14 +51,16 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
 
+                $output  .= $this->print_top();
+
                 // If report is empty, show only message. No graphs/tables empties.
                 if (isset($response->elements->reportHeader->emptyReport) &&
                     $response->elements->reportHeader->emptyReport) {
-                    return $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                    $output .= $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                    return $output;
                 }
 
                 // Report date.
-                $output  = $this->print_top();
                 $output .= $this->output->inforeport($response->reportdate);
 
                 // Inactive Students table from firstLogin Report.

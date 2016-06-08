@@ -121,10 +121,13 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
 
+                $output .= $this->print_top();
+
                 // If report is empty, show only message. No graphs/tables empties.
                 if (isset($response->elements->reportHeader->emptyReport) &&
                     $response->elements->reportHeader->emptyReport) {
-                    return $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                    $output .= $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                    return $output;
                 }
 
                 // Show graphs.
@@ -132,7 +135,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                 if (!empty($this->d)) {
                     $paramsaccessible["d"] = $this->d;
                 }
-                $output .= $this->print_top();
+
                 $output .= $this->output->inforeport($response->reportdate);
                 $output .= $this->output->show_graph("wordHistogram",
                     $response->elements->wordHistogram,

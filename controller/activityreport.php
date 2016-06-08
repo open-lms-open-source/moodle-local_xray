@@ -54,61 +54,67 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
 
+                    // Menu (Always show menu).
+                    $output .= $this->print_top();
+
                     // If report is empty, show only message. No graphs/tables empties.
                     if (isset($response->elements->reportHeader->emptyReport) &&
                         $response->elements->reportHeader->emptyReport) {
-                        return $this->output->notification(get_string("xray_course_report_empty", $this->component));
-                    }
 
-                    // Report date.
-                    $output .= $this->print_top();
-                    $output .= $this->output->inforeport($response->reportdate);
+                        $output .= $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                        return $output;
 
-                    // Inactive Students table from firstLogin Report.
-                    $report = "firstLogin";
-                    $responsefirstlogin = \local_xray\local\api\wsapi::course($this->courseid, $report);
-                    if (!$responsefirstlogin) {
-                        // Fail response of webservice.
-                        \local_xray\local\api\xrayws::instance()->print_error();
                     } else {
 
-                        // We need show table first in activity report.(INT-8186).
-                        $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
-                            "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
+                        // Report date.
+                        $output .= $this->output->inforeport($response->reportdate);
+
+                        // Inactive Students table from firstLogin Report.
+                        $report = "firstLogin";
+                        $responsefirstlogin = \local_xray\local\api\wsapi::course($this->courseid, $report);
+                        if (!$responsefirstlogin) {
+                            // Fail response of webservice.
+                            \local_xray\local\api\xrayws::instance()->print_error();
+                        } else {
+
+                            // We need show table first in activity report.(INT-8186).
+                            $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
+                                "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
+                            $output .= $this->output->standard_table((array)$datatable);
+                        }
+
+                        // Show table Activity report.
+                        $datatable = new local_xray\datatables\datatables($response->elements->studentList,
+                            "rest.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,
+                            array(),
+                            true,
+                            true,
+                            '<"top">rt<"bottom"flp><"clear">');// add column action.
+                        // If the user comes from header.
+                        if ($this->header) {
+                            $datatable->default_field_sort = 3; // Sort by column "Last activity".
+                            $datatable->sort_order = "desc";
+                        } else {
+                            $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
+                        }
                         $output .= $this->output->standard_table((array)$datatable);
-                    }
 
-                    // Show table Activity report.
-                    $datatable = new local_xray\datatables\datatables($response->elements->studentList,
-                        "rest.php?controller='activityreport'&action='jsonstudentsactivity'&courseid=" . $this->courseid,
-                        array(),
-                        true,
-                        true,
-                        '<"top">rt<"bottom"flp><"clear">');// add column action.
-                    // If the user comes from header.
-                    if ($this->header) {
-                        $datatable->default_field_sort = 3; // Sort by column "Last activity".
-                        $datatable->sort_order = "desc";
-                    } else {
-                        $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
+                        // Show graphs Activity report.
+                        $output .= $this->output->show_graph("activityLevelTimeline",
+                            $response->elements->activityLevelTimeline, $response->id);
+                        $output .= $this->output->show_graph("compassTimeDiagram",
+                            $response->elements->compassTimeDiagram, $response->id);
+                        $output .= $this->output->show_graph("barplotOfActivityByWeekday",
+                            $response->elements->barplotOfActivityByWeekday, $response->id);
+                        $output .= $this->output->show_graph("barplotOfActivityWholeWeek",
+                            $response->elements->barplotOfActivityWholeWeek, $response->id);
+                        $output .= $this->output->show_graph("activityByWeekAsFractionOfTotal",
+                            $response->elements->activityByWeekAsFractionOfTotal, $response->id);
+                        $output .= $this->output->show_graph("activityByWeekAsFractionOfOwn",
+                            $response->elements->activityByWeekAsFractionOfOwn, $response->id);
+                        $output .= $this->output->show_graph("firstloginPiechartAdjusted",
+                            $responsefirstlogin->elements->firstloginPiechartAdjusted, $responsefirstlogin->id);
                     }
-                    $output .= $this->output->standard_table((array)$datatable);
-
-                    // Show graphs Activity report.
-                    $output .= $this->output->show_graph("activityLevelTimeline",
-                        $response->elements->activityLevelTimeline, $response->id);
-                    $output .= $this->output->show_graph("compassTimeDiagram",
-                        $response->elements->compassTimeDiagram, $response->id);
-                    $output .= $this->output->show_graph("barplotOfActivityByWeekday",
-                        $response->elements->barplotOfActivityByWeekday, $response->id);
-                    $output .= $this->output->show_graph("barplotOfActivityWholeWeek",
-                        $response->elements->barplotOfActivityWholeWeek, $response->id);
-                    $output .= $this->output->show_graph("activityByWeekAsFractionOfTotal",
-                        $response->elements->activityByWeekAsFractionOfTotal, $response->id);
-                    $output .= $this->output->show_graph("activityByWeekAsFractionOfOwn",
-                        $response->elements->activityByWeekAsFractionOfOwn, $response->id);
-                    $output .= $this->output->show_graph("firstloginPiechartAdjusted",
-                        $responsefirstlogin->elements->firstloginPiechartAdjusted, $responsefirstlogin->id);
                 }
             }
 

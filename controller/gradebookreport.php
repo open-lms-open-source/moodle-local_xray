@@ -53,15 +53,17 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
                     \local_xray\local\api\xrayws::instance()->print_error();
                 } else {
 
+                    $output .= $this->print_top();
+
                     // If report is empty, show only message. No graphs/tables empties.
                     if (isset($response->elements->reportHeader->emptyReport) &&
                         $response->elements->reportHeader->emptyReport) {
-                        return $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                        $output .= $this->output->notification(get_string("xray_course_report_empty", $this->component));
+                        return $output;
                     }
 
                     // Show graphs.
                     // Report date.
-                    $output .= $this->print_top();
                     $output .= $this->output->inforeport($response->reportdate);
                     // Its a table, I will get info with new call.
                     $datatable = new local_xray\datatables\datatables($response->elements->courseGradeTable,
