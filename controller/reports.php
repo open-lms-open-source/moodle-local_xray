@@ -673,7 +673,7 @@ class local_xray_controller_reports extends mr_controller {
 
     public function trigger_report_viewed_event ($data) {
         // Only for non-ajax views.
-        if (!AJAX_SCRIPT) {
+        if (!defined(AJAX_SCRIPT) || !AJAX_SCRIPT) {
             $event = \local_xray\event\report_viewed::create($data);
             $event->trigger();
         }
