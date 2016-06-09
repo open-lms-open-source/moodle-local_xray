@@ -51,7 +51,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 \local_xray\local\api\xrayws::instance()->print_error();
             } else {
 
-                $output  .= $this->print_top();
+                $output .= $this->print_top();
 
                 // If report is empty, show only message. No graphs/tables empties.
                 if (isset($response->elements->reportHeader->emptyReport) &&
