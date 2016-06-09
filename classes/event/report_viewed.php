@@ -56,12 +56,20 @@ class report_viewed extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        $description = "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'";
-        // Add description for special cases.
+        // Do not use "report" in Discussion Report Individual and Discussion Report Individual Forum.
+        $report = ' report';
+        if ($this->other['reportname'] == 'discussionreportindividual' || $this->other['reportname'] == 'discussionreportindividualforum') {
+            $report = '';
+        }
+        // Basic description.
+        $description = "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')."$report for the course with id '$this->courseid'";
+        // Special description for each case.
         if ($this->other['reportname'] == 'discussionreportindividualforum') {
             $description .= " for the forum with id '".$this->other['forumid']."'.";
         } else if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
-            $description = "The user with id '$this->userid' viewed the Accessible Data of the graph called ".$this->other['graphname']." in the X-Ray ".get_string($this->other['reportname'], 'local_xray')." report for the course with id '$this->courseid'.";
+            $description = "The user with id '$this->userid' viewed the Accessible Data of the graph called ".$this->other['graphname']." in the X-Ray ".get_string($this->other['reportname'], 'local_xray')."$report for the course with id '$this->courseid'.";
+        } else {
+            $description .= ".";
         }
         return $description;
     }
