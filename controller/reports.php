@@ -647,4 +647,35 @@ class local_xray_controller_reports extends mr_controller {
             return '-';
         }
     }
+
+    /**
+     * Print Footer.
+     */
+
+    public function print_footer() {
+        parent::print_footer();
+        // Call Report Viewed Event.
+        // Discussion Report Individual Forum and Accessible Data are special cases.
+        if ($this->name != 'discussionreportindividualforum' && $this->name != 'accessibledata') {
+            $data = array(
+                'context' => $this->get_context(),
+                'relateduserid' => $this->userid,
+                'other' => array('reportname' => $this->name)
+            );
+            $this->trigger_report_viewed_event($data);
+        }
+    }
+
+    /**
+     * Trigger the report_viewed event when the user views a Report.
+     * @param $data Array
+     */
+
+    public function trigger_report_viewed_event ($data) {
+        // Only for non-ajax views.
+        if (!defined(AJAX_SCRIPT) || !AJAX_SCRIPT) {
+            $event = \local_xray\event\report_viewed::create($data);
+            $event->trigger();
+        }
+    }
 }

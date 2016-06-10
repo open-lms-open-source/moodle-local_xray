@@ -185,6 +185,7 @@ $string['synclog'] = 'X-Ray Learning Analytics data sync info message';
 $string['synclogexplanation'] = 'Regular log entry for data sync.';
 $string['getreportfailed'] = 'Error to get report from X-Ray Learning Analytics';
 $string['dataprune'] = 'Data pruning';
+$string['reportviewed'] = 'Report viewed';
 
 /* Course Header */
 $string['atrisk'] = 'At risk';
