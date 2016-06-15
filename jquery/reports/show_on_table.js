@@ -17,7 +17,7 @@ function local_xray_show_on_table(YUI, data) {
             $("#xray-js-table-" + data.id + "_wrapper").html(data.errorMessage);
         });
 
-        $("#xray-js-table-" + data.id).dataTable({
+        var table = $("#xray-js-table-" + data.id).dataTable({
             "jQueryUI": true,
             "bProcessing": true,
             "bServerSide": true,
@@ -62,7 +62,7 @@ function local_xray_show_on_table(YUI, data) {
             },
             "fnDrawCallback": function( oSettings ,aoData) {
                 // Not show paginate when pager is 1.
-                if($("#xray-js-table-" + data.id).DataTable().rows().data().length == oSettings._iRecordsTotal) {
+                if (table.fnGetData().length == oSettings._iRecordsTotal) {
                     $("#xray-js-table-" + data.id +"_paginate").hide();
                 } else {
                     $("#xray-js-table-" + data.id +"_paginate").show();
