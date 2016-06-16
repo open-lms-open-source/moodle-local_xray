@@ -75,7 +75,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
      * This controller identify forum type and get correct report.
      */
     public function view_action() {
-        global $PAGE, $DB;
+        global $CFG, $PAGE, $DB;
 
         // Add title to breadcrumb.
         $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
@@ -106,6 +106,19 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
         $PAGE->navbar->add($PAGE->title);
         $this->addiconhelp();
         $output = "";
+
+        // If the forum has no posts, display a message.
+        $forumdiscussions = $modulename.'_discussions';
+        $forumposts = $modulename.'_posts';
+        $sqlposts = "SELECT fp.id
+                      FROM {{$forumdiscussions}} fd
+	                  INNER JOIN {{$forumposts}} fp ON fd.id = fp.discussion
+		              WHERE fd.forum = :forumid";
+        $params = array('forumid' => $this->forumid);
+        if (!$DB->get_record_sql($sqlposts, $params)) {
+            $output .= $this->output->notification(get_string("xray_course_report_empty", $this->component));
+            return $output;
+        }
 
         try {
             $report = "discussion";

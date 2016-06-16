@@ -116,16 +116,27 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
   | user1student |
   | user2teacher |
 
-  @javascript @local_xray_menu_discussionindividualforum_linkaccessible
-  Scenario: Check if breadcrum is working correctly when user go to Accessible Version of some graph in Discussion Report Individual Forum.
+  @javascript @local_xray_menu_discussionindividualforum_posts_linkaccessible
+  Scenario: Check the message when the forum has no posts and check if breadcrum is working correctly when user go to Accessible Version of some graph in Discussion Report Individual Forum.
     Given the following "activities" exist:
       | activity   | name      | intro      | type     | course | idnumber     |
       | forum      | Forum1    | intro test | general  | C1     | forum1       |
-    And I log in as "user2teacher"
+    # I create posts for the forum.
+    And I log in as "admin"
     And I am on site homepage
     And I follow "Course1"
     And I follow "Forum1"
     And I navigate to "Discussion Report Individual Forum" node in "Forum administration > X-Ray Learning Analytics"
+    Then I should see "There is not enough data for this report. Please try again when there is more user activity in your course."
+    And "a.xray-graph-box-link" "css_element" should not exist
+    And I follow "Course1"
+    And I add a new discussion to "Forum1" forum with:
+      | Subject | Discussion of Forum1 |
+      | Message | Generic Message       |
+    And I follow "Course1"
+    And I follow "Forum1"
+    And I navigate to "Discussion Report Individual Forum" node in "Forum administration > X-Ray Learning Analytics"
+    And "a.xray-graph-box-link" "css_element" should exist
     # Open graph.
     And I click on "a.xray-graph-box-link" "css_element"
     # Close graph.
