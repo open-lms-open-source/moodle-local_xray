@@ -258,9 +258,9 @@ $string['risk_riskMeasures_help'] = 'Esta tabla ayuda a identificar a los estudi
     ' de dejar el curso, retirarse de la clase o abandonar la escuela. Los números más altos indican mayor riesgo.'.
     ' El riesgo total está basado en las calificaciones de los estudiantes (Riesgo Académico), así como también en'.
     ' su participación en los foros de discusión (Riesgo Social).'; // Risk report.
-$string['gradebookreport_courseGradeTable_help'] = 'Esta tabla nos muestra el desempeño de los estudiantes en los'.
-    ' items calificables del curso. Para cada estudiante se muestra un puntaje porcentual comparado con el puntaje'.
-    ' promedio de la clase para ese item.'; // Gradebook report.
+$string['gradebookreport_courseGradeTable_help'] = 'Esta tabla muestra el desempeño de los estudiantes en los'.
+    ' ítems calificables dentro de los curso. Se observa el puntaje porcentual para la calificación del curso'.
+    ' y el puntaje promedio en los diferentes tipos de ítems para cada estudiante.'; // Gradebook report.
 $string['gradebookreport_gradableItemsTable_help'] = 'Esta tabla muestra el desempeño de los estudiantes con un'.
     ' porcentaje para cada item. Además nos muestra la relación entre ese item con el desempeño general del'.
     ' estudiante hasta el momento.'; // Gradebook report.
@@ -308,11 +308,14 @@ $string['activityreport_barplotOfActivityByWeekday_help'] = 'Este gráfico muest
 $string['activityreport_barplotOfActivityWholeWeek_help'] = 'Este gráfico muestra el nivel de actividad (tiempo'.
     ' estimado) a lo largo de la semana. Las barras azules representan la actividad de los últimos siete'.
     ' días. Las barras amarillas muestran  la actividad de los siete días anteriores a esta semana.';
-$string['activityreport_activityByWeekAsFractionOfTotal_help'] = 'Cada punto en este gráfico representa el tiempo en'.
-    ' el que un estudiante permanece activo comparado con otros estudiantes en una semana determinada. Los'.
-    ' puntos más grandes representan mayor actividad.';
-$string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Cada punto en este gráfico representa el tiempo en el'.
-    ' que un estudiante permanece activo comparado con otras semanas. Los puntos más grandes representan mayor actividad.';
+$string['activityreport_activityByWeekAsFractionOfTotal_help'] = 'Cada punto en este gráfico representa el tiempo que'.
+    ' el estudiante pasa en el curso durante una semana en comparación con otros estudiantes. Los puntos más altos'.
+    ' indican mayor actividad. Los nombres entre paréntesis refieren a personas que no están inscriptos como'.
+    ' estudiantes en este curso.';
+$string['activityreport_activityByWeekAsFractionOfOwn_help'] = 'Cada punto en este gráfico representa el tiempo que el'.
+    ' estudiante pasa en el curso durante una semana en comparación con otras semanas. Los puntos más altos indican'.
+    ' mayor actividad. Los nombres entre paréntesis refieren a personas que no están inscriptos como estudiantes en'.
+    ' este curso.';
 $string['activityreport_firstloginPiechartAdjusted_help'] = 'El diagrama muestra cuántos estudiantes ingresaron al'.
     ' curso y cuántos aún no. El primer día del curso no se establece en un momento programado, este comienza el'.
     ' día en el que el primer participante acceda al mismo. El patrón que se vea aquí puede dar un indicio del'.
@@ -358,26 +361,31 @@ $string['gradebookreport_scatterPlot'] = 'Calificación automática de los foros
 $string['gradebookreport_itemsHeatmap'] = 'Comparación de puntajes';
 
 /* Help Graphs Gradebook report*/
-$string['gradebookreport_studentScoreDistribution_help'] = 'Este gráfico muestra la distribución de los puntajes'.
-    ' entre todos los estudiantes. El pico muestra el puntaje que la mayoría de los estudiantes obtiene. Un patrón'.
-    ' de distribución en forma de campana podría indicar la presencia de inconsistencias. Los diferentes patrones'.
-    ' de distribución pueden indicar diferencias significativas en el nivel de dificultad de las pruebas.';
-$string['gradebookreport_scoreDistributionByItem_help'] = 'Este diagrama muestra la distribución de los resultados'.
-    ' de los estudiantes para un ejercicio. Cada ejercicio está representado por un recuadro. Los puntos son los'.
-    ' resultados de los estudiantes. La línea horizontal gruesa muestra la puntuación media de cada ejercicio. Hay'.
-    ' cuatro rangos de calificación representados para cada examen. El 25% superior (línea vertical en la parte'.
-    ' superior de la caja), el 25 % por encima del promedio (área de la caja por encima de la puntuación media),'.
-    ' el 25% por debajo del promedio (área de la caja por debajo del promedio), y el 25% por debajo (línea vertical'.
-    ' por debajo de la caja) . Mientras más altas o largas sean las líneas, más dispersos serán los resultados que'.
-    ' se observen.';
-$string['gradebookreport_scatterPlot_help'] = 'Este gráfico muestra la consistencia de la calificación. Cada punto'.
-    ' representa un ejercicio de prueba. La línea de color negro muestra la relación entre las calificaciones'.
-    ' y porcentajes esperados y los asignados. El área sombreada (intervalo de confianza) demuestra la relación'.
-    ' esperada. Los ejercicios fuera de la relación esperada pueden indicar inconsistencias en las calificaciones.';
-$string['gradebookreport_itemsHeatmap_help'] = 'Este esquema o mapa de temperatura muestra cómo performó cada'.
-    ' estudiante en un ejercicio de prueba, en comparación con el resto de la clase  Los colores más oscuros'.
-    ' indican las puntuaciones superiores. Si el color observado se encuentra siempre en el mismo tono para los'.
-    ' estudiantes, se podría tratar de un examen muy simple o muy complejo.';
+$string['gradebookreport_studentScoreDistribution_help'] = 'Este gráfico muestra cómo se distribuyen los puntajes'.
+    ' entre los estudiantes. Los picos representan la calificación general que obtienen la mayoría de los estudiantes,'.
+    ' separados por líneas para cada tipo de ítem calificable. Una distribución representada por un patrón'.
+    ' en forma de campana, podría indicar que no hubo sesgos o inconsistencias. Otros patrones de distribución'.
+    ' pueden indicar diferencias en el nivel de dificultad de los ítems calificables.';
+
+$string['gradebookreport_scoreDistributionByItem_help'] = 'Este diagrama de caja muestra la distribución de las'.
+    ' puntuaciones de los estudiantes en los ítems o categorías calificables, los cuales está representados por una'.
+    ' caja y por las líneas verticales por encima y por debajo de ella. Los diamantes son los puntajes obtenidos'.
+    ' por los estudiantes. La línea horizontal gruesa muestra la puntuación promedio para ese ítem. Existen cuatro'.
+    ' rangos de calificación. El 25% superior (línea vertical en la parte superior de la caja), el 25% por arriba del'.
+    ' promedio (área de la caja por encima de la puntuación media), el 25% por debajo del promedio (el área de la caja'.
+    ' debajo de la puntuación media), y el 25% inferior (línea vertical inferior por debajo de la caja). Cuanto más'.
+    ' bajo o más alto sea el rango, más hacia los márgenes se verán los resultados.';
+$string['gradebookreport_scatterPlot_help'] = 'Este gráfico compara la calificación automática propuesta por X-Ray'.
+    ' basada en la calidad de los posteos en las discusiones; con las calificaciones de todos los ítems calificables.'.
+    ' Cada punto en este diagrama representa los valores para un estudiante. La línea negra muestra la relación'.
+    ' estimada entre los dos métodos de calificación. El área sombreada (intervalo de confianza) ofrece el rango'.
+    ' estimado de la relación. Si todos los puntos están cerca de la línea negra, ambos métodos de calificación son'.
+    ' coherentes.';
+$string['gradebookreport_itemsHeatmap_help'] = 'Este mapa de temperatura muestra el desempeño de cada estudiante en'.
+    ' cada ítem calificable, comparado con el resto de la clase. Los colores más oscuros indican mejores'.
+    ' calificaciones. Si se observan muchos estudiantes dentro de la zona sombreada, se podría decir que el ítem o'.
+    ' ejercicio es demasiado sencillo o demasiado complejo. Los nombres entre paréntesis indican personas que han'.
+    ' participado en los ítems calificables pero no están inscriptos en este curso.';
 
 /* Graphs Discussion report*/
 $string['discussionreport_wordcloud'] = 'Palabras más utilizadas';
