@@ -174,6 +174,8 @@ $string['xrayws_error_nomethod' ] = 'Debes especificar método requerido!';
 /* Web service errors returned from X-Ray Learning Analytics*/
 $string['xrayws_error_server'] = '{$a}';
 $string['xrayws_error_curl'] = '{$a}';
+$string['xrayws_error_graphs'] = 'Error al traer imagen ({$a->url}) para "{$a->graphelement}": {$a->error}.';
+$string['xrayws_error_graphs_incorrect_contentype'] = 'Incorrecto content-type recibido desde xray webservice: {$a}.';
 
 /* Scheduled task */
 $string['datasync'] = 'Sincronización de datos';

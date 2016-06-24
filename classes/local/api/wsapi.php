@@ -460,11 +460,11 @@ abstract class wsapi {
     /**
      * Create complete url to xray image and check if url is available using token.
      *
-     * @param $uuid - Element with path to image in xray side.
-     * @return bool|\moodle_url
+     * @param $graphelement - Element of graph to show sent from xray side.
+     * @return \moodle_url
      * @throws \moodle_exception
      */
-    public static function get_imgurl_xray($uuid) {
+    public static function get_imgurl_xray($graphelement) {
 
         if (defined('BEHAT_SITE_RUNNING')) {
             global $OUTPUT;
@@ -475,7 +475,7 @@ abstract class wsapi {
 
         $result = false;
         $cfgxray = get_config('local_xray');
-        $imgurl = new \moodle_url(sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $uuid));
+        $imgurl = new \moodle_url(sprintf('%s/%s/%s', $cfgxray->xrayurl, $cfgxray->xrayclientid, $graphelement->uuid));
         $imgurl->param('accesstoken', self::accesstoken());
 
         $curlopts = array(
@@ -493,12 +493,24 @@ abstract class wsapi {
 
         $ch = new \curl(['debug' => false]);
         $ch->head($imgurl, $curlopts);
+
+        // Object for message if we found a problem with result.
+        $a = new \stdClass();
+        $a->url = $imgurl->out();
+        $a->graphelement = $graphelement->elementName;
+
         if (!empty($ch->get_errno())) {
-            print_error('xrayws_error_curl', 'local_xray', '', $ch->response);
+            // Error with curl connection.
+            $a->error = $ch->error;
+            print_error("xrayws_error_graphs", "local_xray", '', $a);
         }
 
         if (!empty($ch->info['content_type']) && preg_match('#^image/.*#', $ch->info['content_type'])) {
             $result = $imgurl;
+        } else {
+            // Incorrect format returned from xray side, the content type returned is not an image.
+            $a->error = get_string("xrayws_error_graphs_incorrect_contentype", "local_xray", $ch->info['content_type']);
+            print_error("xrayws_error_graphs", "local_xray", '', $a);
         }
 
         return $result;

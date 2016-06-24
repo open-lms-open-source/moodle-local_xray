@@ -85,7 +85,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $imgurl = false;
         try {
             // Validate if exist and is available image in xray side.
-            $imgurl = local_xray\local\api\wsapi::get_imgurl_xray($element->uuid);
+            $imgurl = local_xray\local\api\wsapi::get_imgurl_xray($element);
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $PAGE->context, "renderer_show_graph")->trigger();
         }

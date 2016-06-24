@@ -175,6 +175,8 @@ $string['xrayws_error_nomethod' ] = 'You must specify request method!';
 /* Web service errors returned from XRay*/
 $string['xrayws_error_server'] = '{$a}';
 $string['xrayws_error_curl'] = '{$a}';
+$string['xrayws_error_graphs'] = 'Error to get image ({$a->url}) for "{$a->graphelement}": {$a->error}.';
+$string['xrayws_error_graphs_incorrect_contentype'] = 'Incorrect content-type received from xray webservice: {$a}.';
 
 /* Scheduled task */
 $string['datasync'] = 'Data Synchronization';
