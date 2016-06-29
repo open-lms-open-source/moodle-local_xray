@@ -434,8 +434,8 @@ class local_xray_controller_reports extends mr_controller {
                         }
                         return $this->show_time_hours_minutes($value, $minutes);
                         break;
-                    case 'weeklyRegularity':
-                        // Column Visit regularity (weekly).
+                    case 'regularity':
+                        // Column Visit regularity (daily).
                         // Add category.
                         return $this->add_category($value, $xraycategory, false, true);
                         break;
