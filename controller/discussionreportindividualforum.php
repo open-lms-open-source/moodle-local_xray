@@ -115,7 +115,7 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
 	                  INNER JOIN {{$forumposts}} fp ON fd.id = fp.discussion
 		              WHERE fd.forum = :forumid";
         $params = array('forumid' => $this->forumid);
-        if (!$DB->get_record_sql($sqlposts, $params)) {
+        if (!$DB->get_records_sql($sqlposts, $params)) {
             $output .= $this->output->notification(get_string("xray_course_report_empty", $this->component));
             return $output;
         }
