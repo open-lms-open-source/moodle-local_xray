@@ -62,6 +62,23 @@ class data_sync extends scheduled_task {
     }
 
     /**
+     * Get storage prefix
+     * default value is rawData/
+     * it can be configured like this in config.php or control panel (has to end with forward slash):
+     *
+     * $CFG->forced_plugin_settings['local_xray']['bucketprefix'] = 'somevalue/';
+     *
+     * @return string bucket storage root directory path
+     */
+    protected function get_storageprefix() {
+        $config = get_config('local_xray', 'bucketprefix');
+        if ($config === false) {
+            $config = 'rawData/';
+        }
+        return $config;
+    }
+
+    /**
      * Do the job.
      * Throw exceptions on errors (the job will be retried).
      */
@@ -85,6 +102,7 @@ class data_sync extends scheduled_task {
             require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
 
             /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+            /* @noinspection PhpUndefinedClassInspection */
             $s3 = new \Aws\S3\S3Client([
                 'version' => '2006-03-01',
                 'region'  => $config->s3bucketregion,
@@ -109,7 +127,7 @@ class data_sync extends scheduled_task {
                 $uploadresult = null;
                 try {
                     $uploadresult = $s3->upload($config->s3bucket,
-                        $destfile,
+                        $this->get_storageprefix() . $destfile,
                         fopen($compfile, 'rb'),
                         'private',
                         array('debug' => true));
