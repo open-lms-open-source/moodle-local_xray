@@ -124,16 +124,13 @@ class data_sync extends scheduled_task {
             if ($compfile !== null) {
                 $cleanfile = new auto_clean_file($compfile);
                 ($cleanfile);
-                $uploadresult = null;
-                try {
-                    $uploadresult = $s3->upload($config->s3bucket,
-                        $this->get_storageprefix() . $destfile,
-                        fopen($compfile, 'rb'),
-                        'private',
-                        array('debug' => true));
-                } catch (\Exception $e) {
-                    sync_failed::create_from_exception($e)->trigger();
-                }
+                $uploadresult = $s3->upload(
+                    $config->s3bucket,
+                    $this->get_storageprefix() . $destfile,
+                    fopen($compfile, 'rb'),
+                    'private',
+                    array('debug' => true)
+                );
                 $metadata = $uploadresult->get('@metadata');
                 if ($metadata['statusCode'] != 200) {
                     throw new \Exception("Upload to S3 bucket failed!");
