@@ -963,7 +963,14 @@ class data_export {
             $recordset = null;
 
             // Store metadata for later.
-            self::$meta[] = (object)['name' => $filenamer, 'table' => $filename];
+            self::$meta[] = (object)[
+                'name'      => $filenamer,
+                'table'     => $filename,
+                'delimiter' => csv_file::DELIMITER,
+                'enclosure' => csv_file::ENCLOSURE,
+                'escape'    => csv_file::ESCAPE_CHAR,
+                'encoding'  => 'UTF8'
+            ];
 
             $pos    += $count;
 
