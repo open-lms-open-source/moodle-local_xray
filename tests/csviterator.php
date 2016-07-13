@@ -40,14 +40,29 @@ class csv_fileiterator implements Iterator {
      * @param string $file - path to existing file
      */
     public function __construct($file) {
-        $this->file = fopen($file, 'r');
-        if ($file === false) {
+        $filehandle = fopen($file, 'r');
+        if ($filehandle === false) {
             print_error('cannotopenfile', 'core_error', '', $file);
         }
+        $this->file = $filehandle;
     }
 
     public function __destruct() {
         fclose($this->file);
+        $this->file = null;
+    }
+
+    /**
+     * Get element
+     */
+    public function read() {
+        $this->current = fgetcsv(
+            $this->file,
+            null,
+            \local_xray\local\api\csv_file::DELIMITER,
+            \local_xray\local\api\csv_file::ENCLOSURE,
+            \local_xray\local\api\csv_file::ESCAPE_CHAR
+        );
     }
 
     /**
@@ -55,7 +70,7 @@ class csv_fileiterator implements Iterator {
      */
     public function rewind() {
         rewind($this->file);
-        $this->current = fgetcsv($this->file);
+        $this->read();
         $this->key = 0;
     }
 
@@ -84,7 +99,7 @@ class csv_fileiterator implements Iterator {
      * @return void
      */
     public function next() {
-        $this->current = fgetcsv($this->file);
+        $this->read();
         $this->key++;
     }
 }

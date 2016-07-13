@@ -35,8 +35,9 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class csv_file {
-    const ESCAPE = '\\';
-    const DBLESCAPE = '\\\\';
+    const DELIMITER   = ',';
+    const ENCLOSURE   = "\x1";
+    const ESCAPE_CHAR = "\v";
 
     /**
      * @var null|resource
@@ -87,16 +88,11 @@ class csv_file {
     }
 
     /**
-     * @param mixed $value
-     * @return void
+     * @param  array $data - data to be stored
+     * @return int|bool
      */
-    protected function fixstring(&$value) {
-        if (!empty($value) and
-            is_string($value) and
-            !$this->endswith($value, self::DBLESCAPE) and
-            $this->endswith($value, self::ESCAPE)) {
-            $value .= self::ESCAPE;
-        }
+    protected function write($data) {
+        return fputcsv($this->resource, $data, self::DELIMITER, self::ENCLOSURE, self::ESCAPE_CHAR);
     }
 
     /**
@@ -106,17 +102,14 @@ class csv_file {
     public function write_csv($fields) {
         $data = (array)$fields;
         if (!$this->header) {
-            $result = fputcsv($this->resource, array_keys($data));
+            $result = $this->write(array_keys($data));
             if ($result === false) {
                 return false;
             }
             $this->header = true;
         }
 
-        // Fix unfortunate fputcsv behavior...
-        array_walk($data, array($this, 'fixstring'));
-
-        $result = fputcsv($this->resource, $data);
+        $result = $this->write($data);
         $data = null;
         return $result;
     }
