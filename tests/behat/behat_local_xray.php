@@ -132,7 +132,7 @@ class behat_local_xray extends behat_base {
         // Test express templates.
         // Add express template.
         if (get_config('core', 'theme') != 'express') {
-            $table = new \Behat\Gherkin\Node\TableNode("| theme | express |");
+            $table = new \Behat\Gherkin\Node\TableNode([['theme', 'express']]);
             $admincontext->the_following_config_values_are_set_as_admin($table);
         }
         foreach ($templates as $template => $formats) {
@@ -156,7 +156,7 @@ class behat_local_xray extends behat_base {
             $this->i_use_express_template_for_xray($theme);
         } else {
             // Add theme.
-            $table = new \Behat\Gherkin\Node\TableNode("| theme | $theme |");
+            $table = new \Behat\Gherkin\Node\TableNode([['theme', $theme]]);
             $admincontext->the_following_config_values_are_set_as_admin($table);
         }
 
