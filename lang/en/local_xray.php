@@ -53,6 +53,7 @@ $string['xray:discussiongrading_view'] = 'View Grading';
 $string['xray:gradebookreport_view'] = 'View Gradebook Report';
 $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indivisual Quiz';
 $string['xray:risk_view'] = 'View Risk Status Report';
+$string['xray:systemreports_view'] = 'View System Reports';
 $string['xray:view'] = 'X-Ray Learning Analytics View';
 
 /* Categories for numbers values */
@@ -82,6 +83,8 @@ $string['risk'] = 'Risk Status';
 $string['discussiongrading'] = 'Grading';
 /* Gradebook report*/
 $string['gradebookreport'] = 'Gradebook';
+/* System Reports*/
+$string['systemreports'] = 'System Reports';
 $string['help'] = 'Help';
 
 /* Columns reports */
@@ -96,12 +99,12 @@ $string['error_loadimg'] = 'Unable to load image, please try reloading the page.
 /* Error Webservice */
 $string['error_xray'] = 'Can’t connect to X-Ray Learning Analytics, please try reloading the page. If you still can’t connect, '.
     'contact your system administrator.';
-
 $string['error_compress'] = 'Unable to create compressed file. Please contact your system administrator.';
-
 $string['error_generic'] = '{$a}';
 $string['error_fexists'] = 'File "{$a}" already exists!';
 $string['error_fnocreate'] = 'Unable to create "{$a}" file!';
+$string['error_systemreports_nourl'] = 'The url for get system reports is not configured correctly.';
+$string['error_systemreports_gettoken'] = 'Error to get token for access to system reports.';
 
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';
@@ -166,6 +169,9 @@ $string['apsoutheast1'] = 'Asia Pacific (Singapore)';
 $string['apsoutheast2'] = 'Asia Pacific (Sydney)';
 $string['apnortheast1'] = 'Asia Pacific (Tokyo)';
 $string['saeast1'] = 'South America (Sao Paulo)';
+
+$string['systemreportsurl'] = 'System Reports URL';
+$string['systemreportsurl_desc'] = 'URL to connect with System Reports.';
 
 /* webservice api */
 $string['xrayws_error_nocurl'   ] = 'cURL module must be present and enabled!';

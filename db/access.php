@@ -135,5 +135,13 @@ $capabilities = array(
                 'editingteacher' => CAP_ALLOW,
                 'manager' => CAP_ALLOW
             )
+    ),
+    // View System reports.
+    'local/xray:systemreports_view' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
     )
 );

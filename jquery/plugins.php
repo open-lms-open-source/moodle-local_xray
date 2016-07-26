@@ -30,5 +30,11 @@ $plugins = array(
             'dataTables-jqueryui-1.10.7/dataTables.jqueryui.js',
             'reports/show_on_table.js'
         )
+    ),
+    'local_xray-systemreports' => array(
+        'files' => array(
+            'iframe-resizer-master/js/iframeResizer.min.js',
+            'reports/systemreports.js'
+        )
     )
 );

@@ -54,6 +54,7 @@ $string['xray:discussiongrading_view'] = 'Ver reporte de calificaciones de discu
 $string['xray:gradebookreport_view'] = 'Ver reporte de calificaciones';
 $string['xray:gradebookreportindividualquiz_view'] = 'Ver reporte individual de calificaciones para quiz';
 $string['xray:risk_view'] = 'Ver reporte de estado de riesgo';
+$string['xray:systemreports_view'] = 'Ver los reportes del sistema';
 $string['xray:view'] = 'Ver X-Ray Learning Analytics';
 
 /* Categories for numbers values */
@@ -96,12 +97,12 @@ $string['error_loadimg'] = 'Error al cargar imagen, por favor intenta nuevamente
 /* Error Webservice */
 $string['error_xray'] = 'Error al conectar con X-Ray Learning Analytics, por favor intenta nuevamente recargando la página. Si el error '.
                         'persiste, por favor contacta con el administrador del sitio.';
-
 $string['error_compress'] = 'No fue possible crear archivo comprimido. Por favor contacta con el administrador del sitio.';
-
 $string['error_generic'] = '{$a}';
 $string['error_fexists'] = '¡El archivo "{$a}" ya existe!';
 $string['error_fnocreate'] = '¡No puedo crear el archivo "{$a}"!';
+$string['error_systemreports_nourl'] = 'La url para obtener reportes de sistemas no esta configurada correctamente.';
+$string['error_systemreports_gettoken'] = 'Error al obtener token para acceder a reportes de sistema.';
 
 /* Settings */
 $string['xrayclientid'] = 'Identificador de cliente';
