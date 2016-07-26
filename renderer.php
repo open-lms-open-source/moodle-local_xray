@@ -559,4 +559,27 @@ class local_xray_renderer extends plugin_renderer_base {
 
         return $menu;
     }
+
+    /**
+     * Print iframe loading systemreports app.
+     * @param moodle_url $systemreportsurl
+     * @return string
+     */
+    public function print_iframe_systemreport(moodle_url $systemreportsurl) {
+
+        global $PAGE;
+        $output = "";
+        $output .= html_writer::tag('iframe',
+            '',
+            array('id' => 'local-xray-systemreports',
+                'src' => $systemreportsurl->out(false),
+                'width' => '100%',
+                'frameBorder' => 0));
+
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('local_xray-systemreports', 'local_xray');
+        $PAGE->requires->js_init_call("localXrayLoadUrl");
+
+        return $output;
+    }
 }

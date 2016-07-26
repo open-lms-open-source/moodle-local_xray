@@ -59,6 +59,12 @@ if ($hassiteconfig) {
                                                  new lang_string("curlcache_desc", $plugin),
                                                  ['h' => 1, 'm' => 0]));
 
+    // Add the URL for System Reports.
+    $settings->add( new admin_setting_configtext("{$plugin}/systemreportsurl",
+        new lang_string("systemreportsurl", $plugin),
+        new lang_string("systemreportsurl_desc", $plugin),
+        '', PARAM_URL));
+
     // Settings for displaying content inline course front page.
     $settings->add( new admin_setting_heading("{$plugin}/xraydisplayheading",
                                               new lang_string("xraydisplayheading", $plugin),
@@ -171,4 +177,14 @@ if ($hassiteconfig) {
                                                 '0'));
 
     $ADMIN->add('localplugins', $settings);
+
+    // Add tree X-ray -> Rebuke List to show in reports.
+    $ADMIN->add('reports',
+        new admin_category('local_xray_report', new lang_string('pluginname', $plugin))
+    );
+    // Add System Reports.
+    $urlsystemreports = new moodle_url('/local/xray/view.php', array("controller" => "systemreports"));
+    $ADMIN->add('local_xray_report', new admin_externalpage('systemreports',
+        new lang_string('systemreports', $plugin),
+        $urlsystemreports->out(false)));
 }

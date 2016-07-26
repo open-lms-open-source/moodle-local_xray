@@ -28,4 +28,18 @@
         <license>BSD-3-Clause</license>
         <licenseversion>1.0</licenseversion>
     </library>
+    <library>
+        <location>vendor/firebase/php-jwt</location>
+        <name>firebase/php-jwt</name>
+        <version>3.0.0</version>
+        <license>BSD-3-Clause</license>
+        <licenseversion>1.0</licenseversion>
+    </library>
+    <library>
+        <location>jquery/iframe-resizer-master</location>
+        <name>iFrame Resizer</name>
+        <version>3.5.5</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
 </libraries>
