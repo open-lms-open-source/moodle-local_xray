@@ -142,7 +142,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     # Close graph.
     And I click on "a.xray-close-link" "css_element"
     # Go to Accessible data.
-    And I click on "a.xray-accessible-view-data" "css_element"
+    And I click on "a.xray-icon-accessibledata" "css_element"
     And I switch to "_accessibledata" window
     And I wait until the page is ready
     And I follow visible link "Discussion Report Individual Forum"

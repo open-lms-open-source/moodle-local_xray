@@ -80,7 +80,6 @@ class local_xray_renderer extends plugin_renderer_base {
         // List Graph.
         $title = get_string($PAGE->url->get_param("controller")."_".$element->elementName, $plugin);
         $output .= html_writer::start_tag('div', array('class' => 'xray-col-4', 'id' => $element->elementName));
-        $output .= html_writer::tag('h3', $title, array("class" => "xray-reportsname"));
 
         $imgurl = false;
         try {
@@ -90,7 +89,8 @@ class local_xray_renderer extends plugin_renderer_base {
             get_report_failed::create_from_exception($e, $PAGE->context, "renderer_show_graph")->trigger();
         }
 
-        // Link to accessible version.
+        // Link to accessible version (Only if graph is available).
+        $accessiblelink = "";
         if (!empty($imgurl)) {
 
             $paramsurl = array("controller" => "accessibledata",
@@ -103,16 +103,17 @@ class local_xray_renderer extends plugin_renderer_base {
                 $paramsurl = array_merge($paramsurl, $extraparamurlaccessible);
             }
             $urlaccessible = new moodle_url("/local/xray/view.php", $paramsurl);
-            // Part of titiel for accessible data, show title of graph, only visible for screenreaders.
-            $titleforreader = html_writer::span(get_string("accessible_view_data_for", $plugin, $title),
-                "xray-screen-reader-only");
-            //  Title visible of link to accessible data.
-            $visibletitleaccessible = get_string("accessible_view_data", $plugin);
-            $linkaccessibleversion = html_writer::link($urlaccessible, $visibletitleaccessible.$titleforreader,
+            $titleforaccessible = get_string("accessible_view_data_for", $plugin, $title);
+
+            $accessiblelink = html_writer::link($urlaccessible,
+                "",
                 array("target" => "_accessibledata",
-                    "class" => "xray-accessible-view-data"));
-            $output .= html_writer::tag('span', $linkaccessibleversion);
+                    "title" => $titleforaccessible,
+                    "class" => "xray-icon-accessibledata"));
         }
+
+        // Show the title of graph.
+        $output .= html_writer::tag('h3', $title.$accessiblelink, array("class" => "xray-reportsname"));
 
         // Show image.
         if (!empty($imgurl)) {

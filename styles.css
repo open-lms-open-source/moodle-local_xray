@@ -49,6 +49,16 @@
 .xray-closetable {
     float:right;
 }
+
+.xray-icon-accessibledata {
+    background-image: url([[pix:local_xray|AccesibleDataIcon]]);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: inline-block;
+    height: 0.8em;
+    margin-left: 0.5em;
+    width: 0.8em;
+}
 /* End Toogle tables */
 
 /* General xray image graph */
