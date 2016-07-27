@@ -46,8 +46,8 @@ $string['xray:activityreportindividual_view'] = 'View Activity Metrics - Individ
 $string['xray:activityreport_view'] = 'View Activity Report';
 $string['xray:dashboard_view'] = 'View Dashboard Report';
 $string['xray:discussionreport_view'] = 'View Discussion Report';
-$string['xray:discussionreportindividual_view'] = 'View Discussion Report Individual';
-$string['xray:discussionreportindividualforum_view'] = 'View Discussion Report Individual Forum';
+$string['xray:discussionreportindividual_view'] = 'View Student Discussion Report';
+$string['xray:discussionreportindividualforum_view'] = 'View Forum Activity Report';
 $string['xray:discussionendogenicplagiarism_view'] = 'View Word Overlap';
 $string['xray:discussiongrading_view'] = 'View Grading';
 $string['xray:gradebookreport_view'] = 'View Gradebook Report';
@@ -72,9 +72,9 @@ $string['activityreportindividual'] = 'Activity Metrics - Individual';
 /* Discussion report*/
 $string['discussionreport'] = 'Discussions';
 /* Discussion report individual*/
-$string['discussionreportindividual'] = 'Discussion Report Individual';
+$string['discussionreportindividual'] = 'Student Discussion Report';
 /* Discussion report individual forum*/
-$string['discussionreportindividualforum'] = 'Discussion Report Individual Forum';
+$string['discussionreportindividualforum'] = 'Forum Activity Report';
 /* Discussion report Endogenic Plagiarism*/
 $string['discussionendogenicplagiarism'] = 'Word Overlap';
 /* Risk report*/

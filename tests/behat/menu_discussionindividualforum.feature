@@ -126,7 +126,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I am on site homepage
     And I follow "Course1"
     And I follow "Forum1"
-    And I navigate to "Discussion Report Individual Forum" node in "Forum administration > X-Ray Learning Analytics"
+    And I navigate to "Forum Activity Report" node in "Forum administration > X-Ray Learning Analytics"
     Then I should see "There is not enough data for this report. Please try again when there is more user activity in your course."
     And "a.xray-graph-box-link" "css_element" should not exist
     And I follow "Course1"
@@ -135,7 +135,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | Message | Generic Message       |
     And I follow "Course1"
     And I follow "Forum1"
-    And I navigate to "Discussion Report Individual Forum" node in "Forum administration > X-Ray Learning Analytics"
+    And I navigate to "Forum Activity Report" node in "Forum administration > X-Ray Learning Analytics"
     And "a.xray-graph-box-link" "css_element" should exist
     # Open graph.
     And I click on "a.xray-graph-box-link" "css_element"
@@ -145,6 +145,6 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I click on "a.xray-icon-accessibledata" "css_element"
     And I switch to "_accessibledata" window
     And I wait until the page is ready
-    And I follow visible link "Discussion Report Individual Forum"
+    And I follow visible link "Forum Activity Report"
     And I wait "3" seconds
-    Then I should see "Discussion Report Individual Forum" in the "#region-main" "css_element"
+    Then I should see "Forum Activity Report" in the "#region-main" "css_element"
