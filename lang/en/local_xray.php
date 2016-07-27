@@ -344,17 +344,16 @@ $string['activityreportindividual_barplotOfActivityWholeWeek_help'] = 'The chart
 
 /* Graphs Risk report*/
 $string['risk_riskDensity'] = 'Total Risk Profile';
-$string['risk_riskScatterPlot'] = 'Academic versus Social Risk';
+$string['risk_balloonPlotRiskHistory'] = 'Risk History';
 
 /* Help Graphs Risk report*/
 $string['risk_riskDensity_help'] = 'This graphic shows the distribution of estimated risk in the course. '.
     'Green represents those who are not considered at risk. Red shows those who are at high risk, and yellow those'.
     ' who are at medium risk.';
-$string['risk_riskScatterPlot_help'] = 'Each dot in this scatterplot represents a student. Where the student is on'.
-    ' the graph shows their level of social and academic risk. The black line shows the expected relationship between'.
-    ' social and academic risk. The shaded area (confidence interval) gives a range for the expected relationship.'.
-    ' Color is used to help you determine risk potential quickly. Green is not at risk. Red is at high risk, yellow'.
-    ' at medium.';
+$string['risk_balloonPlotRiskHistory_help'] = 'The risk development over time is displayed for each student. '.
+    'Color changes of the dots indicate changes in the risk categories. Green represents low risk, yellow '.
+    'medium risk, and red high risk. The size of the dots shows the risk estimate. Small dots represent a low risk '.
+    'of failure, and big dots a high risk.';
 
 /* Graphs Risk report*/
 $string['gradebookreport_studentScoreDistribution'] = 'Distribution of Grades';
