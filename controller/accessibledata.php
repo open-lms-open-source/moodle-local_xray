@@ -159,7 +159,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
                         //Specials cases, these has 1 table and 2 single values to show.
                         case "riskDensity":
                         case "scatterPlot":
-                        case "riskScatterPlot":
+                        case "balloonPlotRiskHistory":
                             $output .= $this->specialcase2($response);
                             break;
                         //Special case, has 2 tables to show (and we need show the tables names).

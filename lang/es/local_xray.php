@@ -345,17 +345,16 @@ $string['activityreportindividual_barplotOfActivityWholeWeek_help'] = 'El gráfi
 
 /* Graphs Risk report*/
 $string['risk_riskDensity'] = 'Perfil total de riesgo';
-$string['risk_riskScatterPlot'] = 'Riesgo académico versus riesgo social';
+$string['risk_balloonPlotRiskHistory'] = 'Historial de riesgo';
 
 /* Help Graphs Risk report*/
 $string['risk_riskDensity_help'] = 'Este gráfico muestra la distribución del riesgo estimado en el curso. El color'.
     ' verde representa a los estudiantes fuera de riesgo. En rojo se observan aquellos en alto riesgo y en amarillo'.
     ' los de riesgo medio.';
-$string['risk_riskScatterPlot_help'] = 'Cada punto en este diagrama de dispersión representa un estudiante. Dependiendo'.
-    ' de la posición del estudiante en el gráfico, se observa su nivel social y su riesgo académico. La línea negra'.
-    ' muestra la relación esperada entre el riesgo social y el académico. El área sombreada (intervalo de confianza)'.
-    ' nos provee un rango de relación esperada. El color es utilizado para ayudar a determinar el riesgo potencial'.
-    ' de forma rápida. Verde significa fuera de riesgo, rojo en alto riesgo y amarillo en riesgo medio.';
+$string['risk_balloonPlotRiskHistory_help'] = 'Se muestra el desarrollo de riesgo a través del tiempo para cada'.
+    ' estudiante. Los cambios de color en los puntos indican cambios en las categorías de riesgo. El color verde'.
+    ' representa riesgo bajo, el amarillo riesgo medio y el rojo riesgo alto. El tamaño de los puntos muestra el'.
+    ' riesgo estimado. Los puntos pequeños representan riesgo bajo y los puntos grandes representan riesgo alto.';
 
 /* Graphs Risk report*/
 $string['gradebookreport_studentScoreDistribution'] = 'Distribución de calificaciones';

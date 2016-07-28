@@ -81,12 +81,12 @@ class local_xray_controller_risk extends local_xray_controller_reports {
                 $datatable = new local_xray\datatables\datatables($response->elements->riskMeasures,
                         "rest.php?controller='risk'&action='jsonriskmeasures'&courseid=" . $this->courseid);
                 $datatable->sort_order = "desc";
-                $datatable->default_field_sort = 5; // New requirement, order by total risk desc.
+                $datatable->default_field_sort = 2; // New requirement, order by total risk desc.
                 $output .= $this->output->standard_table((array)$datatable);
 
                 // Graphs.
                 $output .= $this->output->show_graph("riskDensity", $response->elements->riskDensity, $response->id);
-                $output .= $this->output->show_graph("riskScatterPlot", $response->elements->riskScatterPlot, $response->id);
+                $output .= $this->output->show_graph("balloonPlotRiskHistory", $response->elements->balloonPlotRiskHistory, $response->id);
             }
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();

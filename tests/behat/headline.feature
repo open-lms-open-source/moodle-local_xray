@@ -58,7 +58,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And "h4 .x-ray-icon-title" "css_element" should not exist
     And "h2.xray-report-page-title" "css_element" should exist
     And "#riskMeasures" "css_element" should exist
-    And ".sorting:nth-child(6).sorting_desc" "css_element" should exist
+    And ".sorting:nth-child(3).sorting_desc" "css_element" should exist
     # Test the Activity report link in Headline.
     And I am on site homepage
     And I follow "Xray Course 01"
