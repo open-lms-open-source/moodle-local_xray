@@ -42,7 +42,7 @@ $string['debuginfo'] = 'Debug information:';
 $string['cachedef_request'] = 'X-Ray request cache';
 
 /* Capabilities */
-$string['xray:activityreportindividual_view'] = 'View Activity Metrics - Individual';
+$string['xray:activityreportindividual_view'] = 'View Student Activity Report';
 $string['xray:activityreport_view'] = 'View Activity Report';
 $string['xray:dashboard_view'] = 'View Dashboard Report';
 $string['xray:discussionreport_view'] = 'View Discussion Report';
@@ -68,7 +68,7 @@ $string['regular'] = 'Regular';
 /* Report Activity Report*/
 $string['activityreport'] = 'Activity';
 /* Report Activity Report Individual*/
-$string['activityreportindividual'] = 'Activity Metrics - Individual';
+$string['activityreportindividual'] = 'Student Activity Report';
 /* Discussion report*/
 $string['discussionreport'] = 'Discussions';
 /* Discussion report individual*/
