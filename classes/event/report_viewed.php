@@ -58,7 +58,8 @@ class report_viewed extends \core\event\base {
     public function get_description() {
         // Do not use "report" in Discussion Report Individual and Discussion Report Individual Forum.
         $report = ' report';
-        if ($this->other['reportname'] == 'discussionreportindividual' || $this->other['reportname'] == 'discussionreportindividualforum') {
+        if ($this->other['reportname'] == 'discussionreportindividual' || $this->other['reportname'] == 'discussionreportindividualforum' ||
+                $this->other['reportname'] == 'activityreportindividual') {
             $report = '';
         }
         // Basic description.
