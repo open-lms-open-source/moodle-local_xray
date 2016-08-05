@@ -178,13 +178,21 @@ if ($hassiteconfig) {
 
     $ADMIN->add('localplugins', $settings);
 
-    // Add tree X-ray -> Rebuke List to show in reports.
-    $ADMIN->add('reports',
-        new admin_category('local_xray_report', new lang_string('pluginname', $plugin))
-    );
-    // Add System Reports.
-    $urlsystemreports = new moodle_url('/local/xray/view.php', array("controller" => "systemreports"));
-    $ADMIN->add('local_xray_report', new admin_externalpage('systemreports',
-        new lang_string('systemreports', $plugin),
-        $urlsystemreports->out(false)));
+
+    // Get the URL.
+    $systemreportsurl  = get_config('local_xray', 'systemreportsurl');
+    if (($systemreportsurl !== false) && ($systemreportsurl !== '')) {
+        // Add tree X-ray -> Rebuke List to show in reports.
+        $ADMIN->add('reports',
+            new admin_category('local_xray_report', new lang_string('pluginname', $plugin))
+        );
+        // Add System Reports.
+        $urlsystemreports = new moodle_url('/local/xray/view.php', array("controller" => "systemreports"));
+        $ADMIN->add('local_xray_report', new admin_externalpage('systemreports',
+            new lang_string('systemreports', $plugin),
+            $urlsystemreports->out(false)));
+    }
+
+
+
 }
