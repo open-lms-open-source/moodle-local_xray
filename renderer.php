@@ -540,6 +540,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 // Check if show headerline in course frontpage.
                 $headerdata = "";
+                $subscription_link = "";
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
 
                     $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id);
@@ -548,9 +549,18 @@ class local_xray_renderer extends plugin_renderer_base {
                     } else {
                         $headerdata .= $OUTPUT->notification(get_string('error_xray', 'local_xray'));
                     }
+
+                    // Url for subscribe.
+                    $subscriptionurl = new moodle_url("/local/xray/view.php",
+                        array("controller" => "subscribe", 'courseid' => $COURSE->id));
+
+                    $subscription_link = html_writer::link($subscriptionurl, get_string('subscribetothiscourse', 'local_xray'),
+                        array("class" => "xray_subscription_link",
+                            "title" => "Subscribe",
+                            "target" => "_blank"));
                 }
 
-                $menu = html_writer::div($title . $navmenu. $headerdata,
+                $menu = html_writer::div($title . $navmenu . $headerdata . $subscription_link,
                     $classes,
                     array('id' => 'xray-js-menu', 'role' => 'region'));
 
