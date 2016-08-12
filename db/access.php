@@ -144,14 +144,4 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
-    // subscribe to receive X-Ray emails.
-    'local/xray:subscribe' => array(
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
-            'teacher' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
 );

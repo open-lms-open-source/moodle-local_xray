@@ -17,7 +17,7 @@ class subscribe_form extends moodleform {
         $mform = $this->_form;
         $courseid = $this->_customdata['courseid'];
 
-        if ($courseid == 1) {
+        if ($courseid == SITEID) {
             $mform->addElement('advcheckbox', 'subscribeall', get_string('subscribeall', 'local_xray'),
                 get_string('coursesubscribedesc', 'local_xray'), null, array(false, true));
             $this->add_action_buttons(false);

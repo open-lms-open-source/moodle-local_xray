@@ -417,14 +417,14 @@ function local_xray_email_capability($courseid, $userid) {
  * Add the link in the profile user for subscriptions.
  */
 function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
-    // Validate capabilities.
-    if (!has_capability("local/xray:subscribe", context_system::instance())) {
+    // Validate user.
+    $admins = get_admins();
+    if (!array_key_exists($user->id, $admins) && !local_xray_get_teacher_courses($user->id)) {
         return false;
     }
-
     // Url for subscription.
     $subscriptionurl = new moodle_url("/local/xray/view.php",
-        array("controller" => "subscribe", 'courseid' => 1));
+        array("controller" => "subscribe", 'courseid' => SITEID));
 
     $node = new core_user\output\myprofile\node('miscellaneous', 'local_xray', get_string('profilelink', 'local_xray'), null, $subscriptionurl);
     $tree->add_node($node);

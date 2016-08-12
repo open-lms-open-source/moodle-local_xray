@@ -55,7 +55,6 @@ $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indi
 $string['xray:risk_view'] = 'View Risk Status Report';
 $string['xray:systemreports_view'] = 'View System Reports';
 $string['xray:view'] = 'X-Ray Learning Analytics View';
-$string['xray:subscribe'] = 'Subscribe to X-Ray Emails';
 
 /* Categories for numbers values */
 $string['high'] = 'High';
