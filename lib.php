@@ -412,3 +412,44 @@ function local_xray_email_capability($courseid, $userid) {
     }
     return false;
 }
+
+/**
+ * Add the link in the profile user for subscriptions.
+ */
+function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
+    // Validate capabilities.
+    if (!has_capability("local/xray:subscribe", context_system::instance())) {
+        return false;
+    }
+
+    // Url for subscription.
+    $subscriptionurl = new moodle_url("/local/xray/view.php",
+        array("controller" => "subscribe", 'courseid' => 1));
+
+    $node = new core_user\output\myprofile\node('miscellaneous', 'local_xray', get_string('profilelink', 'local_xray'), null, $subscriptionurl);
+    $tree->add_node($node);
+    return true;
+}
+
+
+/**
+ * Get all the courses where the user is enrolled as editingteacher or teacher.
+ *
+ * */
+function local_xray_get_teacher_courses($userid) {
+
+    global $DB;
+
+    $sql = "SELECT DISTINCT c.id AS courseid
+                FROM gaborisk.mdl_user u
+                JOIN gaborisk.mdl_user_enrolments ue ON ue.userid = u.id
+                JOIN gaborisk.mdl_enrol e ON e.id = ue.enrolid
+                JOIN gaborisk.mdl_role_assignments ra ON ra.userid = u.id
+                JOIN gaborisk.mdl_context ct ON ct.id = ra.contextid AND ct.contextlevel = 50
+                JOIN gaborisk.mdl_course c ON c.id = ct.instanceid AND e.courseid = c.id
+                JOIN gaborisk.mdl_role r ON r.id = ra.roleid AND (r.shortname = 'editingteacher' OR r.shortname = 'teacher')
+                WHERE u.id = :userid AND e.status = 0 AND u.suspended = 0 AND u.deleted = 0";
+
+    $params = array('userid' => $userid);
+    return $DB->get_records_sql($sql, $params);
+}

@@ -55,6 +55,7 @@ $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indi
 $string['xray:risk_view'] = 'View Risk Status Report';
 $string['xray:systemreports_view'] = 'View System Reports';
 $string['xray:view'] = 'X-Ray Learning Analytics View';
+$string['xray:subscribe'] = 'Subscribe to X-Ray Emails';
 
 /* Categories for numbers values */
 $string['high'] = 'High';
@@ -481,8 +482,10 @@ $string['xray_course_report_empty'] = 'There is not enough data for this report.
 // Email.
 $string['emailsubject'] = 'X-Ray Report Summary for {$a}';
 $string['subscriptiontitle'] = 'Email Subscription';
+$string['profilelink'] = 'X-Ray Email Subcription';
 $string['unsubscribeemail'] = 'Unsubscribe';
 $string['coursesubscribe'] = 'Subscribe to the email reports for {$a}';
+$string['subscribeall'] = 'Subscribe to the email reports for all courses';
 $string['coursesubscribedesc'] = 'You will receive an email with the course X-Ray summary data';
 $string['subscribetothiscourse'] = 'Subscribe to email report';
 $string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course id {$a}';
