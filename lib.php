@@ -445,11 +445,11 @@ function local_xray_get_teacher_courses($userid) {
                 JOIN {user_enrolments} ue ON ue.userid = u.id
                 JOIN {enrol} e ON e.id = ue.enrolid
                 JOIN {role_assignments} ra ON ra.userid = u.id
-                JOIN {context} ct ON ct.id = ra.contextid AND ct.contextlevel = 50
+                JOIN {context} ct ON ct.id = ra.contextid AND ct.contextlevel = :contextcourse
                 JOIN {course} c ON c.id = ct.instanceid AND e.courseid = c.id
                 JOIN {role} r ON r.id = ra.roleid AND (r.shortname = 'editingteacher' OR r.shortname = 'teacher')
                 WHERE u.id = :userid AND e.status = 0 AND u.suspended = 0 AND u.deleted = 0";
 
-    $params = array('userid' => $userid);
+    $params = array('userid' => $userid, 'contextcourse' => CONTEXT_COURSE);
     return $DB->get_records_sql($sql, $params);
 }
