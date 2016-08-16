@@ -194,6 +194,8 @@ $string['synclogexplanation'] = 'Regular log entry for data sync.';
 $string['getreportfailed'] = 'Error to get report from X-Ray Learning Analytics';
 $string['dataprune'] = 'Data pruning';
 $string['reportviewed'] = 'Report viewed';
+$string['sendemails'] = 'X-Ray E-Mails';
+$string['emaillog'] = 'X-Ray E-Mail Log';
 
 /* Course Header */
 $string['atrisk'] = 'At risk';
@@ -475,3 +477,15 @@ $string['strftimehoursminutes'] = '%H:%M';
 /* Empties reports */
 $string['xray_course_report_empty'] = 'There is not enough data for this report. Please try again when there is more'.
     ' user activity in your course.';
+
+// Email.
+$string['emailsubject'] = 'X-Ray Report Summary for {$a}';
+$string['subscriptiontitle'] = 'Email Subscription';
+$string['profilelink'] = 'X-Ray Email Subcription';
+$string['unsubscribeemail'] = 'Unsubscribe';
+$string['coursesubscribe'] = 'Subscribe to the email reports for {$a}';
+$string['subscribeall'] = 'Subscribe to the email reports for all courses';
+$string['coursesubscribedesc'] = 'You will receive an email with the course X-Ray summary data';
+$string['subscribetothiscourse'] = 'Subscribe to email report';
+$string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course id {$a}';
+$string['email_log_desc'] = 'Email sent. Course id {$a->courseid} User id {$a->to}';

@@ -427,3 +427,7 @@ a.disabled {
     color: #d6d6d6 !important;
 }
 /**************** End styles for DataTables ****************/
+
+.xray_subscription_link {
+    padding-left:3px;
+}

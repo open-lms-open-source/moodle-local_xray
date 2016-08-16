@@ -338,3 +338,118 @@ function local_xray_role_unassigned(\core\event\role_unassigned $event) {
         $DB->insert_record_raw('local_xray_roleunas', $data, false);
     }
 }
+
+/**
+ * Get headline data for the template.
+ * @param $courseid
+ * @return stdClass
+ */
+function local_xray_template_data($courseid){
+    // Get headline data.
+    $headlinedata = \local_xray\dashboard\dashboard::get($courseid);
+    if ($headlinedata instanceof \local_xray\dashboard\dashboard_data) {
+        // Add info in the template.
+        $data = new stdClass();
+
+        // Risk.
+        // Number for risk.
+        $a = new stdClass();
+        $a->first = $headlinedata->usersinrisk;
+        $a->second = $headlinedata->risktotal;
+        $data->riskdata = get_string('headline_number_of', 'local_xray', $a);
+
+        $data->studentsrisk = get_string('headline_studentatrisk', 'local_xray');
+
+        // Number of students at risk in the last 7 days.
+        $a = new stdClass();
+        $a->previous = $headlinedata->averagerisksevendaybefore;
+        $a->total = $headlinedata->maximumtotalrisksevendaybefore;
+        $data->riskaverageweek = get_string("averageofweek_integer", 'local_xray', $a);
+
+        // Activity.
+        $a = new stdClass();
+        $a->first = $headlinedata->usersloggedinpreviousweek;
+        $a->second = $headlinedata->usersactivitytotal;
+        $data->activitydata = get_string('headline_number_of', 'local_xray', $a);
+
+        $data->activityloggedstudents = get_string('headline_loggedstudents', 'local_xray');
+
+        // Number of students logged in in last 7 days.
+        $a = new stdClass();
+        $a->current = $headlinedata->averageuserslastsevendays;
+        $a->total = $headlinedata->userstotalprevioussevendays;
+        $data->activitylastweekwasof = get_string("headline_lastweekwasof_activity", 'local_xray', $a);
+
+        // Gradebook.
+        $data->gradebooknumber = get_string('headline_number_percentage', 'local_xray', $headlinedata->averagegradeslastsevendays);
+        $data->gradebookheadline = get_string('headline_average', 'local_xray');
+        $data->gradebookaverageofweek = get_string("averageofweek_gradebook", 'local_xray', $headlinedata->averagegradeslastsevendayspreviousweek);
+
+        // Discussion.
+        $data->discussiondata = $headlinedata->postslastsevendays;
+        $data->discussionposts = get_string('headline_posts', 'local_xray');
+        $data->discussionlastweekwas = get_string("headline_lastweekwas_discussion", 'local_xray', $headlinedata->postslastsevendayspreviousweek);
+
+        $result = $data;
+    } else {
+        $result = false;
+    }
+
+    return $result;
+}
+
+/**
+ * Check capabilities to send emails.
+ *
+ * @param $courseid
+ * @param $userid
+ * @return bool
+ * @throws coding_exception
+ */
+function local_xray_email_capability($courseid, $userid) {
+    if (has_capability("local/xray:view", context_course::instance($courseid), $userid)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Add the link in the profile user for subscriptions.
+ */
+function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
+    // Validate user.
+    $admins = get_admins();
+    if (!array_key_exists($user->id, $admins) && !local_xray_get_teacher_courses($user->id)) {
+        return false;
+    }
+    // Url for subscription.
+    $subscriptionurl = new moodle_url("/local/xray/view.php",
+        array("controller" => "subscribe", 'courseid' => SITEID));
+
+    $node = new core_user\output\myprofile\node('miscellaneous', 'local_xray', get_string('profilelink', 'local_xray'), null, $subscriptionurl);
+    $tree->add_node($node);
+    return true;
+}
+
+
+/**
+ * Get all the courses where the user is enrolled as editingteacher or teacher.
+ *
+ * */
+function local_xray_get_teacher_courses($userid) {
+
+    global $DB;
+
+    $sql = "SELECT DISTINCT c.id AS courseid
+                FROM {user} u
+                JOIN {user_enrolments} ue ON ue.userid = u.id
+                JOIN {enrol} e ON e.id = ue.enrolid
+                JOIN {role_assignments} ra ON ra.userid = u.id
+                JOIN {context} ct ON ct.id = ra.contextid AND ct.contextlevel = :contextcourse
+                JOIN {course} c ON c.id = ct.instanceid AND e.courseid = c.id
+                JOIN {role} r ON r.id = ra.roleid AND (r.shortname = 'editingteacher' OR r.shortname = 'teacher')
+                WHERE u.id = :userid AND e.status = 0 AND u.suspended = 0 AND u.deleted = 0";
+
+    $params = array('userid' => $userid, 'contextcourse' => CONTEXT_COURSE);
+    return $DB->get_records_sql($sql, $params);
+}
