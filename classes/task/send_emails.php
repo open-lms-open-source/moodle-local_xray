@@ -66,7 +66,7 @@ class send_emails extends scheduled_task {
 
             // Get admins subscribed in all courses.
             if ($subscribedall = $DB->get_records_select('local_xray_subscribe', "whole = 1", null, '', 'userid')) {
-                $courses = $DB->get_records_select('course', "format != 'site'", null, null, 'id');
+                $courses = $DB->get_recordset_select('course', "format != 'site'", null, null, 'id');
                 foreach($courses as $course) {
                     foreach ($subscribedall as $userid) {
                         $coursesusers[] = array($course->id => $userid->userid);
@@ -75,7 +75,7 @@ class send_emails extends scheduled_task {
             }
 
             // Get the other users.
-            if ($subscribedusers = $DB->get_records_select('local_xray_subscribe', "whole IS NULL", null, 'courseid', 'id, courseid, userid')) {
+            if ($subscribedusers = $DB->get_recordset_select('local_xray_subscribe', "whole IS NULL", null, 'courseid', 'id, courseid, userid')) {
                 foreach ($subscribedusers as $record) {
                     $coursesusers[] = array($record->courseid => $record->userid);
                 }
