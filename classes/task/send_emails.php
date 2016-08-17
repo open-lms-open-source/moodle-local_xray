@@ -129,7 +129,7 @@ class send_emails extends scheduled_task {
                             $data = array(
                                 'context' => \context_course::instance($courseid),
                                 'other' => array(
-                                    'to' => $courseid
+                                    'to' => $userid
                                 )
                             );
                             $event = email_log::create($data);
