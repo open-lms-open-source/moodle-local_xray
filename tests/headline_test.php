@@ -95,7 +95,7 @@ class local_xray_headline_testcase extends \advanced_testcase {
     public function test_attributes_class_dashboard_data() {
 
         $this->resetAfterTest();
-        $dashboadrobj = new \local_xray\dashboard\dashboard_data(1,2,3,4,5,6,7,8,9,10,11,12);
+        $dashboadrobj = new \local_xray\dashboard\dashboard_data(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
         $this->assertObjectHasAttribute("usersinrisk", $dashboadrobj);
         $this->assertObjectHasAttribute("risktotal", $dashboadrobj);
         $this->assertObjectHasAttribute("averagerisksevendaybefore", $dashboadrobj);
@@ -151,9 +151,6 @@ class local_xray_headline_testcase extends \advanced_testcase {
         // Return arrow class increment (green).
         $result = \local_xray\dashboard\dashboard_data::get_status_simple("3.5", "2.5");
         $this->assertEquals("xray-headline-increase", $result[0]);
-
-
-
     }
 
     /**
@@ -207,7 +204,5 @@ class local_xray_headline_testcase extends \advanced_testcase {
 
         $result = \local_xray\dashboard\dashboard_data::get_status_with_average("2.5", "2.5", "2.5", "2.5");
         $this->assertEquals("xray-headline-same", $result[0]);
-
-
     }
 }

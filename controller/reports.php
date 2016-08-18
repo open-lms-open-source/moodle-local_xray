@@ -618,7 +618,7 @@ class local_xray_controller_reports extends mr_controller {
     }
 
     /**
-     * @param $time seconds by default or minutes if $minutes is true
+     * @param int $time seconds by default or minutes if $minutes is true
      * @param bool|false $minutes
      * @return mixed|string
      */
