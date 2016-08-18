@@ -40,7 +40,7 @@ class local_xray_controller_systemreports extends local_xray_controller_reports 
 
     public function view_action() {
 
-        global $CFG, $PAGE;
+        global $CFG, $PAGE, $SESSION;
 
         $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         $PAGE->navbar->add(get_string('systemreports', $this->component), $PAGE->url);
@@ -67,6 +67,18 @@ class local_xray_controller_systemreports extends local_xray_controller_reports 
                     print_error("error_systemreports_gettoken", $this->component);
                 }
             }
+
+            /*
+             * Check is exist cookie for xray  to use Safari browser.If not exist,we redirect to xray side with param
+             * url for create cookie there and from xray side will redirect to Joule again.
+             */
+            if ((strpos($_SERVER['HTTP_USER_AGENT'], 'Safari')) && !isset($SESSION->xray_cookie_systemreport)) {
+                $tokenparams["url"] = $this->url->out(false); // Add page to redirect from xray server.
+                $url = new moodle_url($systemreportsurl."/auth", $tokenparams);
+                $SESSION->xray_cookie_systemreport = true;
+                redirect($url);
+            }
+
             // The param jouleurl is required in shiny server to add link to each report of joule side.
             $tokenparams["jouleurl"] = $CFG->wwwroot;
             $url = new moodle_url($systemreportsurl, $tokenparams);
