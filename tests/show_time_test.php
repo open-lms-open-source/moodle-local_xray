@@ -44,6 +44,7 @@ class local_xray_show_time_testcase extends \advanced_testcase {
     public function setUp() {
         $this->resetAfterTest(true);
         global $CFG;
+        /* @noinspection PhpIncludeInspection */
         require_once($CFG->dirroot.'/local/xray/controller/reports.php');
     }
 

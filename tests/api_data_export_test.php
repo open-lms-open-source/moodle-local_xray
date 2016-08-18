@@ -43,7 +43,7 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         $this->addforums(5, $courses);
@@ -87,7 +87,7 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         $this->addhsuforums(5, $courses);
@@ -131,7 +131,7 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         $this->addquizzes(5, $courses);
@@ -171,7 +171,7 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         $this->addquizzes(5, $courses);

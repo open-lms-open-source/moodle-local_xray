@@ -46,14 +46,13 @@ class local_xray_api_jwthelper_testcase extends local_xray_base_testcase {
         $token = \local_xray\local\api\jwthelper::get_token();
         $this->assertNotFalse($token);
     }
-    
+
     public function test_jwttoken_valid() {
         $this->resetAfterTest(true);
         $this->config_set_ok();
 
         $token = \local_xray\local\api\jwthelper::get_token();
-        $cid = get_config('local_xray', 'xrayclientid');
-        $valid = \local_xray\local\api\jwthelper::validate_token($token, $cid);
+        $valid = \local_xray\local\api\jwthelper::validate_token($token);
         $this->assertTrue($valid);
     }
 }

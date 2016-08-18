@@ -146,51 +146,18 @@ class data_export {
      * @return array
      */
     public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id') {
-        $maxdatestore = get_config(self::PLUGIN, self::get_maxdate_setting($fn));
-        if (!empty($maxdatestore)) {
-            $from = $maxdatestore;
-        }
+        ($field2);
+        ($from);
+        ($fn);
 
         $sqlgt = " {$idfield} > :lastid
+                   AND
+                   {$field1} <= :to
                    ORDER BY {$idfield} ASC ";
 
         $sqlparams = [
-            ['sql' => $sqlgt, 'params' => null]
+            ['sql' => $sqlgt, 'params' => ['to' => $to]]
         ];
-
-        // Use lastid only if not exporting for the first time.
-        $lastidstore = get_config(self::PLUGIN, $fn);
-        if (!empty($lastidstore) && ($fn != 'accesslog')) {
-            $sqlbetween = " {$field1} BETWEEN :from+1 AND :to
-                             AND
-                             {$idfield} <= :lastid
-                             ORDER BY {$idfield} ASC ";
-            $sqlparams[] = ['sql' => $sqlbetween, 'params' => ['from' => $from, 'to' => $to]];
-
-            $sqlbetween1 = " {$field1} = :from
-                             AND
-                             {$idfield} > :lastid
-                             ORDER BY {$idfield} ASC ";
-            $sqlparams[] = ['sql' => $sqlbetween1, 'params' => ['from' => $from, 'to' => $to]];
-            if (!empty($field2)) {
-                $sqlbetween2 = " {$field2} BETWEEN :from+1 AND :to
-                             AND
-                             {$field1} = 0
-                             AND
-                             {$idfield} <= :lastid
-                             ORDER BY {$idfield} ASC ";
-                $sqlparams[] = ['sql' => $sqlbetween2, 'params' => ['from' => $from, 'to' => $to]];
-
-                $sqlbetween3 = " {$field2} = :from
-                             AND
-                             {$field1} = 0
-                             AND
-                             {$idfield} > :lastid
-                             ORDER BY {$idfield} ASC ";
-                $sqlparams[] = ['sql' => $sqlbetween3, 'params' => ['from' => $from, 'to' => $to]];
-
-            }
-        }
 
         return $sqlparams;
     }
@@ -918,7 +885,7 @@ class data_export {
 
         $lastidstore = get_config(self::PLUGIN, $filename);
         if (!empty($lastidstore)) {
-            $lastid = $lastidstore;
+            $lastid = (int)$lastidstore;
         } else {
             $lastidstore = 0;
         }

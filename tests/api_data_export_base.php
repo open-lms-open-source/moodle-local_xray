@@ -167,7 +167,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      *
      * @param int $nr
      * @param int $timecreated
-     * @return array
+     * @return stdClass[]
      */
     protected function addcourses($nr, $timecreated = null) {
         if (empty($timecreated)) {
@@ -202,7 +202,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      */
     protected function addforumsbase($nr, $courses, $module) {
         global $USER;
-        /* @var mod_forum_generator|mod_hsuforum_generator $forumgen */
+        /** @var mod_forum_generator|mod_hsuforum_generator $forumgen */
         $forumgen = $this->getDataGenerator()->get_plugin_generator($module);
         $forums = [];
         $discussions = [];
@@ -251,7 +251,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @throws coding_exception
      */
     protected function addquizzes($nr, $courses) {
-        /* @var mod_quiz_generator $quizgen */
+        /** @var mod_quiz_generator $quizgen */
         $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
         $instances = [];
         foreach ($courses as $course) {
@@ -284,12 +284,12 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     protected function user_set($courses, $module) {
         global $DB;
         $datagen = $this->getDataGenerator();
-        $student = $datagen->create_user(['username' => 'supercalifragilisticoexpialidoso']);
+        $student = $datagen->create_user(['username' => uniqid('supercalifragilisticoexpialidoso')]);
         $roleid = $DB->get_field('role', 'id', ['shortname' => 'student'], MUST_EXIST);
         $timenow = time();
         foreach ($courses as $course) {
             $datagen->enrol_user($student->id, $course->id, $roleid);
-            /* @var grade_item[] $gitems */
+            /** @var grade_item[] $gitems */
             $gitems = grade_item::fetch_all(['itemmodule' => $module, 'courseid' => $course->id]);
             foreach ($gitems as $gitem) {
                 $gitem->update_raw_grade($student->id, 80.0, null, false, FORMAT_MOODLE, null, $timenow, $timenow);
@@ -302,7 +302,6 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
 
     /**
      * @param  int $nr
-     * @param  int $timemodified
      * @return stdClass[]
      */
     protected function addusers($nr) {

@@ -36,11 +36,12 @@ class local_xray_tables_reports_testcase extends local_xray_base_testcase {
 
     /**
      * Course created for test.
+     * @var stdClass
      */
     private $course;
 
     /**
-     * Renderer local_xray.
+     * @var local_xray_renderer
      */
     private $renderer;
 
@@ -95,7 +96,8 @@ class local_xray_tables_reports_testcase extends local_xray_base_testcase {
         $this->assertContains('<table id="xray-js-table-studentDiscussionGrades', $tableoutput);
 
         // Check if exist button for close the table.
-        $this->assertContains('<div class="xray-closetable"><a href="#studentDiscussionGrades-toggle">Close table</a></div>', $tableoutput);
+        $this->assertContains('<div class="xray-closetable">'.
+                              '<a href="#studentDiscussionGrades-toggle">Close table</a></div>', $tableoutput);
 
     }
 }
