@@ -42,7 +42,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         list($forums, $discussions, $posts) = $this->addforums(5, $courses);
@@ -124,7 +124,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         list($forums, $discussions, $posts) = $this->addhsuforums(5, $courses);
@@ -202,7 +202,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
 
@@ -250,7 +250,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
         global $DB;
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $categories = $this->addcategories(5, $timepast);
 
@@ -295,7 +295,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
     public function test_user_delete_export() {
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
 
         $users = $this->addusers(5);
         for ($count = 0; $count < 3; $count++) {
@@ -349,7 +349,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         $quizes = $this->addquizzes(5, $courses);
@@ -402,7 +402,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
 
         $this->resetAfterTest();
 
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         $this->addquizzes(5, $courses);
@@ -451,4 +451,85 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
         $this->assertEquals(0, $DB->count_records('local_xray_roleunas'));
     }
 
+    /**
+     * Helper function for unenrolling the users from courses
+     *
+     * @param int        $start
+     * @param int        $end
+     * @param stdClass[] $courses
+     * @param stdClass   $user
+     */
+    protected function unenrol_users($start, $end, $courses, $user) {
+        $authmanual = enrol_get_plugin('manual');
+        for ($pos = $start; $pos < $end; $pos++) {
+            $instance = null;
+            $instances = enrol_get_instances($courses[$pos]->id, true);
+            foreach ($instances as $inst) {
+                if ($inst->enrol == 'manual') {
+                    $instance = $inst;
+                    break;
+                }
+            }
+            $authmanual->unenrol_user($instance, $user->id);
+        }
+    }
+
+    /**
+     * @param  string $exportfile
+     * @return int[]
+     */
+    protected function get_export_data_keys($exportfile) {
+        $first = true;
+        $iterator = new csv_fileiterator($exportfile);
+        $result = [];
+        foreach ($iterator as $item) {
+            if ($first) {
+                $first = false;
+                continue;
+            }
+
+            $result[] = (int)$item[0];
+
+        }
+
+        return $result;
+    }
+
+    /**
+     * Additional export test (dedicated to Leeloo)
+     */
+    public function test_enrol_delete_export_multipass() {
+        $this->resetAfterTest();
+
+        $timenow = time() + HOURSECS;
+        $timepast = $timenow - DAYSECS;
+        $courses = $this->addcourses(5, $timepast);
+        $this->addquizzes(5, $courses);
+        $user = $this->user_set($courses, 'quiz');
+        $this->unenrol_users(0, 3, $courses, $user);
+
+        // Export.
+        $storage = new local_xray\local\api\auto_clean();
+        $storagedir = $storage->get_directory();
+        $this->export($timenow, $storagedir);
+
+        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'enrolment_delete_00000001.csv';
+        $this->assertFileExists($exportfile);
+        $exportkeys1 = $this->get_export_data_keys($exportfile);
+
+        $this->unenrol_users(3, 5, $courses, $user);
+        $storage2 = new local_xray\local\api\auto_clean();
+        $storagedir2 = $storage2->get_directory();
+        $this->export($timenow, $storagedir2);
+
+        $exportfile = $storagedir2.DIRECTORY_SEPARATOR.'enrolment_delete_00000001.csv';
+        $this->assertFileExists($exportfile);
+        $exportkeys2 = $this->get_export_data_keys($exportfile);
+
+        $testset = array_merge($exportkeys1, $exportkeys2);
+        $final = array_count_values($testset);
+        foreach ($final as $key => $count) {
+            $this->assertEquals(1, $count, "Key $key has duplicate(s)!");
+        }
+    }
 }

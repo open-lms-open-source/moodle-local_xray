@@ -102,7 +102,7 @@ class local_xray_task_data_sync_testcase extends advanced_testcase {
         // Export.
         $storage = new local_xray\local\api\auto_clean();
         $storagedir = $storage->get_directory();
-        $timenow = time();
+        $timenow = time() + HOURSECS;
         $timepast = $timenow - (5 * DAYSECS);
         $this->export($timenow, $storagedir);
 
