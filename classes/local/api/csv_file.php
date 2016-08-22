@@ -92,7 +92,8 @@ class csv_file {
      * @return int|bool
      */
     protected function write($data) {
-        return fputcsv($this->resource, $data, self::DELIMITER, self::ENCLOSURE, self::ESCAPE_CHAR);
+        $ndata = str_replace(["\r\n", "\n", "\r"], '\n', $data);
+        return fputcsv($this->resource, $ndata, self::DELIMITER, self::ENCLOSURE, self::ESCAPE_CHAR);
     }
 
     /**
