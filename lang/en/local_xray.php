@@ -489,3 +489,8 @@ $string['coursesubscribedesc'] = 'You will receive an email with the course X-Ra
 $string['subscribetothiscourse'] = 'Subscribe to email report';
 $string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course id {$a}';
 $string['email_log_desc'] = 'Email sent. Course id {$a->courseid} User id {$a->to}';
+
+// Recommended Actions.
+$string['recommendedactions'] = 'Recommended Actions';
+$string['youhaveaction'] = 'You have {$a} recommended action';
+$string['youhaveactions'] = 'You have {$a} recommended actions';

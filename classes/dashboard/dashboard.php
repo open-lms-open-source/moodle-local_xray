@@ -34,7 +34,7 @@ class dashboard {
      * @param $courseid
      * @return bool|dashboard_data
      */
-    public static function get($courseid) {
+    public static function get($courseid, $isadmin) {
 
         $result = "";
 
@@ -42,6 +42,7 @@ class dashboard {
 
             $report = "dashboard";
             $response = api\wsapi::course($courseid, $report);
+
             if (!$response) {
 
                 // Fail response of webservice.
@@ -135,6 +136,33 @@ class dashboard {
                     $postslastsevendayspreviousweek = $response->elements->element3->items[11]->value;
                 }
 
+                // Recommended actions.
+                // Default values. TODO what happen when there are no recomended actions?
+                $countrecommendations = false;
+                $recommendations = false;
+                $reportdate = false;
+
+                // TODO case when the user is admin and instructor.
+                // Teacher.
+                $recommendationsisset = isset($response->elements->recommendationsInstructor);
+                if ($recommendationsisset) {
+                    $recommendations = $response->elements->recommendationsAdmin;
+                }
+                // Admin.
+                if ($isadmin) {
+                    $recommendationsisset = isset($response->elements->recommendationsAdmin);
+                    if ($recommendationsisset) {
+                        $recommendations = $response->elements->recommendationsAdmin;
+                    }
+                }
+                // Count recommendations.
+                $countrecommendations = count($recommendations->data);
+                // Report date.
+                $reportdateisset = isset($response->reportdate);
+                if ($reportdateisset) {
+                    $reportdate = $response->reportdate;
+                }
+
                 // Return dashboard_data object.
                 $result = new dashboard_data($usersinrisk,
                     $risktotal,
@@ -147,7 +175,10 @@ class dashboard {
                     $averagegradeslastsevendays,
                     $averagegradeslastsevendayspreviousweek,
                     $postslastsevendays,
-                    $postslastsevendayspreviousweek);
+                    $postslastsevendayspreviousweek,
+                    $recommendations,
+                    $countrecommendations,
+                    $reportdate);
 
             }
         } catch (\moodle_exception $e) {

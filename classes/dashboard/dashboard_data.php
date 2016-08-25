@@ -105,6 +105,25 @@ class dashboard_data {
     public $postslastsevendayspreviousweek;
 
     /**
+     * Recommended Actions.
+     * @var integer
+     */
+
+    public $recommendations;
+
+    /**
+     * Count Recommended Actions.
+     * @var integer
+     */
+    public $countrecommendations;
+
+    /**
+     * Report Date.
+     * @var integer
+     */
+    public $reportdate;
+
+    /**
      * Construct
      *
      * @param integer $usersinrisk
@@ -131,7 +150,10 @@ class dashboard_data {
                                 $averagegradeslastsevendays,
                                 $averagegradeslastsevendayspreviousweek,
                                 $postslastsevendays,
-                                $postslastsevendayspreviousweek) {
+                                $postslastsevendayspreviousweek,
+                                $recommendations,
+                                $countrecommendations,
+                                $reportdate) {
 
         $this->usersinrisk = $usersinrisk;
         $this->risktotal = $risktotal;
@@ -145,6 +167,9 @@ class dashboard_data {
         $this->averagegradeslastsevendayspreviousweek = $averagegradeslastsevendayspreviousweek;
         $this->postslastsevendays = $postslastsevendays;
         $this->postslastsevendayspreviousweek = $postslastsevendayspreviousweek;
+        $this->recommendations = $recommendations;
+        $this->countrecommendations = $countrecommendations;
+        $this->reportdate = $reportdate;
     }
 
     /**

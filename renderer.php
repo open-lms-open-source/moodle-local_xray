@@ -460,6 +460,38 @@ class local_xray_renderer extends plugin_renderer_base {
         $list .= html_writer::end_tag("ul");
 
         $output .= html_writer::tag("nav", $list, array("id" => "xray-nav-headline"));
+
+        // Recommended Actions.
+        $recommendedactions = html_writer::span(get_string('recommendedactions', 'local_xray'), 'recommendedactions');
+        // Count recommended actions.
+        $a = new stdClass();
+        $a->countrecommendations = count($data->recommendations->data);
+        $countrecommendations = get_string('youhaveactions', 'local_xray', $a->countrecommendations);
+        if ($a->countrecommendations == 1) {
+            $countrecommendations = get_string('youhaveaction', 'local_xray', $a->countrecommendations);
+        }
+        $countrecommendations = html_writer::div($countrecommendations, 'countrecommendedactions').html_writer::link('#xray-div-recommendations-show', '', array('class' => 'countrecommendedactions_icon'));
+        // Create array with items.
+        $items = array($recommendedactions,
+                            $this->inforeport($data->reportdate),
+                                    $countrecommendations,
+            );
+        // Create list.
+        $recommendations = html_writer::alist($items, array("class" => "xray-headline"));
+
+        $output .= html_writer::tag("nav", $recommendations, array("id" => "xray-nav-recommendations"));
+
+        // Content recommendations.
+        $recommendationnumber = 1;
+        $recommendationlist = '';
+        foreach ($data->recommendations->data as $recommendation) {
+            $recommendationnumberspan = html_writer::span($recommendationnumber, 'recommendationnumber');
+            $recommendationlist .= html_writer::div($recommendationnumberspan.$recommendation->text->value, 'recommendationdiv');
+            $recommendationnumber++;
+        }
+
+        $output .= html_writer::tag("div", $recommendationlist, array("id" => "xray-div-recommendations-show", "class" => "xray-div-recommendations"));
+
         return $output;
     }
 
@@ -507,7 +539,7 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function print_course_menu($reportcontroller, $reports) {
 
-        global $PAGE, $COURSE, $OUTPUT;
+        global $PAGE, $COURSE, $OUTPUT, $USER;
         $displaymenu = get_config('local_xray', 'displaymenu');
         $menu = '';
         if ($displaymenu) {
@@ -541,9 +573,16 @@ class local_xray_renderer extends plugin_renderer_base {
                 // Check if show headerline in course frontpage.
                 $headerdata = "";
                 $subscription_link = "";
+
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
 
-                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id);
+                    $isadmin = false;
+                    $admins = get_admins();
+                    if (!array_key_exists($USER->id, $admins)) {
+                        $isadmin = true;
+                    }
+                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $isadmin);
+
                     if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
                         $headerdata .= $this->dashboard_xray_output($dashboarddata);
                     } else {

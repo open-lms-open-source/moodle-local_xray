@@ -431,3 +431,56 @@ a.disabled {
 .xray_subscription_link {
     padding-left:3px;
 }
+
+/**************** Recommended Actions ****************/
+/*#xray-nav-recommendations {
+    background-image: url([[pix:local_xray|RecommendedActions_icon]]);
+    background-repeat: no-repeat;
+    height: 53px;
+    padding: 12px 0 0 17px;
+}*/
+
+#xray-nav-recommendations li {
+    display: block;
+    float:left;
+    width: 32%;
+    padding:0 0.5%;
+    line-height: normal;
+}
+
+#xray-nav-recommendations li .recommendedactions {
+    background-image: url([[pix:local_xray|RecommendedActions_icon]]);
+    background-repeat: no-repeat;
+    height: 53px;
+    padding: 12px 0 15px 41px;
+}
+
+#xray-nav-recommendations li .countrecommendedactions {
+    float:left;
+    width:80%;
+}
+
+#xray-nav-recommendations li .countrecommendedactions_icon {
+    background-image: url([[pix:local_xray|ExpandIcon]]);
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+}
+
+.xray-div-recommendations {
+    display:none;
+    padding-top:20px;
+}
+.xray-div-recommendations:target {
+    display:block;
+}
+.xray-div-recommendations .recommendationdiv{
+    padding:6px 0 7px;
+}
+
+.xray-div-recommendations .recommendationnumber{
+    font-size: 2.8em;
+}
+/**************** End styles for Recommended Actions ****************/
