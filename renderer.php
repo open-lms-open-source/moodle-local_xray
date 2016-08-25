@@ -464,11 +464,9 @@ class local_xray_renderer extends plugin_renderer_base {
         // Recommended Actions.
         $recommendedactions = html_writer::span(get_string('recommendedactions', 'local_xray'), 'recommendedactions');
         // Count recommended actions.
-        $a = new stdClass();
-        $a->countrecommendations = count($data->recommendations->data);
-        $countrecommendations = get_string('youhaveactions', 'local_xray', $a->countrecommendations);
-        if ($a->countrecommendations == 1) {
-            $countrecommendations = get_string('youhaveaction', 'local_xray', $a->countrecommendations);
+        $countrecommendations = get_string('youhaveactions', 'local_xray', $data->countrecommendations);
+        if ($data->countrecommendations == 1) {
+            $countrecommendations = get_string('youhaveaction', 'local_xray', $data->countrecommendations);
         }
         $countrecommendations = html_writer::div($countrecommendations, 'countrecommendedactions').html_writer::link('#xray-div-recommendations-show', '', array('class' => 'countrecommendedactions_icon'));
         // Create array with items.
@@ -484,9 +482,9 @@ class local_xray_renderer extends plugin_renderer_base {
         // Content recommendations.
         $recommendationnumber = 1;
         $recommendationlist = '';
-        foreach ($data->recommendations->data as $recommendation) {
+        foreach ($data->recommendations as $recommendation) {
             $recommendationnumberspan = html_writer::span($recommendationnumber, 'recommendationnumber');
-            $recommendationlist .= html_writer::div($recommendationnumberspan.$recommendation->text->value, 'recommendationdiv');
+            $recommendationlist .= html_writer::div($recommendationnumberspan.$recommendation, 'recommendationdiv');
             $recommendationnumber++;
         }
 
@@ -576,12 +574,8 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
 
-                    $isadmin = false;
-                    $admins = get_admins();
-                    if (!array_key_exists($USER->id, $admins)) {
-                        $isadmin = true;
-                    }
-                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $isadmin);
+
+                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id);
 
                     if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
                         $headerdata .= $this->dashboard_xray_output($dashboarddata);

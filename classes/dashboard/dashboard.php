@@ -34,7 +34,7 @@ class dashboard {
      * @param $courseid
      * @return bool|dashboard_data
      */
-    public static function get($courseid, $isadmin) {
+    public static function get($courseid, $userid) {
 
         $result = "";
 
@@ -142,21 +142,42 @@ class dashboard {
                 $recommendations = false;
                 $reportdate = false;
 
-                // TODO case when the user is admin and instructor.
+                $recommendationslist = array();
                 // Teacher.
-                $recommendationsisset = isset($response->elements->recommendationsInstructor);
-                if ($recommendationsisset) {
-                    $recommendations = $response->elements->recommendationsAdmin;
-                }
-                // Admin.
-                if ($isadmin) {
-                    $recommendationsisset = isset($response->elements->recommendationsAdmin);
+                if (local_xray_get_teacher_courses($userid)) {
+                    // Recommendations Instructor.
+                    $recommendationsisset = isset($response->elements->recommendationsInstructor);
                     if ($recommendationsisset) {
-                        $recommendations = $response->elements->recommendationsAdmin;
+                        foreach ($response->elements->recommendationsInstructor->data as $recommendation) {
+                            $recommendationslist[] = $recommendation->text->value;
+                        }
+                    }
+                    // Recommendations Positive.
+                    $recommendationsisset = isset($response->elements->recommendationsPositive);
+                    if ($recommendationsisset) {
+                        foreach ($response->elements->recommendationsPositive->data as $recommendation) {
+                            $recommendationslist[] = $recommendation->text->value;
+                        }
                     }
                 }
-                // Count recommendations.
-                $countrecommendations = count($recommendations->data);
+                // Admin.
+                $admins = get_admins();
+                if (array_key_exists($userid, $admins)) {
+                    // Recommendations Admin.
+                    $recommendationsisset = isset($response->elements->recommendationsAdmin);
+                    if ($recommendationsisset) {
+                        foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
+                            $recommendationslist[] = $recommendation->text->value;
+                        }
+                    }
+                }
+
+                if ($recommendationslist) {
+                    $recommendations = $recommendationslist;
+                    // Count recommendations.
+                    $countrecommendations = count($recommendations);
+                }
+
                 // Report date.
                 $reportdateisset = isset($response->reportdate);
                 if ($reportdateisset) {
