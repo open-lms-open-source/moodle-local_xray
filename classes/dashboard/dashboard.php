@@ -138,7 +138,7 @@ class dashboard {
 
                 // Recommended actions.
                 // Default values. TODO what happen when there are no recomended actions?
-                $countrecommendations = false;
+                $countrecommendations = 0;
                 $recommendations = false;
                 $reportdate = false;
 

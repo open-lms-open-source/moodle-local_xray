@@ -495,3 +495,4 @@ $string['countaction'] = '{$a} recommended action';
 $string['countactions'] = '{$a} recommended actions';
 $string['recommendedactions'] = 'Recommended Actions';
 $string['youhave'] = 'You have ';
+$string['youdonthave'] = 'You do not have recommended actions';
