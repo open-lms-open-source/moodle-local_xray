@@ -491,6 +491,7 @@ $string['erroremailheadline'] = 'Error with headline data. The email was not sen
 $string['email_log_desc'] = 'Email sent. Course id {$a->courseid} User id {$a->to}';
 
 // Recommended Actions.
+$string['countaction'] = '{$a} recommended action';
+$string['countactions'] = '{$a} recommended actions';
 $string['recommendedactions'] = 'Recommended Actions';
-$string['youhaveaction'] = 'You have {$a} recommended action';
-$string['youhaveactions'] = 'You have {$a} recommended actions';
+$string['youhave'] = 'You have ';

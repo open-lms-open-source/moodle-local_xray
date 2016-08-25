@@ -433,14 +433,11 @@ a.disabled {
 }
 
 /**************** Recommended Actions ****************/
-/*#xray-nav-recommendations {
-    background-image: url([[pix:local_xray|RecommendedActions_icon]]);
-    background-repeat: no-repeat;
-    height: 53px;
-    padding: 12px 0 0 17px;
-}*/
-
+#xray-nav-recommendations {
+    margin-top: 15px;
+}
 #xray-nav-recommendations li {
+    font-size: 14px;
     display: block;
     float:left;
     width: 32%;
@@ -452,12 +449,11 @@ a.disabled {
     background-image: url([[pix:local_xray|RecommendedActions_icon]]);
     background-repeat: no-repeat;
     height: 53px;
-    padding: 12px 0 15px 41px;
+    padding: 15px 0 15px 47px;
 }
 
 #xray-nav-recommendations li .countrecommendedactions {
     float:left;
-    width:80%;
 }
 
 #xray-nav-recommendations li .countrecommendedactions_icon {
@@ -469,8 +465,21 @@ a.disabled {
     width: 30px;
 }
 
+#xray-nav-recommendations .lirecommendedactions {
+    width:25%;
+}
+
+#xray-nav-recommendations .lireportdate {
+    width:25%;
+}
+
+#xray-nav-recommendations .licountrecommendations {
+    width:40%;
+}
+
 .xray-div-recommendations {
     display:none;
+    font-size: 13px;
     padding-top:20px;
 }
 .xray-div-recommendations:target {
@@ -481,6 +490,7 @@ a.disabled {
 }
 
 .xray-div-recommendations .recommendationnumber{
-    font-size: 2.8em;
+    font-size: 29px;
+    padding-right: 9px;
 }
 /**************** End styles for Recommended Actions ****************/

@@ -149,14 +149,18 @@ class dashboard {
                     $recommendationsisset = isset($response->elements->recommendationsInstructor);
                     if ($recommendationsisset) {
                         foreach ($response->elements->recommendationsInstructor->data as $recommendation) {
-                            $recommendationslist[] = $recommendation->text->value;
+                            if ($recommendation->text->value) {
+                                $recommendationslist[] = $recommendation->text->value;
+                            }
                         }
                     }
                     // Recommendations Positive.
                     $recommendationsisset = isset($response->elements->recommendationsPositive);
                     if ($recommendationsisset) {
                         foreach ($response->elements->recommendationsPositive->data as $recommendation) {
-                            $recommendationslist[] = $recommendation->text->value;
+                            if ($recommendation->text->value) {
+                                $recommendationslist[] = $recommendation->text->value;
+                            }
                         }
                     }
                 }
@@ -167,7 +171,9 @@ class dashboard {
                     $recommendationsisset = isset($response->elements->recommendationsAdmin);
                     if ($recommendationsisset) {
                         foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
-                            $recommendationslist[] = $recommendation->text->value;
+                            if ($recommendation->text->value) {
+                                $recommendationslist[] = $recommendation->text->value;
+                            }
                         }
                     }
                 }
@@ -209,5 +215,4 @@ class dashboard {
 
         return $result;
     }
-
 }
