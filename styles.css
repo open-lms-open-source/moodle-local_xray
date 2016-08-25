@@ -177,7 +177,7 @@ a.xray-headline-link:hover {
 }
 
 .xray-headline-icon {
-    background-position: center center;
+    background-position: center 0px;
     background-repeat: no-repeat;
     background-size: 100% auto;
     display: inline-block;
@@ -440,7 +440,6 @@ a.disabled {
     font-size: 14px;
     display: block;
     float:left;
-    width: 32%;
     padding:0 0.5%;
     line-height: normal;
 }
@@ -458,7 +457,7 @@ a.disabled {
 
 #xray-nav-recommendations li .countrecommendedactions_icon {
     background-image: url([[pix:local_xray|ExpandIcon]]);
-    background-position: center center;
+    background-position: center 0;
     background-repeat: no-repeat;
     display: inline-block;
     height: 30px;
@@ -485,12 +484,19 @@ a.disabled {
 .xray-div-recommendations:target {
     display:block;
 }
-.xray-div-recommendations .recommendationdiv{
-    padding:6px 0 7px;
+.xray-div-recommendations .recommendationdiv {
+    padding: 6px 0 7px;
+}
+.xray-div-recommendations .recommendationdiv .recommendationnumber {
+    float: left;
+    width: 20px;
+    font-size: 29px;
+    padding-right: 23px;
+}
+.xray-div-recommendations .recommendationdiv .recommendationtext {
+    float: left;
+    width: 90%;
+    padding-top: 17px;
 }
 
-.xray-div-recommendations .recommendationnumber{
-    font-size: 29px;
-    padding-right: 9px;
-}
 /**************** End styles for Recommended Actions ****************/

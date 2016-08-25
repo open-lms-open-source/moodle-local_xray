@@ -473,13 +473,14 @@ class local_xray_renderer extends plugin_renderer_base {
                 $countrecommendations = get_string('countactions', 'local_xray', $data->countrecommendations);
             }
             $countrecommendations = html_writer::tag('b', $countrecommendations);
-            $countrecommendations = html_writer::div($youhave.$countrecommendations, 'countrecommendedactions').html_writer::link('#xray-div-recommendations-show', '', array('class' => 'countrecommendedactions_icon'));
-
+            $countrecommendations = html_writer::div($youhave.$countrecommendations, 'countrecommendedactions').html_writer::link('#xray-div-recommendations-show', '', array('class' => 'countrecommendedactions_icon', 'tabindex' => 0));
             // Content recommendations.
             $recommendationnumber = 1;
             foreach ($data->recommendations as $recommendation) {
-                $recommendationnumberspan = html_writer::span($recommendationnumber, 'recommendationnumber');
-                $recommendationlist .= html_writer::div($recommendationnumberspan.$recommendation, 'recommendationdiv');
+                $recommendationnumberdiv = html_writer::div($recommendationnumber, 'recommendationnumber');
+                $recommendationtext = html_writer::div($recommendation, 'recommendationtext');
+                $br = html_writer::empty_tag('br', array('style' => 'clear: left;'));
+                $recommendationlist .= html_writer::div($recommendationnumberdiv.$recommendationtext.$br, 'recommendationdiv');
                 $recommendationnumber++;
             }
         } else {
