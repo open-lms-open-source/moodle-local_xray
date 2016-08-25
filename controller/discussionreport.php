@@ -45,9 +45,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     public function require_capability() {
         // This report show 3 differents reports.
         $ctx = $this->get_context();
-        if (!has_capability("local/xray:discussionreport_view", $ctx) &&
+        if (!local_xray_is_course_enable() ||(!has_capability("local/xray:discussionreport_view", $ctx) &&
             !has_capability("local/xray:discussionendogenicplagiarism_view", $ctx) &&
-            !has_capability("local/xray:discussiongrading_view", $ctx)
+            !has_capability("local/xray:discussiongrading_view", $ctx))
         ) {
 
             throw new required_capability_exception($ctx, "local/xray:discussionreport_view", 'nopermissions', '');

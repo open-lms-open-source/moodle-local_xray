@@ -40,7 +40,7 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     // Small caching to prevent double calculation call since we need the same information in both calls.
     // The forums in home page should not display the X-ray link.
     static $reports = null;
-    if (($reports !== null) || $page->course->format == "singleactivity" || ($context->contextlevel < CONTEXT_COURSE) ||
+    if (!local_xray_is_course_enable() || ($reports !== null) || $page->course->format == "singleactivity" || ($context->contextlevel < CONTEXT_COURSE) ||
         ($page->course->id == SITEID) || !has_capability('local/xray:view', $context)) {
         return $reports;
     }
@@ -338,3 +338,32 @@ function local_xray_role_unassigned(\core\event\role_unassigned $event) {
         $DB->insert_record_raw('local_xray_roleunas', $data, false);
     }
 }
+
+/**
+ * This check if course is enable for xray and if we must to show links/report of xray.
+ * By default all courses are enabled.
+ * But if you add $CFG->xray_enable_courses to config, this will check there.
+ *
+ * Example:
+ * $CFG->xray_enable_courses = array(2,3)
+ * Xray will be enable only for courses 2 and 3.
+ *
+ * Example 2:
+ * $CFG->xray_enabled_courses = array();
+ * This will disabled all courses.
+ *
+ * @return bool
+ */
+function local_xray_is_course_enable() {
+
+    global $CFG, $COURSE;
+    $result = true;
+    if (isset($CFG->xray_enabled_courses) && is_array($CFG->xray_enabled_courses)) {
+        $result = false;
+        if (in_array($COURSE->id, $CFG->xray_enabled_courses)) {
+            $result = true;
+        }
+    }
+    return $result;
+}
+

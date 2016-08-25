@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot.'/local/mr/framework/controller.php');
+require_once($CFG->dirroot.'/local/xray/lib.php');
 use local_xray\event\get_report_failed;
 
 /**
@@ -216,6 +217,12 @@ class local_xray_controller_reports extends mr_controller {
      * Require capabilities
      */
     public function require_capability() {
+
+        global $CFG, $COURSE;
+        if (!local_xray_is_course_enable()) {
+            $ctx = $this->get_context();
+            throw new required_capability_exception($ctx, "{$this->plugin}:{$this->name}_view", 'nopermissions', '');
+        }
         require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
     }
 
