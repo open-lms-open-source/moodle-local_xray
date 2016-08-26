@@ -476,6 +476,7 @@ a.disabled {
     background-image: url([[pix:local_xray|ExpandIcon]]);
     background-position: center center;
     background-repeat: no-repeat;
+    background-size: 22px;
 
 }
 
@@ -483,6 +484,7 @@ a.disabled {
     background-image: url([[pix:local_xray|CollapseIcon]]);
     background-position: center center;
     background-repeat: no-repeat;
+    background-size: 22px;
 }
 
 #xray-nav-recommendations .lirecommendedactions {
