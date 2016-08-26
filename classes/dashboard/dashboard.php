@@ -34,7 +34,7 @@ class dashboard {
      * @param $courseid
      * @return bool|dashboard_data
      */
-    public static function get($courseid, $userid) {
+    public static function get($courseid, $userid = false) {
 
         $result = "";
 
@@ -139,54 +139,56 @@ class dashboard {
                 // Recommended actions.
                 $countrecommendations = 0;
                 $recommendations = false;
-                $reportdate = false;
+                $reportdate = '';
 
                 $recommendationslist = array();
-                // Teacher.
-                if (local_xray_get_teacher_courses($userid)) {
-                    // Recommendations Instructor.
-                    $recommendationsisset = isset($response->elements->recommendationsInstructor);
-                    if ($recommendationsisset) {
-                        foreach ($response->elements->recommendationsInstructor->data as $recommendation) {
-                            if ($recommendation->text->value) {
-                                $recommendationslist[] = $recommendation->text->value;
+                if ($userid) {
+                    // Teacher.
+                    if (local_xray_get_teacher_courses($userid)) {
+                        // Recommendations Instructor.
+                        $recommendationsisset = isset($response->elements->recommendationsInstructor);
+                        if ($recommendationsisset) {
+                            foreach ($response->elements->recommendationsInstructor->data as $recommendation) {
+                                if ($recommendation->text->value) {
+                                    $recommendationslist[] = $recommendation->text->value;
+                                }
+                            }
+                        }
+                        // Recommendations Positive.
+                        $recommendationsisset = isset($response->elements->recommendationsPositive);
+                        if ($recommendationsisset) {
+                            foreach ($response->elements->recommendationsPositive->data as $recommendation) {
+                                if ($recommendation->text->value) {
+                                    $recommendationslist[] = $recommendation->text->value;
+                                }
                             }
                         }
                     }
-                    // Recommendations Positive.
-                    $recommendationsisset = isset($response->elements->recommendationsPositive);
-                    if ($recommendationsisset) {
-                        foreach ($response->elements->recommendationsPositive->data as $recommendation) {
-                            if ($recommendation->text->value) {
-                                $recommendationslist[] = $recommendation->text->value;
+                    // Admin.
+                    $admins = get_admins();
+                    if (array_key_exists($userid, $admins)) {
+                        // Recommendations Admin.
+                        $recommendationsisset = isset($response->elements->recommendationsAdmin);
+                        if ($recommendationsisset) {
+                            foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
+                                if ($recommendation->text->value) {
+                                    $recommendationslist[] = $recommendation->text->value;
+                                }
                             }
                         }
                     }
-                }
-                // Admin.
-                $admins = get_admins();
-                if (array_key_exists($userid, $admins)) {
-                    // Recommendations Admin.
-                    $recommendationsisset = isset($response->elements->recommendationsAdmin);
-                    if ($recommendationsisset) {
-                        foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
-                            if ($recommendation->text->value) {
-                                $recommendationslist[] = $recommendation->text->value;
-                            }
-                        }
-                    }
-                }
 
-                if ($recommendationslist) {
-                    $recommendations = $recommendationslist;
-                    // Count recommendations.
-                    $countrecommendations = count($recommendations);
-                }
+                    if ($recommendationslist) {
+                        $recommendations = $recommendationslist;
+                        // Count recommendations.
+                        $countrecommendations = count($recommendations);
+                    }
 
-                // Report date.
-                $reportdateisset = isset($response->reportdate);
-                if ($reportdateisset) {
-                    $reportdate = $response->reportdate;
+                    // Report date.
+                    $reportdateisset = isset($response->reportdate);
+                    if ($reportdateisset) {
+                        $reportdate = $response->reportdate;
+                    }
                 }
 
                 // Return dashboard_data object.
