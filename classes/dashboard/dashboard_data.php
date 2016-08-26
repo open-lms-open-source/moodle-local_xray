@@ -106,7 +106,7 @@ class dashboard_data {
 
     /**
      * Recommended Actions.
-     * @var integer
+     * @var false/array
      */
 
     public $recommendations;
@@ -119,7 +119,7 @@ class dashboard_data {
 
     /**
      * Report Date.
-     * @var integer
+     * @var string
      */
     public $reportdate;
 
