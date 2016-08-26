@@ -498,20 +498,21 @@ a.disabled {
     display:none;
     font-size: 13px;
     padding-top:20px;
+    margin-bottom:10px;
 }
 .xray-div-recommendations .recommendationdiv {
     padding: 6px 0 7px;
+    margin: auto;
+    width: 92%;
 }
 .xray-div-recommendations .recommendationdiv .recommendationnumber {
     float: left;
-    width: 20px;
     font-size: 29px;
-    padding-right: 23px;
+    padding-right: 2px;
 }
 .xray-div-recommendations .recommendationdiv .recommendationtext {
     float: left;
     width: 90%;
-    padding-top: 17px;
 }
 
 .recommendationdate {

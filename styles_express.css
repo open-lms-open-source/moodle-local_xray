@@ -27,3 +27,8 @@ TODO - make express specific? */
     float: inherit !important;
     width: auto !important;
 }
+
+
+.xray-div-recommendations .recommendationdiv .recommendationtext {
+    padding-top:18px;
+}

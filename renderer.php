@@ -476,7 +476,8 @@ class local_xray_renderer extends plugin_renderer_base {
             }
             $countrecommendations = html_writer::tag('b', $countrecommendations);
             $countrecommendations = html_writer::div($youhave.$countrecommendations, 'countrecommendedactions').
-                html_writer::div('', 'countrecommendedactions_icon_expand', array('id' => 'xray-div-recommendations-icon'));
+                html_writer::div('', 'countrecommendedactions_icon_expand', array('id' => 'xray-div-recommendations-icon',
+                    'onclick' => 'local_xray_recommendations_show()'));
 
             // Content recommendations.
             $recommendationnumber = 1;
@@ -489,7 +490,7 @@ class local_xray_renderer extends plugin_renderer_base {
             }
         } else {
             $youdonthave = get_string('youdonthave', 'local_xray');
-            $countrecommendations = html_writer::div($youdonthave);
+            $countrecommendations = html_writer::div($youdonthave, 'countrecommendedactions');
         }
 
         // Report date.
@@ -502,8 +503,6 @@ class local_xray_renderer extends plugin_renderer_base {
         $recommendations .= html_writer::tag("li", $dashboarddate, array("class" => "lireportdate", "tabindex" => 0));
         $recommendations .= html_writer::tag("li", '', array("class" => "divider", "tabindex" => 0));
         $recommendations .= html_writer::tag("li", $countrecommendations, array("class" => "licountrecommendations", "tabindex" => 0));
-        $recommendations .= html_writer::end_tag("ul");
-        //<div class="divider"></div>
 
         $output .= html_writer::tag("nav", $recommendations, array("id" => "xray-nav-recommendations"));
 
@@ -602,7 +601,6 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
 
-
                     $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id);
 
                     if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
@@ -627,11 +625,6 @@ class local_xray_renderer extends plugin_renderer_base {
 
             }
         }
-
-
-
-
-        $PAGE->requires->js_init_call("local_xray_recommendations");
 
         return $menu;
     }
