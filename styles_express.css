@@ -28,7 +28,8 @@ TODO - make express specific? */
     width: auto !important;
 }
 
-
+/**************** Recommended Actions ****************/
 .xray-div-recommendations .recommendationdiv .recommendationtext {
     padding-top:18px;
 }
+/**************** End styles for Recommended Actions ****************/

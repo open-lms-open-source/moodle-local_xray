@@ -499,9 +499,9 @@ class local_xray_renderer extends plugin_renderer_base {
         // Create list.
         $recommendations = html_writer::start_tag("ul", array("class" => "xray-headline-recommendations"));
         $recommendations .= html_writer::tag("li", $recommendedactionsicon.$recommendedactionstitle, array("class" => "lirecommendedactions", "tabindex" => 0));
-        $recommendations .= html_writer::tag("li", '', array("class" => "divider", "tabindex" => 0));
+        $recommendations .= html_writer::tag("li", '', array("class" => "xray-divider", "tabindex" => 0));
         $recommendations .= html_writer::tag("li", $dashboarddate, array("class" => "lireportdate", "tabindex" => 0));
-        $recommendations .= html_writer::tag("li", '', array("class" => "divider", "tabindex" => 0));
+        $recommendations .= html_writer::tag("li", '', array("class" => "xray-divider", "tabindex" => 0));
         $recommendations .= html_writer::tag("li", $countrecommendations, array("class" => "licountrecommendations", "tabindex" => 0));
 
         $output .= html_writer::tag("nav", $recommendations, array("id" => "xray-nav-recommendations"));
@@ -562,8 +562,6 @@ class local_xray_renderer extends plugin_renderer_base {
         $PAGE->requires->jquery_plugin('ui');
         // Load specific js for tables.
         $PAGE->requires->jquery_plugin("local_xray-recommendations", "local_xray");
-
-
 
         $displaymenu = get_config('local_xray', 'displaymenu');
         $menu = '';
