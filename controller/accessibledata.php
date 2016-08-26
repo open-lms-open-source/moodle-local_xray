@@ -100,6 +100,10 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
      * Require capability.
      */
     public function require_capability() {
+        if (!local_xray_is_course_enable()) {
+            $ctx = $this->get_context();
+            throw new required_capability_exception($ctx, "local/xray:accessibledata_view", 'nopermissions', '');
+        }
         require_capability("{$this->plugin}:{$this->origincontroller}_view", $this->get_context());
     }
 
