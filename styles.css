@@ -455,7 +455,7 @@ a.disabled {
     float:left;
 }
 
-#xray-nav-recommendations li .countrecommendedactions_icon {
+#xray-nav-recommendations li .countrecommendedactions_icon_expand {
     background-image: url([[pix:local_xray|ExpandIcon]]);
     background-position: center 0;
     background-repeat: no-repeat;
@@ -463,6 +463,16 @@ a.disabled {
     height: 30px;
     width: 30px;
 }
+
+#xray-nav-recommendations li .countrecommendedactions_icon_collapse {
+    background-image: url([[pix:local_xray|CollapseIcon]]);
+    background-position: center 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+}
+
 
 #xray-nav-recommendations .lirecommendedactions {
     width:25%;
@@ -481,9 +491,9 @@ a.disabled {
     font-size: 13px;
     padding-top:20px;
 }
-.xray-div-recommendations:target {
+/*.xray-div-recommendations:target {
     display:block;
-}
+}*/
 .xray-div-recommendations .recommendationdiv {
     padding: 6px 0 7px;
 }

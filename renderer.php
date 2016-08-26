@@ -473,7 +473,9 @@ class local_xray_renderer extends plugin_renderer_base {
                 $countrecommendations = get_string('countactions', 'local_xray', $data->countrecommendations);
             }
             $countrecommendations = html_writer::tag('b', $countrecommendations);
-            $countrecommendations = html_writer::div($youhave.$countrecommendations, 'countrecommendedactions').html_writer::link('#xray-div-recommendations-show', '', array('class' => 'countrecommendedactions_icon', 'tabindex' => 0));
+            $countrecommendations = html_writer::div($youhave.$countrecommendations, 'countrecommendedactions').
+                html_writer::div('', 'countrecommendedactions_icon_expand', array('id' => 'xray-div-recommendations-icon'));
+
             // Content recommendations.
             $recommendationnumber = 1;
             foreach ($data->recommendations as $recommendation) {
@@ -547,6 +549,15 @@ class local_xray_renderer extends plugin_renderer_base {
     public function print_course_menu($reportcontroller, $reports) {
 
         global $PAGE, $COURSE, $OUTPUT, $USER;
+
+        // Load Jquery.
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        // Load specific js for tables.
+        $PAGE->requires->jquery_plugin("local_xray-recommendations", "local_xray");
+
+
+
         $displaymenu = get_config('local_xray', 'displaymenu');
         $menu = '';
         if ($displaymenu) {
@@ -608,6 +619,11 @@ class local_xray_renderer extends plugin_renderer_base {
 
             }
         }
+
+
+
+
+        $PAGE->requires->js_init_call("local_xray_recommendations");
 
         return $menu;
     }
