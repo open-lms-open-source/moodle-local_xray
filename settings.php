@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') or die();
 
 /* @var admin_root $ADMIN */
 if ($hassiteconfig) {
+    require_once($CFG->dirroot.'/local/xray/lib.php');
     $plugin = 'local_xray';
     $settings = new admin_settingpage($plugin, new lang_string('pluginname', $plugin));
 
