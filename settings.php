@@ -181,8 +181,8 @@ if ($hassiteconfig) {
 
     // Get the URL.
     $systemreportsurl  = get_config('local_xray', 'systemreportsurl');
-    if (($systemreportsurl !== false) && ($systemreportsurl !== '' && local_xray_is_course_enable() &&
-            has_capability("local/xray:systemreports_view", context_system::instance()))) {
+    if ($systemreportsurl !== false && $systemreportsurl !== '' && local_xray_is_course_enable() &&
+            has_capability("local/xray:systemreports_view", context_system::instance())) {
 
         // Add tree X-ray -> Rebuke List to show in reports.
         $ADMIN->add('reports',
