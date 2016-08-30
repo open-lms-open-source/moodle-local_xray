@@ -36,5 +36,10 @@ $plugins = array(
             'iframe-resizer-master/js/iframeResizer.min.js',
             'reports/systemreports.js'
         )
+    ),
+    'local_xray-recommendations' => array(
+        'files' => array(
+            'reports/recommendations.js'
+        )
     )
 );

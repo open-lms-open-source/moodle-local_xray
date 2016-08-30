@@ -460,6 +460,54 @@ class local_xray_renderer extends plugin_renderer_base {
         $list .= html_writer::end_tag("ul");
 
         $output .= html_writer::tag("nav", $list, array("id" => "xray-nav-headline"));
+
+        // Recommended Actions Title.
+        $recommendedactionsicon = html_writer::span('', 'recommendedactions');
+        $recommendedactionstitle = html_writer::div(get_string('recommendedactions', 'local_xray'), 'recommendedactionstitle');
+
+        // Check if there are recommended actions.
+        $recommendationlist = '';
+        if ($data->countrecommendations) {
+            // Count recommended actions.
+            $youhave = get_string('youhave', 'local_xray');
+            $countrecommendations = get_string('countactions', 'local_xray', $data->countrecommendations);
+            if ($data->countrecommendations == 1) {
+                $countrecommendations = get_string('countactions', 'local_xray', $data->countrecommendations);
+            }
+            $countrecommendations = html_writer::tag('b', $countrecommendations);
+            $countrecommendations = html_writer::div($youhave.$countrecommendations, 'countrecommendedactions').
+                html_writer::div('', 'countrecommendedactions_icon_expand', array('id' => 'xray-div-recommendations-icon',
+                    'onclick' => 'local_xray_recommendations_show()'));
+
+            // Content recommendations.
+            $recommendationnumber = 1;
+            foreach ($data->recommendations as $recommendation) {
+                $recommendationnumberdiv = html_writer::div($recommendationnumber, 'recommendationnumber');
+                $recommendationtext = html_writer::div($recommendation, 'recommendationtext');
+                $br = html_writer::empty_tag('br', array('style' => 'clear: left;'));
+                $recommendationlist .= html_writer::div($recommendationnumberdiv.$recommendationtext.$br, 'recommendationdiv');
+                $recommendationnumber++;
+            }
+        } else {
+            $youdonthave = get_string('youdonthave', 'local_xray');
+            $countrecommendations = html_writer::div($youdonthave, 'countrecommendedactions');
+        }
+
+        // Report date.
+        $dashboarddate = html_writer::div($this->inforeport($data->reportdate), 'recommendationdate');
+
+        // Create list.
+        $recommendations = html_writer::start_tag("ul", array("class" => "xray-headline-recommendations"));
+        $recommendations .= html_writer::tag("li", $recommendedactionsicon.$recommendedactionstitle, array("class" => "lirecommendedactions", "tabindex" => 0));
+        $recommendations .= html_writer::tag("li", '', array("class" => "xray-divider", "tabindex" => 0));
+        $recommendations .= html_writer::tag("li", $dashboarddate, array("class" => "lireportdate", "tabindex" => 0));
+        $recommendations .= html_writer::tag("li", '', array("class" => "xray-divider", "tabindex" => 0));
+        $recommendations .= html_writer::tag("li", $countrecommendations, array("class" => "licountrecommendations", "tabindex" => 0));
+
+        $output .= html_writer::tag("nav", $recommendations, array("id" => "xray-nav-recommendations"));
+
+        $output .= html_writer::tag("div", $recommendationlist, array("id" => "xray-div-recommendations-show", "class" => "xray-div-recommendations"));
+
         return $output;
     }
 
@@ -507,7 +555,14 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     public function print_course_menu($reportcontroller, $reports) {
 
-        global $PAGE, $COURSE, $OUTPUT;
+        global $PAGE, $COURSE, $OUTPUT, $USER;
+
+        // Load Jquery.
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        // Load specific js for tables.
+        $PAGE->requires->jquery_plugin("local_xray-recommendations", "local_xray");
+
         $displaymenu = get_config('local_xray', 'displaymenu');
         $menu = '';
         if ($displaymenu) {
@@ -541,9 +596,11 @@ class local_xray_renderer extends plugin_renderer_base {
                 // Check if show headerline in course frontpage.
                 $headerdata = "";
                 $subscription_link = "";
+
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
 
-                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id);
+                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id);
+
                     if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
                         $headerdata .= $this->dashboard_xray_output($dashboarddata);
                     } else {

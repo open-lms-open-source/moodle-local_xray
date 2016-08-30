@@ -10,3 +10,8 @@
     height: 3em; /* fixed header height*/
     margin-top:-3em; /* negative fixed header height */
 }
+/**************** Recommended Actions ****************/
+.xray-div-recommendations .recommendationdiv .recommendationtext {
+    padding-top:18px;
+}
+/**************** End styles for Recommended Actions ****************/
