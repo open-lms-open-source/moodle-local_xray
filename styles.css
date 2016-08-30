@@ -177,7 +177,7 @@ a.xray-headline-link:hover {
 }
 
 .xray-headline-icon {
-    background-position: center center;
+    background-position: center 0px;
     background-repeat: no-repeat;
     background-size: 100% auto;
     display: inline-block;
@@ -431,3 +431,105 @@ a.disabled {
 .xray_subscription_link {
     padding-left:3px;
 }
+
+/**************** Recommended Actions ****************/
+.xray-headline-recommendations {
+    display: inline-block;
+    width:100%;
+    margin:0;
+    padding:0;
+}
+#xray-nav-recommendations {
+    margin-top: 15px;
+    margin-left: 6px;
+}
+#xray-nav-recommendations li {
+    font-size: 14px;
+    display: block;
+    float:left;
+    /*padding:0 0.5%;*/
+    line-height: normal;
+}
+
+#xray-nav-recommendations li .recommendedactions {
+    background-image: url([[pix:local_xray|RecommendedActions_icon]]);
+    background-repeat: no-repeat;
+    height: 45px;
+    width: 42px;
+    float: left;
+    position: relative;
+    top: -10px;
+}
+
+#xray-nav-recommendations li .countrecommendedactions {
+    float:left;
+    padding-top: 5px;
+}
+
+#xray-div-recommendations-icon {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+}
+
+#xray-nav-recommendations li .countrecommendedactions_icon_expand {
+    background-image: url([[pix:local_xray|ExpandIcon]]);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 22px;
+
+}
+
+#xray-nav-recommendations li .countrecommendedactions_icon_collapse {
+    background-image: url([[pix:local_xray|CollapseIcon]]);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 22px;
+}
+
+#xray-nav-recommendations .lirecommendedactions {
+    max-width:25%;
+    min-width:22%;
+}
+#xray-nav-recommendations .lireportdate {
+    max-width:27%;
+}
+#xray-nav-recommendations .licountrecommendations {
+    max-width:46%;
+}
+.xray-div-recommendations {
+    display:none;
+    font-size: 13px;
+    padding-top:20px;
+    margin-bottom:10px;
+}
+.xray-div-recommendations .recommendationdiv {
+    padding: 6px 0 7px;
+    margin: auto;
+    width: 92%;
+}
+.xray-div-recommendations .recommendationdiv .recommendationnumber {
+    float: left;
+    font-size: 29px;
+    padding-right: 2px;
+}
+.xray-div-recommendations .recommendationdiv .recommendationtext {
+    float: left;
+    width: 90%;
+}
+
+#xray-nav-recommendations .recommendationdate {
+    padding-top: 5px;
+}
+
+#xray-nav-recommendations .recommendedactionstitle {
+    padding-top: 5px;
+}
+
+#xray-nav-recommendations .xray-divider {
+    border-left: 1px solid #565656;
+    height: 26px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+/**************** End styles for Recommended Actions ****************/

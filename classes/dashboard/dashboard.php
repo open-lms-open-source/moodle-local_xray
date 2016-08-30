@@ -34,7 +34,7 @@ class dashboard {
      * @param $courseid
      * @return bool|dashboard_data
      */
-    public static function get($courseid) {
+    public static function get($courseid, $userid = false) {
 
         $result = "";
 
@@ -42,6 +42,7 @@ class dashboard {
 
             $report = "dashboard";
             $response = api\wsapi::course($courseid, $report);
+
             if (!$response) {
 
                 // Fail response of webservice.
@@ -135,6 +136,61 @@ class dashboard {
                     $postslastsevendayspreviousweek = $response->elements->element3->items[11]->value;
                 }
 
+                // Recommended actions.
+                $countrecommendations = 0;
+                $recommendations = false;
+                $reportdate = '';
+
+                $recommendationslist = array();
+                if ($userid) {
+                    // Teacher.
+                    if (local_xray_get_teacher_courses($userid)) {
+                        // Recommendations Instructor.
+                        $recommendationsisset = isset($response->elements->recommendationsInstructor);
+                        if ($recommendationsisset) {
+                            foreach ($response->elements->recommendationsInstructor->data as $recommendation) {
+                                if ($recommendation->text->value) {
+                                    $recommendationslist[] = $recommendation->text->value;
+                                }
+                            }
+                        }
+                        // Recommendations Positive.
+                        $recommendationsisset = isset($response->elements->recommendationsPositive);
+                        if ($recommendationsisset) {
+                            foreach ($response->elements->recommendationsPositive->data as $recommendation) {
+                                if ($recommendation->text->value) {
+                                    $recommendationslist[] = $recommendation->text->value;
+                                }
+                            }
+                        }
+                    }
+                    // Admin.
+                    $admins = get_admins();
+                    if (array_key_exists($userid, $admins)) {
+                        // Recommendations Admin.
+                        $recommendationsisset = isset($response->elements->recommendationsAdmin);
+                        if ($recommendationsisset) {
+                            foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
+                                if ($recommendation->text->value) {
+                                    $recommendationslist[] = $recommendation->text->value;
+                                }
+                            }
+                        }
+                    }
+
+                    if ($recommendationslist) {
+                        $recommendations = $recommendationslist;
+                        // Count recommendations.
+                        $countrecommendations = count($recommendations);
+                    }
+
+                    // Report date.
+                    $reportdateisset = isset($response->reportdate);
+                    if ($reportdateisset) {
+                        $reportdate = $response->reportdate;
+                    }
+                }
+
                 // Return dashboard_data object.
                 $result = new dashboard_data($usersinrisk,
                     $risktotal,
@@ -147,7 +203,10 @@ class dashboard {
                     $averagegradeslastsevendays,
                     $averagegradeslastsevendayspreviousweek,
                     $postslastsevendays,
-                    $postslastsevendayspreviousweek);
+                    $postslastsevendayspreviousweek,
+                    $recommendations,
+                    $countrecommendations,
+                    $reportdate);
 
             }
         } catch (\moodle_exception $e) {
@@ -157,5 +216,4 @@ class dashboard {
 
         return $result;
     }
-
 }

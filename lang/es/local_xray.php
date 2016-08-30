@@ -494,3 +494,10 @@ $string['strftimehoursminutes'] = '%H:%M';
 /* Empties reports */
 $string['xray_course_report_empty'] = 'No hay datos suficientes para este reporte. Por favor, inténtelo de nuevo'.
     ' cuando haya más actividad de los usuarios en su curso';
+
+// Recommended Actions.
+$string['countaction'] = '{$a} recomendación';
+$string['countactions'] = '{$a} recomendaciones';
+$string['recommendedactions'] = 'Recomendaciones';
+$string['youhave'] = 'Usted tiene ';
+$string['youdonthave'] = 'Usted no tiene recomendaciones';
