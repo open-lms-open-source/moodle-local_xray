@@ -64,14 +64,25 @@ class get_report_failed extends \core\event\base {
 
     /**
      * Get the URL related to this action
+     * Note: Ve have not a controller with dashboard name. The dashboard is embebed in course
+     * frontpage, if we have an error in dashboard we will add link to course fronpage.
      *
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/local/xray/view.php?', array(
-            'controller'    => $this->other['controller'],
-            'courseid' => $this->courseid,
-        ));
+
+        if ($this->other['controller'] == "dashboard") {
+            $url = new \moodle_url('/course/view.php?', array(
+                'id' => $this->courseid,
+            ));
+        } else {
+            $url = new \moodle_url('/local/xray/view.php?', array(
+                'controller'    => $this->other['controller'],
+                'courseid' => $this->courseid,
+            ));
+        }
+
+        return $url;
     }
 
     /**
