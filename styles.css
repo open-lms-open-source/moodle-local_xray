@@ -445,25 +445,15 @@ a.disabled {
 }
 #xray-nav-recommendations li {
     font-size: 14px;
-    display: block;
+    display: inline-block;
     float:left;
     /*padding:0 0.5%;*/
     line-height: normal;
 }
 
-#xray-nav-recommendations li .recommendedactions {
-    background-image: url([[pix:local_xray|RecommendedActions_icon]]);
-    background-repeat: no-repeat;
-    height: 45px;
-    width: 42px;
-    float: left;
-    position: relative;
-    top: -10px;
-}
-
 #xray-nav-recommendations li .countrecommendedactions {
     float:left;
-    padding-top: 5px;
+    padding-top: 7px;
 }
 
 #xray-div-recommendations-icon {
@@ -477,7 +467,7 @@ a.disabled {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 22px;
-
+    cursor:pointer;
 }
 
 #xray-nav-recommendations li .countrecommendedactions_icon_collapse {
@@ -485,17 +475,23 @@ a.disabled {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 22px;
+    cursor:pointer;
 }
 
 #xray-nav-recommendations .lirecommendedactions {
     max-width:25%;
     min-width:22%;
+    padding-right:5px;
 }
 #xray-nav-recommendations .lireportdate {
-    max-width:27%;
+    max-width:28%;
+    border-left: 1px solid #565656;
+    padding:10px 5px 0 5px;
 }
 #xray-nav-recommendations .licountrecommendations {
-    max-width:46%;
+    max-width:44%;
+    border-left: 1px solid #565656;
+    padding:10px 0 0 5px;
 }
 .xray-div-recommendations {
     display:none;
@@ -523,13 +519,10 @@ a.disabled {
 }
 
 #xray-nav-recommendations .recommendedactionstitle {
-    padding-top: 5px;
-}
-
-#xray-nav-recommendations .xray-divider {
-    border-left: 1px solid #565656;
-    height: 26px;
-    margin-left: 6px;
-    margin-right: 6px;
+    background-image: url([[pix:local_xray|RecommendedActions_icon]]);
+    background-repeat: no-repeat;
+    min-height: 45px;
+    padding-left: 45px;
+    padding-top: 14px;
 }
 /**************** End styles for Recommended Actions ****************/
