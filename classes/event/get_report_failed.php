@@ -72,11 +72,11 @@ class get_report_failed extends \core\event\base {
     public function get_url() {
 
         if ($this->other['controller'] == "dashboard") {
-            $url = new \moodle_url('/course/view.php?', array(
+            $url = new \moodle_url('/course/view.php', array(
                 'id' => $this->courseid,
             ));
         } else {
-            $url = new \moodle_url('/local/xray/view.php?', array(
+            $url = new \moodle_url('/local/xray/view.php', array(
                 'controller'    => $this->other['controller'],
                 'courseid' => $this->courseid,
             ));
