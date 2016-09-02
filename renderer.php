@@ -462,7 +462,6 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::tag("nav", $list, array("id" => "xray-nav-headline"));
 
         // Recommended Actions Title.
-        $recommendedactionsicon = html_writer::span('', 'recommendedactions');
         $recommendedactionstitle = html_writer::div(get_string('recommendedactions', 'local_xray'), 'recommendedactionstitle');
 
         // Check if there are recommended actions.
@@ -472,7 +471,7 @@ class local_xray_renderer extends plugin_renderer_base {
             $youhave = get_string('youhave', 'local_xray');
             $countrecommendations = get_string('countactions', 'local_xray', $data->countrecommendations);
             if ($data->countrecommendations == 1) {
-                $countrecommendations = get_string('countactions', 'local_xray', $data->countrecommendations);
+                $countrecommendations = get_string('countaction', 'local_xray', $data->countrecommendations);
             }
             $countrecommendations = html_writer::tag('b', $countrecommendations);
             $countrecommendations = html_writer::div($youhave.$countrecommendations, 'countrecommendedactions').
@@ -497,16 +496,29 @@ class local_xray_renderer extends plugin_renderer_base {
         $dashboarddate = html_writer::div($this->inforeport($data->reportdate), 'recommendationdate');
 
         // Create list.
-        $recommendations = html_writer::start_tag("ul", array("class" => "xray-headline-recommendations"));
-        $recommendations .= html_writer::tag("li", $recommendedactionsicon.$recommendedactionstitle, array("class" => "lirecommendedactions", "tabindex" => 0));
-        $recommendations .= html_writer::tag("li", '', array("class" => "xray-divider", "tabindex" => 0));
-        $recommendations .= html_writer::tag("li", $dashboarddate, array("class" => "lireportdate", "tabindex" => 0));
-        $recommendations .= html_writer::tag("li", '', array("class" => "xray-divider", "tabindex" => 0));
-        $recommendations .= html_writer::tag("li", $countrecommendations, array("class" => "licountrecommendations", "tabindex" => 0));
+        $recommendations = html_writer::start_tag("ul",
+            array("class" => "xray-headline-recommendations"));
+        $recommendations .= html_writer::tag("li",
+            $recommendedactionstitle,
+            array("class" => "lirecommendedactions",
+                "tabindex" => 0));
+        $recommendations .= html_writer::tag("li",
+            $dashboarddate,
+            array("class" => "lireportdate",
+                "tabindex" => 0));
+        $recommendations .= html_writer::tag("li",
+            $countrecommendations,
+            array("class" => "licountrecommendations",
+                "tabindex" => 0));
 
-        $output .= html_writer::tag("nav", $recommendations, array("id" => "xray-nav-recommendations"));
+        $output .= html_writer::tag("nav",
+            $recommendations,
+            array("id" => "xray-nav-recommendations"));
 
-        $output .= html_writer::tag("div", $recommendationlist, array("id" => "xray-div-recommendations-show", "class" => "xray-div-recommendations"));
+        $output .= html_writer::tag("div",
+            $recommendationlist,
+            array("id" => "xray-div-recommendations-show",
+                "class" => "xray-div-recommendations"));
 
         return $output;
     }
