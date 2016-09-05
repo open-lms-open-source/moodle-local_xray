@@ -498,10 +498,10 @@ a.disabled {
 #xray-nav-recommendations .licountrecommendations {
     max-width:46%;
 }
-#xray-nav-recommendations .liseparator {
+#xray-nav-recommendations .xray-liseparator {
     width:1%;
 }
-#xray-nav-recommendations .liseparator div{
+#xray-nav-recommendations .xray-liseparator div{
     height:50px;
     border-right: 1px solid #565656;
 }

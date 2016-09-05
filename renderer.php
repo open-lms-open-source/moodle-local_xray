@@ -505,12 +505,12 @@ class local_xray_renderer extends plugin_renderer_base {
             $recommendedactionstitle,
             array("class" => "lirecommendedactions",
                 "tabindex" => 0));
-        $recommendations .=  html_writer::tag("li", html_writer::empty_tag("div"), array("class" => "liseparator"));
+        $recommendations .= html_writer::tag("li", html_writer::empty_tag("div"), array("class" => "xray-liseparator"));
         $recommendations .= html_writer::tag("li",
             $dashboarddate,
             array("class" => "lireportdate",
                 "tabindex" => 0));
-        $recommendations .=  html_writer::tag("li", html_writer::empty_tag("div"), array("class" => "liseparator"));
+        $recommendations .= html_writer::tag("li", html_writer::empty_tag("div"), array("class" => "xray-liseparator"));
         $recommendations .= html_writer::tag("li",
             $countrecommendations,
             array("class" => "licountrecommendations",
