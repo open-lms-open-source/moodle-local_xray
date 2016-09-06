@@ -501,3 +501,4 @@ $string['countactions'] = '{$a} recomendaciones';
 $string['recommendedactions'] = 'Recomendaciones';
 $string['youhave'] = 'Usted tiene ';
 $string['youdonthave'] = 'Usted no tiene recomendaciones';
+$string['recommendedactions_button'] = 'Mostrar/Ocultar recomendaciones';

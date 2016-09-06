@@ -449,7 +449,6 @@ a.disabled {
     float:left;
     /*padding:0 0.5%;*/
     line-height: normal;
-    border-right: 1px solid #565656;
     min-height: 45px;
     word-wrap: break-word;
 }
@@ -470,18 +469,22 @@ a.disabled {
     background-image: url([[pix:local_xray|ExpandIcon]]);
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 22px;
+    background-size: 16px;
     cursor:pointer;
-    margin-top: 7px;
+    display: inline-block;
+    height: 16px;
+    width: 20px;
 }
 
 #xray-nav-recommendations li .countrecommendedactions_icon_collapse {
     background-image: url([[pix:local_xray|CollapseIcon]]);
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 22px;
+    background-size: 16px;
     cursor:pointer;
-    margin-top: 7px;
+    display: inline-block;
+    height: 16px;
+    width: 20px;
 }
 
 #xray-nav-recommendations .lirecommendedactions {
@@ -493,7 +496,14 @@ a.disabled {
     width:27%;
 }
 #xray-nav-recommendations .licountrecommendations {
-    max-width:48%;
+    max-width:46%;
+}
+#xray-nav-recommendations .xray-liseparator {
+    width:1%;
+}
+#xray-nav-recommendations .xray-liseparator div{
+    height:50px;
+    border-right: 1px solid #565656;
 }
 .xray-div-recommendations {
     display:none;
