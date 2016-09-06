@@ -474,14 +474,15 @@ class local_xray_renderer extends plugin_renderer_base {
                 $countrecommendations = get_string('countaction', 'local_xray', $data->countrecommendations);
             }
             $countrecommendations = html_writer::tag('b', $countrecommendations);
-
+            $buttontext = get_string('recommendedactions_button', 'local_xray');
             $iconrecommendations =  html_writer::span('',
                 'countrecommendedactions_icon_expand',
                 array('id' => 'xray-div-recommendations-icon',
                     'role' => 'button',
                     'aria-pressed' => false,
+                    'aria-label' => $buttontext,
                     'tabindex' => 0,
-                    'title' => get_string('recommendedactions_button', 'local_xray'),
+                    'title' => $buttontext,
                     'onclick' => 'local_xray_recommendations_show()'));
             $countrecommendations = html_writer::div($youhave.$countrecommendations.$iconrecommendations, 'countrecommendedactions');
 
