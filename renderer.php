@@ -478,6 +478,10 @@ class local_xray_renderer extends plugin_renderer_base {
             $iconrecommendations =  html_writer::span('',
                 'countrecommendedactions_icon_expand',
                 array('id' => 'xray-div-recommendations-icon',
+                    'role' => 'button',
+                    'aria-pressed' => false,
+                    'tabindex' => 0,
+                    'title' => get_string('recommendedactions_button', 'local_xray'),
                     'onclick' => 'local_xray_recommendations_show()'));
             $countrecommendations = html_writer::div($youhave.$countrecommendations.$iconrecommendations, 'countrecommendedactions');
 
@@ -487,7 +491,9 @@ class local_xray_renderer extends plugin_renderer_base {
                 $recommendationnumberdiv = html_writer::div($recommendationnumber, 'recommendationnumber');
                 $recommendationtext = html_writer::div($recommendation, 'recommendationtext');
                 $br = html_writer::empty_tag('br', array('style' => 'clear: left;'));
-                $recommendationlist .= html_writer::div($recommendationnumberdiv.$recommendationtext.$br, 'recommendationdiv');
+                $recommendationlist .= html_writer::div($recommendationnumberdiv.$recommendationtext.$br,
+                    'recommendationdiv',
+                    array('tabindex' => 0));
                 $recommendationnumber++;
             }
         } else {
