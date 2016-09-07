@@ -519,7 +519,9 @@ a.disabled {
 .xray-div-recommendations .recommendationdiv .recommendationnumber {
     float: left;
     font-size: 29px;
+    min-width: 36px;
     padding-right: 2px;
+    text-align: center;
 }
 .xray-div-recommendations .recommendationdiv .recommendationtext {
     float: left;
