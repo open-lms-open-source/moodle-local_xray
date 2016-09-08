@@ -103,7 +103,7 @@ $string['error_compress'] = 'Unable to create compressed file. Please contact yo
 $string['error_generic'] = '{$a}';
 $string['error_fexists'] = 'File "{$a}" already exists!';
 $string['error_fnocreate'] = 'Unable to create "{$a}" file!';
-$string['error_systemreports_nourl'] = 'The url for get system reports is not configured correctly.';
+$string['error_systemreports_nourl'] = 'The System Reports URL is missing from the X-Ray Learning Analytics configuration page.';
 $string['error_systemreports_gettoken'] = 'Error to get token for access to system reports.';
 
 /* Settings */
