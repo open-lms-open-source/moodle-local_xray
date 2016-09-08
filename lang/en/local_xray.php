@@ -497,3 +497,4 @@ $string['recommendedactions'] = 'Recommended Actions';
 $string['youhave'] = 'You have ';
 $string['youdonthave'] = 'You do not have recommended actions';
 $string['recommendedactions_button'] = 'Show/Hide recommended actions';
+$string['recommendedaction_button'] = 'Show/Hide recommended action';

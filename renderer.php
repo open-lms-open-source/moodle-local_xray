@@ -470,11 +470,12 @@ class local_xray_renderer extends plugin_renderer_base {
             // Count recommended actions.
             $youhave = get_string('youhave', 'local_xray');
             $countrecommendations = get_string('countactions', 'local_xray', $data->countrecommendations);
+            $buttontext = get_string('recommendedactions_button', 'local_xray');
             if ($data->countrecommendations == 1) {
+                $buttontext = get_string('recommendedaction_button', 'local_xray');
                 $countrecommendations = get_string('countaction', 'local_xray', $data->countrecommendations);
             }
             $countrecommendations = html_writer::tag('b', $countrecommendations);
-            $buttontext = get_string('recommendedactions_button', 'local_xray');
             $iconrecommendations =  html_writer::span('',
                 'countrecommendedactions_icon_expand',
                 array('id' => 'xray-div-recommendations-icon',
