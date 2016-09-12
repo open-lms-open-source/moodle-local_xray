@@ -55,7 +55,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 array('class' => 'xray-inforeport-user'));
         }
         $date = new DateTime($reportdate);
-        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'));
+        $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
         $output .= html_writer::tag("p",
             get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'inforeport'));
         return $output;
