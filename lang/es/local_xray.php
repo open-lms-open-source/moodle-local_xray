@@ -502,3 +502,4 @@ $string['recommendedactions'] = 'Recomendaciones';
 $string['youhave'] = 'Usted tiene ';
 $string['youdonthave'] = 'Usted no tiene recomendaciones';
 $string['recommendedactions_button'] = 'Mostrar/Ocultar recomendaciones';
+$string['recommendedaction_button'] = 'Mostrar/Ocultar recomendación';
