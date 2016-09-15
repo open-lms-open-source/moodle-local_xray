@@ -837,6 +837,53 @@ class data_export {
     }
 
     /**
+     * Export grade history
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function grades_history($timest, $timeend, $dir) {
+        global $CFG;
+        $disabled = get_config('core', 'disablegradehistory');
+        if ($disabled) {
+            // Grade history is disabled. Nothing to do.
+            return;
+        }
+
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->libdir.'/grade/constants.php');
+
+        $wherecond = self::range_where('gh.timemodified', null, $timest, $timeend, __FUNCTION__, 'gh.id');
+        $wherecond[0]['params']['insert'] = GRADE_HISTORY_INSERT;
+        $wherecond[0]['params']['update'] = GRADE_HISTORY_UPDATE;
+        $wherecond[0]['params']['delete'] = GRADE_HISTORY_DELETE;
+        $sql = "
+            SELECT gh.id,
+                   CASE gh.action
+                      WHEN :insert THEN 'INSERT'
+                      WHEN :update THEN 'UPDATE'
+                      WHEN :delete THEN 'DELETE'
+                      ELSE              'UNKNOWN'
+                   END AS action,
+                   gh.itemid,
+                   gh.userid,
+                   gh.rawgrademax,
+                   gh.rawgrademin,
+                   gh.rawgrade,
+                   gh.finalgrade,
+                   gh.loggeduser,
+                   gh.timemodified,
+                   gh.timemodified AS traw
+              FROM {grade_grades_history} gh
+              JOIN {grade_items}          gi ON gh.itemid = gi.id
+             WHERE gh.finalgrade IS NOT NULL
+                   AND
+        ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
      * @return mixed|string
      */
     public static function get_dir() {
@@ -1135,6 +1182,7 @@ class data_export {
             self::mtrace('Quiz activity not installed. Skipping.');
         }
         self::grades($timest, $timeend, $dir);
+        self::grades_history($timest, $timeend, $dir);
 
         // Deleted records go here.
         self::coursecategories_delete($timest, $timeend, $dir);
@@ -1165,7 +1213,12 @@ class data_export {
         $items = ['coursecategories', 'courseinfo',
                   'userlist', 'enrolment', 'accesslog',
                   'forums', 'threads', 'posts', 'hsuforums',
-                  'hsuthreads', 'hsuposts', 'quiz', 'grades'];
+                  'hsuthreads', 'hsuposts', 'quiz', 'grades',
+                  'activity_delete', 'grades_history',
+                  'coursecategories_delete',
+                  'courseinfo_delete', 'enrolment_delete',
+                  'threads_delete', 'posts_delete',
+                  'hsuthreads_delete', 'hsuposts_delete'];
         foreach ($items as $item) {
             set_config($item, null, self::PLUGIN);
             set_config(self::get_maxdate_setting($item), null, self::PLUGIN);
