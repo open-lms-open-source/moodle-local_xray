@@ -227,4 +227,54 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
         }
     }
 
+    /**
+     * Test export of grades history.
+     */
+    public function test_grades_history_export() {
+        $this->resetAfterTest();
+
+        $timenow = time() + HOURSECS;
+        $timepast = $timenow - DAYSECS;
+        $courses = $this->addcourses(5, $timepast);
+        $this->addquizzes(5, $courses);
+        $this->user_set($courses, 'quiz');
+
+        // Export.
+        $storage = new local_xray\local\api\auto_clean();
+        $storagedir = $storage->get_directory();
+        $this->export($timenow, $storagedir);
+
+        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'grades_history_00000001.csv';
+        $this->assertFileExists($exportfile);
+
+        $first = true;
+        $iterator = new csv_fileiterator($exportfile);
+        foreach ($iterator as $item) {
+            if ($first) {
+                $first = false;
+                continue;
+            }
+            // Expect 10 items.
+            $this->assertEquals(10, count($item));
+            $this->assertInternalType('numeric', $item[0]);
+            $this->assertInternalType('string' , $item[1]);
+            $this->assertInternalType('numeric', $item[2]);
+            $this->assertInternalType('numeric', $item[3]);
+            if (!empty($item[4])) {
+                $this->assertInternalType('numeric', $item[4]);
+            }
+            if (!empty($item[5])) {
+                $this->assertInternalType('numeric', $item[5]);
+            }
+            if (!empty($item[6])) {
+                $this->assertInternalType('numeric', $item[6]);
+            }
+            if (!empty($item[7])) {
+                $this->assertInternalType('numeric', $item[7]);
+            }
+            $this->assertInternalType('numeric', $item[8]);
+            $this->assertInternalType('numeric', $item[9]);
+        }
+    }
+
 }
