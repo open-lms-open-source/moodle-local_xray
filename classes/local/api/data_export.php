@@ -143,21 +143,56 @@ class data_export {
      * @param  int    $to
      * @param  string $fn
      * @param  string $idfield
+     * @param  bool $skipextra
      * @return array
      */
-    public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id') {
-        ($field2);
-        ($from);
-        ($fn);
+    public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id', $skipextra = false) {
+        global $DB;
+        $maxdatestore = get_config(self::PLUGIN, self::get_maxdate_setting($fn));
+        if (!empty($maxdatestore)) {
+            $from = (int)$maxdatestore;
+        }
 
         $sqlgt = " {$idfield} > :lastid
-                   AND
-                   {$field1} <= :to
                    ORDER BY {$idfield} ASC ";
 
         $sqlparams = [
-            ['sql' => $sqlgt, 'params' => ['to' => $to]]
+            ['sql' => $sqlgt, 'params' => null]
         ];
+
+        // Use lastid only if not exporting for the first time.
+        $lastidstore = get_config(self::PLUGIN, $fn);
+        if (!empty($lastidstore) && !$skipextra) {
+            if ($from > $to) {
+                if ($DB->get_debug()) {
+                    mtrace("BBB - {$fn} - Start date more recent than end date!!! from: {$from} to: {$to}");
+                }
+            }
+
+            $sqlbetween = " {$field1} BETWEEN :from AND :to
+                             AND
+                             {$idfield} <= :lastid
+                             ORDER BY {$idfield} ASC ";
+            $sqlparams[] = ['sql' => $sqlbetween, 'params' => ['from' => $from, 'to' => $to]];
+
+            if (!empty($field2)) {
+                $sqlbetween2 = " {$field2} BETWEEN :from AND :to
+                                 AND
+                                 {$field1} = 0
+                                 AND
+                                 {$idfield} <= :lastid
+                                 ORDER BY {$idfield} ASC ";
+                $sqlparams[] = ['sql' => $sqlbetween2, 'params' => ['from' => $from, 'to' => $to]];
+
+                $sqlbetween3 = " {$field2} BETWEEN :from AND :to
+                                 AND
+                                 {$field1} IS NULL
+                                 AND
+                                 {$idfield} <= :lastid
+                                 ORDER BY {$idfield} ASC ";
+                $sqlparams[] = ['sql' => $sqlbetween3, 'params' => ['from' => $from, 'to' => $to]];
+            }
+        }
 
         return $sqlparams;
     }
@@ -217,7 +252,7 @@ class data_export {
                   FROM {local_xray_coursecat}
                  WHERE
                        ";
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
@@ -274,7 +309,7 @@ class data_export {
                   FROM {local_xray_course}
                  WHERE
                        ";
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
@@ -359,7 +394,7 @@ class data_export {
                   FROM {local_xray_roleunas}
                  WHERE
                        ";
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
     }
 
@@ -372,7 +407,7 @@ class data_export {
      */
     public static function accesslog($timest, $timeend, $dir) {
         $sqltime = self::to_timestamp('l.time', true, 'time');
-        $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id');
+        $wherecond = self::range_where('l.time', null, $timest, $timeend, __FUNCTION__, 'l.id', true);
 
         $sql = "
             SELECT l.id,
@@ -418,7 +453,7 @@ class data_export {
      */
     public static function standardlog($timest, $timeend, $dir) {
         $sqltime = self::to_timestamp('l.timecreated', true, 'time');
-        $wherecond = self::range_where('l.timecreated', null, $timest, $timeend, __FUNCTION__, 'l.id');
+        $wherecond = self::range_where('l.timecreated', null, $timest, $timeend, __FUNCTION__, 'l.id', true);
 
         $sql = "
             SELECT l.id,
@@ -522,7 +557,7 @@ class data_export {
      */
     public static function threads_delete($timest, $timeend, $dir) {
         $sqltimedeleted = self::to_timestamp('timedeleted');
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
         $sql = "
             SELECT id,
                    discussion,
@@ -583,7 +618,7 @@ class data_export {
      */
     public static function posts_delete($timest, $timeend, $dir) {
         $sqltimedeleted = self::to_timestamp('timedeleted');
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
         $sql = "
             SELECT id,
                    post,
@@ -662,7 +697,7 @@ class data_export {
      */
     public static function hsuthreads_delete($timest, $timeend, $dir) {
         $sqltimedeleted = self::to_timestamp('timedeleted');
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
         $sql = "
             SELECT id,
                    discussion,
@@ -724,7 +759,7 @@ class data_export {
      */
     public static function hsuposts_delete($timest, $timeend, $dir) {
         $sqltimedeleted = self::to_timestamp('timedeleted');
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
         $sql = "
             SELECT id,
                    post,
@@ -777,7 +812,7 @@ class data_export {
      */
     public static function activity_delete($timest, $timeend, $dir) {
         $sqltimedeleted = self::to_timestamp('timedeleted');
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
         $sql = "
             SELECT id,
                    cm as activityid,
@@ -854,16 +889,14 @@ class data_export {
         require_once($CFG->libdir.'/grade/constants.php');
 
         $wherecond = self::range_where('gh.timemodified', null, $timest, $timeend, __FUNCTION__, 'gh.id');
-        $wherecond[0]['params']['insert'] = GRADE_HISTORY_INSERT;
-        $wherecond[0]['params']['update'] = GRADE_HISTORY_UPDATE;
-        $wherecond[0]['params']['delete'] = GRADE_HISTORY_DELETE;
+
         $sql = "
             SELECT gh.id,
                    CASE gh.action
-                      WHEN :insert THEN 'INSERT'
-                      WHEN :update THEN 'UPDATE'
-                      WHEN :delete THEN 'DELETE'
-                      ELSE              'UNKNOWN'
+                      WHEN 1 THEN 'INSERT'
+                      WHEN 2 THEN 'UPDATE'
+                      WHEN 3 THEN 'DELETE'
+                      ELSE        'UNKNOWN'
                    END AS action,
                    gh.itemid,
                    gh.userid,
@@ -1145,6 +1178,9 @@ class data_export {
         // In case timeframe is 0 - there would be no limit to the execution.
         timer::start($timeframe);
 
+        // Assure we have accurate internal markers.
+        self::internal_check_lastid();
+
         // Order of export matters. Do not change unless sure.
         self::coursecategories($timest, $timeend, $dir);
         self::courseinfo($timest, $timeend, $dir);
@@ -1205,24 +1241,85 @@ class data_export {
     }
 
     /**
+     * Get all available export methods
+     * @return array[string]string
+     */
+    public static function elements() {
+        $items = [
+            'coursecategories'        => 'course_categories'    ,
+            'courseinfo'              => 'course'               ,
+            'userlist'                => 'user'                 ,
+            'enrolment'               => 'role_assignments'     ,
+            'accesslog'               => 'log'                  ,
+            'standardlog'             => 'logstore_standard_log',
+            'forums'                  => 'forum'                ,
+            'threads'                 => 'forum_discussions'    ,
+            'posts'                   => 'forum_posts'          ,
+            'hsuforums'               => 'hsuforum'             ,
+            'hsuthreads'              => 'hsuforum_discussions' ,
+            'hsuposts'                => 'hsuforum_posts'       ,
+            'quiz'                    => 'quiz'                 ,
+            'grades'                  => 'grade_grades'         ,
+            'grades_history'          => 'grade_grades_history' ,
+            'activity_delete'         => 'local_xray_cm'        ,
+            'coursecategories_delete' => 'local_xray_coursecat' ,
+            'courseinfo_delete'       => 'local_xray_course'    ,
+            'enrolment_delete'        => 'local_xray_roleunas'  ,
+            'threads_delete'          => 'local_xray_disc'      ,
+            'posts_delete'            => 'local_xray_post'      ,
+            'hsuthreads_delete'       => 'local_xray_hsudisc'   ,
+            'hsuposts_delete'         => 'local_xray_hsupost'
+        ];
+        return $items;
+    }
+
+    /**
+     * Method that confirms that last stored id in configuration table actually works for current table id
+     * @return void
+     */
+    public static function internal_check_lastid() {
+        global $DB;
+        // Provide all table names and obtain max id.
+        // In case there is wrong discrepancy ( config lastid > table max(id) ) delete the config value.
+        foreach (self::elements() as $setting => $table) {
+            $recordset = $DB->get_recordset_sql("SELECT id FROM {{$table}} ORDER BY id DESC", null, 0, 1);
+            $recordset->rewind();
+            if (!$recordset->valid()) {
+                $recordset->close();
+                $recordset = null;
+                continue;
+            }
+            $lastid = (int)$recordset->current()->id;
+            $recordset->close();
+            $recordset = null;
+            if ($lastid > 0) {
+                $id = get_config(self::PLUGIN, $setting);
+                if ($id > $lastid) {
+                    // Inconsistency detected.
+                    self::delete_setting($setting);
+                }
+            }
+        }
+    }
+
+    /**
      * Resets all progress settings
      *
      * @return void
      */
     public static function delete_progress_settings() {
-        $items = ['coursecategories', 'courseinfo',
-                  'userlist', 'enrolment', 'accesslog',
-                  'forums', 'threads', 'posts', 'hsuforums',
-                  'hsuthreads', 'hsuposts', 'quiz', 'grades',
-                  'activity_delete', 'grades_history',
-                  'coursecategories_delete',
-                  'courseinfo_delete', 'enrolment_delete',
-                  'threads_delete', 'posts_delete',
-                  'hsuthreads_delete', 'hsuposts_delete'];
-        foreach ($items as $item) {
-            set_config($item, null, self::PLUGIN);
-            set_config(self::get_maxdate_setting($item), null, self::PLUGIN);
+        foreach (self::elements() as $setting => $table) {
+            self::delete_setting($setting);
         }
+    }
+
+    /**
+     * @param string $setting
+     * @return void
+     */
+    public static function delete_setting($setting) {
+        unset_config($setting, self::PLUGIN);
+        unset_config(self::get_maxdate_setting($setting), self::PLUGIN);
     }
 
 }
