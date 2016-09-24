@@ -20,7 +20,7 @@ require_once(__DIR__.'/api_data_export_base.php');
 
 /**
  * Class local_xray_api_data_export_extra_testcase
- * @group local_xray
+ * @group local_xray4
  */
 class local_xray_api_data_export_extra_testcase extends local_xray_api_data_export_base_testcase {
 
@@ -79,6 +79,7 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         $now = time();
         $startnow = $now - (8 * HOURSECS);
         list($exportuntil, $timecreated) = $this->get_now_past($startnow);
+        $coursecount = $DB->count_records_select('course', 'category <> 0');
         $nr = 10;
         $elements = $this->addcourses($nr, $timecreated);
 
@@ -96,7 +97,7 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         ];
 
         // Initial export.
-        $this->export_check('courseinfo', $typedef, $exportuntil, false, $nr);
+        $this->export_check('courseinfo', $typedef, $exportuntil, false, ($nr + $coursecount));
 
         // Check export of modified categories.
         $newnow = $now - (4 * HOURSECS);
@@ -111,6 +112,56 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         $DB->execute("UPDATE {course} SET timemodified = :timemodified WHERE id {$insql}", $params);
         // Update export.
         $this->export_check('courseinfo', $typedef, $exportuntil, false, $nr);
+    }
+
+    public function test_userlist_export() {
+        global $DB;
+
+        $this->resetAfterTest();
+        $now = time();
+        $startnow = $now - (8 * HOURSECS);
+        list($exportuntil, $timecreated) = $this->get_now_past($startnow);
+        $usercount = $DB->count_records('user', ['deleted' => false]);
+        $nr = 10;
+        $elements = $this->addusers($nr, $timecreated);
+
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => true , 'type' => 'string' ],
+            ['optional' => true , 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+        ];
+
+        // Initial export.
+        $this->export_check('userlist', $typedef, $exportuntil, false, ($nr + $usercount));
+
+        // Check export of modified categories.
+        $newnow = $now - (4 * HOURSECS);
+        list($exportuntil, $timemodified) = $this->get_now_past($newnow);
+        $cats = [];
+        foreach ($elements as $elem) {
+            $cats[] = (int)$elem->id;
+        }
+        $params = ['timemodified' => $timemodified];
+        list ($insql, $tparams) = $DB->get_in_or_equal($cats, SQL_PARAMS_NAMED);
+        $params += $tparams;
+        $DB->execute("UPDATE {user} SET timemodified = :timemodified WHERE id {$insql}", $params);
+        // Update export.
+        $this->export_check('userlist', $typedef, $exportuntil, false, $nr);
+    }
+
+    public function test_enrolment_export() {
+        $this->resetAfterTest();
+        $this->markTestSkipped('Not Implemented.');
+
+        // TODO: to be implemented.
     }
 
 }

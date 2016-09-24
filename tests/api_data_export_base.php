@@ -307,13 +307,21 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
 
     /**
      * @param  int $nr
+     * @param  int $timecreated
      * @return stdClass[]
      */
-    protected function addusers($nr) {
+    protected function addusers($nr, $timecreated = null) {
         $datagen = $this->getDataGenerator();
+        if (empty($timecreated)) {
+            $timecreated = time();
+        }
         $users = [];
         for ($pos = 0; $pos < $nr; $pos++) {
-            $users[] = $datagen->create_user(['username' => 'testuser'.$pos, 'deleted' => 0]);
+            $users[] = $datagen->create_user([
+                'username'    => 'testuser'.$pos,
+                'deleted'     => 0,
+                'timecreated' => $timecreated
+            ]);
         }
         return $users;
     }
