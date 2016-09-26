@@ -170,6 +170,9 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @return stdClass[]
      */
     protected function addcourses($nr, $timecreated = null) {
+        global $CFG;
+        require_once($CFG->libdir.'/gradelib.php');
+
         if (empty($timecreated)) {
             $timecreated = time();
         }
