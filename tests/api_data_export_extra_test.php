@@ -20,7 +20,7 @@ require_once(__DIR__.'/api_data_export_base.php');
 
 /**
  * Class local_xray_api_data_export_extra_testcase
- * @group local_xray4
+ * @group local_xray
  */
 class local_xray_api_data_export_extra_testcase extends local_xray_api_data_export_base_testcase {
 
@@ -158,10 +158,36 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
     }
 
     public function test_enrolment_export() {
-        $this->resetAfterTest();
-        $this->markTestSkipped('Not Implemented.');
+        global $DB;
 
-        // TODO: to be implemented.
+        $this->resetAfterTest();
+        $now = time();
+        $startnow = $now - (8 * HOURSECS);
+        list($exportuntil, $timecreated) = $this->get_now_past($startnow);
+        $rcount = $DB->count_records_sql("
+            SELECT COUNT(r.id) AS count
+              FROM {role_assignments} r
+              JOIN {context}          ctx ON r.contextid = ctx.id AND ctx.contextlevel= :ctxlevel
+             WHERE
+                   EXISTS (SELECT u.id FROM {user} u WHERE r.userid = u.id AND u.deleted = :deleted)
+                   AND
+                   EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
+        ", ['ctxlevel' => CONTEXT_COURSE, 'deleted' => false]);
+        $nr = 10;
+        $courses = $this->addcourses($nr, $timecreated);
+        $this->addquizzes($nr, $courses);
+        $this->user_set($courses, 'quiz');
+
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+        ];
+
+        // Initial export.
+        $this->export_check('enrolment', $typedef, $exportuntil, false, ($nr + $rcount));
     }
 
 }
