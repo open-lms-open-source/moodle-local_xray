@@ -344,9 +344,10 @@ function local_xray_role_unassigned(\core\event\role_unassigned $event) {
  * @param $courseid
  * @return stdClass
  */
-function local_xray_template_data($courseid){
+function local_xray_template_data($courseid, $userid){
     // Get headline data.
-    $headlinedata = \local_xray\dashboard\dashboard::get($courseid);
+    $headlinedata = \local_xray\dashboard\dashboard::get($courseid, $userid);
+
     if ($headlinedata instanceof \local_xray\dashboard\dashboard_data) {
         // Add info in the template.
         $data = new stdClass();
@@ -389,6 +390,42 @@ function local_xray_template_data($courseid){
         $data->discussiondata = $headlinedata->postslastsevendays;
         $data->discussionposts = get_string('headline_posts', 'local_xray');
         $data->discussionlastweekwas = get_string("headline_lastweekwas_discussion", 'local_xray', $headlinedata->postslastsevendayspreviousweek);
+
+
+        // Recommended Actions.
+        // Content recommendations.
+        $data->recommendationslist = '';
+        if ($headlinedata->countrecommendations) {
+            $data->recommendations = true;
+            $recommendationnumber = 1;
+            foreach ($headlinedata->recommendations as $recommendation) {
+                // Add the recommendation.
+
+                // Add title.
+                $data->recommendationstitle = get_string('recommendedactions' , 'local_xray');
+                // Number.
+                $data->recommendationslist .= html_writer::tag('td', $recommendationnumber, array('align' => 'left',
+                    'class' => 'MsoNormal',
+                    'style' => "color:#777777;font-family:'Segoe UI',sans-serif,Arial,Helvetica,Lato;font-size:29px;line-height:24px;padding-right:5px;",
+                    'valign' => 'top'));
+
+                // Recommendation text.
+                $data->recommendationslist .= html_writer::tag('td', $recommendation, array('align' => 'left',
+                    'class' => 'MsoNormal',
+                    'style' => "color:#777777;font-family:'Segoe UI',sans-serif,Arial,Helvetica,Lato;font-size:13px;line-height:24px;"));
+
+                $data->recommendationslist .= html_writer::end_tag('tr');
+                $data->recommendationslist .= html_writer::tag('tr', '', array('style' => "height:16px;"));
+
+                /*$recommendationnumberdiv = html_writer::div($recommendationnumber, 'recommendationnumber');
+                $recommendationtext = html_writer::div($recommendation, 'recommendationtext');
+                $br = html_writer::empty_tag('br', array('style' => 'clear: left;'));
+                $recommendationlist .= html_writer::div($recommendationnumberdiv.$recommendationtext.$br,
+                    'recommendationdiv',
+                    array('tabindex' => 0));*/
+                $recommendationnumber++;
+            }
+        }
 
         $result = $data;
     } else {

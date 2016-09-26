@@ -101,7 +101,7 @@ class send_emails extends scheduled_task {
 
                         // Get messagehtml only if the course change.
                         if ($currentid != $courseid) {
-                            $headlinedata = local_xray_template_data($courseid);
+                            $headlinedata = local_xray_template_data($courseid, $userid);
 
                             if ($headlinedata) {
                                 // Add the link to the subscription page.
