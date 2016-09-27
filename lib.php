@@ -391,17 +391,14 @@ function local_xray_template_data($courseid, $userid){
         $data->discussionposts = get_string('headline_posts', 'local_xray');
         $data->discussionlastweekwas = get_string("headline_lastweekwas_discussion", 'local_xray', $headlinedata->postslastsevendayspreviousweek);
 
-
         // Recommended Actions.
-        // Content recommendations.
         $data->recommendationslist = '';
         if ($headlinedata->countrecommendations) {
             $data->recommendations = true;
             $recommendationnumber = 1;
             foreach ($headlinedata->recommendations as $recommendation) {
                 // Add the recommendation.
-
-                // Add title.
+                // Title.
                 $data->recommendationstitle = get_string('recommendedactions' , 'local_xray');
                 // Number.
                 $data->recommendationslist .= html_writer::tag('td', $recommendationnumber, array('align' => 'left',
@@ -416,13 +413,6 @@ function local_xray_template_data($courseid, $userid){
 
                 $data->recommendationslist .= html_writer::end_tag('tr');
                 $data->recommendationslist .= html_writer::tag('tr', '', array('style' => "height:16px;"));
-
-                /*$recommendationnumberdiv = html_writer::div($recommendationnumber, 'recommendationnumber');
-                $recommendationtext = html_writer::div($recommendation, 'recommendationtext');
-                $br = html_writer::empty_tag('br', array('style' => 'clear: left;'));
-                $recommendationlist .= html_writer::div($recommendationnumberdiv.$recommendationtext.$br,
-                    'recommendationdiv',
-                    array('tabindex' => 0));*/
                 $recommendationnumber++;
             }
         }
