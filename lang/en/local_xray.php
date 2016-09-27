@@ -487,8 +487,8 @@ $string['coursesubscribe'] = 'Subscribe to the email reports for {$a}';
 $string['subscribeall'] = 'Subscribe to the email reports for all courses';
 $string['coursesubscribedesc'] = 'You will receive an email with the course X-Ray summary data';
 $string['subscribetothiscourse'] = 'Subscribe to email report';
-$string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course id {$a}';
-$string['email_log_desc'] = 'Email sent. Course id {$a->courseid} User id {$a->to}';
+$string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course ID {$a}';
+$string['email_log_desc'] = 'Email sent. Course ID {$a->courseid} User ID {$a->to}';
 
 // Recommended Actions.
 $string['countaction'] = '{$a} recommended action';
