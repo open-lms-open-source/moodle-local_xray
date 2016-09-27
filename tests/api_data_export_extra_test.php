@@ -20,7 +20,7 @@ require_once(__DIR__.'/api_data_export_base.php');
 
 /**
  * Class local_xray_api_data_export_extra_testcase
- * @group local_xray
+ * @group local_xray4
  */
 class local_xray_api_data_export_extra_testcase extends local_xray_api_data_export_base_testcase {
 
@@ -42,8 +42,14 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
 
         $this->resetAfterTest();
         $now = time();
-        $startnow = $now - (8 * HOURSECS);
+        $startnow = $now - (12 * HOURSECS);
         list($exportuntil, $timecreated) = $this->get_now_past($startnow);
+        // Ensure all existing categories are set to correct creation date.
+        $DB->execute(
+            'UPDATE {course_categories} SET timemodified = :tm',
+            ['tm' => ($timecreated - HOURSECS)]
+        );
+
         $categorynr = 10;
         $categories = $this->addcategories($categorynr, $timecreated);
 
@@ -67,11 +73,25 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         $params = ['timemodified' => $timemodified];
         list ($insql, $tparams) = $DB->get_in_or_equal($cats, SQL_PARAMS_NAMED);
         $params += $tparams;
-        $DB->execute("UPDATE {course_categories} SET timemodified = :timemodified WHERE id {$insql}", $params);
+        $DB->execute(
+            "UPDATE {course_categories} SET timemodified = :timemodified WHERE id {$insql}",
+            $params
+        );
+        $this->assertEquals(
+            $categorynr,
+            $DB->count_records('course_categories', ['timemodified' => $timemodified])
+        );
+
         // Update export.
         $this->export_check('coursecategories', $typedef, $exportuntil, false, $categorynr);
     }
 
+    /**
+     * Course info export test with updates
+     *
+     * @throws coding_exception
+     * @throws dml_exception
+     */
     public function test_courseinfo_export() {
         global $DB;
 
@@ -80,6 +100,12 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         $startnow = $now - (8 * HOURSECS);
         list($exportuntil, $timecreated) = $this->get_now_past($startnow);
         $coursecount = $DB->count_records_select('course', 'category <> 0');
+        // Ensure all existing courses are set to correct creation date.
+        $DB->execute(
+            'UPDATE {course} SET timemodified = :tm',
+            ['tm' => ($timecreated - HOURSECS)]
+        );
+
         $nr = 10;
         $elements = $this->addcourses($nr, $timecreated);
 
@@ -109,11 +135,24 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         $params = ['timemodified' => $timemodified];
         list ($insql, $tparams) = $DB->get_in_or_equal($cats, SQL_PARAMS_NAMED);
         $params += $tparams;
-        $DB->execute("UPDATE {course} SET timemodified = :timemodified WHERE id {$insql}", $params);
+        $DB->execute(
+            "UPDATE {course} SET timemodified = :timemodified WHERE id {$insql}",
+            $params
+        );
+        $this->assertEquals(
+            $nr,
+            $DB->count_records('course', ['timemodified' => $timemodified])
+        );
         // Update export.
         $this->export_check('courseinfo', $typedef, $exportuntil, false, $nr);
     }
 
+    /**
+     * User export with updates
+     *
+     * @throws coding_exception
+     * @throws dml_exception
+     */
     public function test_userlist_export() {
         global $DB;
 
@@ -122,6 +161,11 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         $startnow = $now - (8 * HOURSECS);
         list($exportuntil, $timecreated) = $this->get_now_past($startnow);
         $usercount = $DB->count_records('user', ['deleted' => false]);
+        $DB->execute(
+            "UPDATE {user} SET timemodified = :tm WHERE deleted = :deleted",
+            ['tm' => ($timecreated - HOURSECS), 'deleted' => false]
+        );
+
         $nr = 10;
         $elements = $this->addusers($nr, $timecreated);
 
@@ -152,11 +196,24 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         $params = ['timemodified' => $timemodified];
         list ($insql, $tparams) = $DB->get_in_or_equal($cats, SQL_PARAMS_NAMED);
         $params += $tparams;
-        $DB->execute("UPDATE {user} SET timemodified = :timemodified WHERE id {$insql}", $params);
+        $DB->execute(
+            "UPDATE {user} SET timemodified = :timemodified WHERE id {$insql}",
+            $params
+        );
+        $this->assertEquals(
+            $nr,
+            $DB->count_records('user', ['timemodified' => $timemodified])
+        );
+
         // Update export.
         $this->export_check('userlist', $typedef, $exportuntil, false, $nr);
     }
 
+    /**
+     * Enrollment export
+     *
+     * @throws coding_exception
+     */
     public function test_enrolment_export() {
         global $DB;
 

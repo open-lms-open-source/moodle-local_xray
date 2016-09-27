@@ -171,6 +171,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      */
     protected function addcourses($nr, $timecreated = null) {
         global $CFG;
+        /* @noinspection PhpIncludeInspection */
         require_once($CFG->libdir.'/gradelib.php');
 
         if (empty($timecreated)) {
@@ -290,7 +291,10 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @return stdClass
      */
     protected function user_set($courses, $module) {
-        global $DB;
+        global $DB, $CFG;
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->libdir.'/gradelib.php');
+
         $datagen = $this->getDataGenerator();
         $student = $datagen->create_user(['username' => uniqid('supercalifragilisticoexpialidoso')]);
         $roleid = $DB->get_field('role', 'id', ['shortname' => 'student'], MUST_EXIST);
@@ -336,13 +340,6 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         // Reset any progress saved.
         local_xray\local\api\data_export::delete_progress_settings();
         $this->setAdminUser();
-
-        // Check is required since many hosting companies disable this function.
-        if (function_exists('sys_get_temp_dir')) {
-            // This is unfortunate workaround for issues with nfs locking when using Vagrant.
-            // If returned directory does not offer sufficient permissions the default is used.
-            set_config('exportlocation', sys_get_temp_dir(), 'local_xray');
-        }
     }
 
     /**
@@ -350,7 +347,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @return int[]
      */
     protected function get_now_past($startpoint) {
-        $pastdiff = 4 * HOURSECS;
+        $pastdiff = HOURSECS;
         $now      = $startpoint - $pastdiff;
         $past     = $now - $pastdiff;
         return [$now, $past];
@@ -372,6 +369,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         $storage = new local_xray\local\api\auto_clean();
         $storagedir = $storage->get_directory();
         if ($debug) {
+            $storage->detach();
             $DB->set_debug(true);
         }
         $this->export($now, $storagedir, $itemname);

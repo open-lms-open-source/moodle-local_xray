@@ -921,7 +921,7 @@ class data_export {
      */
     public static function get_dir() {
         $dir = get_config(self::PLUGIN, 'exportlocation');
-        if (empty($dir) or !is_dir($dir) or !is_writable($dir)) {
+        if (!(is_dir($dir) && is_writable($dir))) {
             $dir = get_config('core', 'tempdir');
         }
         // Normalize final result and remove ending DIRECTORY_SEPARATOR if present.

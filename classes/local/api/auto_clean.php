@@ -70,15 +70,8 @@ class auto_clean {
      * @return void
      */
     public function __destruct() {
-        $exportfiles = array_diff(scandir($this->directory), array('..', '.'));
-        foreach ($exportfiles as $file) {
-            unlink($this->directory.DIRECTORY_SEPARATOR.$file);
-        }
-        $exportfiles = array_diff(scandir($this->directory), array('..', '.'));
-        if (empty($exportfiles)) {
-            rmdir($this->directory);
-        }
-        $this->directory = '';
+        remove_dir($this->directory);
+        $this->detach();
     }
 
     private function __clone() {
@@ -103,5 +96,14 @@ class auto_clean {
      */
     public function get_dirname() {
         return $this->dirname;
+    }
+
+    /**
+     * @return void
+     */
+    public function detach() {
+        $this->directory = '';
+        $this->dirbase   = '';
+        $this->dirname   = '';
     }
 }
