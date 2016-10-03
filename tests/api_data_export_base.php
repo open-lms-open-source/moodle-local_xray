@@ -143,20 +143,20 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @return coursecat[]
      */
     protected function addcategories($nr, $timecreated = null) {
-        if (empty($timecreated)) {
-            $timecreated = time();
-        }
+        global $DB;
 
-        $record = [
-            'timecreated' => $timecreated,
-            'startdate'   => $timecreated
-        ];
         // Create categories.
         $datagen = $this->getDataGenerator();
         $categories = [];
         $count = 0;
         while ($count++ < $nr) {
-            $categories[] = $datagen->create_category($record);
+            $cat = $datagen->create_category();
+            if (!empty($timecreated)) {
+                $catid = (int)$cat->id;
+                $DB->update_record('course_categories', (object)['id' => $catid, 'timemodified' => $timecreated]);
+                $cat = coursecat::get($catid);
+            }
+            $categories[] = $cat;
         }
 
         return $categories;
@@ -170,6 +170,10 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @return stdClass[]
      */
     protected function addcourses($nr, $timecreated = null) {
+        global $CFG;
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->libdir.'/gradelib.php');
+
         if (empty($timecreated)) {
             $timecreated = time();
         }
@@ -266,11 +270,16 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     /**
      * Export data to csv files
      *
-     * @param $timeend
-     * @param $dir
+     * @param int    $timeend
+     * @param string $dir
+     * @param string $fn
      */
-    protected function export($timeend, $dir) {
-        local_xray\local\api\data_export::export_csv(0, $timeend, $dir);
+    protected function export($timeend, $dir, $fn = null) {
+        if (empty($fn)) {
+            local_xray\local\api\data_export::export_csv(0, $timeend, $dir);
+        } else {
+            call_user_func(['local_xray\local\api\data_export', $fn], 0, $timeend, $dir);
+        }
         local_xray\local\api\data_export::store_counters();
     }
 
@@ -282,7 +291,10 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @return stdClass
      */
     protected function user_set($courses, $module) {
-        global $DB;
+        global $DB, $CFG;
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->libdir.'/gradelib.php');
+
         $datagen = $this->getDataGenerator();
         $student = $datagen->create_user(['username' => uniqid('supercalifragilisticoexpialidoso')]);
         $roleid = $DB->get_field('role', 'id', ['shortname' => 'student'], MUST_EXIST);
@@ -302,13 +314,21 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
 
     /**
      * @param  int $nr
+     * @param  int $timecreated
      * @return stdClass[]
      */
-    protected function addusers($nr) {
+    protected function addusers($nr, $timecreated = null) {
         $datagen = $this->getDataGenerator();
+        if (empty($timecreated)) {
+            $timecreated = time();
+        }
         $users = [];
         for ($pos = 0; $pos < $nr; $pos++) {
-            $users[] = $datagen->create_user(['username' => 'testuser'.$pos, 'deleted' => 0]);
+            $users[] = $datagen->create_user([
+                'username'    => 'testuser'.$pos,
+                'deleted'     => 0,
+                'timecreated' => $timecreated
+            ]);
         }
         return $users;
     }
@@ -320,13 +340,72 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         // Reset any progress saved.
         local_xray\local\api\data_export::delete_progress_settings();
         $this->setAdminUser();
+    }
 
-        // Check is required since many hosting companies disable this function.
-        if (function_exists('sys_get_temp_dir')) {
-            // This is unfortunate workaround for issues with nfs locking when using Vagrant.
-            // If returned directory does not offer sufficient permissions the default is used.
-            set_config('exportlocation', sys_get_temp_dir(), 'local_xray');
+    /**
+     * @param  int $startpoint
+     * @return int[]
+     */
+    protected function get_now_past($startpoint) {
+        $pastdiff = HOURSECS;
+        $now      = $startpoint - $pastdiff;
+        $past     = $now - $pastdiff;
+        return [$now, $past];
+    }
+
+    /**
+     * Generic export check method
+     *
+     * @param string $itemname
+     * @param array  $typedef
+     * @param int    $now
+     * @param bool   $debug
+     * @param int    $expectedcount - expected record count, if -1 no expectations are checked
+     * @return void
+     */
+    protected function export_check($itemname, $typedef, $now, $debug = false, $expectedcount = -1) {
+        global $DB;
+        // Export.
+        $storage = new local_xray\local\api\auto_clean();
+        $storagedir = $storage->get_directory();
+        if ($debug) {
+            $storage->detach();
+            $DB->set_debug(true);
         }
+        $this->export($now, $storagedir, $itemname);
+        if ($debug) {
+            $DB->set_debug(false);
+        }
+
+        $exportfile = $storagedir.DIRECTORY_SEPARATOR.$itemname.'_00000001.csv';
+        $this->assertFileExists($exportfile);
+
+        $first = true;
+        $count = count($typedef);
+        $iterator = new csv_fileiterator($exportfile);
+        $realexpectedcount = 0;
+        foreach ($iterator as $item) {
+            if ($first) {
+                $first = false;
+                continue;
+            }
+            // Expect N items.
+            $this->assertEquals($count, count($item), var_export($item, true));
+
+            $pos = 0;
+            foreach ($item as $field) {
+                if (($typedef[$pos]['optional'] and !empty($field)) or !$typedef[$pos]['optional']) {
+                    $this->assertInternalType($typedef[$pos]['type'], $field);
+                }
+                $pos++;
+            }
+            $realexpectedcount++;
+        }
+
+        if ($expectedcount >= 0) {
+            $this->assertEquals($expectedcount, $realexpectedcount);
+        }
+
     }
 
 }

@@ -26,13 +26,6 @@ class local_xray_task_data_sync_testcase extends advanced_testcase {
 
     public function setUp() {
         $this->setAdminUser();
-
-        // Check is required since many hosting companies disable this function.
-        if (function_exists('sys_get_temp_dir')) {
-            // This is unfortunate workaround for issues with nfs locking when using Vagrant.
-            // If returned directory does not offer sufficient permissions the default is used.
-            set_config('exportlocation', sys_get_temp_dir(), 'local_xray');
-        }
     }
 
     /**
