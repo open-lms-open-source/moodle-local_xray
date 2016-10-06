@@ -66,7 +66,7 @@ class report_viewed extends \core\event\base {
         $description = "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')."$report for the course with id '$this->courseid'";
         // Special description for each case.
         if ($this->other['reportname'] == 'discussionreportindividualforum') {
-            $description .= " for the forum with id '".$this->other['forum']."'.";
+            $description .= " for the forum with id '".$this->other['forumid']."'.";
         } else if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
             $description = "The user with id '$this->userid' viewed the Accessible Data of the graph called ".$this->other['graphname']." in the X-Ray ".get_string($this->other['reportname'], 'local_xray')."$report for the course with id '$this->courseid'.";
         } else {
@@ -93,7 +93,7 @@ class report_viewed extends \core\event\base {
         // Discussion individual Forum Report.
         if ($this->other['reportname'] == 'discussionreportindividualforum') {
             $params['cmid'] = $this->other['cmid'];
-            $params['forum'] = $this->other['forum'];
+            $params['forum'] = $this->other['forumid'];
         }
         // Accessible Data.
         if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
