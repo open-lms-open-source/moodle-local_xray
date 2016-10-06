@@ -266,15 +266,6 @@ class data_export {
         $sqltimecreated = self::to_timestamp('timecreated');
         $sqltimemodified = self::to_timestamp('timemodified');
 
-        $sac = get_config('local_xray', 'sacenabled');
-        $sacsql = '';
-        if (empty($sac)) {
-            $sacsql = "
-                format <> 'singleactivity'
-                AND
-            ";
-        }
-
         $sql = "
             SELECT id,
                    fullname,
@@ -294,7 +285,6 @@ class data_export {
              WHERE
                    (category <> 0)
                    AND
-                   {$sacsql}
                    ";
 
         $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
