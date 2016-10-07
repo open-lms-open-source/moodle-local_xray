@@ -144,7 +144,8 @@ class dashboard {
                 $recommendationslist = array();
                 if ($userid) {
                     // Teacher.
-                    if (local_xray_get_teacher_courses($userid)) {
+                    $usercourses = local_xray_get_teacher_courses($userid);
+                    if (array_key_exists($courseid, $usercourses)) {
                         // Recommendations Instructor.
                         $recommendationsisset = isset($response->elements->recommendationsInstructor);
                         if ($recommendationsisset) {
