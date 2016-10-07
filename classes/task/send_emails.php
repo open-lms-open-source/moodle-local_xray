@@ -83,7 +83,7 @@ class send_emails extends scheduled_task {
 
             // Course ID is diferent to null or 0.
             // Send emails to users subscribed only in some courses.
-            if ($subscribedusers = $DB->get_records('local_xray_subscribe', null, 'courseid')) {
+            if ($coursesusers) {
                 $messagehtml = '';
                 foreach ($coursesusers as $value) {
 
