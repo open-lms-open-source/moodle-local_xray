@@ -65,14 +65,14 @@ class send_emails extends scheduled_task {
             $coursesusers = array();
 
             // Get admins subscribed in all courses.
-            if ($subscribedall = $DB->get_records_select('local_xray_subscribe', "whole = 1", null, '', 'userid')) {
+            /*if ($subscribedall = $DB->get_records_select('local_xray_subscribe', "whole = 1", null, '', 'userid')) {
                 $courses = $DB->get_recordset_select('course', "format != 'site'", null, null, 'id');
                 foreach($courses as $course) {
                     foreach ($subscribedall as $userid) {
                         $coursesusers[] = array($course->id => $userid->userid);
                     }
                 }
-            }
+            }*/
 
             // Get the other users.
             if ($subscribedusers = $DB->get_recordset_select('local_xray_subscribe', "whole IS NULL", null, 'courseid', 'id, courseid, userid')) {
@@ -83,7 +83,7 @@ class send_emails extends scheduled_task {
 
             // Course ID is diferent to null or 0.
             // Send emails to users subscribed only in some courses.
-            if ($subscribedusers = $DB->get_records('local_xray_subscribe', null, 'courseid')) {
+            if ($coursesusers) {
                 $messagehtml = '';
                 foreach ($coursesusers as $value) {
 
