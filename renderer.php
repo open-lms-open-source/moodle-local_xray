@@ -642,7 +642,7 @@ class local_xray_renderer extends plugin_renderer_base {
                             "target" => "_blank"));
                 }
 
-                $menu = html_writer::div($title . $navmenu . $headerdata . $subscription_link,
+                $menu = html_writer::div($title . $navmenu . $headerdata,
                     $classes,
                     array('id' => 'xray-js-menu', 'role' => 'region'));
 
