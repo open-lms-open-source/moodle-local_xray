@@ -32,14 +32,13 @@ class local_xray_controller_subscribe extends mr_controller {
 
     public function view_action() {
 
-        Global $CFG, $USER, $DB, $PAGE;
-        $courseid = required_param('courseid', PARAM_INT);
+        Global $CFG, $USER, $DB, $PAGE, $OUTPUT;
+        //$courseid = required_param('courseid', PARAM_INT);
 
         require_once($CFG->dirroot.'/local/xray/lib.php');
         require_once($CFG->dirroot.'/local/xray/subscribeform.php');
 
-
-        if ($courseid == SITEID) {
+        /*if ($courseid == SITEID) {
             // Not ready.
         } else {
             // Add the heading text.
@@ -110,7 +109,7 @@ class local_xray_controller_subscribe extends mr_controller {
             $this->print_header();
             $mform->display();
             $this->print_footer();
-        }
+        }*/
 
     }
 
