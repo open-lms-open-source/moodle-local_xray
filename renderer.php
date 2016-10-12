@@ -633,16 +633,20 @@ class local_xray_renderer extends plugin_renderer_base {
                     }
 
                     // Url for subscribe.
-                    $subscriptionurl = new moodle_url("/local/xray/view.php",
-                        array("controller" => "subscribe", 'courseid' => $COURSE->id));
+                    $subscription_link = '';
+                    if (local_xray_email_enable()) {
+                        $subscriptionurl = new moodle_url("/local/xray/view.php",
+                            array("controller" => "subscribe", 'courseid' => $COURSE->id));
 
-                    $subscription_link = html_writer::link($subscriptionurl, get_string('subscribetothiscourse', 'local_xray'),
-                        array("class" => "xray_subscription_link",
-                            "title" => "Subscribe",
-                            "target" => "_blank"));
+                        $subscription_link = html_writer::link($subscriptionurl, get_string('subscribetothiscourse', 'local_xray'),
+                            array("class" => "xray_subscription_link",
+                                "title" => "Subscribe",
+                                "target" => "_blank"));
+                    }
+
                 }
 
-                $menu = html_writer::div($title . $navmenu . $headerdata,
+                $menu = html_writer::div($title . $navmenu . $headerdata . $subscription_link,
                     $classes,
                     array('id' => 'xray-js-menu', 'role' => 'region'));
 

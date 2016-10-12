@@ -511,3 +511,14 @@ function local_xray_is_course_enable() {
     return $result;
 }
 
+/**
+ * Check if the Email Report is enabled in control panel.
+ */
+function local_xray_email_enable() {
+    $result = false;
+    $cfgxray = get_config('local_xray');
+    if (isset($cfgxray->emailreport) && $cfgxray->emailreport == 1) {
+        $result = true;
+    }
+    return $result;
+}
