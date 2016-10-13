@@ -214,13 +214,15 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
             $classname = '\\' . $classname;
         }
 
-        if ($task = $DB->get_record('task_scheduled', array('component' => 'local_xray',
-                                                            'classname' => $classname,
-                                                            'disabled'  => '0'), 'id')) {
-            $disabletask = new stdClass();
-            $disabletask->id = $task->id;
-            $disabletask->disabled = 1;
-            $DB->update_record('task_scheduled', $disabletask);
+        $task = \core\task\manager::get_scheduled_task($classname);
+        if ($task) {
+            $task->set_disabled(true);
+            try {
+                \core\task\manager::configure_scheduled_task($task);
+            } catch (Exception $e) {
+                // This should not happen but we will let it pass.
+                ($task);
+            }
         }
 
         upgrade_plugin_savepoint(true, 2015070332, 'local', 'xray');

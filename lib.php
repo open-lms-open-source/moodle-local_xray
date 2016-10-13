@@ -513,6 +513,7 @@ function local_xray_is_course_enable() {
 
 /**
  * Check if the Email Report is enabled in control panel.
+ * @return bool
  */
 function local_xray_email_enable() {
     $result = false;
