@@ -51,6 +51,7 @@ $tasks = [
         'hour'      => '0',
         'day'       => '*',
         'dayofweek' => '*',
-        'month'     => '*'
+        'month'     => '*',
+        'disabled'  => 1
     ],
 ];
