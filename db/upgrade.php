@@ -208,5 +208,23 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070331, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070332) {
+        $classname = 'local_xray\task\send_emails';
+        if (strpos($classname, '\\') !== 0) {
+            $classname = '\\' . $classname;
+        }
+
+        if ($task = $DB->get_record('task_scheduled', array('component' => 'local_xray',
+                                                            'classname' => $classname,
+                                                            'disabled'  => '0'), 'id')) {
+            $disabletask = new stdClass();
+            $disabletask->id = $task->id;
+            $disabletask->disabled = 1;
+            $DB->update_record('task_scheduled', $disabletask);
+        }
+
+        upgrade_plugin_savepoint(true, 2015070332, 'local', 'xray');
+    }
+
     return true;
 }
