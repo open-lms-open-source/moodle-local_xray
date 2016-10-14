@@ -463,9 +463,10 @@ function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, 
 
 /**
  * Get all the courses where the user is enrolled as editingteacher or teacher.
+ * 
  * @param int $userid
  * @return array of objects, or empty array if no records were found.
- * */
+ */
 function local_xray_get_teacher_courses($userid) {
 
     global $DB;
@@ -514,6 +515,7 @@ function local_xray_is_course_enable() {
 
 /**
  * Check if the Email Report is enabled in control panel.
+ *
  * @return bool
  */
 function local_xray_email_enable() {
@@ -527,11 +529,11 @@ function local_xray_email_enable() {
 
 /**
  * Check if the user is subscribed.
+ *
  * @param int $courseid
  * @param int $userid
  * @return bool
  */
-
 function local_xray_is_subscribed($userid, $courseid) {
     global $DB;
     return $DB->record_exists('local_xray_subscribe', array('courseid' => $courseid, 'userid' => $userid));
@@ -539,9 +541,9 @@ function local_xray_is_subscribed($userid, $courseid) {
 
 /**
  * Get support user.
+ *
  * @return stdClass user record.
  */
-
 function local_xray_get_support_user() {
     return core_user::get_support_user();
 }
