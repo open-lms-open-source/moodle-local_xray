@@ -55,10 +55,7 @@ class local_xray_controller_subscribe extends mr_controller {
             $PAGE->navbar->add(get_string("subscriptiontitle", $this->component), $this->url);
 
             // Check if the user is subscribed.
-            $exists = false;
-            if (local_xray_is_subscribed($USER->id, $courseid)) {
-                $exists = true;
-            }
+            $exists = local_xray_is_subscribed($USER->id, $courseid);
 
             // Process data.
             if ($fromform = $mform->get_data()) {
