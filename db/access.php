@@ -144,4 +144,14 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
+    // View Course Subscription page.
+    'local/xray:subscription_view' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        )
+    ),
 );

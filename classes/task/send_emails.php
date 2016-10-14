@@ -85,7 +85,7 @@ class send_emails extends scheduled_task {
                     // Check if the user has capabilities to receive email.
                     if (local_xray_email_capability($courseid, $userid)) {
                         $to = $DB->get_record('user', array('id' => $userid));
-                        $from = get_admin();
+                        $from = local_xray_get_support_user();
                         $courseshortname = $DB->get_field('course', 'shortname', array('id' => $courseid));
                         $subject = get_string('emailsubject', 'local_xray', $courseshortname);
                         $messagetext = '';

@@ -638,7 +638,13 @@ class local_xray_renderer extends plugin_renderer_base {
                         $subscriptionurl = new moodle_url("/local/xray/view.php",
                             array("controller" => "subscribe", 'courseid' => $COURSE->id));
 
-                        $subscription_link = html_writer::link($subscriptionurl, get_string('subscribetothiscourse', 'local_xray'),
+                        if (local_xray_is_subscribed($USER->id, $COURSE->id)) {
+                            $subscriptionstring = get_string('unsubscribetothiscourse', 'local_xray');
+                        } else {
+                            $subscriptionstring = get_string('subscribetothiscourse', 'local_xray');
+                        }
+
+                        $subscription_link = html_writer::link($subscriptionurl, $subscriptionstring,
                             array("class" => "xray_subscription_link",
                                 "title" => "Subscribe",
                                 "target" => "_blank"));

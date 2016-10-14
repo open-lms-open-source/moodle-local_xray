@@ -523,3 +523,28 @@ function local_xray_email_enable() {
     }
     return $result;
 }
+
+/**
+ * Check if the user is subscribed.
+ * @param $courseid
+ * @param $userid
+ * @return bool
+ */
+
+function local_xray_is_subscribed($userid, $courseid) {
+    global $DB;
+    $result = false;
+    if ($DB->record_exists('local_xray_subscribe', array('courseid' => $courseid, 'userid' => $userid))) {
+        $result = true;
+    }
+    return $result;
+}
+
+/**
+ * Get support user.
+ * @return stdClass user record.
+ */
+
+function local_xray_get_support_user() {
+    return core_user::get_support_user();
+}

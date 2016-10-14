@@ -34,6 +34,7 @@ class local_xray_controller_subscribe extends mr_controller {
 
         Global $CFG, $USER, $DB, $PAGE, $OUTPUT;
         $courseid = required_param('courseid', PARAM_INT);
+        $saved = optional_param('saved', 0, PARAM_INT);
 
         require_once($CFG->dirroot.'/local/xray/lib.php');
         require_once($CFG->dirroot.'/local/xray/subscribeform.php');
@@ -52,6 +53,12 @@ class local_xray_controller_subscribe extends mr_controller {
             // Create navbar.
             $PAGE->navbar->add(get_string("navigation_xray", $this->component));
             $PAGE->navbar->add(get_string("subscriptiontitle", $this->component), $this->url);
+
+            // Check if the user is subscribed.
+            $exists = false;
+            if (local_xray_is_subscribed($USER->id, $courseid)) {
+                $exists = true;
+            }
 
             // Process data.
             if ($fromform = $mform->get_data()) {
@@ -81,10 +88,6 @@ class local_xray_controller_subscribe extends mr_controller {
                     }
                 } else if (isset($fromform->subscribe)) {
                     // Subscribe in one course form.
-                    $exists = false;
-                    if ($DB->record_exists('local_xray_subscribe', array('courseid' => $courseid, 'userid' => $USER->id))) {
-                        $exists = true;
-                    }
                     if ($fromform->subscribe && !$exists) {
                         $subscribed = new stdClass();
                         $subscribed->courseid = $courseid;
@@ -94,19 +97,36 @@ class local_xray_controller_subscribe extends mr_controller {
                         $DB->delete_records('local_xray_subscribe', array('courseid' => $courseid, 'userid' => $USER->id));
                     }
                 }
+
+                $this->url->param('saved', 1);
+                redirect($this->url);
             }
 
             // Set the current value.
-            // TODO buscar tambien si tiene el campo all.
-            if ($DB->get_records('local_xray_subscribe', array('courseid' => $courseid, 'userid' => $USER->id))) { // TODO.
+            if ($exists) {
                 $toform = new stdClass();
                 $toform->subscribe = 1;
                 $mform->set_data($toform);
             }
 
             $this->print_header();
+            if ($saved) {
+                echo $OUTPUT->notification(get_string('changessaved'), 'notifysuccess');
+            }
             $mform->display();
             $this->print_footer();
         }
+    }
+
+    /**
+     * Require capabilities.
+     */
+    public function require_capability() {
+        global $CFG, $COURSE;
+        if (!local_xray_is_course_enable()) {
+            $ctx = $this->get_context();
+            throw new required_capability_exception($ctx, "{$this->plugin}:subscription_view", 'nopermissions', '');
+        }
+        require_capability("{$this->plugin}:subscription_view", $this->get_context());
     }
 }
