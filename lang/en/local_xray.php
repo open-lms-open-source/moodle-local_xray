@@ -480,6 +480,7 @@ $string['xray_course_report_empty'] = 'There is not enough data for this report.
     ' user activity in your course.';
 
 // Email.
+$string['changesubscription'] = 'Change your subscription preferences';
 $string['coursesubscribe'] = 'Subscribe to the email reports for {$a}';
 $string['coursesubscribedesc'] = 'You will receive an email with the course X-Ray summary data';
 $string['email_log_desc'] = 'Email sent. Course ID {$a->courseid} User ID {$a->to}';
