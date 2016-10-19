@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $plugin */
-$plugin->version  = 2015070334;
+$plugin->version  = 2015070336;
 $plugin->requires = 2015051100; // Moodle 2.9 .
 $plugin->cron = 0;
 $plugin->component = 'local_xray';
