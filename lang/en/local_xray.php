@@ -486,12 +486,21 @@ $string['coursesubscribedesc'] = 'You will receive an email with the course X-Ra
 $string['email_log_desc'] = 'Email sent. Course ID {$a->courseid} User ID {$a->to}';
 $string['emailsubject'] = 'X-Ray Report Summary for {$a}';
 $string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course ID {$a}';
-$string['profilelink'] = 'X-Ray Email Subcription';
+$string['profilelink'] = 'X-Ray Email Subscription';
 $string['subscribeall'] = 'Subscribe to the email reports for all courses';
 $string['subscribetothiscourse'] = 'Subscribe to email report';
 $string['subscriptiontitle'] = 'Email Subscription';
 $string['unsubscribeemail'] = 'Unsubscribe';
 $string['unsubscribetothiscourse'] = 'Unsubscribe from email report';
+$string['globalsubtitle'] = 'Global Email Subscription';
+$string['globalsubcourse'] = 'Use course level subscription';
+$string['globalsubon'] = 'Subscribe to all courses';
+$string['globalsuboff'] = 'Cancel all subscriptions';
+$string['globalsubdesc'] = 'Select the proper configuration for the subscriptions to the Email Summary reports. '.
+    'The first option will use the configuration set in each course. This is the behavior by default. With '.
+    'the second option, the emails will be sent for all courses. The third option will cancel all subscriptions. '.
+    'This setting works in a superior level of the subscription done for each course. This means that the second '.
+    'and third option will override course’s subscriptions.';
 
 // Recommended Actions.
 $string['countaction'] = '{$a} recommended action';
@@ -501,3 +510,11 @@ $string['youhave'] = 'You have ';
 $string['youdonthave'] = 'You do not have recommended actions';
 $string['recommendedactions_button'] = 'Show/Hide recommended actions';
 $string['recommendedaction_button'] = 'Show/Hide recommended action';
+
+
+
+
+
+
+
+
