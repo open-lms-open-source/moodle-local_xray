@@ -50,6 +50,7 @@ $string['xray:discussionreportindividual_view'] = 'View Student Discussion Repor
 $string['xray:discussionreportindividualforum_view'] = 'View Forum Activity Report';
 $string['xray:discussionendogenicplagiarism_view'] = 'View Word Overlap';
 $string['xray:discussiongrading_view'] = 'View Grading';
+$string['xray:globalsub_view'] = 'View Global Subscription page';
 $string['xray:gradebookreport_view'] = 'View Gradebook Report';
 $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indivisual Quiz';
 $string['xray:risk_view'] = 'View Risk Status Report';
@@ -510,11 +511,3 @@ $string['youhave'] = 'You have ';
 $string['youdonthave'] = 'You do not have recommended actions';
 $string['recommendedactions_button'] = 'Show/Hide recommended actions';
 $string['recommendedaction_button'] = 'Show/Hide recommended action';
-
-
-
-
-
-
-
-

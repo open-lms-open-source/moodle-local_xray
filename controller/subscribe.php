@@ -59,42 +59,15 @@ class local_xray_controller_subscribe extends mr_controller {
 
             // Process data.
             if ($fromform = $mform->get_data()) {
-
-                // Subscribe all form.
-                if (isset($fromform->subscribeall)) {
-                    // Delete all records related with this user.
-                    $DB->delete_records('local_xray_subscribe', array('userid' => $USER->id));
-
-                    // If the ckeckbox is checked, add subscription for all courses.
-                    if ($fromform->subscribeall) {
-                        $subscribeall = new stdClass();
-                        $subscribeall->userid = $USER->id;
-
-                        $admins = get_admins();
-                        if (array_key_exists($USER->id, $admins)) {
-                            // The user is an Admin.
-                            $subscribeall->whole = 1;
-                        } else {
-                            // The user is instructor.
-                            $courses = local_xray_get_teacher_courses($USER->id);
-                            foreach ($courses as $course) {
-                                $subscribeall->courseid = $course->courseid;
-                            }
-                        }
-                        $DB->insert_record('local_xray_subscribe', $subscribeall);
-                    }
-                } else if (isset($fromform->subscribe)) {
-                    // Subscribe in one course form.
-                    if ($fromform->subscribe && !$exists) {
-                        $subscribed = new stdClass();
-                        $subscribed->courseid = $courseid;
-                        $subscribed->userid = $USER->id;
-                        $DB->insert_record('local_xray_subscribe', $subscribed);
-                    } else if (!$fromform->subscribe && $exists) {
-                        $DB->delete_records('local_xray_subscribe', array('courseid' => $courseid, 'userid' => $USER->id));
-                    }
+                // Subscribe in one course form.
+                if ($fromform->subscribe && !$exists) {
+                    $subscribed = new stdClass();
+                    $subscribed->courseid = $courseid;
+                    $subscribed->userid = $USER->id;
+                    $DB->insert_record('local_xray_subscribe', $subscribed);
+                } else if (!$fromform->subscribe && $exists) {
+                    $DB->delete_records('local_xray_subscribe', array('courseid' => $courseid, 'userid' => $USER->id));
                 }
-
                 $this->url->param('saved', 1);
                 redirect($this->url);
             }
