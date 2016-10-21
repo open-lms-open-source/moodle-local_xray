@@ -61,12 +61,46 @@ class send_emails extends scheduled_task {
 
         try {
 
-            // Create array.
+            // Create an array with courses and users.
             $coursesusers = array();
-
             if (local_xray_email_enable()) {
+                // Global settings.
+                $params = array('on' => \local_xray_controller_globalsub::XRAYSUBSCRIBEON, 'off' => \local_xray_controller_globalsub::XRAYSUBSCRIBEOFF);
+                $globalsettings = $DB->get_records_select('local_xray_globalsub', "type = :on OR type = :off", $params);
+
+                $skipusers = array();
+                foreach ($globalsettings as $record) {
+                    if ($record->type == \local_xray_controller_globalsub::XRAYSUBSCRIBEON) {
+                        // If is Admin.
+                        if (array_key_exists($record->userid, get_admins())) {
+                            $courses = get_courses("all", "c.sortorder ASC", "c.id");
+                            foreach ($courses as $course) {
+                                if ($course->id != SITEID) {
+                                    $coursesusers[] = array($course->id => $record->userid);
+                                }
+                            }
+                        } else if ($courses = local_xray_get_teacher_courses($record->userid)) {
+                            foreach ($courses as $course) {
+                                $coursesusers[] = array($course->courseid => $record->userid);
+                            }
+                        }
+                    }
+                    // Skip these users in the next search.
+                    $skipusers[] = $record->userid;
+                }
                 // Get the other users.
-                if ($subscribedusers = $DB->get_recordset_select('local_xray_subscribe', "whole IS NULL", null, 'courseid', 'id, courseid, userid')) {
+                $select = '';
+                $increase = 0;
+                if ($skipusers) {
+                    foreach ($skipusers as $skipuser) {
+                        $select .= 'userid <> '.$skipuser;
+                        if ($increase < count($select)) {
+                            $select .= ' AND ';
+                        }
+                        $increase++;
+                    }
+                }
+                if ($subscribedusers = $DB->get_recordset_select('local_xray_subscribe', $select, null, 'courseid', 'id, courseid, userid')) {
                     foreach ($subscribedusers as $record) {
                         $coursesusers[] = array($record->courseid => $record->userid);
                     }
