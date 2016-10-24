@@ -48,7 +48,13 @@ class local_xray_controller_subscribe extends mr_controller {
             $params = array('controller' => 'subscribe');
             $this->url->params($params);
 
-            $mform = new subscribe_form($this->url, array('courseid' => $courseid));
+            // Check if the setting is enabled.
+            $globalsub = $DB->get_record('local_xray_globalsub', array('userid' => $USER->id), 'type', IGNORE_MULTIPLE);
+            $disabled = false;
+            if ($globalsub->type == XRAYSUBSCRIBEON || $globalsub->type == XRAYSUBSCRIBEOFF) {
+                $disabled = true;
+            }
+            $mform = new subscribe_form($this->url, array('disabled' => $disabled));
 
             // Create navbar.
             $PAGE->navbar->add(get_string("navigation_xray", $this->component));
@@ -78,12 +84,15 @@ class local_xray_controller_subscribe extends mr_controller {
                 $toform->subscribe = 1;
                 $mform->set_data($toform);
             }
-
+            // Display form.
             $this->print_header();
             if ($saved) {
                 echo $OUTPUT->notification(get_string('changessaved'), 'notifysuccess');
             }
             $mform->display();
+            if ($disabled) {
+                echo $OUTPUT->notification(get_string("subscriptiondisabled", $this->component), 'info');
+            }
             $this->print_footer();
         }
     }

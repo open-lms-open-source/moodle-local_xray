@@ -494,14 +494,17 @@ $string['subscriptiontitle'] = 'Email Subscription';
 $string['unsubscribeemail'] = 'Unsubscribe';
 $string['unsubscribetothiscourse'] = 'Unsubscribe from email report';
 $string['globalsubtitle'] = 'Global Email Subscription';
-$string['globalsubcourse'] = 'Use course level subscription';
+$string['globalsubcourse'] = 'Use course level subscription settings';
 $string['globalsubon'] = 'Subscribe to all courses';
 $string['globalsuboff'] = 'Cancel all subscriptions';
-$string['globalsubdesc'] = 'Select the proper configuration for the subscriptions to the Email Summary reports. '.
-    'The first option will use the configuration set in each course. This is the behavior by default. With '.
-    'the second option, the emails will be sent for all courses. The third option will cancel all subscriptions. '.
-    'This setting works in a superior level of the subscription done for each course. This means that the second '.
-    'and third option will override course’s subscriptions.';
+$string['globalsubdesc'] = 'Select the configuration for the global subscription to the X-Ray summary report. '.
+    'You can let the decision to subscribe be made at the course level or make the decision for all courses. '.
+    'If you choose to use course level subscription settings, you will receive the X-Ray summary report only for '.
+    'the courses that you are subscribed. This is selected by default. The Subscribe to all courses and Cancel all '.
+    'subscriptions options overwrite subscription settings made at the course level. You will or will not receive '.
+    'the X-Ray summary report for all courses.';
+$string['subscriptiondisabled'] = 'Enable this setting in the Global Email Subscription page. You can access '.
+    'this page using the link X-Ray Email Subscription from your profile.';
 
 // Recommended Actions.
 $string['countaction'] = '{$a} recommended action';
