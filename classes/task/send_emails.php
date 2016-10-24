@@ -69,28 +69,30 @@ class send_emails extends scheduled_task {
                 $globalsettings = $DB->get_records_select('local_xray_globalsub', "type = :on OR type = :off", $params);
 
                 $skipusers = array();
-                foreach ($globalsettings as $record) {
-                    if ($record->type == \local_xray_controller_globalsub::XRAYSUBSCRIBEON) {
-                        // If is Admin.
-                        if (array_key_exists($record->userid, get_admins())) {
-                            $courses = get_courses("all", "c.sortorder ASC", "c.id");
-                            foreach ($courses as $course) {
-                                if ($course->id != SITEID) {
-                                    $coursesusers[] = array($course->id => $record->userid);
+                if ($globalsettings) {
+                    foreach ($globalsettings as $record) {
+                        if ($record->type == \local_xray_controller_globalsub::XRAYSUBSCRIBEON) {
+                            // If is Admin.
+                            if (array_key_exists($record->userid, get_admins())) {
+                                $courses = get_courses("all", "c.sortorder ASC", "c.id");
+                                foreach ($courses as $course) {
+                                    if ($course->id != SITEID) {
+                                        $coursesusers[] = array($course->id => $record->userid);
+                                    }
+                                }
+                            } else if ($courses = local_xray_get_teacher_courses($record->userid)) {
+                                foreach ($courses as $course) {
+                                    $coursesusers[] = array($course->courseid => $record->userid);
                                 }
                             }
-                        } else if ($courses = local_xray_get_teacher_courses($record->userid)) {
-                            foreach ($courses as $course) {
-                                $coursesusers[] = array($course->courseid => $record->userid);
-                            }
                         }
+                        // Skip these users in the next search.
+                        $skipusers[] = $record->userid;
                     }
-                    // Skip these users in the next search.
-                    $skipusers[] = $record->userid;
                 }
                 // Get the other users.
                 $select = '';
-                $increase = 0;
+                $increase = 1;
                 if ($skipusers) {
                     foreach ($skipusers as $skipuser) {
                         $select .= 'userid <> '.$skipuser;
