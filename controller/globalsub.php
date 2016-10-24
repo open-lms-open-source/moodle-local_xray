@@ -30,11 +30,6 @@ defined('MOODLE_INTERNAL') || die();
 
 class local_xray_controller_globalsub extends mr_controller {
 
-    // Global Subscription types.
-    const XRAYSUBSCRIBECOURSE = 0;
-    const XRAYSUBSCRIBEON = 1;
-    const XRAYSUBSCRIBEOFF = 2;
-
     public function view_action() {
 
         Global $CFG, $USER, $DB, $PAGE, $OUTPUT;

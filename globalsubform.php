@@ -9,6 +9,7 @@
  */
 
 require_once("$CFG->libdir/formslib.php");
+require_once($CFG->dirroot.'/local/xray/lib.php');
 
 class globalsub_form extends moodleform {
     public function definition() {
@@ -17,9 +18,9 @@ class globalsub_form extends moodleform {
         $mform = $this->_form;
 
         $options = array(
-            local_xray_controller_globalsub::XRAYSUBSCRIBECOURSE => get_string('globalsubcourse', 'local_xray'),
-            local_xray_controller_globalsub::XRAYSUBSCRIBEON => get_string('globalsubon', 'local_xray'),
-            local_xray_controller_globalsub::XRAYSUBSCRIBEOFF => get_string('globalsuboff', 'local_xray')
+            XRAYSUBSCRIBECOURSE => get_string('globalsubcourse', 'local_xray'),
+            XRAYSUBSCRIBEON => get_string('globalsubon', 'local_xray'),
+            XRAYSUBSCRIBEOFF => get_string('globalsuboff', 'local_xray')
         );
 
         $mform->addElement('html', html_writer::tag('p', get_string('globalsubdesc', 'local_xray')));

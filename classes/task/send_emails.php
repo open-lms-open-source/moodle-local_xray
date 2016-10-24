@@ -65,13 +65,13 @@ class send_emails extends scheduled_task {
             $coursesusers = array();
             if (local_xray_email_enable()) {
                 // Global settings.
-                $params = array('on' => \local_xray_controller_globalsub::XRAYSUBSCRIBEON, 'off' => \local_xray_controller_globalsub::XRAYSUBSCRIBEOFF);
+                $params = array('on' => XRAYSUBSCRIBEON, 'off' => XRAYSUBSCRIBEOFF);
                 $globalsettings = $DB->get_records_select('local_xray_globalsub', "type = :on OR type = :off", $params);
 
                 $skipusers = array();
                 if ($globalsettings) {
                     foreach ($globalsettings as $record) {
-                        if ($record->type == \local_xray_controller_globalsub::XRAYSUBSCRIBEON) {
+                        if ($record->type == XRAYSUBSCRIBEON) {
                             // If is Admin.
                             if (array_key_exists($record->userid, get_admins())) {
                                 $courses = get_courses("all", "c.sortorder ASC", "c.id");
@@ -96,7 +96,7 @@ class send_emails extends scheduled_task {
                 if ($skipusers) {
                     foreach ($skipusers as $skipuser) {
                         $select .= 'userid <> '.$skipuser;
-                        if ($increase < count($select)) {
+                        if ($increase < count($skipusers)) {
                             $select .= ' AND ';
                         }
                         $increase++;

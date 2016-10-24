@@ -27,6 +27,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/// CONSTANTS ///////////////////////////////////////////////////////////
+
+define('XRAYSUBSCRIBECOURSE', 0);
+define('XRAYSUBSCRIBEON', 1);
+define('XRAYSUBSCRIBEOFF', 2);
+
 /**
  * Generate list of report links according to the current page
  * Result is returned as associative array ($reportname => $reporturl)
