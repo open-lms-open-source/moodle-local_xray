@@ -451,8 +451,8 @@ function local_xray_email_capability($courseid, $userid) {
  */
 function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
     // Validate user.
-    $admins = get_admins();
-    if ((!array_key_exists($user->id, $admins) && !local_xray_get_teacher_courses($user->id)) || !local_xray_email_enable()) {
+    if ((!has_capability("local/xray:globalsub_view", context_system::instance($course->id)) &&
+            !local_xray_get_teacher_courses($user->id)) || !local_xray_email_enable()) {
         return false;
     }
     // Url for subscription.
