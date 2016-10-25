@@ -90,6 +90,9 @@ class local_xray_controller_globalsub extends mr_controller {
      * Require capabilities.
      */
     public function require_capability() {
-        require_capability("{$this->plugin}:globalsub_view", $this->get_context());
+        Global $USER;
+        if (!local_xray_get_teacher_courses($USER->id)) {
+            require_capability("{$this->plugin}:globalsub_view", $this->get_context());
+        }
     }
 }
