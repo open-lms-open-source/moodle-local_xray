@@ -27,7 +27,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/// CONSTANTS ///////////////////////////////////////////////////////////
+// Contants.
 
 define('XRAYSUBSCRIBECOURSE', 0);
 define('XRAYSUBSCRIBEON', 1);
