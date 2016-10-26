@@ -123,17 +123,21 @@ class local_xray_controller_reports extends mr_controller {
             case "activityreport":
             case "activityreportindividual":
                 $report = 'https://redirects.blackboard.com/005_008';
-                break;
+                $reportshelp = 'activityreports_help';
+            break;
             case "discussionreport":
             case "discussionreportindividual":
             case "discussionreportindividualforum":
                 $report = 'https://redirects.blackboard.com/005_009';
-                break;
+                $reportshelp = 'discussionreports_help';
+            break;
             case "gradebookreport":
                 $report = 'https://redirects.blackboard.com/005_010';
+                $reportshelp = 'gradebookreports_help';
                 break;
             case "risk":
                 $report = 'https://redirects.blackboard.com/005_011';
+                $reportshelp = 'riskreports_help';
                 break;
             default:
                 $report = 'https://redirects.blackboard.com/005_007';
@@ -142,9 +146,7 @@ class local_xray_controller_reports extends mr_controller {
         $helpurl = $report.$this->resolve_language_key();
 
         // Add icon for help of report. Link redirect to external url.
-        $newheading = $PAGE->title.$this->output->help_icon_external_url(get_string('reports_help', $this->component),
-                $helpurl);
-
+        $newheading = $PAGE->title.$this->output->help_icon_external_url(get_string($reportshelp, $this->component), $helpurl);
         $this->heading->text = $newheading;
     }
 

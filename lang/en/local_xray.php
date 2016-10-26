@@ -246,7 +246,10 @@ $string['accessible_view_data'] = 'View data';
 $string['accessible_view_data_for'] = 'Accessible Data for {$a} (new window)';
 $string['accessible_emptydata'] = 'Without data available for Accessible version.';
 $string['accessible_error'] = 'Accessible version for this graph was not found in X-Ray Learning Analytics.';
-$string['reports_help'] = 'Help';
+$string['riskreports_help'] = 'Help with Risk Status';
+$string['activityreports_help'] = 'Help with Activity';
+$string['gradebookreports_help'] = 'Help with Gradebook';
+$string['discussionreports_help'] = 'Help with Discussions';
 $string['accessibledata_of'] = 'Accessible Data of {$a}';
 
 /* Tables names all report*/
