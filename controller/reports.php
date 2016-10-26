@@ -124,13 +124,13 @@ class local_xray_controller_reports extends mr_controller {
             case "activityreportindividual":
                 $report = 'https://redirects.blackboard.com/005_008';
                 $reportshelp = 'activityreports_help';
-            break;
+                break;
             case "discussionreport":
             case "discussionreportindividual":
             case "discussionreportindividualforum":
                 $report = 'https://redirects.blackboard.com/005_009';
                 $reportshelp = 'discussionreports_help';
-            break;
+                break;
             case "gradebookreport":
                 $report = 'https://redirects.blackboard.com/005_010';
                 $reportshelp = 'gradebookreports_help';
