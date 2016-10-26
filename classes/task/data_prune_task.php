@@ -50,7 +50,8 @@ class data_prune_task extends scheduled_task {
         $itemsprune = [
             'coursecategories_delete' => 'local_xray_coursecat',
             'courseinfo_delete'       => 'local_xray_course',
-            'enrolment_delete'        => 'local_xray_roleunas',
+            'enrolment_deletev2'      => 'local_xray_enroldel',
+            'roles_delete'            => 'local_xray_roleunas',
             'threads_delete'          => 'local_xray_disc',
             'posts_delete'            => 'local_xray_post',
             'hsuthreads_delete'       => 'local_xray_hsudisc',

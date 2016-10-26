@@ -55,4 +55,9 @@ $observers = [
         'callback'    => 'local_xray_role_unassigned',
         'includefile' => '/local/xray/lib.php'
     ],
+    [
+        'eventname'   => '\core\event\user_enrolment_deleted',
+        'callback'    => 'local_xray_user_enrolment_deleted',
+        'includefile' => '/local/xray/lib.php'
+    ],
 ];

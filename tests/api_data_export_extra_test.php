@@ -214,7 +214,7 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
      *
      * @throws coding_exception
      */
-    public function test_enrolment_export() {
+    public function test_roles_export() {
         global $DB;
 
         $this->resetAfterTest();
@@ -244,7 +244,43 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         ];
 
         // Initial export.
-        $this->export_check('enrolment', $typedef, $exportuntil, false, ($nr + $rcount));
+        $this->export_check('roles', $typedef, $exportuntil, false, ($nr + $rcount));
+    }
+
+    /**
+     * Test enrollment export
+     * @throws coding_exception
+     */
+    public function test_user_enrollment_export() {
+        global $DB;
+
+        $this->resetAfterTest();
+        $now = time();
+        $startnow = $now - (8 * HOURSECS);
+        list($exportuntil, $timecreated) = $this->get_now_past($startnow);
+        $rcount = $DB->count_records_sql("
+               SELECT COUNT(ue.id) AS cnt
+                 FROM {user_enrolments} ue
+                 JOIN {enrol}            e ON ue.enrolid = e.id
+                WHERE
+                      EXISTS (SELECT c.id FROM {course} c WHERE e.courseid = c.id AND c.category <> 0)
+                      AND
+                      EXISTS (SELECT u.id FROM {user}   u WHERE ue.userid  = u.id AND u.deleted   = 0)                      
+         ");
+        $nr = 10;
+        $courses = $this->addcourses($nr, $timecreated);
+        $this->addquizzes($nr, $courses);
+        $this->user_set($courses, 'quiz');
+
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+        ];
+
+        // Initial export.
+        $this->export_check('enrolmentv2', $typedef, $exportuntil, false, ($nr + $rcount));
     }
 
 }

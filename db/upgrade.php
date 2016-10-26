@@ -242,5 +242,22 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070336, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070337) {
+        $tablename = 'local_xray_enroldel';
+        if (!$dbman->table_exists($tablename)) {
+            $table = new xmldb_table($tablename);
+            $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null, null);
+            $table->add_field('enrolid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, 'id');
+            $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, 'enrolid');
+            $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, 'userid');
+            $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, 'courseid');
+            $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+            $dbman->create_table($table);
+        }
+
+        // Xray savepoint reached.
+        upgrade_plugin_savepoint(true, 2015070337, 'local', 'xray');
+    }
+
     return true;
 }
