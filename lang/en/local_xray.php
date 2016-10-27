@@ -490,13 +490,13 @@ $string['coursesubscribedesc'] = 'You will receive an email with the course X-Ra
 $string['email_log_desc'] = 'Email sent. Course ID {$a->courseid} User ID {$a->to}';
 $string['emailsubject'] = 'X-Ray Report Summary for {$a}';
 $string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course ID {$a}';
-$string['profilelink'] = 'X-Ray Email Subscription';
+$string['profilelink'] = 'X-Ray Global Subscription';
 $string['subscribeall'] = 'Subscribe to the email reports for all courses';
 $string['subscribetothiscourse'] = 'Subscribe to email report';
-$string['subscriptiontitle'] = 'Email Subscription';
+$string['subscriptiontitle'] = 'X-Ray Email Subscription';
 $string['unsubscribeemail'] = 'Unsubscribe';
 $string['unsubscribetothiscourse'] = 'Unsubscribe from email report';
-$string['globalsubtitle'] = 'Global Email Subscription';
+$string['globalsubtitle'] = 'X-Ray Global Subscription';
 $string['globalsubcourse'] = 'Use course level subscription settings';
 $string['globalsubon'] = 'Subscribe to all courses';
 $string['globalsuboff'] = 'Cancel all subscriptions';
@@ -506,8 +506,8 @@ $string['globalsubdesc'] = 'Select the configuration for the global subscription
     'the courses that you are subscribed. This is selected by default. The Subscribe to all courses and Cancel all '.
     'subscriptions options overwrite subscription settings made at the course level. You will or will not receive '.
     'the X-Ray summary report for all courses.';
-$string['subscriptiondisabled'] = 'Enable this setting in the Global Email Subscription page. You can access '.
-    'this page using the link X-Ray Email Subscription from your profile.';
+$string['subscriptiondisabled'] = 'Enable this setting in the X-Ray Global Subscription page. You can access '.
+    'this page using the link X-Ray Global Subscription from your profile.';
 
 // Recommended Actions.
 $string['countaction'] = '{$a} recommended action';
