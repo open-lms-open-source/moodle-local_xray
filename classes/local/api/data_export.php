@@ -95,6 +95,12 @@ class data_export {
     public static function to_timestamp($fieldname, $doalias = true, $alias = null) {
         global $DB;
         $format = '';
+        // Do not use textual datetime representation in the new format.
+        $newformat = get_config(self::PLUGIN, 'newformat');
+        if ($newformat) {
+            return $fieldname;
+        }
+
         switch($DB->get_dbfamily()) {
             case 'mysql':
                 $format = 'FROM_UNIXTIME(%s)';
@@ -326,6 +332,42 @@ class data_export {
 
         $sql = "
                 SELECT id,
+                       firstname,
+                       lastname,
+                       '' AS gender,
+                       email,
+                       suspended,
+                       deleted,
+                       {$sqltimecreated},
+                       {$sqltimemodified},
+                       {$sqlfirstaccess},
+                       {$sqllastaccess},
+                       CASE
+                            WHEN timemodified = 0 THEN timecreated
+                            ELSE timemodified
+                       END AS traw
+                  FROM {user}
+                 WHERE
+                       ";
+
+        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function userlistv2($timest, $timeend, $dir) {
+        $sqltimecreated = self::to_timestamp('timecreated');
+        $sqltimemodified = self::to_timestamp('timemodified');
+        $sqlfirstaccess = self::to_timestamp('firstaccess');
+        $sqllastaccess = self::to_timestamp('lastaccess');
+
+        $sql = "
+                SELECT id,
+                       username,
                        firstname,
                        lastname,
                        '' AS gender,
@@ -1145,6 +1187,7 @@ class data_export {
             $destfile = $clientid . '/' . $basefile;
             /** @var \tgz_packer $tgzpacker */
             $tgzpacker = get_file_packer('application/x-gzip');
+            $tgzpacker->set_include_index(false);
             $result = $tgzpacker->archive_to_pathname($files, $archivefile);
             if (!$result) {
                 print_error('error_compress', self::PLUGIN);
@@ -1219,6 +1262,8 @@ class data_export {
     public static function export_csv($timest, $timeend, $dir) {
         self::$meta = array();
 
+        $newformat = get_config(self::PLUGIN, 'newformat');
+
         /** @var array $plugins */
         $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
         /** @var array $logstores */
@@ -1237,7 +1282,11 @@ class data_export {
         // Order of export matters. Do not change unless sure.
         self::coursecategories($timest, $timeend, $dir);
         self::courseinfo($timest, $timeend, $dir);
-        self::userlist($timest, $timeend, $dir);
+        if ($newformat) {
+            self::userlistv2($timest, $timeend, $dir);
+        } else {
+            self::userlist($timest, $timeend, $dir);
+        }
         self::enrolmentv2($timest, $timeend, $dir);
         self::roles($timest, $timeend, $dir);
         // Unfortunately log stores can be uninstalled so we check for that case.
@@ -1290,7 +1339,10 @@ class data_export {
             self::hsuposts_delete($timest, $timeend, $dir);
         }
 
-        self::export_metadata($dir);
+        // Export meta.json only in case legacy format is used.
+        if (!$newformat) {
+            self::export_metadata($dir);
+        }
 
         self::mtrace("Export data execution time: ".timer::end()." sec.");
     }
@@ -1325,6 +1377,16 @@ class data_export {
             'hsuthreads_delete'       => 'local_xray_hsudisc'   ,
             'hsuposts_delete'         => 'local_xray_hsupost'
         ];
+
+        $newformat = get_config(self::PLUGIN, 'newformat');
+        if ($newformat) {
+            $items['enrolmentv2'       ] = 'user_enrolments';
+            $items['enrolment_deletev2'] = 'local_xray_enroldel';
+            $items['userlistv2'        ] = 'user';
+            $items['roles'             ] = 'role_assignments';
+            $items['roles_delete'      ] = 'local_xray_roleunas';
+        }
+
         return $items;
     }
 
