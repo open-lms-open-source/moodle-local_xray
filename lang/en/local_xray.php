@@ -502,10 +502,11 @@ $string['globalsubon'] = 'Subscribe to all courses';
 $string['globalsuboff'] = 'Cancel all subscriptions';
 $string['globalsubdesctitle'] = 'Select the configuration for the global subscription to the X-Ray summary report. '.
     'You can let the decision to subscribe be made at the course level or make the decision for all courses.';
-$string['globalsubdescfirst'] = 'If you choose to <b>Use course level subscription settings</b>, you will receive the X-Ray summary report only for '.
-    'the courses that you are subscribed. This is selected by default.';
-$string['globalsubdescsecond'] = 'The <b>Subscribe to all courses</b> and <b>Cancel all subscriptions</b> options overwrite subscription settings made at '.
-    'the course level. You will or will not receive the X-Ray summary report for all courses.';
+$string['globalsubdescfirst'] = 'If you choose to <b>Use course level subscription settings</b>, you will receive '.
+    'the X-Ray summary report only for the courses that you are subscribed. This is selected by default.';
+$string['globalsubdescsecond'] = 'The <b>Subscribe to all courses</b> and <b>Cancel all subscriptions</b> options '.
+    'overwrite subscription settings made at the course level. You will or will not receive the X-Ray summary '.
+    'report for all courses.';
 $string['subscriptiondisabled'] = 'Enable this setting in the X-Ray Global Subscription page. You can access '.
     'this page using the link X-Ray Global Subscription from your profile.';
 
