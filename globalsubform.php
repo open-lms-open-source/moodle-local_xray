@@ -23,13 +23,15 @@ class globalsub_form extends moodleform {
             XRAYSUBSCRIBEOFF => get_string('globalsuboff', 'local_xray')
         );
 
-
-
-        $lista = html_writer::alist(array(
+        $description = html_writer::tag('div', get_string('globalsubdesctitle', 'local_xray'),
+            array('style' => 'margin-bottom:10px;'));
+        $list = html_writer::alist(array(
             get_string('globalsubdescfirst', 'local_xray'),
-            get_string('globalsubdescsecond', 'local_xray')));
+            get_string('globalsubdescsecond', 'local_xray')
+            )
+        );
 
-        $mform->addElement('html', html_writer::tag('p', get_string('globalsubdesctitle', 'local_xray')).$lista);
+        $mform->addElement('html', $description.$list);
         $mform->addElement('select', 'type', '', $options);
         $mform->setDefault('select', XRAYSUBSCRIBECOURSE);
         $this->add_action_buttons(false);
