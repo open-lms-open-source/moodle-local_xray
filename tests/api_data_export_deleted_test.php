@@ -425,7 +425,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
         $storagedir = $storage->get_directory();
         $this->export($timenow, $storagedir);
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'enrolment_delete_00000001.csv';
+        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'enrolment_deletev2_00000001.csv';
         $this->assertFileExists($exportfile);
 
         $first = true;
@@ -435,20 +435,20 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
                 $first = false;
                 continue;
             }
-            // Expect 4 items.
+            // Expect 5 items.
             $this->assertEquals(5, count($item));
             $this->assertInternalType('numeric', $item[0]);
             $this->assertInternalType('numeric', $item[1]);
             $this->assertInternalType('numeric', $item[2]);
             $this->assertInternalType('numeric', $item[3]);
-            $this->assertInternalType('string' , $item[4]);
+            $this->assertInternalType('numeric', $item[4]);
 
         }
 
         // Check data pruning.
         $task = new \local_xray\task\data_prune_task();
         $task->execute();
-        $this->assertEquals(0, $DB->count_records('local_xray_roleunas'));
+        $this->assertEquals(0, $DB->count_records('local_xray_enroldel'));
     }
 
     /**
@@ -513,7 +513,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
         $storagedir = $storage->get_directory();
         $this->export($timenow, $storagedir);
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'enrolment_delete_00000001.csv';
+        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'enrolment_deletev2_00000001.csv';
         $this->assertFileExists($exportfile);
         $exportkeys1 = $this->get_export_data_keys($exportfile);
 
@@ -522,7 +522,7 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
         $storagedir2 = $storage2->get_directory();
         $this->export($timenow, $storagedir2);
 
-        $exportfile = $storagedir2.DIRECTORY_SEPARATOR.'enrolment_delete_00000001.csv';
+        $exportfile = $storagedir2.DIRECTORY_SEPARATOR.'enrolment_deletev2_00000001.csv';
         $this->assertFileExists($exportfile);
         $exportkeys2 = $this->get_export_data_keys($exportfile);
 

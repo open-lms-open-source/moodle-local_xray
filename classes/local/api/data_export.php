@@ -349,11 +349,64 @@ class data_export {
     }
 
     /**
+     *
+     * Export course enrollments
+     *
      * @param int    $timest
      * @param int    $timeend
      * @param string $dir
      */
-    public static function enrolment($timest, $timeend, $dir) {
+    public static function enrolmentv2($timest, $timeend, $dir) {
+        $wherecond = self::range_where('ue.timemodified', null, $timest, $timeend, __FUNCTION__, 'ue.id');
+
+        $sql = "
+               SELECT ue.id,
+                      e.courseid,
+                      ue.userid AS participantid,
+                      ue.timemodified,
+                      ue.timemodified AS traw
+                 FROM {user_enrolments} ue
+                 JOIN {enrol}            e ON ue.enrolid = e.id
+                WHERE
+                      EXISTS (SELECT c.id FROM {course} c WHERE e.courseid = c.id AND c.category <> 0)
+                      AND
+                      EXISTS (SELECT u.id FROM {user}   u WHERE ue.userid  = u.id AND u.deleted   = 0)
+                      AND
+                          ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     *
+     * Export enrollment deletions
+     *
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function enrolment_deletev2($timest, $timeend, $dir) {
+
+        $sql = "
+                SELECT id,
+                       enrolid,
+                       userid,
+                       courseid,
+                       timedeleted,
+                       timedeleted AS traw
+                  FROM {local_xray_enroldel}
+                 WHERE
+                       ";
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param int    $timest
+     * @param int    $timeend
+     * @param string $dir
+     */
+    public static function roles($timest, $timeend, $dir) {
         $wherecond = self::range_where('l.timemodified', null, $timest, $timeend, __FUNCTION__, 'l.id');
         $sqltimemodified = self::to_timestamp('l.timemodified', true, 'timemodified');
         $sql = "
@@ -364,9 +417,9 @@ class data_export {
                        {$sqltimemodified},
                        l.timemodified AS traw
                   FROM {role_assignments} l
-                  JOIN {context}          ctx  ON l.contextid = ctx.id AND ctx.contextlevel= 50
+                  JOIN {context}          ctx ON l.contextid = ctx.id AND ctx.contextlevel= 50
                  WHERE
-                       EXISTS (SELECT u.id FROM {user} u WHERE l.userid = u.id AND u.deleted = 0)
+                       EXISTS (SELECT u.id FROM {user}   u WHERE l.userid = u.id AND u.deleted = 0)
                        AND
                        EXISTS (SELECT c.id FROM {course} c WHERE ctx.instanceid = c.id AND c.category <> 0)
                        AND
@@ -381,7 +434,7 @@ class data_export {
      * @param int    $timeend
      * @param string $dir
      */
-    public static function enrolment_delete($timest, $timeend, $dir) {
+    public static function roles_delete($timest, $timeend, $dir) {
         $sqltimedeleted = self::to_timestamp('timedeleted');
 
         $sql = "
@@ -1185,7 +1238,8 @@ class data_export {
         self::coursecategories($timest, $timeend, $dir);
         self::courseinfo($timest, $timeend, $dir);
         self::userlist($timest, $timeend, $dir);
-        self::enrolment($timest, $timeend, $dir);
+        self::enrolmentv2($timest, $timeend, $dir);
+        self::roles($timest, $timeend, $dir);
         // Unfortunately log stores can be uninstalled so we check for that case.
         if (array_key_exists('legacy', $logstores)) {
             self::accesslog($timest, $timeend, $dir);
@@ -1223,7 +1277,8 @@ class data_export {
         // Deleted records go here.
         self::coursecategories_delete($timest, $timeend, $dir);
         self::courseinfo_delete($timest, $timeend, $dir);
-        self::enrolment_delete($timest, $timeend, $dir);
+        self::enrolment_deletev2($timest, $timeend, $dir);
+        self::roles_delete($timest, $timeend, $dir);
         self::activity_delete($timest, $timeend, $dir);
         if (array_key_exists('forum', $plugins)) {
             self::threads_delete($timest, $timeend, $dir);

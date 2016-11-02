@@ -90,6 +90,10 @@ class local_xray_headline_testcase extends \advanced_testcase {
         // Set clientid, with clientid "error", webservice class send us error when phpunit is running.
         set_config("xrayclientid", "error", self::PLUGIN_NAME);
 
+        $baseurl = "http://xrayunitest";
+        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+        \local_xray\local\api\testhelper::push_pair($baseurl.'/user/login', 'user-login-fail-final.json');
+        \local_xray\local\api\xrayws::instance()->resetcookie();
         /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
         $dashboarddata = \local_xray\dashboard\dashboard::get($this->course->id, $this->user->id);
         // This must return false.
@@ -102,7 +106,8 @@ class local_xray_headline_testcase extends \advanced_testcase {
     public function test_attributes_class_dashboard_data() {
 
         $this->resetAfterTest();
-        $dashboadrobj = new \local_xray\dashboard\dashboard_data(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, array(), 14, '2016-08-26T00:00:00.000Z');
+        $dashboadrobj = new \local_xray\dashboard\dashboard_data(1, 2, 3, 4, 5, 6, 7, 8,
+            9, 10, 11, 12, array(), 14, '2016-08-26T00:00:00.000Z');
         $this->assertObjectHasAttribute("usersinrisk", $dashboadrobj);
         $this->assertObjectHasAttribute("risktotal", $dashboadrobj);
         $this->assertObjectHasAttribute("averagerisksevendaybefore", $dashboadrobj);

@@ -346,6 +346,22 @@ function local_xray_role_unassigned(\core\event\role_unassigned $event) {
 }
 
 /**
+ * Listener for removal of user enrollment from a course
+ * @param \core\event\user_enrolment_deleted $event
+ * @throws coding_exception
+ */
+function local_xray_user_enrolment_deleted(\core\event\user_enrolment_deleted $event) {
+    global $DB;
+    $data = [
+        'enrolid'     => $event->objectid,
+        'userid'      => $event->relateduserid,
+        'courseid'    => $event->courseid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_enroldel', $data, false);
+}
+
+/**
  * Get headline data for the template.
  * @param $courseid
  * @return stdClass
