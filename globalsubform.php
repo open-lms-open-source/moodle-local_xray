@@ -25,7 +25,7 @@ class globalsub_form extends moodleform {
 
         $mform->addElement('html', html_writer::tag('p', get_string('globalsubdesc', 'local_xray')));
         $mform->addElement('select', 'type', '', $options);
-        $mform->setDefault(XRAYSUBSCRIBECOURSE);
+        $mform->setDefault('select', XRAYSUBSCRIBECOURSE);
         $this->add_action_buttons(false);
 
     }

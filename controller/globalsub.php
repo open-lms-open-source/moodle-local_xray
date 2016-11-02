@@ -51,7 +51,8 @@ class local_xray_controller_globalsub extends mr_controller {
             $mform = new globalsub_form($this->url);
 
             // Create navbar.
-            $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+            $profileurl = new moodle_url('/user/profile.php', array('id'=>$USER->id));
+            $PAGE->navbar->add(get_string("profile"), $profileurl);
             $PAGE->navbar->add(get_string("globalsubtitle", $this->component), $this->url);
 
             if ($currentvalue = $DB->get_record('local_xray_globalsub', array('userid' => $USER->id), 'id, type', IGNORE_MULTIPLE)) {
