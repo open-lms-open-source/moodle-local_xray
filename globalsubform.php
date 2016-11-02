@@ -13,7 +13,6 @@ require_once($CFG->dirroot.'/local/xray/lib.php');
 
 class globalsub_form extends moodleform {
     public function definition() {
-        global $COURSE;
 
         $mform = $this->_form;
 
@@ -35,6 +34,5 @@ class globalsub_form extends moodleform {
         $mform->addElement('select', 'type', '', $options);
         $mform->setDefault('select', XRAYSUBSCRIBECOURSE);
         $this->add_action_buttons(false);
-
     }
 }
