@@ -25,7 +25,7 @@ TODO - make express specific? */
     padding:0 15px;
     /*We are using class .block in this div too, but we need to be sure that width will be 100%.*/
     float: inherit !important;
-    width: auto !important;
+    width: 100% !important;
 }
 
 /**************** Recommended Actions ****************/
