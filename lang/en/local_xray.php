@@ -401,8 +401,10 @@ $string['discussionreport_endogenicPlagiarismHeatmap'] = 'Word Overlap (with ins
 $string['discussionreport_discussionSuggestedGrades'] = 'Distribution of Recommended Grades';
 
 /* Help Graphs Discussion report*/
-$string['discussionreport_wordcloud_help'] = 'This word cloud shows the words used most often in discussions. It is'.
-    ' based on a word count of unique words used. Bigger words indicate more use. ';
+$string['discussionreport_wordcloud_help'] = 'This word cloud shows the words used most often in discussions.'.
+    ' It is based on a word count of unique words used. Bigger words indicate more use. In the individual discussion'.
+    ' report word cloud there might be words included that are not in the course discussion report word cloud, because'.
+    ' there is a lower threshold for minimum number of occurrences for words to appear in the individual report.';
 $string['discussionreport_avgWordPerPost_help'] = 'This graph shows the average word count in course discussion posts'.
     ' per week. The blue line represents observed values while the yellow dotted line represents the expected  average.';
 $string['discussionreport_socialStructure_help'] = 'This diagram shows you who your students are replying to. Color'.
