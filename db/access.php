@@ -157,7 +157,7 @@ $capabilities = array(
     // View Global Subscription page.
     'local/xray:globalsub_view' => array(
         'captype' => 'read',
-        'contextlevel' => CONTEXT_SYSTEM,
+        'contextlevel' => CONTEXT_USER,
         'archetypes' => array(
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,

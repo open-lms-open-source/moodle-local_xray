@@ -32,29 +32,14 @@ class local_xray_controller_globalsub extends mr_controller {
 
     public function view_action() {
 
-        global $CFG, $USER, $DB, $PAGE, $OUTPUT;
+        global $CFG, $USER, $DB, $OUTPUT;
         $saved = optional_param('saved', 0, PARAM_INT);
 
         require_once($CFG->dirroot.'/local/xray/lib.php');
         require_once($CFG->dirroot.'/local/xray/globalsubform.php');
 
         if (local_xray_email_enable()) {
-
-            // Add the heading text.
-            $this->heading->text = get_string("globalsubtitle", $this->component);
-            // Add title.
-            $PAGE->set_title(get_string("globalsubtitle", $this->component));
-            // Add params in URL.
-            $params = array('controller' => 'globalsub');
-            $this->url->params($params);
-
             $mform = new globalsub_form($this->url);
-
-            // Create navbar.
-            $profileurl = new moodle_url('/user/profile.php', array('id'=>$USER->id));
-            $PAGE->navbar->add(get_string("profile"), $profileurl);
-            $PAGE->navbar->add(get_string("globalsubtitle", $this->component), $this->url);
-
             if ($currentvalue = $DB->get_record('local_xray_globalsub', array('userid' => $USER->id), 'id, type', IGNORE_MULTIPLE)) {
                 $toform = new stdClass();
                 $toform->type = $currentvalue->type;
@@ -95,5 +80,43 @@ class local_xray_controller_globalsub extends mr_controller {
         if (!local_xray_get_teacher_courses($USER->id)) {
             require_capability("{$this->plugin}:globalsub_view", $this->get_context());
         }
+    }
+
+    /**
+     * Setup.
+     */
+    public function setup() {
+        global $CFG, $PAGE, $COURSE, $USER;
+
+        require_login();
+
+        $PAGE->set_context($this->get_context());
+        // Add the heading text.
+        $this->heading->text = get_string("globalsubtitle", $this->component);
+        // Add title.
+        $PAGE->set_title(get_string("globalsubtitle", $this->component));
+        $url = new moodle_url('/local/xray/view.php', array('controller' => 'globalsub'));
+        $PAGE->set_url($url);
+        $PAGE->set_pagelayout('standard');
+        // Create navbar.
+        if (isset($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_SITE)) {
+            $myurl = new moodle_url($CFG->wwwroot.'/my/');
+            $PAGE->navbar->add(get_string("myhome"), $myurl);
+        }
+        $profileurl = new moodle_url('/user/profile.php', array('id'=>$USER->id));
+        $PAGE->navbar->add(get_string("profile"), $profileurl);
+        $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+        $PAGE->navbar->add(get_string("globalsubtitle", $this->component), $url);
+    }
+
+    /**
+     * Get controller context
+     *
+     * @return \context
+     */
+    public function get_context() {
+        global $USER;
+
+        return context_user::instance($USER->id, MUST_EXIST);
     }
 }
