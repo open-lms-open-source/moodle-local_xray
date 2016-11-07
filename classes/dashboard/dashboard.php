@@ -190,6 +190,16 @@ class dashboard {
                             }
                         }
                     }
+                    if ($recommendationslist) {
+                        $recommendations = $recommendationslist;
+                        // Count recommendations.
+                        $countrecommendations = count($recommendations);
+                    }
+                    // Report date.
+                    $reportdateisset = isset($response->reportdate);
+                    if ($reportdateisset) {
+                        $reportdate = $response->reportdate;
+                    }
                 }
 
                 // Return dashboard_data object.
