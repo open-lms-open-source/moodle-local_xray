@@ -480,7 +480,6 @@ function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, 
     return true;
 }
 
-
 /**
  * Get all the courses where the user is enrolled as editingteacher or teacher.
  * 
@@ -503,6 +502,21 @@ function local_xray_get_teacher_courses($userid) {
 
     $params = array('userid' => $userid, 'contextcourse' => CONTEXT_COURSE);
     return $DB->get_records_sql($sql, $params);
+}
+
+/**
+ * Check if the user is enrolled as a teacher in a course.
+ *
+ * @param int $courseid
+ * @param int $userid
+ * @return bool.
+ */
+function local_xray_is_teacher_in_course ($courseid, $userid) {
+    $usercourses = local_xray_get_teacher_courses($userid);
+    if (array_key_exists($courseid, $usercourses)) {
+        return true;
+    }
+    return false;
 }
 
 /**

@@ -29,6 +29,10 @@ use local_xray\local\api;
  */
 class dashboard {
 
+    const XRAYRECOMMENDATIONADMIN = 0;
+    const XRAYRECOMMENDATIONTEACHER = 1;
+    const XRAYRECOMMENDATIONALL = 2;
+
     /**
      * Connect with xray webservice and get data for dashboard.
      * @param $courseid
@@ -37,6 +41,7 @@ class dashboard {
     public static function get($courseid, $userid = false) {
 
         $result = "";
+        $context = \context_course::instance($courseid);
 
         try {
 
@@ -143,9 +148,29 @@ class dashboard {
 
                 $recommendationslist = array();
                 if ($userid) {
-                    // Teacher.
-                    $usercourses = local_xray_get_teacher_courses($userid);
-                    if (array_key_exists($courseid, $usercourses)) {
+                    $addrecommendations = '';
+                    if (has_capability("local/xray:adminrecommendations_view", $context)) {
+                        $addrecommendations = self::XRAYRECOMMENDATIONADMIN;
+                        if (local_xray_is_teacher_in_course($courseid, $userid)) {
+                            $addrecommendations = self::XRAYRECOMMENDATIONALL;
+                        }
+                    } else if (has_capability("local/xray:teacherrecommendations_view", $context) || local_xray_is_teacher_in_course($courseid, $userid)) {
+                        $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
+                    }
+                    // Recommendations for Admin user..
+                    if ($addrecommendations == self::XRAYRECOMMENDATIONADMIN || $addrecommendations == self::XRAYRECOMMENDATIONALL) {
+                        // Recommendations Admin.
+                        $recommendationsisset = isset($response->elements->recommendationsAdmin);
+                        if ($recommendationsisset) {
+                            foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
+                                if ($recommendation->text->value) {
+                                    $recommendationslist[] = $recommendation->text->value;
+                                }
+                            }
+                        }
+                    }
+                    // Recommendations for Instructor user..
+                    if ($addrecommendations == self::XRAYRECOMMENDATIONTEACHER || $addrecommendations == self::XRAYRECOMMENDATIONALL) {
                         // Recommendations Instructor.
                         $recommendationsisset = isset($response->elements->recommendationsInstructor);
                         if ($recommendationsisset) {
@@ -164,31 +189,6 @@ class dashboard {
                                 }
                             }
                         }
-                    }
-                    // Admin.
-                    $admins = get_admins();
-                    if (array_key_exists($userid, $admins)) {
-                        // Recommendations Admin.
-                        $recommendationsisset = isset($response->elements->recommendationsAdmin);
-                        if ($recommendationsisset) {
-                            foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
-                                if ($recommendation->text->value) {
-                                    $recommendationslist[] = $recommendation->text->value;
-                                }
-                            }
-                        }
-                    }
-
-                    if ($recommendationslist) {
-                        $recommendations = $recommendationslist;
-                        // Count recommendations.
-                        $countrecommendations = count($recommendations);
-                    }
-
-                    // Report date.
-                    $reportdateisset = isset($response->reportdate);
-                    if ($reportdateisset) {
-                        $reportdate = $response->reportdate;
                     }
                 }
 
@@ -211,7 +211,7 @@ class dashboard {
 
             }
         } catch (\moodle_exception $e) {
-            get_report_failed::create_from_exception($e, \context_course::instance($courseid), "dashboard")->trigger();
+            get_report_failed::create_from_exception($e, $context, "dashboard")->trigger();
             $result = false;
         }
 

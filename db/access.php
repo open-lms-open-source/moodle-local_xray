@@ -164,4 +164,22 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
+    // View Recommendations for Teacher.
+    'local/xray:teacherrecommendations_view' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW
+        )
+    ),
+
+    // View Recommendations for Admin.
+    'local/xray:adminrecommendations_view' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
 );
