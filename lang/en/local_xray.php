@@ -450,8 +450,10 @@ $string['discussionreportindividual_socialStructure'] = 'Interaction Analysis';
 $string['discussionreportindividual_wordHistogram'] = 'Frequency of Most Used Words';
 
 /* Help Graphs Discussion report individual*/
-$string['discussionreportindividual_wordcloud_help'] = 'This word cloud shows the words used most often in'.
-    ' discussions. It is based on a word count of unique words used.  Bigger words indicate more use. ';
+$string['discussionreportindividual_wordcloud_help'] = 'This word cloud shows the words used most often in discussions.'.
+    ' It is based on a word count of unique words used. Bigger words indicate more use. In the individual discussion'.
+    ' report word cloud there might be words included that are not in the course discussion report word cloud, because'.
+    ' there is a lower threshold for minimum number of occurrences for words to appear in the individual report.';
 $string['discussionreportindividual_socialStructure_help'] = 'This diagram shows who this student is talking to. Color'.
     ' shows how connected a student is to the rest of the class. Blue shows an average or a above average connection.'.
     ' Yellow shows a below average connection. Red shows that there has been no connection with that student yet. ';
@@ -463,8 +465,10 @@ $string['discussionreportindividualforum_socialStructure'] = 'Interaction Analys
 $string['discussionreportindividualforum_wordHistogram'] = 'Frequency of Most Used Words';
 
 /* Help Graphs Discussion report individual forum*/
-$string['discussionreportindividualforum_wordcloud_help'] = 'This word cloud shows the words used most often in'.
-    ' discussions. It is based on a word count of unique words used. Bigger words indicate more use.';
+$string['discussionreportindividualforum_wordcloud_help'] = 'This word cloud shows the words used most often in discussions.'.
+    ' It is based on a word count of unique words used. Bigger words indicate more use. In the individual discussion'.
+    ' report word cloud there might be words included that are not in the course discussion report word cloud, because'.
+    ' there is a lower threshold for minimum number of occurrences for words to appear in the individual report.';
 $string['discussionreportindividualforum_socialStructure_help'] = 'This diagram shows you who your students are'.
     ' replying to. Color shows how connected a student is to the rest of the class. Blue shows the student has'.
     ' an average or a above average connection to the rest of the class. Yellow shows a below average connection.'.
