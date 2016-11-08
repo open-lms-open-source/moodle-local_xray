@@ -512,6 +512,15 @@ $string['globalsubdescsecond'] = 'The <b>Subscribe to all courses</b> and <b>Can
 $string['subscriptiondisabled'] = 'Enable this setting in the X-Ray Global Subscription page. You can access '.
     'this page using the link X-Ray Global Subscription from your profile.';
 
+// Frequency control for emails.
+$string['daily'] = 'Daily';
+$string['emailfrequency'] = 'Frequency of email';
+$string['emailfrequency_desc'] = 'When the frequency is changed to daily the email will be sent the following midnight. When the frequency is changed to weekly the email will be sent following Sunday.';
+$string['frequencyheading'] = 'Email Frequency Controls';
+$string['frequencyheading_desc'] = 'Choose the frequency of email alerts.';
+$string['never'] = 'Never';
+$string['weekly'] = 'Weekly';
+
 // Recommended Actions.
 $string['countaction'] = '{$a} recommended action';
 $string['countactions'] = '{$a} recommended actions';
