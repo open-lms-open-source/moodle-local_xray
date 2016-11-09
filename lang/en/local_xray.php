@@ -517,7 +517,7 @@ $string['daily'] = 'Daily';
 $string['emailfrequency'] = 'Frequency of email';
 $string['emailfrequency_desc'] = 'When the frequency is changed to daily the email will be sent the following midnight. When the frequency is changed to weekly the email will be sent following Sunday.';
 $string['frequencyheading'] = 'Email Frequency Controls';
-$string['frequencyheading_desc'] = 'Choose the frequency of email alerts.';
+$string['frequencyheading_desc'] = 'Choose the frequency of email alerts. All the emails are sent one minute after midnight. You can choose if you want to send emails daily, weekly or never. If you choose weekly, the emails will be sent on Sunday.';
 $string['never'] = 'Never';
 $string['weekly'] = 'Weekly';
 
