@@ -45,6 +45,7 @@ $string['reportviewed'] = 'Reporte Visualizado';
 /* Capabilities */
 $string['xray:activityreportindividual_view'] = 'Ver reporte de métricas de actividad individuales';
 $string['xray:activityreport_view'] = 'Ver reporte de actividad';
+$string['xray:adminrecommendations_view'] = 'Ver las recomendaciones para el administrador';
 $string['xray:dashboard_view'] = 'Ver interfaz de reportes';
 $string['xray:discussionreport_view'] = 'Ver reporte de discusiones';
 $string['xray:discussionreportindividual_view'] = 'Ver discusión - Reporte individual';
@@ -56,6 +57,7 @@ $string['xray:gradebookreportindividualquiz_view'] = 'Ver reporte individual de 
 $string['xray:risk_view'] = 'Ver reporte de estado de riesgo';
 $string['xray:subscription_view'] = 'Suscribirse al reporte de correo electrónico';
 $string['xray:systemreports_view'] = 'Ver los reportes del sistema';
+$string['xray:teacherrecommendations_view'] = 'Ver las recomendaciones para el instructor';
 $string['xray:view'] = 'Ver X-Ray Learning Analytics';
 
 /* Categories for numbers values */

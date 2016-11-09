@@ -44,6 +44,7 @@ $string['cachedef_request'] = 'X-Ray request cache';
 /* Capabilities */
 $string['xray:activityreportindividual_view'] = 'View Student Activity Report';
 $string['xray:activityreport_view'] = 'View Activity Report';
+$string['xray:adminrecommendations_view'] = 'View Recommendations for Admin';
 $string['xray:dashboard_view'] = 'View Dashboard Report';
 $string['xray:discussionreport_view'] = 'View Discussion Report';
 $string['xray:discussionreportindividual_view'] = 'View Student Discussion Report';
@@ -56,6 +57,7 @@ $string['xray:gradebookreportindividualquiz_view'] = 'View Gradebook Report Indi
 $string['xray:risk_view'] = 'View Risk Status Report';
 $string['xray:subscription_view'] = 'Subscribe to email report';
 $string['xray:systemreports_view'] = 'View System Reports';
+$string['xray:teacherrecommendations_view'] = 'View Recommendations for Teacher';
 $string['xray:view'] = 'X-Ray Learning Analytics View';
 
 /* Categories for numbers values */

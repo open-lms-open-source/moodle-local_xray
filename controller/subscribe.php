@@ -49,11 +49,13 @@ class local_xray_controller_subscribe extends mr_controller {
             $this->url->params($params);
 
             // Check if the setting is enabled.
-            $globalsub = $DB->get_record('local_xray_globalsub', array('userid' => $USER->id), 'type', IGNORE_MULTIPLE);
             $disabled = false;
-            if ($globalsub->type == XRAYSUBSCRIBEON || $globalsub->type == XRAYSUBSCRIBEOFF) {
-                $disabled = true;
+            if ($globalsub = $DB->get_record('local_xray_globalsub', array('userid' => $USER->id), 'type', IGNORE_MULTIPLE)) {
+                if ($globalsub->type == XRAYSUBSCRIBEON || $globalsub->type == XRAYSUBSCRIBEOFF) {
+                    $disabled = true;
+                }
             }
+
             $mform = new subscribe_form($this->url, array('disabled' => $disabled));
 
             // Create navbar.
