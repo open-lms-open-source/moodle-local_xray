@@ -63,10 +63,10 @@ class send_emails extends scheduled_task {
             // Check frequency.
             $currentdayofweek = date("w");
             // Get current day of week.
-            $frequency = get_config('weekly', 'local_xray');
+            $frequency = get_config('local_xray', 'emailfrequency');
             // If the frequency is daily, the email should be sent.
             // If the frequency is weekly, check if the current day of week is Sunday.
-            if ($frequency == 'daily' || ($frequency == 'weekly' && $currentdayofweek == 0)) {
+            if ($frequency == XRAYDAILY || ($frequency == XRAYWEEKLY && $currentdayofweek == 0)) {
                 // Create an array with courses and users.
                 $coursesusers = array();
                 if (local_xray_email_enable()) {

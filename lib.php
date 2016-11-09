@@ -33,6 +33,10 @@ define('XRAYSUBSCRIBECOURSE', 0);
 define('XRAYSUBSCRIBEON', 1);
 define('XRAYSUBSCRIBEOFF', 2);
 
+define('XRAYNEVER', 'never');
+define('XRAYDAILY', 'daily');
+define('XRAYWEEKLY', 'weekly');
+
 /**
  * Generate list of report links according to the current page
  * Result is returned as associative array ($reportname => $reporturl)
