@@ -68,6 +68,11 @@ function local_xray_show_on_table(YUI, data) {
                     $("#xray-js-table-" + data.id +"_paginate").show();
                 }
 
+                /* Add tabindex to tbody, scope to th elements and scope to first element in rows(tbody). */
+                $("#xray-js-table-" + data.id + " tbody").attr("tabindex",0);
+                $("#xray-js-table-" + data.id + " tr th").attr("scope", "col");
+                $("#xray-js-table-" + data.id + " tbody tr td:first-child").attr("scope", "row");
+
                 // To load table, show table on top.
                 var targetOffset = $("#" + data.id).offset().top;
                 $('html, body').scrollTop(targetOffset);
