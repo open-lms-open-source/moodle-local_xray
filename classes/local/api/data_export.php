@@ -42,12 +42,12 @@ class data_export {
     /**
      * @var array
      */
-    protected static $meta = array();
+    protected static $meta = [];
 
     /**
      * @var array
      */
-    protected static $counters = array();
+    protected static $counters = [];
 
     /**
      * @param  string $base
@@ -142,6 +142,7 @@ class data_export {
         return $result;
     }
 
+    /* @noinspection PhpTooManyParametersInspection */
     /**
      * @param  string $field1
      * @param  string $field2
@@ -151,6 +152,7 @@ class data_export {
      * @param  string $idfield
      * @param  bool $skipextra
      * @return array
+     *
      */
     public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id', $skipextra = false) {
         global $DB;
@@ -201,6 +203,25 @@ class data_export {
         }
 
         return $sqlparams;
+    }
+
+    /**
+     * @param  string $method
+     * @param  string $optional
+     * @return string
+     */
+    public static function exportpath($method, $optional = '') {
+        $newformat = get_config(self::PLUGIN, 'newformat');
+        if ($newformat) {
+            $fixedprefix = get_config(self::PLUGIN, 'fixedprefix');
+            if (empty($optional) && !empty($fixedprefix)) {
+                $optional = $fixedprefix;
+            }
+            $postfix = empty($optional) ? uniqid('_') : $optional;
+            $method = $method.DIRECTORY_SEPARATOR.$method.$postfix;
+        }
+
+        return $method;
     }
 
     /**
@@ -1047,6 +1068,8 @@ class data_export {
             return 0;
         }
 
+        $newformat = get_config(self::PLUGIN, 'newformat');
+        $delimiter = $newformat ? '|' : ',';
         $count     = self::get_max_record_count();
         $pos       = 0;
         $counter   = 0;
@@ -1055,7 +1078,7 @@ class data_export {
         $lastid    = null;
         $maxdate   = null;
         if (!is_array($params)) {
-            $params = array();
+            $params = [];
         }
 
         $lastidstore = get_config(self::PLUGIN, $filename);
@@ -1063,6 +1086,13 @@ class data_export {
             $lastid = (int)$lastidstore;
         } else {
             $lastidstore = 0;
+        }
+
+        if ($newformat) {
+            $ndir = $dir.DIRECTORY_SEPARATOR.$filename;
+            if (!file_exists($ndir)) {
+                make_writable_directory($ndir, false);
+            }
         }
 
         do {
@@ -1078,10 +1108,10 @@ class data_export {
             }
 
             $fcount   += 1;
-            $filenamer = sprintf('%s_%08d.csv', $filename, $fcount);
+            $filenamer = sprintf('%s_%08d.csv', self::exportpath($filename), $fcount);
             $exportf   = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filenamer);
-            $file      = new csv_file($exportf);
-
+            $file = new csv_file($exportf, $delimiter);
+            
             foreach ($recordset as $record) {
                 $cmaxdate = $record->traw;
                 unset($record->traw);
@@ -1098,21 +1128,21 @@ class data_export {
                 }
             }
 
+            // Store metadata for later.
+            self::$meta[] = (object)[
+                'name'      => $filenamer,
+                'table'     => $filename,
+                'delimiter' => $file->delimiter(),
+                'enclosure' => $file->enclosure(),
+                'escape'    => $file->escape_char(),
+                'encoding'  => 'UTF8'
+            ];
+
             $file->close();
             $recordset->close();
 
             $file      = null;
             $recordset = null;
-
-            // Store metadata for later.
-            self::$meta[] = (object)[
-                'name'      => $filenamer,
-                'table'     => $filename,
-                'delimiter' => csv_file::DELIMITER,
-                'enclosure' => csv_file::ENCLOSURE,
-                'escape'    => csv_file::ESCAPE_CHAR,
-                'encoding'  => 'UTF8'
-            ];
 
             $pos    += $count;
 
@@ -1151,11 +1181,16 @@ class data_export {
      * @return string[]
      */
     public static function compress($dirbase, $dirname) {
-        $usenative = get_config(self::PLUGIN, 'enablepacker');
-        if ($usenative) {
-            $result = self::compress_targz_native($dirbase, $dirname);
+        $newformat = get_config(self::PLUGIN, 'newformat');
+        if ($newformat) {
+            $result = self::compress_bzip2_native($dirbase, $dirname);
         } else {
-            $result = self::compress_targz($dirbase, $dirname);
+            $usenative = get_config(self::PLUGIN, 'enablepacker');
+            if ($usenative) {
+                $result = self::compress_targz_native($dirbase, $dirname);
+            } else {
+                $result = self::compress_targz($dirbase, $dirname);
+            }
         }
 
         return $result;
@@ -1194,7 +1229,7 @@ class data_export {
             }
         }
 
-        return array($archivefile, $destfile);
+        return [$archivefile, $destfile];
     }
 
     /**
@@ -1230,7 +1265,32 @@ class data_export {
             }
         }
 
-        return array($compfile, $destfile);
+        return [$compfile, $destfile];
+    }
+
+    /**
+     * @param  string $dirbase
+     * @param  string $dirname
+     * @return bool
+     * @throws \moodle_exception
+     */
+    public static function compress_bzip2_native($dirbase, $dirname) {
+        $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
+
+        $files = get_directory_list($transdir, ['..', '.'], true, false, true);
+        foreach ($files as $file) {
+            $ndir = $transdir . DIRECTORY_SEPARATOR . $file;
+            $escdir = escapeshellarg($ndir);
+            $command = escapeshellcmd("bzip2 -sq {$escdir}");
+            $ret = 0;
+            $lastmsg = system($command, $ret);
+            if ($ret != 0) {
+                // We have error code should not upload...
+                print_error('error_generic', self::PLUGIN, '', $lastmsg);
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -1260,7 +1320,7 @@ class data_export {
      * @param string $dir
      */
     public static function export_csv($timest, $timeend, $dir) {
-        self::$meta = array();
+        self::$meta = [];
 
         $newformat = get_config(self::PLUGIN, 'newformat');
 

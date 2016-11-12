@@ -46,34 +46,22 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
         $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
-        $this->addforums(5, $courses);
-
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
-
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'forums_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 7 items.
-            $this->assertEquals(7, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('string' , $item[3]);
-            $this->assertInternalType('string' , $item[4]);
-            $this->assertInternalType('string' , $item[5]);
-            $this->assertInternalType('string' , $item[6]);
+        list($forums, $discussions, $posts) = $this->addforums(5, $courses);
+        $validationdata = [];
+        foreach ($forums as $forum) {
+            $validationdata[] = [$forum->id, null, $forum->course, $forum->type, $forum->name, $forum->intro, null];
         }
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+        ];
 
+        $this->export_check('forums', $typedef, $timenow, false, 25, $validationdata);
     }
 
     /**
@@ -90,34 +78,23 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
         $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
-        $this->addhsuforums(5, $courses);
+        list($forums, $discussions, $posts) = $this->addhsuforums(5, $courses);
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
-
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'hsuforums_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 7 items.
-            $this->assertEquals(7, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('string' , $item[3]);
-            $this->assertInternalType('string' , $item[4]);
-            $this->assertInternalType('string' , $item[5]);
-            $this->assertInternalType('string' , $item[6]);
+        $validationdata = [];
+        foreach ($forums as $forum) {
+            $validationdata[] = [$forum->id, null, $forum->course, $forum->type, $forum->name, $forum->intro, null];
         }
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+        ];
 
+        $this->export_check('hsuforums', $typedef, $timenow, false, 25, $validationdata);
     }
 
     /**
@@ -134,33 +111,23 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
         $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
-        $this->addquizzes(5, $courses);
+        $quizzes = $this->addquizzes(5, $courses);
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
-
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'quiz_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 7 items.
-            $this->assertEquals(7, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('string' , $item[3]);
-            $this->assertInternalType('numeric', $item[4]);
-            $this->assertInternalType('numeric', $item[5]);
-            $this->assertInternalType('string' , $item[6]);
+        $validationdata = [];
+        foreach ($quizzes as $quiz) {
+            $validationdata[] = [$quiz->id, null, $quiz->course, $quiz->name, $quiz->attempts, $quiz->grade, null];
         }
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+        ];
+
+        $this->export_check('quiz', $typedef, $timenow, false, 25, $validationdata);
     }
 
     /**
@@ -177,54 +144,24 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
         $this->addquizzes(5, $courses);
         $this->user_set($courses, 'quiz');
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => true , 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => true , 'type' => 'string' ],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => true , 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => true , 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+        ];
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'grades_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 14 items.
-            $this->assertEquals(14, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            if (!empty($item[2])) {
-                $this->assertInternalType('numeric', $item[2]);
-            }
-            $this->assertInternalType('numeric', $item[3]);
-            $this->assertInternalType('numeric', $item[4]);
-            if (!empty($item[5])) {
-                $this->assertInternalType('string', $item[5]);
-            }
-            $this->assertInternalType('string' , $item[6]);
-            $this->assertInternalType('numeric', $item[7]);
-            $this->assertInternalType('numeric', $item[8]);
-            if (!empty($item[9])) {
-                $this->assertInternalType('numeric', $item[9]);
-            }
-            $this->assertInternalType('numeric', $item[10]);
-            $this->assertInternalType('numeric', $item[11]);
-            if (!empty($item[12])) {
-                $this->assertInternalType('numeric', $item[12]);
-            }
-            $this->assertInternalType('numeric', $item[13]);
-            $this->assertRegExp('/^(quiz|course)$/', $item[6]);
-            $this->assertEquals(($item[6] == 'course') ? 500.0 : 100.0 , (float)$item[7]);
-            $this->assertEquals(0.0   , (float)$item[8]);
-            if (!empty($item[9])) {
-                $this->assertEquals(80.0, $item[9]);
-            }
-            $this->assertEquals(($item[6] == 'course') ? 400.0 : 80.0 , (float)$item[10]);
-            $this->assertEquals(0     , $item[11]);
-        }
+        $this->export_check('grades', $typedef, $timenow, false, 30);
     }
 
     /**
@@ -239,42 +176,20 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
         $this->addquizzes(5, $courses);
         $this->user_set($courses, 'quiz');
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => true , 'type' => 'numeric'],
+            ['optional' => true , 'type' => 'numeric'],
+            ['optional' => true , 'type' => 'numeric'],
+            ['optional' => true , 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+        ];
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'grades_history_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 10 items.
-            $this->assertEquals(10, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('string' , $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('numeric', $item[3]);
-            if (!empty($item[4])) {
-                $this->assertInternalType('numeric', $item[4]);
-            }
-            if (!empty($item[5])) {
-                $this->assertInternalType('numeric', $item[5]);
-            }
-            if (!empty($item[6])) {
-                $this->assertInternalType('numeric', $item[6]);
-            }
-            if (!empty($item[7])) {
-                $this->assertInternalType('numeric', $item[7]);
-            }
-            $this->assertInternalType('numeric', $item[8]);
-            $this->assertInternalType('numeric', $item[9]);
-        }
+        $this->export_check('grades_history', $typedef, $timenow, false, 50);
     }
 
 }

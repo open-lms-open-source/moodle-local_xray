@@ -41,7 +41,7 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
     public function test_coursecategories_export() {
         global $DB;
 
-        $this->resetAfterTest();
+        $this->resetAfterTest(false);
         $now = time();
         $startnow = $now - (12 * HOURSECS);
         list($exportuntil, $timecreated) = $this->get_now_past($startnow);
@@ -96,7 +96,7 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
     public function test_courseinfo_export() {
         global $DB;
 
-        $this->resetAfterTest();
+        $this->resetAfterTest(false);
         $now = time();
         $startnow = $now - (8 * HOURSECS);
         list($exportuntil, $timecreated) = $this->get_now_past($startnow);
@@ -157,7 +157,7 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
     public function test_userlist_export() {
         global $DB;
 
-        $this->resetAfterTest();
+        $this->resetAfterTest(false);
         $now = time();
         $startnow = $now - (8 * HOURSECS);
         list($exportuntil, $timecreated) = $this->get_now_past($startnow);
@@ -219,7 +219,7 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
     public function test_roles_export() {
         global $DB;
 
-        $this->resetAfterTest();
+        $this->resetAfterTest(false);
         $now = time();
         $startnow = $now - (8 * HOURSECS);
         list($exportuntil, $timecreated) = $this->get_now_past($startnow);

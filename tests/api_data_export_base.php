@@ -16,11 +16,36 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once(__DIR__.'/csviterator.php');
+
 /**
  * Class local_xray_api_data_export_base_testcase
  * @group local_xray
  */
 abstract class local_xray_api_data_export_base_testcase extends advanced_testcase {
+
+    /**
+     * @param string $pattern
+     * @param string $dir
+     */
+    protected function copy_dir($pattern, $dir) {
+        mtrace('');
+        mtrace($pattern);
+        $realdir = realpath($dir);
+        if ($realdir === false) {
+            $realdir = realpath(make_writable_directory($dir));
+        }
+        foreach (glob($pattern) as $file) {
+            $dest = $realdir.DIRECTORY_SEPARATOR.basename($file);
+            mtrace($dest);
+            mtrace($file);
+            if (is_dir($file)) {
+                make_writable_directory($dest);
+            } else if(is_readable($file)) {
+                copy($file, $dest);
+            }
+        }
+    }
 
     /**
      * @param $id
@@ -43,13 +68,13 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         // That is a great design. They did not place event code into forum_delete_discussion API.
         // So I have to do it.
         $modcontext = context_module::instance($cmid);
-        $params = array(
+        $params = [
             'objectid' => $discussion->id,
-            'context' => $modcontext,
-            'other' => array(
+            'context'  => $modcontext,
+            'other'    => [
                 'forumid' => $forum->id,
-            )
-        );
+            ]
+        ];
 
         $event = \mod_forum\event\discussion_deleted::create($params);
         $event->add_record_snapshot('forum_discussions', $discussion);
@@ -94,13 +119,13 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         hsuforum_delete_discussion($discussion, false, $course, $cm, $forum);
 
         $modcontext = context_module::instance($cmid);
-        $params = array(
+        $params = [
             'objectid' => $discussion->id,
-            'context' => $modcontext,
-            'other' => array(
+            'context'  => $modcontext,
+            'other'    => [
                 'forumid' => $forum->id,
-            )
-        );
+            ]
+        ];
 
         $event = \mod_hsuforum\event\discussion_deleted::create($params);
         $event->add_record_snapshot('hsuforum_discussions', $discussion);
@@ -339,6 +364,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     protected function init_base() {
         // Reset any progress saved.
         local_xray\local\api\data_export::delete_progress_settings();
+        set_config('fixedprefix', '_123', 'local_xray');
         $this->setAdminUser();
     }
 
@@ -354,6 +380,17 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     }
 
     /**
+     * @param  string $storagedir
+     * @param  string $itemname
+     * @return string
+     */
+    protected function get_export_file($storagedir, $itemname) {
+        return $storagedir.
+               DIRECTORY_SEPARATOR.
+               \local_xray\local\api\data_export::exportpath($itemname) ."_00000001.csv";
+    }
+
+    /**
      * Generic export check method
      *
      * @param string $itemname
@@ -361,23 +398,23 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @param int    $now
      * @param bool   $debug
      * @param int    $expectedcount - expected record count, if -1 no expectations are checked
+     * @param array  $validate
      * @return void
      */
-    protected function export_check($itemname, $typedef, $now, $debug = false, $expectedcount = -1) {
+    protected function export_check($itemname, $typedef, $now, $debug = false, $expectedcount = -1, $validate = []) {
         global $DB;
+
         // Export.
         $storage = new local_xray\local\api\auto_clean();
         $storagedir = $storage->get_directory();
-        if ($debug) {
-            $storage->detach();
-            $DB->set_debug(true);
-        }
+        $DB->set_debug($debug);
         $this->export($now, $storagedir, $itemname);
         if ($debug) {
+            $storage->listdir();
+            $storage->detach();
             $DB->set_debug(false);
         }
-
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.$itemname.'_00000001.csv';
+        $exportfile = $this->get_export_file($storagedir, $itemname);
         $this->assertFileExists($exportfile);
 
         $first = true;
@@ -393,9 +430,21 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
             $this->assertEquals($count, count($item), var_export($item, true));
 
             $pos = 0;
+            if (!empty($validate)) {
+                $validator= $validate[$realexpectedcount];
+            }
             foreach ($item as $field) {
                 if (($typedef[$pos]['optional'] and !empty($field)) or !$typedef[$pos]['optional']) {
                     $this->assertInternalType($typedef[$pos]['type'], $field);
+                }
+                if (!empty($validate)) {
+                    if ($validator[$pos] !== null) {
+                        $this->assertEquals(
+                            $validator[$pos],
+                            $field,
+                            var_export($item, true).var_export($validator, true)
+                        );
+                    }
                 }
                 $pos++;
             }

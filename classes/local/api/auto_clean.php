@@ -99,6 +99,30 @@ class auto_clean {
     }
 
     /**
+     * List contents of a directory.
+     * Intended for debugging purporses.
+     */
+    public function listdir() {
+        $objects = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(
+                $this->directory,
+                \FilesystemIterator::KEY_AS_PATHNAME     |
+                \FilesystemIterator::CURRENT_AS_FILEINFO |
+                \FilesystemIterator::SKIP_DOTS
+            ),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        /**
+         * @var  string       $name
+         * @var  \SplFileInfo $object
+         */
+        foreach ($objects as $name => $object) {
+            mtrace($name);
+        }
+    }
+
+    /**
      * @return void
      */
     public function detach() {

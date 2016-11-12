@@ -36,6 +36,8 @@ class csv_fileiterator implements Iterator {
      */
     protected $current;
 
+    private $delimiter;
+
     /**
      * @param string $file - path to existing file
      */
@@ -45,6 +47,8 @@ class csv_fileiterator implements Iterator {
             print_error('cannotopenfile', 'core_error', '', $file);
         }
         $this->file = $filehandle;
+        $newformat = get_config('local_xray', 'newformat');
+        $this->delimiter = $newformat ? '|' : ',';
     }
 
     public function __destruct() {
@@ -59,7 +63,7 @@ class csv_fileiterator implements Iterator {
         $this->current = fgetcsv(
             $this->file,
             null,
-            \local_xray\local\api\csv_file::DELIMITER,
+            $this->delimiter,
             \local_xray\local\api\csv_file::ENCLOSURE,
             \local_xray\local\api\csv_file::ESCAPE_CHAR
         );

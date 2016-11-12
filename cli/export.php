@@ -21,19 +21,19 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 define('CLI_SCRIPT', true);
 
 use local_xray\local\api\data_export;
+use local_xray\local\api\auto_clean;
 
 require_once(__DIR__.'/../../../config.php');
 require_once($CFG->libdir.'/clilib.php');
 
 try {
     $DB->set_debug(($CFG->debug == DEBUG_DEVELOPER) && $CFG->debugdisplay);
-    $timeend = time() - (2 * HOURSECS);
+    $timeend = time() - (2 * MINSECS);
     mtrace('Starting export.');
-    $base = uniqid('doexport');
-    $outdir = make_temp_directory($base);
-    data_export::export_csv(0, $timeend, $outdir);
-    list($compfile, $destfile) = data_export::compress($CFG->tempdir, $base);
+    $storage = new auto_clean();
+    data_export::export_csv(0, $timeend, $storage->get_directory());
     $DB->set_debug(false);
+    list($compfile, $destfile) = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
     mtrace('Finished.');
     mtrace('Export file is: '.$compfile);
 } catch (Exception $e) {

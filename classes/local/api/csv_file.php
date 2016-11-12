@@ -24,6 +24,8 @@
 
 namespace local_xray\local\api;
 
+use gradereport_singleview\local\ui\empty_element;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -35,7 +37,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class csv_file {
-    const DELIMITER   = ',';
     const ENCLOSURE   = "\x1";
     const ESCAPE_CHAR = "\v";
 
@@ -50,9 +51,45 @@ class csv_file {
     private $header = false;
 
     /**
+     * @var string
+     */
+    private $delimiter = ',';
+
+    /**
+     * @var string
+     */
+    private $enclosure = "\x1";
+
+    /**
+     * @var string
+     */
+    private $escape = "\v";
+
+    /**
+     * @return string
+     */
+    public function delimiter() {
+        return $this->delimiter;
+    }
+
+    /**
+     * @return string
+     */
+    public function enclosure() {
+        return $this->enclosure;
+    }
+
+    /**
+     * @return string
+     */
+    public function escape_char() {
+        return $this->escape;
+    }
+
+    /**
      * @param string $path
      */
-    public function __construct($path) {
+    public function __construct($path, $delimiter = ',', $enclosure = "\x1", $escape = "\v") {
         if (file_exists($path)) {
             print_error('error_fexists', 'local_xray', '', $path);
         }
@@ -61,6 +98,15 @@ class csv_file {
             print_error('error_fnocreate', 'local_xray', '', $path);
         }
         $this->resource = $res;
+        if (!empty($delimiter)) {
+            $this->delimiter = $delimiter;
+        }
+        if (!empty($enclosure)) {
+            $this->enclosure = $enclosure;
+        }
+        if (!empty($escape)) {
+            $this->escape = $escape;
+        }
     }
 
     public function __destruct() {
@@ -93,7 +139,7 @@ class csv_file {
      */
     protected function write($data) {
         $ndata = str_replace(["\r\n", "\n", "\r"], '\n', $data);
-        return fputcsv($this->resource, $ndata, self::DELIMITER, self::ENCLOSURE, self::ESCAPE_CHAR);
+        return fputcsv($this->resource, $ndata, $this->delimiter, $this->enclosure, $this->escape);
     }
 
     /**

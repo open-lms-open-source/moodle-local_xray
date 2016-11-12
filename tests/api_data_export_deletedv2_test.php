@@ -49,6 +49,7 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
         list($forums, $discussions, $posts) = $this->addforums(5, $courses);
         ($forums); ($posts);
         $count = 0;
+        $validationdata = [];
         foreach ($discussions as $discussion) {
             if ($count++ > 3) {
                 break;
@@ -63,49 +64,18 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
 
             // This removes complete discussion with posts inside.
             $this->delete_discussion($discussion->id, $discussion->course, $cmid, $discussion->forum);
+            // Test data for validation.
+            $validationdata[] = [null, $discussion->id, $cmid, null];
         }
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric' ],
+            ['optional' => false, 'type' => 'numeric' ],
+            ['optional' => false, 'type' => 'numeric' ],
+        ];
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'threads_delete_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 4 items.
-            $this->assertEquals(4, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('numeric', $item[3]);
-        }
-
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'posts_delete_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 5 items.
-            $this->assertEquals(5, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('numeric', $item[3]);
-            $this->assertInternalType('numeric', $item[4]);
-        }
+        $this->export_check('threads_delete', $typedef, $timenow, false, 4, $validationdata);
 
         // Check data pruning.
         $task = new \local_xray\task\data_prune_task();
@@ -131,6 +101,7 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
         list($forums, $discussions, $posts) = $this->addhsuforums(5, $courses);
         ($forums); ($posts);
         $count = 0;
+        $validationdata = [];
         foreach ($discussions as $discussion) {
             if ($count++ > 3) {
                 break;
@@ -145,49 +116,18 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
 
             // This removes complete discussion with posts inside.
             $this->delete_hsudiscussion($discussion->id, $discussion->course, $cmid, $discussion->forum);
+            // Test data for validation.
+            $validationdata[] = [null, $discussion->id, $cmid, null];
         }
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric' ],
+            ['optional' => false, 'type' => 'numeric' ],
+            ['optional' => false, 'type' => 'numeric' ],
+        ];
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'hsuthreads_delete_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 4 items.
-            $this->assertEquals(4, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('numeric', $item[3]);
-        }
-
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'hsuposts_delete_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 5 items.
-            $this->assertEquals(5, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('numeric', $item[3]);
-            $this->assertInternalType('numeric', $item[4]);
-        }
+        $this->export_check('hsuthreads_delete', $typedef, $timenow, false, 4, $validationdata);
 
         // Check data pruning.
         $task = new \local_xray\task\data_prune_task();
@@ -206,35 +146,21 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
         $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
-
-        for ($count = 0; $count < 3; $count++) {
+        $nr = 3;
+        
+        $validationdata = [];
+        for ($count = 0; $count < $nr; $count++) {
             delete_course($courses[$count], false);
+            $validationdata[] = [null, $courses[$count]->id, null];
         }
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric' ],
+            ['optional' => false, 'type' => 'numeric' ],
+        ];
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'courseinfo_delete_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $counter = 0;
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 4 items.
-            $this->assertEquals(3, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertEquals($courses[$counter]->id, $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $counter++;
-        }
+        $this->export_check('courseinfo_delete', $typedef, $timenow, false, $nr, $validationdata);
 
         // Check data pruning.
         $task = new \local_xray\task\data_prune_task();
@@ -254,88 +180,25 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
         $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
         $categories = $this->addcategories(5, $timepast);
-
-        for ($count = 0; $count < 3; $count++) {
+        $nr = 3;
+        $validationdata = [];
+        for ($count = 0; $count < $nr; $count++) {
+            $validationdata[] = [null, $categories[$count]->id, null];
             $categories[$count]->delete_full(false);
         }
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+        ];
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'coursecategories_delete_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $counter = 0;
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 4 items.
-            $this->assertEquals(3, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertEquals($categories[$counter]->id, $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $counter++;
-        }
+        $this->export_check('coursecategories_delete', $typedef, $timenow, false, $nr, $validationdata);
 
         // Check data pruning.
         $task = new \local_xray\task\data_prune_task();
         $task->execute();
         $this->assertEquals(0, $DB->count_records('local_xray_coursecat'));
-    }
-
-    /**
-     * test user deletion
-     */
-    public function test_user_delete_export() {
-        $this->resetAfterTest();
-
-        $timenow = time() + HOURSECS;
-
-        $users = $this->addusers(5);
-        for ($count = 0; $count < 3; $count++) {
-            delete_user($users[$count]);
-        }
-
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
-
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'userlistv2_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 12 items.
-            $this->assertEquals(12, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('string' , $item[1]);
-            $this->assertInternalType('string' , $item[2]);
-            $this->assertInternalType('string' , $item[3]);
-            if (!empty($item[4])) {
-                $this->assertInternalType('string', $item[4]);
-            }
-            $this->assertInternalType('string' , $item[5]);
-            $this->assertInternalType('numeric', $item[6]);
-            $this->assertInternalType('numeric', $item[7]);
-            $this->assertInternalType('numeric' , $item[8]);
-            $this->assertInternalType('numeric' , $item[9]);
-            $this->assertInternalType('numeric' , $item[10]);
-            $this->assertInternalType('numeric' , $item[11]);
-        }
-
     }
 
     /**
@@ -358,36 +221,25 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
 
         /* @noinspection PhpIncludeInspection */
         require_once(core_component::get_component_directory('core_course').'/lib.php');
-
+        $nr = 10;
         $deleted = [];
-        for ($count = 0; $count < 10; $count++) {
-            course_delete_module($quizes[$count]->cmid);
-            $deleted[] = (int)$quizes[$count]->cmid;
+        $validationdata = [];
+        for ($count = 0; $count < $nr; $count++) {
+            $quiz = $quizes[$count];
+            $cmid = (int)$quiz->cmid;
+            course_delete_module($cmid);
+            $deleted[] = $cmid;
+            $validationdata[] = [null, $cmid, $quiz->course, null];
         }
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+        ];
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'activity_delete_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 4 items.
-            $this->assertEquals(4, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertTrue(in_array($item[1], $deleted));
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('numeric', $item[3]);
-        }
+        $this->export_check('activity_delete', $typedef, $timenow, false, $nr, $validationdata);
 
         // Check data pruning.
         $task = new \local_xray\task\data_prune_task();
@@ -410,7 +262,9 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
         $this->addquizzes(5, $courses);
         $user = $this->user_set($courses, 'quiz');
         $authmanual = enrol_get_plugin('manual');
-        for ($pos = 0; $pos < 3; $pos++) {
+        $nr = 3;
+        $validationdata = [];
+        for ($pos = 0; $pos < $nr; $pos++) {
             $instance = null;
             $instances = enrol_get_instances($courses[$pos]->id, true);
             foreach ($instances as $inst) {
@@ -419,33 +273,20 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
                     break;
                 }
             }
+            $ue = $DB->get_record('user_enrolments', ['enrolid' => $instance->id, 'userid' => $user->id]);
             $authmanual->unenrol_user($instance, $user->id);
+            $validationdata[] = [null, $ue->id, $user->id, $courses[$pos]->id, null];
         }
 
-        // Export.
-        $storage = new local_xray\local\api\auto_clean();
-        $storagedir = $storage->get_directory();
-        $this->export($timenow, $storagedir);
+        $typedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+        ];
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'enrolment_deletev2_00000001.csv';
-        $this->assertFileExists($exportfile);
-
-        $first = true;
-        $iterator = new csv_fileiterator($exportfile);
-        foreach ($iterator as $item) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            // Expect 5 items.
-            $this->assertEquals(5, count($item));
-            $this->assertInternalType('numeric', $item[0]);
-            $this->assertInternalType('numeric', $item[1]);
-            $this->assertInternalType('numeric', $item[2]);
-            $this->assertInternalType('numeric', $item[3]);
-            $this->assertInternalType('numeric', $item[4]);
-
-        }
+        $this->export_check('enrolment_deletev2', $typedef, $timenow, false, $nr, $validationdata);
 
         // Check data pruning.
         $task = new \local_xray\task\data_prune_task();
@@ -515,7 +356,7 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
         $storagedir = $storage->get_directory();
         $this->export($timenow, $storagedir);
 
-        $exportfile = $storagedir.DIRECTORY_SEPARATOR.'enrolment_deletev2_00000001.csv';
+        $exportfile = $this->get_export_file($storagedir, 'enrolment_deletev2');
         $this->assertFileExists($exportfile);
         $exportkeys1 = $this->get_export_data_keys($exportfile);
 
@@ -524,7 +365,7 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
         $storagedir2 = $storage2->get_directory();
         $this->export($timenow, $storagedir2);
 
-        $exportfile = $storagedir2.DIRECTORY_SEPARATOR.'enrolment_deletev2_00000001.csv';
+        $exportfile = $this->get_export_file($storagedir2, 'enrolment_deletev2');
         $this->assertFileExists($exportfile);
         $exportkeys2 = $this->get_export_data_keys($exportfile);
 
