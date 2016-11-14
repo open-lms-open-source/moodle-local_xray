@@ -192,8 +192,8 @@ class data_sync extends scheduled_task {
     }
 
     /**
-     * @param $dirbase
-     * @param $dirname
+     * @param  string $dirbase
+     * @param  string $dirname
      * @throws \Exception
      */
     protected function upload_new($dirbase, $dirname) {
