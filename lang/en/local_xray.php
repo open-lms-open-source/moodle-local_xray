@@ -515,12 +515,12 @@ $string['subscriptiondisabled'] = 'Enable this setting in the X-Ray Global Subsc
 // Frequency control for emails.
 $string['daily'] = 'Daily';
 $string['emailfrequency'] = 'Frequency of email alerts';
-$string['emailfrequency_desc'] = 'If you choose to send alerts daily, the emails start tomorrow. If you choose '.
-    'to send alerts weekly, the emails start on the next Sunday. If you choose to never send alerts, users can '.
+$string['emailfrequency_desc'] = 'If you choose to email alerts daily, the emails start tomorrow. If you choose '.
+    'to email alerts weekly, the emails start on the next Sunday. If you choose to never email alerts, users can '.
     'still subscribe but no emails are sent.';
 $string['frequencyheading'] = 'Email Frequency Controls';
 $string['frequencyheading_desc'] = 'Choose how often you want X-Ray alerts emailed to subscribers. By default, '.
-    'alerts are sent weekly. This happens every Sunday. You can choose to send alerts daily or never.';
+    'alerts are emailed weekly. This happens every Sunday. You can choose to email alerts daily or never.';
 $string['never'] = 'Never';
 $string['weekly'] = 'Weekly';
 
