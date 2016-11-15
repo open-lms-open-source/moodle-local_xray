@@ -518,7 +518,7 @@ $string['emailfrequency'] = 'Frequency of email alerts';
 $string['emailfrequency_desc'] = 'If you choose to email alerts daily, the emails start tomorrow. If you choose '.
     'to email alerts weekly, the emails start on the next Sunday. If you choose to never email alerts, users can '.
     'still subscribe but no emails are sent.';
-$string['frequencyheading'] = 'Email Frequency Controls';
+$string['frequencyheading'] = 'Alert Email Frequency';
 $string['frequencyheading_desc'] = 'Choose how often you want X-Ray alerts emailed to subscribers. By default, '.
     'alerts are emailed weekly. This happens every Sunday. You can choose to email alerts daily or never.';
 $string['never'] = 'Never';
