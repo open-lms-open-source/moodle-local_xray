@@ -572,10 +572,8 @@ function local_xray_get_support_user() {
     return core_user::get_support_user();
 }
 
-
-
 /**
- * Check if the email should be sent.
+ * Check if the email should be sent today.
  *
  * @return bool.
  */
