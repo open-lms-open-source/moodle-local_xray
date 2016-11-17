@@ -33,6 +33,10 @@ define('XRAYSUBSCRIBECOURSE', 0);
 define('XRAYSUBSCRIBEON', 1);
 define('XRAYSUBSCRIBEOFF', 2);
 
+define('XRAYNEVER', 'never');
+define('XRAYDAILY', 'daily');
+define('XRAYWEEKLY', 'weekly');
+
 /**
  * Generate list of report links according to the current page
  * Result is returned as associative array ($reportname => $reporturl)
@@ -580,4 +584,37 @@ function local_xray_is_subscribed($userid, $courseid) {
  */
 function local_xray_get_support_user() {
     return core_user::get_support_user();
+}
+
+/**
+ * Check if the email should be sent today.
+ *
+ * @return bool.
+ */
+function local_xray_send_email_today() {
+    // Check frequency.
+    $frequency = get_config('local_xray', 'emailfrequency');
+    // If the frequency is daily, the email should be sent.
+    if ($frequency == XRAYDAILY) {
+        return true;
+    }
+    // If the frequency is weekly.
+    if ($frequency == XRAYWEEKLY) {
+        // Days of the week.
+        $day = array(0 => 'sunday', 1 => 'monday', 2 => 'tuesday', 3 => 'wednesday',
+            4 => 'thursday', 5 => 'friday', 6 => 'saturday');
+        // Get current day of week.
+        $currentdayofweek = date("w");
+        // By default, Sunday is the day to run.
+        $daytorun = 0;
+        // Check if the Control Panel variable weeklyday is set.
+        $cfgxray = get_config('local_xray');
+        if (isset($cfgxray->weeklyday) && isset($day[$cfgxray->weeklyday])) {
+            $daytorun = $cfgxray->weeklyday;
+        }
+        if ($currentdayofweek == $daytorun) {
+            return true;
+        }
+    }
+    return false;
 }

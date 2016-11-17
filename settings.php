@@ -76,6 +76,20 @@ if ($hassiteconfig) {
                                                      new lang_string("displaymenu_desc", $plugin),
                                                      '0'));
 
+    // Frequency control for emails.
+    $settings->add( new admin_setting_heading("{$plugin}/frequencyheading",
+        new lang_string("frequencyheading", $plugin),
+        new lang_string("frequencyheading_desc", $plugin)));
+
+    $frequency = array(XRAYDAILY => get_string('daily', $plugin),
+        XRAYWEEKLY => get_string('weekly', $plugin),
+        XRAYNEVER => get_string('never', $plugin));
+
+    $settings->add( new admin_setting_configselect("{$plugin}/emailfrequency",
+        new lang_string("emailfrequency", $plugin),
+        new lang_string("emailfrequency_desc", $plugin),
+        XRAYWEEKLY, $frequency));
+
     // Configuration and credentials for accessing Xray S3 bucket.
     $settings->add( new admin_setting_heading("{$plugin}/xrayawsheading",
                                               new lang_string("xrayawsheading", $plugin),
