@@ -46,13 +46,8 @@ class local_xray_api_data_exportv2_testcase extends local_xray_api_data_export_b
 
         $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
-        $courses = $this->addcourses(5, $timepast);
-        list($forums, $discussions, $posts) = $this->addforums(5, $courses);
-        $validationdata = [];
-        foreach ($forums as $forum) {
-            $validationdata[] = [$forum->id, null, $forum->course, $forum->type, $forum->name, $forum->intro, null];
-        }
-        $typedef = [
+
+        $forumtypedef = [
             ['optional' => false, 'type' => 'numeric'],
             ['optional' => false, 'type' => 'numeric'],
             ['optional' => false, 'type' => 'numeric'],
@@ -62,7 +57,34 @@ class local_xray_api_data_exportv2_testcase extends local_xray_api_data_export_b
             ['optional' => false, 'type' => 'numeric'],
         ];
 
-        $this->export_check('forums', $typedef, $timenow, false, 25, $validationdata);
+        $threadtypedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+        ];
+
+        $courses = $this->addcourses(5, $timepast);
+
+        foreach ([5 => 10, 3 => 180] as $itemnumber => $timediff) {
+            list($forumdata, $threaddata) = $this->addforums_validation(
+                $itemnumber,
+                $courses,
+                $timepast + $timediff
+            );
+
+            $elemcount = $itemnumber * 5;
+            $passdata = [
+                'forums'  => ['typedef' => $forumtypedef , 'data' => $forumdata ],
+                'threads' => ['typedef' => $threadtypedef, 'data' => $threaddata],
+            ];
+            foreach ($passdata as $item => $data) {
+                $this->export_check($item, $data['typedef'], $timenow, false, $elemcount, $data['data']);
+                $this->export_check($item, [], $timenow, false, 0);
+            }
+        }
     }
 
     /**
@@ -78,14 +100,8 @@ class local_xray_api_data_exportv2_testcase extends local_xray_api_data_export_b
 
         $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
-        $courses = $this->addcourses(5, $timepast);
-        list($forums, $discussions, $posts) = $this->addhsuforums(5, $courses);
 
-        $validationdata = [];
-        foreach ($forums as $forum) {
-            $validationdata[] = [$forum->id, null, $forum->course, $forum->type, $forum->name, $forum->intro, null];
-        }
-        $typedef = [
+        $forumtypedef = [
             ['optional' => false, 'type' => 'numeric'],
             ['optional' => false, 'type' => 'numeric'],
             ['optional' => false, 'type' => 'numeric'],
@@ -95,7 +111,34 @@ class local_xray_api_data_exportv2_testcase extends local_xray_api_data_export_b
             ['optional' => false, 'type' => 'numeric'],
         ];
 
-        $this->export_check('hsuforums', $typedef, $timenow, false, 25, $validationdata);
+        $threadtypedef = [
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'string' ],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+            ['optional' => false, 'type' => 'numeric'],
+        ];
+
+        $courses = $this->addcourses(5, $timepast);
+
+        foreach ([5 => 10, 3 => 180] as $itemnumber => $timediff) {
+            list($forumdata, $threaddata) = $this->addhsuforums_validation(
+                $itemnumber,
+                $courses,
+                $timepast + $timediff
+            );
+
+            $elemcount = $itemnumber * 5;
+            $passdata = [
+                'hsuforums'  => ['typedef' => $forumtypedef , 'data' => $forumdata ],
+                'hsuthreads' => ['typedef' => $threadtypedef, 'data' => $threaddata],
+            ];
+            foreach ($passdata as $item => $data) {
+                $this->export_check($item, $data['typedef'], $timenow, false, $elemcount, $data['data']);
+                $this->export_check($item, [], $timenow, false, 0);
+            }
+        }
     }
 
     /**
@@ -111,13 +154,7 @@ class local_xray_api_data_exportv2_testcase extends local_xray_api_data_export_b
 
         $timenow = time() + HOURSECS;
         $timepast = $timenow - DAYSECS;
-        $courses = $this->addcourses(5, $timepast);
-        $quizzes = $this->addquizzes(5, $courses);
 
-        $validationdata = [];
-        foreach ($quizzes as $quiz) {
-            $validationdata[] = [$quiz->id, null, $quiz->course, $quiz->name, $quiz->attempts, $quiz->grade, null];
-        }
         $typedef = [
             ['optional' => false, 'type' => 'numeric'],
             ['optional' => false, 'type' => 'numeric'],
@@ -128,7 +165,13 @@ class local_xray_api_data_exportv2_testcase extends local_xray_api_data_export_b
             ['optional' => false, 'type' => 'numeric'],
         ];
 
-        $this->export_check('quiz', $typedef, $timenow, false, 25, $validationdata);
+        $courses = $this->addcourses(5, $timepast);
+        foreach ([5, 3] as $itemnumber) {
+            $data = $this->addquizzes_validation($itemnumber, $courses);
+            $elemcount = $itemnumber * 5;
+            $this->export_check('quiz', $typedef, $timenow, false, $elemcount, $data);
+            $this->export_check('quiz', [], $timenow, false, 0);
+        }
     }
 
 }

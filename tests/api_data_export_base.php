@@ -41,7 +41,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
             mtrace($file);
             if (is_dir($file)) {
                 make_writable_directory($dest);
-            } else if(is_readable($file)) {
+            } else if (is_readable($file)) {
                 copy($file, $dest);
             }
         }
@@ -223,14 +223,18 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     /**
      * Creates forums and discussions needed for the test for specified type of forum
      *
-     * @param int $nr
-     * @param array $courses
-     * @param string $module
+     * @param  int         $nr
+     * @param  stdClass[]  $courses
+     * @param  string      $module
+     * @param  int         $timepast
      * @return array
      * @throws coding_exception
      */
-    protected function addforumsbase($nr, $courses, $module) {
+    protected function addforumsbase($nr, $courses, $module, $timepast = 0) {
         global $USER;
+        if ($timepast == 0) {
+            $timepast = time();
+        }
         /** @var mod_forum_generator|mod_hsuforum_generator $forumgen */
         $forumgen = $this->getDataGenerator()->get_plugin_generator($module);
         $forums = [];
@@ -239,13 +243,25 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         foreach ($courses as $course) {
             $count = 0;
             while ($count++ < $nr) {
-                $instance = $forumgen->create_instance(['type' => 'general', 'course' => $course]);
+                $instance = $forumgen->create_instance([
+                    'type'         => 'general',
+                    'course'       => $course,
+                    'timemodified' => $timepast
+                ]);
                 $forums[] = $instance;
-                $discussion = $forumgen->create_discussion(['course' => $course->id,
-                    'forum'  => $instance->id,
-                    'userid' => $USER->id]);
+                $discussion = $forumgen->create_discussion([
+                    'course'       => $course->id,
+                    'forum'        => $instance->id,
+                    'userid'       => $USER->id,
+                    'timemodified' => $timepast
+                ]);
                 $discussions[] = $discussion;
-                $post = $forumgen->create_post(['discussion' => $discussion->id, 'userid' => $USER->id]);
+                $post = $forumgen->create_post([
+                    'discussion' => $discussion->id,
+                    'userid'     => $USER->id,
+                    'created'    => $timepast,
+                    'modified'   => $timepast
+                ]);
                 $posts[] = $post;
             }
         }
@@ -254,21 +270,94 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     }
 
     /**
-     * @param int $nr
-     * @param array $courses
-     * @return array
+     * @param  int        $nr
+     * @param  stdClass[] $courses
+     * @param  int        $timepast
+     * @return array[]
      */
-    protected function addhsuforums($nr, $courses) {
-        return $this->addforumsbase($nr, $courses, 'mod_hsuforum');
+    protected function addhsuforums($nr, $courses, $timepast = 0) {
+        return $this->addforumsbase($nr, $courses, 'mod_hsuforum', $timepast);
     }
 
     /**
-     * @param int $nr
-     * @param array $courses
-     * @return array
+     * @param  int        $nr
+     * @param  stdClass[] $courses
+     * @param  int        $timepast
+     * @return array[]
      */
-    protected function addforums($nr, $courses) {
-        return $this->addforumsbase($nr, $courses, 'mod_forum');
+    protected function addforums($nr, $courses, $timepast = 0) {
+        return $this->addforumsbase($nr, $courses, 'mod_forum', $timepast);
+    }
+
+    /**
+     * @param  int        $nr
+     * @param  stdClass[] $courses
+     * @param  string     $module
+     * @param  int        $timepast
+     * @return array[]
+     */
+    protected function addforumsbase_validation($nr, $courses, $module, $timepast = 0) {
+        list($forums, $discussions, $posts) = $this->addforumsbase($nr, $courses, $module, $timepast);
+        $forumdata = [];
+        foreach ($forums as $forum) {
+            $forumdata[] = [
+                $forum->id,
+                null,
+                $forum->course,
+                $forum->type,
+                $forum->name,
+                $forum->intro,
+                null
+            ];
+        }
+
+        $discdata = [];
+        foreach ($discussions as $dsc) {
+            $discdata[] = [
+                $dsc->id,
+                $dsc->forum,
+                $dsc->name,
+                $dsc->userid,
+                $dsc->groupid,
+                null
+            ];
+        }
+
+        $postdata = [];
+        foreach ($posts as $post) {
+            $postdata[] = [
+                $post->id,
+                $post->parent,
+                $post->discussion,
+                $post->userid,
+                null,
+                null,
+                $post->subject,
+                $post->message
+            ];
+        }
+
+        return [$forumdata, $discdata, $postdata];
+    }
+
+    /**
+     * @param  int $nr
+     * @param  stdClass[] $courses
+     * @param  int $timepast
+     * @return array[]
+     */
+    protected function addhsuforums_validation($nr, $courses, $timepast = 0) {
+        return $this->addforumsbase_validation($nr, $courses, 'mod_hsuforum', $timepast);
+    }
+
+    /**
+     * @param  int        $nr
+     * @param  stdClass[] $courses
+     * @param  int        $timepast
+     * @return array[]
+     */
+    protected function addforums_validation($nr, $courses, $timepast = 0) {
+        return $this->addforumsbase_validation($nr, $courses, 'mod_forum', $timepast);
     }
 
     /**
@@ -293,6 +382,21 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     }
 
     /**
+     * @param  int        $nr
+     * @param  stdClass[] $courses
+     * @return array
+     */
+    protected function addquizzes_validation($nr, $courses) {
+        $instances = $this->addquizzes($nr, $courses);
+        $validationdata = [];
+        foreach ($instances as $quiz) {
+            $validationdata[] = [$quiz->id, null, $quiz->course, $quiz->name, $quiz->attempts, $quiz->grade, null];
+        }
+        return $validationdata;
+    }
+
+
+    /**
      * Export data to csv files
      *
      * @param int    $timeend
@@ -303,6 +407,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         if (empty($fn)) {
             local_xray\local\api\data_export::export_csv(0, $timeend, $dir);
         } else {
+            local_xray\local\api\data_export::reset_counter_storage();
             call_user_func(['local_xray\local\api\data_export', $fn], 0, $timeend, $dir);
         }
         local_xray\local\api\data_export::store_counters();
@@ -335,6 +440,75 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         }
 
         return $student;
+    }
+
+    /**
+     * @param  stdClass[] $courses
+     * @return array[]
+     * @throws coding_exception
+     */
+    protected function get_validategrades(array $courses) {
+        global $CFG;
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->libdir.'/gradelib.php');
+
+        $grades = [];
+        foreach ($courses as $course) {
+            /** @var grade_grade[] $gradess */
+            $gradess = grade_grade::fetch_all(['courseid' => $course->id]);
+            foreach ($gradess as $gg) {
+                $gg->load_grade_item();
+                $gitem = $gg->grade_item;
+                $cm = get_coursemodule_from_instance('quiz', $gitem->iteminstance, $gitem->courseid);
+                $grades[] = [
+                    $gg->id,
+                    $gg->userid,
+                    isset($cm->id) ? $cm->id : '',
+                    $gitem->id,
+                    $gitem->courseid,
+                    $gitem->itemname,
+                    ($gitem->itemtype == 'mod') ? $gitem->itemmodule : $gitem->itemtype,
+                    $gg->rawgrademax,
+                    $gg->rawgrademin,
+                    $gg->rawgrade,
+                    $gg->finalgrade,
+                    $gg->locktime,
+                    $gg->timecreated,
+                    $gg->timemodified,
+                ];
+            }
+        }
+
+        return $grades;
+    }
+
+    /**
+     * @return array[]
+     * @throws coding_exception
+     * @throws dml_exception
+     */
+    protected function get_validate_gradehistory() {
+        global $DB;
+        $grades = [];
+        $actions = [1 => 'INSERT', 2 => 'UPDATE', 3 => 'DELETE'];
+        list($sql, $params) = $DB->get_in_or_equal([], SQL_PARAMS_NAMED, 'param', false, true);
+        $recs = $DB->get_records_select('grade_grades_history', 'finalgrade '.$sql, $params);
+        foreach ($recs as $rec) {
+            $grades[] = [
+                $rec->id,
+                $actions[$rec->action],
+                $rec->itemid,
+                $rec->userid,
+                $rec->rawgrademax,
+                $rec->rawgrademin,
+                $rec->rawgrade,
+                $rec->finalgrade,
+                $rec->loggeduser,
+                $rec->timemodified,
+            ];
+        }
+
+        return $grades;
     }
 
     /**
@@ -397,9 +571,10 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @param array  $typedef
      * @param int    $now
      * @param bool   $debug
-     * @param int    $expectedcount - expected record count, if -1 no expectations are checked
+     * @param int    $expectedcount - expected record count, if -1 no expectations are checked, if 0 we expect no data
      * @param array  $validate
      * @return void
+     * @throws PHPUnit_Framework_ExpectationFailedException
      */
     protected function export_check($itemname, $typedef, $now, $debug = false, $expectedcount = -1, $validate = []) {
         global $DB;
@@ -411,16 +586,25 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         $this->export($now, $storagedir, $itemname);
         if ($debug) {
             $storage->listdir();
-            $storage->detach();
             $DB->set_debug(false);
         }
+
         $exportfile = $this->get_export_file($storagedir, $itemname);
+        if ($expectedcount == 0) {
+            $this->assertFileNotExists($exportfile);
+            return;
+        }
+
         $this->assertFileExists($exportfile);
+        if ($debug) {
+            mtrace($exportfile);
+        }
 
         $first = true;
         $count = count($typedef);
         $iterator = new csv_fileiterator($exportfile);
         $realexpectedcount = 0;
+        $validator = null;
         foreach ($iterator as $item) {
             if ($first) {
                 $first = false;
@@ -431,7 +615,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
 
             $pos = 0;
             if (!empty($validate)) {
-                $validator= $validate[$realexpectedcount];
+                $validator = isset($validate[$realexpectedcount]) ? $validate[$realexpectedcount] : null;
             }
             foreach ($item as $field) {
                 if (($typedef[$pos]['optional'] and !empty($field)) or !$typedef[$pos]['optional']) {
@@ -442,7 +626,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
                         $this->assertEquals(
                             $validator[$pos],
                             $field,
-                            var_export($item, true).var_export($validator, true)
+                            var_export($item, true) . var_export($validator, true)
                         );
                     }
                 }
@@ -451,10 +635,9 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
             $realexpectedcount++;
         }
 
-        if ($expectedcount >= 0) {
+        if ($expectedcount > 0) {
             $this->assertEquals($expectedcount, $realexpectedcount);
         }
-
     }
 
 }
