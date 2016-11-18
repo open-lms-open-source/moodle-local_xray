@@ -100,7 +100,6 @@ Feature: The headline data should be present in the course page for manager, edi
       | clean      | weeks,topics,folderview,onetopic,social,topcoll          | theme    |
       | more       | weeks,topics,folderview,onetopic,social,topcoll          | theme    |
       | snap       | weeks,topics                                             | theme    |
-      | express    | flexpage,weeks,topics,folderview,onetopic,social,topcoll | theme    |
       | minimal    | weeks,topics,folderview,onetopic,social,topcoll          | template |
       | cherub     | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
       | dropshadow | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
