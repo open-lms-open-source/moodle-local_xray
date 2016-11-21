@@ -68,6 +68,10 @@ class local_xray_controller_globalsub extends mr_controller {
                 echo $OUTPUT->notification(get_string('changessaved'), 'notifysuccess');
             }
             $mform->display();
+            $frequency = get_config('local_xray', 'emailfrequency');
+            if ($frequency == XRAYNEVER) {
+                echo $OUTPUT->notification(get_string("emailsdisabled", $this->component), 'info');
+            }
             $this->print_footer();
         }
     }
