@@ -594,27 +594,29 @@ function local_xray_get_support_user() {
 function local_xray_send_email_today() {
     // Check frequency.
     $frequency = get_config('local_xray', 'emailfrequency');
+    // If the frequency is never, the email should not be sent.
+    if ($frequency == XRAYNEVER) {
+        return false;
+    }
     // If the frequency is daily, the email should be sent.
     if ($frequency == XRAYDAILY) {
         return true;
     }
-    // If the frequency is weekly.
-    if ($frequency == XRAYWEEKLY) {
-        // Days of the week.
-        $day = array(0 => 'sunday', 1 => 'monday', 2 => 'tuesday', 3 => 'wednesday',
-            4 => 'thursday', 5 => 'friday', 6 => 'saturday');
-        // Get current day of week.
-        $currentdayofweek = date("w");
-        // By default, Sunday is the day to run.
-        $daytorun = 0;
-        // Check if the Control Panel variable weeklyday is set.
-        $cfgxray = get_config('local_xray');
-        if (isset($cfgxray->weeklyday) && isset($day[$cfgxray->weeklyday])) {
-            $daytorun = $cfgxray->weeklyday;
-        }
-        if ($currentdayofweek == $daytorun) {
-            return true;
-        }
+    // By default, the email should be sent weekly.
+    // Days of the week.
+    $day = array(0 => 'sunday', 1 => 'monday', 2 => 'tuesday', 3 => 'wednesday',
+        4 => 'thursday', 5 => 'friday', 6 => 'saturday');
+    // Get current day of week.
+    $currentdayofweek = date("w");
+    // By default, Sunday is the day to run.
+    $daytorun = 0;
+    // Check if the Control Panel variable weeklyday is set.
+    $cfgxray = get_config('local_xray');
+    if (isset($cfgxray->weeklyday) && isset($day[$cfgxray->weeklyday])) {
+        $daytorun = $cfgxray->weeklyday;
+    }
+    if ($currentdayofweek == $daytorun) {
+        return true;
     }
     return false;
 }
