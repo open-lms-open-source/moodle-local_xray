@@ -233,6 +233,7 @@ a.xray-headline-link:hover {
     display: inline-block;
     height: 30px;
     margin-right: 5px;
+    width: 45px;
 }
 
 .xray-menu-item-active {
