@@ -184,7 +184,9 @@ class dashboard_data {
      * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
      * @return array
      */
-    public static function get_status_simple($valuenow, $valuepreviousweek) {
+    public static function get_status_simple($valuenow, $valuepreviousweek, $mail = false) {
+        // File name for email case.
+        $filename = '';
 
         // Value can be null or "-" too.
         if (empty($valuenow1) && !is_numeric($valuenow)) {
@@ -197,18 +199,27 @@ class dashboard_data {
         // Default, same value.
         $stylestatus = "xray-headline-same";
         $status_lang = "arrow_same";
+        if ($mail) {
+            $filename = "arrow_yellow";
+        }
 
         if ($valuenow < $valuepreviousweek) {
             // Decrement.
             $stylestatus = "xray-headline-decrease";
             $status_lang = "arrow_decrease";
+            if ($mail) {
+                $filename = "arrow_red";
+            }
         } else if ($valuenow > $valuepreviousweek) {
             // Increment.
             $stylestatus = "xray-headline-increase";
             $status_lang = "arrow_increase";
+            if ($mail) {
+                $filename = "arrow_green";
+            }
         }
         $langstatus = get_string($status_lang, "local_xray");
-        return array($stylestatus, $langstatus);
+        return array($stylestatus, $langstatus, $filename);
     }
 
     /**
@@ -233,8 +244,10 @@ class dashboard_data {
                                                    $valuenow2,
                                                    $valuepreviousweek,
                                                    $valuepreviousweek2,
-                                                   $inversebehavior = false) {
-
+                                                   $inversebehavior = false,
+                                                   $mail = false) {
+        // File name for email case.
+        $filename = '';
         $firstaverage = 0;
         // Value can be null or "-" too.
         if (!empty($valuenow1) && !empty($valuenow2) && is_numeric($valuenow1) && is_numeric($valuenow2)) {
@@ -249,15 +262,24 @@ class dashboard_data {
         // Default, same value.
         $stylestatus = "xray-headline-same";
         $status_lang = "arrow_same";
+        if ($mail) {
+            $filename = "arrow_yellow";
+        }
 
         if ($firstaverage < $secondaverage) {
 
             // Decrement.
             $stylestatus = "xray-headline-decrease";
             $status_lang = "arrow_decrease";
+            if ($mail) {
+                $filename = "arrow_red";
+            }
             if ($inversebehavior) {
                 // Arrow will be inverse.
                 $stylestatus = "xray-headline-increase-caserisk";
+                if ($mail) {
+                    $filename = "arrow_red_risk";
+                }
             }
 
         } else if ($firstaverage > $secondaverage) {
@@ -265,13 +287,19 @@ class dashboard_data {
             // Increment.
             $stylestatus = "xray-headline-increase";
             $status_lang = "arrow_increase";
+            if ($mail) {
+                $filename = "arrow_green";
+            }
             if ($inversebehavior) {
                 // Arrow will be inverse.
                 $stylestatus = "xray-headline-decrease-caserisk";
+                if ($mail) {
+                    $filename = "arrow_green_risk";
+                }
             }
         }
 
         $langstatus = get_string($status_lang, "local_xray");
-        return array($stylestatus, $langstatus);
+        return array($stylestatus, $langstatus, $filename);
     }
 }
