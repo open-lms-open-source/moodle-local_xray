@@ -498,6 +498,52 @@ $string['strftimehoursminutes'] = '%H:%M';
 $string['xray_course_report_empty'] = 'No hay datos suficientes para este reporte. Por favor, inténtelo de nuevo'.
     ' cuando haya más actividad de los usuarios en su curso';
 
+// Email.
+$string['changesubscription'] = 'Cambie sus preferencias de suscripción';
+$string['coursesubscribe'] = 'Suscribirse a los reportes por correo electrónico de {$a}';
+$string['coursesubscribedesc'] = 'Usted recibirá un correo electrónico con el resumen de los datos de X-Ray';
+$string['email_log_desc'] = 'Correo electrónico enviado. ID de curso {$a->courseid} ID de usuario {$a->to}';
+$string['emailsubject'] = 'Resumen de informe de X-Ray para {$a}';
+$string['erroremailheadline'] = 'Error en el panel de datos destacados. No fue enviado el correo electrónico para el ID de curso {$a}';
+$string['profilelink'] = 'Suscripción global a X-Ray';
+$string['subscribeall'] = 'Suscribirse a reportes por correo electrónico para todos los cursos';
+$string['subscribetothiscourse'] = 'Suscribirse al reporte por correo electrónico';
+$string['subscriptiontitle'] = 'Suscripción al correo electrónico de X-Ray';
+$string['unsubscribeemail'] = 'Cancelar suscripción';
+$string['unsubscribetothiscourse'] = 'Cancelar suscripción a los reportes por correo electrónico';
+$string['globalsubtitle'] = 'Suscripción global a X-Ray';
+$string['globalsubcourse'] = 'Utilizar la configuración de suscripción a nivel curso';
+$string['globalsubon'] = 'Suscribirse a todos los cursos';
+$string['globalsuboff'] = 'Cancelar todas las suscripciones';
+$string['globalsubdesctitle'] = 'Seleccione la configuración para la suscripción global al resumen de X-Ray. '.
+    'Puede decidir suscribirse para un curso o para todos los cursos.';
+
+$string['globalsubdescfirst'] = 'Si elige <b>Utilizar la configuración de suscripción a nivel de curso</b>, recibirá '.
+    'el reporte resumen de X-Ray sólo para los cursos a los que está suscrito. Esta opción está seleccionada de '.
+    'forma predeterminada.';
+$string['globalsubdescsecond'] = 'Las opciones <b>Suscribirse a todos los cursos</b> y <b>Cancelar todas las suscripciones</b> '.
+    'sobre-escriben los ajustes de suscripción realizados a nivel del curso. Usted recibirá o no el resumen de X-Ray '.
+    'para todos los cursos.';
+$string['subscriptiondisabled'] = 'Habilite esta configuración en la página de suscripción global de X-Ray. '.
+    'Puede acceder a esta página utilice el enlace Suscripción global de X-Ray en su perfil. ';
+
+// Frequency control for emails.
+$string['daily'] = 'Diaria';
+$string['emailfrequency'] = 'Frecuencia para las alertas de correo electrónico';
+$string['emailfrequency_desc'] = 'Si elige enviar alertas por correo electrónico diariamente, los mensajes de '.
+    'correo electrónico comenzarán mañana. Si decide enviar alertas por correo electrónico cada semana, comenzarán '.
+    'el próximo domingo. Si elige no enviar alertas por correo electrónico, los usuarios aún podrán suscribirse '.
+    'pero no se enviarán correos electrónicos.';
+$string['emailsdisabled'] = 'You will not receive alerts at this time. X-Ray email alerts are turned off. You can '.
+    'still subscribe. Emails will be sent when the alerts are turned on. Contact your system administrator for more '.
+    'information.';
+$string['frequencyheading'] = 'Frecuencia de alertas de correo electrónico';
+$string['frequencyheading_desc'] = 'Elija la frecuencia con la que desea que las alertas de X-Ray se envíen por '.
+    'correo electrónico a los suscriptores. De forma predeterminada, las alertas se envían por correo electrónico '.
+    'cada semana. Esto ocurre todos los domingos. Puede elegir enviar alertas por correo electrónico diariamente o nunca.';
+$string['never'] = 'Nunca';
+$string['weekly'] = 'Semanal';
+
 // Recommended Actions.
 $string['countaction'] = '{$a} recomendación';
 $string['countactions'] = '{$a} recomendaciones';
