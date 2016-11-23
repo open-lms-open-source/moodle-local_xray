@@ -406,7 +406,8 @@ function local_xray_template_data($courseid, $userid){
         $a = new stdClass();
         $a->first = $headlinedata->usersinrisk;
         $a->second = $headlinedata->risktotal;
-        $data->riskdata = get_string('headline_number_of', 'local_xray', $a);
+        $data->riskdata = html_writer::link($riskarrowurl, get_string('headline_number_of', 'local_xray', $a),
+            array('style' => 'text-decoration: none'));
 
         $data->studentsrisk = get_string('headline_studentatrisk', 'local_xray');
 
@@ -443,7 +444,8 @@ function local_xray_template_data($courseid, $userid){
         $a = new stdClass();
         $a->first = $headlinedata->usersloggedinpreviousweek;
         $a->second = $headlinedata->usersactivitytotal;
-        $data->activitydata = get_string('headline_number_of', 'local_xray', $a);
+        $data->activitydata = html_writer::link($activityarrowurl, get_string('headline_number_of', 'local_xray', $a),
+            array('style' => 'text-decoration: none'));
 
         $data->activityloggedstudents = get_string('headline_loggedstudents', 'local_xray');
 
@@ -473,7 +475,9 @@ function local_xray_template_data($courseid, $userid){
         $gradebookarrow = html_writer::img($OUTPUT->pix_url($statusclass[2], 'local_xray'), $statusclass[1]);
         $data->gradebookarrow = html_writer::link($gradebookarrowurl, $gradebookarrow);
 
-        $data->gradebooknumber = get_string('headline_number_percentage', 'local_xray', $headlinedata->averagegradeslastsevendays);
+        $data->gradebooknumber = html_writer::link($gradebookarrowurl, get_string('headline_number_percentage', 'local_xray',
+            $headlinedata->averagegradeslastsevendays),
+            array('style' => 'text-decoration: none'));
         $data->gradebookheadline = get_string('headline_average', 'local_xray');
         $data->gradebookaverageofweek = get_string("averageofweek_gradebook", 'local_xray', $headlinedata->averagegradeslastsevendayspreviousweek);
 
@@ -498,7 +502,8 @@ function local_xray_template_data($courseid, $userid){
         $discussionarrow = html_writer::img($OUTPUT->pix_url($statusclass[2], 'local_xray'), $statusclass[1]);
         $data->discussionarrow = html_writer::link($discussionarrowurl, $discussionarrow);
 
-        $data->discussiondata = $headlinedata->postslastsevendays;
+        $data->discussiondata = html_writer::link($discussionarrowurl, $headlinedata->postslastsevendays,
+            array('style' => 'text-decoration: none'));
         $data->discussionposts = get_string('headline_posts', 'local_xray');
         $data->discussionlastweekwas = get_string("headline_lastweekwas_discussion", 'local_xray', $headlinedata->postslastsevendayspreviousweek);
 
