@@ -50,6 +50,13 @@ class data_export {
     protected static $counters = [];
 
     /**
+     * Set it to default.
+     */
+    public static function reset_counter_storage() {
+        self::$counters = [];
+    }
+
+    /**
      * @param  string $base
      * @return string
      */
@@ -177,14 +184,14 @@ class data_export {
                 }
             }
 
-            $sqlbetween = " {$field1} BETWEEN :from AND :to
+            $sqlbetween = " {$field1} BETWEEN (:from + 1) AND :to
                              AND
                              {$idfield} <= :lastid
                              ORDER BY {$idfield} ASC ";
             $sqlparams[] = ['sql' => $sqlbetween, 'params' => ['from' => $from, 'to' => $to]];
 
             if (!empty($field2)) {
-                $sqlbetween2 = " {$field2} BETWEEN :from AND :to
+                $sqlbetween2 = " {$field2} BETWEEN (:from + 1) AND :to
                                  AND
                                  {$field1} = 0
                                  AND
@@ -192,7 +199,7 @@ class data_export {
                                  ORDER BY {$idfield} ASC ";
                 $sqlparams[] = ['sql' => $sqlbetween2, 'params' => ['from' => $from, 'to' => $to]];
 
-                $sqlbetween3 = " {$field2} BETWEEN :from AND :to
+                $sqlbetween3 = " {$field2} BETWEEN (:from + 1) AND :to
                                  AND
                                  {$field1} IS NULL
                                  AND
@@ -1083,7 +1090,8 @@ class data_export {
 
         $lastidstore = get_config(self::PLUGIN, $filename);
         if (!empty($lastidstore)) {
-            $lastid = (int)$lastidstore;
+            $lastidstore = (int)$lastidstore;
+            $lastid = $lastidstore;
         } else {
             $lastidstore = 0;
         }
@@ -1111,7 +1119,6 @@ class data_export {
             $filenamer = sprintf('%s_%08d.csv', self::exportpath($filename), $fcount);
             $exportf   = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filenamer);
             $file = new csv_file($exportf, $delimiter);
-            
             foreach ($recordset as $record) {
                 $cmaxdate = $record->traw;
                 unset($record->traw);
@@ -1148,7 +1155,7 @@ class data_export {
 
         } while (($counter >= $pos) && timer::within_time());
 
-        if (!empty($lastid)) {
+        if (!empty($lastid) && ($lastid > $lastidstore)) {
             self::$counters[] = ['setting' => $filename, 'value' => $lastid];
         }
         if (!empty($maxdate)) {
@@ -1321,6 +1328,7 @@ class data_export {
      */
     public static function export_csv($timest, $timeend, $dir) {
         self::$meta = [];
+        self::reset_counter_storage();
 
         $newformat = get_config(self::PLUGIN, 'newformat');
 
@@ -1435,17 +1443,13 @@ class data_export {
             'threads_delete'          => 'local_xray_disc'      ,
             'posts_delete'            => 'local_xray_post'      ,
             'hsuthreads_delete'       => 'local_xray_hsudisc'   ,
-            'hsuposts_delete'         => 'local_xray_hsupost'
+            'hsuposts_delete'         => 'local_xray_hsupost'   ,
+            'enrolmentv2'             => 'user_enrolments'      ,
+            'enrolment_deletev2'      => 'local_xray_enroldel'  ,
+            'userlistv2'              => 'user'                 ,
+            'roles'                   => 'role_assignments'     ,
+            'roles_delete'            => 'local_xray_roleunas'
         ];
-
-        $newformat = get_config(self::PLUGIN, 'newformat');
-        if ($newformat) {
-            $items['enrolmentv2'       ] = 'user_enrolments';
-            $items['enrolment_deletev2'] = 'local_xray_enroldel';
-            $items['userlistv2'        ] = 'user';
-            $items['roles'             ] = 'role_assignments';
-            $items['roles_delete'      ] = 'local_xray_roleunas';
-        }
 
         return $items;
     }
