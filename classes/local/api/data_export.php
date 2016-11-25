@@ -987,8 +987,6 @@ class data_export {
        LEFT JOIN {modules}        mo ON mo.name     = gi.itemmodule   AND gi.itemtype = 'mod'
        LEFT JOIN {course_modules} cm ON cm.instance = gi.iteminstance AND cm.module   = mo.id AND gi.itemtype = 'mod'
            WHERE
-                 gg.finalgrade IS NOT NULL
-                 AND
                      ";
 
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
@@ -1032,8 +1030,7 @@ class data_export {
                    gh.timemodified AS traw
               FROM {grade_grades_history} gh
               JOIN {grade_items}          gi ON gh.itemid = gi.id
-             WHERE gh.finalgrade IS NOT NULL
-                   AND
+             WHERE
         ";
 
         self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);

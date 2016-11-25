@@ -185,7 +185,7 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         $this->addquizzes(5, $courses);
-        $user = $this->user_set($courses, 'quiz');
+        $this->user_set($courses, 'quiz');
         $gradedata = $this->get_validategrades($courses);
 
         $typedef = [
@@ -235,7 +235,7 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
             ['optional' => false, 'type' => 'numeric'],
         ];
 
-        $this->export_check('grades_history', $typedef, $timenow, false, 50, $data);
+        $this->export_check('grades_history', $typedef, $timenow, false, 75, $data);
         $this->export_check('grades_history', [], $timenow, false, 0);
     }
 

@@ -20,7 +20,7 @@ require_once(__DIR__.'/api_data_export_base.php');
 
 /**
  * Class local_xray_api_data_export_extra_testcase
- * @group local_xray4
+ * @group local_xray
  */
 class local_xray_api_data_export_extra_testcase extends local_xray_api_data_export_base_testcase {
 
@@ -265,7 +265,7 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
                 WHERE
                       EXISTS (SELECT c.id FROM {course} c WHERE e.courseid = c.id AND c.category <> 0)
                       AND
-                      EXISTS (SELECT u.id FROM {user}   u WHERE ue.userid  = u.id AND u.deleted   = 0)                      
+                      EXISTS (SELECT u.id FROM {user}   u WHERE ue.userid  = u.id AND u.deleted   = 0)
          ");
         $nr = 10;
         $courses = $this->addcourses($nr, $timecreated);
