@@ -491,8 +491,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         global $DB;
         $grades = [];
         $actions = [1 => 'INSERT', 2 => 'UPDATE', 3 => 'DELETE'];
-        list($sql, $params) = $DB->get_in_or_equal([], SQL_PARAMS_NAMED, 'param', false, true);
-        $recs = $DB->get_records_select('grade_grades_history', 'finalgrade '.$sql, $params);
+        $recs = $DB->get_records('grade_grades_history');
         foreach ($recs as $rec) {
             $grades[] = [
                 $rec->id,

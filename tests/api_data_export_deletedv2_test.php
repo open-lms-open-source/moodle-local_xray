@@ -147,7 +147,7 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
         $timepast = $timenow - DAYSECS;
         $courses = $this->addcourses(5, $timepast);
         $nr = 3;
-        
+
         $validationdata = [];
         for ($count = 0; $count < $nr; $count++) {
             delete_course($courses[$count], false);
