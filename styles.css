@@ -227,13 +227,27 @@ a.xray-headline-link:hover {
     margin:10px 0;
     font-size:30px;
     text-align: left;
+    display: inline;
 }
 
-#xray-js-menu h4 img.x-ray-icon-title {
-    display: inline-block;
-    height: 30px;
-    margin-right: 5px;
-    width: 4%;
+#xray-js-menu #xray-title #xray-icon img {
+    max-width: 30px;
+    max-height: 30px;
+    display: inline;
+    background-image: url([[pix:local_xray|xray-logo]]);
+    background-position: center 0px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+
+#xray-js-menu #xray-title div {
+    max-width: 30px;
+    max-height: 30px;
+    left: 0;
+    top: 0;
+    margin: 0 10px 0 0;
+    display: inline;
+    position: relative;
 }
 
 .xray-menu-item-active {

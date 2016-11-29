@@ -613,7 +613,11 @@ class local_xray_renderer extends plugin_renderer_base {
                         $pluginname,
                         'local_xray',
                         array("tabindex" => -1, "class" => "x-ray-icon-title"));
-                    $title = html_writer::tag('h4', $icon.$pluginname);
+                    $divicon = html_writer::tag('div', $icon,
+                        array('id' => 'xray-icon'));
+                    $title = html_writer::tag('h4', $pluginname);
+                    $title = html_writer::tag('div',$divicon.$title,
+                        array('id' => 'xray-title'));
                 }
                 $amenu = html_writer::alist($menuitems, array('class' => 'xray-reports-links'));
                 $navmenu = html_writer::tag("nav", $amenu, array("id" => "xray-nav-reports"));
