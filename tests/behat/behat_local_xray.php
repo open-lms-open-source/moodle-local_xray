@@ -206,14 +206,14 @@ class behat_local_xray extends behat_base {
         $generalcontext = behat_context_helper::get('behat_general');
         if ($positive) {// Test headline is present.
             $generalcontext->should_exist("#xray-nav-headline", "css_element");
-            $generalcontext->should_exist("h4 .x-ray-icon-title", "css_element");
+            $generalcontext->should_exist("img.x-ray-icon-title", "css_element");
             $generalcontext->should_exist("#xray-headline-risk p.xray-headline-number", "css_element");
             $generalcontext->should_exist("#xray-headline-activity p.xray-headline-number", "css_element");
             $generalcontext->should_exist("#xray-headline-gradebook p.xray-headline-number", "css_element");
             $generalcontext->should_exist("#xray-headline-discussion p.xray-headline-number", "css_element");
         } else { // Test headline is not present.
             $generalcontext->should_not_exist("#xray-nav-headline", "css_element");
-            $generalcontext->should_not_exist("h4 .x-ray-icon-title", "css_element");
+            $generalcontext->should_not_exist("img.x-ray-icon-title", "css_element");
             $generalcontext->should_not_exist("#xray-headline-risk p.xray-headline-number", "css_element");
             $generalcontext->should_not_exist("#xray-headline-activity p.xray-headline-number", "css_element");
             $generalcontext->should_not_exist("#xray-headline-gradebook p.xray-headline-number", "css_element");

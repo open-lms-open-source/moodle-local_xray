@@ -55,7 +55,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I click on "#xray-headline-risk p.xray-headline-number" "css_element"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
-    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "img.x-ray-icon-title" "css_element" should not exist
     And "h2.xray-report-page-title" "css_element" should exist
     And "#riskMeasures" "css_element" should exist
     And ".sorting:nth-child(3).sorting_desc" "css_element" should exist
@@ -66,7 +66,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I click on "#xray-headline-activity p.xray-headline-number" "css_element"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
-    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "img.x-ray-icon-title" "css_element" should not exist
     And "h2.xray-report-page-title" "css_element" should exist
     And "#studentList" "css_element" should exist
     And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
@@ -77,7 +77,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I click on "#xray-headline-discussion p.xray-headline-number" "css_element"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
-    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "img.x-ray-icon-title" "css_element" should not exist
     And "h2.xray-report-page-title" "css_element" should exist
     And "#discussionMetrics" "css_element" should exist
     And ".sorting:nth-child(5).sorting_desc" "css_element" should exist
@@ -88,7 +88,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I click on "#xray-headline-gradebook p.xray-headline-number" "css_element"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
-    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "img.x-ray-icon-title" "css_element" should not exist
     And "#courseGradeTable" "css_element" should exist
     And ".sorting:nth-child(3).sorting_desc" "css_element" should exist
     # Test Headline in all themes, formats and templates.
@@ -116,7 +116,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I follow "Xray Course 01"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
-    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "img.x-ray-icon-title" "css_element" should not exist
     And "#course-header" "css_element" should exist
 
   @javascript
@@ -129,18 +129,18 @@ Feature: The headline data should be present in the course page for manager, edi
     And I follow "Xray Course 01"
     And I wait until the page is ready
     Then I should see "Can’t connect to X-Ray Learning Analytics, please try reloading the page. If you still can’t connect, contact your system administrator."
-    And "h4 .x-ray-icon-title" "css_element" should exist
+    And "img.x-ray-icon-title" "css_element" should exist
     And "#xray-nav-headline" "css_element" should not exist
     # Headline is displayed.
     Then the following config values are set as admin:
       | xrayclientid | datapushdemo | local_xray |
     And I reload the page
     Then I should not see "Can’t connect to X-Ray Learning Analytics, please try reloading the page. If you still can’t connect, contact your system administrator."
-    And "h4 .x-ray-icon-title" "css_element" should exist
+    And "img.x-ray-icon-title" "css_element" should exist
     And "#xray-nav-headline" "css_element" should exist
     # Disabled menu.
     Then the following config values are set as admin:
       | displaymenu | 0 | local_xray |
     And I reload the page
     Then "#xray-nav-headline" "css_element" should not exist
-    And "h4 .x-ray-icon-title" "css_element" should not exist
+    And "img.x-ray-icon-title" "css_element" should not exist
