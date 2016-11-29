@@ -534,9 +534,9 @@ $string['emailfrequency_desc'] = 'Si elige enviar alertas por correo electrónic
     'correo electrónico comenzarán mañana. Si decide enviar alertas por correo electrónico cada semana, comenzarán '.
     'el próximo domingo. Si elige no enviar alertas por correo electrónico, los usuarios aún podrán suscribirse '.
     'pero no se enviarán correos electrónicos.';
-$string['emailsdisabled'] = 'You will not receive alerts at this time. X-Ray email alerts are turned off. You can '.
-    'still subscribe. Emails will be sent when the alerts are turned on. Contact your system administrator for more '.
-    'information.';
+$string['emailsdisabled'] = 'No recibirá alertas en este momento. Las notificaciones por correo electrónico de '.
+    'X-Ray están desactivadas. Aún se puede suscribir. Los correos electrónicos serán enviados cuando las alertas '.
+    'estén activadas. Contáctese con su administrador de sistema para más información.';
 $string['frequencyheading'] = 'Frecuencia de alertas de correo electrónico';
 $string['frequencyheading_desc'] = 'Elija la frecuencia con la que desea que las alertas de X-Ray se envíen por '.
     'correo electrónico a los suscriptores. De forma predeterminada, las alertas se envían por correo electrónico '.
