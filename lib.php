@@ -380,9 +380,9 @@ function local_xray_template_data($courseid, $userid){
         $data = new stdClass();
 
         // Risk.
-
         // Icon and link.
-        $data->riskicon = html_writer::img($OUTPUT->pix_url('xray-risk', 'local_xray'), get_string('risk', 'local_xray'));
+        $xrayriskicon = local_xray_get_email_icons('xray-risk');
+        $data->riskicon = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'), array('width' => '30px'));
 
         $riskurl = $url = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $courseid, "action" => "view"));
@@ -393,13 +393,15 @@ function local_xray_template_data($courseid, $userid){
             array("controller" => "risk", "courseid" => $courseid, "header" => 1), "riskMeasures");
 
         // Calculate colour status.
-        $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($headlinedata->usersinrisk,
+        $statusclassrisk = local_xray\dashboard\dashboard_data::get_status_with_average($headlinedata->usersinrisk,
             $headlinedata->risktotal,
             $headlinedata->averagerisksevendaybefore,
             $headlinedata->maximumtotalrisksevendaybefore,
             true,
             true); // This arrow will be inverse to all.
-        $riskarrow = html_writer::img($OUTPUT->pix_url($statusclass[2], 'local_xray'), $statusclass[1]);
+
+        $xrayriskarrow = local_xray_get_email_icons($statusclassrisk[2]);
+        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1]);
         $data->riskarrow = html_writer::link($riskarrowurl, $riskarrow);
 
         // Number for risk.
@@ -418,9 +420,10 @@ function local_xray_template_data($courseid, $userid){
         $data->riskaverageweek = get_string("averageofweek_integer", 'local_xray', $a);
 
         // Activity.
-
         // Icon and link.
-        $data->activityicon = html_writer::img($OUTPUT->pix_url('xray-activity', 'local_xray'), get_string('activityreport', 'local_xray'));
+        $xrayactivityicon = local_xray_get_email_icons('xray-activity');
+        $data->activityicon = html_writer::img($xrayactivityicon, get_string('activityreport', 'local_xray'),
+            array('width' => '30px'));
 
         $activityurl = $url = new moodle_url("/local/xray/view.php",
             array("controller" => "activityreport", "courseid" => $courseid, "action" => "view"));
@@ -431,15 +434,16 @@ function local_xray_template_data($courseid, $userid){
             array("controller" => "activityreport", "courseid" => $courseid, "header" => 1), "studentList");
 
         // Calculate colour status.
-        $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($headlinedata->usersloggedinpreviousweek,
+        $statusclassactivity = local_xray\dashboard\dashboard_data::get_status_with_average($headlinedata->usersloggedinpreviousweek,
             $headlinedata->usersactivitytotal,
             $headlinedata->averageuserslastsevendays,
             $headlinedata->userstotalprevioussevendays,
             false,
             true);
-        $activityarrow = html_writer::img($OUTPUT->pix_url($statusclass[2], 'local_xray'), $statusclass[1]);
-        $data->activityarrow = html_writer::link($activityarrowurl, $activityarrow);
 
+        $xrayactivityarrow = local_xray_get_email_icons($statusclassactivity[2]);
+        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1]);
+        $data->activityarrow = html_writer::link($activityarrowurl, $activityarrow);
 
         $a = new stdClass();
         $a->first = $headlinedata->usersloggedinpreviousweek;
@@ -456,9 +460,10 @@ function local_xray_template_data($courseid, $userid){
         $data->activitylastweekwasof = get_string("headline_lastweekwasof_activity", 'local_xray', $a);
 
         // Gradebook.
-
         // Icon and link.
-        $data->gradebookicon = html_writer::img($OUTPUT->pix_url('xray-grade', 'local_xray'), get_string('gradebookreport', 'local_xray'));
+        $xraygradeicon = local_xray_get_email_icons('xray-grade');
+        $data->gradebookicon = html_writer::img($xraygradeicon, get_string('gradebookreport', 'local_xray'),
+            array('width' => '30px'));
 
         $gradebookurl = $url = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $courseid, "action" => "view"));
@@ -472,7 +477,9 @@ function local_xray_template_data($courseid, $userid){
         $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($headlinedata->averagegradeslastsevendays,
             $headlinedata->averagegradeslastsevendayspreviousweek,
             true);
-        $gradebookarrow = html_writer::img($OUTPUT->pix_url($statusclass[2], 'local_xray'), $statusclass[1]);
+
+        $xraygradebookarrow = local_xray_get_email_icons($statusclass[2]);
+        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1]);
         $data->gradebookarrow = html_writer::link($gradebookarrowurl, $gradebookarrow);
 
         $data->gradebooknumber = html_writer::link($gradebookarrowurl, get_string('headline_number_percentage', 'local_xray',
@@ -482,9 +489,10 @@ function local_xray_template_data($courseid, $userid){
         $data->gradebookaverageofweek = get_string("averageofweek_gradebook", 'local_xray', $headlinedata->averagegradeslastsevendayspreviousweek);
 
         // Discussion.
-
         // Icon and link.
-        $data->discussionicon = html_writer::img($OUTPUT->pix_url('xray-discussions', 'local_xray'), get_string('discussionreport', 'local_xray'));
+        $xraydiscussionsicon = local_xray_get_email_icons('xray-discussions');
+        $data->discussionicon = html_writer::img($xraydiscussionsicon, get_string('discussionreport', 'local_xray'),
+            array('width' => '30px'));
 
         $discussionurl = $url = new moodle_url("/local/xray/view.php",
             array("controller" => "discussionreport", "courseid" => $courseid, "action" => "view"));
@@ -495,11 +503,12 @@ function local_xray_template_data($courseid, $userid){
             array("controller" => "discussionreport", "courseid" => $courseid, "header" => 1), "studentList");
 
         // Calculate colour status.
-        $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($headlinedata->postslastsevendays,
+        $statusclassdiscussion = local_xray\dashboard\dashboard_data::get_status_simple($headlinedata->postslastsevendays,
             $headlinedata->postslastsevendayspreviousweek,
             true);
 
-        $discussionarrow = html_writer::img($OUTPUT->pix_url($statusclass[2], 'local_xray'), $statusclass[1]);
+        $xraydiscussionsarrow = local_xray_get_email_icons($statusclassdiscussion[2]);
+        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1]);
         $data->discussionarrow = html_writer::link($discussionarrowurl, $discussionarrow);
 
         $data->discussiondata = html_writer::link($discussionarrowurl, $headlinedata->postslastsevendays,
@@ -707,4 +716,20 @@ function local_xray_send_email_today() {
         }
     }
     return false;
+}
+
+/**
+ * Get the url for the icons email.
+ *
+ * @return string.
+ */
+function local_xray_get_email_icons($imagename) {
+    $cfgxray = get_config('local_xray');
+    if (isset($cfgxray->iconsurl)) {
+        $url = $cfgxray->iconsurl;
+    } else {
+        // Use default value.
+        $url = 'https://cdn.xrayanalytics.net/images/';
+    }
+    return $url.$imagename.'.svg';
 }
