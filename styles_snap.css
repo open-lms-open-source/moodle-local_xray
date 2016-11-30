@@ -10,6 +10,12 @@
     height: 3em; /* fixed header height*/
     margin-top:-3em; /* negative fixed header height */
 }
+
+/*X-Ray Icon margin*/
+#xray-js-menu #xray-title #xray-icon img {
+  margin: 0 0 10px 0 !important;
+}
+
 /**************** Recommended Actions ****************/
 .xray-div-recommendations .recommendationdiv .recommendationtext {
     padding-top:12px;

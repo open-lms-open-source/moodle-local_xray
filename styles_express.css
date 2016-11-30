@@ -28,6 +28,10 @@ TODO - make express specific? */
     width: 100% !important;
 }
 
+#xray-js-menu #xray-title #xray-icon img {
+  margin: 10px 0 0 0 !important;
+}
+
 /**************** Recommended Actions ****************/
 .xray-div-recommendations .recommendationdiv .recommendationtext {
     padding-top:12px;
