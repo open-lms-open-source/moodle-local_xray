@@ -500,7 +500,7 @@ function local_xray_template_data($courseid, $userid){
         $data->discussionlink = html_writer::link($discussionurl, get_string('discussionreport', 'local_xray'));
 
         $discussionarrowurl = $url = new moodle_url("/local/xray/view.php",
-            array("controller" => "discussionreport", "courseid" => $courseid, "header" => 1), "studentList");
+            array("controller" => "discussionreport", "courseid" => $courseid, "header" => 1), "discussionMetrics");
 
         // Calculate colour status.
         $statusclassdiscussion = local_xray\dashboard\dashboard_data::get_status_simple($headlinedata->postslastsevendays,
@@ -724,12 +724,13 @@ function local_xray_send_email_today() {
  * @return string.
  */
 function local_xray_get_email_icons($imagename) {
+    // Add format.
+    $imagename = $imagename.'.svg';
+    // Default value.
+    $baseurl = 'https://cdn.xrayanalytics.net';
     $cfgxray = get_config('local_xray');
     if (isset($cfgxray->iconsurl)) {
-        $url = $cfgxray->iconsurl;
-    } else {
-        // Use default value.
-        $url = 'https://cdn.xrayanalytics.net/images/';
+        $baseurl = $cfgxray->iconsurl;
     }
-    return $url.$imagename.'.svg';
+    return sprintf('%s/images/%s', $baseurl, $imagename);
 }
