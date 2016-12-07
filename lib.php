@@ -366,6 +366,33 @@ function local_xray_user_enrolment_deleted(\core\event\user_enrolment_deleted $e
 }
 
 /**
+ * Listener for send email to admin/s when X-Ray Learning Analytics data sync failed.
+ * @param \local_xray\event\sync_failed $event
+ * @throws coding_exception
+ */
+function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
+
+    $error = $event->get_description();
+    $subject = get_string('syncfailed', 'local_xray');
+    // We will send email to each administrator.
+    $userfrom = get_admin();
+    $admins = get_admins();
+    foreach ($admins as $admin) {
+        $eventdata = new \stdClass();
+        $eventdata->component         = 'moodle';
+        $eventdata->name              = 'errors';
+        $eventdata->userfrom          = $userfrom;
+        $eventdata->userto            = $admin;
+        $eventdata->subject           = $subject;
+        $eventdata->fullmessage       = $error;
+        $eventdata->fullmessageformat = FORMAT_PLAIN;
+        $eventdata->fullmessagehtml   = '';
+        $eventdata->smallmessage      = '';
+        message_send($eventdata);
+    }
+}
+
+/**
  * Get headline data for the template.
  * @param $courseid
  * @return stdClass
