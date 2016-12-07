@@ -51,18 +51,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class data_sync extends scheduled_task {
-    /**
-     * @var \stdClass
-     */
-    private $config = null;
-
-    /**
-     * data_sync constructor.
-     */
-    public function __construct() {
-        $config = get_config('local_xray');
-        $this->config = $config;
-    }
 
     /**
      * Get a descriptive name for this task (shown to admins).
@@ -82,11 +70,10 @@ class data_sync extends scheduled_task {
      *
      * @return string bucket storage root directory path
      */
-    protected function get_storageprefix() {
-        if (!isset($this->config->bucketprefix)) {
+    public function get_storageprefix() {
+        $config = get_config('local_xray', 'bucketprefix');
+        if ($config === false) {
             $config = 'rawData/';
-        } else {
-            $config = $this->config->bucketprefix;
         }
         return $config;
     }
@@ -98,25 +85,64 @@ class data_sync extends scheduled_task {
     public function execute() {
         global $CFG, $DB;
         try {
+            $config = get_config('local_xray');
+
             // Check if it is enabled?
-            if ($this->config === false) {
+            if ($config === false) {
                 throw new \Exception('Plugin is not configured!');
             }
 
-            if (!$this->config->enablesync) {
+            if (!$config->enablesync) {
                 throw new \Exception('Data Synchronization is not enabled!');
             }
 
             sync_log::create_msg("Start data sync.")->trigger();
 
+            /* @noinspection PhpIncludeInspection */
+            require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
+
+            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+            /* @noinspection PhpUndefinedClassInspection */
+            $s3 = new \Aws\S3\S3Client([
+                'version' => '2006-03-01',
+                'region'  => $config->s3bucketregion,
+                'scheme'  => $config->s3protocol,
+                'retries' => (int)$config->s3uploadretry,
+                'credentials' => [
+                    'key'    => $config->awskey,
+                    'secret' => $config->awssecret,
+                ],
+            ]);
+
             $storage = new auto_clean();
             $DB->set_debug(($CFG->debug == DEBUG_DEVELOPER) && $CFG->debugdisplay);
-            $timeend = time() - (2 * MINSECS);
-            $dir = $storage->get_directory();
-            data_export::export_csv(0, $timeend, $dir);
+            $timeend = time() - (2 * HOURSECS);
+            data_export::export_csv(0, $timeend, $storage->get_directory());
             $DB->set_debug(false);
 
-            $this->upload($storage);
+            list($compfile, $destfile) = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
+            if ($compfile !== null) {
+                $cleanfile = new auto_clean_file($compfile);
+                ($cleanfile);
+                $uploadresult = $s3->upload(
+                    $config->s3bucket,
+                    $this->get_storageprefix() . $destfile,
+                    fopen($compfile, 'rb'),
+                    'private',
+                    array('debug' => true)
+                );
+                $metadata = $uploadresult->get('@metadata');
+                if ($metadata['statusCode'] != 200) {
+                    throw new \Exception("Upload to S3 bucket failed!");
+                }
+
+                // Save counters only when entire process passed OK.
+                data_export::store_counters();
+
+                sync_log::create_msg("Uploaded {$destfile}.")->trigger();
+            } else {
+                sync_log::create_msg("No data to upload.")->trigger();
+            }
 
             sync_log::create_msg("Completed data sync.")->trigger();
         } catch (\Exception $e) {
@@ -126,110 +152,6 @@ class data_sync extends scheduled_task {
             mtrace($e->getMessage());
             mtrace($e->getTraceAsString());
             sync_failed::create_from_exception($e)->trigger();
-        }
-    }
-
-    /**
-     * @param auto_clean $storage
-     * @throws \Exception
-     */
-    protected function upload(auto_clean $storage) {
-        if (!empty($this->config->newformat)) {
-            $this->upload_new($storage->get_dirbase(), $storage->get_dirname());
-        } else {
-            $this->upload_legacy($storage->get_dirbase(), $storage->get_dirname());
-        }
-    }
-
-    /**
-     * @param string $dirbase
-     * @param string $dirname
-     * @throws \Exception
-     * @throws \coding_exception
-     */
-    protected function upload_legacy($dirbase, $dirname) {
-        global $CFG;
-
-        /* @noinspection PhpIncludeInspection */
-        require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
-
-        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-        /* @noinspection PhpUndefinedClassInspection */
-        $s3 = new \Aws\S3\S3Client([
-            'version' => '2006-03-01',
-            'region'  => $this->config->s3bucketregion,
-            'scheme'  => $this->config->s3protocol,
-            'retries' => (int)$this->config->s3uploadretry,
-            'credentials' => [
-                'key'    => $this->config->awskey,
-                'secret' => $this->config->awssecret,
-            ],
-        ]);
-
-        list($compfile, $destfile) = data_export::compress($dirbase, $dirname);
-        if ($compfile !== null) {
-            $cleanfile = new auto_clean_file($compfile);
-            ($cleanfile);
-            $uploadresult = $s3->upload(
-                $this->config->s3bucket,
-                $this->get_storageprefix() . $destfile,
-                fopen($compfile, 'rb'),
-                'private',
-                ['debug' => true]
-            );
-            $metadata = $uploadresult->get('@metadata');
-            if ($metadata['statusCode'] != 200) {
-                throw new \Exception("Upload to S3 bucket failed!");
-            }
-
-            // Save counters only when entire process passed OK.
-            data_export::store_counters();
-
-            sync_log::create_msg("Uploaded {$destfile}.")->trigger();
-        } else {
-            sync_log::create_msg("No data to upload.")->trigger();
-        }
-    }
-
-    /**
-     * @param  string $dirbase
-     * @param  string $dirname
-     * @throws \Exception
-     */
-    protected function upload_new($dirbase, $dirname) {
-        global $CFG;
-
-        /* @noinspection PhpIncludeInspection */
-        require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
-
-        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-        /* @noinspection PhpUndefinedClassInspection */
-        $s3 = new \Aws\S3\S3Client([
-            'version' => '2006-03-01',
-            'region'  => $this->config->s3bucketregion,
-            'scheme'  => $this->config->s3protocol,
-            'retries' => (int)$this->config->s3uploadretry,
-            'credentials' => [
-                'key'    => $this->config->awskey,
-                'secret' => $this->config->awssecret,
-            ],
-        ]);
-
-        $result = data_export::compress($dirbase, $dirname);
-
-        if ($result) {
-            $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname . DIRECTORY_SEPARATOR;
-            $s3->uploadDirectory(
-                $transdir,
-                $this->config->s3bucket,
-                $this->get_storageprefix().$this->config->xrayclientid,
-                ['debug' => true]
-            );
-
-            // Save counters only when entire process passed OK.
-            data_export::store_counters();
-
-            sync_log::create_msg("Uploaded export.")->trigger();
         }
     }
 }
