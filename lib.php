@@ -739,3 +739,13 @@ function local_xray_get_email_icons($imagename) {
     }
     return sprintf('%s/images/%s', $baseurl, $imagename);
 }
+
+/**
+ * Check if the course has the Single Activity format.
+ *
+ * @return bool.
+ */
+function local_xray_single_activity_course($courseid) {
+    global $DB;
+    return $DB->record_exists('course', array('id' => $courseid, 'format' => 'singleactivity'));
+}

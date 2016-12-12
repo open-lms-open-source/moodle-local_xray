@@ -77,13 +77,15 @@ class send_emails extends scheduled_task {
                                 if (array_key_exists($record->userid, get_admins())) {
                                     $courses = get_courses("all", "c.sortorder ASC", "c.id");
                                     foreach ($courses as $course) {
-                                        if ($course->id != SITEID) {
+                                        if ($course->id != SITEID && !local_xray_single_activity_course($course->id)) {
                                             $coursesusers[] = array($course->id => $record->userid);
                                         }
                                     }
                                 } else if ($courses = local_xray_get_teacher_courses($record->userid)) {
                                     foreach ($courses as $course) {
-                                        $coursesusers[] = array($course->courseid => $record->userid);
+                                        if (!local_xray_single_activity_course($course->courseid)) {
+                                            $coursesusers[] = array($course->courseid => $record->userid);
+                                        }
                                     }
                                 }
                             }
@@ -105,7 +107,9 @@ class send_emails extends scheduled_task {
                     }
                     if ($subscribedusers = $DB->get_recordset_select('local_xray_subscribe', $select, null, 'courseid', 'id, courseid, userid')) {
                         foreach ($subscribedusers as $record) {
-                            $coursesusers[] = array($record->courseid => $record->userid);
+                            if (!local_xray_single_activity_course($record->courseid)) {
+                                $coursesusers[] = array($record->courseid => $record->userid);
+                            }
                         }
                     }
                 }
@@ -116,7 +120,7 @@ class send_emails extends scheduled_task {
                     $messagehtml = '';
                     foreach ($coursesusers as $value) {
 
-                        $courseid = $first_key = key($value);
+                        $courseid = key($value);
                         $userid = $value[$courseid];
 
                         // Check if the user has capabilities to receive email.
