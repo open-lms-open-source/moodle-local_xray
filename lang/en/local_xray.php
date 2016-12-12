@@ -548,7 +548,7 @@ $string['error_wsapi_config_xrayusername'] = 'X-Ray Learning Analytics Username 
 $string['error_wsapi_config_xraypassword'] = 'X-Ray Learning Analytics Password is empty';
 $string['error_wsapi_config_xrayurl'] = 'X-Ray Learning Analytics Url is empty';
 $string['error_wsapi_config_xrayclientid'] = 'X-Ray Learning Analytics Client Identifier is empty';
-$string['error_wsapi_exception'] = 'Error when talking to X-Ray server: {$a}';
+$string['error_wsapi_exception'] = 'Error when talking to X-Ray server:<br/>{$a}';
 $string['error_wsapi_domaininfo_incomplete'] = 'Domain information is incomplete, missing: ${a}';
 
 // Config validation errors for aws
@@ -579,6 +579,8 @@ $string['connectionverified'] = 'Parameters verified';
 $string['connectionstatusunknown'] = 'Status unknown';
 $string['verifyingapi'] = '<div class="xray_validate_loader"></div> Checking parameters, please wait.';
 $string['test_api_action'] = 'Validate parameters';
+$string['validate_check_fields'] = 'Please, check the following parameters';
+$string['validate_service_response'] = 'Service response';
 
 // API titles
 $string['test_api_ws_connect'] = 'X-Ray Server';
@@ -586,3 +588,4 @@ $string['test_api_s3_bucket'] = 'AWS S3 Bucket';
 $string['test_api_compress'] = 'Compression';
 $string['test_api_label'] = 'Validation';
 $string['test_api_description'] = 'Check <strong>saved parameters</strong> for connectivity or system issues';
+$string['validate_when'] = 'When';

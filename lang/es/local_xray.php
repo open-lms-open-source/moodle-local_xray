@@ -559,7 +559,7 @@ $string['error_wsapi_config_xrayusername'] = 'El campo username de X-Ray Learnin
 $string['error_wsapi_config_xraypassword'] = 'El campo password de X-Ray Learning Analytics está vacío';
 $string['error_wsapi_config_xrayurl'] = 'El campo url de X-Ray Learning Analytics está vacío';
 $string['error_wsapi_config_xrayclientid'] = 'El campo clientid de X-Ray Learning Analytics está vacío';
-$string['error_wsapi_exception'] = 'Hubo un error al comunicarse con el servidor X-Ray: {$a}';
+$string['error_wsapi_exception'] = 'Hubo un error al comunicarse con el servidor X-Ray:<br/>{$a}';
 $string['error_wsapi_domaininfo_incomplete'] = 'La información del dominio está incompleta: ${a}';
 
 // Config validation errors for aws
@@ -597,3 +597,4 @@ $string['test_api_s3_bucket'] = 'Bucket S3 de AWS';
 $string['test_api_compress'] = 'Compresión';
 $string['test_api_label'] = 'Validación';
 $string['test_api_description'] = 'Validar <strong>parámetros guardados</strong> para encontrar problemas de conexión o del sistema.';
+$string['validate_when'] = 'Al';

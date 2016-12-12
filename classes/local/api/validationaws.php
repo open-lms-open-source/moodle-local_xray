@@ -45,11 +45,13 @@ abstract class validationaws {
      */
     public static function check_ws_connect() {
         $result   = [];
-        $whenStr  = 'When ';
-        $reason   = 'Logging in';
-        $sep = ': ';
+        $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
+        $reason   = '';
+        $reason_fields = [];
+        $sep = ':<br />';
+        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
+        $reason_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
         
-        global $CFG;
         $config = get_config('local_xray');
         if (empty($config)) {
             $result[] = get_string("error_wsapi_config_params_empty", wsapi::PLUGIN);
@@ -65,7 +67,7 @@ abstract class validationaws {
         ];
 
         foreach ($params as $property) {
-            if (!isset($config->{$property})) {
+            if (!isset($config->{$property}) && empty($config->{$property})) {
                 $result[] = get_string("error_wsapi_config_{$property}", wsapi::PLUGIN);
             }
         }
@@ -76,11 +78,11 @@ abstract class validationaws {
 
         try {
             // Testing login
+            $reason = get_string('error_wsapi_reason_login', wsapi::PLUGIN);
+            $reason_fields = ['xrayusername','xraypassword','xrayurl'];
             $loginRes = wsapi::login();
             if (!$loginRes) {
-                $result[] = get_string("error_wsapi_exception",
-                    wsapi::PLUGIN, $whenStr.$reason.$sep.
-                    xrayws::instance()->errorinfo());
+                throw new \Exception(xrayws::instance()->errorinfo());
             }
             
             // If login fails, nothing else will work
@@ -90,19 +92,17 @@ abstract class validationaws {
             
             // Testing the query endpoints
             $reason = get_string('error_wsapi_reason_accesstoken', wsapi::PLUGIN);
+            $reason_fields = ['xrayclientid','xrayurl'];
             $tokenRes = wsapi::accesstoken();
             if (!$tokenRes) {
-                $result[] = get_string("error_wsapi_exception",
-                    wsapi::PLUGIN, $whenStr.$reason.$sep.
-                    xrayws::instance()->errorinfo());
+                throw new \Exception(xrayws::instance()->errorinfo());
             }
             
             $reason = get_string('error_wsapi_reason_domaininfo', wsapi::PLUGIN);
+            $reason_fields = ['xrayclientid','xrayurl'];
             $domainRes = wsapi::domaininfo();
             if (!$domainRes) {
-                $result[] = get_string("error_wsapi_exception",
-                    wsapi::PLUGIN, $whenStr.$reason.$sep.
-                    xrayws::instance()->errorinfo());
+                throw new \Exception(xrayws::instance()->errorinfo());
             } else {
                 
                 $requiredKeys = array(
@@ -127,22 +127,24 @@ abstract class validationaws {
                         }
                     }
                     
-                    $result[] = get_string("error_wsapi_domaininfo_incomplete",
+                    $error = get_string("error_wsapi_domaininfo_incomplete",
                         wsapi::PLUGIN, implode(", ", $missingKeys));
+                    throw new \Exception($error);
                 }
             }
             
             $reason = get_string('error_wsapi_reason_courses', wsapi::PLUGIN);
+            $reason_fields = ['xrayclientid','xrayurl'];
             $coursesRes = wsapi::courses();
             if(!$coursesRes) {
-               $result[] = get_string("error_wsapi_exception",
-                    wsapi::PLUGIN, $whenStr.$reason.$sep.
-                    xrayws::instance()->errorinfo());
+                throw new \Exception(xrayws::instance()->errorinfo());
             }
             
         } catch (\Exception $ex) {
+            $html_fields = validationaws::listFields($reason_fields);
+                
             $result[] = get_string("error_wsapi_exception",
-                wsapi::PLUGIN, $whenStr.$reason.$sep.
+                wsapi::PLUGIN, $fields_title.$html_fields.$whenStr.$reason.$sep.$reason_title.
                 $ex->getMessage());
         }
         
@@ -165,6 +167,14 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_s3_bucket() {
+        $result   = [];
+        $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
+        $reason   = '';
+        $reason_fields = [];
+        $sep = ':<br />';
+        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
+        $reason_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
+        
         global $CFG;
         $config = get_config('local_xray');
         if (empty($config)) {
@@ -184,7 +194,7 @@ abstract class validationaws {
 
         $result = [];
         foreach ($params as $property) {
-            if (!isset($config->{$property})) {
+            if (!isset($config->{$property}) && empty($config->{$property})) {
                 $result[] = get_string("error_awssync_config_{$property}", wsapi::PLUGIN);
             }
         }
@@ -299,7 +309,14 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_compress() {
-        global $CFG;
+        $result   = [];
+        $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
+        $reason   = '';
+        $reason_fields = [];
+        $sep = ':<br />';
+        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
+        $reason_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
+        
         $config = get_config('local_xray');
         if (empty($config)) {
             $result[] = get_string("error_wsapi_config_params_empty", wsapi::PLUGIN);
@@ -317,7 +334,6 @@ abstract class validationaws {
             if (!isset($config->{$prop})) {
                 $result[] = get_string("error_compress_config_{$prop}", wsapi::PLUGIN);
             } else if ($config->{$prop} == true) {
-                print($prop.': '.$config->{$prop}.PHP_EOL);
                 foreach ($subprops as $subprop) {
                     if (!isset($config->{$subprop}) 
                         || ( gettype($config->{$subprop}) == 'string' && empty($config->{$subprop}))) {
@@ -385,5 +401,22 @@ abstract class validationaws {
         }
 
         return true;
+    }
+    
+    /**
+     * Creates and an unordered HTML list of xray fields
+     * 
+     * @param string[] $fields String identifies of the fields to be listed
+     */
+    private static function listFields($fields) {
+        $res = '<ul>';
+        
+        foreach ($fields as $field) {
+            $res .= '<li>'.get_string($field, wsapi::PLUGIN).'</li>';
+        }
+        
+        $res .= '</ul>';
+        
+        return $res;
     }
 }
