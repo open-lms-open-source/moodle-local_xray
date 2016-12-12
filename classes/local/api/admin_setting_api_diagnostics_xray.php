@@ -110,9 +110,9 @@ class admin_setting_api_diagnostics_xray extends \admin_setting_heading {
         global $OUTPUT;
 
         $o = '<div id="api_diag" title="'.get_string('test_api_action', 'local_xray').'">';
-        $o .= '<div class="noticetemplate_problem">'.$OUTPUT->notification('', 'notifyproblem').'</div>';
-        $o .= '<div class="noticetemplate_success">'.$OUTPUT->notification('', 'notifysuccess').'</div>';
-        $o .= '<div class="noticetemplate_message">'.$OUTPUT->notification('', 'notifymessage').'</div>';
+        $o .= '<div class="noticetemplate_problem">'.$OUTPUT->notification('', 'error').'</div>';
+        $o .= '<div class="noticetemplate_success">'.$OUTPUT->notification('', 'success').'</div>';
+        $o .= '<div class="noticetemplate_message">'.$OUTPUT->notification('', 'warning').'</div>';
         $o .= '<div id="ws_connect-status" class="api-connection-status"></div>';
         $o .= '<div id="s3_bucket-status" class="api-connection-status"></div>';
         $o .= '<div id="compress-status" class="api-connection-status"></div>';
