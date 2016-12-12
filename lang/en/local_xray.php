@@ -577,7 +577,7 @@ $string['error_compress_files'] = 'Incorrect files found in archive(s)';
 $string['connectionfailed'] = 'Failed - please check parameters';
 $string['connectionverified'] = 'Parameters verified';
 $string['connectionstatusunknown'] = 'Status unknown';
-$string['verifyingapi'] = 'Checking parameters';
+$string['verifyingapi'] = '<div class="xray_validate_loader"></div> Checking parameters, please wait.';
 $string['test_api_action'] = 'Validate parameters';
 
 // API titles

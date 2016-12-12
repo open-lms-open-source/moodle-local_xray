@@ -588,7 +588,7 @@ $string['error_compress_files'] = 'Se encotraron archivos incorrecto en el/los a
 $string['connectionfailed'] = 'Conexión fallida - verificar credenciales';
 $string['connectionverified'] = 'Credenciales verificadas';
 $string['connectionstatusunknown'] = 'Estado de conexión no verificado';
-$string['verifyingapi'] = 'Revisando el estado de conexión';
+$string['verifyingapi'] = '<div class="xray_validate_loader"></div> Revisando el estado de conexión, por favor espere.';
 $string['test_api_action'] = 'Validar parámetros';
 
 // API titles
