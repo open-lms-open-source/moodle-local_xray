@@ -76,7 +76,7 @@ function validate_api_aws_compress(YUI, data) {
         $('.api_diag_btn').attr('disabled','disabled');
 
         for (var key in self.api_msg_keys) {
-            self.api_msg(self.api_msg_keys[key], 'verifyingapi', 'message', 'spinner');
+            self.api_msg(self.api_msg_keys[key], 'verifyingapi', 'message', '');
         }
 
         $.ajax({
