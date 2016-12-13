@@ -48,9 +48,9 @@ abstract class validationaws {
         $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
         $reason   = '';
         $reason_fields = [];
-        $sep = ':<br />';
+        $sep = ':<br /><br />';
         $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
-        $reason_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
+        $response_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
         
         $config = get_config('local_xray');
         if (empty($config)) {
@@ -67,7 +67,7 @@ abstract class validationaws {
         ];
 
         foreach ($params as $property) {
-            if (!isset($config->{$property}) && empty($config->{$property})) {
+            if (!isset($config->{$property}) || empty($config->{$property})) {
                 $result[] = get_string("error_wsapi_config_{$property}", wsapi::PLUGIN);
             }
         }
@@ -144,7 +144,7 @@ abstract class validationaws {
             $html_fields = validationaws::listFields($reason_fields);
                 
             $result[] = get_string("error_wsapi_exception",
-                wsapi::PLUGIN, $fields_title.$html_fields.$whenStr.$reason.$sep.$reason_title.
+                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$sep.$fields_title.$html_fields.$response_title.
                 $ex->getMessage());
         }
         
@@ -171,9 +171,9 @@ abstract class validationaws {
         $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
         $reason   = '';
         $reason_fields = [];
-        $sep = ':<br />';
+        $sep = ':<br /><br />';
         $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
-        $reason_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
+        $response_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
         
         global $CFG;
         $config = get_config('local_xray');
@@ -192,9 +192,8 @@ abstract class validationaws {
             , 's3uploadretry'
         ];
 
-        $result = [];
         foreach ($params as $property) {
-            if (!isset($config->{$property}) && empty($config->{$property})) {
+            if (!isset($config->{$property}) || empty($config->{$property})) {
                 $result[] = get_string("error_awssync_config_{$property}", wsapi::PLUGIN);
             }
         }
@@ -207,6 +206,9 @@ abstract class validationaws {
             /* @noinspection PhpIncludeInspection */
             require_once($CFG->dirroot . "/local/xray/lib/vendor/aws/aws-autoloader.php");
 
+            // Testing AWS client creation
+            $reason = get_string('error_aws_reason_client_create', wsapi::PLUGIN);
+            $reason_fields = ['s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
             /* @noinspection PhpUndefinedClassInspection */
             $s3 = new \Aws\S3\S3Client(
@@ -230,6 +232,9 @@ abstract class validationaws {
             $objectContent = "sample test: ".md5(uniqid(rand(), true));
             
 
+            // Testing AWS object listing
+            $reason = get_string('error_aws_reason_object_list', wsapi::PLUGIN);
+            $reason_fields = ['s3bucket','s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             // Try to list the directory and get no more than 1 items to speed things up.
             // It does not matter if there are no objects, we are checking the access rights here.
             $objects = $s3->listObjects(
@@ -242,6 +247,8 @@ abstract class validationaws {
             ($objects);
 
             // Now we try to upload simple file.
+            $reason = get_string('error_aws_reason_upload_file', wsapi::PLUGIN);
+            $reason_fields = ['s3bucket','s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             $uploadfile = tmpfile();
             if ($uploadfile !== false) {
                 fwrite($uploadfile, $objectContent);
@@ -262,6 +269,8 @@ abstract class validationaws {
             }
             
             // Now we try to download simple file.
+            $reason = get_string('error_aws_reason_download_file', wsapi::PLUGIN);
+            $reason_fields = ['s3bucket','s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             $awsObject = $s3->getObject(array(
                 'Bucket' => $config->s3bucket,
                 'Key'    => $objectKey
@@ -274,6 +283,8 @@ abstract class validationaws {
             }
             
             // Now we try to erase simple file.
+            $reason = get_string('error_aws_reason_erase_file', wsapi::PLUGIN);
+            $reason_fields = ['s3bucket','s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             $delResult = $s3->deleteObject(array(
                 'Bucket' => $config->s3bucket,
                 'Key'    => $objectKey
@@ -285,9 +296,13 @@ abstract class validationaws {
                 throw new \Exception("Deletion on S3 bucket failed!");
             } 
 
-        } catch (\Exception $e) {
+        } catch (\Exception $ex) {
+            
+            $html_fields = validationaws::listFields($reason_fields);
+                
             $result[] = get_string("error_awssync_exception",
-                wsapi::PLUGIN, $e->getMessage());
+                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$sep.$fields_title.$html_fields.$response_title.
+                $ex->getMessage());
         }
         
         if (!empty($result)) {
@@ -313,9 +328,9 @@ abstract class validationaws {
         $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
         $reason   = '';
         $reason_fields = [];
-        $sep = ':<br />';
+        $sep = ':<br /><br />';
         $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
-        $reason_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
+        $response_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
         
         $config = get_config('local_xray');
         if (empty($config)) {
@@ -412,11 +427,20 @@ abstract class validationaws {
         $res = '<ul>';
         
         foreach ($fields as $field) {
-            $res .= '<li>'.get_string($field, wsapi::PLUGIN).'</li>';
+            $res .= '<li>'.validationaws::strong(get_string($field, wsapi::PLUGIN)).'</li>';
         }
         
         $res .= '</ul>';
         
         return $res;
+    }
+    
+    /**
+     * Wraps string with a strong html tag
+     * 
+     * @param string $str
+     */
+    private static function strong($str) {
+        return '<strong>'.$str.'</strong>';
     }
 }

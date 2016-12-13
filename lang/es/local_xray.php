@@ -569,27 +569,34 @@ $string['error_awssync_config_awssecret'] = 'El campo AWS Secret está vacío';
 $string['error_awssync_config_s3bucket'] = 'El campo S3 bucket está vacío';
 $string['error_awssync_config_s3bucketregion'] = 'El campo S3 region está vacío';
 $string['error_awssync_config_s3protocol'] = 'El campo Upload protocol está vacío';
-$string['error_awssync_exception'] = 'Hubo un error al comunicarse con el servidor AWS: {$a}';
+$string['error_awssync_exception'] = 'Hubo un error al comunicarse con el servidor AWS:<br />{$a}';
 
 // Config validation error reasons
 $string['error_wsapi_reason_login'] = 'Ingresar';
 $string['error_wsapi_reason_accesstoken'] = 'Acceder al token';
 $string['error_wsapi_reason_domaininfo'] = 'Obtener información del dominio';
 $string['error_wsapi_reason_courses'] = 'Obtener cursos';
+$string['error_aws_reason_client_create'] = 'Crear el cliente AWS';
+$string['error_aws_reason_object_list'] = 'Listar los Objectos del Bucket';
+$string['error_aws_reason_upload_file'] = 'Cargar un arhchivo';
+$string['error_aws_reason_download_file'] = 'Descargar un archivo';
+$string['error_aws_reason_erase_file'] = 'Borrar un archivo';
 
 // Config validation errors for compression
 $string['error_compress_config_enablepacker'] = 'El capo de uso de compresión nativa está vacío';
 $string['error_compress_config_packertar'] = 'El campo del ejecutable GNU tar está vacío';
 $string['error_compress_config_exportlocation'] = 'El campo Locación de export está vacío';
-$string['error_compress_exception'] = 'Error al comprimir: {$a}';
-$string['error_compress_files'] = 'Se encotraron archivos incorrecto en el/los archivo(s) comprimido(s)';
+$string['error_compress_exception'] = 'Error al comprimir:<br />{$a}';
+$string['error_compress_files'] = 'Se encontraron archivos incorrectos en el/los archivo(s) comprimido(s)';
 
 // Temporary for API check
-$string['connectionfailed'] = 'Conexión fallida - verificar credenciales';
-$string['connectionverified'] = 'Credenciales verificadas';
+$string['connectionfailed'] = 'Conexión fallida - verificar parámetros';
+$string['connectionverified'] = 'Parámetros verificados';
 $string['connectionstatusunknown'] = 'Estado de conexión no verificado';
 $string['verifyingapi'] = '<div class="xray_validate_loader"></div> Revisando el estado de conexión, por favor espere.';
 $string['test_api_action'] = 'Validar parámetros';
+$string['validate_check_fields'] = 'Por favor, revise los siguientes campos';
+$string['validate_service_response'] = 'Si los campos son correctos, por favor verifique la respuesta del servicio';
 
 // API titles
 $string['test_api_ws_connect'] = 'Servidor X-Ray';

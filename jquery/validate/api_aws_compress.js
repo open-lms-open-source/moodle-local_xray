@@ -29,7 +29,7 @@ function validate_api_aws_compress(YUI, data) {
         self.dialog = $('#api_diag').dialog({
             modal: true,
             autoOpen: false,
-            width: '500px',
+            width: '90%',
         });
     };
 

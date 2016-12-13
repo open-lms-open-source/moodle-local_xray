@@ -558,19 +558,24 @@ $string['error_awssync_config_awssecret'] = 'AWS Secret is empty';
 $string['error_awssync_config_s3bucket'] = 'S3 bucket is empty';
 $string['error_awssync_config_s3bucketregion'] = 'S3 region is empty';
 $string['error_awssync_config_s3protocol'] = 'Upload protocol is empty';
-$string['error_awssync_exception'] = 'Error when talking to AWS server: {$a}';
+$string['error_awssync_exception'] = 'Error when talking to AWS server:<br/>{$a}';
 
 // Config validation error reasons
 $string['error_wsapi_reason_login'] = 'Logging in';
 $string['error_wsapi_reason_accesstoken'] = 'Accessing token';
 $string['error_wsapi_reason_domaininfo'] = 'Getting domain information';
 $string['error_wsapi_reason_courses'] = 'Getting courses';
+$string['error_aws_reason_client_create'] = 'Creating AWS client';
+$string['error_aws_reason_object_list'] = 'Listing Bucket Objects';
+$string['error_aws_reason_upload_file'] = 'Uploading a file';
+$string['error_aws_reason_download_file'] = 'Downloading a file';
+$string['error_aws_reason_erase_file'] = 'Erasing a file';
 
 // Config validation errors for compression
 $string['error_compress_config_enablepacker'] = 'Use native compression is empty';
 $string['error_compress_config_packertar'] = 'GNU tar executable is empty';
 $string['error_compress_config_exportlocation'] = 'Export location is empty';
-$string['error_compress_exception'] = 'Error when compressing: {$a}';
+$string['error_compress_exception'] = 'Error when compressing:<br/>{$a}';
 $string['error_compress_files'] = 'Incorrect files found in archive(s)';
 
 // Temporary for API check
@@ -580,7 +585,7 @@ $string['connectionstatusunknown'] = 'Status unknown';
 $string['verifyingapi'] = '<div class="xray_validate_loader"></div> Checking parameters, please wait.';
 $string['test_api_action'] = 'Validate parameters';
 $string['validate_check_fields'] = 'Please, check the following parameters';
-$string['validate_service_response'] = 'Service response';
+$string['validate_service_response'] = 'If parameters are correct, please check the service response';
 
 // API titles
 $string['test_api_ws_connect'] = 'X-Ray Server';
