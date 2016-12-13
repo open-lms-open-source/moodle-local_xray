@@ -517,6 +517,7 @@ $string['globalsubdescsecond'] = 'The <b>Subscribe to all courses</b> and <b>Can
     'report for all courses.';
 $string['subscriptiondisabled'] = 'Enable this setting in the X-Ray Global Subscription page. You can access '.
     'this page using the link X-Ray Global Subscription from your profile.';
+$string['email_singleactivity'] = "Subscriptions aren't available for Single Activity Courses. No X-Ray alerts are emailed for this course.";
 
 // Frequency control for emails.
 $string['daily'] = 'Daily';
