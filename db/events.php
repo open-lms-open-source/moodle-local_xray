@@ -60,4 +60,9 @@ $observers = [
         'callback'    => 'local_xray_user_enrolment_deleted',
         'includefile' => '/local/xray/lib.php'
     ],
+    [
+        'eventname'   => '\local_xray\event\sync_failed',
+        'callback'    => 'local_xray_sync_failed',
+        'includefile' => '/local/xray/lib.php'
+    ],
 ];
