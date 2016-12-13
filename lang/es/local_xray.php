@@ -596,7 +596,7 @@ $string['connectionstatusunknown'] = 'Estado de conexión no verificado';
 $string['verifyingapi'] = '<div class="xray_validate_loader"></div> Revisando el estado de conexión, por favor espere.';
 $string['test_api_action'] = 'Validar parámetros';
 $string['validate_check_fields'] = 'Por favor, revise los siguientes campos';
-$string['validate_service_response'] = 'Si los campos son correctos, por favor verifique la respuesta del servicio';
+$string['validate_service_response'] = 'Verifique la respuesta del servicio dando click acá';
 
 // API titles
 $string['test_api_ws_connect'] = 'Servidor X-Ray';

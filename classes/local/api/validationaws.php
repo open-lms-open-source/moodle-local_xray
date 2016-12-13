@@ -50,7 +50,6 @@ abstract class validationaws {
         $reason_fields = [];
         $sep = ':<br /><br />';
         $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
-        $response_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
         
         $config = get_config('local_xray');
         if (empty($config)) {
@@ -68,7 +67,7 @@ abstract class validationaws {
 
         foreach ($params as $property) {
             if (!isset($config->{$property}) || empty($config->{$property})) {
-                $result[] = get_string("error_wsapi_config_{$property}", wsapi::PLUGIN);
+                $result[] = validationaws::strong(get_string("error_wsapi_config_{$property}", wsapi::PLUGIN));
             }
         }
         
@@ -144,8 +143,8 @@ abstract class validationaws {
             $html_fields = validationaws::listFields($reason_fields);
                 
             $result[] = get_string("error_wsapi_exception",
-                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$sep.$fields_title.$html_fields.$response_title.
-                $ex->getMessage());
+                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$sep.$fields_title.$html_fields.
+                validationaws::service_info('ws_connect',$ex->getMessage()));
         }
         
         if(!empty($result)) {
@@ -173,7 +172,6 @@ abstract class validationaws {
         $reason_fields = [];
         $sep = ':<br /><br />';
         $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
-        $response_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
         
         global $CFG;
         $config = get_config('local_xray');
@@ -194,7 +192,7 @@ abstract class validationaws {
 
         foreach ($params as $property) {
             if (!isset($config->{$property}) || empty($config->{$property})) {
-                $result[] = get_string("error_awssync_config_{$property}", wsapi::PLUGIN);
+                $result[] = validationaws::strong(get_string("error_awssync_config_{$property}", wsapi::PLUGIN));
             }
         }
 
@@ -301,8 +299,8 @@ abstract class validationaws {
             $html_fields = validationaws::listFields($reason_fields);
                 
             $result[] = get_string("error_awssync_exception",
-                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$sep.$fields_title.$html_fields.$response_title.
-                $ex->getMessage());
+                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$sep.$fields_title.$html_fields.
+                validationaws::service_info('s3_bucket',$ex->getMessage()));
         }
         
         if (!empty($result)) {
@@ -347,12 +345,12 @@ abstract class validationaws {
         $result = [];
         foreach ($params as $prop => $subprops) {
             if (!isset($config->{$prop})) {
-                $result[] = get_string("error_compress_config_{$prop}", wsapi::PLUGIN);
+                $result[] = validationaws::strong(get_string("error_compress_config_{$prop}", wsapi::PLUGIN));
             } else if ($config->{$prop} == true) {
                 foreach ($subprops as $subprop) {
                     if (!isset($config->{$subprop}) 
                         || ( gettype($config->{$subprop}) == 'string' && empty($config->{$subprop}))) {
-                        $result[] = get_string("error_compress_config_{$subprop}", wsapi::PLUGIN);
+                        $result[] = validationaws::strong(get_string("error_compress_config_{$subprop}", wsapi::PLUGIN));
                     }
                 }
             }
@@ -442,5 +440,17 @@ abstract class validationaws {
      */
     private static function strong($str) {
         return '<strong>'.$str.'</strong>';
+    }
+    
+    /**
+     * Wraps string with a div html tag with a serviceinfo class
+     * 
+     * @param string $str
+     */
+    private static function service_info($service, $str) {
+        $response_title = get_string('validate_service_response', wsapi::PLUGIN);
+        
+        return '<a id="'.$service.'" class="service_info_btn" href>'.$response_title.'</a><br /><br />'
+               .'<div id="'.$service.'_txt"class="service_info">'.$str.'</div>';
     }
 }

@@ -585,7 +585,7 @@ $string['connectionstatusunknown'] = 'Status unknown';
 $string['verifyingapi'] = '<div class="xray_validate_loader"></div> Checking parameters, please wait.';
 $string['test_api_action'] = 'Validate parameters';
 $string['validate_check_fields'] = 'Please, check the following parameters';
-$string['validate_service_response'] = 'If parameters are correct, please check the service response';
+$string['validate_service_response'] = 'Click here to check the service response';
 
 // API titles
 $string['test_api_ws_connect'] = 'X-Ray Server';

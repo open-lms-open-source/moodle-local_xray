@@ -45,6 +45,7 @@ $plugins = array(
     'local_xray-validate_api_aws_compress' => array(
         'files' => array(
             'validate/loader.css',
+            'validate/api_aws_compress.css',
             'validate/api_aws_compress.js'
         )
     )
