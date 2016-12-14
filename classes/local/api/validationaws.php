@@ -48,8 +48,9 @@ abstract class validationaws {
         $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
         $reason   = '';
         $reason_fields = [];
-        $sep = ':<br /><br />';
-        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
+        $colon = ': ';
+        $break = '<br />';
+        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$colon.$break;
         
         $config = get_config('local_xray');
         if (empty($config)) {
@@ -143,7 +144,7 @@ abstract class validationaws {
             $html_fields = validationaws::listFields($reason_fields);
                 
             $result[] = get_string("error_wsapi_exception",
-                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$sep.$fields_title.$html_fields.
+                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$break.$fields_title.$html_fields.
                 validationaws::service_info('ws_connect',$ex->getMessage()));
         }
         
@@ -170,8 +171,9 @@ abstract class validationaws {
         $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
         $reason   = '';
         $reason_fields = [];
-        $sep = ':<br /><br />';
-        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
+        $colon = ': ';
+        $break = '<br />';
+        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$colon.$break;
         
         global $CFG;
         $config = get_config('local_xray');
@@ -299,7 +301,7 @@ abstract class validationaws {
             $html_fields = validationaws::listFields($reason_fields);
                 
             $result[] = get_string("error_awssync_exception",
-                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$sep.$fields_title.$html_fields.
+                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$break.$fields_title.$html_fields.
                 validationaws::service_info('s3_bucket',$ex->getMessage()));
         }
         
