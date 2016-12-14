@@ -409,7 +409,7 @@ function local_xray_template_data($courseid, $userid){
         // Styles.
         $linksnum = array('title' => get_string('link_gotoreport', 'local_xray'), 'style' => 'text-decoration: none; color: #777777; font-weight: bolder;');
         $gotoreport = array('title' => get_string('link_gotoreport', 'local_xray'));
-        $reporticon = array('width' => '43px');
+        $reporticon = array('width' => '39px');
 
         // Risk.
         // Icon and link.
@@ -433,7 +433,7 @@ function local_xray_template_data($courseid, $userid){
             true); // This arrow will be inverse to all.
 
         $xrayriskarrow = local_xray_get_email_icons($statusclassrisk[2]);
-        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1]);
+        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1], array('width' => '31'));
         $data->riskarrow = html_writer::link($riskarrowurl, $riskarrow, $gotoreport);
 
         // Number for risk.
@@ -474,7 +474,7 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xrayactivityarrow = local_xray_get_email_icons($statusclassactivity[2]);
-        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1]);
+        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1], array('width' => '31'));
         $data->activityarrow = html_writer::link($activityarrowurl, $activityarrow, $gotoreport);
 
         $a = new stdClass();
@@ -511,7 +511,7 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xraygradebookarrow = local_xray_get_email_icons($statusclass[2]);
-        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1]);
+        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1], array('width' => '31'));
         $data->gradebookarrow = html_writer::link($gradebookarrowurl, $gradebookarrow, $gotoreport);
 
         $data->gradebooknumber = html_writer::link($gradebookarrowurl, get_string('headline_number_percentage', 'local_xray',
@@ -539,7 +539,7 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xraydiscussionsarrow = local_xray_get_email_icons($statusclassdiscussion[2]);
-        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1]);
+        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1], array('width' => '31'));
         $data->discussionarrow = html_writer::link($discussionarrowurl, $discussionarrow, $gotoreport);
 
         $data->discussiondata = html_writer::link($discussionarrowurl, $headlinedata->postslastsevendays, $linksnum);
@@ -757,7 +757,7 @@ function local_xray_send_email_today() {
  */
 function local_xray_get_email_icons($imagename) {
     // Add format.
-    $imagename = $imagename.'.svg';
+    $imagename = $imagename.'.gif';
     // Default value.
     $baseurl = 'https://cdn.xrayanalytics.net';
     $cfgxray = get_config('local_xray');
