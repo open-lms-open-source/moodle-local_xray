@@ -561,10 +561,10 @@ $string['error_awssync_config_s3protocol'] = 'Upload protocol is empty';
 $string['error_awssync_exception'] = 'Error while communicating with AWS server: {$a}';
 
 // Config validation error reasons
-$string['error_wsapi_reason_login'] = 'Logging in';
-$string['error_wsapi_reason_accesstoken'] = 'Accessing token';
-$string['error_wsapi_reason_domaininfo'] = 'Getting domain information';
-$string['error_wsapi_reason_courses'] = 'Getting courses';
+$string['error_wsapi_reason_login'] = 'Logging into X-Ray server';
+$string['error_wsapi_reason_accesstoken'] = 'Accessing X-Ray server token';
+$string['error_wsapi_reason_domaininfo'] = 'Getting information about for the specified <strong>Client Identifier</strong>';
+$string['error_wsapi_reason_courses'] = 'Getting X-Ray server courses';
 $string['error_aws_reason_client_create'] = 'Creating AWS client';
 $string['error_aws_reason_object_list'] = 'Listing Bucket Objects';
 $string['error_aws_reason_upload_file'] = 'Uploading a file';
@@ -576,7 +576,7 @@ $string['error_compress_config_enablepacker'] = 'Use native compression is empty
 $string['error_compress_config_packertar'] = 'GNU tar executable is empty';
 $string['error_compress_config_exportlocation'] = 'Export location is empty';
 $string['error_compress_exception'] = 'Error when compressing: {$a}';
-$string['error_compress_files'] = 'Incorrect files found in archive(s)';
+$string['error_compress_files'] = 'Incorrect files found in archive(s), please check all your compression parameters against your operating system capabilities.';
 
 // Temporary for API check
 $string['connectionfailed'] = 'Failed - please check parameters';
