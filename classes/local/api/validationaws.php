@@ -82,7 +82,7 @@ abstract class validationaws {
             $reason_fields = ['xrayusername','xraypassword','xrayurl'];
             $loginRes = wsapi::login();
             if (!$loginRes) {
-                throw new \Exception(xrayws::instance()->errorinfo());
+                throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
             
             // If login fails, nothing else will work
@@ -95,14 +95,14 @@ abstract class validationaws {
             $reason_fields = ['xrayclientid','xrayurl'];
             $tokenRes = wsapi::accesstoken();
             if (!$tokenRes) {
-                throw new \Exception(xrayws::instance()->errorinfo());
+                throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
             
             $reason = get_string('error_wsapi_reason_domaininfo', wsapi::PLUGIN);
             $reason_fields = ['xrayclientid','xrayurl'];
             $domainRes = wsapi::domaininfo();
             if (!$domainRes) {
-                throw new \Exception(xrayws::instance()->errorinfo());
+                throw new \moodle_exception(xrayws::instance()->errorinfo());
             } else {
                 
                 $requiredKeys = array(
@@ -129,7 +129,7 @@ abstract class validationaws {
                     
                     $error = get_string("error_wsapi_domaininfo_incomplete",
                         wsapi::PLUGIN, implode(", ", $missingKeys));
-                    throw new \Exception($error);
+                    throw new \moodle_exception($error);
                 }
             }
             
@@ -137,7 +137,7 @@ abstract class validationaws {
             $reason_fields = ['xrayclientid','xrayurl'];
             $coursesRes = wsapi::courses();
             if(!$coursesRes) {
-                throw new \Exception(xrayws::instance()->errorinfo());
+                throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
             
         } catch (\Exception $ex) {
@@ -262,10 +262,10 @@ abstract class validationaws {
                 );
                 $metadata = $uploadresult->get('@metadata');
                 if ($metadata['statusCode'] !== 200) {
-                    throw new \Exception("Upload to S3 bucket failed!");
+                    throw new \moodle_exception("Upload to S3 bucket failed!");
                 }
             } else {
-                throw new \Exception("Unable to create temporary file!");
+                throw new \moodle_exception("Unable to create temporary file!");
             }
             
             // Now we try to download simple file.
@@ -277,9 +277,9 @@ abstract class validationaws {
             ));
             
             if ($metadata['statusCode'] !== 200) {
-                throw new \Exception("Download from S3 bucket failed!");
+                throw new \moodle_exception("Download from S3 bucket failed!");
             } else if($awsObject['Body'] != $objectContent) {
-                throw new \Exception("S3 bucket corrupt.");
+                throw new \moodle_exception("S3 bucket corrupt.");
             }
             
             // Now we try to erase simple file.
@@ -293,7 +293,7 @@ abstract class validationaws {
             $delMetadata = $delResult->get('@metadata');
             
             if ($delMetadata['statusCode'] !== 204) {
-                throw new \Exception("Deletion on S3 bucket failed!");
+                throw new \moodle_exception("Deletion on S3 bucket failed!");
             } 
 
         } catch (\Exception $ex) {
@@ -390,7 +390,7 @@ abstract class validationaws {
                 }
                 
                 if(count(array_intersect($tgzfile_list, $file_list)) != $num_files){
-                    throw new \Exception(get_string('error_compress_files', wsapi::PLUGIN));
+                    throw new \moodle_exception(get_string('error_compress_files', wsapi::PLUGIN));
                 }
                 
             } else { // BZ2 Compression
@@ -402,7 +402,7 @@ abstract class validationaws {
                 }
                 
                 if(count(array_intersect($bz2file_list, $file_list)) != $num_files){
-                    throw new \Exception(get_string('error_compress_files', wsapi::PLUGIN));
+                    throw new \moodle_exception(get_string('error_compress_files', wsapi::PLUGIN));
                 }
             }
             
