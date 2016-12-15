@@ -138,12 +138,12 @@ function validate_api_aws_compress(YUI, data) {
      * @author David Castro
      */
     self.applyServerInfoToggle = function() {
-        $('.service_info_btn').click(function(e){
+        $('.xray_service_info_btn').click(function(e){
             e.preventDefault();
             $('#'+ this.id + '_txt').toggle();
         });
         
-        $('.service_info_btn').css('color', '#FFF');
+        $('.xray_service_info_btn').css('color', '#FFF');
     };
     
     $(document).ready(function () {

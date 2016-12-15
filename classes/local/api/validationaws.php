@@ -452,7 +452,7 @@ abstract class validationaws {
     private static function service_info($service, $str) {
         $response_title = get_string('validate_service_response', wsapi::PLUGIN);
         
-        return '<a id="'.$service.'" class="service_info_btn" href>'.$response_title.'</a><br /><br />'
-               .'<div id="'.$service.'_txt"class="service_info">'.$str.'</div>';
+        return '<a id="'.$service.'" class="xray_service_info_btn" href>'.$response_title.'</a><br /><br />'
+               .'<div id="'.$service.'_txt"class="xray_service_info">'.$str.'</div>';
     }
 }
