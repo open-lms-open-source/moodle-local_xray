@@ -764,7 +764,7 @@ function local_xray_get_email_icons($imagename) {
     if (isset($cfgxray->iconsurl)) {
         $baseurl = $cfgxray->iconsurl;
     }
-    return sprintf('%s/images/%s', $baseurl, $imagename);
+    return sprintf('%s/pix/%s', $baseurl, $imagename);
 }
 
 /**
