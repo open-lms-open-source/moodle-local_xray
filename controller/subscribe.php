@@ -56,7 +56,12 @@ class local_xray_controller_subscribe extends mr_controller {
                 }
             }
 
-            $mform = new subscribe_form($this->url, array('disabled' => $disabled));
+            if (!local_xray_single_activity_course($courseid)) {
+                $mform = new subscribe_form($this->url, array('disabled' => $disabled));
+            } else if (local_xray_single_activity_course($courseid)) {
+                $returnurl = new moodle_url('/course/index.php', array('section' => 'course'));
+                redirect($returnurl, get_string('email_singleactivity', 'local_xray'), null, \core\output\notification::NOTIFY_WARNING);
+            }
 
             // Create navbar.
             $PAGE->navbar->add(get_string("navigation_xray", $this->component));

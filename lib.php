@@ -366,6 +366,33 @@ function local_xray_user_enrolment_deleted(\core\event\user_enrolment_deleted $e
 }
 
 /**
+ * Listener for send email to admin/s when X-Ray Learning Analytics data sync failed.
+ * @param \local_xray\event\sync_failed $event
+ * @throws coding_exception
+ */
+function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
+
+    $error = $event->get_description();
+    $subject = get_string('syncfailed', 'local_xray');
+    // We will send email to each administrator.
+    $userfrom = get_admin();
+    $admins = get_admins();
+    foreach ($admins as $admin) {
+        $eventdata = new \stdClass();
+        $eventdata->component         = 'moodle';
+        $eventdata->name              = 'errors';
+        $eventdata->userfrom          = $userfrom;
+        $eventdata->userto            = $admin;
+        $eventdata->subject           = $subject;
+        $eventdata->fullmessage       = $error;
+        $eventdata->fullmessageformat = FORMAT_PLAIN;
+        $eventdata->fullmessagehtml   = '';
+        $eventdata->smallmessage      = '';
+        message_send($eventdata);
+    }
+}
+
+/**
  * Get headline data for the template.
  * @param $courseid
  * @return stdClass
@@ -382,7 +409,7 @@ function local_xray_template_data($courseid, $userid){
         // Styles.
         $linksnum = array('title' => get_string('link_gotoreport', 'local_xray'), 'style' => 'text-decoration: none; color: #777777; font-weight: bolder;');
         $gotoreport = array('title' => get_string('link_gotoreport', 'local_xray'));
-        $reporticon = array('width' => '43px');
+        $reporticon = array('width' => '39px');
 
         // Risk.
         // Icon and link.
@@ -406,7 +433,7 @@ function local_xray_template_data($courseid, $userid){
             true); // This arrow will be inverse to all.
 
         $xrayriskarrow = local_xray_get_email_icons($statusclassrisk[2]);
-        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1]);
+        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1], array('width' => '31'));
         $data->riskarrow = html_writer::link($riskarrowurl, $riskarrow, $gotoreport);
 
         // Number for risk.
@@ -447,7 +474,7 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xrayactivityarrow = local_xray_get_email_icons($statusclassactivity[2]);
-        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1]);
+        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1], array('width' => '31'));
         $data->activityarrow = html_writer::link($activityarrowurl, $activityarrow, $gotoreport);
 
         $a = new stdClass();
@@ -484,7 +511,7 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xraygradebookarrow = local_xray_get_email_icons($statusclass[2]);
-        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1]);
+        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1], array('width' => '31'));
         $data->gradebookarrow = html_writer::link($gradebookarrowurl, $gradebookarrow, $gotoreport);
 
         $data->gradebooknumber = html_writer::link($gradebookarrowurl, get_string('headline_number_percentage', 'local_xray',
@@ -512,7 +539,7 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xraydiscussionsarrow = local_xray_get_email_icons($statusclassdiscussion[2]);
-        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1]);
+        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1], array('width' => '31'));
         $data->discussionarrow = html_writer::link($discussionarrowurl, $discussionarrow, $gotoreport);
 
         $data->discussiondata = html_writer::link($discussionarrowurl, $headlinedata->postslastsevendays, $linksnum);
@@ -730,14 +757,14 @@ function local_xray_send_email_today() {
  */
 function local_xray_get_email_icons($imagename) {
     // Add format.
-    $imagename = $imagename.'.svg';
+    $imagename = $imagename.'.gif';
     // Default value.
     $baseurl = 'https://cdn.xrayanalytics.net';
     $cfgxray = get_config('local_xray');
     if (isset($cfgxray->iconsurl)) {
         $baseurl = $cfgxray->iconsurl;
     }
-    return sprintf('%s/images/%s', $baseurl, $imagename);
+    return sprintf('%s/pix/%s', $baseurl, $imagename);
 }
 
 /**

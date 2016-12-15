@@ -278,7 +278,7 @@ class dashboard_data {
                 // Arrow will be inverse.
                 $stylestatus = "xray-headline-increase-caserisk";
                 if ($mail) {
-                    $filename = "arrow_red_risk";
+                    $filename = "arrow_green_risk";
                 }
             }
 
@@ -294,7 +294,7 @@ class dashboard_data {
                 // Arrow will be inverse.
                 $stylestatus = "xray-headline-decrease-caserisk";
                 if ($mail) {
-                    $filename = "arrow_green_risk";
+                    $filename = "arrow_red_risk";
                 }
             }
         }
