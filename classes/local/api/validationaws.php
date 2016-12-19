@@ -428,9 +428,10 @@ abstract class validationaws {
      */
     private static function listFields($fields) {
         $res = '<ul>';
+        $config = get_config('local_xray');
         
         foreach ($fields as $field) {
-            $res .= '<li>'.validationaws::strong(get_string($field, wsapi::PLUGIN)).'</li>';
+            $res .= '<li>'.validationaws::strong(get_string($field, wsapi::PLUGIN)).': '.$config->{$field}.'</li>';
         }
         
         $res .= '</ul>';
