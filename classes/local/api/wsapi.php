@@ -44,14 +44,23 @@ abstract class wsapi {
     const XRAYHEATMAP       = 'xrayHeatmap';
 
     /**
+     * 
+     * @param bool omit_cache Omit the cache for logging in again
      * @return bool
      * @throws \Exception
      * @throws \dml_exception
      * @throws jsonerror_exception
      */
-    public static function login() {
-        if (xrayws::instance()->hascookie()) {
+    public static function login($omit_cache = false) {
+        $cacheTimeout = 0;
+        
+        if (!$omit_cache && xrayws::instance()->hascookie()) {
             return true;
+        }
+        
+        if ($omit_cache) {
+            $cacheTimeout = get_config(self::PLUGIN, 'curl_cache');
+            set_config('curlcache', 0, self::PLUGIN);
         }
 
         $username = get_config(self::PLUGIN, 'xrayusername');
@@ -72,6 +81,10 @@ abstract class wsapi {
                 xrayws::instance()->resetcookie();
             }
         }
+        
+        if ($omit_cache) {
+            set_config('curlcache', $cacheTimeout, self::PLUGIN);
+        }
 
         return $result;
     }
@@ -86,7 +99,7 @@ abstract class wsapi {
      * @return bool|mixed
      */
     public static function accountcheck() {
-        $baseurl  = get_config(self::PLUGIN, 'xrayadminserver');
+        $baseurl  = get_config(self::PLUGIN, 'xrayurl');
         if ($baseurl === false) {
             return false;
         }

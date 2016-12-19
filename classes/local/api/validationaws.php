@@ -80,7 +80,7 @@ abstract class validationaws {
             // Testing login
             $reason = get_string('error_wsapi_reason_login', wsapi::PLUGIN);
             $reason_fields = ['xrayusername','xraypassword','xrayurl'];
-            $loginRes = wsapi::login();
+            $loginRes = wsapi::login(true);
             if (!$loginRes) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
