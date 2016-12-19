@@ -75,6 +75,24 @@ abstract class wsapi {
 
         return $result;
     }
+    
+    /**
+     * Returns result in this format:
+     * array(
+     *   (object)array('ok' => true,
+     *                 'account' => 'login-email'
+     * )
+     *
+     * @return bool|mixed
+     */
+    public static function accountcheck() {
+        $baseurl  = get_config(self::PLUGIN, 'xrayadminserver');
+        if ($baseurl === false) {
+            return false;
+        }
+
+        return self::generic_getcall($baseurl);
+    }
 
     public static function adminlogin() {
         $username = get_config(self::PLUGIN, 'xrayadmin');

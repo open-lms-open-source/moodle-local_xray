@@ -30,6 +30,7 @@ function validate_api_aws_compress(YUI, data) {
             modal: true,
             autoOpen: false,
             width: '90%',
+            draggable: false
         });
     };
 
@@ -126,7 +127,7 @@ function validate_api_aws_compress(YUI, data) {
      */
     self.applySettingChangeCheck = function() {
         for (var s in self.watch_fields) {
-            $(self.watch_fields[s]).keypress(function(e) {
+            $(self.watch_fields[s]).change(function(e) {
                 $('.api_diag_btn').attr('disabled','disabled');
             });
         }

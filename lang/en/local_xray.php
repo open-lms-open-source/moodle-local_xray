@@ -564,6 +564,7 @@ $string['error_awssync_exception'] = 'Error while communicating with AWS server:
 // Config validation error reasons
 $string['error_wsapi_reason_login'] = 'Logging into X-Ray server';
 $string['error_wsapi_reason_accesstoken'] = 'Accessing X-Ray server token';
+$string['error_wsapi_reason_accountcheck'] = 'Checking the account information in the X-Ray server';
 $string['error_wsapi_reason_domaininfo'] = 'Getting information about for the specified <strong>Client Identifier</strong>';
 $string['error_wsapi_reason_courses'] = 'Getting X-Ray server courses';
 $string['error_aws_reason_client_create'] = 'Creating AWS client';
