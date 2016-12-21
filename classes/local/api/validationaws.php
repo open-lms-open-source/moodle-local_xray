@@ -45,13 +45,11 @@ abstract class validationaws {
      */
     public static function check_ws_connect() {
         $result   = [];
-        $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
-        $reason   = '';
-        $reason_fields = [];
-        $colon = ': ';
-        $break = '<br />';
-        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$colon.$break;
+        $whenStr  = 'When ';
+        $reason   = 'Logging in';
+        $sep = ': ';
         
+        global $CFG;
         $config = get_config('local_xray');
         if (empty($config)) {
             $result[] = get_string("error_wsapi_config_params_empty", wsapi::PLUGIN);
@@ -67,8 +65,8 @@ abstract class validationaws {
         ];
 
         foreach ($params as $property) {
-            if (!isset($config->{$property}) || empty($config->{$property})) {
-                $result[] = validationaws::strong(get_string("error_wsapi_config_{$property}", wsapi::PLUGIN));
+            if (!isset($config->{$property})) {
+                $result[] = get_string("error_wsapi_config_{$property}", wsapi::PLUGIN);
             }
         }
         
@@ -78,11 +76,11 @@ abstract class validationaws {
 
         try {
             // Testing login
-            $reason = get_string('error_wsapi_reason_login', wsapi::PLUGIN);
-            $reason_fields = ['xrayusername','xraypassword','xrayurl'];
             $loginRes = wsapi::login();
             if (!$loginRes) {
-                throw new \moodle_exception(xrayws::instance()->errorinfo());
+                $result[] = get_string("error_wsapi_exception",
+                    wsapi::PLUGIN, $whenStr.$reason.$sep.
+                    xrayws::instance()->errorinfo());
             }
             
             // If login fails, nothing else will work
@@ -92,17 +90,19 @@ abstract class validationaws {
             
             // Testing the query endpoints
             $reason = get_string('error_wsapi_reason_accesstoken', wsapi::PLUGIN);
-            $reason_fields = ['xrayclientid','xrayurl'];
             $tokenRes = wsapi::accesstoken();
             if (!$tokenRes) {
-                throw new \moodle_exception(xrayws::instance()->errorinfo());
+                $result[] = get_string("error_wsapi_exception",
+                    wsapi::PLUGIN, $whenStr.$reason.$sep.
+                    xrayws::instance()->errorinfo());
             }
             
             $reason = get_string('error_wsapi_reason_domaininfo', wsapi::PLUGIN);
-            $reason_fields = ['xrayclientid','xrayurl'];
             $domainRes = wsapi::domaininfo();
             if (!$domainRes) {
-                throw new \moodle_exception(xrayws::instance()->errorinfo());
+                $result[] = get_string("error_wsapi_exception",
+                    wsapi::PLUGIN, $whenStr.$reason.$sep.
+                    xrayws::instance()->errorinfo());
             } else {
                 
                 $requiredKeys = array(
@@ -127,25 +127,23 @@ abstract class validationaws {
                         }
                     }
                     
-                    $error = get_string("error_wsapi_domaininfo_incomplete",
+                    $result[] = get_string("error_wsapi_domaininfo_incomplete",
                         wsapi::PLUGIN, implode(", ", $missingKeys));
-                    throw new \moodle_exception($error);
                 }
             }
             
             $reason = get_string('error_wsapi_reason_courses', wsapi::PLUGIN);
-            $reason_fields = ['xrayclientid','xrayurl'];
             $coursesRes = wsapi::courses();
             if(!$coursesRes) {
-                throw new \moodle_exception(xrayws::instance()->errorinfo());
+               $result[] = get_string("error_wsapi_exception",
+                    wsapi::PLUGIN, $whenStr.$reason.$sep.
+                    xrayws::instance()->errorinfo());
             }
             
         } catch (\Exception $ex) {
-            $html_fields = validationaws::listFields($reason_fields);
-                
             $result[] = get_string("error_wsapi_exception",
-                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$break.$fields_title.$html_fields.
-                validationaws::service_info('ws_connect',$ex->getMessage()));
+                wsapi::PLUGIN, $whenStr.$reason.$sep.
+                $ex->getMessage());
         }
         
         if(!empty($result)) {
@@ -167,14 +165,6 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_s3_bucket() {
-        $result   = [];
-        $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
-        $reason   = '';
-        $reason_fields = [];
-        $colon = ': ';
-        $break = '<br />';
-        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$colon.$break;
-        
         global $CFG;
         $config = get_config('local_xray');
         if (empty($config)) {
@@ -192,9 +182,10 @@ abstract class validationaws {
             , 's3uploadretry'
         ];
 
+        $result = [];
         foreach ($params as $property) {
-            if (!isset($config->{$property}) || empty($config->{$property})) {
-                $result[] = validationaws::strong(get_string("error_awssync_config_{$property}", wsapi::PLUGIN));
+            if (!isset($config->{$property})) {
+                $result[] = get_string("error_awssync_config_{$property}", wsapi::PLUGIN);
             }
         }
 
@@ -206,9 +197,6 @@ abstract class validationaws {
             /* @noinspection PhpIncludeInspection */
             require_once($CFG->dirroot . "/local/xray/lib/vendor/aws/aws-autoloader.php");
 
-            // Testing AWS client creation
-            $reason = get_string('error_aws_reason_client_create', wsapi::PLUGIN);
-            $reason_fields = ['s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
             /* @noinspection PhpUndefinedClassInspection */
             $s3 = new \Aws\S3\S3Client(
@@ -232,9 +220,6 @@ abstract class validationaws {
             $objectContent = "sample test: ".md5(uniqid(rand(), true));
             
 
-            // Testing AWS object listing
-            $reason = get_string('error_aws_reason_object_list', wsapi::PLUGIN);
-            $reason_fields = ['s3bucket','s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             // Try to list the directory and get no more than 1 items to speed things up.
             // It does not matter if there are no objects, we are checking the access rights here.
             $objects = $s3->listObjects(
@@ -247,8 +232,6 @@ abstract class validationaws {
             ($objects);
 
             // Now we try to upload simple file.
-            $reason = get_string('error_aws_reason_upload_file', wsapi::PLUGIN);
-            $reason_fields = ['s3bucket','s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             $uploadfile = tmpfile();
             if ($uploadfile !== false) {
                 fwrite($uploadfile, $objectContent);
@@ -262,29 +245,25 @@ abstract class validationaws {
                 );
                 $metadata = $uploadresult->get('@metadata');
                 if ($metadata['statusCode'] !== 200) {
-                    throw new \moodle_exception("Upload to S3 bucket failed!");
+                    throw new \Exception("Upload to S3 bucket failed!");
                 }
             } else {
-                throw new \moodle_exception("Unable to create temporary file!");
+                throw new \Exception("Unable to create temporary file!");
             }
             
             // Now we try to download simple file.
-            $reason = get_string('error_aws_reason_download_file', wsapi::PLUGIN);
-            $reason_fields = ['s3bucket','s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             $awsObject = $s3->getObject(array(
                 'Bucket' => $config->s3bucket,
                 'Key'    => $objectKey
             ));
             
             if ($metadata['statusCode'] !== 200) {
-                throw new \moodle_exception("Download from S3 bucket failed!");
+                throw new \Exception("Download from S3 bucket failed!");
             } else if($awsObject['Body'] != $objectContent) {
-                throw new \moodle_exception("S3 bucket corrupt.");
+                throw new \Exception("S3 bucket corrupt.");
             }
             
             // Now we try to erase simple file.
-            $reason = get_string('error_aws_reason_erase_file', wsapi::PLUGIN);
-            $reason_fields = ['s3bucket','s3bucketregion','s3protocol','s3uploadretry','awskey','awssecret'];
             $delResult = $s3->deleteObject(array(
                 'Bucket' => $config->s3bucket,
                 'Key'    => $objectKey
@@ -293,16 +272,12 @@ abstract class validationaws {
             $delMetadata = $delResult->get('@metadata');
             
             if ($delMetadata['statusCode'] !== 204) {
-                throw new \moodle_exception("Deletion on S3 bucket failed!");
+                throw new \Exception("Deletion on S3 bucket failed!");
             } 
 
-        } catch (\Exception $ex) {
-            
-            $html_fields = validationaws::listFields($reason_fields);
-                
+        } catch (\Exception $e) {
             $result[] = get_string("error_awssync_exception",
-                wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$break.$fields_title.$html_fields.
-                validationaws::service_info('s3_bucket',$ex->getMessage()));
+                wsapi::PLUGIN, $e->getMessage());
         }
         
         if (!empty($result)) {
@@ -324,14 +299,7 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_compress() {
-        $result   = [];
-        $whenStr  = get_string('validate_when', wsapi::PLUGIN).' ';
-        $reason   = '';
-        $reason_fields = [];
-        $sep = ':<br /><br />';
-        $fields_title = get_string('validate_check_fields', wsapi::PLUGIN).$sep;
-        $response_title = get_string('validate_service_response', wsapi::PLUGIN).$sep;
-        
+        global $CFG;
         $config = get_config('local_xray');
         if (empty($config)) {
             $result[] = get_string("error_wsapi_config_params_empty", wsapi::PLUGIN);
@@ -347,12 +315,13 @@ abstract class validationaws {
         $result = [];
         foreach ($params as $prop => $subprops) {
             if (!isset($config->{$prop})) {
-                $result[] = validationaws::strong(get_string("error_compress_config_{$prop}", wsapi::PLUGIN));
+                $result[] = get_string("error_compress_config_{$prop}", wsapi::PLUGIN);
             } else if ($config->{$prop} == true) {
+                print($prop.': '.$config->{$prop}.PHP_EOL);
                 foreach ($subprops as $subprop) {
                     if (!isset($config->{$subprop}) 
                         || ( gettype($config->{$subprop}) == 'string' && empty($config->{$subprop}))) {
-                        $result[] = validationaws::strong(get_string("error_compress_config_{$subprop}", wsapi::PLUGIN));
+                        $result[] = get_string("error_compress_config_{$subprop}", wsapi::PLUGIN);
                     }
                 }
             }
@@ -390,7 +359,7 @@ abstract class validationaws {
                 }
                 
                 if(count(array_intersect($tgzfile_list, $file_list)) != $num_files){
-                    throw new \moodle_exception(get_string('error_compress_files', wsapi::PLUGIN));
+                    throw new \Exception(get_string('error_compress_files', wsapi::PLUGIN));
                 }
                 
             } else { // BZ2 Compression
@@ -402,7 +371,7 @@ abstract class validationaws {
                 }
                 
                 if(count(array_intersect($bz2file_list, $file_list)) != $num_files){
-                    throw new \moodle_exception(get_string('error_compress_files', wsapi::PLUGIN));
+                    throw new \Exception(get_string('error_compress_files', wsapi::PLUGIN));
                 }
             }
             
@@ -416,43 +385,5 @@ abstract class validationaws {
         }
 
         return true;
-    }
-    
-    /**
-     * Creates and an unordered HTML list of xray fields
-     * 
-     * @param string[] $fields String identifies of the fields to be listed
-     */
-    private static function listFields($fields) {
-        $res = '<ul>';
-        
-        foreach ($fields as $field) {
-            $res .= '<li>'.validationaws::strong(get_string($field, wsapi::PLUGIN)).'</li>';
-        }
-        
-        $res .= '</ul>';
-        
-        return $res;
-    }
-    
-    /**
-     * Wraps string with a strong html tag
-     * 
-     * @param string $str
-     */
-    private static function strong($str) {
-        return '<strong>'.$str.'</strong>';
-    }
-    
-    /**
-     * Wraps string with a div html tag with a serviceinfo class
-     * 
-     * @param string $str
-     */
-    private static function service_info($service, $str) {
-        $response_title = get_string('validate_service_response', wsapi::PLUGIN);
-        
-        return '<a id="'.$service.'" class="xray_service_info_btn" href>'.$response_title.'</a><br /><br />'
-               .'<div id="'.$service.'_txt"class="xray_service_info">'.$str.'</div>';
     }
 }

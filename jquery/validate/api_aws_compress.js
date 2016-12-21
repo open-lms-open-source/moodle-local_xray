@@ -29,7 +29,7 @@ function validate_api_aws_compress(YUI, data) {
         self.dialog = $('#api_diag').dialog({
             modal: true,
             autoOpen: false,
-            width: '90%',
+            width: '500px',
         });
     };
 
@@ -76,15 +76,17 @@ function validate_api_aws_compress(YUI, data) {
         $('.api_diag_btn').attr('disabled','disabled');
 
         for (var key in self.api_msg_keys) {
-            self.api_msg(self.api_msg_keys[key], 'verifyingapi', 'message', '');
+            self.api_msg(self.api_msg_keys[key], 'verifyingapi', 'message', 'spinner');
         }
 
         $.ajax({
             url: self.www_root + '/local/xray/testapi.php',
             success: function (data, status, xhr) {
+//                console.log('Connection success.', xhr, status, data);
                 
                 for (var key in self.api_msg_keys) {
                     var msg_key = self.api_msg_keys[key], msg_data = data[msg_key];
+//                    console.log(msg_data);
                     if (msg_data && msg_data.success) {
                         self.api_msg(msg_key, 'connectionverified', 'success');
                     } else {
@@ -93,9 +95,9 @@ function validate_api_aws_compress(YUI, data) {
                 }
 
                 $('.api_diag_btn').removeAttr('disabled');
-                self.applyServerInfoToggle();
             },
             error: function (xhr, status, err) {
+//                console.error('Connection error.', xhr, status, err);
                 
                 self.api_msg('connectionfailed', 'problem');
 
@@ -130,20 +132,6 @@ function validate_api_aws_compress(YUI, data) {
                 $('.api_diag_btn').attr('disabled','disabled');
             });
         }
-    };
-    
-    /**
-     * Apply listener for toggling of server info
-     *
-     * @author David Castro
-     */
-    self.applyServerInfoToggle = function() {
-        $('.xray_service_info_btn').click(function(e){
-            e.preventDefault();
-            $('#'+ this.id + '_txt').toggle();
-        });
-        
-        $('.xray_service_info_btn').css('color', '#FFF');
     };
     
     $(document).ready(function () {
