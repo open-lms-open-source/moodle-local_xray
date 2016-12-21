@@ -41,10 +41,5 @@ $plugins = array(
         'files' => array(
             'reports/recommendations.js'
         )
-    ),
-    'local_xray-validate_api_aws_compress' => array(
-        'files' => array(
-            'validate/api_aws_compress.js'
-        )
     )
 );

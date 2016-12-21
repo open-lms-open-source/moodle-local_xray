@@ -1409,6 +1409,7 @@ class data_export {
             self::export_metadata($dir);
         }
 
+        self::mtrace("Export data execution time: ".timer::end()." sec.");
     }
 
     /**

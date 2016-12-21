@@ -191,8 +191,6 @@ if ($hassiteconfig) {
                                                 new lang_string("export_progress_desc", $plugin),
                                                 '0'));
 
-    $settings->add(new \local_xray\local\api\admin_setting_api_diagnostics_xray());
-
     $ADMIN->add('localplugins', $settings);
 
 
@@ -211,5 +209,7 @@ if ($hassiteconfig) {
             new lang_string('systemreports', $plugin),
             $urlsystemreports->out(false)));
     }
+
+
 
 }
