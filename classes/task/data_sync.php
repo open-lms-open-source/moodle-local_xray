@@ -82,7 +82,7 @@ class data_sync extends scheduled_task {
      *
      * @return string bucket storage root directory path
      */
-    protected function get_storageprefix() {
+    public function get_storageprefix() {
         if (!isset($this->config->bucketprefix)) {
             $config = 'rawData/';
         } else {

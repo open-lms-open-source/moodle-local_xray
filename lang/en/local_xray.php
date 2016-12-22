@@ -542,3 +542,57 @@ $string['youhave'] = 'You have ';
 $string['youdonthave'] = 'You do not have recommended actions';
 $string['recommendedactions_button'] = 'Show/Hide recommended actions';
 $string['recommendedaction_button'] = 'Show/Hide recommended action';
+
+// Config validation errors for wsapi
+$string['error_wsapi_config_params_empty'] = 'X-Ray parameters are empty';
+$string['error_wsapi_config_xrayusername'] = 'X-Ray Learning Analytics Username is empty';
+$string['error_wsapi_config_xraypassword'] = 'X-Ray Learning Analytics Password is empty';
+$string['error_wsapi_config_xrayurl'] = 'X-Ray Learning Analytics Url is empty';
+$string['error_wsapi_config_xrayclientid'] = 'X-Ray Learning Analytics Client Identifier is empty';
+$string['error_wsapi_exception'] = 'Error while communicating with X-Ray server: {$a}';
+$string['error_wsapi_domaininfo_incomplete'] = 'Domain information is incomplete, missing: ${a}';
+
+// Config validation errors for aws
+$string['error_awssync_config_enablesync'] = 'Data Sync is empty';
+$string['error_awssync_config_awskey'] = 'AWS Key is empty';
+$string['error_awssync_config_awssecret'] = 'AWS Secret is empty';
+$string['error_awssync_config_s3bucket'] = 'S3 bucket is empty';
+$string['error_awssync_config_s3bucketregion'] = 'S3 region is empty';
+$string['error_awssync_config_s3protocol'] = 'Upload protocol is empty';
+$string['error_awssync_exception'] = 'Error while communicating with AWS server: {$a}';
+
+// Config validation error reasons
+$string['error_wsapi_reason_login'] = 'Logging into X-Ray server';
+$string['error_wsapi_reason_accesstoken'] = 'Accessing X-Ray server token';
+$string['error_wsapi_reason_accountcheck'] = 'Checking the account information in the X-Ray server';
+$string['error_wsapi_reason_domaininfo'] = 'Getting information about for the specified <strong>Client Identifier</strong>';
+$string['error_wsapi_reason_courses'] = 'Getting X-Ray server courses';
+$string['error_aws_reason_client_create'] = 'Creating AWS client';
+$string['error_aws_reason_object_list'] = 'Listing Bucket Objects';
+$string['error_aws_reason_upload_file'] = 'Uploading a file';
+$string['error_aws_reason_download_file'] = 'Downloading a file';
+$string['error_aws_reason_erase_file'] = 'Erasing a file';
+
+// Config validation errors for compression
+$string['error_compress_config_enablepacker'] = 'Use native compression is empty';
+$string['error_compress_config_packertar'] = 'GNU tar executable is empty';
+$string['error_compress_config_exportlocation'] = 'Export location is empty';
+$string['error_compress_exception'] = 'Error when compressing: {$a}';
+$string['error_compress_files'] = 'Incorrect files found in archive(s). Please check all your compression parameters against your operating system capabilities.';
+
+// Temporary for API check
+$string['connectionfailed'] = 'Failed - please check parameters';
+$string['connectionverified'] = 'Parameters verified';
+$string['connectionstatusunknown'] = 'Status unknown. There was a problem with the moodle server, please contact your system administrator.';
+$string['verifyingapi'] = '<div class="xray_validate_loader"></div> Checking parameters. Please wait.';
+$string['test_api_action'] = 'Validate parameters';
+$string['validate_check_fields'] = 'Please, check the following parameters';
+$string['validate_service_response'] = 'Check the service response';
+
+// API titles
+$string['test_api_ws_connect'] = 'X-Ray Server';
+$string['test_api_s3_bucket'] = 'AWS S3 Bucket';
+$string['test_api_compress'] = 'Compression';
+$string['test_api_label'] = 'Validation';
+$string['test_api_description'] = 'Check <strong>saved parameters</strong> for connectivity or system issues';
+$string['validate_when'] = 'When';
