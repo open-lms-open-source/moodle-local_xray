@@ -520,6 +520,7 @@ $string['subscriptiondisabled'] = 'Enable this setting in the X-Ray Global Subsc
 $string['email_singleactivity'] = "Subscriptions aren't available for Single Activity Courses. No X-Ray alerts are emailed for this course.";
 $string['xrayemaildate'] = 'X-Ray data as of {$a}';
 $string['pdfnotattached'] = 'The PDF was not attached.';
+$string['strfemaildate'] = '%m%d%Y';
 
 // Frequency control for emails.
 $string['daily'] = 'Daily';

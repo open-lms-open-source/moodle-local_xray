@@ -527,6 +527,7 @@ $string['subscriptiondisabled'] = 'Habilite esta configuración en la página de
     'Puede acceder a esta página utilice el enlace Suscripción global de X-Ray en su perfil. ';
 $string['xrayemaildate'] = 'Datos de X-Ray del {$a}';
 $string['pdfnotattached'] = 'El PDF no fue adjuntado.';
+$string['strfemaildate'] = '%d%m%Y';
 
 // Frequency control for emails.
 $string['daily'] = 'Diaria';

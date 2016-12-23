@@ -415,6 +415,9 @@ function local_xray_template_data($courseid, $userid){
         $reporticonarrow = array('width' => '31px');
         $reportdata = array('style' => 'color:#777777;font-weight:bolder;font-size:20px;');
 
+        // Add report date.
+        $data->reportdate = $headlinedata->reportdate;
+
         // Risk.
         // Icon and link.
         $xrayriskicon = local_xray_get_email_icons('xray-risk');
@@ -803,7 +806,7 @@ function local_xray_single_activity_course($courseid) {
  * @param string $subject
  * @return object $pdf
  */
-function local_xray_create_pdf($headlinedata, $subject) {
+function local_xray_create_pdf($headlinedata, $subject, $reportdate) {
     global $CFG;
 
     require_once("$CFG->libdir/pdflib.php");
@@ -896,7 +899,12 @@ function local_xray_create_pdf($headlinedata, $subject) {
     // Add date of email.
     $xraydate = new html_table();
     $xraydate->attributes = array('style' => 'padding: 20px 10px 0 10px;font-weight:bolder;text-align:center;');
-    $xrayemaildate = userdate(time(), get_string('strftimedayshort', 'langconfig'), 'UTC');
+
+
+    $date = new DateTime($reportdate);
+    //$mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
+
+    $xrayemaildate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
     $xraydate->data[] = array(get_string('xrayemaildate', 'local_xray', $xrayemaildate));
     $html .= html_writer::table($xraydate);
 

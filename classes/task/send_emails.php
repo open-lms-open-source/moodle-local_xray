@@ -144,7 +144,7 @@ class send_emails extends scheduled_task {
                                 // Add the data in the template.
                                 $messagehtml = $OUTPUT->render_from_template('local_xray/email', $headlinedata);
                                 // Create PDF.
-                                $pdf = local_xray_create_pdf($headlinedata, $subject);
+                                $pdf = local_xray_create_pdf($headlinedata, $subject, $headlinedata->reportdate);
                             } else {
                                 $data = array(
                                     'context' => \context_course::instance($courseid),
@@ -162,7 +162,9 @@ class send_emails extends scheduled_task {
                             // Add PDF file in moodle.
                             if (isset($pdf) && $pdf instanceof \pdf) {
                                 // Close and output PDF document.
-                                $filename = clean_param('XRAY_COURSE_'.$courseshortname.'.pdf', PARAM_FILE);
+                                $strfemaildate = get_string('strfemaildate', 'local_xray');
+                                $reportdate =  userdate(time(), $strfemaildate);
+                                $filename = clean_param('XRAY_COURSE_'.$courseshortname.'_'.$reportdate.'.pdf', PARAM_FILE);
                                 $filecontent = $pdf->Output($filename, 'S');
                                 // Add as a temporary file.
                                 $dir = 'files';
