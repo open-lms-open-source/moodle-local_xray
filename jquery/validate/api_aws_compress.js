@@ -84,7 +84,7 @@ function validate_api_aws_compress(YUI, data) {
             url: self.www_root + '/local/xray/testapi.php',
             success: function (data, status, xhr) {
                 var reasons = [], generalFail = false;
-                if(data.error) {
+                if(data.error || data.debuginfo || data.errorcode || data.stacktrace) {
                     generalFail = true;
                     
                     var mappedData = $.map(data, function(value, index) {

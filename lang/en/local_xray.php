@@ -579,6 +579,7 @@ $string['error_compress_config_packertar'] = 'GNU tar executable is empty';
 $string['error_compress_config_exportlocation'] = 'Export location is empty';
 $string['error_compress_exception'] = 'Error when compressing: {$a}';
 $string['error_compress_files'] = 'Incorrect files found in archive(s). Please check all your compression parameters against your operating system capabilities.';
+$string['error_compress_packertar_invalid'] = '<strong>GNU tar executable</strong> is invalid.';
 
 // Temporary for API check
 $string['connectionfailed'] = 'Failed - please check parameters';

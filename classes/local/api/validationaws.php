@@ -395,11 +395,14 @@ abstract class validationaws {
                 // tgz_extractor library
                 global $CFG;
                 require_once($CFG->dirroot.'/lib/filestorage/tgz_extractor.php');
+                require_once($CFG->dirroot.'/lib/filestorage/tgz_packer.php');
                 
                 $comp_files = (new \tgz_extractor($compfile))->list_files();
                 $tgzfile_list = [];
                 foreach ($comp_files as $cfile) {
-                    $tgzfile_list[] = $cfile->pathname;
+                    if('./' !== $cfile->pathname) {
+                        $tgzfile_list[] = basename($cfile->pathname);
+                    }
                 }
                 
                 if(count(array_intersect($tgzfile_list, $file_list)) != $num_files){
@@ -419,9 +422,9 @@ abstract class validationaws {
                 }
             }
             
-        } catch (Exception $e) {
+        } catch (\Exception $ex) {
             $result[] = get_string("error_compress_exception",
-                wsapi::PLUGIN, $e->getMessage());
+                wsapi::PLUGIN, $ex->getMessage());
         }
         
         if (!empty($result)) {

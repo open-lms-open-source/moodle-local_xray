@@ -1183,6 +1183,7 @@ class data_export {
      * @param string $dirbase
      * @param string $dirname
      * @return string[]
+     * @throws \moodle_exception
      */
     public static function compress($dirbase, $dirname) {
         $newformat = get_config(self::PLUGIN, 'newformat');
@@ -1253,6 +1254,12 @@ class data_export {
             $clientid = get_config(self::PLUGIN, 'xrayclientid');
             $tarpath = get_config(self::PLUGIN, 'packertar');
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
+            
+            // Check if tar is an executable prior to executing
+            if(!file_exists($bintar) || is_dir($bintar) || !file_is_executable($bintar)) {
+                throw new \moodle_exception(get_string('error_compress_packertar_invalid', self::PLUGIN));
+            }
+            
             $escdir = escapeshellarg($transdir);
             // We have to use microseconds timestamp because of nodejs...
             $basefile = self::generate_filename($clientid);
