@@ -52,17 +52,10 @@ abstract class wsapi {
      * @throws jsonerror_exception
      */
     public static function login($omit_cache = false) {
-        $cacheTimeout = 0;
-        
-        if (!$omit_cache && xrayws::instance()->hascookie()) {
+        if (xrayws::instance()->hascookie()) {
             return true;
         }
         
-        if ($omit_cache) {
-            $cacheTimeout = get_config(self::PLUGIN, 'curlcache');
-            set_config('curlcache', 0, self::PLUGIN);
-        }
-
         $username = get_config(self::PLUGIN, 'xrayusername');
         $pass     = get_config(self::PLUGIN, 'xraypassword');
         $baseurl  = get_config(self::PLUGIN, 'xrayurl');
@@ -80,10 +73,6 @@ abstract class wsapi {
                 // Should check this some more?
                 xrayws::instance()->resetcookie();
             }
-        }
-        
-        if ($omit_cache) {
-            set_config('curlcache', $cacheTimeout, self::PLUGIN);
         }
 
         return $result;

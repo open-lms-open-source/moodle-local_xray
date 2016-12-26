@@ -61,22 +61,6 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
     }
     
     /**
-     * Tests if the cache is kept if login omits the cache
-     * @return void
-     */
-    public function test_login_omit_keep_cache_ok() {
-        $this->resetAfterTest(true);
-        $this->config_set_ok();
-        $omitCache = true;
-        $curlcache = get_config(self::PLUGIN, 'curlcache');
-        // Tell the cache to load specific fixture for login url.
-        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
-
-        $this->assertTrue( \local_xray\local\api\wsapi::login($omitCache) );
-        $this->assertEquals($curlcache, get_config(self::PLUGIN, 'curlcache'));
-    }
-    
-    /**
      * @return void
      */
     public function test_accountcheck_ok() {

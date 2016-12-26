@@ -86,10 +86,18 @@ abstract class validationaws {
             // Testing login
             $reason = get_string('error_wsapi_reason_login', wsapi::PLUGIN);
             $reason_fields = ['xrayusername','xraypassword','xrayurl'];
-            $loginRes = wsapi::login(true);
+            
+            // Omit cache for testing that login works
+            $cacheTimeout = get_config(wsapi::PLUGIN, 'curlcache');
+            set_config('curlcache', 0, wsapi::PLUGIN);
+            
+            $loginRes = wsapi::login();
             if (!$loginRes) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
+            
+            // Leave cache as it was before
+            set_config('curlcache', $cacheTimeout, wsapi::PLUGIN);
             
             // Testing the query endpoints
             $reason = get_string('error_wsapi_reason_accesstoken', wsapi::PLUGIN);
