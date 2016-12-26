@@ -144,7 +144,7 @@ class send_emails extends scheduled_task {
                                 // Add the data in the template.
                                 $messagehtml = $OUTPUT->render_from_template('local_xray/email', $headlinedata);
                                 // Create PDF.
-                                $pdf = local_xray_create_pdf($headlinedata, $subject, $headlinedata->reportdate);
+                                $pdf = local_xray_create_pdf($headlinedata, $subject);
                             } else {
                                 $data = array(
                                     'context' => \context_course::instance($courseid),

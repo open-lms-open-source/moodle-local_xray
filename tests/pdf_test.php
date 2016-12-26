@@ -93,6 +93,7 @@ class local_xray_pdf_testcase extends \advanced_testcase {
         $data->recommendationslist = 'Some text';
         $data->recommendationspdf = array('Recommendation 1', 'Recommendation 2');
         $data->recommendationstitle = 'Some text';
+        $data->reportdate = '2016-12-26T00:00:00.000Z';
         $result = local_xray_create_pdf($data, 'Subject text');
         $this->assertInstanceOf('\pdf', $result);
     }

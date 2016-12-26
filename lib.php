@@ -806,7 +806,7 @@ function local_xray_single_activity_course($courseid) {
  * @param string $subject
  * @return object $pdf
  */
-function local_xray_create_pdf($headlinedata, $subject, $reportdate) {
+function local_xray_create_pdf($headlinedata, $subject) {
     global $CFG;
 
     require_once("$CFG->libdir/pdflib.php");
@@ -901,7 +901,7 @@ function local_xray_create_pdf($headlinedata, $subject, $reportdate) {
     $xraydate->attributes = array('style' => 'padding: 20px 10px 0 10px;font-weight:bolder;text-align:center;');
 
 
-    $date = new DateTime($reportdate);
+    $date = new DateTime($headlinedata->reportdate);
     //$mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
 
     $xrayemaildate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
