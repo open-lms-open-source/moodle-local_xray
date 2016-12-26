@@ -385,7 +385,8 @@ abstract class validationaws {
             $storage = new auto_clean();
             
             $file_list = [];
-            data_export::export_csv(0, $timeend, $storage->get_directory(), self::DISABLE_TIME_TRACE);
+            define('DISABLE_MTRACE_DEBUG', self::DISABLE_TIME_TRACE);
+            data_export::export_csv(0, $timeend, $storage->get_directory());
             
             // Store list of files before compression
             $dir_list = $storage->listdir_as_array();

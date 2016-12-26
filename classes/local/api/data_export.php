@@ -1320,7 +1320,7 @@ class data_export {
      * @param string $text
      */
     protected static function mtrace($text) {
-        if (!PHPUNIT_TEST) {
+        if (!PHPUNIT_TEST && !defined('DISABLE_MTRACE_DEBUG') ) {
             mtrace($text);
         }
     }
@@ -1331,7 +1331,7 @@ class data_export {
      * @param string $dir
      * @param bool   $disableTimeTrace
      */
-    public static function export_csv($timest, $timeend, $dir, $disableTimeTrace = false) {
+    public static function export_csv($timest, $timeend, $dir) {
         self::$meta = [];
         self::reset_counter_storage();
 
@@ -1417,9 +1417,7 @@ class data_export {
             self::export_metadata($dir);
         }
 
-        if(!$disableTimeTrace) {
-            self::mtrace("Export data execution time: ".timer::end()." sec.");
-        }
+        self::mtrace("Export data execution time: ".timer::end()." sec.");
     }
 
     /**
