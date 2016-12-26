@@ -902,8 +902,6 @@ function local_xray_create_pdf($headlinedata, $subject) {
 
 
     $date = new DateTime($headlinedata->reportdate);
-    //$mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
-
     $xrayemaildate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
     $xraydate->data[] = array(get_string('xrayemaildate', 'local_xray', $xrayemaildate));
     $html .= html_writer::table($xraydate);
