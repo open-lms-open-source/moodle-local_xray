@@ -45,13 +45,12 @@ abstract class wsapi {
 
     /**
      * 
-     * @param bool omit_cache Omit the cache for logging in again
      * @return bool
      * @throws \Exception
      * @throws \dml_exception
      * @throws jsonerror_exception
      */
-    public static function login($omit_cache = false) {
+    public static function login() {
         if (xrayws::instance()->hascookie()) {
             return true;
         }
