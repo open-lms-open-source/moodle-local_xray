@@ -1073,7 +1073,6 @@ class data_export {
         }
 
         $newformat = get_config(self::PLUGIN, 'newformat');
-        $delimiter = $newformat ? '|' : ',';
         $count     = self::get_max_record_count();
         $pos       = 0;
         $counter   = 0;
@@ -1115,7 +1114,7 @@ class data_export {
             $fcount   += 1;
             $filenamer = sprintf('%s_%08d.csv', self::exportpath($filename), $fcount);
             $exportf   = sprintf('%s%s%s', $dir, DIRECTORY_SEPARATOR, $filenamer);
-            $file = new csv_file($exportf, $delimiter);
+            $file = new csv_file($exportf);
             foreach ($recordset as $record) {
                 $cmaxdate = $record->traw;
                 unset($record->traw);

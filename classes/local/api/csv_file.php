@@ -24,8 +24,6 @@
 
 namespace local_xray\local\api;
 
-use gradereport_singleview\local\ui\empty_element;
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -87,9 +85,12 @@ class csv_file {
     }
 
     /**
+     * csv_file constructor.
+     *
      * @param string $path
+     * @throws \moodle_exception
      */
-    public function __construct($path, $delimiter = ',', $enclosure = "\x1", $escape = "\v") {
+    public function __construct($path) {
         if (file_exists($path)) {
             print_error('error_fexists', 'local_xray', '', $path);
         }
@@ -98,15 +99,9 @@ class csv_file {
             print_error('error_fnocreate', 'local_xray', '', $path);
         }
         $this->resource = $res;
-        if (!empty($delimiter)) {
-            $this->delimiter = $delimiter;
-        }
-        if (!empty($enclosure)) {
-            $this->enclosure = $enclosure;
-        }
-        if (!empty($escape)) {
-            $this->escape = $escape;
-        }
+        $this->delimiter = csv_meta::get_delimiter();
+        $this->enclosure = csv_meta::get_enclosure();
+        $this->escape    = csv_meta::get_escape();
     }
 
     public function __destruct() {
@@ -139,7 +134,19 @@ class csv_file {
      */
     protected function write($data) {
         $ndata = str_replace(["\r\n", "\n", "\r"], '\n', $data);
-        return fputcsv($this->resource, $ndata, $this->delimiter, $this->enclosure, $this->escape);
+        if (csv_meta::checkformat()) {
+            global $CFG;
+
+            /* @noinspection PhpIncludeInspection */
+            require_once($CFG->dirroot.'/local/xray/vendor/autoload.php');
+
+            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+            /* @noinspection PhpUndefinedClassInspection */
+            \Ajgl\Csv\Rfc\fputcsv($this->resource, $ndata, $this->delimiter, $this->enclosure, $this->escape);
+            return true;
+        } else {
+            return fputcsv($this->resource, $ndata, $this->delimiter, $this->enclosure, $this->escape);
+        }
     }
 
     /**

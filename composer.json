@@ -1,6 +1,7 @@
 {
     "require-dev": {
         "justinrainbow/json-schema": "1.6.1.*",
-        "firebase/php-jwt":"3.0.0"
+        "firebase/php-jwt":"3.0.0",
+        "ajgl/csv-rfc":"0.2.0"
     }
 }

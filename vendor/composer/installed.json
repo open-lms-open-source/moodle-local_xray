@@ -111,5 +111,65 @@
         ],
         "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
         "homepage": "https://github.com/firebase/php-jwt"
+    },
+    {
+        "name": "ajgl/csv-rfc",
+        "version": "0.2.0",
+        "version_normalized": "0.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ajgarlag/AjglCsvRfc.git",
+            "reference": "483ef1c076b2eabfc82ac5e5904abd01985d891d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ajgarlag/AjglCsvRfc/zipball/483ef1c076b2eabfc82ac5e5904abd01985d891d",
+            "reference": "483ef1c076b2eabfc82ac5e5904abd01985d891d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "fabpot/php-cs-fixer": "^1.11",
+            "league/csv": ">=7.2",
+            "phpunit/phpunit": "^4.8"
+        },
+        "time": "2016-04-08 11:23:20",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Ajgl\\Csv\\Rfc\\": "src/"
+            },
+            "files": [
+                "src/functions.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Antonio J. García Lagar",
+                "email": "aj@garcialagar.es",
+                "homepage": "http://aj.garcialagar.es",
+                "role": "developer"
+            }
+        ],
+        "description": "Drop in replacement for native PHP CSV related functions to read and/or write RFC4180 compliant CSV files",
+        "homepage": "https://github.com/ajgarlag/AjglCsvRfc",
+        "keywords": [
+            "4180",
+            "csv",
+            "rfc",
+            "rfc4180"
+        ]
     }
 ]

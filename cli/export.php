@@ -36,6 +36,8 @@ try {
     list($compfile, $destfile) = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
     mtrace('Finished.');
     mtrace('Export file is: '.$compfile);
+    // Prevent deletion.
+    $storage->detach();
 } catch (Exception $e) {
     cli_error($e->getMessage(), $e->getCode());
 }

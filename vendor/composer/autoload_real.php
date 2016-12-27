@@ -23,13 +23,12 @@ class ComposerAutoloaderInit96d67f615d12ce2d4b88e1ab7aeb4f2e
         self::$loader = $loader = new \Composer\Autoload\ClassLoader();
         spl_autoload_unregister(array('ComposerAutoloaderInit96d67f615d12ce2d4b88e1ab7aeb4f2e', 'loadClassLoader'));
 
-        // Commented this since we can not ship yet autoload_static.php which is for PHP 5.6+
-//        $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION');
-//        if ($useStaticLoader) {
-//            require_once __DIR__ . '/autoload_static.php';
-//
-//            call_user_func(\Composer\Autoload\ComposerStaticInit96d67f615d12ce2d4b88e1ab7aeb4f2e::getInitializer($loader));
-//        } else {
+        $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION') && (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());
+        if ($useStaticLoader) {
+            require_once __DIR__ . '/autoload_static.php';
+
+            call_user_func(\Composer\Autoload\ComposerStaticInit96d67f615d12ce2d4b88e1ab7aeb4f2e::getInitializer($loader));
+        } else {
             $map = require __DIR__ . '/autoload_namespaces.php';
             foreach ($map as $namespace => $path) {
                 $loader->set($namespace, $path);
@@ -44,10 +43,28 @@ class ComposerAutoloaderInit96d67f615d12ce2d4b88e1ab7aeb4f2e
             if ($classMap) {
                 $loader->addClassMap($classMap);
             }
-//        }
+        }
 
         $loader->register(true);
 
+        if ($useStaticLoader) {
+            $includeFiles = Composer\Autoload\ComposerStaticInit96d67f615d12ce2d4b88e1ab7aeb4f2e::$files;
+        } else {
+            $includeFiles = require __DIR__ . '/autoload_files.php';
+        }
+        foreach ($includeFiles as $fileIdentifier => $file) {
+            composerRequire96d67f615d12ce2d4b88e1ab7aeb4f2e($fileIdentifier, $file);
+        }
+
         return $loader;
+    }
+}
+
+function composerRequire96d67f615d12ce2d4b88e1ab7aeb4f2e($fileIdentifier, $file)
+{
+    if (empty($GLOBALS['__composer_autoload_files'][$fileIdentifier])) {
+        require $file;
+
+        $GLOBALS['__composer_autoload_files'][$fileIdentifier] = true;
     }
 }

@@ -42,4 +42,11 @@
         <license>MIT</license>
         <licenseversion></licenseversion>
     </library>
+    <library>
+        <location>vendor/ajgl/csv-rfc</location>
+        <name>ajgl/csv-rfc</name>
+        <version>0.2.0</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
 </libraries>

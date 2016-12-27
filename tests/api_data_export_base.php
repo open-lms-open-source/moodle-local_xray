@@ -190,11 +190,12 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     /**
      * Creates courses needed for test
      *
-     * @param int $nr
-     * @param int $timecreated
+     * @param  int $nr
+     * @param  int $timecreated
+     * @param  array $options
      * @return stdClass[]
      */
-    protected function addcourses($nr, $timecreated = null) {
+    protected function addcourses($nr, $timecreated = null, array $options = []) {
         global $CFG;
         /* @noinspection PhpIncludeInspection */
         require_once($CFG->libdir.'/gradelib.php');
@@ -207,13 +208,15 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
             'timecreated' => $timecreated,
             'startdate'   => $timecreated
         ];
+
+        $record += $options;
+
         // Create course(s).
         $datagen = $this->getDataGenerator();
         $courses = [];
         $count = 0;
         while ($count++ < $nr) {
             $course = $datagen->create_course($record);
-            grade_regrade_final_grades($course->id);
             $courses[] = $course;
         }
 
@@ -363,19 +366,20 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     /**
      * Add specified ammount of quizzes
      *
-     * @param int $nr
-     * @param array $courses
+     * @param  int $nr
+     * @param  array $courses
+     * @param  array $options
      * @return array
      * @throws coding_exception
      */
-    protected function addquizzes($nr, $courses) {
+    protected function addquizzes($nr, $courses, array $options = []) {
         /** @var mod_quiz_generator $quizgen */
         $quizgen = $this->getDataGenerator()->get_plugin_generator('mod_quiz');
         $instances = [];
         foreach ($courses as $course) {
             $lnr = $nr;
             while ($lnr-- > 0) {
-                $instances[] = $quizgen->create_instance(['course' => $course]);
+                $instances[] = $quizgen->create_instance(['course' => $course], $options);
             }
         }
         return $instances;
@@ -416,11 +420,11 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     /**
      * Set the student account
      *
-     * @param array $courses
-     * @param string $module
-     * @return stdClass
+     * @param  array $courses
+     * @param  string $module
+     * @return array
      */
-    protected function user_set($courses, $module) {
+    protected function user_set_internal($courses, $module) {
         global $DB, $CFG;
         /* @noinspection PhpIncludeInspection */
         require_once($CFG->libdir.'/gradelib.php');
@@ -429,17 +433,30 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         $student = $datagen->create_user(['username' => uniqid('supercalifragilisticoexpialidoso')]);
         $roleid = $DB->get_field('role', 'id', ['shortname' => 'student'], MUST_EXIST);
         $timenow = time();
+        $gitemsf = [];
         foreach ($courses as $course) {
             $datagen->enrol_user($student->id, $course->id, $roleid);
             /** @var grade_item[] $gitems */
             $gitems = grade_item::fetch_all(['itemmodule' => $module, 'courseid' => $course->id]);
-            foreach ($gitems as $gitem) {
-                $gitem->update_raw_grade($student->id, 80.0, null, false, FORMAT_MOODLE, null, $timenow, $timenow);
+            if (is_array($gitems)) {
+                foreach ($gitems as $gitem) {
+                    $gitem->update_raw_grade($student->id, 80.0, null, false, FORMAT_MOODLE, null, $timenow, $timenow);
+                }
+                $gitemsf += $gitems;
             }
-            grade_regrade_final_grades($course->id);
         }
 
-        return $student;
+        return [$student, $gitemsf];
+    }
+
+    /**
+     * @param  $courses
+     * @param  $module
+     * @return stdClass
+     */
+    protected function user_set($courses, $module) {
+        $result = $this->user_set_internal($courses, $module);
+        return $result[0];
     }
 
     /**

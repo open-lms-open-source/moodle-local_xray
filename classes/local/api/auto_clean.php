@@ -70,7 +70,12 @@ class auto_clean {
      * @return void
      */
     public function __destruct() {
-        remove_dir($this->directory);
+        // We prevent deletion of attached directory for unit testing.
+        // There are issues with vagrant image and NFS mounted data.
+        // It will be deleted anyways after all tests are executed.
+        if (!PHPUNIT_TEST) {
+            remove_dir($this->directory);
+        }
         $this->detach();
     }
 
@@ -103,20 +108,16 @@ class auto_clean {
      * Intended for debugging purporses.
      */
     public function listdir() {
+        /** @var int $flags */
+        $flags  = \FilesystemIterator::KEY_AS_PATHNAME;
+        $flags |= \FilesystemIterator::CURRENT_AS_FILEINFO;
+        $flags |= \FilesystemIterator::SKIP_DOTS;
+
         $objects = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator(
-                $this->directory,
-                \FilesystemIterator::KEY_AS_PATHNAME     |
-                \FilesystemIterator::CURRENT_AS_FILEINFO |
-                \FilesystemIterator::SKIP_DOTS
-            ),
+            new \RecursiveDirectoryIterator($this->directory, $flags),
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
-        /**
-         * @var  string       $name
-         * @var  \SplFileInfo $object
-         */
         foreach ($objects as $name => $object) {
             mtrace($name);
         }

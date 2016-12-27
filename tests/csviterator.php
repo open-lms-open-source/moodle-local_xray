@@ -36,19 +36,35 @@ class csv_fileiterator implements Iterator {
      */
     protected $current;
 
-    private $delimiter;
+    /**
+     * @var null|string
+     */
+    private $delimiter = null;
 
     /**
-     * @param string $file - path to existing file
+     * @var null
+     */
+    private $enclosure = null;
+
+    /**
+     * @var null
+     */
+    private $escape = null;
+
+    /**
+     * csv_fileiterator constructor.
+     *
+     * @param string $file
      */
     public function __construct($file) {
         $filehandle = fopen($file, 'r');
         if ($filehandle === false) {
             print_error('cannotopenfile', 'core_error', '', $file);
         }
-        $this->file = $filehandle;
-        $newformat = get_config('local_xray', 'newformat');
-        $this->delimiter = $newformat ? '|' : ',';
+        $this->file      = $filehandle;
+        $this->delimiter = \local_xray\local\api\csv_meta::get_delimiter();
+        $this->enclosure = \local_xray\local\api\csv_meta::get_enclosure();
+        $this->escape    = \local_xray\local\api\csv_meta::get_escape();
     }
 
     public function __destruct() {
@@ -60,13 +76,28 @@ class csv_fileiterator implements Iterator {
      * Get element
      */
     public function read() {
-        $this->current = fgetcsv(
-            $this->file,
-            null,
-            $this->delimiter,
-            \local_xray\local\api\csv_file::ENCLOSURE,
-            \local_xray\local\api\csv_file::ESCAPE_CHAR
-        );
+        if (\local_xray\local\api\csv_meta::checkformat()) {
+            global $CFG;
+
+            /* @noinspection PhpIncludeInspection */
+            require_once($CFG->dirroot . '/local/xray/vendor/autoload.php');
+
+            $this->current = \Ajgl\Csv\Rfc\fgetcsv(
+                $this->file,
+                0,
+                $this->delimiter,
+                $this->enclosure,
+                $this->enclosure // It is a MUST to have this same as enclosure.
+            );
+        } else {
+            $this->current = fgetcsv(
+                $this->file,
+                0,
+                $this->delimiter,
+                $this->enclosure,
+                $this->escape
+            );
+        }
     }
 
     /**
