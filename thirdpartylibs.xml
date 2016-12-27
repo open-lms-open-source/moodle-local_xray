@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <libraries>
     <library>
+        <location>vendor</location>
+        <name>Composer dependencies</name>
+        <version></version>
+        <license>Apache/MIT/BSD-3-Clause</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
         <location>lib/vendor/aws</location>
         <name>aws-sdk-php</name>
         <version>3.4.0</version>
