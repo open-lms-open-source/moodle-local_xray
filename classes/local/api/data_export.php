@@ -1329,7 +1329,6 @@ class data_export {
      * @param int    $timest
      * @param int    $timeend
      * @param string $dir
-     * @param bool   $disableTimeTrace
      */
     public static function export_csv($timest, $timeend, $dir) {
         self::$meta = [];
