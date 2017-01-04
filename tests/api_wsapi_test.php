@@ -59,6 +59,33 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
         $result = \local_xray\local\api\wsapi::login();
         $this->assertFalse($result);
     }
+    
+    /**
+     * @return void
+     */
+    public function test_accountcheck_ok() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+        // Tell the cache to load specific fixture for account check url.
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com', 'user-accountcheck-final.json');
+        $this->assertTrue( \local_xray\local\api\wsapi::accountcheck() );
+    }
+
+    /**
+     * @return void
+     */
+    public function test_accountcheck_fail() {
+        $this->resetAfterTest(true);
+        $this->config_set_ok();
+
+        // Tell the cache to load specific fixture for account check url.
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-fail-final.json');
+        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com', 'user-accountcheck-fail-final.json');
+
+        $result = \local_xray\local\api\wsapi::accountcheck();
+        $this->assertFalse($result);
+    }
 
     /**
      * @return void

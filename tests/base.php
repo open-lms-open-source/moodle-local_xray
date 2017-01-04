@@ -43,6 +43,7 @@ abstract class local_xray_base_testcase extends advanced_testcase {
         set_config('xrayadmin'      , 'someuser@domain.com'      , self::PLUGIN);
         set_config('xrayadminkey'   , '1234'                     , self::PLUGIN);
         set_config('xrayadminserver', 'http://xrayserver.foo.com', self::PLUGIN);
+        set_config('curlcache'      , '1'                        , self::PLUGIN);
     }
 
     /**

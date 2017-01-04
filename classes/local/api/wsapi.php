@@ -44,6 +44,7 @@ abstract class wsapi {
     const XRAYHEATMAP       = 'xrayHeatmap';
 
     /**
+     * 
      * @return bool
      * @throws \Exception
      * @throws \dml_exception
@@ -53,7 +54,7 @@ abstract class wsapi {
         if (xrayws::instance()->hascookie()) {
             return true;
         }
-
+        
         $username = get_config(self::PLUGIN, 'xrayusername');
         $pass     = get_config(self::PLUGIN, 'xraypassword');
         $baseurl  = get_config(self::PLUGIN, 'xrayurl');
@@ -74,6 +75,26 @@ abstract class wsapi {
         }
 
         return $result;
+    }
+    
+    /**
+     * Returns result in this format:
+     * array(
+     *   (object)array('ok' => true,
+     *                 'account' => 'login-email'
+     * )
+     *
+     * @return bool
+     */
+    public static function accountcheck() {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        if (empty($baseurl)) {
+            return false;
+        }
+        
+        $data = self::generic_getcall($baseurl);
+        
+        return !is_null($data) && isset($data->ok) && $data->ok;
     }
 
     public static function adminlogin() {
