@@ -56,7 +56,11 @@ class email_log extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return get_string('email_log_desc', 'local_xray', array('courseid' => $this->courseid, 'to' => $this->other['to']));
+        $messagedesc = get_string('email_log_desc', 'local_xray', array('courseid' => $this->courseid, 'to' => $this->other['to']));
+        if (empty($this->other['pdf'])) {
+            $messagedesc .= ' '.get_string('pdfnotattached', 'local_xray');
+        }
+        return $messagedesc;
     }
 
     /**

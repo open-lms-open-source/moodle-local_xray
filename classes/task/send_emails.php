@@ -58,6 +58,7 @@ class send_emails extends scheduled_task {
         global $CFG, $DB, $OUTPUT;
 
         require_once($CFG->dirroot.'/local/xray/lib.php');
+        require_once("$CFG->libdir/pdflib.php");
 
         try {
             // Check frequency.
@@ -131,6 +132,7 @@ class send_emails extends scheduled_task {
                             $subject = get_string('emailsubject', 'local_xray', $courseshortname);
                             $messagetext = '';
 
+                            $pdfstatus = false;
                             $headlinedata = local_xray_template_data($courseid, $userid);
 
                             if ($headlinedata) {
@@ -141,6 +143,8 @@ class send_emails extends scheduled_task {
                                 $headlinedata->title = get_string('pluginname', 'local_xray');
                                 // Add the data in the template.
                                 $messagehtml = $OUTPUT->render_from_template('local_xray/email', $headlinedata);
+                                // Create PDF.
+                                $pdf = local_xray_create_pdf($headlinedata, $subject);
                             } else {
                                 $data = array(
                                     'context' => \context_course::instance($courseid),
@@ -152,13 +156,40 @@ class send_emails extends scheduled_task {
                                 $event->trigger();
                                 continue;
                             }
+
+                            $attachment = '';
+                            $filename = '';
+                            // Add PDF file in moodle.
+                            if (isset($pdf) && $pdf instanceof \pdf) {
+                                // Close and output PDF document.
+                                $strfemaildate = get_string('strfemaildate', 'local_xray');
+                                $reportdate =  userdate(time(), $strfemaildate);
+                                $filename = clean_param('XRAY_COURSE_'.$courseshortname.'_'.$reportdate.'.pdf', PARAM_FILE);
+                                $filecontent = $pdf->Output($filename, 'S');
+                                // Add as a temporary file.
+                                $dir = 'files';
+                                $fileprefix = 'tempup_';
+                                if ($dir = make_temp_directory($dir)) {
+                                    if ($attachment = tempnam($dir, $fileprefix)) {
+                                        file_put_contents($attachment , $filecontent);
+                                        $pdfstatus = true;
+                                    }
+                                }
+                            }
                             // Send Email.
-                            $email = email_to_user($to, $from, $subject, $messagetext, $messagehtml);
+                            $email = email_to_user($to, $from, $subject, $messagetext, $messagehtml, $attachment, $filename);
+                            // Delete the file.
+                            if ($realpath = realpath($attachment)){
+                                if (is_writable($realpath)) {
+                                    unlink($realpath);
+                                }
+                            }
                             if ($email) {
                                 $data = array(
                                     'context' => \context_course::instance($courseid),
                                     'other' => array(
-                                        'to' => $userid
+                                        'to' => $userid,
+                                        'pdf' => $pdfstatus
                                     )
                                 );
                                 $event = email_log::create($data);

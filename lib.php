@@ -409,11 +409,19 @@ function local_xray_template_data($courseid, $userid){
         // Styles.
         $linksnum = array('title' => get_string('link_gotoreport', 'local_xray'), 'style' => 'text-decoration: none; color: #777777; font-weight: bolder;');
         $gotoreport = array('title' => get_string('link_gotoreport', 'local_xray'));
+        $reporticonpdf = array('width' => '37px');
         $reporticon = array('width' => '39px');
+        $reporticonarrowpdf = array('width' => '25px');
+        $reporticonarrow = array('width' => '31px');
+        $reportdata = array('style' => 'color:#777777;font-weight:bolder;font-size:20px;');
+
+        // Add report date.
+        $data->reportdate = $headlinedata->reportdate;
 
         // Risk.
         // Icon and link.
         $xrayriskicon = local_xray_get_email_icons('xray-risk');
+        $data->riskiconpdf = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'), $reporticonpdf);
         $data->riskicon = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'), $reporticon);
 
         $riskurl = new moodle_url("/local/xray/view.php",
@@ -433,13 +441,15 @@ function local_xray_template_data($courseid, $userid){
             true); // This arrow will be inverse to all.
 
         $xrayriskarrow = local_xray_get_email_icons($statusclassrisk[2]);
-        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1], array('width' => '31'));
+        $data->riskarrowpdf = html_writer::img($xrayriskarrow, $statusclassrisk[1], $reporticonarrowpdf);
+        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1], $reporticonarrow);
         $data->riskarrow = html_writer::link($riskarrowurl, $riskarrow, $gotoreport);
 
         // Number for risk.
         $a = new stdClass();
         $a->first = $headlinedata->usersinrisk;
         $a->second = $headlinedata->risktotal;
+        $data->riskdatapdf = html_writer::span(get_string('headline_number_of', 'local_xray', $a), '', $reportdata);
         $data->riskdata = html_writer::link($riskarrowurl, get_string('headline_number_of', 'local_xray', $a),
             $linksnum);
 
@@ -454,6 +464,8 @@ function local_xray_template_data($courseid, $userid){
         // Activity.
         // Icon and link.
         $xrayactivityicon = local_xray_get_email_icons('xray-activity');
+        $data->activityiconpdf = html_writer::img($xrayactivityicon, get_string('activityreport', 'local_xray'),
+            $reporticonpdf);
         $data->activityicon = html_writer::img($xrayactivityicon, get_string('activityreport', 'local_xray'),
             $reporticon);
 
@@ -474,12 +486,14 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xrayactivityarrow = local_xray_get_email_icons($statusclassactivity[2]);
-        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1], array('width' => '31'));
+        $data->activityarrowpdf = html_writer::img($xrayactivityarrow, $statusclassactivity[1], $reporticonarrowpdf);
+        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1], $reporticonarrow);
         $data->activityarrow = html_writer::link($activityarrowurl, $activityarrow, $gotoreport);
 
         $a = new stdClass();
         $a->first = $headlinedata->usersloggedinpreviousweek;
         $a->second = $headlinedata->usersactivitytotal;
+        $data->activitydatapdf = html_writer::span(get_string('headline_number_of', 'local_xray', $a), '', $reportdata);
         $data->activitydata = html_writer::link($activityarrowurl, get_string('headline_number_of', 'local_xray', $a),
             $linksnum);
 
@@ -494,8 +508,9 @@ function local_xray_template_data($courseid, $userid){
         // Gradebook.
         // Icon and link.
         $xraygradeicon = local_xray_get_email_icons('xray-grade');
-        $data->gradebookicon = html_writer::img($xraygradeicon, get_string('gradebookreport', 'local_xray'),
-            array('width' => '43px'));
+        $data->gradebookiconpdf = html_writer::img($xraygradeicon, get_string('gradebookreport', 'local_xray'),
+            $reporticonpdf);
+        $data->gradebookicon = html_writer::img($xraygradeicon, get_string('gradebookreport', 'local_xray'), $reporticon);
 
         $gradebookurl = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $courseid, "action" => "view"));
@@ -511,9 +526,12 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xraygradebookarrow = local_xray_get_email_icons($statusclass[2]);
-        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1], array('width' => '31'));
+        $data->gradebookarrowpdf = html_writer::img($xraygradebookarrow, $statusclass[1], $reporticonarrowpdf);
+        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1], $reporticonarrow);
         $data->gradebookarrow = html_writer::link($gradebookarrowurl, $gradebookarrow, $gotoreport);
 
+        $data->gradebooknumberpdf = html_writer::span(get_string('headline_number_percentage', 'local_xray',
+            $headlinedata->averagegradeslastsevendays), '', $reportdata);
         $data->gradebooknumber = html_writer::link($gradebookarrowurl, get_string('headline_number_percentage', 'local_xray',
             $headlinedata->averagegradeslastsevendays), $linksnum);
         $data->gradebookheadline = get_string('headline_average', 'local_xray');
@@ -522,6 +540,8 @@ function local_xray_template_data($courseid, $userid){
         // Discussion.
         // Icon and link.
         $xraydiscussionsicon = local_xray_get_email_icons('xray-discussions');
+        $data->discussioniconpdf = html_writer::img($xraydiscussionsicon, get_string('discussionreport', 'local_xray'),
+            $reporticonpdf);
         $data->discussionicon = html_writer::img($xraydiscussionsicon, get_string('discussionreport', 'local_xray'),
             $reporticon);
 
@@ -539,15 +559,17 @@ function local_xray_template_data($courseid, $userid){
             true);
 
         $xraydiscussionsarrow = local_xray_get_email_icons($statusclassdiscussion[2]);
-        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1], array('width' => '31'));
+        $data->discussionarrowpdf = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1], $reporticonarrowpdf);
+        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1], $reporticonarrow);
         $data->discussionarrow = html_writer::link($discussionarrowurl, $discussionarrow, $gotoreport);
-
+        $data->discussiondatapdf = html_writer::span($headlinedata->postslastsevendays, '', $reportdata);
         $data->discussiondata = html_writer::link($discussionarrowurl, $headlinedata->postslastsevendays, $linksnum);
         $data->discussionposts = get_string('headline_posts', 'local_xray');
         $data->discussionlastweekwas = get_string("headline_lastweekwas_discussion", 'local_xray', $headlinedata->postslastsevendayspreviousweek);
 
         // Recommended Actions.
         $data->recommendationslist = '';
+        $data->recommendationspdf = $headlinedata->recommendations;
         if ($headlinedata->countrecommendations) {
             $data->recommendations = true;
             $recommendationnumber = 1;
@@ -775,4 +797,167 @@ function local_xray_get_email_icons($imagename) {
 function local_xray_single_activity_course($courseid) {
     global $DB;
     return $DB->record_exists('course', array('id' => $courseid, 'format' => 'singleactivity'));
+}
+
+/**
+ * Create PDF.
+ *
+ * @param object $headlinedata
+ * @param string $subject
+ * @return object $pdf
+ */
+function local_xray_create_pdf($headlinedata, $subject) {
+    global $CFG;
+
+    require_once("$CFG->libdir/pdflib.php");
+
+    $pdf = new pdf();
+
+    // Set document information
+    $pdf->SetCreator(PDF_CREATOR);
+    $pdf->SetAuthor(get_string('pluginname', 'local_xray'));
+    $pdf->SetTitle($subject);
+    $pdf->SetSubject($subject);
+    $pdf->SetKeywords('MOODLE, XRAY');
+    // Set header and footer fonts.
+    $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+    // Set default monospaced font.
+    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+    // Set margins.
+    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+    $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+    // Set auto page breaks.
+    $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+    // Set image scale factor.
+    $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+    // Set font.
+    $pdf->SetFont('helvetica', '', 9);
+    // Add a page.
+    $pdf->AddPage();
+    // Create some HTML content.
+
+    $title = new html_table();
+    $title->attributes = array('style' => 'padding-bottom: 20px;font-weight:bolder;font-size:22px;');
+    $title->data[] = array($subject);
+    $html = html_writer::table($title);
+
+    $riskicontable = new html_table();
+    $riskicontable->data = local_xray_report_head_row(get_string('risk', 'local_xray'), $headlinedata->riskiconpdf);
+
+    $activityicontable = new html_table();
+    $activityicontable->data = local_xray_report_head_row(get_string('activityreport', 'local_xray'), $headlinedata->activityiconpdf);
+
+    $gradebookicontable = new html_table();
+    $gradebookicontable->data = local_xray_report_head_row(get_string('gradebookreport', 'local_xray'), $headlinedata->gradebookiconpdf);
+
+    $discussionicontable = new html_table();
+    $discussionicontable->data = local_xray_report_head_row(get_string('discussionreport', 'local_xray'), $headlinedata->discussioniconpdf);
+
+    $table = new html_table();
+    $table->data[] = array(html_writer::table($riskicontable),
+        html_writer::table($activityicontable),
+        html_writer::table($gradebookicontable),
+        html_writer::table($discussionicontable));
+
+    $riskdatatable = new html_table();
+    $riskdatatable->data[] = array($headlinedata->riskdatapdf, $headlinedata->riskarrowpdf);
+
+    $activitydatatable = new html_table();
+    $activitydatatable->data[] = array($headlinedata->activitydatapdf, $headlinedata->activityarrowpdf);
+
+    $gradebooknumbertable = new html_table();
+    $gradebooknumbertable->data[] = array($headlinedata->gradebooknumberpdf, $headlinedata->gradebookarrowpdf);
+
+    $discussiondatatable = new html_table();
+    $discussiondatatable->data[] = array($headlinedata->discussiondatapdf, $headlinedata->discussionarrowpdf);
+
+    $table->data[] = array(html_writer::table($riskdatatable), html_writer::table($activitydatatable), html_writer::table($gradebooknumbertable), html_writer::table($discussiondatatable));
+    $table->data[] = array($headlinedata->studentsrisk, $headlinedata->activityloggedstudents, $headlinedata->gradebookheadline, $headlinedata->discussionposts);
+    $table->data[] = array($headlinedata->riskaverageweek, $headlinedata->activitylastweekwasof, $headlinedata->gradebookaverageofweek, $headlinedata->discussionlastweekwas);
+
+    $html .= html_writer::table($table);
+
+    // Add recommendations.
+    if ($headlinedata->recommendations) {
+        $recommendationtitle = new html_table();
+        $recommendationtitle->attributes = array('style' => 'padding: 10px 10px 0 10px;font-weight:bolder;');
+        $recommendationtitle->data[] = array(get_string('recommendedactions' , 'local_xray'));
+        $html .= html_writer::table($recommendationtitle);
+
+        $recommendationtable = new html_table();
+        $recommendationtable->attributes = array('style' => 'padding: 10px 10px 0 10px;');
+        $recommendationnumber = 1;
+        foreach ($headlinedata->recommendationspdf as $recommendation) {
+            $recommendationtable->data[] = local_xray_add_recommendation_pdf($recommendationnumber, $recommendation);
+            $recommendationnumber++;
+        }
+        $html .= html_writer::table($recommendationtable);
+    }
+
+    // Add date of email.
+    $xraydate = new html_table();
+    $xraydate->attributes = array('style' => 'padding: 20px 10px 0 10px;font-weight:bolder;text-align:center;');
+
+
+    $date = new DateTime($headlinedata->reportdate);
+    $xrayemaildate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
+    $xraydate->data[] = array(get_string('xrayemaildate', 'local_xray', $xrayemaildate));
+    $html .= html_writer::table($xraydate);
+
+    // Output the HTML content
+    $pdf->writeHTML($html, true, 0, true, 0);
+    // Reset pointer to the last page
+    $pdf->lastPage();
+
+    return $pdf;
+}
+
+/**
+ * Add a recommendation in the PDF.
+ *
+ * @param int $recommendationnumber
+ * @param string $recommendation
+ * @return array of cells.
+ */
+function local_xray_add_recommendation_pdf($recommendationnumber, $recommendation) {
+
+    $cellicon = new html_table_cell();
+    $cellicon->text = $recommendationnumber;
+    $cellicon->style = 'width:28px;color:#777777;font-weight:bolder;';
+    $cellname = new html_table_cell();
+    $cellname->text = $recommendation;
+    $cellname->style = 'width:80%;';
+
+    return array($cellicon, $cellname);
+}
+
+/**
+ * Add report icon with the report title.
+ *
+ * @param string $reporttitle
+ * @param string $reporticon
+ * @return array of rows.
+ */
+function local_xray_report_head_row($reporttitle, $reporticon) {
+
+    $cell1 = new html_table_cell();
+    $cell1->text = $reporticon;
+    $cell1->rowspan = 3;
+    $cell1->style = 'width:42px;padding: 0;';
+    $cell2 = new html_table_cell();
+    $row = new html_table_row();
+    $row->cells = array($cell1, $cell2);
+
+    $cell2 = new html_table_cell();
+    $cell2->text = $reporttitle;
+    $row2 = new html_table_row();
+    $row2->cells = array($cell2);
+
+    $cell2 = new html_table_cell();
+    $row3 = new html_table_row();
+    $row3->cells = array($cell2);
+
+    return array($row, $row2, $row3);
 }
