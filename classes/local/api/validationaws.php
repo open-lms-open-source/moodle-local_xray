@@ -82,7 +82,7 @@ abstract class validationaws {
             return $result;
         }
 
-        $cachetimeoutmng = new stdClass();
+        $cachetimeoutmng = new \stdClass();
         $cachetimeoutmng->val = 0;
         $cachetimeoutmng->changed = false;
         try {
