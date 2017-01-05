@@ -66,10 +66,10 @@ abstract class validationaws {
 
         /** @var string[] $params */
         $params = [
-              'xrayusername'
+              'xrayurl'
+            , 'xrayusername'
             , 'xraypassword'
             , 'xrayclientid'
-            , 'xrayurl'
         ];
 
         foreach ($params as $property) {
@@ -85,7 +85,7 @@ abstract class validationaws {
         try {
             // Testing login
             $reason = get_string('error_wsapi_reason_login', wsapi::PLUGIN);
-            $reason_fields = ['xrayusername','xraypassword','xrayurl'];
+            $reason_fields = ['xrayurl','xrayusername','xraypassword'];
             
             // Omit cache for testing that login works
             $cacheTimeout = get_config(wsapi::PLUGIN, 'curlcache');
@@ -109,7 +109,7 @@ abstract class validationaws {
             
             // Testing login
             $reason = get_string('error_wsapi_reason_accountcheck', wsapi::PLUGIN);
-            $reason_fields = ['xrayusername','xraypassword','xrayurl'];
+            $reason_fields = ['xrayurl','xrayusername','xraypassword'];
             $accountchkRes = wsapi::accountcheck();
             if (!$accountchkRes) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
