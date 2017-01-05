@@ -82,14 +82,18 @@ abstract class validationaws {
             return $result;
         }
 
+        $cachetimeoutmng = new stdClass();
+        $cachetimeoutmng->val = 0;
+        $cachetimeoutmng->changed = false;
         try {
             // Testing login
             $reason = get_string('error_wsapi_reason_login', wsapi::PLUGIN);
             $reason_fields = ['xrayurl','xrayusername','xraypassword'];
             
             // Omit cache for testing that login works
-            $cacheTimeout = get_config(wsapi::PLUGIN, 'curlcache');
+            $cachetimeoutmng->val = get_config(wsapi::PLUGIN, 'curlcache');
             set_config('curlcache', 0, wsapi::PLUGIN);
+            $cachetimeoutmng->changed = true;
             
             $loginRes = wsapi::login();
             if (!$loginRes) {
@@ -97,7 +101,8 @@ abstract class validationaws {
             }
             
             // Leave cache as it was before
-            set_config('curlcache', $cacheTimeout, wsapi::PLUGIN);
+            set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
+            $cachetimeoutmng->changed = false;
             
             // Testing the query endpoints
             $reason = get_string('error_wsapi_reason_accesstoken', wsapi::PLUGIN);
@@ -163,6 +168,10 @@ abstract class validationaws {
             $result[] = get_string("error_wsapi_exception",
                 wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$break.$fields_title.$html_fields.
                 validationaws::service_info('ws_connect',$ex->getMessage()));
+            
+            if($cachetimeoutmng->changed) {
+                set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
+            }
         }
         
         if(!empty($result)) {
