@@ -108,8 +108,10 @@ class send_emails extends scheduled_task {
                     }
                     if ($subscribedusers = $DB->get_recordset_select('local_xray_subscribe', $select, null, 'courseid', 'id, courseid, userid')) {
                         foreach ($subscribedusers as $record) {
-                            if (!local_xray_single_activity_course($record->courseid)) {
-                                $coursesusers[] = array($record->courseid => $record->userid);
+                            if (isset($record->userid) && $record->userid && isset($record->courseid) && $record->courseid) {
+                                if (!local_xray_single_activity_course($record->courseid)) {
+                                    $coursesusers[] = array($record->courseid => $record->userid);
+                                }
                             }
                         }
                     }
