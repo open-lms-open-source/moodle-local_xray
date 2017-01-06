@@ -592,6 +592,8 @@ $string['verifyingapi'] = '<div class="xray_validate_loader"></div> Checking par
 $string['test_api_action'] = 'Validate parameters';
 $string['validate_check_fields'] = 'Please, check the following parameters';
 $string['validate_service_response'] = 'Check the service response';
+$string['validation_check_not_found'] = 'Validation check "{$a}" not found.';
+$string['validation_check_not_filled'] = 'Validation check not specified.';
 
 // API titles
 $string['test_api_ws_connect'] = 'X-Ray Server';

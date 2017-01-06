@@ -73,17 +73,13 @@ function validate_api_aws_compress(YUI, data) {
     /**
      * Test api.
      */
-    self.testApi = function() {       
-        $('.api_diag_btn').attr('disabled','disabled');
-
-        for (var key in self.api_msg_keys) {
-            self.api_msg(self.api_msg_keys[key], 'verifyingapi', 'message', '');
-        }
+    self.testApi = function(check_key) {       
+        
 
         $.ajax({
-            url: self.www_root + '/local/xray/testapi.php',
+            url: self.www_root + '/local/xray/testapi.php?check='+check_key,
             success: function (data, status, xhr) {
-                var reasons = [], generalFail = false;
+                var generalFail = false;
                 if(data.error || data.debuginfo || data.errorcode || data.stacktrace) {
                     generalFail = true;
                     
@@ -91,42 +87,28 @@ function validate_api_aws_compress(YUI, data) {
                         return [self.strong(index) + '&nbsp;' + value];
                     });
                     var htmlData = self.htmlList(mappedData);
-                    
-                    for (var key in self.api_msg_keys) {
-                        var msg_key = self.api_msg_keys[key];
-                        reasons[msg_key] = {
-                            reasons: [self.serverTechMessage(msg_key, htmlData)]
-                        };
-                    }
-                } else {
-                    reasons = data;
+
+                    data.reasons = [self.serverTechMessage(check_key, htmlData)];
                 }
                 
-                for (var key in self.api_msg_keys) {
-                    var msg_key = self.api_msg_keys[key], msg_data = reasons[msg_key];
-                    if (msg_data && msg_data.success) {
-                        self.api_msg(msg_key, 'connectionverified', 'success');
-                    } else {
-                        var str_key = generalFail ? 'connectionstatusunknown' : 'connectionfailed';
-                        var alert_class = generalFail ? 'message' : 'problem';
-                        self.api_msg(msg_key, str_key, alert_class, null, msg_data ? msg_data.reasons : null);
-                    }
+                if (data && data.success) {
+                    self.api_msg(check_key, 'connectionverified', 'success');
+                } else {
+                    var str_key = generalFail ? 'connectionstatusunknown' : 'connectionfailed';
+                    var alert_class = generalFail ? 'message' : 'problem';
+                    self.api_msg(check_key, str_key, alert_class, null, data ? data.reasons : null);
                 }
 
-                $('.api_diag_btn').removeAttr('disabled');
-                self.applyServerInfoToggle();
+                self.applyServerInfoToggle(check_key);
             },
             error: function (xhr, status, err) {
-                for (var key in self.api_msg_keys) {
-                    var msg_key = self.api_msg_keys[key];
-                    self.api_msg(msg_key, 'connectionstatusunknown', 'message', null, [
-                        'Status: ' + status,
-                        'Error: ' + err,
-                        self.serverTechMessage(msg_key, xhr.responseText)
-                    ]);
-                }
-                $('.api_diag_btn').removeAttr('disabled');
-                self.applyServerInfoToggle();
+                self.api_msg(check_key, 'connectionstatusunknown', 'message', null, [
+                    'Status: ' + status,
+                    'Error: ' + err,
+                    self.serverTechMessage(check_key, xhr.responseText)
+                ]);
+
+                self.applyServerInfoToggle(check_key);
             }
         });
     };
@@ -142,7 +124,12 @@ function validate_api_aws_compress(YUI, data) {
             
             self.dialog.dialog('open');
             
-            self.testApi();
+            $('.api_diag_btn').attr('disabled','disabled');
+
+            for (var key in self.api_msg_keys) {
+                self.api_msg(self.api_msg_keys[key], 'verifyingapi', 'message', '');
+                self.testApi(self.api_msg_keys[key]);
+            }
         });
     };
 
@@ -156,6 +143,10 @@ function validate_api_aws_compress(YUI, data) {
             $(self.watch_fields[s]).change(function(e) {
                 $('.api_diag_btn').attr('disabled','disabled');
             });
+            
+            $(self.watch_fields[s]).keypress(function(e) {
+                $('.api_diag_btn').attr('disabled','disabled');
+            });
         }
     };
     
@@ -164,13 +155,13 @@ function validate_api_aws_compress(YUI, data) {
      *
      * @author David Castro
      */
-    self.applyServerInfoToggle = function() {
-        $('.xray_service_info_btn').click(function(e){
+    self.applyServerInfoToggle = function(check_key) {
+        $('#' + check_key).click(function(e){
             e.preventDefault();
-            $('#'+ this.id + '_txt').toggle();
+            $('#'+ check_key + '_txt').toggle();
         });
         
-        $('.xray_service_info_btn').css('color', '#FFF');
+        $('#' + check_key).css('color', '#FFF');
     };
     
     /**
