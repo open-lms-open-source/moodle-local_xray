@@ -39,8 +39,9 @@ $result = [];
 $checks = get_class_methods('local_xray\local\api\validationaws');
 $prefix = 'check_';
 
-if(isset($_GET['check'])){
-    $check_key = $_GET['check'];
+$check_key = optional_param('check', null, PARAM_ALPHANUMEXT);
+
+if(!empty($check_key)){
     $check_method = $prefix.$check_key;
     if(in_array($check_method, $checks)) {
         $check_result = local_xray\local\api\validationaws::{$check_method}();

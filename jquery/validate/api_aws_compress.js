@@ -99,6 +99,7 @@ function validate_api_aws_compress(YUI, data) {
                     self.api_msg(check_key, str_key, alert_class, null, data ? data.reasons : null);
                 }
 
+                $('.api_diag_btn').removeAttr('disabled');
                 self.applyServerInfoToggle(check_key);
             },
             error: function (xhr, status, err) {
@@ -107,7 +108,8 @@ function validate_api_aws_compress(YUI, data) {
                     'Error: ' + err,
                     self.serverTechMessage(check_key, xhr.responseText)
                 ]);
-
+                    
+                $('.api_diag_btn').removeAttr('disabled');
                 self.applyServerInfoToggle(check_key);
             }
         });
