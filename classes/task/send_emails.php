@@ -165,7 +165,7 @@ class send_emails extends scheduled_task {
                             if (isset($pdf) && $pdf instanceof \pdf) {
                                 // Close and output PDF document.
                                 $strfemaildate = get_string('strfemaildate', 'local_xray');
-                                $reportdate =  userdate(time(), $strfemaildate);
+                                $reportdate =  userdate(time(), $strfemaildate, 99, false);
                                 $filename = clean_param('XRAY_COURSE_'.$courseshortname.'_'.$reportdate.'.pdf', PARAM_FILE);
                                 $filecontent = $pdf->Output($filename, 'S');
                                 // Add as a temporary file.
