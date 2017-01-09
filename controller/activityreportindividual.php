@@ -53,6 +53,8 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                 array("controller" => "activityreport",
                     "courseid" => $this->courseid)));
         $PAGE->navbar->add($PAGE->title);
+
+        $this->validate_course();
         $this->addiconhelp();
 
         $output = '';

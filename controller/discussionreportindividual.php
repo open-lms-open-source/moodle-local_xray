@@ -53,6 +53,8 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
             new moodle_url('/local/xray/view.php',
                 array("controller" => "discussionreport", "courseid" => $this->courseid)));
         $PAGE->navbar->add($PAGE->title);
+
+        $this->validate_course();
         $this->addiconhelp();
 
         $output = "";

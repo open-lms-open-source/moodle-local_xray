@@ -600,3 +600,6 @@ $string['test_api_compress'] = 'Compression';
 $string['test_api_label'] = 'Validation';
 $string['test_api_description'] = 'Check <strong>saved parameters</strong> for connectivity or system issues';
 $string['validate_when'] = 'When';
+
+// Validate courses.
+$string['error_single_activity'] = 'Reports aren’t available for Single Activity Courses.';

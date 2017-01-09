@@ -607,3 +607,6 @@ $string['test_api_compress'] = 'Compresión';
 $string['test_api_label'] = 'Validación';
 $string['test_api_description'] = 'Validar <strong>parámetros guardados</strong> para encontrar problemas de conexión o del sistema.';
 $string['validate_when'] = 'Al';
+
+// Validate courses.
+$string['error_single_activity'] = 'Los reportes no están disponibles en los cursos con el formato de actividad individual.';

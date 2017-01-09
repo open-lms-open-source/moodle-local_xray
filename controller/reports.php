@@ -584,7 +584,6 @@ class local_xray_controller_reports extends mr_controller {
      * @param bool|false $inverted
      * @return float|string
      */
-
     public static function add_category ($value, $xraycategory, $percentage = false, $regularity = false, $inverted = false) {
         // Check if the value is a number.
         if (!isset($value) || !is_numeric(trim($value))) {
@@ -660,7 +659,6 @@ class local_xray_controller_reports extends mr_controller {
     /**
      * Print Footer.
      */
-
     public function print_footer() {
         parent::print_footer();
         // Call Report Viewed Event.
@@ -679,12 +677,26 @@ class local_xray_controller_reports extends mr_controller {
      * Trigger the report_viewed event when the user views a Report.
      * @param $data Array
      */
-
     public function trigger_report_viewed_event ($data) {
         // Only for non-ajax views.
         if (!defined(AJAX_SCRIPT) || !AJAX_SCRIPT) {
             $event = \local_xray\event\report_viewed::create($data);
             $event->trigger();
+        }
+    }
+
+    /**
+     * Validate if the course is available on X-Ray.
+     */
+    public function validate_course() {
+        global $OUTPUT, $COURSE;
+
+        // Validate if the course has the Single Activity format.
+        if (local_xray_single_activity_course($COURSE->id)) {
+            $this->print_header();
+            echo $OUTPUT->notification(get_string("error_single_activity", $this->component));
+            $this->print_footer();
+            die();
         }
     }
 }

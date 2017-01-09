@@ -104,6 +104,8 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
         }
         $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         $PAGE->navbar->add($PAGE->title);
+
+        $this->validate_course();
         $this->addiconhelp();
         $output = "";
 
