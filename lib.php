@@ -569,6 +569,7 @@ function local_xray_template_data($courseid, $userid){
 
         // Recommended Actions.
         $data->recommendationslist = '';
+        $data->recommendations = false;
         $data->recommendationspdf = $headlinedata->recommendations;
         if ($headlinedata->countrecommendations) {
             $data->recommendations = true;
