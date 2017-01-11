@@ -79,17 +79,18 @@ class local_xray_controller_courseselection extends mr_controller_admin {
         if (!$login_result) {
             global $OUTPUT;
             
-            $globalset_url = new moodle_url('/admin/settings.php',
+            $globalseturl = new moodle_url('/admin/settings.php',
                 array('section'         => self::PLUGIN.'_global'));
             
-            $globalset_link = '&nbsp;<a href="'.$globalset_url->out(false).'">'
+            $globalsetlink = '&nbsp;<a href="'.$globalseturl->out(false).'">'
                     .new lang_string('xray_check_global_settings_link', self::PLUGIN)
                     .'</a>';
             
             return $OUTPUT->notification(
                 new lang_string('xray_check_global_settings', self::PLUGIN)
-                .$globalset_link, 'warning');
+                .$globalsetlink, 'warning');
         }
+        
         
         $this->require_js_libs();
         
@@ -110,6 +111,13 @@ class local_xray_controller_courseselection extends mr_controller_admin {
                 $formVal[] = $selCourse->cid;
             }
             $toform->joined_courses = implode(',',$formVal);
+            $mform->set_data($toform);
+        } else if ($xrayids = \local_xray\local\api\course_manager::load_course_ids_from_xray()){
+            // If database is empty and courses are foung in X-Ray server, load them to the database.
+            \local_xray\local\api\course_manager::save_selected_courses($xrayids);
+
+            $toform = new stdClass();
+            $toform->joined_courses = implode(',',$xrayids);
             $mform->set_data($toform);
         }
         

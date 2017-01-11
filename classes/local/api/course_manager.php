@@ -157,8 +157,10 @@ abstract class course_manager {
      * Loads selected courses on X-Ray server
      * @return array
      */
-    private static function load_course_ids_from_xray() {
-        define('XRAY_OMIT_CACHE', true);
+    public static function load_course_ids_from_xray() {
+        if(!defined('XRAY_OMIT_CACHE')) {
+            define('XRAY_OMIT_CACHE', true);
+        }
         $xraycourses = wsapi::get_analysis_filter();
 
         return $xraycourses->filtervalue;
@@ -236,7 +238,9 @@ abstract class course_manager {
      * @throws \moodle_exception
      */
     private static function save_courses_to_xray() {
-        define('XRAY_OMIT_CACHE', true);
+        if(!defined('XRAY_OMIT_CACHE')) {
+            define('XRAY_OMIT_CACHE', true);
+        }
         $cids = self::list_selected_course_ids();
 
         $wsapires = wsapi::save_analysis_filter($cids);
