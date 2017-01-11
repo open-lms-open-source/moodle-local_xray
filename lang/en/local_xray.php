@@ -605,13 +605,12 @@ $string['courseselection'] = 'X-Ray Course Selection';
 
 // Courses
 $string['xraycourses'] = 'X-Ray Courses';
-$string['xraycourses_desc'] = 'Defines the specific courses in which X-Ray will be enabled';
-$string['xraycourses_instructions'] = 'The following list shows <strong><i>Categories</i></strong> and their associated <strong>Courses</strong> for usage with X-Ray Learning Analytics. You can expand each category to show its underlying elements. You can also select them as a whole or choose individual courses.';
-$string['xray_check_global_settings'] = 'Could not connect to X-Ray Learning Analytics Server.';
-$string['xray_check_global_settings_link'] = 'Please validate that moodle can connect before selecting the courses.';
+$string['xraycourses_instructions'] = 'Select from this list the <strong><i>Categories</i></strong> and <strong>Courses</strong> that you want to use with X-Ray Learning Analytics. Select a Category, if you want all of the associated courses to use X-Ray. Or expand a Category and select individual courses.';
+$string['xray_check_global_settings'] = 'Couldn\'t connect to X-Ray Learning Analytics Server.';
+$string['xray_check_global_settings_link'] = 'Please validate that X-Ray Learning Analytics Server is available before selecting the courses.';
 $string['xray_save_course_filter_error'] = 'There was an error saving the courses to X-Ray Learning Analytics server:<br />{$a}';
 $string['loading_please_wait'] = 'Loading. Please wait.';
-$string['warn_courses_do_not_match'] = 'X-Ray server selected courses do not match the courses which are selected here. You will overwrite X-Ray server analysis filter if you save your selection.';
+$string['warn_courses_do_not_match'] = 'The selected courses on the X-Ray server don\'t match the courses selected here. You will overwrite X-Ray server analysis filter if you save your selection.';
 
 // Course related messages
 $string['warn_course_disabled'] = 'This course is not enabled for X-Ray Learning Analytics usage. If you think it should be, contact your system administrator';
