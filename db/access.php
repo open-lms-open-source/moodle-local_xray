@@ -182,4 +182,13 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
+
+    // View Recommendations for Admin.
+    'local/xray:courseselection_view' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
 );

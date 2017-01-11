@@ -25,7 +25,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 define('AJAX_SCRIPT', true);
 define('NO_DEBUG_DISPLAY', true);
 
@@ -40,7 +39,7 @@ $checks = get_class_methods('local_xray\local\api\validationaws');
 $prefix = 'check_';
 
 foreach ($checks as $check) {
-    $check_result = local_xray\local\api\validationaws::{$check}();
+    $check_result = \local_xray\local\api\validationaws::{$check}();
     $api_msg_key = substr($check, strlen($prefix));
     if ($check_result === true) {
         $result[$api_msg_key] = ['success' => $check_result];

@@ -502,7 +502,7 @@ $string['xray_course_report_empty'] = 'No hay datos suficientes para este report
 $string['changesubscription'] = 'Cambie sus preferencias de suscripción';
 $string['coursesubscribe'] = 'Suscribirse a los reportes por correo electrónico de {$a}';
 $string['coursesubscribedesc'] = 'Usted recibirá un correo electrónico con el resumen de los datos de X-Ray';
-$string['email_log_desc'] = 'Correo electrónico enviado. ID de curso {$a->courseid} ID de usuario {$a->to}.';
+$string['email_log_desc'] = 'Correo electrónico enviado. ID de curso {$a->courseid} ID de usuario {$a->to}';
 $string['emailsubject'] = 'Resumen de informe de X-Ray para {$a}';
 $string['erroremailheadline'] = 'Error en el panel de datos destacados. No fue enviado el correo electrónico para el ID de curso {$a}';
 $string['profilelink'] = 'Suscripción global a X-Ray';
@@ -517,6 +517,7 @@ $string['globalsubon'] = 'Suscribirse a todos los cursos';
 $string['globalsuboff'] = 'Cancelar todas las suscripciones';
 $string['globalsubdesctitle'] = 'Seleccione la configuración para la suscripción global al resumen de X-Ray. '.
     'Puede decidir suscribirse para un curso o para todos los cursos.';
+
 $string['globalsubdescfirst'] = 'Si elige <b>Utilizar la configuración de suscripción a nivel de curso</b>, recibirá '.
     'el reporte resumen de X-Ray sólo para los cursos a los que está suscrito. Esta opción está seleccionada de '.
     'forma predeterminada.';
@@ -525,9 +526,6 @@ $string['globalsubdescsecond'] = 'Las opciones <b>Suscribirse a todos los cursos
     'para todos los cursos.';
 $string['subscriptiondisabled'] = 'Habilite esta configuración en la página de suscripción global de X-Ray. '.
     'Puede acceder a esta página utilice el enlace Suscripción global de X-Ray en su perfil. ';
-$string['xrayemaildate'] = 'Datos de X-Ray del {$a}';
-$string['pdfnotattached'] = 'El PDF no fue adjuntado.';
-$string['strfemaildate'] = '%d%m%Y';
 
 // Frequency control for emails.
 $string['daily'] = 'Diaria';
@@ -607,6 +605,3 @@ $string['test_api_compress'] = 'Compresión';
 $string['test_api_label'] = 'Validación';
 $string['test_api_description'] = 'Validar <strong>parámetros guardados</strong> para encontrar problemas de conexión o del sistema.';
 $string['validate_when'] = 'Al';
-
-// Validate courses.
-$string['error_single_activity'] = 'Los reportes no están disponibles en los cursos con el formato de actividad individual.';

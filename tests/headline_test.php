@@ -56,7 +56,6 @@ class local_xray_headline_testcase extends \advanced_testcase {
         set_config("xrayusername", "unittest", self::PLUGIN_NAME);
         set_config("xraypassword", 1234, self::PLUGIN_NAME);
         set_config("xrayclientid", "test", self::PLUGIN_NAME);
-
     }
 
     /**

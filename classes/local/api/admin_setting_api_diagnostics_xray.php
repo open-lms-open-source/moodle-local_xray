@@ -43,7 +43,7 @@ class admin_setting_api_diagnostics_xray extends \admin_setting_heading {
     public function __construct() {
         global $PAGE;
         
-        if($PAGE->pagetype === 'admin-setting-local_xray') {
+        if($PAGE->pagetype === 'admin-setting-local_xray_global') {
             $this->require_js_libs();
             $output = $this->print_html_output();
             parent::__construct('apidiagnostics', '', $output, '');

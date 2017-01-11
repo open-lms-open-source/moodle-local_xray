@@ -47,9 +47,14 @@ define('XRAYWEEKLY', 'weekly');
  * @throws coding_exception
  */
 function local_xray_navigationlinks(moodle_page $page, context $context) {
+    static $reports = null;
+    // Course selection check.
+    if (!\local_xray\local\api\course_manager::is_course_selected($page->course->id)) {
+        return $reports;
+    }
+
     // Small caching to prevent double calculation call since we need the same information in both calls.
     // The forums in home page should not display the X-ray link.
-    static $reports = null;
     if (!local_xray_is_course_enable() || ($reports !== null) || $page->course->format == "singleactivity" || ($context->contextlevel < CONTEXT_COURSE) ||
         ($page->course->id == SITEID) || !has_capability('local/xray:view', $context)) {
         return $reports;

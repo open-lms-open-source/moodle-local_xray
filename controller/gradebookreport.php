@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') or die();
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
+use local_xray\local\api\course_manager;
 
 /**
  * Xray integration Reports Controller
@@ -46,6 +47,9 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
         $output = '';
         try {
             if (has_capability("local/xray:gradebookreport_view", $this->get_context())) {
+                if (!course_manager::is_course_selected($this->courseid)) {
+                    return $this->output->notification(get_string('warn_course_disabled', 'local_xray'), 'notifymessage');
+                }
 
                 $report = "gradebook";
                 $response = \local_xray\local\api\wsapi::course($this->courseid, $report);

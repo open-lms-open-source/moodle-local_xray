@@ -66,10 +66,10 @@ abstract class validationaws {
 
         /** @var string[] $params */
         $params = [
-              'xrayusername'
+              'xrayurl'
+            , 'xrayusername'
             , 'xraypassword'
             , 'xrayclientid'
-            , 'xrayurl'
         ];
 
         foreach ($params as $property) {
@@ -82,14 +82,18 @@ abstract class validationaws {
             return $result;
         }
 
+        $cachetimeoutmng = new \stdClass();
+        $cachetimeoutmng->val = 0;
+        $cachetimeoutmng->changed = false;
         try {
             // Testing login
             $reason = get_string('error_wsapi_reason_login', wsapi::PLUGIN);
-            $reason_fields = ['xrayusername','xraypassword','xrayurl'];
+            $reason_fields = ['xrayurl','xrayusername','xraypassword'];
             
             // Omit cache for testing that login works
-            $cacheTimeout = get_config(wsapi::PLUGIN, 'curlcache');
+            $cachetimeoutmng->val = get_config(wsapi::PLUGIN, 'curlcache');
             set_config('curlcache', 0, wsapi::PLUGIN);
+            $cachetimeoutmng->changed = true;
             
             $loginRes = wsapi::login();
             if (!$loginRes) {
@@ -97,7 +101,8 @@ abstract class validationaws {
             }
             
             // Leave cache as it was before
-            set_config('curlcache', $cacheTimeout, wsapi::PLUGIN);
+            set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
+            $cachetimeoutmng->changed = false;
             
             // Testing the query endpoints
             $reason = get_string('error_wsapi_reason_accesstoken', wsapi::PLUGIN);
@@ -109,7 +114,7 @@ abstract class validationaws {
             
             // Testing login
             $reason = get_string('error_wsapi_reason_accountcheck', wsapi::PLUGIN);
-            $reason_fields = ['xrayusername','xraypassword','xrayurl'];
+            $reason_fields = ['xrayurl','xrayusername','xraypassword'];
             $accountchkRes = wsapi::accountcheck();
             if (!$accountchkRes) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
@@ -163,6 +168,10 @@ abstract class validationaws {
             $result[] = get_string("error_wsapi_exception",
                 wsapi::PLUGIN, $whenStr.validationaws::strong($reason).$break.$fields_title.$html_fields.
                 validationaws::service_info('ws_connect',$ex->getMessage()));
+            
+            if($cachetimeoutmng->changed) {
+                set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
+            }
         }
         
         if(!empty($result)) {
@@ -478,7 +487,7 @@ abstract class validationaws {
     private static function service_info($service, $str) {
         $response_title = get_string('validate_service_response', wsapi::PLUGIN);
         
-        return '<a id="'.$service.'" class="xray_service_info_btn" href>'.$response_title.'</a><br /><br />'
+        return '<br><a id="'.$service.'" class="xray_service_info_btn" href>'.$response_title.'</a><br /><br />'
                .'<div id="'.$service.'_txt"class="xray_service_info">'.$str.'</div>';
     }
 }

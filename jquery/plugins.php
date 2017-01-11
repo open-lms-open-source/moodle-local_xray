@@ -48,5 +48,14 @@ $plugins = array(
             'validate/api_aws_compress.css',
             'validate/api_aws_compress.js'
         )
+    ),
+    'local_xray-config_toggle_categories' => array(
+        'files' => array(
+            'validate/loader.css',
+            'config/CollapsibleLists.css',
+            'config/CollapsibleLists.js',
+            'config/toggle_categories.js'
+            
+        )
     )
 );

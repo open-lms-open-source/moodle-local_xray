@@ -58,6 +58,7 @@ $string['xray:risk_view'] = 'View Risk Status Report';
 $string['xray:subscription_view'] = 'Subscribe to email report';
 $string['xray:systemreports_view'] = 'View System Reports';
 $string['xray:teacherrecommendations_view'] = 'View Recommendations for Teacher';
+$string['xray:courseselection_view'] = 'X-Ray Course Selection';
 $string['xray:view'] = 'X-Ray Learning Analytics View';
 
 /* Categories for numbers values */
@@ -495,7 +496,7 @@ $string['xray_course_report_empty'] = 'There is not enough data for this report.
 $string['changesubscription'] = 'Change your subscription preferences';
 $string['coursesubscribe'] = 'Subscribe to the email reports for {$a}';
 $string['coursesubscribedesc'] = 'You will receive an email with the course X-Ray summary data';
-$string['email_log_desc'] = 'Email sent. Course ID {$a->courseid} User ID {$a->to}.';
+$string['email_log_desc'] = 'Email sent. Course ID {$a->courseid} User ID {$a->to}';
 $string['emailsubject'] = 'X-Ray Report Summary for {$a}';
 $string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course ID {$a}';
 $string['profilelink'] = 'X-Ray Global Subscription';
@@ -518,9 +519,6 @@ $string['globalsubdescsecond'] = 'The <b>Subscribe to all courses</b> and <b>Can
 $string['subscriptiondisabled'] = 'Enable this setting in the X-Ray Global Subscription page. You can access '.
     'this page using the link X-Ray Global Subscription from your profile.';
 $string['email_singleactivity'] = "Subscriptions aren't available for Single Activity Courses. No X-Ray alerts are emailed for this course.";
-$string['xrayemaildate'] = 'X-Ray data as of {$a}';
-$string['pdfnotattached'] = 'The PDF was not attached.';
-$string['strfemaildate'] = '%m%d%Y';
 
 // Frequency control for emails.
 $string['daily'] = 'Daily';
@@ -601,5 +599,19 @@ $string['test_api_label'] = 'Validation';
 $string['test_api_description'] = 'Check <strong>saved parameters</strong> for connectivity or system issues';
 $string['validate_when'] = 'When';
 
-// Validate courses.
-$string['error_single_activity'] = 'Reports aren’t available for Single Activity Courses.';
+// Settings page
+$string['global_settings'] = 'X-Ray Global Settings';
+$string['courseselection'] = 'X-Ray Course Selection';
+
+// Courses
+$string['xraycourses'] = 'X-Ray Courses';
+$string['xraycourses_desc'] = 'Defines the specific courses in which X-Ray will be enabled';
+$string['xraycourses_instructions'] = 'The following list shows <strong><i>Categories</i></strong> and their associated <strong>Courses</strong> for usage with X-Ray Learning Analytics. You can expand each category to show its underlying elements. You can also select them as a whole or choose individual courses.';
+$string['xray_check_global_settings'] = 'Could not connect to X-Ray Learning Analytics Server.';
+$string['xray_check_global_settings_link'] = 'Please validate that moodle can connect before selecting the courses.';
+$string['xray_save_course_filter_error'] = 'There was an error saving the courses to X-Ray Learning Analytics server:<br />{$a}';
+$string['loading_please_wait'] = 'Loading. Please wait.';
+$string['warn_courses_do_not_match'] = 'X-Ray server selected courses do not match the courses which are selected here. You will overwrite X-Ray server analysis filter if you save your selection.';
+
+// Course related messages
+$string['warn_course_disabled'] = 'This course is not enabled for X-Ray Learning Analytics usage. If you think it should be, contact your system administrator';

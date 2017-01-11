@@ -1328,8 +1328,9 @@ class data_export {
      * @param int    $timest
      * @param int    $timeend
      * @param string $dir
+     * @param bool   $disableTimeTrace
      */
-    public static function export_csv($timest, $timeend, $dir) {
+    public static function export_csv($timest, $timeend, $dir, $disableTimeTrace = false) {
         self::$meta = [];
         self::reset_counter_storage();
 
@@ -1415,7 +1416,9 @@ class data_export {
             self::export_metadata($dir);
         }
 
-        self::mtrace("Export data execution time: ".timer::end()." sec.");
+        if(!$disableTimeTrace) {
+            self::mtrace("Export data execution time: ".timer::end()." sec.");
+        }
     }
 
     /**
