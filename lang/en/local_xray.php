@@ -496,7 +496,7 @@ $string['xray_course_report_empty'] = 'There is not enough data for this report.
 $string['changesubscription'] = 'Change your subscription preferences';
 $string['coursesubscribe'] = 'Subscribe to the email reports for {$a}';
 $string['coursesubscribedesc'] = 'You will receive an email with the course X-Ray summary data';
-$string['email_log_desc'] = 'Email sent. Course ID {$a->courseid} User ID {$a->to}';
+$string['email_log_desc'] = 'Email sent. Course ID {$a->courseid} User ID {$a->to}.';
 $string['emailsubject'] = 'X-Ray Report Summary for {$a}';
 $string['erroremailheadline'] = 'Error with headline data. The email was not sent for Course ID {$a}';
 $string['profilelink'] = 'X-Ray Global Subscription';
@@ -519,6 +519,9 @@ $string['globalsubdescsecond'] = 'The <b>Subscribe to all courses</b> and <b>Can
 $string['subscriptiondisabled'] = 'Enable this setting in the X-Ray Global Subscription page. You can access '.
     'this page using the link X-Ray Global Subscription from your profile.';
 $string['email_singleactivity'] = "Subscriptions aren't available for Single Activity Courses. No X-Ray alerts are emailed for this course.";
+$string['xrayemaildate'] = 'X-Ray data as of {$a}';
+$string['pdfnotattached'] = 'The PDF was not attached.';
+$string['strfemaildate'] = '%m%d%Y';
 
 // Frequency control for emails.
 $string['daily'] = 'Daily';
