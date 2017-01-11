@@ -149,12 +149,12 @@ class dashboard {
                 $recommendationslist = array();
                 if ($userid) {
                     $addrecommendations = '';
-                    if (has_capability("local/xray:adminrecommendations_view", $context)) {
+                    if (has_capability("local/xray:adminrecommendations_view", $context, $userid)) {
                         $addrecommendations = self::XRAYRECOMMENDATIONADMIN;
                         if (local_xray_is_teacher_in_course($courseid, $userid)) {
                             $addrecommendations = self::XRAYRECOMMENDATIONALL;
                         }
-                    } else if (has_capability("local/xray:teacherrecommendations_view", $context) || local_xray_is_teacher_in_course($courseid, $userid)) {
+                    } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid) || local_xray_is_teacher_in_course($courseid, $userid)) {
                         $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
                     }
                     // Recommendations for Admin user..
