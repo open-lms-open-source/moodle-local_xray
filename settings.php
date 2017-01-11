@@ -209,7 +209,7 @@ if ($hassiteconfig) {
         $urlsystemreports = new moodle_url('/local/xray/view.php', array("controller" => "systemreports"));
         $ADMIN->add('local_xray_report', new admin_externalpage('systemreports',
             new lang_string('systemreports', $plugin),
-            $urlsystemreports->out(false)));
+            $urlsystemreports->out(false), 'local/xray:systemreports_view'));
     }
 
 
