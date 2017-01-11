@@ -140,6 +140,8 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $PAGE->navbar->add($title);
         $this->heading->text = $title;
 
+        $this->validate_course();
+
         try{
             $response = \local_xray\local\api\wsapi::report_accessibility($this->reportid, $this->elementname);
             if (!$response) {
