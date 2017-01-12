@@ -301,7 +301,7 @@ class local_xray_controller_reports extends mr_controller {
         $sortorder = optional_param('sSortDir_0', 'asc', PARAM_ALPHA); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", 'id', PARAM_TEXT); // Get column name.
 
-        $return = "";
+        $return = [];
         try {
             $response = \local_xray\local\api\wsapi::courseelement($this->courseid,
                 $reportelement,
