@@ -24,8 +24,9 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var admin_root $ADMIN */
 if ($hassiteconfig) {
+    global $CFG;
+    /* @noinspection PhpIncludeInspection */
     require_once($CFG->dirroot.'/local/xray/lib.php');
     $plugin = 'local_xray';
     $settings = new admin_settingpage($plugin, new lang_string('pluginname', $plugin));
@@ -193,25 +194,29 @@ if ($hassiteconfig) {
 
     $settings->add(new \local_xray\local\api\admin_setting_api_diagnostics_xray());
 
+    /** @var admin_root $ADMIN */
     $ADMIN->add('localplugins', $settings);
 
+}
 
+// This has to be outside of global if so that we can permit non admin users to see this.
+if (has_capability('local/xray:systemreports_view', context_system::instance())) {
     // Get the URL.
-    $systemreportsurl  = get_config('local_xray', 'systemreportsurl');
-    if ($systemreportsurl !== false && $systemreportsurl !== '' && local_xray_is_course_enable() &&
-            has_capability("local/xray:systemreports_view", context_system::instance())) {
-
+    $showsystemreport = !empty(get_config('local_xray', 'systemreportsurl'));
+    if ($showsystemreport) {
         // Add tree X-ray -> Rebuke List to show in reports.
         $ADMIN->add('reports',
-            new admin_category('local_xray_report', new lang_string('pluginname', $plugin))
+            new admin_category('local_xray_report', new lang_string('pluginname', 'local_xray'))
         );
         // Add System Reports.
-        $urlsystemreports = new moodle_url('/local/xray/view.php', array("controller" => "systemreports"));
-        $ADMIN->add('local_xray_report', new admin_externalpage('systemreports',
-            new lang_string('systemreports', $plugin),
-            $urlsystemreports->out(false), 'local/xray:systemreports_view'));
+        $urlsystemreports = new moodle_url('/local/xray/view.php', ['controller' => 'systemreports']);
+        $ADMIN->add('local_xray_report',
+            new admin_externalpage(
+                'systemreports',
+                new lang_string('systemreports', 'local_xray'),
+                $urlsystemreports->out(false),
+                'local/xray:systemreports_view'
+            )
+        );
     }
-
-
-
 }
