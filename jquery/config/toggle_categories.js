@@ -12,13 +12,14 @@ function config_toggle_categories(YUI, data) {
     var catPrefix = '#cat_';
     var coursePrefix = '#id_courses_';
     var joinedInputName = 'joined_courses';
-    var idSubmitBtn = '#id_submitbutton'
+    var idSubmitBtn = '#id_submitbutton';
 
     // Get values from backend
     var json_data = JSON.parse(data);
     self.lang_strs = json_data.lang_strs;
     self.www_root = json_data.www_root;
     self.cats = json_data.categories;
+    self.sesskey = json_data.sesskey;
     
     // Self properties
     self.selection = [];
@@ -248,26 +249,42 @@ function config_toggle_categories(YUI, data) {
         
         $.when (
             $.ajax({
-                url: self.www_root + '/local/xray/view.php?controller=courseapi&action=listcategories&categoryid='+cat.id,
+                url: self.www_root + '/lib/ajax/service.php?sesskey='+self.sesskey,
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify([{
+                    index: 0,
+                    methodname: 'local_xray_category_list',
+                    args: {
+                        categoryid: cat.id
+                    }
+                }]),
                 success: function (data, status, xhr) {
-                    var res = JSON.parse(data);
-                    if(!res || res.length === 0)
+                    if(!data || data.length === 0)
                         return;
 
-                    cat.categories = res;
+                    cat.categories = data[0].data;
                 },
                 error: function (xhr, status, err) {
                     cat.loaded = false;
                 }
             }),
             $.ajax({
-                url: self.www_root + '/local/xray/view.php?controller=courseapi&action=listcourses&categoryid='+cat.id,
+                url: self.www_root + '/lib/ajax/service.php?sesskey='+self.sesskey,
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify([{
+                    index: 0,
+                    methodname: 'local_xray_course_list',
+                    args: {
+                        categoryid: cat.id
+                    }
+                }]),
                 success: function (data, status, xhr) {
-                    var res = JSON.parse(data);
-                    if(!res || res.length === 0)
+                    if(!data || data.length === 0)
                         return;
 
-                    cat.courses = res;
+                    cat.courses = data[0].data;
                 },
                 error: function (xhr, status, err) {
                     cat.loaded = false;

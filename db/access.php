@@ -183,7 +183,7 @@ $capabilities = array(
         )
     ),
 
-    // View Recommendations for Admin.
+    // View course selection
     'local/xray:courseselection_view' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,

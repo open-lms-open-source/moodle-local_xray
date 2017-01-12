@@ -65,7 +65,8 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             'lang_strs' => array(
                 'loading_please_wait' => new lang_string('loading_please_wait', self::PLUGIN)
             ),
-            'www_root' => $CFG->wwwroot
+            'www_root' => $CFG->wwwroot,
+            'sesskey' => sesskey()
         );
         $strdata = array(json_encode($data));
         $PAGE->requires->js_init_call('config_toggle_categories', $strdata);
