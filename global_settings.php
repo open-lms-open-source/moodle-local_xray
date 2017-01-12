@@ -24,8 +24,9 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var admin_root $ADMIN */
 if ($hassiteconfig) {
+    global $CFG;
+    /* @noinspection PhpIncludeInspection */
     require_once($CFG->dirroot.'/local/xray/lib.php');
     $plugin = 'local_xray';
     
@@ -195,6 +196,7 @@ if ($hassiteconfig) {
 
     $settings->add(new \local_xray\local\api\admin_setting_api_diagnostics_xray());
 
+    /** @var admin_root $ADMIN */
     $ADMIN->add($plugin, $settings);
 
 }
