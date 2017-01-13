@@ -29,6 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
 use local_xray\event\get_report_failed;
+use local_xray\local\api\course_manager;
 /**
  * Xray integration Accessible data
  * Show accessible data for each graph in each report.
@@ -140,6 +141,9 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $PAGE->navbar->add($title);
         $this->heading->text = $title;
 
+        if (!course_manager::is_course_selected($this->courseid)) {
+            return $this->output->notification(get_string('warn_course_disabled', 'local_xray'), 'notifymessage');
+        }
         $this->validate_course();
 
         try{

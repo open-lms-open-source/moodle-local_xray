@@ -42,15 +42,14 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     public function view_action() {
 
+        if (!course_manager::is_course_selected($this->courseid)) {
+            return $this->output->notification(get_string('warn_course_disabled', 'local_xray'), 'notifymessage');
+        }
         $this->validate_course();
         $this->addiconhelp();
         $output = '';
         try {
             if (has_capability("local/xray:gradebookreport_view", $this->get_context())) {
-                if (!course_manager::is_course_selected($this->courseid)) {
-                    return $this->output->notification(get_string('warn_course_disabled', 'local_xray'), 'notifymessage');
-                }
-
                 $report = "gradebook";
                 $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
