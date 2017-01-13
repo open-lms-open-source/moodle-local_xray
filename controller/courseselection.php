@@ -27,6 +27,9 @@ defined('MOODLE_INTERNAL') || die();
 /* @var stdClass $CFG */
 require_once($CFG->libdir.'/adminlib.php');
 
+use local_xray\local\api\wsapi;
+use local_xray\local\api\course_manager;
+
 /**
  * Xray course selection controller
  *
@@ -65,8 +68,7 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             'lang_strs' => array(
                 'loading_please_wait' => new lang_string('loading_please_wait', self::PLUGIN)
             ),
-            'www_root' => $CFG->wwwroot,
-            'sesskey' => sesskey()
+            'www_root' => $CFG->wwwroot
         );
         $strdata = array(json_encode($data));
         $PAGE->requires->js_init_call('config_toggle_categories', $strdata);
@@ -76,75 +78,71 @@ class local_xray_controller_courseselection extends mr_controller_admin {
      * 
      */
     public function view_action() {
-        $login_result = \local_xray\local\api\wsapi::login();
+        global $CFG, $DB, $OUTPUT;
+        
+        $login_result = wsapi::login();
         if (!$login_result) {
-            global $OUTPUT;
-            
-            $globalseturl = new moodle_url('/admin/settings.php',
-                array('section'         => self::PLUGIN.'_global'));
-            
-            $globalsetlink = '&nbsp;<a href="'.$globalseturl->out(false).'">'
-                    .new lang_string('xray_check_global_settings_link', self::PLUGIN)
-                    .'</a>';
-            
             return $OUTPUT->notification(
                 new lang_string('xray_check_global_settings', self::PLUGIN)
                 .$globalsetlink, 'warning');
         }
-        
-        
+
         $this->require_js_libs();
-        
-        global $CFG, $DB, $OUTPUT;
-        $saved = optional_param('saved', 0, PARAM_INT);
-        
-        $selcourTable = 'local_xray_selectedcourse';
 
-        require_once($CFG->dirroot.'/local/xray/lib.php');
-        require_once($CFG->dirroot.'/local/xray/courseselectionform.php');
+        try {
+            $saved = optional_param('saved', 0, PARAM_INT);
         
-        // Prepare the form
-        $mform = new courseselection_form($this->url);
-        if ($currentvalue = $DB->get_records($selcourTable)) {
-            $toform = new stdClass();
-            $formVal = array();
-            foreach ($currentvalue as $selCourse) {
-                $formVal[] = $selCourse->cid;
-            }
-            $toform->joined_courses = implode(',',$formVal);
-            $mform->set_data($toform);
-        } else if ($xrayids = \local_xray\local\api\course_manager::load_course_ids_from_xray()){
-            // If database is empty and courses are foung in X-Ray server, load them to the database.
-            \local_xray\local\api\course_manager::save_selected_courses($xrayids);
+            $selcourTable = 'local_xray_selectedcourse';
 
-            $toform = new stdClass();
-            $toform->joined_courses = implode(',',$xrayids);
-            $mform->set_data($toform);
-        }
-        
-        if ($fromform = $mform->get_data()) {
-            $courseselection = array();
-            if($fromform->joined_courses && $fromform->joined_courses !== '') {
-                $courseselection = explode(',',$fromform->joined_courses);
+            require_once($CFG->dirroot.'/local/xray/lib.php');
+            require_once($CFG->dirroot.'/local/xray/courseselectionform.php');
+
+            // Prepare the form
+            $mform = new courseselection_form($this->url);
+            if ($currentvalue = $DB->get_records($selcourTable)) {
+                $toform = new stdClass();
+                $formVal = array();
+                foreach ($currentvalue as $selCourse) {
+                    $formVal[] = $selCourse->cid;
+                }
+                $toform->joined_courses = implode(',',$formVal);
+                $mform->set_data($toform);
+            } else if ($xrayids = course_manager::load_course_ids_from_xray()){
+                // If database is empty and courses are foung in X-Ray server, load them to the database.
+                \local_xray\local\api\course_manager::save_selected_courses($xrayids);
+
+                $toform = new stdClass();
+                $toform->joined_courses = implode(',',$xrayids);
+                $mform->set_data($toform);
             }
-            
-            \local_xray\local\api\course_manager::save_selected_courses($courseselection);
-            
-            $this->url->param('action', 'view');
-            $this->url->param('saved', 1);
-            redirect($this->url);
+
+            if ($fromform = $mform->get_data()) {
+                $courseselection = array();
+                if($fromform->joined_courses && $fromform->joined_courses !== '') {
+                    $courseselection = explode(',',$fromform->joined_courses);
+                }
+
+                course_manager::save_selected_courses($courseselection);
+
+                $this->url->param('action', 'view');
+                $this->url->param('saved', 1);
+                redirect($this->url);
+            }
+
+            // Print all output
+            $output = '';
+            if ($saved) {
+                $output .= $OUTPUT->notification(get_string('changessaved'), 'notifysuccess');
+            }
+            if (!course_manager::courses_match()) {
+                $output .= $OUTPUT->notification(get_string('warn_courses_do_not_match', 'local_xray'), 'notifymessage');
+            }
+            $output .= $mform->render();
+            return $this->output->box($output, 'boxwidthwide');
+        } catch (\Exception $exc) {
+            global $OUTPUT;
+            return $OUTPUT->notification($exc->getMessage(), 'notificationerror');
         }
-        
-        // Print all output
-        $output = '';
-        if ($saved) {
-            $output .= $OUTPUT->notification(get_string('changessaved'), 'notifysuccess');
-        }
-        if (!\local_xray\local\api\course_manager::courses_match()) {
-            $output .= $OUTPUT->notification(get_string('warn_courses_do_not_match', 'local_xray'), 'notifymessage');
-        }
-        $output .= $mform->render();
-        return $this->output->box($output, 'boxwidthwide');
     }
     
 }

@@ -32,6 +32,8 @@ defined('MOODLE_INTERNAL') || die();
  * @package local_xray
  */
 abstract class course_manager {
+    
+    const PLUGIN = 'local_xray';
 
     /**
      * Retrieve the available courses for usage with X-Ray
@@ -156,19 +158,28 @@ abstract class course_manager {
     /**
      * Loads selected courses on X-Ray server
      * @return array
+     * @throws \moodle_exception
      */
     public static function load_course_ids_from_xray() {
         if(!defined('XRAY_OMIT_CACHE')) {
             define('XRAY_OMIT_CACHE', true);
         }
-        $xraycourses = wsapi::get_analysis_filter();
+        
+        $res = array();
+        
+        if ($xraycourses = wsapi::get_analysis_filter()) {
+            $res = $xraycourses->filtervalue;
+        } else {
+            throw new \moodle_exception(self::generate_xray_conn_error_text());
+        }
 
-        return $xraycourses->filtervalue;
+        return $res;
     }
 
     /**
      * Verifies if courses in X-Ray match courses selected in moodle
      * @return boolean
+     * @throws \moodle_exception
      */
     public static function courses_match() {
         $cids = self::list_selected_course_ids();
@@ -255,6 +266,22 @@ abstract class course_manager {
                     get_string('xray_save_course_filter_error', 'local_xray',
                     get_string('error_xray', 'local_xray')));
         }
+    }
+    
+    /**
+     * Generates X-Ray connection error text
+     * @return string Text with a connection error to X-Ray
+     */
+    public static function generate_xray_conn_error_text() {
+        $globalseturl = new \moodle_url('/admin/settings.php',
+            array('section'         => self::PLUGIN.'_global'));
+            
+        $globalsetlink = '&nbsp;<a href="'.$globalseturl->out(false).'">'
+            .new \lang_string('xray_check_global_settings_link', self::PLUGIN)
+            .'</a>';
+
+        return new \lang_string('xray_check_global_settings', self::PLUGIN)
+            .$globalsetlink;
     }
 
 }
