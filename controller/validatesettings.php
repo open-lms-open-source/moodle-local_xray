@@ -64,12 +64,12 @@ class local_xray_controller_validatesettings extends mr_controller {
      */
     public function check_action() {
         $this->define_json_headers();
-        
-        $check_key = required_param('check', PARAM_ALPHANUMEXT);
+
+        $checkkey = required_param('check', PARAM_ALPHANUMEXT);
         $checks = get_class_methods('local_xray\local\api\validationaws');
         $prefix = 'check_';
-        
-        $checkmethod = $prefix.$check_key;
+
+        $checkmethod = $prefix.$checkkey;
         if(in_array($checkmethod, $checks)) {
             $checkresult = validationaws::{$checkmethod}();
             echo $this->process_response($checkresult);

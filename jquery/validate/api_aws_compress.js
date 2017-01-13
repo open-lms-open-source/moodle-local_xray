@@ -78,6 +78,7 @@ function validate_api_aws_compress(YUI, data) {
 
         $.ajax({
             url: self.www_root + '/local/xray/view.php?controller=validatesettings&action=check&check='+check_key,
+            dataType: 'json',
             success: function (data, status, xhr) {
                 var generalFail = false;
                 if(data.error || data.debuginfo || data.errorcode || data.stacktrace) {
