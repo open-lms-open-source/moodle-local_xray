@@ -49,7 +49,7 @@ class local_xray_api_validationaws_testcase extends local_xray_base_testcase {
         \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com', 'user-accountcheck-final.json');
         \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo', 'domain-final.json');
         \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo/course', 'courses-final.json');
-        $this->assertTrue( \local_xray\local\api\validationaws::check_ws_connect() );
+        $this->assertTrue( \local_xray\local\api\validationaws::check_ws_connect()->is_successful() );
     }
 
     /**
@@ -60,7 +60,7 @@ class local_xray_api_validationaws_testcase extends local_xray_base_testcase {
         $this->config_set_ok();
         // Tell the cache to load specific fixture for login url.
         \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-fail-final.json');
-        $result = \local_xray\local\api\validationaws::check_ws_connect();
+        $result = \local_xray\local\api\validationaws::check_ws_connect()->get_result();
         $this->assertRegexp( '/'.get_string('error_wsapi_reason_login', self::PLUGIN).'/', $result[0]);
     }
 
