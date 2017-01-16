@@ -410,9 +410,7 @@ function local_xray_template_data($courseid, $userid){
         $linksnum = array('title' => get_string('link_gotoreport', 'local_xray'), 'style' => 'text-decoration: none; color: #777777; font-weight: bolder;');
         $gotoreport = array('title' => get_string('link_gotoreport', 'local_xray'));
         $reporticonpdf = array('width' => '37px');
-        $reporticon = array('width' => '39px');
         $reporticonarrowpdf = array('width' => '25px');
-        $reporticonarrow = array('width' => '31px');
         $reportdata = array('style' => 'color:#777777;font-weight:bolder;font-size:20px;');
 
         // Add report date.
@@ -422,7 +420,7 @@ function local_xray_template_data($courseid, $userid){
         // Icon and link.
         $xrayriskicon = local_xray_get_email_icons('xray-risk');
         $data->riskiconpdf = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'), $reporticonpdf);
-        $data->riskicon = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'), $reporticon);
+        $data->riskicon = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'));
 
         $riskurl = new moodle_url("/local/xray/view.php",
             array("controller" => "risk", "courseid" => $courseid, "action" => "view"));
@@ -442,7 +440,7 @@ function local_xray_template_data($courseid, $userid){
 
         $xrayriskarrow = local_xray_get_email_icons($statusclassrisk[2]);
         $data->riskarrowpdf = html_writer::img($xrayriskarrow, $statusclassrisk[1], $reporticonarrowpdf);
-        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1], $reporticonarrow);
+        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1]);
         $data->riskarrow = html_writer::link($riskarrowurl, $riskarrow, $gotoreport);
 
         // Number for risk.
@@ -466,8 +464,7 @@ function local_xray_template_data($courseid, $userid){
         $xrayactivityicon = local_xray_get_email_icons('xray-activity');
         $data->activityiconpdf = html_writer::img($xrayactivityicon, get_string('activityreport', 'local_xray'),
             $reporticonpdf);
-        $data->activityicon = html_writer::img($xrayactivityicon, get_string('activityreport', 'local_xray'),
-            $reporticon);
+        $data->activityicon = html_writer::img($xrayactivityicon, get_string('activityreport', 'local_xray'));
 
         $activityurl = new moodle_url("/local/xray/view.php",
             array("controller" => "activityreport", "courseid" => $courseid, "action" => "view"));
@@ -487,7 +484,7 @@ function local_xray_template_data($courseid, $userid){
 
         $xrayactivityarrow = local_xray_get_email_icons($statusclassactivity[2]);
         $data->activityarrowpdf = html_writer::img($xrayactivityarrow, $statusclassactivity[1], $reporticonarrowpdf);
-        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1], $reporticonarrow);
+        $activityarrow = html_writer::img($xrayactivityarrow, $statusclassactivity[1]);
         $data->activityarrow = html_writer::link($activityarrowurl, $activityarrow, $gotoreport);
 
         $a = new stdClass();
@@ -510,7 +507,7 @@ function local_xray_template_data($courseid, $userid){
         $xraygradeicon = local_xray_get_email_icons('xray-grade');
         $data->gradebookiconpdf = html_writer::img($xraygradeicon, get_string('gradebookreport', 'local_xray'),
             $reporticonpdf);
-        $data->gradebookicon = html_writer::img($xraygradeicon, get_string('gradebookreport', 'local_xray'), $reporticon);
+        $data->gradebookicon = html_writer::img($xraygradeicon, get_string('gradebookreport', 'local_xray'));
 
         $gradebookurl = new moodle_url("/local/xray/view.php",
             array("controller" => "gradebookreport", "courseid" => $courseid, "action" => "view"));
@@ -527,7 +524,7 @@ function local_xray_template_data($courseid, $userid){
 
         $xraygradebookarrow = local_xray_get_email_icons($statusclass[2]);
         $data->gradebookarrowpdf = html_writer::img($xraygradebookarrow, $statusclass[1], $reporticonarrowpdf);
-        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1], $reporticonarrow);
+        $gradebookarrow = html_writer::img($xraygradebookarrow, $statusclass[1]);
         $data->gradebookarrow = html_writer::link($gradebookarrowurl, $gradebookarrow, $gotoreport);
 
         $data->gradebooknumberpdf = html_writer::span(get_string('headline_number_percentage', 'local_xray',
@@ -542,8 +539,7 @@ function local_xray_template_data($courseid, $userid){
         $xraydiscussionsicon = local_xray_get_email_icons('xray-discussions');
         $data->discussioniconpdf = html_writer::img($xraydiscussionsicon, get_string('discussionreport', 'local_xray'),
             $reporticonpdf);
-        $data->discussionicon = html_writer::img($xraydiscussionsicon, get_string('discussionreport', 'local_xray'),
-            $reporticon);
+        $data->discussionicon = html_writer::img($xraydiscussionsicon, get_string('discussionreport', 'local_xray'));
 
         $discussionurl = new moodle_url("/local/xray/view.php",
             array("controller" => "discussionreport", "courseid" => $courseid, "action" => "view"));
@@ -560,7 +556,7 @@ function local_xray_template_data($courseid, $userid){
 
         $xraydiscussionsarrow = local_xray_get_email_icons($statusclassdiscussion[2]);
         $data->discussionarrowpdf = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1], $reporticonarrowpdf);
-        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1], $reporticonarrow);
+        $discussionarrow = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1]);
         $data->discussionarrow = html_writer::link($discussionarrowurl, $discussionarrow, $gotoreport);
         $data->discussiondatapdf = html_writer::span($headlinedata->postslastsevendays, '', $reportdata);
         $data->discussiondata = html_writer::link($discussionarrowurl, $headlinedata->postslastsevendays, $linksnum);
@@ -787,7 +783,7 @@ function local_xray_get_email_icons($imagename) {
     if (isset($cfgxray->iconsurl)) {
         $baseurl = $cfgxray->iconsurl;
     }
-    return sprintf('%s/pix/%s', $baseurl, $imagename);
+    return sprintf('%s/pix/1/%s', $baseurl, $imagename);
 }
 
 /**
