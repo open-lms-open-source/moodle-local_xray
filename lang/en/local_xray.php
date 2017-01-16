@@ -562,6 +562,7 @@ $string['error_awssync_config_awssecret'] = 'AWS Secret is empty';
 $string['error_awssync_config_s3bucket'] = 'S3 bucket is empty';
 $string['error_awssync_config_s3bucketregion'] = 'S3 region is empty';
 $string['error_awssync_config_s3protocol'] = 'Upload protocol is empty';
+$string['error_awssync_config_s3uploadretry'] = 'Upload retry is empty';
 $string['error_awssync_exception'] = 'Error while communicating with AWS server: {$a}';
 
 // Config validation error reasons
