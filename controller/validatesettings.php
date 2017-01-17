@@ -80,15 +80,15 @@ class local_xray_controller_validatesettings extends mr_controller {
     
     /**
      * Processes a response for this service
-     * @param type $res
+     * @param \local_xray\local\api\validationresponse $res
      */
     private function process_response($res) {
         $result = array();
-        if ($res === true) {
-            $result['success'] = $res;
+        if ($res->is_successful()) {
+            $result['success'] = true;
         } else {
             $result['success'] = false;
-            $result['reasons'] = $res;
+            $result['reasons'] = $res->get_result();
         }
         return json_encode($result);
     }
