@@ -224,12 +224,6 @@ abstract class validationaws {
             return $awsres;
         }
 
-        $cachetimeoutmng = new \stdClass();
-        $cachetimeoutmng->val = 0;
-        $cachetimeoutmng->changed = false;
-        // Omit cache for testing that AWS S3 works.
-        $cachetimeoutmng->val = get_config(wsapi::PLUGIN, 'curlcache');
-        set_config('curlcache', 0, wsapi::PLUGIN);
         try {
             /* @noinspection PhpIncludeInspection */
             require_once($CFG->dirroot . "/local/xray/lib/vendor/aws/aws-autoloader.php");
@@ -257,13 +251,14 @@ abstract class validationaws {
             /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
             /* @noinspection PhpUndefinedClassInspection */
             $task = new \local_xray\task\data_sync();
-            $location = $task->get_storageprefix()."{$config->xrayusername}/";
+            $location = $task->get_storageprefix()."{$config->xrayclientid}/";
             $objectKey = $location.'sample.test.upload.txt';
             $objectContent = "sample test: ".md5(uniqid(rand(), true));
 
             // Testing AWS object listing
             $awsres->set_reason(get_string('error_aws_reason_object_list', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('awskey','awssecret','s3bucket','s3bucketregion','s3protocol','s3uploadretry'));
+            $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
+                    's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
             // Try to list the directory and get no more than 1 items to speed things up.
             // It does not matter if there are no objects, we are checking the access rights here.
             $objects = $s3->listObjects(
@@ -279,7 +274,8 @@ abstract class validationaws {
 
             // Now we try to upload simple file.
             $awsres->set_reason(get_string('error_aws_reason_upload_file', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('awskey','awssecret','s3bucket','s3bucketregion','s3protocol','s3uploadretry'));
+            $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
+                    's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
             $uploadfile = tmpfile();
             if ($uploadfile !== false) {
                 fwrite($uploadfile, $objectContent);
@@ -303,7 +299,8 @@ abstract class validationaws {
 
             // Now we try to download simple file.
             $awsres->set_reason(get_string('error_aws_reason_download_file', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('awskey','awssecret','s3bucket','s3bucketregion','s3protocol','s3uploadretry'));
+            $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
+                    's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
             $awsObject = $s3->getObject(array(
                 'Bucket' => $config->s3bucket,
                 'Key'    => $objectKey
@@ -319,7 +316,8 @@ abstract class validationaws {
 
             // Now we try to erase simple file.
             $awsres->set_reason(get_string('error_aws_reason_erase_file', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('awskey','awssecret','s3bucket','s3bucketregion','s3protocol','s3uploadretry'));
+            $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
+                    's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
             $delResult = $s3->deleteObject(array(
                 'Bucket' => $config->s3bucket,
                 'Key'    => $objectKey
@@ -336,8 +334,6 @@ abstract class validationaws {
         } catch (\Exception $ex) {
             $awsres->register_error('awssync',$ex->getMessage());
         }
-        // Reenable cache.
-        set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
 
         if($awsres->is_successful() && !$awsres->is_finished()) {
             $awsres->register_error('awssync');
