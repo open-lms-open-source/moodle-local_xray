@@ -224,6 +224,12 @@ abstract class validationaws {
             return $awsres;
         }
 
+        $cachetimeoutmng = new \stdClass();
+        $cachetimeoutmng->val = 0;
+        $cachetimeoutmng->changed = false;
+        // Omit cache for testing that AWS S3 works.
+        $cachetimeoutmng->val = get_config(wsapi::PLUGIN, 'curlcache');
+        set_config('curlcache', 0, wsapi::PLUGIN);
         try {
             /* @noinspection PhpIncludeInspection */
             require_once($CFG->dirroot . "/local/xray/lib/vendor/aws/aws-autoloader.php");
@@ -330,6 +336,8 @@ abstract class validationaws {
         } catch (\Exception $ex) {
             $awsres->register_error('awssync',$ex->getMessage());
         }
+        // Reenable cache.
+        set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
 
         if($awsres->is_successful() && !$awsres->is_finished()) {
             $awsres->register_error('awssync');

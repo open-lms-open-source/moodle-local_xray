@@ -18,7 +18,6 @@ function validate_api_aws_compress(YUI, data) {
     
     // Initialize
     self.init = function() {
-        
         for(var key in self.watch_fields) {
             self.watch_fields[key] = '#id_s_local_xray_' + self.watch_fields[key];
         }
@@ -72,10 +71,10 @@ function validate_api_aws_compress(YUI, data) {
 
     /**
      * Test api.
+     * @param string check_key
+     * @param function callback
      */
-    self.testApi = function(check_key) {       
-        
-
+    self.testApi = function(check_key, callback) {
         $.ajax({
             url: self.www_root + '/local/xray/view.php?controller=validatesettings&action=check&check='+check_key,
             dataType: 'json',
@@ -91,7 +90,7 @@ function validate_api_aws_compress(YUI, data) {
 
                     data.reasons = [self.serverTechMessage(check_key, htmlData)];
                 }
-                
+
                 if (data && data.success) {
                     self.api_msg(check_key, 'connectionverified', 'success');
                 } else {
@@ -100,8 +99,8 @@ function validate_api_aws_compress(YUI, data) {
                     self.api_msg(check_key, str_key, alert_class, null, data ? data.reasons : null);
                 }
 
-                $('.api_diag_btn').removeAttr('disabled');
                 self.applyServerInfoToggle(check_key);
+                callback();
             },
             error: function (xhr, status, err) {
                 self.api_msg(check_key, 'connectionstatusunknown', 'message', null, [
@@ -109,31 +108,49 @@ function validate_api_aws_compress(YUI, data) {
                     'Error: ' + err,
                     self.serverTechMessage(check_key, xhr.responseText)
                 ]);
-                    
-                $('.api_diag_btn').removeAttr('disabled');
+
                 self.applyServerInfoToggle(check_key);
+                callback();
             }
         });
     };
 
     /**
      * Apply listener for api test button.
-     *
      * @author David Castro
      */
     self.applyClickApiTest = function() {
+        var enableValidateButton = function(){
+            $('.api_diag_btn').removeAttr('disabled');
+        };
+        
         $('.api_diag_btn').click(function(e){
             e.preventDefault();
             
             self.dialog.dialog('open');
             
             $('.api_diag_btn').attr('disabled','disabled');
-
-            for (var key in self.api_msg_keys) {
-                self.api_msg(self.api_msg_keys[key], 'verifyingapi', 'message', '');
-                self.testApi(self.api_msg_keys[key]);
+            
+            for (var i = 0; i < self.api_msg_keys.length; i++) {
+                self.api_msg(self.api_msg_keys[i], 'verifyingapi', 'message', '');
             }
+            self.executeApiTest(0, enableValidateButton);
         });
+    };
+
+    /**
+     * Recursively execute api tests from idx onwards.
+     * @param {int} idx
+     * @param {function} callback
+     */
+    self.executeApiTest = function(idx, callback) {
+        if(idx < self.api_msg_keys.length) {
+            self.testApi(self.api_msg_keys[idx], function(){
+                self.executeApiTest(idx + 1, callback);
+            });
+        } else {
+            callback();
+        }
     };
 
     /**
