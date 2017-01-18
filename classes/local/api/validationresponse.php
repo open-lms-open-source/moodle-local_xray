@@ -37,15 +37,19 @@ class validationresponse {
     private $reason;
     private $reasonfields;
     private $checkkey;
+    private $steps;
+    private $currStep;
 
     /**
      * Constructor method
      */
-    public function __construct($checkkey) {
+    public function __construct($checkkey, $steps) {
         $this->result = array();
         $this->reason = '';
         $this->reasonfields = array();
         $this->checkkey = $checkkey;
+        $this->steps = $steps;
+        $this->currStep = 0;
     }
 
     public function add_result($res) {
@@ -66,6 +70,14 @@ class validationresponse {
 
     public function set_reason($reason) {
         $this->reason = $reason;
+    }
+    
+    public function step() {
+        $this->currStep ++;
+    }
+
+    public function is_finished() {
+        return $this->currStep === $this->steps;
     }
 
     /**
@@ -98,6 +110,7 @@ class validationresponse {
 
     /**
      * Wraps string with a div html tag with a serviceinfo class
+     * @param string $service
      * @param string $str
      */
     private function service_info($service, $str) {
@@ -107,15 +120,23 @@ class validationresponse {
                .'<div id="'.$service.'_txt"class="xray_service_info">'.$str.'</div>';
     }
 
-    public function register_error($exkey, $message) {
+    /**
+     * Registers an error based on step and optional message
+     * @param string $exkey
+     * @param string $message
+     */
+    public function register_error($exkey, $message = null) {
         $break = '<br />';
         $colon = ': ';
+        $numStep = $this->currStep + 1;
+        $stepsstr = "($numStep/$this->steps)";
         $htmlfields = $this->list_fields($this->reasonfields);
         $whenstr = get_string('validate_when', wsapi::PLUGIN).' ';
         $fieldstitle = get_string('validate_check_fields', wsapi::PLUGIN).$colon.$break;
+        $msgstr = $this->service_info($this->checkkey, isset($message) ? $message : $stepsstr);
 
         $this->add_result(get_string("error_".$exkey."_exception",
-            wsapi::PLUGIN, $whenstr.$this->strong($this->reason).$break.$fieldstitle.$htmlfields.
-            $this->service_info($this->checkkey, $message)));
+            wsapi::PLUGIN, $whenstr.$this->strong($this->reason).$break
+            .$fieldstitle.$htmlfields.$msgstr));
     }
 }

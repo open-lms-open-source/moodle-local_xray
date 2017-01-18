@@ -50,7 +50,8 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_ws_connect() {
-        $wsapires = new validationresponse('ws_connect');
+        $wsapisteps = 5;
+        $wsapires = new validationresponse('ws_connect', $wsapisteps);
 
         $config = get_config('local_xray');
         if (empty($config)) {
@@ -98,6 +99,9 @@ abstract class validationaws {
             set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
             $cachetimeoutmng->changed = false;
 
+            // Increase step.
+            $wsapires->step();
+
             // Testing the query endpoints
             $wsapires->set_reason(get_string('error_wsapi_reason_accesstoken', wsapi::PLUGIN));
             $wsapires->set_reason_fields(array('xrayurl','xrayclientid'));
@@ -105,6 +109,8 @@ abstract class validationaws {
             if (!$tokenRes) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
+            // Increase step.
+            $wsapires->step();
 
             // Testing login
             $wsapires->set_reason(get_string('error_wsapi_reason_accountcheck', wsapi::PLUGIN));
@@ -113,6 +119,8 @@ abstract class validationaws {
             if (!$accountchkRes) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
+            // Increase step.
+            $wsapires->step();
 
             $wsapires->set_reason(get_string('error_wsapi_reason_domaininfo', wsapi::PLUGIN));
             $wsapires->set_reason_fields(array('xrayurl','xrayclientid'));
@@ -147,6 +155,8 @@ abstract class validationaws {
                     throw new \moodle_exception($error);
                 }
             }
+            // Increase step.
+            $wsapires->step();
 
             $wsapires->set_reason(get_string('error_wsapi_reason_courses', wsapi::PLUGIN));
             $wsapires->set_reason_fields(array('xrayurl','xrayclientid'));
@@ -154,6 +164,8 @@ abstract class validationaws {
             if(!$coursesRes) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
+            // Increase step.
+            $wsapires->step();
 
         } catch (\Exception $ex) {
             $wsapires->register_error('wsapi',$ex->getMessage());
@@ -161,6 +173,10 @@ abstract class validationaws {
             if($cachetimeoutmng->changed) {
                 set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
             }
+        }
+
+        if($wsapires->is_successful() && !$wsapires->is_finished()) {
+            $wsapires->register_error('wsapi');
         }
 
         return $wsapires;
@@ -178,7 +194,8 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_s3_bucket() {
-        $awsres = new validationresponse('s3_bucket');
+        $awssteps = 5;
+        $awsres = new validationresponse('s3_bucket', $awssteps);
 
         global $CFG;
         $config = get_config('local_xray');
@@ -228,6 +245,8 @@ abstract class validationaws {
                     ]
                 ]
             );
+            // Increase step.
+            $awsres->step();
 
             /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
             /* @noinspection PhpUndefinedClassInspection */
@@ -249,6 +268,8 @@ abstract class validationaws {
                 ]
             );
             ($objects);
+            // Increase step.
+            $awsres->step();
 
             // Now we try to upload simple file.
             $awsres->set_reason(get_string('error_aws_reason_upload_file', wsapi::PLUGIN));
@@ -271,6 +292,8 @@ abstract class validationaws {
             } else {
                 throw new \moodle_exception("Unable to create temporary file!");
             }
+            // Increase step.
+            $awsres->step();
 
             // Now we try to download simple file.
             $awsres->set_reason(get_string('error_aws_reason_download_file', wsapi::PLUGIN));
@@ -285,6 +308,8 @@ abstract class validationaws {
             } else if($awsObject['Body'] != $objectContent) {
                 throw new \moodle_exception("S3 bucket corrupt.");
             }
+            // Increase step.
+            $awsres->step();
 
             // Now we try to erase simple file.
             $awsres->set_reason(get_string('error_aws_reason_erase_file', wsapi::PLUGIN));
@@ -298,10 +323,16 @@ abstract class validationaws {
 
             if ($delMetadata['statusCode'] !== 204) {
                 throw new \moodle_exception("Deletion on S3 bucket failed!");
-            } 
+            }
+            // Increase step.
+            $awsres->step();
 
         } catch (\Exception $ex) {
             $awsres->register_error('awssync',$ex->getMessage());
+        }
+
+        if($awsres->is_successful() && !$awsres->is_finished()) {
+            $awsres->register_error('awssync');
         }
 
         return $awsres;
@@ -319,7 +350,8 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_compress() {
-        $compressres = new validationresponse('compress');
+        $compresssteps = 0;
+        $compressres = new validationresponse('compress', $compresssteps);
         
         $config = get_config('local_xray');
         if (empty($config)) {
