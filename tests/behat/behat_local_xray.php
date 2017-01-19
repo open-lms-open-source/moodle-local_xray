@@ -247,7 +247,6 @@ class behat_local_xray extends behat_base {
      * Test the info message when the email feature is disabled.
      *
      * @Given /^I test xray email alerts turned off$/
-     * @param string $shortname
      * @return void
      */
     public function i_test_xray_email_alerts_turned_off() {
