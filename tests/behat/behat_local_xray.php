@@ -242,4 +242,30 @@ class behat_local_xray extends behat_base {
         $record->format = $format;
         $DB->update_record('course', $record);
     }
+
+    /**
+     * Test the info message when the email feature is disabled.
+     *
+     * @Given /^I test xray email alerts turned off$/
+     * @param string $shortname
+     * @return void
+     */
+    public function i_test_xray_email_alerts_turned_off() {
+
+        $admincontext = behat_context_helper::get('behat_admin');
+        $generalcontext = behat_context_helper::get('behat_general');
+
+        $table = new \Behat\Gherkin\Node\TableNode([['emailfrequency', 'weekly', 'local_xray']]);
+        $admincontext->the_following_config_values_are_set_as_admin($table);
+        $generalcontext->reload();
+        $generalcontext->assert_page_not_contains_text(get_string('emailsdisabled', 'local_xray'));
+        $table = new \Behat\Gherkin\Node\TableNode([['emailfrequency', 'never', 'local_xray']]);
+        $admincontext->the_following_config_values_are_set_as_admin($table);
+        $generalcontext->reload();
+        $generalcontext->assert_page_contains_text(get_string('emailsdisabled', 'local_xray'));
+        $table = new \Behat\Gherkin\Node\TableNode([['emailfrequency', 'daily', 'local_xray']]);
+        $admincontext->the_following_config_values_are_set_as_admin($table);
+        $generalcontext->reload();
+        $generalcontext->assert_page_not_contains_text(get_string('emailsdisabled', 'local_xray'));
+    }
 }
