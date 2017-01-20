@@ -258,6 +258,20 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         // Xray savepoint reached.
         upgrade_plugin_savepoint(true, 2015070337, 'local', 'xray');
     }
+    
+    if ($oldversion < 2015070342) {
+        $table = new xmldb_table('local_xray_selectedcourse');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('cid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_subscribe.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        upgrade_plugin_savepoint(true, 2015070342, 'local', 'xray');
+    }
 
     return true;
 }

@@ -146,7 +146,7 @@ class auto_clean {
         foreach ($objects as $name => $object) {
             $res[] = $name;
         }
-        
+
         return $res;
     }
 

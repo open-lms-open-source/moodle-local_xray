@@ -58,6 +58,7 @@ $string['xray:risk_view'] = 'View Risk Status Report';
 $string['xray:subscription_view'] = 'Subscribe to email report';
 $string['xray:systemreports_view'] = 'View System Reports';
 $string['xray:teacherrecommendations_view'] = 'View Recommendations for Teacher';
+$string['xray:courseselection_view'] = 'X-Ray Course Selection';
 $string['xray:view'] = 'X-Ray Learning Analytics View';
 
 /* Categories for numbers values */
@@ -606,3 +607,19 @@ $string['validate_when'] = 'When';
 
 // Validate courses.
 $string['error_single_activity'] = 'Reports aren’t available for Single Activity Courses.';
+
+// Settings page
+$string['global_settings'] = 'X-Ray Global Settings';
+$string['courseselection'] = 'X-Ray Course Selection';
+
+// Courses
+$string['xraycourses'] = 'X-Ray Courses';
+$string['xraycourses_instructions'] = 'Select from this list the <strong><i>Categories</i></strong> and <strong>Courses</strong> that you want to use with X-Ray Learning Analytics. Select a Category, if you want all of the associated courses to use X-Ray. Or expand a Category and select individual courses.';
+$string['xray_check_global_settings'] = 'Couldn\'t connect to X-Ray Learning Analytics Server.';
+$string['xray_check_global_settings_link'] = 'Please validate that X-Ray Learning Analytics Server is available before selecting the courses.';
+$string['xray_save_course_filter_error'] = 'There was an error saving the courses to X-Ray Learning Analytics server:<br />{$a}';
+$string['loading_please_wait'] = 'Loading. Please wait.';
+$string['warn_courses_do_not_match'] = 'The selected courses on the X-Ray server don\'t match the courses selected here. You will overwrite X-Ray server analysis filter if you save your selection.';
+
+// Course related messages
+$string['warn_course_disabled'] = 'This course is not enabled for X-Ray Learning Analytics usage. If you think it should be, contact your system administrator';

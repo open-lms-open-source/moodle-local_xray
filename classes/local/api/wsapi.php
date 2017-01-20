@@ -255,6 +255,36 @@ abstract class wsapi {
     }
 
     /**
+     * Generic http post call
+     * @param type $url
+     * @param type $postdata
+     * @return boolean
+     */
+    protected static function generic_postcall($url, $postdata) {
+        if (empty($url)) {
+            return false;
+        }
+
+        if (!xrayws::instance()->hascookie()) {
+            if (!self::login()) {
+                return false;
+            }
+        }
+
+        $result = xrayws::instance()->post_withcookie($url, [], [], $postdata);
+        if ($result) {
+            $data = json_decode(xrayws::instance()->lastresponse());
+            if ($data === false) {
+                return array('ok' => false, 'error' => xrayws::instance()->lastresponse());
+            }
+            $result = $data;
+        }
+
+        return $result;
+    }
+
+
+    /**
      *
      * @param null|int $start
      * @param null|int $count
@@ -536,4 +566,45 @@ abstract class wsapi {
 
         return $result;
     }
+   
+    /**
+     * Save the courses filter value for analysis.
+     * 
+     * @param string[] $cids
+     * @return boolean
+     */
+    public static function save_analysis_filter($cids) {
+        if (defined('BEHAT_SITE_RUNNING')) {
+            $res = (object) array('ok' => true);
+            return $res;
+        }
+
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
+            return false;
+        }
+        $url = sprintf('%s/%s/analysisfilter/course', $baseurl, $domain);
+
+        $postdata = '{ "enabled" : ['.implode(',', $cids).']}';
+
+        return self::generic_postcall($url, $postdata);
+    }
+    
+    /**
+     * Get the courses filter value for analysis.
+     * 
+     * @return boolean|array False if there was an issue, array with courses otherwise
+     */
+    public static function get_analysis_filter() {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
+            return false;
+        }
+        $url = sprintf('%s/%s/analysisfilter/course', $baseurl, $domain);
+
+        return self::generic_getcall($url);
+    }
+
 }

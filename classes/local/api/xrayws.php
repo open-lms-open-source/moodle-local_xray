@@ -351,7 +351,7 @@ class xrayws {
         );
         $fullopts = $options + $useopts;
         $curlopts = $this->getopts($fullopts);
-        if ($ret = $this->cache->get($url)) {
+        if (!defined('XRAY_OMIT_CACHE') && $ret = $this->cache->get($url)) {
             $this->rawresponse = $ret;
             return true;
         }
@@ -404,7 +404,7 @@ class xrayws {
                 }
             }
 
-            if ($response) {
+            if ($response && !defined('XRAY_OMIT_CACHE')) {
                 $this->cache->set($url, $this->rawresponse);
             }
         }
@@ -639,9 +639,14 @@ class xrayws {
      * @param string $url
      * @param array $custheaders
      * @param array $options
+     * @param string $postdata
      * @return mixed
      */
-    public function post_withcookie($url, array $custheaders = array(), array $options = array()) {
+    public function post_withcookie($url, array $custheaders = array(), array $options = array(), $postdata = null) {
+        if (isset($postdata)) {
+            $options[CURLOPT_POSTFIELDS] = $postdata;
+        }
+
         return $this->request_withcookie($url, self::HTTP_POST, $custheaders, $options);
     }
 

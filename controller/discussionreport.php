@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 /* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
+use local_xray\local\api\course_manager;
 
 /**
  * Xray integration Reports Controller
@@ -56,6 +57,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     public function view_action() {
 
+        if (!course_manager::is_course_selected($this->courseid)) {
+            return $this->output->notification(get_string('warn_course_disabled', 'local_xray'), 'notifymessage');
+        }
         $this->validate_course();
         $this->addiconhelp();
         $output = '';
@@ -63,7 +67,6 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         try {
 
             if (has_capability("local/xray:discussionreport_view", $ctx)) {
-
                 $report = "discussion";
                 $response = \local_xray\local\api\wsapi::course($this->courseid, $report);
                 if (!$response) {
