@@ -60,6 +60,9 @@ Feature: Global and course level subscription pages.
     And "#id_subscribe" "css_element" should exist
     And I click on "id_subscribe" "checkbox"
     And I press "Save changes"
+    And I wait until the page is ready
+    And ".alert.alert-success" "css_element" should exist
+    And I should see "Changes saved"
     And I switch to the main window
     And I reload the page
     And ".xray_subscription_link" "css_element" should exist
@@ -75,6 +78,9 @@ Feature: Global and course level subscription pages.
     And I test xray email alerts turned off
     And I select "Subscribe to all courses" from the "id_type" singleselect
     And I press "Save changes"
+    And I wait until the page is ready
+    And ".alert.alert-success" "css_element" should exist
+    And I should see "Changes saved"
     # Course level subscription. Course level subscriptions is disabled.
     And I switch to "_xray_course_subscription" window
     And I reload the page
@@ -85,6 +91,9 @@ Feature: Global and course level subscription pages.
     And I switch to the main window
     And I select "Use course level subscription settings" from the "id_type" singleselect
     And I press "Save changes"
+    And I wait until the page is ready
+    And ".alert.alert-success" "css_element" should exist
+    And I should see "Changes saved"
     # Course level subscription. Course level subscription is enabled.
     And I switch to "_xray_course_subscription" window
     And I reload the page
@@ -95,6 +104,9 @@ Feature: Global and course level subscription pages.
     And I switch to the main window
     And I select "Cancel all subscriptions" from the "id_type" singleselect
     And I press "Save changes"
+    And I wait until the page is ready
+    And ".alert.alert-success" "css_element" should exist
+    And I should see "Changes saved"
     # Course level subscription. Course level subscriptions is disabled.
     And I switch to "_xray_course_subscription" window
     And I reload the page
