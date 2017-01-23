@@ -48,20 +48,24 @@ Feature: Global and course level subscription pages.
   @javascript
   Scenario: Teacher sees global and course level subscription.
     Given I log in as "teacher1"
-    # Course level subscription.
+    # Course level subscription. Subscribe to a course. The link in the course should change from
+    # "Subscribe to email report" to "Unsubscribe from email report".
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
+    And ".xray_subscription_link" "css_element" should exist
     And I follow "Subscribe to email report"
     And I switch to "_xray_course_subscription" window
     And I test xray email alerts turned off
+    And "#id_subscribe" "css_element" should exist
     And I click on "id_subscribe" "checkbox"
     And I press "Save changes"
     And I switch to the main window
     And I reload the page
+    And ".xray_subscription_link" "css_element" should exist
     And I should not see "Subscribe to email report"
     And I should see "Unsubscribe from email report"
-    # Global Subscription.
+    # Global Subscription. Subscribe to all courses from Global subscription page.
     And I switch to the main window
     And I am on site homepage
     And I follow "Profile" in the user menu
@@ -71,28 +75,31 @@ Feature: Global and course level subscription pages.
     And I test xray email alerts turned off
     And I select "Subscribe to all courses" from the "id_type" singleselect
     And I press "Save changes"
-    # Course level subscription.
+    # Course level subscription. Course level subscriptions is disabled.
     And I switch to "_xray_course_subscription" window
     And I reload the page
     And the "id_subscribe" "checkbox" should be disabled
+    And ".alert.alert-info" "css_element" should exist
     And I should see "Enable this setting in the X-Ray Global Subscription page. You can access this page using the link X-Ray Global Subscription from your profile."
-    # Global Subscription.
+    # Global Subscription. Change to "Use course level subscription settings" option.
     And I switch to the main window
     And I select "Use course level subscription settings" from the "id_type" singleselect
     And I press "Save changes"
-    # Course level subscription.
+    # Course level subscription. Course level subscription is enabled.
     And I switch to "_xray_course_subscription" window
     And I reload the page
     And the "id_subscribe" "checkbox" should be enabled
+    And ".alert.alert-info" "css_element" should not exist
     And I should not see "Enable this setting in the X-Ray Global Subscription page. You can access this page using the link X-Ray Global Subscription from your profile."
-    # Global Subscription.
+    # Global Subscription. Change to "Cancel all subscriptions" option.
     And I switch to the main window
     And I select "Cancel all subscriptions" from the "id_type" singleselect
     And I press "Save changes"
-    # Course level subscription.
+    # Course level subscription. Course level subscriptions is disabled.
     And I switch to "_xray_course_subscription" window
     And I reload the page
     And the "id_subscribe" "checkbox" should be disabled
+    And ".alert.alert-info" "css_element" should exist
     And I should see "Enable this setting in the X-Ray Global Subscription page. You can access this page using the link X-Ray Global Subscription from your profile."
 
   @javascript
@@ -102,6 +109,7 @@ Feature: Global and course level subscription pages.
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
+    And ".xray_subscription_link" "css_element" should not exist
     And I should not see "Subscribe to email report"
     And I should not see "Unsubscribe from email report"
     # Global Subscription.

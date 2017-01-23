@@ -257,14 +257,17 @@ class behat_local_xray extends behat_base {
         $table = new \Behat\Gherkin\Node\TableNode([['emailfrequency', 'weekly', 'local_xray']]);
         $admincontext->the_following_config_values_are_set_as_admin($table);
         $generalcontext->reload();
+        $generalcontext->should_not_exist('.alert.alert-info', 'css_element');
         $generalcontext->assert_page_not_contains_text(get_string('emailsdisabled', 'local_xray'));
         $table = new \Behat\Gherkin\Node\TableNode([['emailfrequency', 'never', 'local_xray']]);
         $admincontext->the_following_config_values_are_set_as_admin($table);
         $generalcontext->reload();
+        $generalcontext->should_exist('.alert.alert-info', 'css_element');
         $generalcontext->assert_page_contains_text(get_string('emailsdisabled', 'local_xray'));
         $table = new \Behat\Gherkin\Node\TableNode([['emailfrequency', 'daily', 'local_xray']]);
         $admincontext->the_following_config_values_are_set_as_admin($table);
         $generalcontext->reload();
+        $generalcontext->should_not_exist('.alert.alert-info', 'css_element');
         $generalcontext->assert_page_not_contains_text(get_string('emailsdisabled', 'local_xray'));
     }
 }
