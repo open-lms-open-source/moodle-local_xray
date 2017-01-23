@@ -612,9 +612,13 @@ $string['error_single_activity'] = 'Reports aren’t available for Single Activi
 $string['global_settings'] = 'X-Ray Global Settings';
 $string['courseselection'] = 'X-Ray Course Selection';
 
+// Default X-Ray controller error
+$string['noxraydefcontroller'] = 'You have manually entered to this page. This location is not available. Please go back or browse the menu to arrive to your desired location.';
+$string['error_xray_unknown'] = 'X-Ray server didn\'t respond with something that could be processed. Please, ensure your X-Ray server credentials allow the analysis filter to be set. If error persists, contact your systema administrator.';
+
 // Courses
 $string['xraycourses'] = 'X-Ray Courses';
-$string['xraycourses_instructions'] = 'Select from this list the <strong><i>Categories</i></strong> and <strong>Courses</strong> that you want to use with X-Ray Learning Analytics. Select a Category, if you want all of the associated courses to use X-Ray. Or expand a Category and select individual courses.';
+$string['xraycourses_instructions'] = 'Select from this list the Categories and Courses that you want to use with X-Ray Learning Analytics. Select a Category, if you want all of the associated courses to use X-Ray. Or expand a Category and select individual courses.';
 $string['xray_check_global_settings'] = 'Couldn\'t connect to X-Ray Learning Analytics Server.';
 $string['xray_check_global_settings_link'] = 'Please validate that X-Ray Learning Analytics Server is available before selecting the courses.';
 $string['xray_save_course_filter_error'] = 'There was an error saving the courses to X-Ray Learning Analytics server:<br />{$a}';
