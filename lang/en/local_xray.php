@@ -614,7 +614,7 @@ $string['courseselection'] = 'X-Ray Course Selection';
 
 // Default X-Ray controller error
 $string['noxraydefcontroller'] = 'You have manually entered to this page. This location is not available. Please go back or browse the menu to arrive to your desired location.';
-$string['error_xray_unknown'] = 'X-Ray server didn\'t respond with something that could be processed. Please, ensure your X-Ray server credentials allow the analysis filter to be set. If error persists, contact your systema administrator.';
+$string['error_xray_unknown'] = 'X-Ray server didn\'t respond with something that could be processed. Please, ensure your X-Ray server credentials allow the analysis filter to be set. If error persists, contact your systems administrator.';
 
 // Courses
 $string['xraycourses'] = 'X-Ray Courses';

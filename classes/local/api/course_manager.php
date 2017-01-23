@@ -256,12 +256,14 @@ abstract class course_manager {
 
         $wsapires = wsapi::save_analysis_filter($cids);
         if ($wsapires !== false) {
-            if ($wsapires->ok) {
+            if (isset($wsapires->ok)) {
                 return true;
             } else {
-                $error = $wsapires->error;
-                if (!$error) {
-                    $error = get_string('error_xray_unknown', self::PLUGIN);
+                $error = get_string('error_xray_unknown', self::PLUGIN);
+                if (isset($wsapires->error)) {
+                    $error = $wsapires->error;
+                } else if (isset($wsapires)) {
+                    $error = $wsapires;
                 }
                 throw new \moodle_exception(get_string('xray_save_course_filter_error', self::PLUGIN, $error));
             }
