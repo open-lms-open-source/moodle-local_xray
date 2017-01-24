@@ -658,7 +658,7 @@ class local_xray_renderer extends plugin_renderer_base {
                         $subscription_link = html_writer::link($subscriptionurl, $subscriptionstring,
                             array("class" => "xray_subscription_link",
                                 "title" => get_string('changesubscription', 'local_xray'),
-                                "target" => "_blank"));
+                                "target" => "_xray_course_subscription"));
                     }
 
                 }
