@@ -244,12 +244,12 @@ class behat_local_xray extends behat_base {
     }
 
     /**
-     * Test the info message when the email feature is disabled.
+     * Test the info message when the email feature are turned off.
      *
-     * @Given /^I test xray email alerts turned off$/
+     * @Given /^Xray email alerts are turned off$/
      * @return void
      */
-    public function i_test_xray_email_alerts_turned_off() {
+    public function xray_email_alerts_are_turned_off() {
 
         $admincontext = behat_context_helper::get('behat_admin');
         $generalcontext = behat_context_helper::get('behat_general');
