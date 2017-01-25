@@ -256,7 +256,7 @@ abstract class course_manager {
 
         $wsapires = wsapi::save_analysis_filter($cids);
         if ($wsapires !== false) {
-            if (isset($wsapires->ok)) {
+            if (!empty($wsapires->ok)) {
                 return true;
             } else {
                 $error = get_string('error_xray_unknown', self::PLUGIN);
