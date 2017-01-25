@@ -238,8 +238,8 @@ function config_toggle_categories(YUI, data) {
         }
     };
     
-    self.loadCategory = function(cat, callback = null) {
-        if(cat.loaded) {
+    self.loadCategory = function(cat, callback) {
+        if (cat.loaded) {
             if(callback) callback();
             return;
         }

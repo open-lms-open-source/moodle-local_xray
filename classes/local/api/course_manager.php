@@ -256,15 +256,21 @@ abstract class course_manager {
 
         $wsapires = wsapi::save_analysis_filter($cids);
         if ($wsapires !== false) {
-            if ($wsapires->ok) {
+            if (!empty($wsapires->ok)) {
                 return true;
             } else {
-                throw new \moodle_exception(get_string('xray_save_course_filter_error', 'local_xray', $wsapires->error));
+                $error = get_string('error_xray_unknown', self::PLUGIN);
+                if (isset($wsapires->error)) {
+                    $error = $wsapires->error;
+                } else if (isset($wsapires)) {
+                    $error = $wsapires;
+                }
+                throw new \moodle_exception(get_string('xray_save_course_filter_error', self::PLUGIN, $error));
             }
         } else {
             throw new \moodle_exception(
-                    get_string('xray_save_course_filter_error', 'local_xray',
-                    get_string('error_xray', 'local_xray')));
+                    get_string('xray_save_course_filter_error', self::PLUGIN,
+                    get_string('error_xray', self::PLUGIN)));
         }
     }
     
@@ -274,14 +280,14 @@ abstract class course_manager {
      */
     public static function generate_xray_conn_error_text() {
         $globalseturl = new \moodle_url('/admin/settings.php',
-            array('section'         => self::PLUGIN.'_global'));
+                array('section'         => self::PLUGIN.'_global'));
             
         $globalsetlink = '&nbsp;<a href="'.$globalseturl->out(false).'">'
-            .new \lang_string('xray_check_global_settings_link', self::PLUGIN)
-            .'</a>';
+                .new \lang_string('xray_check_global_settings_link', self::PLUGIN)
+                .'</a>';
 
         return new \lang_string('xray_check_global_settings', self::PLUGIN)
-            .$globalsetlink;
+                .$globalsetlink;
     }
 
 }

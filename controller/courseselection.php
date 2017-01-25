@@ -48,7 +48,7 @@ class local_xray_controller_courseselection extends mr_controller_admin {
     protected function init() {
         $this->heading->set('courseselection');
     }
-    
+
     /**
      * 
      */
@@ -82,12 +82,17 @@ class local_xray_controller_courseselection extends mr_controller_admin {
         
         $login_result = wsapi::login();
         if (!$login_result) {
-            return $OUTPUT->notification(
-                new lang_string('xray_check_global_settings', self::PLUGIN)
-                .$globalsetlink, 'warning');
-        }
+            $globalseturl = new \moodle_url('/admin/settings.php',
+                    array('section' => self::PLUGIN.'_global'));
 
-        $this->require_js_libs();
+            $globalsetlink = '&nbsp;<a href="'.$globalseturl->out(false).'">'
+                    .new \lang_string('xray_check_global_settings_link', self::PLUGIN)
+                    .'</a>';
+
+            return $OUTPUT->notification(
+                    new lang_string('xray_check_global_settings', self::PLUGIN)
+                    .$globalsetlink, 'warning');
+        }
 
         try {
             $saved = optional_param('saved', 0, PARAM_INT);
@@ -129,7 +134,7 @@ class local_xray_controller_courseselection extends mr_controller_admin {
                 redirect($this->url);
             }
 
-            // Print all output
+            // Print all output.
             $output = '';
             if ($saved) {
                 $output .= $OUTPUT->notification(get_string('changessaved'), 'notifysuccess');
@@ -138,10 +143,10 @@ class local_xray_controller_courseselection extends mr_controller_admin {
                 $output .= $OUTPUT->notification(get_string('warn_courses_do_not_match', 'local_xray'), 'notifymessage');
             }
             $output .= $mform->render();
+            $this->require_js_libs(); // Require js libs if everything worked out alright.
             return $this->output->box($output, 'boxwidthwide');
         } catch (\Exception $exc) {
-            global $OUTPUT;
-            return $OUTPUT->notification($exc->getMessage(), 'notificationerror');
+            return $this->output->box($OUTPUT->notification($exc->getMessage(), 'notificationerror'));
         }
     }
     

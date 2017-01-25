@@ -46,6 +46,8 @@ class xrayws {
     const PLUGIN       = 'local_xray';
     const COOKIE       = 'local_xray_cookie';
 
+    const STR_HTTP     = 'HTTP'; // Raw HTTP response parsing.
+
     /**
      * @var null|xrayws
      */
@@ -363,7 +365,15 @@ class xrayws {
         $rawresponse = $this->memfile->get_content();
         $this->memfile->close();
         if (!empty($rawresponse)) {
-            list($this->respheaders, $this->rawresponse) = explode("\r\n\r\n", $rawresponse, 2);
+            $responselist = explode("\r\n\r\n", $rawresponse);
+            // Get last header and response.
+            foreach ($responselist as $responseval) {
+                if(strpos($responseval, self::STR_HTTP) === 0) {
+                    $this->respheaders = $responseval;
+                } else {
+                    $this->rawresponse = $responseval;
+                }
+            }
         }
         if ($response) {
             $httpcode = isset($this->curlinfo['http_code']) ? $this->curlinfo['http_code'] : false;
