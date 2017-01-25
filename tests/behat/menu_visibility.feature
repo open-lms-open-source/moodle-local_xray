@@ -48,15 +48,15 @@ Feature: The tree menu xray will visible or not in each place.
     And I log in as "user2teacher"
     And I am on site homepage
     And I follow "Course1"
-    Then I should <vis> "X-Ray Learning Analytics" in the "Administration" "block"
+    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
   Examples:
-  | format         | vis     |
-  | singleactivity | not see |
-  | weeks          | see     |
+  | format         | vis        |
+  | singleactivity | should not |
+  | weeks          | should     |
 
   @javascript @local_xray_menu_visibility_courses_format_students
   Scenario: Menu xray will not visible for students in courses.
     Given I log in as "user1student"
     And I am on site homepage
     And I follow "Course1"
-    Then I should not see "X-Ray Learning Analytics" in the "Administration" "block"
+    Then "X-Ray Learning Analytics" "text" should not exist in current page administration
