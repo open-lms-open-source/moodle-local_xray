@@ -83,7 +83,7 @@ class local_xray_controller_courseselection extends mr_controller_admin {
         $login_result = wsapi::login();
         if (!$login_result) {
             $globalseturl = new \moodle_url('/admin/settings.php',
-                    array('section'         => self::PLUGIN.'_global'));
+                    array('section' => self::PLUGIN.'_global'));
 
             $globalsetlink = '&nbsp;<a href="'.$globalseturl->out(false).'">'
                     .new \lang_string('xray_check_global_settings_link', self::PLUGIN)
