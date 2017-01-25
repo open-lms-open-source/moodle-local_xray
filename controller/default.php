@@ -48,7 +48,8 @@ class local_xray_controller_default extends mr_controller_block {
      */
     public function view_action() {
         global $OUTPUT;
-        $message = get_string('noxraydefcontroller', self::PLUGIN);
+        $xraydefpagemsg = get_string('xraydefaultpage', self::PLUGIN);
+        $message = get_string('nopermissions', 'error', $xraydefpagemsg);
         return $this->output->box(
                 $OUTPUT->notification(
                         $message, 'notificationerror'));

@@ -613,8 +613,8 @@ $string['global_settings'] = 'X-Ray Global Settings';
 $string['courseselection'] = 'X-Ray Course Selection';
 
 // Default X-Ray controller error
-$string['noxraydefcontroller'] = 'The page you entered is not available. Please go back or browse the menu to find the page.';
-$string['error_xray_unknown'] = 'Unknown X-Ray response, please reload the page. If error persists, contact your systems administrator.';
+$string['xraydefaultpage'] = 'Access X-Ray main page.';
+$string['error_xray_unknown'] = 'Unknown X-Ray response, please reload the page. If error persists, contact your system administrator.';
 
 // Courses
 $string['xraycourses'] = 'X-Ray Courses';
