@@ -378,7 +378,8 @@ function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
     $userfrom = get_admin();
     $admins = get_admins();
     foreach ($admins as $admin) {
-        $eventdata = new \stdClass();
+        $eventdata = new \core\message\message();
+        $eventdata->courseid          = SITEID;
         $eventdata->component         = 'moodle';
         $eventdata->name              = 'errors';
         $eventdata->userfrom          = $userfrom;
