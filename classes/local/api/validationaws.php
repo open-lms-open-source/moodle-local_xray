@@ -407,7 +407,10 @@ abstract class validationaws {
             
             if($compressResult !== TRUE) { // TGZ Compression
                 list($compfile, $destfile) = $compressResult;
-                
+                if (empty($compfile)) {
+                    throw new \moodle_exception(get_string('error_compress_files', wsapi::PLUGIN));
+                }
+
                 // tgz_extractor library
                 global $CFG;
                 require_once($CFG->dirroot.'/lib/filestorage/tgz_extractor.php');

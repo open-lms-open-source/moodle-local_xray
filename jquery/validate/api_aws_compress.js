@@ -16,6 +16,9 @@ function validate_api_aws_compress(YUI, data) {
     self.watch_fields = json_data.watch_fields;
     self.api_msg_keys = json_data.api_msg_keys;
     
+    // Special case for breaking the error list.
+    self.strbreak = 'break';
+    
     // Initialize
     self.init = function() {
         for(var key in self.watch_fields) {
@@ -49,7 +52,11 @@ function validate_api_aws_compress(YUI, data) {
         if(reasons) {
             reasonsMsg += '<ul>';
             for(var i = 0; i < reasons.length; i++) {
-                reasonsMsg += '<li>' + reasons[i] + '</li>';
+                if (self.strbreak !== reasons[i]) {
+                    reasonsMsg += '<li>' + reasons[i] + '</li>';
+                } else {
+                    reasonsMsg += '</ul><br><ul>';
+                }
             }
             reasonsMsg += '</ul>';
         }
@@ -106,6 +113,7 @@ function validate_api_aws_compress(YUI, data) {
                 self.api_msg(check_key, 'connectionstatusunknown', 'message', null, [
                     'Status: ' + status,
                     'Error: ' + err,
+                    self.strbreak,
                     self.serverTechMessage(check_key, xhr.responseText)
                 ]);
 
