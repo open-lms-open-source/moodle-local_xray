@@ -90,8 +90,8 @@ class local_xray_controller_courseselection extends mr_controller_admin {
                     .'</a>';
 
             return $OUTPUT->notification(
-                    new lang_string('xray_check_global_settings', self::PLUGIN)
-                    .$globalsetlink, 'warning');
+                    new lang_string('xray_check_global_settings', self::PLUGIN,
+                            $globalsetlink, 'notificationerror'));
         }
 
         try {

@@ -619,7 +619,7 @@ $string['error_xray_unknown'] = 'Unknown X-Ray response, please reload the page.
 // Courses
 $string['xraycourses'] = 'X-Ray Courses';
 $string['xraycourses_instructions'] = 'Select from this list the Categories and Courses that you want to use with X-Ray Learning Analytics. Select a Category, if you want all of the associated courses to use X-Ray. Or expand a Category and select individual courses.';
-$string['xray_check_global_settings'] = 'Couldn\'t connect to X-Ray Learning Analytics Server.';
+$string['xray_check_global_settings'] = 'Couldn\'t connect to X-Ray Learning Analytics Server. {$a}';
 $string['xray_check_global_settings_link'] = 'Please validate that X-Ray Learning Analytics Server is available before selecting the courses.';
 $string['xray_save_course_filter_error'] = 'There was an error saving the courses to X-Ray Learning Analytics server:<br />{$a}';
 $string['loading_please_wait'] = 'Loading. Please wait.';
