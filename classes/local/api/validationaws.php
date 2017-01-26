@@ -408,7 +408,7 @@ abstract class validationaws {
             if($compressResult !== TRUE) { // TGZ Compression
                 list($compfile, $destfile) = $compressResult;
                 if (empty($compfile)) {
-                    throw new \moodle_exception(get_string('error_compress_files', wsapi::PLUGIN));
+                    throw new \moodle_exception('error_compress_files', wsapi::PLUGIN);
                 }
 
                 // tgz_extractor library
@@ -425,7 +425,7 @@ abstract class validationaws {
                 }
                 
                 if(count(array_intersect($tgzfile_list, $file_list)) != $num_files){
-                    throw new \moodle_exception(get_string('error_compress_files', wsapi::PLUGIN));
+                    throw new \moodle_exception('error_compress_files', wsapi::PLUGIN);
                 }
                 
             } else { // BZ2 Compression
@@ -437,7 +437,7 @@ abstract class validationaws {
                 }
                 
                 if(count(array_intersect($bz2file_list, $file_list)) != $num_files){
-                    throw new \moodle_exception(get_string('error_compress_files', wsapi::PLUGIN));
+                    throw new \moodle_exception('error_compress_files', wsapi::PLUGIN);
                 }
             }
             
