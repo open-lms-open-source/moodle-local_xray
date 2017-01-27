@@ -102,7 +102,7 @@ function config_toggle_categories(YUI, data) {
             submitBtn.prop('disabled', 'disabled');
             catLbl.append('<span class="xray_validate_loader"></span>');
             self.loadCategory(cat, function(){
-                catInput.prop('disabled', false);
+                catInput.prop('disabled', cat.disabled);
                 submitBtn.prop('disabled', false);
                 catLbl.children('.xray_validate_loader').remove();
             });
@@ -143,7 +143,7 @@ function config_toggle_categories(YUI, data) {
             catInput.prop('checked',checked);
             catInput.prop('indeterminate',indeterminate);
             
-            if(cat.parentListener) {
+            if (cat.parentListener) {
                 cat.parentListener();
             }
         };
@@ -153,7 +153,9 @@ function config_toggle_categories(YUI, data) {
     
     self.checkCategories = function(cats, checked, callback) {
         for(var c in cats) {
-            self.checkCategory(cats[c], checked, callback);
+            if (!cats[c].disabled) {
+                self.checkCategory(cats[c], checked, callback);
+            }
         }
     };
     
@@ -196,7 +198,7 @@ function config_toggle_categories(YUI, data) {
         
         var res = true;
         for(var c in cats) {
-            res = res && $(catPrefix + cats[c].id).prop('checked');
+            res = res && ($(catPrefix + cats[c].id).prop('checked') || cats[c].disabled);
         }
         return res;
     };
@@ -207,6 +209,9 @@ function config_toggle_categories(YUI, data) {
         var res = false;
         for(var c in cats) {
             res = res || $(catPrefix + cats[c].id).prop('checked');
+            if (res) {
+                break;
+            }
         }
         return res;
     };
@@ -226,7 +231,7 @@ function config_toggle_categories(YUI, data) {
         
         var catCount = 0, catIndCount = 0, catLength = Object.keys(cats).length;
         for(var c in cats) {
-            catCount += $(catPrefix + cats[c].id).prop('checked') ? 1 : 0;
+            catCount += ($(catPrefix + cats[c].id).prop('checked') || cats[c].disabled) ? 1 : 0;
             catIndCount += $(catPrefix + cats[c].id).prop('indeterminate') ? 1 : 0;
         }
         return catCount < catLength || catIndCount > 0;
@@ -248,6 +253,9 @@ function config_toggle_categories(YUI, data) {
         var res = false;
         for(var c in courses) {
             res = res || $(coursePrefix + courses[c].id).prop('checked');
+            if (res) {
+                break;
+            }
         }
         return res;
     };
@@ -345,10 +353,10 @@ function config_toggle_categories(YUI, data) {
     
     self.renderCategory = function(parentCat, cat) {
         var catStr = '<li id="cat_' + cat.id + '_li">'
-            +'<input type="checkbox" id="cat_' + cat.id + '" value="1">'
+            +'<input type="checkbox" id="cat_' + cat.id + '" value="1"'
+            +(cat.disabled ? 'disabled="disabled"' : '') + '>'
             +'<label id="cat_' + cat.id + '_lbl" for="cat_' + cat.id + '" class="cat_label">' + cat.name + '&nbsp;&nbsp;</label>'
-            +'<ul id="cat_' + cat.id + '_children">'
-            +'</ul>'
+            +'<ul id="cat_' + cat.id + '_children"></ul>'
             +'</li>';
     
         $(catPrefix + parentCat.id + '_children').append(catStr);

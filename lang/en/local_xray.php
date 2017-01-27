@@ -626,4 +626,4 @@ $string['loading_please_wait'] = 'Loading. Please wait.';
 $string['warn_courses_do_not_match'] = 'The selected courses on the X-Ray server don\'t match the courses selected here. You will overwrite X-Ray server analysis filter if you save your selection.';
 
 // Course related messages
-$string['warn_course_disabled'] = 'This course is not enabled for X-Ray Learning Analytics usage. If you think it should be, contact your system administrator';
+$string['warn_course_disabled'] = 'This course doesn\'t use X-Ray Learning Analytics. If you think it should, contact your system administrator.';

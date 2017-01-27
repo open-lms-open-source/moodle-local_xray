@@ -96,18 +96,11 @@ abstract class course_manager {
         $query = 'SELECT mdcat.id, mdcat.name,
 
                          COUNT(mdc.id) AS totcourses,
-                         COUNT(lxc.id) AS xraycourses,
-
-                         COUNT(mdsc.id) AS stotcourses,
-                         COUNT(lxsc.id) AS sxraycourses
+                         COUNT(lxc.id) AS xraycourses
 
                     FROM {course_categories} mdcat
                LEFT JOIN {course} mdc ON mdc.category = mdcat.id
                LEFT JOIN {local_xray_selectedcourse} lxc ON mdc.id = lxc.cid
-
-               LEFT JOIN {course_categories} mdscat ON mdscat.parent = mdcat.id
-               LEFT JOIN {course} mdsc ON mdsc.category = mdscat.id
-               LEFT JOIN {local_xray_selectedcourse} lxsc ON mdsc.id = lxsc.cid
 
                    WHERE mdcat.parent = ?
                 GROUP BY mdcat.id, mdcat.name
@@ -116,14 +109,62 @@ abstract class course_manager {
         $categories = $DB->get_records_sql($query, array($cid));
 
         foreach ($categories as $cat) {
-            $checked = ($cat->xraycourses > 0 || $cat->sxraycourses > 0);
-            $indeterminate = $checked && ($cat->totcourses > $cat->xraycourses || $cat->stotcourses > $cat->sxraycourses);
+            $checked = ($cat->xraycourses > 0);
+            $indeterminate = $checked && ($cat->totcourses > $cat->xraycourses);
+            $coursecount = $cat->totcourses;
+
+            $scatchk = self::query_categories_check_status($cat->id);
+            $checked = $checked || $scatchk->checked;
+            $indeterminate = $indeterminate || $scatchk->indeterminate;
+            $coursecount += $scatchk->coursecount;
+
             $res[] = array(
                 'id' => $cat->id,
                 'name' => $cat->name,
                 'checked' => $checked,
-                'indeterminate' => $indeterminate
+                'indeterminate' => $indeterminate,
+                'disabled' => ($coursecount == 0)
             );
+        }
+
+        return $res;
+    }
+    
+    /**
+     * Reviews if category children are checked
+     * @param type $cid
+     */
+    private static function query_categories_check_status($cid = 0) {
+        $res = new \stdClass();
+        global $DB;
+
+        $query = 'SELECT mdcat.id,
+
+                         COUNT(mdc.id) AS totcourses,
+                         COUNT(lxc.id) AS xraycourses
+
+                    FROM {course_categories} mdcat
+               LEFT JOIN {course} mdc ON mdc.category = mdcat.id
+               LEFT JOIN {local_xray_selectedcourse} lxc ON mdc.id = lxc.cid
+
+                   WHERE mdcat.parent = ?
+                GROUP BY mdcat.id, mdcat.name
+                ORDER BY mdcat.name';
+
+        $categories = $DB->get_records_sql($query, array($cid));
+
+        $res->checked = false;
+        $res->indeterminate = false;
+        $res->coursecount = 0;
+        foreach ($categories as $cat) {
+            $res->checked = $res->checked || ($cat->xraycourses > 0);
+            $res->indeterminate = $res->indeterminate || ($res->checked && ($cat->totcourses > $cat->xraycourses));
+            $res->coursecount += $cat->totcourses;
+
+            $scatchk = self::query_categories_check_status($cat->id);
+            $res->checked = $res->checked || $scatchk->checked;
+            $res->indeterminate = $res->indeterminate || $scatchk->indeterminate;
+            $res->coursecount += $scatchk->coursecount;
         }
 
         return $res;
