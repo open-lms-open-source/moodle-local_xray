@@ -129,10 +129,11 @@ abstract class course_manager {
 
         return $res;
     }
-    
+
     /**
      * Reviews if category children are checked
-     * @param type $cid
+     * @param string|int $cid Parent category id
+     * @return \stdClass response with attributes: checked, indeterminate, coursecount 
      */
     private static function query_categories_check_status($cid = 0) {
         $res = new \stdClass();
