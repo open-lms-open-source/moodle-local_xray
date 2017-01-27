@@ -82,16 +82,9 @@ class local_xray_controller_courseselection extends mr_controller_admin {
         
         $login_result = wsapi::login();
         if (!$login_result) {
-            $globalseturl = new \moodle_url('/admin/settings.php',
-                    array('section' => self::PLUGIN.'_global'));
-
-            $globalsetlink = '&nbsp;<a href="'.$globalseturl->out(false).'">'
-                    .new \lang_string('xray_check_global_settings_link', self::PLUGIN)
-                    .'</a>';
-
-            return $OUTPUT->notification(
-                    new lang_string('xray_check_global_settings', self::PLUGIN)
-                    .$globalsetlink, 'warning');
+            $errmessage = new lang_string('xray_check_global_settings', self::PLUGIN,
+                    course_manager::generate_xray_settings_link());
+            return $OUTPUT->notification($errmessage, 'notifyerror');
         }
 
         try {
@@ -146,7 +139,7 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             $this->require_js_libs(); // Require js libs if everything worked out alright.
             return $this->output->box($output, 'boxwidthwide');
         } catch (\Exception $exc) {
-            return $this->output->box($OUTPUT->notification($exc->getMessage(), 'notificationerror'));
+            return $this->output->box($OUTPUT->notification($exc->getMessage(), 'notifyerror'));
         }
     }
     

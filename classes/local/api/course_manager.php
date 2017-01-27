@@ -170,7 +170,7 @@ abstract class course_manager {
         if ($xraycourses = wsapi::get_analysis_filter()) {
             $res = $xraycourses->filtervalue;
         } else {
-            throw new \moodle_exception(self::generate_xray_conn_error_text());
+            throw new \moodle_exception('xray_check_global_settings', self::PLUGIN, '',self::generate_xray_settings_link());
         }
 
         return $res;
@@ -265,29 +265,28 @@ abstract class course_manager {
                 } else if (isset($wsapires)) {
                     $error = $wsapires;
                 }
-                throw new \moodle_exception(get_string('xray_save_course_filter_error', self::PLUGIN, $error));
+                throw new \moodle_exception('xray_save_course_filter_error', self::PLUGIN, '',$error);
             }
         } else {
             throw new \moodle_exception(
-                    get_string('xray_save_course_filter_error', self::PLUGIN,
-                    get_string('error_xray', self::PLUGIN)));
+                    'xray_save_course_filter_error', self::PLUGIN,
+                    '',get_string('error_xray', self::PLUGIN));
         }
     }
     
     /**
-     * Generates X-Ray connection error text
-     * @return string Text with a connection error to X-Ray
+     * Generates X-Ray connection error text with a link to the global settings
+     * @return string Text with a connection error to X-Ray and link to settings
      */
-    public static function generate_xray_conn_error_text() {
+    public static function generate_xray_settings_link() {
         $globalseturl = new \moodle_url('/admin/settings.php',
-                array('section'         => self::PLUGIN.'_global'));
-            
+                array('section' => self::PLUGIN.'_global'));
+
         $globalsetlink = '&nbsp;<a href="'.$globalseturl->out(false).'">'
-                .new \lang_string('xray_check_global_settings_link', self::PLUGIN)
+                .get_string('xray_check_global_settings_link', self::PLUGIN)
                 .'</a>';
 
-        return new \lang_string('xray_check_global_settings', self::PLUGIN)
-                .$globalsetlink;
+        return $globalsetlink;
     }
 
 }

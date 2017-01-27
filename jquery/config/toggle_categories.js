@@ -118,13 +118,27 @@ function config_toggle_categories(YUI, data) {
     self.createListenersInCategory = function(cat) {
         cat.myListener = function() {
             var indeterminate = 
-                self.areCatsIndeterminate(cat.categories) ||
+                self.atLeastOneCourseChecked(cat.courses) &&
                 self.areCoursesIndeterminate(cat.courses);
         
+            indeterminate = indeterminate || (
+                self.atLeastOneCatChecked(cat.categories) &&
+                self.areCatsIndeterminate(cat.categories));
+        
+            if(cat.courses && cat.categories) {
+                indeterminate = indeterminate || (
+                    !self.areCatsChecked(cat.categories) &&
+                    self.areCoursesChecked(cat.courses));
+
+                indeterminate = indeterminate || (
+                    self.areCatsChecked(cat.categories) &&
+                    !self.areCoursesChecked(cat.courses));
+            }
+
             var checked = indeterminate ||
-                self.areCatsChecked(cat.categories) ||
-                self.areCoursesChecked(cat.courses);
-            
+                self.atLeastOneCatChecked(cat.categories) ||
+                self.atLeastOneCourseChecked(cat.courses);
+
             var catInput = $(catPrefix + cat.id);
             catInput.prop('checked',checked);
             catInput.prop('indeterminate',indeterminate);
@@ -150,6 +164,10 @@ function config_toggle_categories(YUI, data) {
         catInput.prop('indeterminate', false);
         
         var checkMyStuff = function() {
+            if(cat.courses) {
+                self.checkCourses(cat.courses, checked);
+            }
+            
             if(cat.categories) {
                 if (cat.categories.length > 0) {
                     self.checkCategories(cat.categories, checked, callback);
@@ -160,9 +178,7 @@ function config_toggle_categories(YUI, data) {
                 callback();
             }
             
-            if(cat.courses) {
-                self.checkCourses(cat.courses, checked);
-            }
+            if(cat.parentListener) cat.parentListener();
         };
         
         self.loadCategory(cat, checkMyStuff);
@@ -185,8 +201,18 @@ function config_toggle_categories(YUI, data) {
         return res;
     };
     
+    self.atLeastOneCatChecked = function(cats) {
+        if(!cats) return false;
+        
+        var res = false;
+        for(var c in cats) {
+            res = res || $(catPrefix + cats[c].id).prop('checked');
+        }
+        return res;
+    };
+    
     self.areCoursesChecked = function(courses) {
-        if(!courses) return false;
+        if(!courses || courses.length === 0) return true;
         
         var res = true;
         for(var c in courses) {
@@ -203,7 +229,7 @@ function config_toggle_categories(YUI, data) {
             catCount += $(catPrefix + cats[c].id).prop('checked') ? 1 : 0;
             catIndCount += $(catPrefix + cats[c].id).prop('indeterminate') ? 1 : 0;
         }
-        return (catCount > 0 && catCount < catLength) || catIndCount > 0;
+        return catCount < catLength || catIndCount > 0;
     };
     
     self.areCoursesIndeterminate = function(courses) {
@@ -213,7 +239,17 @@ function config_toggle_categories(YUI, data) {
         for(var c in courses) {
             courseCount += $(coursePrefix + courses[c].id).prop('checked') ? 1 : 0;
         }
-        return courseCount > 0 && courseCount < courseLength;
+        return courseCount < courseLength;
+    };
+    
+    self.atLeastOneCourseChecked = function(courses) {
+        if(!courses) return false;
+        
+        var res = false;
+        for(var c in courses) {
+            res = res || $(coursePrefix + courses[c].id).prop('checked');
+        }
+        return res;
     };
     
     self.updateCourseSelection = function(course, checked) {
