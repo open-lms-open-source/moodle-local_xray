@@ -48,7 +48,7 @@ abstract class course_validation {
             return true;
         }
         if (!self::validate_students($courseid)  || self::single_activity_course($courseid) ||
-            !self::course_is_visible($courseid) || !self::selected_course($courseid)) {
+                !self::course_is_visible($courseid) || !self::selected_course($courseid)) {
             return false;
         }
         return true;
