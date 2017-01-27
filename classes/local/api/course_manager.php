@@ -275,8 +275,8 @@ abstract class course_manager {
     }
     
     /**
-     * Generates X-Ray connection error text
-     * @return string Text with a connection error to X-Ray
+     * Generates X-Ray connection error text with a link to the global settings
+     * @return string Text with a connection error to X-Ray and link to settings
      */
     public static function generate_xray_settings_link() {
         $globalseturl = new \moodle_url('/admin/settings.php',
