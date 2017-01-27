@@ -627,3 +627,9 @@ $string['warn_courses_do_not_match'] = 'The selected courses on the X-Ray server
 
 // Course related messages
 $string['warn_course_disabled'] = 'This course doesn\'t use X-Ray Learning Analytics. If you think it should, contact your system administrator.';
+$string['course_disabled'] = '<p>This course can’t use X-Ray Learning Analytics at this time. Here’s why:'.
+    '</p><ul>{$a->students}{$a->hidden}{$a->single}</ul><p>If you think your course meets the requirements and '.
+    'still can’t use X-Ray, contact your system administrator.</p>';
+$string['course_many_students'] = '<li>The course has too many students. There can’t be more than {$a} students enrolled to use X-Ray.</li>';
+$string['course_hidden'] = '<li>The course is hidden. Courses must be visible to use X-Ray.</li>';
+$string['course_single_activity_format'] = '<li>The course is in Single Activity format. Courses can’t be in Single Activity format to use X-Ray.</li>';

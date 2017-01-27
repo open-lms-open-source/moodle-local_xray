@@ -41,7 +41,7 @@ class local_xray_controller_risk extends local_xray_controller_reports {
 
     public function view_action() {
 
-        $this->validate_course();
+        $this->validate_course_status();
         $this->addiconhelp();
         $output = '';
         try {

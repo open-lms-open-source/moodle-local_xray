@@ -28,6 +28,7 @@ namespace local_xray\task;
 use core\task\scheduled_task;
 use local_xray\event\email_log;
 use local_xray\event\email_failed;
+use local_xray\local\api\course_validation;
 
 defined('MOODLE_INTERNAL') || die();
 
