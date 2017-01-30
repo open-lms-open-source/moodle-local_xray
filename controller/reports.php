@@ -692,7 +692,7 @@ class local_xray_controller_reports extends mr_controller {
     public function validate_course_status() {
         global $OUTPUT, $COURSE;
 
-        if ($courseinfo = course_validation::validate_course($COURSE) && !defined('BEHAT_SITE_RUNNING')) {
+        if (($courseinfo = course_validation::validate_course($COURSE)) && !defined('BEHAT_SITE_RUNNING')) {
             if (!$courseinfo['status']) {
                 $a = new stdClass();
                 $a->single = ($courseinfo[course_validation::XRAYCOURSESINGLEFORMAT] ? get_string('course_single_activity_format', $this->component) : '');
