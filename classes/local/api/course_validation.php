@@ -74,17 +74,14 @@ abstract class course_validation {
         $description = '';
         if (!self::validate_students($course->id)) {
             $response[self::XRAYCOURSESTUDENTS] = true;
-            //$description .= self::XRAYCOURSESTUDENTS;
             $status = self::XRAYCOURSEDISABLED;
         }
         if (self::single_activity_course($course->id)) {
             $response[self::XRAYCOURSESINGLEFORMAT] = true;
-            //$description .= ($status == self::XRAYCOURSEDISABLED ? ', ' : '').self::XRAYCOURSESINGLEFORMAT;
             $status = self::XRAYCOURSEDISABLED;
         }
         if (!self::course_is_visible($course->id)) {
-            $response[self::XRAYCOURSEDISABLED] = true;
-            //$description .= ($status == self::XRAYCOURSEDISABLED ? ', ' : '').self::XRAYCOURSEHIDDEN;
+            $response[self::XRAYCOURSEHIDDEN] = true;
             $status = self::XRAYCOURSEDISABLED;
         }
         $response['status'] = $status;
