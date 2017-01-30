@@ -25,25 +25,28 @@
 defined('MOODLE_INTERNAL') or die();
 
 if ($hassiteconfig) {
-    global $CFG;
+    global $CFG, $USER;
     /* @noinspection PhpIncludeInspection */
     require_once($CFG->dirroot.'/local/xray/lib.php');
     $plugin = 'local_xray';
-    
+    $allowedunamecourses = 'mrsupport';
+
     $ADMIN->add('localplugins',
         new admin_category($plugin,
         new lang_string('pluginname', $plugin))
     );
-    
+
     require_once($CFG->dirroot.'/local/xray/global_settings.php');
-    // Add System Reports.
-    $urlcourseselection = new moodle_url('/local/xray/view.php',
-            array('controller'      => 'courseselection',
-                  'action'          => 'view'));
-    $ADMIN->add('local_xray', new admin_externalpage('courseselection_view',
-        new lang_string('courseselection', $plugin),
-        $urlcourseselection->out(false)));
-    
+    // Add Course selection.
+    if (defined('XRAY_UNRESTRICT_COURSE_SELECTION') ||
+            $USER->username === $allowedunamecourses) {
+        $urlcourseselection = new moodle_url('/local/xray/view.php',
+                array('controller' => 'courseselection',
+                      'action' => 'view'));
+        $ADMIN->add('local_xray', new admin_externalpage('courseselection_view',
+            new lang_string('courseselection', $plugin),
+            $urlcourseselection->out(false)));
+    }
 }
 
 // This has to be outside of global if so that we can permit non admin users to see this.
