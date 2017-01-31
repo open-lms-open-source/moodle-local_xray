@@ -92,7 +92,6 @@ abstract class course_validation {
             if (!self::validate_students($course->id)
                 || self::single_activity_course($course->id) || !self::course_is_visible($course->id)) {
                 $response['disabled'] = true;
-                $response['checked'] = false;
             }
         }
         return $response;
