@@ -65,4 +65,14 @@ $observers = [
         'callback'    => 'local_xray_sync_failed',
         'includefile' => '/local/xray/lib.php'
     ],
+    [
+        'eventname'   => '\core\event\group_deleted',
+        'callback'    => 'local_xray_group_deleted',
+        'includefile' => '/local/xray/lib.php'
+    ],
+    [
+        'eventname'   => '\core\event\group_member_removed',
+        'callback'    => 'local_xray_group_member_removed',
+        'includefile' => '/local/xray/lib.php'
+    ],
 ];
