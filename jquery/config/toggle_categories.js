@@ -277,8 +277,9 @@ function config_toggle_categories(YUI, data) {
     
     self.remCourseFromSelection = function(course) {
         var idx = self.selection.indexOf(course.id);
-        if(idx > -1) {
+        while(idx > -1) {
             self.selection.splice(idx, 1);
+            idx = self.selection.indexOf(course.id);
         }
     };
     

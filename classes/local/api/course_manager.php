@@ -49,7 +49,7 @@ abstract class course_manager {
 
         global $DB;
 
-        $query = 'SELECT mdc.id, mdc.fullname, lxsc.id AS xray_id
+        $query = 'SELECT DISTINCT mdc.id, mdc.fullname, lxsc.cid AS xray_cid
                     FROM {course} mdc
                LEFT JOIN {local_xray_selectedcourse} lxsc ON (mdc.id = lxsc.cid)
                    WHERE mdc.category = ?
@@ -62,7 +62,7 @@ abstract class course_manager {
             $res[] = array(
                 'id' => $course->id,
                 'name' => $course->fullname,
-                'checked' => !is_null($course->xray_id), // TODO bring from database
+                'checked' => !is_null($course->xray_cid), // TODO bring from database
                 'disabled' => false // TODO bring from database.
             );
         }
@@ -251,7 +251,8 @@ abstract class course_manager {
 
         // Create array of new records.
         $cidobjects = array();
-        foreach ($cids as $cid) {
+        $uniquecids = array_unique($cids);
+        foreach ($uniquecids as $cid) {
             $cidobject = new \stdClass();
             $cidobject->cid = $cid;
             $cidobjects[] = $cidobject;
