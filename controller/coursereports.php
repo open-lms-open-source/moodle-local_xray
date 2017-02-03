@@ -72,6 +72,7 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
         $PAGE->set_title(get_string($this->reportname, $this->component));
         // Add params in URL.
         $params = array('name' => $this->reportname);
+
         // Forum Activity Report.
         if ($this->forumid) {
             $params["forum"] = $this->forumid;
@@ -118,6 +119,7 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
             }
             // The param jouleurl is required in shiny server to add link to each report of joule side.
             $tokenparams["jouleurl"] = $CFG->wwwroot;
+
             // Course id.
             $tokenparams["courseid"] = $COURSE->id;
             // User id: Instructor/Admin who is seeing the report.
@@ -132,6 +134,11 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
             if ($this->forumid) {
                 $tokenparams["forumid"] = $this->forumid;
             }
+
+            // User id: Instructor/Admin who is seeing the report.
+            $tokenparams["userid"] = $USER->id;
+            // Report name.
+            $tokenparams["name"] = $USER->id;
 
             $url = new moodle_url($systemreportsurl, $tokenparams);
             $output .= $this->output->print_iframe_systemreport($url);
