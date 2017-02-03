@@ -633,3 +633,8 @@ $string['course_disabled'] = '<p>This course can’t use X-Ray Learning Analytic
 $string['course_many_students'] = '<li>The course has too many students. There can’t be more than {$a} students enrolled to use X-Ray.</li>';
 $string['course_hidden'] = '<li>The course is hidden. Courses must be visible to use X-Ray.</li>';
 $string['course_single_activity_format'] = '<li>The course is in Single Activity format. Courses can’t be in Single Activity format to use X-Ray.</li>';
+
+// Course Reports.
+$string['coursereportsurl'] = '';
+$string['coursereportsurl_desc'] = '';
+$string['coursereports'] = 'Course Reports';
