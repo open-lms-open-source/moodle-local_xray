@@ -627,3 +627,8 @@ $string['warn_courses_do_not_match'] = 'The selected courses on the X-Ray server
 
 // Course related messages
 $string['warn_course_disabled'] = 'This course doesn\'t use X-Ray Learning Analytics. If you think it should, contact your system administrator.';
+
+// Course Reports.
+$string['coursereportsurl'] = '';
+$string['coursereportsurl_desc'] = '';
+$string['coursereports'] = 'Course Reports';

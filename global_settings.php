@@ -33,11 +33,20 @@ if ($hassiteconfig) {
     $settings = new admin_settingpage('local_xray_global',
             new lang_string('global_settings', $plugin));
 
-    // Xray url webservice.
-    $settings->add( new admin_setting_configtext("{$plugin}/xrayurl",
-                                                 new lang_string("xrayurl", $plugin),
-                                                 new lang_string("xrayurl_desc", $plugin),
-                                                 '', PARAM_URL));
+    $coursereports = local_xray_coursereports();
+    if ($coursereports) {
+        // Add the URL for Course Reports.
+        $settings->add( new admin_setting_configtext("{$plugin}/coursereportsurl",
+            new lang_string("coursereportsurl", $plugin),
+            new lang_string("coursereportsurl_desc", $plugin),
+            '', PARAM_URL));
+    } else {
+        // Xray url webservice.
+        $settings->add( new admin_setting_configtext("{$plugin}/xrayurl",
+            new lang_string("xrayurl", $plugin),
+            new lang_string("xrayurl_desc", $plugin),
+            '', PARAM_URL));
+    }
 
     // Xray user webservice.
     $settings->add( new admin_setting_configtext("{$plugin}/xrayusername",
@@ -63,11 +72,14 @@ if ($hassiteconfig) {
                                                  new lang_string("curlcache_desc", $plugin),
                                                  ['h' => 1, 'm' => 0]));
 
-    // Add the URL for System Reports.
-    $settings->add( new admin_setting_configtext("{$plugin}/systemreportsurl",
-        new lang_string("systemreportsurl", $plugin),
-        new lang_string("systemreportsurl_desc", $plugin),
-        '', PARAM_URL));
+    if (!$coursereports) {
+        // Add the URL for System Reports.
+        $settings->add( new admin_setting_configtext("{$plugin}/systemreportsurl",
+            new lang_string("systemreportsurl", $plugin),
+            new lang_string("systemreportsurl_desc", $plugin),
+            '', PARAM_URL));
+    }
+
 
     // Settings for displaying content inline course front page.
     $settings->add( new admin_setting_heading("{$plugin}/xraydisplayheading",

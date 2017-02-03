@@ -225,7 +225,9 @@ class local_xray_controller_reports extends mr_controller {
             $ctx = $this->get_context();
             throw new required_capability_exception($ctx, "{$this->plugin}:{$this->name}_view", 'nopermissions', '');
         }
-        require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
+        if (!local_xray_coursereports()) {
+            require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
+        }
     }
 
     /**

@@ -963,3 +963,16 @@ function local_xray_report_head_row($reporttitle, $reporticon) {
 
     return array($row, $row2, $row3);
 }
+
+/**
+ * Check is the shiny course reports are available.
+ *
+ * @return bool.
+ */
+function local_xray_coursereports() {
+    $coursereports = get_config('local_xray', 'coursereports');
+    if ($coursereports && $coursereports == 1) {
+        return true;
+    }
+    return false;
+}
