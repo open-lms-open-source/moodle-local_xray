@@ -49,6 +49,8 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
      */
     public function init() {
         $this->reportname = required_param("name", PARAM_ALPHANUMEXT);
+        $this->showid = optional_param("name", 0, PARAM_INT);
+        $this->forumid = optional_param("forum", 0, PARAM_INT);
     }
 
     /**
@@ -70,6 +72,10 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
         $PAGE->set_title(get_string($this->reportname, $this->component));
         // Add params in URL.
         $params = array('name' => $this->reportname);
+        // Forum Activity Report.
+        if ($this->forumid) {
+            $params["forum"] = $this->forumid;
+        }
         $this->url->params($params);
 
         $PAGE->navbar->add(get_string("navigation_xray", $this->component));
@@ -112,10 +118,21 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
             }
             // The param jouleurl is required in shiny server to add link to each report of joule side.
             $tokenparams["jouleurl"] = $CFG->wwwroot;
+            // Course id.
+            $tokenparams["courseid"] = $COURSE->id;
             // User id: Instructor/Admin who is seeing the report.
-            $tokenparams["userid"] = $USER->id;
-            // Report name.
-            $tokenparams["name"] = $USER->id;
+            $tokenparams["uid"] = $USER->id;
+            // Report name. Fix reportname for the param.
+            $tokenparams["name"] = str_replace('report', '', $this->reportname);
+            // For the individual reports, we need to send the id of the user displayed.
+            if ($this->showid) {
+                $tokenparams["showid"] = $this->showid;
+            }
+            // Forum Activity Report.
+            if ($this->forumid) {
+                $tokenparams["forumid"] = $this->forumid;
+            }
+
             $url = new moodle_url($systemreportsurl, $tokenparams);
             $output .= $this->output->print_iframe_systemreport($url);
         } catch (Exception $e) {
