@@ -80,6 +80,8 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
 
         $output = '';
         try {
+            // Menu (Always show menu).
+            $output .= $this->print_top();
             // Get the URL.
             $systemreportsurl  = get_config('local_xray', 'coursereportsurl');
             if (($systemreportsurl === false) || ($systemreportsurl === '')) {

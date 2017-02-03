@@ -93,9 +93,16 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     foreach ($reportlist as $nodename => $reportsublist) {
         foreach ($reportsublist as $report => $capability) {
             if (has_capability($capability, $context)) {
-                $reports[$nodename][$report] = $baseurl->out(false, ['controller' => $report,
-                                                                     'courseid'   => $page->course->id,
-                                                                     'action'     => 'view'] + $extraparams);
+                if (local_xray_coursereports()) {
+                    $reports[$nodename][$report] = $baseurl->out(false, ['controller' => 'coursereports',
+                            'name'   => $report,
+                            'courseid'   => $page->course->id,
+                            'action'     => 'view'] + $extraparams);
+                } else {
+                    $reports[$nodename][$report] = $baseurl->out(false, ['controller' => $report,
+                            'courseid'   => $page->course->id,
+                            'action'     => 'view'] + $extraparams);
+                }
             }
         }
     }
