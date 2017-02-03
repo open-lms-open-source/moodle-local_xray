@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') or die();
 use local_xray\datatables\datatablescolumns;
 use local_xray\event\get_report_failed;
 use local_xray\local\api\course_manager;
+use local_xray\local\api\course_validation;
 
 /**
  * Renderer
@@ -580,13 +581,11 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function print_course_menu($reportcontroller, $reports) {
-        global $COURSE;
+        global $PAGE, $OUTPUT, $USER, $COURSE;
 
-        if (!course_manager::is_course_selected($COURSE->id)) {
+        if (!course_validation::is_xray_course($COURSE->id)) {
             return '';
         }
-
-        global $PAGE, $OUTPUT, $USER;
 
         // Load Jquery.
         $PAGE->requires->jquery();
