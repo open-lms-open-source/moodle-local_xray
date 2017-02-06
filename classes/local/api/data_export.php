@@ -1355,7 +1355,7 @@ class data_export {
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
 
             // Check if tar is an executable prior to executing.
-            if (!!file_is_executable($bintar)) {
+            if (!file_is_executable($bintar)) {
                 throw new \moodle_exception(get_string('error_compress_packertar_invalid', self::PLUGIN));
             }
 

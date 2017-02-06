@@ -1,0 +1,228 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Event listeners used in this plugin.
+ *
+ * @package   local_xray
+ * @author    Darko MIletic
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright Moodlerooms
+ */
+
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Listener for course delete event
+ *
+ * @param \core\event\course_deleted $event
+ */
+function local_xray_course_deleted(\core\event\course_deleted $event) {
+    global $DB;
+    $data = [
+        'course'      => $event->courseid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_course', $data, false);
+}
+
+/**
+ * Listener for course category delete
+ *
+ * @param \core\event\course_category_deleted $event
+ */
+function local_xray_course_category_deleted(\core\event\course_category_deleted $event) {
+    global $DB;
+    $data = [
+        'category'    => $event->objectid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_coursecat', $data, false);
+}
+
+/**
+ * Listener for Advanced forum discussion delete
+ *
+ * @param \mod_hsuforum\event\discussion_deleted $event
+ */
+function local_xray_hsu_discussion_deleted(\mod_hsuforum\event\discussion_deleted $event) {
+    global $DB;
+    $data = [
+        'discussion'  => $event->objectid,
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_hsudisc', $data, false);
+}
+
+/**
+ * Listener for Advanced forum post delete
+ *
+ * @param \mod_hsuforum\event\post_deleted $event
+ */
+function local_xray_hsu_post_deleted(\mod_hsuforum\event\post_deleted $event) {
+    global $DB;
+    $data = [
+        'post'        => $event->objectid,
+        'discussion'  => $event->other['discussionid'],
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_hsupost', $data, false);
+}
+
+/**
+ * Listener for forum discussion delete
+ *
+ * @param \mod_forum\event\discussion_deleted $event
+ */
+function local_xray_discussion_deleted(\mod_forum\event\discussion_deleted $event) {
+    global $DB;
+    $data = [
+        'discussion'  => $event->objectid,
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_disc', $data, false);
+}
+
+/**
+ * Listener for forum post delete
+ *
+ * @param \mod_forum\event\post_deleted $event
+ */
+function local_xray_post_deleted(\mod_forum\event\post_deleted $event) {
+    global $DB;
+    $data = [
+        'post'        => $event->objectid,
+        'discussion'  => $event->other['discussionid'],
+        'cm'          => $event->contextinstanceid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_post', $data, false);
+}
+
+/**
+ * Listener for activity delete from course
+ *
+ * @param \core\event\course_module_deleted $event
+ */
+function local_xray_course_module_deleted(\core\event\course_module_deleted $event) {
+    global $DB;
+    // We handle only gradable activities.
+    if (plugin_supports('mod', $event->other['modulename'], FEATURE_GRADE_HAS_GRADE, false)) {
+        $data = [
+            'cm'          => $event->objectid,
+            'course'      => $event->courseid,
+            'timedeleted' => $event->timecreated
+        ];
+        $DB->insert_record_raw('local_xray_cm', $data, false);
+    }
+}
+
+/**
+ * Listener for role unasignment on a course context ONLY!
+ *
+ * @param \core\event\role_unassigned $event
+ * @throws coding_exception
+ */
+function local_xray_role_unassigned(\core\event\role_unassigned $event) {
+    global $DB;
+    // Strangely can not use course_context::instance_by_id since it throws exception...
+    $courseid = $DB->get_field('context', 'instanceid', ['id' => $event->contextid, 'contextlevel' => CONTEXT_COURSE]);
+    if ($courseid) {
+        $data = [
+            'role'        => $event->objectid,
+            'userid'      => $event->relateduserid,
+            'course'      => $courseid,
+            'timedeleted' => $event->timecreated
+        ];
+        $DB->insert_record_raw('local_xray_roleunas', $data, false);
+    }
+}
+
+/**
+ * Listener for removal of user enrollment from a course
+ * @param \core\event\user_enrolment_deleted $event
+ * @throws coding_exception
+ */
+function local_xray_user_enrolment_deleted(\core\event\user_enrolment_deleted $event) {
+    global $DB;
+    $data = [
+        'enrolid'     => $event->objectid,
+        'userid'      => $event->relateduserid,
+        'courseid'    => $event->courseid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_enroldel', $data, false);
+}
+
+/**
+ * Listener for group deletion from a course
+ * @param \core\event\group_deleted $event
+ * @throws coding_exception
+ */
+function local_xray_group_deleted(\core\event\group_deleted $event) {
+    global $DB;
+    $data = [
+        'groupid'     => $event->objectid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_groupdel', $data, false);
+}
+
+/**
+ * Listener for group member removal
+ * @param \core\event\group_member_removed $event
+ * @throws coding_exception
+ */
+function local_xray_group_member_removed(\core\event\group_member_removed $event) {
+    global $DB;
+    $data = [
+        'groupid'     => $event->objectid,
+        'userid'      => $event->relateduserid,
+        'timedeleted' => $event->timecreated
+    ];
+    $DB->insert_record_raw('local_xray_gruserdel', $data, false);
+}
+
+/**
+ * Listener for send email to admin/s when X-Ray Learning Analytics data sync failed.
+ * @param \local_xray\event\sync_failed $event
+ * @throws coding_exception
+ */
+function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
+
+    $error = $event->get_description();
+    $subject = get_string('syncfailed', 'local_xray');
+    // We will send email to each administrator.
+    $userfrom = get_admin();
+    $admins = get_admins();
+    foreach ($admins as $admin) {
+        $eventdata = new \stdClass();
+        $eventdata->component         = 'moodle';
+        $eventdata->name              = 'errors';
+        $eventdata->userfrom          = $userfrom;
+        $eventdata->userto            = $admin;
+        $eventdata->subject           = $subject;
+        $eventdata->fullmessage       = $error;
+        $eventdata->fullmessageformat = FORMAT_PLAIN;
+        $eventdata->fullmessagehtml   = '';
+        $eventdata->smallmessage      = '';
+        message_send($eventdata);
+    }
+}
+

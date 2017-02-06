@@ -302,5 +302,9 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070343, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070344) {
+        upgrade_plugin_savepoint(true, 2015070344, 'local', 'xray');
+    }
+
     return true;
 }
