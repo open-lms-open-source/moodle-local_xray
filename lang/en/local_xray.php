@@ -635,6 +635,6 @@ $string['course_hidden'] = '<li>The course is hidden. Courses must be visible to
 $string['course_single_activity_format'] = '<li>The course is in Single Activity format. Courses can’t be in Single Activity format to use X-Ray.</li>';
 
 // Course Reports.
-$string['coursereportsurl'] = '';
-$string['coursereportsurl_desc'] = '';
-$string['coursereports'] = 'Course Reports';
+$string['coursereportsurl'] = 'X-Ray Course Reports Url';
+$string['coursereportsurl_desc'] = 'URL to connect with X-Ray Course Reports.';
+$string['coursereports'] = 'X-Ray Course Reports';
