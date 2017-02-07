@@ -74,9 +74,12 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
 
     if (in_array($page->pagetype, ['mod-forum-view', 'mod-hsuforum-view',
         'mod-forum-discuss', 'mod-hsuforum-discuss'])) {
-        $extraparams['cmid' ] = $context->instanceid;
-        $extraparams['forum'] = $page->cm->instance;
-
+        if (local_xray_reports()) {
+            $extraparams['showid' ] = $page->cm->instance;
+        } else {
+            $extraparams['cmid' ] = $context->instanceid;
+            $extraparams['forum'] = $page->cm->instance;
+        }
         // Support for discussion of forum/hsforum.
         $d = $page->url->get_param('d');
         if (!empty($d)) {
@@ -95,7 +98,7 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
             if (has_capability($capability, $context)) {
                 if (local_xray_reports()) {
                     $reports[$nodename][$report] = $baseurl->out(false, ['controller' => 'xrayreports',
-                            'name'   => $report,
+                            'name'   => local_xray_name_conversion($report),
                             'courseid'   => $page->course->id,
                             'action'     => 'view'] + $extraparams);
                 } else {
@@ -981,4 +984,30 @@ function local_xray_reports() {
         return true;
     }
     return false;
+}
+
+/**
+ * Change the report names to adjust to new X-Ray names.
+ *
+ * @return string.
+ */
+function local_xray_name_conversion($reportname, $inverse = false) {
+    if ($inverse) {
+        $add = 'report';
+        switch ($reportname) {
+            case 'activity':
+            case 'discussion':
+            case 'gradebook':
+                return 'activity'.$add;
+                break;
+            case 'activityindividual':
+            case 'discussionindividual':
+            case 'discussionindividualforum':
+                return str_replace('individual', 'reportindividual', $reportname);
+                break;
+            default:
+                return $reportname;
+        }
+    }
+    return str_replace('report', '', $reportname);
 }

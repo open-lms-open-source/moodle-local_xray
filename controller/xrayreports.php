@@ -45,27 +45,33 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
     private $reportname;
 
     /**
+     * Old report name.
+     * @var String
+     */
+    private $oldreportname;
+
+    /**
      * Init
      */
     public function init() {
         $this->reportname = required_param("name", PARAM_ALPHANUMEXT);
-        if ($this->reportname == 'discussionreportindividual' || $this->reportname == 'activityreportindividual') {
+        $this->showid = 0;
+        if ($this->reportname == 'activityindividual' || $this->reportname == 'discussionindividual' ||
+                $this->reportname == 'discussionindividualforum') {
             $this->showid = required_param("showid", PARAM_INT);
         }
-        if ($this->reportname == 'discussionreportindividualforum') {
-            $this->forumid = required_param("forum", PARAM_INT);
-        }
+        $this->oldreportname = local_xray_name_conversion($this->reportname, true);
     }
 
     /**
      * Require capability.
      */
     public function require_capability() {
-        if (!local_xray_is_course_enable()) {// TODO test
+        if (!local_xray_is_course_enable()) {// TODO
             $ctx = $this->get_context();
-            throw new required_capability_exception($ctx, "{$this->plugin}:{$this->reportname}_view", 'nopermissions', '');
+            throw new required_capability_exception($ctx, "{$this->plugin}:{$this->oldreportname}_view", 'nopermissions', '');
         }
-        require_capability("{$this->plugin}:{$this->reportname}_view", $this->get_context());
+        require_capability("{$this->plugin}:{$this->oldreportname}_view", $this->get_context());
     }
 
     public function view_action() {
@@ -73,28 +79,22 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
         global $CFG, $COURSE, $PAGE, $SESSION, $USER, $OUTPUT;
 
         // Add title.
-        $PAGE->set_title(get_string($this->reportname, $this->component));
+        $PAGE->set_title(get_string($this->oldreportname, $this->component));
         // Add params.
         $jouleparams = array('name' => $this->reportname);
         // Report name. Fix reportname for X-Ray params.
-        $xrayparams = array('name' => str_replace('report', '', $this->reportname));
-        // Forum Activity Report.
-        if ($this->forumid) {
-            $jouleparams["forum"] = $this->forumid;
-            /*
-             * In X-ray side, the param forum will be replaced with showid. In joule side, forum id and
-             * show id will never be together.
-             */
-            $xrayparams["showid"] = $this->forumid;
-        } else if ($this->showid) { // Student Activity Report or Student Discussion Report.
+        $xrayparams = array('name' => $this->reportname);
+
+        // Forum Activity Report, Student Activity Report or Student Discussion Report.
+        if ($this->showid) {
             $jouleparams["showid"] = $this->showid;
             $xrayparams["showid"] = $this->showid;
         }
 
-        $this->url->params($jouleparams);
+        $this->url->params($xrayparams);
 
         $PAGE->navbar->add(get_string("navigation_xray", $this->component));
-        $PAGE->navbar->add(get_string($this->reportname, $this->component), $this->url);
+        $PAGE->navbar->add(get_string($this->oldreportname, $this->component), $this->url);
 
         // The title will be displayed in the X-ray page.
         $this->heading->text = '';
