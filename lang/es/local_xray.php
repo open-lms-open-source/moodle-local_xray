@@ -605,3 +605,9 @@ $string['test_api_compress'] = 'Compresión';
 $string['test_api_label'] = 'Validación';
 $string['test_api_description'] = 'Validar <strong>parámetros guardados</strong> para encontrar problemas de conexión o del sistema.';
 $string['validate_when'] = 'Al';
+
+// X-Ray Course Reports.
+$string['xrayreportsurl'] = 'URL de los reportes de X-Ray';
+$string['xrayreportsurl_desc'] = 'Url para conectar con los reportes de X-Ray';
+$string['xrayreports'] = 'Reportes de X-Ray';
+$string['noaccessxrayreports'] = '';

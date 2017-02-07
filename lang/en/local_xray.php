@@ -634,7 +634,8 @@ $string['course_many_students'] = '<li>The course has too many students. There c
 $string['course_hidden'] = '<li>The course is hidden. Courses must be visible to use X-Ray.</li>';
 $string['course_single_activity_format'] = '<li>The course is in Single Activity format. Courses can’t be in Single Activity format to use X-Ray.</li>';
 
-// Course Reports.
-$string['coursereportsurl'] = 'X-Ray Course Reports Url';
-$string['coursereportsurl_desc'] = 'URL to connect with X-Ray Course Reports.';
-$string['coursereports'] = 'X-Ray Course Reports';
+// X-Ray Course Reports.
+$string['xrayreportsurl'] = 'X-Ray Reports Url';
+$string['xrayreportsurl_desc'] = 'URL to connect with X-Ray Reports.';
+$string['xrayreports'] = 'X-Ray Reports';
+$string['noaccessxrayreports'] = '';

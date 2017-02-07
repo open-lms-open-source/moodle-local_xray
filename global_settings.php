@@ -33,12 +33,12 @@ if ($hassiteconfig) {
     $settings = new admin_settingpage('local_xray_global',
             new lang_string('global_settings', $plugin));
 
-    $coursereports = local_xray_coursereports();
-    if ($coursereports) {
+    $xrayreports = local_xray_reports();
+    if ($xrayreports) {
         // Add the URL for Course Reports.
-        $settings->add( new admin_setting_configtext("{$plugin}/coursereportsurl",
-            new lang_string("coursereportsurl", $plugin),
-            new lang_string("coursereportsurl_desc", $plugin),
+        $settings->add( new admin_setting_configtext("{$plugin}/xrayreportsurl",
+            new lang_string("xrayreportsurl", $plugin),
+            new lang_string("xrayreportsurl_desc", $plugin),
             '', PARAM_URL));
     } else {
         // Xray url webservice.
@@ -72,7 +72,7 @@ if ($hassiteconfig) {
                                                  new lang_string("curlcache_desc", $plugin),
                                                  ['h' => 1, 'm' => 0]));
 
-    if (!$coursereports) {
+    if (!$xrayreports) {
         // Add the URL for System Reports.
         $settings->add( new admin_setting_configtext("{$plugin}/systemreportsurl",
             new lang_string("systemreportsurl", $plugin),

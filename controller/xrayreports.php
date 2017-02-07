@@ -36,7 +36,7 @@ use local_xray\event\get_report_failed;
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_xray_controller_coursereports extends local_xray_controller_reports {
+class local_xray_controller_xrayreports extends local_xray_controller_reports {
 
     /**
      * Report name.
@@ -70,7 +70,7 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
 
     public function view_action() {
 
-        global $CFG, $COURSE, $PAGE, $SESSION, $USER;
+        global $CFG, $COURSE, $PAGE, $SESSION, $USER, $OUTPUT;
 
         // Add title.
         $PAGE->set_title(get_string($this->reportname, $this->component));
@@ -99,14 +99,18 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
         // The title will be displayed in the X-ray page.
         $this->heading->text = '';
 
+        if (!local_xray_reports()) {
+            return $OUTPUT->notification(get_string("noaccessxrayreports", $this->component), 'error');
+        }
+
         $output = '';
         try {
             // Menu (Always show menu).
             $output .= $this->print_top();
             // Get the URL.
-            $coursereportsurl  = get_config('local_xray', 'coursereportsurl');
-            if (($coursereportsurl === false) || ($coursereportsurl === '')) {
-                print_error("error_coursereports_nourl", $this->component);
+            $xrayreportsurl  = get_config('local_xray', 'xrayreportsurl');
+            if (($xrayreportsurl === false) || ($xrayreportsurl === '')) {
+                print_error("error_xrayreports_nourl", $this->component);// TODO
             }
             // We allow cancel authentication in shiny server from config for the first version.
             if (isset($CFG->local_xray_system_reports_cancel_auth) && $CFG->local_xray_system_reports_cancel_auth) {
@@ -116,7 +120,7 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
                 $tokenparams = \local_xray\local\api\jwthelper::get_token_params();
                 if (!$tokenparams) {
                     // Error to get token for shiny server.
-                    print_error("error_coursereports_gettoken", $this->component);
+                    print_error("error_xrayreports_gettoken", $this->component);// TODO
                 }
             }
             $xrayparams = array_merge($xrayparams,$tokenparams);
@@ -127,7 +131,7 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
              */
             if ((strpos($_SERVER['HTTP_USER_AGENT'], 'Safari')) && !isset($SESSION->xray_cookie_systemreport)) {
                 $xrayparams["url"] = $this->url->out(false); // Add page to redirect from xray server.
-                $url = new moodle_url($coursereportsurl."/auth", $xrayparams);
+                $url = new moodle_url($xrayreportsurl."/auth", $xrayparams);
                 $SESSION->xray_cookie_systemreport = true;
                 redirect($url);
             }
@@ -138,7 +142,7 @@ class local_xray_controller_coursereports extends local_xray_controller_reports 
             // User id: Instructor/Admin who is seeing the report.
             $xrayparams["uid"] = $USER->id;
 
-            $url = new moodle_url($coursereportsurl, $xrayparams);
+            $url = new moodle_url($xrayreportsurl, $xrayparams);
             $output .= $this->output->print_iframe_systemreport($url);
         } catch (Exception $e) {
             get_report_failed::create_from_exception($e, $this->get_context(), $this->name)->trigger();

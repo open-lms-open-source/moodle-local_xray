@@ -93,8 +93,8 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     foreach ($reportlist as $nodename => $reportsublist) {
         foreach ($reportsublist as $report => $capability) {
             if (has_capability($capability, $context)) {
-                if (local_xray_coursereports()) {
-                    $reports[$nodename][$report] = $baseurl->out(false, ['controller' => 'coursereports',
+                if (local_xray_reports()) {
+                    $reports[$nodename][$report] = $baseurl->out(false, ['controller' => 'xrayreports',
                             'name'   => $report,
                             'courseid'   => $page->course->id,
                             'action'     => 'view'] + $extraparams);
@@ -976,9 +976,8 @@ function local_xray_report_head_row($reporttitle, $reporticon) {
  *
  * @return bool.
  */
-function local_xray_coursereports() {
-    $coursereports = get_config('local_xray', 'coursereports');
-    if ($coursereports && $coursereports == 1) {
+function local_xray_reports() {
+    if (defined('XRAY_SHINY_REPORTS')) {
         return true;
     }
     return false;
