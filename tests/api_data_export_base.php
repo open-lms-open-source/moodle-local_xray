@@ -399,6 +399,102 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         return $validationdata;
     }
 
+    /**
+     * @param  int        $nr
+     * @param  stdClass[] $courses
+     * @param  string     $fields
+     * @return stdClass[]
+     * @throws dml_exception
+     * @throws RuntimeException
+     */
+    protected function add_course_groups($nr, $courses, $fields = '') {
+        global $CFG;
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->dirroot.'/group/lib.php');
+
+        if (empty($fields)) {
+            $fields = 'id, courseid, name, description, timecreated, timemodified';
+        }
+
+        /** @var stdClass[] $groups */
+        $groups = [];
+        foreach ($courses as $course) {
+            for ($count = 0; $count < $nr; $count++) {
+                $data = (object)[
+                    'courseid'          => (int)$course->id,
+                    'idnumber'          => '',
+                    'name'              => "Course group {$course->shortname}: {$nr}",
+                    'description'       => 'lorem ipsum',
+                    'descriptionformat' => FORMAT_MOODLE,
+                    'picture'           => false,
+                    'hidepicture'       => false,
+                    'timecreated'       => time(),
+                    'timemodified'      => 0,
+                ];
+                $groupid = groups_create_group($data);
+                if (!$groupid) {
+                    throw new RuntimeException('Failed to create course group!');
+                }
+            }
+            $groups += groups_get_all_groups($course->id, 0, 0, $fields);
+        }
+
+        return $groups;
+    }
+
+    /**
+     * @param  stdClass[] $courses
+     * @return void
+     */
+    protected function delete_course_groups($courses) {
+        global $CFG;
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->dirroot.'/group/lib.php');
+
+        foreach ($courses as $course) {
+            groups_delete_groups($course->id);
+        }
+    }
+
+    /**
+     * @param  int        $nr
+     * @param  stdClass[] $courses
+     * @return stdClass[] - list of users
+     */
+    protected function add_course_groups_members($nr, $courses) {
+        global $CFG;
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->dirroot.'/group/lib.php');
+
+        $users = $this->addusers($nr);
+        $this->users_enrol($courses, $users);
+        $gmdata = [];
+        foreach ($courses as $course) {
+            $groups = groups_get_all_groups($course->id);
+            foreach ($groups as $group) {
+                foreach ($users as $user) {
+                    groups_add_member($group->id, $user->id);
+                }
+                $gmdata += groups_get_members($group->id, 'gm.id, gm.groupid, gm.userid, gm.timeadded', 'gm.id ASC');
+            }
+        }
+
+        return $gmdata;
+    }
+
+    /**
+     * @param  stdClass[] $courses
+     * @return void
+     */
+    protected function delete_course_groups_members($courses) {
+        global $CFG;
+        /* @noinspection PhpIncludeInspection */
+        require_once($CFG->dirroot.'/group/lib.php');
+
+        foreach ($courses as $course) {
+            groups_delete_group_members($course->id);
+        }
+    }
 
     /**
      * Export data to csv files
@@ -457,6 +553,25 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     protected function user_set($courses, $module) {
         $result = $this->user_set_internal($courses, $module);
         return $result[0];
+    }
+
+    /**
+     * @param  stdClass[] $courses
+     * @param  stdClass[] $users
+     * @param  string     $rolename
+     * @return void
+     * @throws dml_exception
+     */
+    protected function users_enrol($courses, $users, $rolename = 'student') {
+        global $DB;
+
+        $datagen = $this->getDataGenerator();
+        $roleid = $DB->get_field('role', 'id', ['shortname' => $rolename], MUST_EXIST);
+        foreach ($courses as $course) {
+            foreach ($users as $user) {
+                $datagen->enrol_user($user->id, $course->id, $roleid);
+            }
+        }
     }
 
     /**
@@ -638,6 +753,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
                     $this->assertInternalType($typedef[$pos]['type'], $field);
                 }
                 if (!empty($validate)) {
+                    $this->assertArrayHasKey($pos, $validator, var_export($validator, true));
                     if ($validator[$pos] !== null) {
                         $this->assertEquals(
                             $validator[$pos],

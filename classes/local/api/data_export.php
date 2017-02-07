@@ -1037,6 +1037,106 @@ class data_export {
     }
 
     /**
+     * @param  int $timest
+     * @param  int $timeend
+     * @param  string $dir
+     * @return void
+     */
+    public static function groups($timest, $timeend, $dir) {
+        $wherecond = self::range_where('timemodified', 'timecreated', $timest, $timeend, __FUNCTION__);
+
+        $sql = "
+            SELECT id,
+                   courseid,
+                   name,
+                   description,
+                   timecreated,
+                   timemodified,
+                   CASE
+                        WHEN timemodified = 0 THEN timecreated
+                        ELSE timemodified
+                   END AS traw
+              FROM {groups} g
+             WHERE
+                   EXISTS (SELECT c.id FROM {course} c WHERE c.id = g.courseid)
+                   AND
+        ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param  int $timest
+     * @param  int $timeend
+     * @param  string $dir
+     * @return void
+     */
+    public static function groups_deleted($timest, $timeend, $dir) {
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+
+        $sql = "
+            SELECT id,
+                   groupid,
+                   timedeleted,
+                   timedeleted AS traw
+              FROM {local_xray_groupdel}
+             WHERE
+        ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param  int $timest
+     * @param  int $timeend
+     * @param  string $dir
+     * @return void
+     */
+    public static function groups_members($timest, $timeend, $dir) {
+        $wherecond = self::range_where('timeadded', null, $timest, $timeend, __FUNCTION__);
+
+        $sql = "
+            SELECT id,
+                   groupid,
+                   userid AS participantid,
+                   timeadded,
+                   timeadded AS traw
+              FROM {groups_members} gm
+             WHERE
+                   EXISTS (SELECT g.id FROM {groups} g WHERE g.id = gm.groupid)
+                   AND
+                   EXISTS (SELECT u.id FROM {user}   u WHERE u.id = gm.userid AND u.deleted = 0)
+                   AND
+        ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
+     * @param  int $timest
+     * @param  int $timeend
+     * @param  string $dir
+     * @return void
+     */
+    public static function groups_members_deleted($timest, $timeend, $dir) {
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+
+        $sql = "
+            SELECT id,
+                   groupid,
+                   participantid,
+                   timedeleted,
+                   timedeleted AS traw
+              FROM {local_xray_gruserdel} gd
+             WHERE
+                   EXISTS (SELECT u.id FROM {user} u WHERE u.id = gd.participantid AND u.deleted = 0)
+                   AND
+        ";
+
+        self::dispatch_query($sql, $wherecond, __FUNCTION__, $dir);
+    }
+
+    /**
      * @return mixed|string
      */
     public static function get_dir() {
@@ -1253,12 +1353,12 @@ class data_export {
             $clientid = get_config(self::PLUGIN, 'xrayclientid');
             $tarpath = get_config(self::PLUGIN, 'packertar');
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
-            
-            // Check if tar is an executable prior to executing
-            if(!file_exists($bintar) || is_dir($bintar) || !file_is_executable($bintar)) {
+
+            // Check if tar is an executable prior to executing.
+            if (!file_is_executable($bintar)) {
                 throw new \moodle_exception(get_string('error_compress_packertar_invalid', self::PLUGIN));
             }
-            
+
             $escdir = escapeshellarg($transdir);
             // We have to use microseconds timestamp because of nodejs...
             $basefile = self::generate_filename($clientid);
@@ -1328,9 +1428,9 @@ class data_export {
      * @param int    $timest
      * @param int    $timeend
      * @param string $dir
-     * @param bool   $disableTimeTrace
+     * @param bool   $disabletimetrace
      */
-    public static function export_csv($timest, $timeend, $dir, $disableTimeTrace = false) {
+    public static function export_csv($timest, $timeend, $dir, $disabletimetrace = false) {
         self::$meta = [];
         self::reset_counter_storage();
 
@@ -1359,6 +1459,8 @@ class data_export {
         } else {
             self::userlist($timest, $timeend, $dir);
         }
+        self::groups($timest, $timeend, $dir);
+        self::groups_members($timest, $timeend, $dir);
         self::enrolmentv2($timest, $timeend, $dir);
         self::roles($timest, $timeend, $dir);
         // Unfortunately log stores can be uninstalled so we check for that case.
@@ -1410,13 +1512,15 @@ class data_export {
             self::hsuthreads_delete($timest, $timeend, $dir);
             self::hsuposts_delete($timest, $timeend, $dir);
         }
+        self::groups_deleted($timest, $timeend, $dir);
+        self::groups_members_deleted($timest, $timeend, $dir);
 
         // Export meta.json only in case legacy format is used.
         if (!$newformat) {
             self::export_metadata($dir);
         }
 
-        if(!$disableTimeTrace) {
+        if (!$disabletimetrace) {
             self::mtrace("Export data execution time: ".timer::end()." sec.");
         }
     }
@@ -1454,7 +1558,11 @@ class data_export {
             'enrolment_deletev2'      => 'local_xray_enroldel'  ,
             'userlistv2'              => 'user'                 ,
             'roles'                   => 'role_assignments'     ,
-            'roles_delete'            => 'local_xray_roleunas'
+            'roles_delete'            => 'local_xray_roleunas'  ,
+            'groups'                  => 'groups'               ,
+            'groups_deleted'          => 'local_xray_groupdel'  ,
+            'groups_members'          => 'groups_members'       ,
+            'groups_members_deleted'  => 'local_xray_gruserdel' ,
         ];
 
         return $items;

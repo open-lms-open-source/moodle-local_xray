@@ -273,5 +273,38 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070342, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070343) {
+        // Table local_xray_groupdel.
+        $table = new xmldb_table('local_xray_groupdel');
+        $field = $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $field = $table->add_field('groupid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Table local_xray_groupdel.
+        $table = new xmldb_table('local_xray_gruserdel');
+        $field = $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $field = $table->add_field('groupid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
+        $field = $table->add_field('participantid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
+        $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Conditionally launch create table for local_xray_course.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        upgrade_plugin_savepoint(true, 2015070343, 'local', 'xray');
+    }
+
+    if ($oldversion < 2015070344) {
+        upgrade_plugin_savepoint(true, 2015070344, 'local', 'xray');
+    }
+
     return true;
 }
