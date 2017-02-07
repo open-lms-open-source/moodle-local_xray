@@ -109,13 +109,15 @@ abstract class course_manager {
         $categories = $DB->get_records_sql($query, array($cid));
 
         foreach ($categories as $cat) {
-            $checked = ($cat->xraycourses > 0);
-            $indeterminate = $checked && ($cat->totcourses > $cat->xraycourses);
+            $coursechecked = ($cat->xraycourses > 0);
+            $courseindeterminate = $coursechecked && ($cat->totcourses > $cat->xraycourses);
             $coursecount = $cat->totcourses;
 
             $scatchk = self::query_categories_check_status($cat->id);
-            $checked = $checked || $scatchk->checked;
-            $indeterminate = $indeterminate || $scatchk->indeterminate;
+            $checked = $coursechecked || $scatchk->checked;
+            $indeterminate = $courseindeterminate || $scatchk->indeterminate ||
+                ($scatchk->checked && !$coursechecked) ||
+                (!$scatchk->checked && $coursechecked);
             $coursecount += $scatchk->coursecount;
 
             $res[] = array(
