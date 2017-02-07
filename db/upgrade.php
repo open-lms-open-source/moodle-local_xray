@@ -290,7 +290,7 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         $table = new xmldb_table('local_xray_gruserdel');
         $field = $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
         $field = $table->add_field('groupid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
-        $field = $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
+        $field = $table->add_field('participantid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
         $table->add_field('timedeleted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, $field);
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
 

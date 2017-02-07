@@ -192,9 +192,9 @@ function local_xray_group_deleted(\core\event\group_deleted $event) {
 function local_xray_group_member_removed(\core\event\group_member_removed $event) {
     global $DB;
     $data = [
-        'groupid'     => $event->objectid,
-        'userid'      => $event->relateduserid,
-        'timedeleted' => $event->timecreated
+        'groupid'       => $event->objectid,
+        'participantid' => $event->relateduserid,
+        'timedeleted'   => $event->timecreated
     ];
     $DB->insert_record_raw('local_xray_gruserdel', $data, false);
 }

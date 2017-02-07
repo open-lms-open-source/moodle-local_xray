@@ -1098,7 +1098,7 @@ class data_export {
         $sql = "
             SELECT id,
                    groupid,
-                   userid,
+                   userid AS participantid,
                    timeadded,
                    timeadded AS traw
               FROM {groups_members} gm
@@ -1124,12 +1124,12 @@ class data_export {
         $sql = "
             SELECT id,
                    groupid,
-                   userid,
+                   participantid,
                    timedeleted,
                    timedeleted AS traw
               FROM {local_xray_gruserdel} gd
              WHERE
-                   EXISTS (SELECT u.id FROM {user} u WHERE u.id = gd.userid AND u.deleted = 0)
+                   EXISTS (SELECT u.id FROM {user} u WHERE u.id = gd.participantid AND u.deleted = 0)
                    AND
         ";
 
