@@ -55,6 +55,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
                 array("controller" => "discussionreport", "courseid" => $this->courseid)));
         $PAGE->navbar->add($PAGE->title);
 
+        $this->message_reports_disabled();
         $this->validate_course_status();
         $this->addiconhelp();
 

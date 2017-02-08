@@ -48,6 +48,8 @@ class local_xray_controller_systemreports extends local_xray_controller_reports 
         // The title will be displayed in the X-ray page.
         $this->heading->text = '';
 
+        $this->message_reports_disabled();
+
         $output = '';
         try {
             // Get the URL.

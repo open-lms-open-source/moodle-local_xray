@@ -42,6 +42,7 @@ class local_xray_controller_gradebookreport extends local_xray_controller_report
 
     public function view_action() {
 
+        $this->message_reports_disabled();
         $this->validate_course_status();
         $this->addiconhelp();
         $output = '';
