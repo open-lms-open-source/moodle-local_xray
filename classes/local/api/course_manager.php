@@ -88,21 +88,21 @@ abstract class course_manager {
         $categories = $DB->get_records_sql($query, array($cid));
 
         foreach ($categories as $cat) {
-            $checked = ($cat->xraycourses > 0);
-            $indeterminate = $checked && ($cat->totcourses > $cat->xraycourses);
-            $coursecount = $cat->totcourses;
+            $xraycourses = $cat->xraycourses;
+            $totcourses = $cat->totcourses;
 
-            $scatchk = self::query_categories_check_status($cat->id);
-            $checked = $checked || $scatchk->checked;
-            $indeterminate = $indeterminate || $scatchk->indeterminate;
-            $coursecount += $scatchk->coursecount;
+            $subcatcourses = self::query_categories_selected_courses($cat->id);
+            $xraycourses += $subcatcourses->xraycourses;
+            $totcourses += $subcatcourses->totcourses;
+
+            $checkstatus = self::compute_check_status($xraycourses, $totcourses);
 
             $res[] = array(
                 'id' => $cat->id,
                 'name' => $cat->name,
-                'checked' => $checked,
-                'indeterminate' => $indeterminate,
-                'disabled' => ($coursecount == 0)
+                'checked' => $checkstatus->checked,
+                'indeterminate' => $checkstatus->indeterminate,
+                'disabled' => $checkstatus->disabled
             );
         }
 
@@ -110,11 +110,11 @@ abstract class course_manager {
     }
 
     /**
-     * Reviews if category children are checked
+     * Counts number of selected courses and total courses in category and sub categories
      * @param string|int $cid Parent category id
-     * @return \stdClass response with attributes: checked, indeterminate, coursecount 
+     * @return \stdClass response with attributes: xraycourses, totcourses
      */
-    private static function query_categories_check_status($cid = 0) {
+    private static function query_categories_selected_courses($cid = 0) {
         $res = new \stdClass();
         global $DB;
 
@@ -133,19 +133,32 @@ abstract class course_manager {
 
         $categories = $DB->get_records_sql($query, array($cid));
 
-        $res->checked = false;
-        $res->indeterminate = false;
-        $res->coursecount = 0;
+        $res->xraycourses = 0;
+        $res->totcourses = 0;
         foreach ($categories as $cat) {
-            $res->checked = $res->checked || ($cat->xraycourses > 0);
-            $res->indeterminate = $res->indeterminate || ($res->checked && ($cat->totcourses > $cat->xraycourses));
-            $res->coursecount += $cat->totcourses;
+            $res->xraycourses += $cat->xraycourses;
+            $res->totcourses += $cat->totcourses;
 
-            $scatchk = self::query_categories_check_status($cat->id);
-            $res->checked = $res->checked || $scatchk->checked;
-            $res->indeterminate = $res->indeterminate || $scatchk->indeterminate;
-            $res->coursecount += $scatchk->coursecount;
+            $subcatcourses = self::query_categories_selected_courses($cat->id);
+            $res->xraycourses += $subcatcourses->xraycourses;
+            $res->totcourses += $subcatcourses->totcourses;
         }
+
+        return $res;
+    }
+
+    /**
+     * Calculates the check status based on number of xray selected courses and total category courses
+     * @param int $xraycourses X-Ray selected courses
+     * @param int $totcourses Total courses for this category
+     * @return \stdClass response with attribures: disabled, checked, indeterminate
+     */
+    public static function compute_check_status($xraycourses, $totcourses) {
+        $res = new \stdClass();
+
+        $res->disabled = $totcourses == 0;
+        $res->checked = $xraycourses > 0;
+        $res->indeterminate = $res->checked && $xraycourses < $totcourses;
 
         return $res;
     }
@@ -153,7 +166,7 @@ abstract class course_manager {
     /**
      * Retrieve the available categories for usage with X-Ray as json encoded string
      *
-     * @param string $$cid Id of the category
+     * @param string $cid Id of the category
      * @return string
      * @throws \moodle_exception
      */
@@ -230,7 +243,8 @@ abstract class course_manager {
 
         // Create array of new records.
         $cidobjects = array();
-        foreach ($cids as $cid) {
+        $uniquecids = array_unique($cids);
+        foreach ($uniquecids as $cid) {
             $cidobject = new \stdClass();
             $cidobject->cid = $cid;
             $cidobjects[] = $cidobject;

@@ -103,7 +103,7 @@ class local_xray_controller_courseselection extends mr_controller_admin {
                 foreach ($currentvalue as $selCourse) {
                     $formVal[] = $selCourse->cid;
                 }
-                $toform->joined_courses = implode(',',$formVal);
+                $toform->joined_courses = implode(',', array_unique($formVal));
                 $mform->set_data($toform);
             } else if ($xrayids = course_manager::load_course_ids_from_xray()){
                 // If database is empty and courses are foung in X-Ray server, load them to the database.

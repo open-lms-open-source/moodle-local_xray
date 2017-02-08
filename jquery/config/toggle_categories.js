@@ -80,31 +80,17 @@ function config_toggle_categories(YUI, data) {
         // Add click handler to checks to check children when parent is checked
         $(catPrefix + cat.id).on('click', function( event ) {
             event.stopPropagation();
-            var catInput = $(this), submitBtn = $(idSubmitBtn),
-            catLbl = $(catPrefix + cat.id + '_lbl');
-            catInput.prop('disabled', 'disabled');
-            submitBtn.prop('disabled', 'disabled');
-            catLbl.append('<span class="xray_validate_loader"></span>');
+            var catInput = $(this)
             // Check sub categories and courses
-            self.checkCategory(cat, catInput.prop('checked'), function() {
-                catInput.prop('disabled', false);
-                submitBtn.prop('disabled', false);
-                catLbl.children('.xray_validate_loader').remove();
-            });
+            self.checkCategory(cat, catInput.prop('checked'), function() {});
         });
         
         // Add click handler to checks to check children when parent is checked
         $(catPrefix + cat.id + '_li').on('click', function( event ) {
             event.stopPropagation();
-            var catInput = $(catPrefix + cat.id), submitBtn = $(idSubmitBtn),
-            catLbl = $(catPrefix + cat.id + '_lbl');
-            catInput.prop('disabled', 'disabled');
-            submitBtn.prop('disabled', 'disabled');
-            catLbl.append('<span class="xray_validate_loader"></span>');
+            self.toggleCategoryUI(cat, false);
             self.loadCategory(cat, function(){
-                catInput.prop('disabled', cat.disabled);
-                submitBtn.prop('disabled', false);
-                catLbl.children('.xray_validate_loader').remove();
+                self.toggleCategoryUI(cat, true);
             });
         });
         
@@ -113,6 +99,21 @@ function config_toggle_categories(YUI, data) {
             event.preventDefault();
             event.stopPropagation();
         });
+    };
+
+    self.toggleCategoryUI = function(cat, allowusage) {
+        var catInput = $(catPrefix + cat.id), submitBtn = $(idSubmitBtn),
+            catLbl = $(catPrefix + cat.id + '_lbl'),
+            disabledstr = 'disabled';
+
+        catInput.prop(disabledstr, allowusage ? cat.disabled : disabledstr);
+        submitBtn.prop(disabledstr, allowusage ? false : disabledstr);
+        if (allowusage) {
+            catLbl.children('.xray_validate_loader').remove();
+        } else {
+            catLbl.append('<span class="xray_validate_loader"></span>');
+        }
+
     };
     
     self.createListenersInCategory = function(cat) {
@@ -152,37 +153,55 @@ function config_toggle_categories(YUI, data) {
     };
     
     self.checkCategories = function(cats, checked, callback) {
-        for(var c in cats) {
-            if (!cats[c].disabled) {
-                self.checkCategory(cats[c], checked, callback);
-            }
+        self.recursiveCategoryCheck(0, cats, checked, callback);
+    };
+
+    self.recursiveCategoryCheck = function(idx, cats, checked, callback) {
+        if(idx < cats.length) {
+            var nextIdx = idx + 1;
+            self.checkCategory(cats[idx], checked, function() {
+                self.recursiveCategoryCheck(nextIdx, cats, checked, callback);
+            });
+        } else {
+            return callback();
         }
     };
     
     self.checkCategory = function(cat, checked, callback) {
+        if(cat.disabled) {
+            return callback();
+        }
+
+        self.toggleCategoryUI(cat, false);
+
+        var allowMyUsage = function() {
+            self.toggleCategoryUI(cat, true);
+            callback();
+        };
+
         var catInput = $(catPrefix + cat.id);
-    
+
         catInput.prop('checked', checked);
         catInput.prop('indeterminate', false);
-        
+
         var checkMyStuff = function() {
             if(cat.courses) {
                 self.checkCourses(cat.courses, checked);
             }
-            
+
             if(cat.categories) {
                 if (cat.categories.length > 0) {
-                    self.checkCategories(cat.categories, checked, callback);
+                    self.checkCategories(cat.categories, checked, allowMyUsage);
                 } else {
-                    callback();
+                    allowMyUsage();
                 }
             } else {
-                callback();
+                allowMyUsage();
             }
-            
+
             if(cat.parentListener) cat.parentListener();
         };
-        
+
         self.loadCategory(cat, checkMyStuff);
     };
     
@@ -279,8 +298,9 @@ function config_toggle_categories(YUI, data) {
     
     self.remCourseFromSelection = function(course) {
         var idx = self.selection.indexOf(course.id);
-        if(idx > -1) {
+        while(idx > -1) {
             self.selection.splice(idx, 1);
+            idx = self.selection.indexOf(course.id);
         }
     };
     
