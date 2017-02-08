@@ -77,9 +77,9 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
         if (local_xray_reports()) {
             $extraparams['showid' ] = $page->cm->instance;
         } else {
-            $extraparams['cmid' ] = $context->instanceid;
             $extraparams['forum'] = $page->cm->instance;
         }
+        $extraparams['cmid' ] = $context->instanceid;
         // Support for discussion of forum/hsforum.
         $d = $page->url->get_param('d');
         if (!empty($d)) {
@@ -998,7 +998,7 @@ function local_xray_name_conversion($reportname, $inverse = false) {
             case 'activity':
             case 'discussion':
             case 'gradebook':
-                return 'activity'.$add;
+                return $reportname.$add;
                 break;
             case 'activityindividual':
             case 'discussionindividual':

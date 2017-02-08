@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Report controller.
+ * Xray Reports controller.
  *
  * @package   local_xray
- * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -33,7 +33,7 @@ use local_xray\event\get_report_failed;
  * @package   local_xray
  * @author    Pablo Pagnone
  * @author    German Vitale
- * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_controller_xrayreports extends local_xray_controller_reports {
@@ -42,25 +42,46 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
      * Report name.
      * @var String
      */
-    private $reportname;
+    protected $reportname;
 
     /**
      * Old report name.
      * @var String
      */
-    private $oldreportname;
+    protected $oldreportname;
+
+    /**
+     * Show id.
+     * @var String
+     */
+    protected $showid = 0;
+
+    /**
+     * Course module id.
+     * @var integer
+     */
+    private $cmid;
+
+    /**
+     * Discussion id.
+     * @var integer
+     */
+    private $d;
 
     /**
      * Init
      */
     public function init() {
         $this->reportname = required_param("name", PARAM_ALPHANUMEXT);
-        $this->showid = 0;
-        if ($this->reportname == 'activityindividual' || $this->reportname == 'discussionindividual' ||
-                $this->reportname == 'discussionindividualforum') {
-            $this->showid = required_param("showid", PARAM_INT);
-        }
         $this->oldreportname = local_xray_name_conversion($this->reportname, true);
+
+        if ($this->reportname == 'activityindividual' || $this->reportname == 'discussionindividual') {
+            $this->showid = required_param("showid", PARAM_INT); // User id viewed.
+        } else if ($this->reportname == 'discussionindividualforum') {
+            $this->showid = required_param("showid", PARAM_INT); // Forum id viewed.
+            $this->cmid = required_param('cmid', PARAM_INT); // Cmid of forum/hsuforum.
+            $this->d = optional_param('d', null, PARAM_INT); // Id of discussion.
+        }
     }
 
     /**
@@ -76,7 +97,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
 
     public function view_action() {
 
-        global $CFG, $COURSE, $PAGE, $SESSION, $USER, $OUTPUT;
+        global $CFG, $COURSE, $PAGE, $SESSION, $USER, $OUTPUT, $DB;
 
         // Add title.
         $PAGE->set_title(get_string($this->oldreportname, $this->component));
@@ -92,9 +113,59 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
         }
 
         $this->url->params($xrayparams);
+        // Navbar.
+        switch ($this->reportname) {
+            case 'activityindividual':
+                $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+                // Add nav to return to activityreport.
+                $PAGE->navbar->add(get_string("activityreport", $this->component),
+                    new moodle_url('/local/xray/view.php',
+                        array("controller" => "xrayreports", "name" => "activity",
+                            "courseid" => $this->courseid)));
+                $PAGE->navbar->add($PAGE->title);
+                break;
+            case 'discussionindividual':
+                $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+                // Add nav to return to discussionreport.
+                $PAGE->navbar->add(get_string("discussionreport", $this->component),
+                    new moodle_url('/local/xray/view.php',
+                        array("controller" => "xrayreports", "name" => "discussion",
+                            "courseid" => $this->courseid)));
+                $PAGE->navbar->add($PAGE->title);
+                break;
+            case 'discussionindividualforum':
+                // Add title to breadcrumb.
+                $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
+                $modulename = 'forum';
+                if (array_key_exists('hsuforum', $plugins)) {
+                    // Get module name and forum/hsuforum id.
+                    $sqlmodule = "SELECT m.name
+                            FROM {course_modules} cm
+                            INNER JOIN {modules} m ON m.id = cm.module
+                            WHERE cm.id = :cmid";
+                    $params = array('cmid' => $this->cmid);
+                    $module = $DB->get_record_sql($sqlmodule, $params);
+                    $modulename = $module->name;
+                }
 
-        $PAGE->navbar->add(get_string("navigation_xray", $this->component));
-        $PAGE->navbar->add(get_string($this->oldreportname, $this->component), $this->url);
+                // Get and show forun name in navbar.
+                $forumname = $DB->get_field($modulename, 'name', array("id" => $this->showid));
+                $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/".$modulename."/view.php",
+                    array("id" => $this->cmid)));
+
+                if (!empty($this->d)) {
+                    // Get discussion name.
+                    $discussion = $DB->get_field($modulename."_discussions", 'name', array("id" => $this->d));
+                    $PAGE->navbar->add(format_string($discussion), new moodle_url("/mod/".$modulename."/discuss.php",
+                        array("d" => $this->d)));
+                }
+                $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+                $PAGE->navbar->add($PAGE->title);
+                break;
+            default:
+                $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+                $PAGE->navbar->add(get_string($this->oldreportname, $this->component), $this->url);
+        }
 
         // The title will be displayed in the X-ray page.
         $this->heading->text = '';
