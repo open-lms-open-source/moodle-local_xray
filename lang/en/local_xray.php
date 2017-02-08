@@ -638,6 +638,7 @@ $string['course_single_activity_format'] = '<li>The course is in Single Activity
 $string['xrayreportsurl'] = 'X-Ray Reports Url';
 $string['xrayreportsurl_desc'] = 'URL to connect with X-Ray reports.';
 $string['xrayreports'] = 'X-Ray reports';
-$string['noaccessxrayreports'] = '';
+$string['noaccessxrayreports'] = 'X-Ray Reports are not available. If you want those available, please, contact your '.
+    'system administrator.';
 $string['error_xrayreports_nourl'] = 'The Xray Reports URL is missing from the X-Ray Learning Analytics configuration page.';
 $string['error_xrayreports_gettoken'] = 'Error to get token for access to X-Ray reports.';
