@@ -112,27 +112,23 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
             if (($xrayreportsurl === false) || ($xrayreportsurl === '')) {
                 print_error("error_xrayreports_nourl", $this->component);
             }
-            // We allow cancel authentication in shiny server from config for the first version.
-            if (isset($CFG->local_xray_system_reports_cancel_auth) && $CFG->local_xray_system_reports_cancel_auth) {
-                // We need to send the clientid.
-                $tokenparams = array("cid" => get_config("local_xray", 'xrayclientid'));
-            } else {
-                $tokenparams = \local_xray\local\api\jwthelper::get_token_params();
-                if (!$tokenparams) {
-                    // Error to get token for shiny server.
-                    print_error("error_xrayreports_gettoken", $this->component);
-                }
+            // Tokens.
+            // TODO this should be disabled for INT-10445. It will be added later.
+            /*$tokenparams = \local_xray\local\api\jwthelper::get_token_params();
+            if (!$tokenparams) {
+                // Error to get token for shiny server.
+                print_error("error_xrayreports_gettoken", $this->component);
             }
-            $xrayparams = array_merge($xrayparams,$tokenparams);
+            $xrayparams = array_merge($xrayparams,$tokenparams);*/
 
             /*
-             * Check is exist cookie for xray  to use Safari browser.If not exist,we redirect to xray side with param
+             * Check if exist cookie for xray to use Safari browser.If not exist,we redirect to xray side with param
              * url for create cookie there and from xray side will redirect to Joule again.
              */
-            if ((strpos($_SERVER['HTTP_USER_AGENT'], 'Safari')) && !isset($SESSION->xray_cookie_systemreport)) {
+            if ((strpos($_SERVER['HTTP_USER_AGENT'], 'Safari')) && !isset($SESSION->xray_cookie_xrayreports)) {
                 $xrayparams["url"] = $this->url->out(false); // Add page to redirect from xray server.
                 $url = new moodle_url($xrayreportsurl."/auth", $xrayparams);
-                $SESSION->xray_cookie_systemreport = true;
+                $SESSION->xray_cookie_xrayreports = true;
                 redirect($url);
             }
             // The param jouleurl is required in shiny server to add link to each report of joule side.

@@ -720,7 +720,7 @@ class local_xray_controller_reports extends mr_controller {
      * Check if the shiny reports are available.
      */
     public function message_reports_disabled() {
-        if (local_xray_reports()) {
+        if (local_xray_reports() && !defined('BEHAT_SITE_RUNNING')) {
             $this->print_header();
             echo $this->output->notification(get_string('noaccessoldxrayreports', $this->component), 'error');
             $this->print_footer();
