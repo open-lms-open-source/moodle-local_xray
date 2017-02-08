@@ -67,7 +67,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
      * Require capability.
      */
     public function require_capability() {
-        if (!local_xray_is_course_enable()) {// TODO
+        if (!local_xray_is_course_enable()) {
             $ctx = $this->get_context();
             throw new required_capability_exception($ctx, "{$this->plugin}:{$this->oldreportname}_view", 'nopermissions', '');
         }
@@ -110,7 +110,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
             // Get the URL.
             $xrayreportsurl  = get_config('local_xray', 'xrayreportsurl');
             if (($xrayreportsurl === false) || ($xrayreportsurl === '')) {
-                print_error("error_xrayreports_nourl", $this->component);// TODO
+                print_error("error_xrayreports_nourl", $this->component);
             }
             // We allow cancel authentication in shiny server from config for the first version.
             if (isset($CFG->local_xray_system_reports_cancel_auth) && $CFG->local_xray_system_reports_cancel_auth) {
@@ -120,7 +120,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 $tokenparams = \local_xray\local\api\jwthelper::get_token_params();
                 if (!$tokenparams) {
                     // Error to get token for shiny server.
-                    print_error("error_xrayreports_gettoken", $this->component);// TODO
+                    print_error("error_xrayreports_gettoken", $this->component);
                 }
             }
             $xrayparams = array_merge($xrayparams,$tokenparams);

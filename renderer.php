@@ -636,10 +636,12 @@ class local_xray_renderer extends plugin_renderer_base {
 
                     $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id);
 
-                    if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
-                        $headerdata .= $this->dashboard_xray_output($dashboarddata);
-                    } else {
-                        $headerdata .= $OUTPUT->notification(get_string('error_xray', 'local_xray'));
+                    if (!local_xray_reports()) {
+                        if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
+                            $headerdata .= $this->dashboard_xray_output($dashboarddata);
+                        } else {
+                            $headerdata .= $OUTPUT->notification(get_string('error_xray', 'local_xray'));
+                        }
                     }
 
                     // Url for subscribe.

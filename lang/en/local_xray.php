@@ -634,8 +634,10 @@ $string['course_many_students'] = '<li>The course has too many students. There c
 $string['course_hidden'] = '<li>The course is hidden. Courses must be visible to use X-Ray.</li>';
 $string['course_single_activity_format'] = '<li>The course is in Single Activity format. Courses can’t be in Single Activity format to use X-Ray.</li>';
 
-// X-Ray Course Reports.
+// X-Ray Reports.
 $string['xrayreportsurl'] = 'X-Ray Reports Url';
-$string['xrayreportsurl_desc'] = 'URL to connect with X-Ray Reports.';
-$string['xrayreports'] = 'X-Ray Reports';
+$string['xrayreportsurl_desc'] = 'URL to connect with X-Ray reports.';
+$string['xrayreports'] = 'X-Ray reports';
 $string['noaccessxrayreports'] = '';
+$string['error_xrayreports_nourl'] = 'The Xray Reports URL is missing from the X-Ray Learning Analytics configuration page.';
+$string['error_xrayreports_gettoken'] = 'Error to get token for access to X-Ray reports.';

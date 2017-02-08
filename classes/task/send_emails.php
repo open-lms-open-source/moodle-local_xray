@@ -66,7 +66,7 @@ class send_emails extends scheduled_task {
             if (local_xray_send_email_today()) {
                 // Create an array with courses and users.
                 $coursesusers = array();
-                if (local_xray_email_enable()) {
+                if (local_xray_email_enable() && !local_xray_reports()) {
                     // Global settings.
                     $params = array('on' => XRAYSUBSCRIBEON, 'off' => XRAYSUBSCRIBEOFF);
                     $globalsettings = $DB->get_records_select('local_xray_globalsub', "type = :on OR type = :off", $params);
