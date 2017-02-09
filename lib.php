@@ -980,7 +980,8 @@ function local_xray_report_head_row($reporttitle, $reporticon) {
  * @return bool.
  */
 function local_xray_reports() {
-    if (defined('XRAY_SHINY_REPORTS')) {
+    global $CFG;
+    if (isset($CFG->local_xray_shiny_reports) && $CFG->local_xray_shiny_reports) {
         return true;
     }
     return false;

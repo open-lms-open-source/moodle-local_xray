@@ -612,7 +612,7 @@ $string['xrayreportsurl_desc'] = 'Url para conectar con los reportes de X-Ray';
 $string['xrayreports'] = 'Reportes de X-Ray';
 $string['noaccessxrayreports'] = 'Los reportes de X-Ray no están disponibles. Por favor, contacta con el '.
     'administrador del sitio para solicitar su habilitación.';
-$string['noaccessoldxrayreports'] = 'Esta versión de los reportes está deshabilitada. Por favor, contacta con el '.
+$string['noaccessoldxrayreports'] = 'Esta versión de los reportes ya no está disponible. Por favor, contacta con el '.
     'administrador del sitio para solicitar su habilitación.';
 $string['error_xrayreports_nourl'] = 'La url para obtener reportes de X-Ray no esta configurada correctamente.';
 $string['error_xrayreports_gettoken'] = 'Error al obtener token para acceder a los reportes de X-Ray.';
