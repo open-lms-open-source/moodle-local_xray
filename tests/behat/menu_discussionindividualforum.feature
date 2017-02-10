@@ -67,18 +67,14 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I am on site homepage
     And I follow "Course1"
     And I follow "Forum 1 test"
-    Then I should <vis> "X-Ray Learning Analytics" in the "Administration" "block"
-    And I follow "Discussion of Forum 1"
-    Then I should <vis> "X-Ray Learning Analytics" in the "Administration" "block"
+    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
     And I follow "Course1"
     And I follow "HSUForum 1 test"
-    Then I should <vis> "X-Ray Learning Analytics" in the "Administration" "block"
-    And I follow "Discussion of HSUForum 1"
-    Then I should <vis> "X-Ray Learning Analytics" in the "Administration" "block"
+    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
     Examples:
-    | user         | vis     |
-    | user2teacher | see     |
-    | user1student | not see |
+    | user         | vis        |
+    | user2teacher | should     |
+    | user1student | should not |
 
   @javascript @local_xray_menu_discussionindividualforum_forumsingle
   Scenario Outline: Menu xray with link to Discussion Report Individual Forum is displayed in forum view-page and in
@@ -92,14 +88,14 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I am on site homepage
     And I follow "Course1"
     And I follow "Forum 1 test"
-    Then I should <vis> "X-Ray Learning Analytics" in the "Administration" "block"
+    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
     And I follow "Course1"
     And I follow "HSUForum 1 test"
-    Then I should <vis> "X-Ray Learning Analytics" in the "Administration" "block"
+    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
     Examples:
-      | user         | vis     |
-      | user2teacher | see     |
-      | user1student | not see |
+      | user         | vis        |
+      | user2teacher | should     |
+      | user1student | should not |
 
   @javascript @local_xray_menu_discussionindividualforum_quiz
   Scenario Outline: Menu xray with link to Discussion Report Individual Forum is not displayed in quiz pages.
@@ -110,7 +106,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I am on site homepage
     And I follow "Course1"
     And I follow "Quiz1"
-    Then I should not see "X-Ray Learning Analytics" in the "Administration" "block"
+    Then "X-Ray Learning Analytics" "link" should not exist in current page administration
   Examples:
   | user         |
   | user1student |
