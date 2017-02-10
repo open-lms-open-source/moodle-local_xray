@@ -74,9 +74,12 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
 
     if (in_array($page->pagetype, ['mod-forum-view', 'mod-hsuforum-view',
         'mod-forum-discuss', 'mod-hsuforum-discuss'])) {
+        if (local_xray_reports()) {
+            $extraparams['showid' ] = $page->cm->instance;
+        } else {
+            $extraparams['forum'] = $page->cm->instance;
+        }
         $extraparams['cmid' ] = $context->instanceid;
-        $extraparams['forum'] = $page->cm->instance;
-
         // Support for discussion of forum/hsforum.
         $d = $page->url->get_param('d');
         if (!empty($d)) {
@@ -93,9 +96,16 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     foreach ($reportlist as $nodename => $reportsublist) {
         foreach ($reportsublist as $report => $capability) {
             if (has_capability($capability, $context)) {
-                $reports[$nodename][$report] = $baseurl->out(false, ['controller' => $report,
-                                                                     'courseid'   => $page->course->id,
-                                                                     'action'     => 'view'] + $extraparams);
+                if (local_xray_reports()) {
+                    $reports[$nodename][$report] = $baseurl->out(false, ['controller' => 'xrayreports',
+                            'name'   => local_xray_name_conversion($report),
+                            'courseid'   => $page->course->id,
+                            'action'     => 'view'] + $extraparams);
+                } else {
+                    $reports[$nodename][$report] = $baseurl->out(false, ['controller' => $report,
+                            'courseid'   => $page->course->id,
+                            'action'     => 'view'] + $extraparams);
+                }
             }
         }
     }
@@ -790,4 +800,43 @@ function local_xray_report_head_row($reporttitle, $reporticon) {
     $row3->cells = array($cell2);
 
     return array($row, $row2, $row3);
+}
+
+/**
+ * Check is the shiny course reports are available.
+ *
+ * @return bool.
+ */
+function local_xray_reports() {
+    global $CFG;
+    if (isset($CFG->local_xray_shiny_reports) && $CFG->local_xray_shiny_reports) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Change the report names to adjust to new X-Ray names.
+ *
+ * @return string.
+ */
+function local_xray_name_conversion($reportname, $inverse = false) {
+    if ($inverse) {
+        $add = 'report';
+        switch ($reportname) {
+            case 'activity':
+            case 'discussion':
+            case 'gradebook':
+                return $reportname.$add;
+                break;
+            case 'activityindividual':
+            case 'discussionindividual':
+            case 'discussionindividualforum':
+                return str_replace('individual', 'reportindividual', $reportname);
+                break;
+            default:
+                return $reportname;
+        }
+    }
+    return str_replace('report', '', $reportname);
 }

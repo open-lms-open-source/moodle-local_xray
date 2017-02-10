@@ -55,6 +55,7 @@ class local_xray_controller_activityreportindividual extends local_xray_controll
                     "courseid" => $this->courseid)));
         $PAGE->navbar->add($PAGE->title);
 
+        $this->message_reports_disabled();
         $this->validate_course_status();
         $this->addiconhelp();
 

@@ -57,6 +57,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     public function view_action() {
 
+        $this->message_reports_disabled();
         $this->validate_course_status();
         $this->addiconhelp();
         $output = '';

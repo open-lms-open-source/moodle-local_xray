@@ -226,7 +226,9 @@ class local_xray_controller_reports extends mr_controller {
             $ctx = $this->get_context();
             throw new required_capability_exception($ctx, "{$this->plugin}:{$this->name}_view", 'nopermissions', '');
         }
-        require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
+        if (!local_xray_reports()) {
+            require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
+        }
     }
 
     /**
@@ -711,6 +713,18 @@ class local_xray_controller_reports extends mr_controller {
                 $this->print_footer();
                 die();
             }
+        }
+    }
+
+    /**
+     * Check if the shiny reports are available.
+     */
+    public function message_reports_disabled() {
+        if (local_xray_reports() && !defined('BEHAT_SITE_RUNNING')) {
+            $this->print_header();
+            echo $this->output->notification(get_string('noaccessoldxrayreports', $this->component), 'error');
+            $this->print_footer();
+            die();
         }
     }
 }
