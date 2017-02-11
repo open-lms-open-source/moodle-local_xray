@@ -129,10 +129,15 @@ class local_xray_controller_courseselection extends mr_controller_admin {
 
             // Print all output.
             $output = '';
+            $analysisfilterdisabled = isset($CFG->local_xray_disable_analysisfilter) &&
+                $CFG->local_xray_disable_analysisfilter;
             if ($saved) {
                 $output .= $OUTPUT->notification(get_string('changessaved'), 'notifysuccess');
             }
-            if (!course_manager::courses_match()) {
+            if ($saved && $analysisfilterdisabled) {
+                $output .= $OUTPUT->notification(get_string('warn_courses_not_persisted_in_xrf', 'local_xray'), 'notifymessage');
+            }
+            if (!$saved && !$analysisfilterdisabled && !course_manager::courses_match()) {
                 $output .= $OUTPUT->notification(get_string('warn_courses_do_not_match', 'local_xray'), 'notifymessage');
             }
             $output .= $mform->render();

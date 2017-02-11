@@ -574,7 +574,10 @@ abstract class wsapi {
      * @return boolean
      */
     public static function save_analysis_filter($cids) {
-        if (defined('BEHAT_SITE_RUNNING')) {
+        global $CFG;
+        if (defined('BEHAT_SITE_RUNNING') ||
+                (isset($CFG->local_xray_disable_analysisfilter) &&
+                $CFG->local_xray_disable_analysisfilter)) {
             $res = (object) array('ok' => true);
             return $res;
         }
