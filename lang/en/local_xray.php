@@ -624,6 +624,7 @@ $string['xray_check_global_settings_link'] = 'Please validate that X-Ray Learnin
 $string['xray_save_course_filter_error'] = 'There was an error saving the courses to X-Ray Learning Analytics server:<br />{$a}';
 $string['loading_please_wait'] = 'Loading. Please wait.';
 $string['warn_courses_do_not_match'] = 'The selected courses on the X-Ray server don\'t match the courses selected here. You will overwrite X-Ray server analysis filter if you save your selection.';
+$string['warn_courses_not_persisted_in_xrf'] = 'The selected courses weren\'t saved in the X-Ray server due to system configuration.';
 
 // Course related messages
 $string['warn_course_disabled'] = 'This course doesn\'t use X-Ray Learning Analytics. If you think it should, contact your system administrator.';
