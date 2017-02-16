@@ -765,7 +765,7 @@ function local_xray_add_recommendation_pdf($recommendationnumber, $recommendatio
 
     $cellicon = new html_table_cell();
     $cellicon->text = $recommendationnumber;
-    $cellicon->style = 'width:28px;color:#777777;font-weight:bolder;';
+    $cellicon->style = 'width:36px;color:#777777;font-weight:bolder;';
     $cellname = new html_table_cell();
     $cellname->text = $recommendation;
     $cellname->style = 'width:80%;';
