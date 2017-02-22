@@ -1343,6 +1343,9 @@ class data_export {
      * @throws \moodle_exception
      */
     public static function compress_targz_native($dirbase, $dirname) {
+        // Global CFG variable.
+        global $CFG;
+
         $transdir = $dirbase . DIRECTORY_SEPARATOR . $dirname;
 
         $exportfiles = array_diff(scandir($transdir), ['..', '.']);
@@ -1355,7 +1358,6 @@ class data_export {
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
 
             // Check if tar is an executable prior to executing.
-            global $CFG;
             require_once("$CFG->libdir/filelib.php");
             if (!\file_is_executable($bintar)) {
                 throw new \moodle_exception(get_string('error_compress_packertar_invalid', self::PLUGIN));
