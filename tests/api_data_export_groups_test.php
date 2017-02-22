@@ -36,6 +36,7 @@ class local_xray_api_data_export_groups_testcase extends local_xray_api_data_exp
 
         $courses = $this->addcourses(5);
         $groups = $this->add_course_groups(5, $courses);
+
         $groupdata = [];
         foreach ($groups as $group) {
             $groupdata[] = array_values((array)$group);
