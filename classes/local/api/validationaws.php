@@ -403,6 +403,8 @@ abstract class validationaws {
             $num_files = count($file_list);
             
             // Execute compression
+            $compressres->set_reason('');
+            $compressres->set_reason_fields(array('packertar'));
             $compressResult = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
             
             if($compressResult !== TRUE) { // TGZ Compression
@@ -442,8 +444,12 @@ abstract class validationaws {
             }
             
         } catch (\Exception $ex) {
-            $compressres->add_result(get_string("error_compress_exception",
-                wsapi::PLUGIN, $ex->getMessage()));
+            if (!empty($ex->getMessage())) {
+                $compressres->register_error('compress',$ex->getMessage());
+            } else {
+                $compressres->add_result(get_string("error_compress_exception",
+                    wsapi::PLUGIN, $ex->getMessage()));
+            }
         }
 
         return $compressres;

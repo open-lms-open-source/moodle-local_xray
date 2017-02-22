@@ -189,7 +189,7 @@ class validationresponse {
         $numstep = $this->currstep + 1;
         $stepsstr = "($numstep/$this->steps)";
         $htmlfields = $this->list_fields($this->reasonfields);
-        $whenstr = get_string('validate_when', wsapi::PLUGIN).' ';
+        $whenstr = !empty($this->reason) ? get_string('validate_when', wsapi::PLUGIN).' ' : '';
         $fieldstitle = get_string('validate_check_fields', wsapi::PLUGIN).$colon.$break;
         $msgstr = $this->service_info($this->checkkey, isset($message) ? $message : $stepsstr);
 
