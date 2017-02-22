@@ -1355,7 +1355,9 @@ class data_export {
             $bintar = empty($tarpath) ? 'tar' : $tarpath;
 
             // Check if tar is an executable prior to executing.
-            if (!file_is_executable($bintar)) {
+            global $CFG;
+            require_once("$CFG->libdir/filelib.php");
+            if (!\file_is_executable($bintar)) {
                 throw new \moodle_exception(get_string('error_compress_packertar_invalid', self::PLUGIN));
             }
 
@@ -1371,7 +1373,7 @@ class data_export {
             $lastmsg = system($command, $ret);
             if ($ret != 0) {
                 // We have error code should not upload...
-                print_error('error_generic', self::PLUGIN, '', $lastmsg);
+                print_error('error_generic', self::PLUGIN, '', empty($lastmsg) ? get_string('error_compress_packertar_invalid', self::PLUGIN) : $lastmsg);
             }
         }
 
