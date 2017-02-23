@@ -57,7 +57,7 @@ class admin_setting_configcheckbox_xray extends \admin_setting_configcheckbox {
         global $PAGE;
         $result = false;
         if (!during_initial_install() && !CLI_SCRIPT && $PAGE->has_set_url()) {
-            $url = new \moodle_url('/admin/settings.php', ['section' => 'local_xray']);
+            $url = new \moodle_url('/admin/settings.php', ['section' => 'local_xray_global']);
             $result = $PAGE->url->compare($url);
         }
         return $result;
