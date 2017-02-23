@@ -402,25 +402,21 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     /**
      * @param  int        $nr
      * @param  stdClass[] $courses
-     * @param  string     $fields
      * @return stdClass[]
      * @throws dml_exception
      * @throws RuntimeException
      */
-    protected function add_course_groups($nr, $courses, $fields = '') {
+    protected function add_course_groups($nr, $courses) {
         global $CFG;
         /* @noinspection PhpIncludeInspection */
         require_once($CFG->dirroot.'/group/lib.php');
-
-        if (empty($fields)) {
-            $fields = 'id, courseid, name, description, timecreated, timemodified';
-        }
 
         /** @var stdClass[] $groups */
         $groups = [];
         foreach ($courses as $course) {
             for ($count = 0; $count < $nr; $count++) {
-                $data = (object)[
+                $t = time();
+                $data = [
                     'courseid'          => (int)$course->id,
                     'idnumber'          => '',
                     'name'              => "Course group {$course->shortname}: {$nr}",
@@ -428,15 +424,20 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
                     'descriptionformat' => FORMAT_MOODLE,
                     'picture'           => false,
                     'hidepicture'       => false,
-                    'timecreated'       => time(),
-                    'timemodified'      => 0,
+                    'timecreated'       => $t,
+                    'timemodified'      => $t,
                 ];
-                $groupid = groups_create_group($data);
-                if (!$groupid) {
-                    throw new RuntimeException('Failed to create course group!');
-                }
+
+                $groupid = groups_create_group((object)$data);
+
+                unset($data['idnumber']);
+                unset($data['descriptionformat']);
+                unset($data['picture']);
+                unset($data['hidepicture']);
+                $bdata = ['id' => $groupid];
+                $bdata += $data;
+                $groups[] = (object)$bdata;
             }
-            $groups += groups_get_all_groups($course->id, 0, 0, $fields);
         }
 
         return $groups;
