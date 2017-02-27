@@ -111,11 +111,6 @@ class local_xray_controller_subscribe extends mr_controller {
      * Require capabilities.
      */
     public function require_capability() {
-        global $CFG, $COURSE;
-        if (!local_xray_is_course_enable()) {
-            $ctx = $this->get_context();
-            throw new required_capability_exception($ctx, "{$this->plugin}:subscription_view", 'nopermissions', '');
-        }
         require_capability("{$this->plugin}:subscription_view", $this->get_context());
     }
 }
