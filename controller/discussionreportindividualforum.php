@@ -88,8 +88,9 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
                             INNER JOIN {modules} m ON m.id = cm.module
                             WHERE cm.id = :cmid";
             $params = array('cmid' => $this->cmid);
-            $module = $DB->get_record_sql($sqlmodule, $params);
-            $modulename = $module->name;
+            if ($module = $DB->get_record_sql($sqlmodule, $params)) {
+                $modulename = $module->name;
+            }
         }
 
         // Get and show forun name in navbar.
