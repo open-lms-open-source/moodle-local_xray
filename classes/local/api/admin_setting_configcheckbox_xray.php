@@ -47,6 +47,10 @@ class admin_setting_configcheckbox_xray extends \admin_setting_configcheckbox {
      */
     public function __construct($name, $visiblename, $description, $defaultsetting, $yes='1', $no='0') {
         parent::__construct($name, $visiblename, $description, $defaultsetting, $yes, $no);
+        $configval = $this->get_setting();
+        if ($configval == $this->yes) {
+            $this->write_setting($this->no);
+        }
         $this->nosave = $this->disablewrite();
     }
 
