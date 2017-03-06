@@ -38,7 +38,9 @@ if ($hassiteconfig) {
 
     require_once($CFG->dirroot.'/local/xray/global_settings.php');
     // Add Course selection.
-    if (defined('XRAY_UNRESTRICT_COURSE_SELECTION') ||
+    $adminscanselectcourses = isset($CFG->local_xray_unrestrict_course_selection) &&
+            $CFG->local_xray_unrestrict_course_selection;
+    if ($adminscanselectcourses ||
             $USER->username === $allowedunamecourses) {
         $urlcourseselection = new moodle_url('/local/xray/view.php',
                 array('controller' => 'courseselection',
