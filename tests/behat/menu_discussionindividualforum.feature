@@ -137,6 +137,6 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I click on "a.xray-icon-accessibledata" "css_element"
     And I switch to "_accessibledata" window
     And I wait until the page is ready
-    And I follow visible link "Forum Activity Report"
+    And I follow "Forum Activity Report"
     And I wait "3" seconds
     Then I should see "Forum Activity Report" in the "#region-main" "css_element"
