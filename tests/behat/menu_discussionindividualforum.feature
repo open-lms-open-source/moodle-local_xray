@@ -133,10 +133,6 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I follow "Forum1"
     And I navigate to "Forum Activity Report" node in "Forum administration > X-Ray Learning Analytics"
     And "a.xray-graph-box-link" "css_element" should exist
-    # Open graph.
-    And I click on "a.xray-graph-box-link" "css_element"
-    # Close graph.
-    And I click on "a.xray-close-link" "css_element"
     # Go to Accessible data.
     And I click on "a.xray-icon-accessibledata" "css_element"
     And I switch to "_accessibledata" window
