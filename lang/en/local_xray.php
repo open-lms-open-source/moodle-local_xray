@@ -613,7 +613,7 @@ $string['global_settings'] = 'X-Ray Global Settings';
 $string['courseselection'] = 'X-Ray Course Selection';
 
 // Default X-Ray controller error
-$string['xraydefaultpage'] = 'Access X-Ray main page.';
+$string['page_not_found'] = '404 - Page not found.';
 $string['error_xray_unknown'] = 'Unknown X-Ray response, please reload the page. If error persists, contact your system administrator.';
 
 // Courses

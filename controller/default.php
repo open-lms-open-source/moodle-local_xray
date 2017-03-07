@@ -40,6 +40,7 @@ class local_xray_controller_default extends mr_controller_block {
      * Special setup for docs page
      */
     public function setup() {
+        header("HTTP/1.0 404 Not Found");
         parent::setup();
     }
 
@@ -48,10 +49,9 @@ class local_xray_controller_default extends mr_controller_block {
      */
     public function view_action() {
         global $OUTPUT;
-        $xraydefpagemsg = get_string('xraydefaultpage', self::PLUGIN);
-        $message = get_string('nopermissions', 'error', $xraydefpagemsg);
+        $pagenotfoundmsg = get_string('page_not_found', self::PLUGIN);
         return $this->output->box(
                 $OUTPUT->notification(
-                        $message, 'notificationerror'));
+                    $pagenotfoundmsg, 'notificationerror'));
     }
 }
