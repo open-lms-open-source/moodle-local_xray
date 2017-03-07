@@ -33,6 +33,9 @@ Feature: The tree menu xray will visible or not in each place.
     And the following "courses" exist:
       | fullname | shortname | format |
       | Course1  | C1        | weeks  |
+    And the following "activities" exist:
+      | activity   | name            | intro      | type   | course | idnumber     |
+      | forum      | Forum 1 test    | intro test | general| C1     | forum1       |
     And the following "users" exist:
       | username     | firstname | lastname | email |
       | user1student | user1 | student  | user1@example.com |
@@ -48,7 +51,8 @@ Feature: The tree menu xray will visible or not in each place.
     And I log in as "user2teacher"
     And I am on site homepage
     And I follow "Course1"
-    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
+    And I navigate to "More..." in current page administration
+    Then I <vis> see "X-Ray Learning Analytic" in the "region-main" "region"
   Examples:
   | format         | vis        |
   | singleactivity | should not |
