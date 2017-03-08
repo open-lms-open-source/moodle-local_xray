@@ -33,6 +33,8 @@ Feature: Global and course level subscription pages.
       | displaymenu | 1 | local_xray |
       | emailfrequency | weekly | local_xray |
       | emailreport | 1 | local_xray |
+    And the following config values are set as admin:
+      | theme | clean |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
