@@ -270,4 +270,45 @@ class behat_local_xray extends behat_base {
         $generalcontext->should_not_exist('.alert.alert-info', 'css_element');
         $generalcontext->assert_page_not_contains_text(get_string('emailsdisabled', 'local_xray'));
     }
+
+    /**
+     * Change Global Subscription
+     *
+     * @Given /^Global subscription type is changed to "(?P<type_string>(?:[^"]|\\")*)" by "(?P<username_string>(?:[^"]|\\")*)"$/
+     * @param string $type courselevel/all/none
+     * @param string $username
+     * @return void
+     */
+    public function xray_global_subscription($type, $username) {
+        global $DB;
+        $session = $this->getSession();
+
+        If ($userid = $DB->get_field('user', 'id', array('username' => $username), IGNORE_MULTIPLE)) {
+            switch ($type) {
+                case "courselevel":
+                    $type = 0;
+                    break;
+                case "all":
+                    $type = 1;
+                    break;
+                case "none":
+                    $type = 2;
+                    break;
+                default:
+                    throw new ExpectationException('Invalid type '.$type, $session);
+            }
+
+            $data = new stdClass();
+            $data->userid = $userid;
+            $data->type = $type;
+            if ($currentvalue = $DB->get_record('local_xray_globalsub', array('userid' => $userid), 'id, type', IGNORE_MULTIPLE)) {
+                $data->id = $currentvalue->id;
+                $DB->update_record('local_xray_globalsub', $data);
+            } else {
+                $DB->insert_record('local_xray_globalsub', $data);
+            }
+        } else {
+            throw new ExpectationException("The username ".$username." doesn't exist", $session);
+        }
+    }
 }

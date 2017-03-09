@@ -72,9 +72,9 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I follow "HSUForum 1 test"
     Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
     Examples:
-    | user         | vis        |
-    | user2teacher | should     |
-    | user1student | should not |
+      | user         | vis        |
+      | user2teacher | should     |
+      | user1student | should not |
 
   @javascript @local_xray_menu_discussionindividualforum_forumsingle
   Scenario Outline: Menu xray with link to Discussion Report Individual Forum is displayed in forum view-page and in
@@ -107,10 +107,10 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I follow "Course1"
     And I follow "Quiz1"
     Then "X-Ray Learning Analytics" "link" should not exist in current page administration
-  Examples:
-  | user         |
-  | user1student |
-  | user2teacher |
+    Examples:
+      | user         |
+      | user1student |
+      | user2teacher |
 
   @javascript @local_xray_menu_discussionindividualforum_posts_linkaccessible
   Scenario: Check the message when the forum has no posts and check if breadcrum is working correctly when user go to Accessible Version of some graph in Discussion Report Individual Forum.
@@ -122,7 +122,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I am on site homepage
     And I follow "Course1"
     And I follow "Forum1"
-    And I navigate to "Forum Activity Report" node in "Forum administration > X-Ray Learning Analytics"
+    And I navigate to "X-Ray Learning Analytics > Forum Activity Report" in current page administration
     Then I should see "There is not enough data for this report. Please try again when there is more user activity in your course."
     And "a.xray-graph-box-link" "css_element" should not exist
     And I follow "Course1"
@@ -131,16 +131,12 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | Message | Generic Message       |
     And I follow "Course1"
     And I follow "Forum1"
-    And I navigate to "Forum Activity Report" node in "Forum administration > X-Ray Learning Analytics"
+    And I navigate to "X-Ray Learning Analytics > Forum Activity Report" in current page administration
     And "a.xray-graph-box-link" "css_element" should exist
-    # Open graph.
-    And I click on "a.xray-graph-box-link" "css_element"
-    # Close graph.
-    And I click on "a.xray-close-link" "css_element"
     # Go to Accessible data.
     And I click on "a.xray-icon-accessibledata" "css_element"
     And I switch to "_accessibledata" window
     And I wait until the page is ready
-    And I follow visible link "Forum Activity Report"
+    And I follow "Forum Activity Report"
     And I wait "3" seconds
     Then I should see "Forum Activity Report" in the "#region-main" "css_element"
