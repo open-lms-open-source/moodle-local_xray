@@ -31,6 +31,18 @@ class local_xray_api_data_export_groups_testcase extends local_xray_api_data_exp
         $this->init_base();
     }
 
+    /**
+     * Reset stuff
+     */
+    public function test_groups_export_init() {
+        $this->resetAfterTest();
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @depends test_groups_export_init
+     * @return stdClass[]
+     */
     public function test_groups_export() {
         $this->resetAfterTest(false);
 
