@@ -196,9 +196,6 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @return stdClass[]
      */
     protected function addcourses($nr, $timecreated = null, array $options = []) {
-        global $CFG;
-        /* @noinspection PhpIncludeInspection */
-        require_once($CFG->libdir.'/gradelib.php');
 
         if (empty($timecreated)) {
             $timecreated = time();
@@ -403,40 +400,25 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @param  int        $nr
      * @param  stdClass[] $courses
      * @return stdClass[]
-     * @throws dml_exception
-     * @throws RuntimeException
      */
-    protected function add_course_groups($nr, $courses) {
-        global $CFG;
-        /* @noinspection PhpIncludeInspection */
-        require_once($CFG->dirroot.'/group/lib.php');
+    protected function add_course_groups($nr, array $courses) {
+        $datagen = $this->getDataGenerator();
 
         /** @var stdClass[] $groups */
         $groups = [];
         foreach ($courses as $course) {
             for ($count = 0; $count < $nr; $count++) {
-                $t = time();
                 $data = [
-                    'courseid'          => (int)$course->id,
-                    'idnumber'          => '',
-                    'name'              => "Course group {$course->shortname}: {$nr}",
-                    'description'       => 'lorem ipsum',
-                    'descriptionformat' => FORMAT_MOODLE,
-                    'picture'           => false,
-                    'hidepicture'       => false,
-                    'timecreated'       => $t,
-                    'timemodified'      => $t,
+                    'courseid'    => (int)$course->id,
+                    'description' => "Group description {$count} - {$course->shortname}"
                 ];
-
-                $groupid = groups_create_group((object)$data);
-
-                unset($data['idnumber']);
-                unset($data['descriptionformat']);
-                unset($data['picture']);
-                unset($data['hidepicture']);
-                $bdata = ['id' => $groupid];
-                $bdata += $data;
-                $groups[] = (object)$bdata;
+                $group = $datagen->create_group($data);
+                unset($group->idnumber);
+                unset($group->descriptionformat);
+                unset($group->picture);
+                unset($group->hidepicture);
+                unset($group->enrolmentkey);
+                $groups[] = $group;
             }
         }
 
@@ -463,21 +445,26 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
      * @return stdClass[] - list of users
      */
     protected function add_course_groups_members($nr, $courses) {
-        global $CFG;
-        /* @noinspection PhpIncludeInspection */
-        require_once($CFG->dirroot.'/group/lib.php');
+        global $DB;
+
+        $datagen = $this->getDataGenerator();
 
         $users = $this->addusers($nr);
         $this->users_enrol($courses, $users);
         $gmdata = [];
         foreach ($courses as $course) {
-            $groups = groups_get_all_groups($course->id);
+            $groups = $DB->get_recordset('groups', ['courseid' => $course->id], 'id ASC');
             foreach ($groups as $group) {
                 foreach ($users as $user) {
-                    groups_add_member($group->id, $user->id);
+                    $data = [
+                        'groupid' => $group->id,
+                        'userid'  => $user->id
+                    ];
+                    $datagen->create_group_member($data);
                 }
                 $gmdata += groups_get_members($group->id, 'gm.id, gm.groupid, gm.userid, gm.timeadded', 'gm.id ASC');
             }
+            $groups->close();
         }
 
         return $gmdata;
