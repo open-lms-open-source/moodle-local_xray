@@ -83,6 +83,66 @@ abstract class jwthelper {
     }
 
     /**
+     * @return array
+     */
+    public static function generate_access() {
+        global $COURSE, $USER, $CFG;
+
+        $result = [];
+
+        $cid = get_config(self::PLUGIN, 'xrayclientid');
+        $context = \context_course::instance($COURSE->id);
+        $canviewreports = has_capability('local/xray:view', $context);
+        if ($canviewreports) {
+            $coursereports = [
+                'activity'   => 'activityreport',
+                'discussion' => 'discussionreport',
+                'gradebook'  => 'gradebookreport',
+                'risk'       => 'risk'
+            ];
+
+            $creports = [];
+            foreach ($coursereports as $coursereport => $capability) {
+                if (has_capability("local/xray:{$capability}_view", $context)) {
+                    $creports[] = $coursereport;
+                }
+            }
+
+            $courseobject = (object) [
+                'path'      => '/coursereports',
+                'parameter' => [
+                    (object) ['name' => 'report'   , 'values' => $creports                               ],
+                    (object) ['name' => 'courseid' , 'values' => [(int)$COURSE->id]                      ],
+                    (object) ['name' => 'uid'      , 'values' => [(int)$USER->id]                        ],
+                    (object) ['name' => 'forumid'  , 'required' => false                                 ],
+                    (object) ['name' => 'forumtype', 'values' => ['classic', 'hsu'], 'required' => false ],
+                    (object) ['name' => 'jouleurl' , 'values' => [$CFG->wwwroot]                         ],
+                    (object) ['name' => 't'                                                              ],
+                    (object) ['name' => 'cid', 'values' => [$cid]                                        ],
+                ]
+            ];
+
+            $result[] = $courseobject;
+        }
+
+        if (has_capability('local/xray:systemreports_view', \context_system::instance())) {
+            $domainobject = (object) [
+                'path'      => '/domainreports',
+                'parameter' => [
+                    (object) ['name' => 't'                                     ],
+                    (object) ['name' => 'cid'     , 'values' => [$cid]          ],
+                    (object) ['name' => 'uid'     , 'values' => [(int)$USER->id]],
+                    (object) ['name' => 'jouleurl', 'values' => [$CFG->wwwroot] ],
+                ]
+            ];
+
+            $result[] = $domainobject;
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns generated JSON Web Token according to the RFC 7519 (https://tools.ietf.org/html/rfc7519)
      * For this to work AWS secret must be configured in the module global settings section.
      * Token expires in token_timeout value. Default is 1h.
@@ -97,12 +157,15 @@ abstract class jwthelper {
         $token = false;
 
         if (!empty($key) and !empty($iss)) {
+            $access = self::generate_access();
             $now = time();
-            $payload = [
-                'iss' => $iss,
-                'nbf' => $now,
-                'exp' => $now + self::token_timeout(),
-            ];
+            $payload = [];
+            $payload['iss'] = $iss;
+            if (!empty($access)) {
+                $payload['access'] = $access;
+            }
+            $payload['nbf'] = $now;
+            $payload['exp'] = $now + self::token_timeout();
 
             /* @noinspection PhpIncludeInspection */
             require_once($CFG->dirroot.'/local/xray/vendor/autoload.php');

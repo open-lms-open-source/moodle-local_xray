@@ -35,12 +35,15 @@ class local_xray_api_jwthelper_testcase extends local_xray_base_testcase {
     }
 
     public function test_jwttoken_false() {
+        $this->resetAfterTest();
+        $this->setAdminUser();
         $token = \local_xray\local\api\jwthelper::get_token();
         $this->assertFalse($token);
     }
 
     public function test_jwttoken_ok() {
-        $this->resetAfterTest(true);
+        $this->setAdminUser();
+        $this->resetAfterTest();
         $this->config_set_ok();
 
         $token = \local_xray\local\api\jwthelper::get_token();
@@ -48,7 +51,8 @@ class local_xray_api_jwthelper_testcase extends local_xray_base_testcase {
     }
 
     public function test_jwttoken_valid() {
-        $this->resetAfterTest(true);
+        $this->setAdminUser();
+        $this->resetAfterTest();
         $this->config_set_ok();
 
         $token = \local_xray\local\api\jwthelper::get_token();
