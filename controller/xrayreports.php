@@ -51,7 +51,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
     protected $oldreportname;
 
     /**
-     * Show id.
+     * Forum id.
      * @var String
      */
     protected $forumid = 0;
