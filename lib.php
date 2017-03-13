@@ -75,7 +75,7 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     if (in_array($page->pagetype, ['mod-forum-view', 'mod-hsuforum-view',
         'mod-forum-discuss', 'mod-hsuforum-discuss'])) {
         if (local_xray_reports()) {
-            $extraparams['showid' ] = $page->cm->instance;
+            $extraparams['forumid'] = $page->cm->instance;
         } else {
             $extraparams['forum'] = $page->cm->instance;
         }

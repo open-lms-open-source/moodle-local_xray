@@ -54,6 +54,12 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
      * Show id.
      * @var String
      */
+    protected $forumid = 0;
+
+    /**
+     * Show id.
+     * @var String
+     */
     protected $showid = 0;
 
     /**
@@ -78,7 +84,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
         if ($this->reportname == 'activityindividual' || $this->reportname == 'discussionindividual') {
             $this->showid = required_param("showid", PARAM_INT); // User id viewed.
         } else if ($this->reportname == 'discussionindividualforum') {
-            $this->showid = required_param("showid", PARAM_INT); // Forum id viewed.
+            $this->forumid = required_param("forumid", PARAM_INT); // Forum id viewed.
             $this->cmid = required_param('cmid', PARAM_INT); // Cmid of forum/hsuforum.
             $this->d = optional_param('d', null, PARAM_INT); // Id of discussion.
         }
@@ -105,17 +111,15 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
         $jouleparams = array('name' => $this->reportname);
         // Report name. Fix reportname for X-Ray params.
         $xrayparams = array('name' => $this->reportname);
-
-        // Forum Activity Report, Student Activity Report or Student Discussion Report.
-        if ($this->showid) {
-            $jouleparams["showid"] = $this->showid;
-            $xrayparams["showid"] = $this->showid;
-        }
-
-        $this->url->params($xrayparams);
-        // Navbar.
+        // Navbar and extra params.
         switch ($this->reportname) {
             case 'activityindividual':
+                // Params.
+                if ($this->showid) {
+                    $jouleparams["showid"] = $this->showid;
+                    $xrayparams["showid"] = $this->showid;
+                }
+                // Navbar.
                 $PAGE->navbar->add(get_string("navigation_xray", $this->component));
                 // Add nav to return to activityreport.
                 $PAGE->navbar->add(get_string("activityreport", $this->component),
@@ -125,6 +129,12 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 $PAGE->navbar->add($PAGE->title);
                 break;
             case 'discussionindividual':
+                // Params.
+                if ($this->showid) {
+                    $jouleparams["showid"] = $this->showid;
+                    $xrayparams["showid"] = $this->showid;
+                }
+                // Navbar.
                 $PAGE->navbar->add(get_string("navigation_xray", $this->component));
                 // Add nav to return to discussionreport.
                 $PAGE->navbar->add(get_string("discussionreport", $this->component),
@@ -134,6 +144,12 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 $PAGE->navbar->add($PAGE->title);
                 break;
             case 'discussionindividualforum':
+                // Params.
+                if ($this->forumid) {
+                    $jouleparams["forumid"] = $this->forumid;
+                    $xrayparams["forumid"] = $this->forumid;
+                }
+                // Navbar.
                 // Add title to breadcrumb.
                 $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
                 $modulename = 'forum';
@@ -144,8 +160,15 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                             INNER JOIN {modules} m ON m.id = cm.module
                             WHERE cm.id = :cmid";
                     $params = array('cmid' => $this->cmid);
-                    $module = $DB->get_record_sql($sqlmodule, $params);
-                    $modulename = $module->name;
+                    if ($module = $DB->get_record_sql($sqlmodule, $params)) {
+                        $modulename = $module->name;
+                        if ($modulename == 'forum') {
+                            $xrayparams["forumtype"] = "classic";
+                        } elseif ($modulename == 'hsuforum') {
+                            $xrayparams["forumtype"] = "hsu";
+                        }
+                    }
+
                 }
 
                 // Get and show forun name in navbar.
@@ -166,7 +189,8 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 $PAGE->navbar->add(get_string("navigation_xray", $this->component));
                 $PAGE->navbar->add(get_string($this->oldreportname, $this->component), $this->url);
         }
-
+        // Url in joule side.
+        $this->url->params($jouleparams);
         // The title will be displayed in the X-ray page.
         $this->heading->text = '';
 
@@ -182,6 +206,11 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
             $xrayreportsurl  = get_config('local_xray', 'xrayreportsurl');
             if (($xrayreportsurl === false) || ($xrayreportsurl === '')) {
                 print_error("error_xrayreports_nourl", $this->component);
+            }
+            // Get the Client Id.
+            $domain = get_config('local_xray', 'xrayclientid');
+            if (($domain === false) || ($domain === '')) {
+                print_error("error_xrayclientid", $this->component);
             }
             // Tokens.
             // TODO this should be disabled for INT-10445. It will be added later.
@@ -202,6 +231,8 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 $SESSION->xray_cookie_xrayreports = true;
                 redirect($url);
             }
+            // Client Id.
+            $xrayparams["cid"] = $domain;
             // The param jouleurl is required in shiny server to add link to each report of joule side.
             $xrayparams["jouleurl"] = $CFG->wwwroot;
             // Course id.
