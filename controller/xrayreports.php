@@ -115,6 +115,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
         switch ($this->reportname) {
             case 'activityindividual':
                 // Params.
+                $xrayparams["name"] = "activity";
                 if ($this->showid) {
                     $jouleparams["showid"] = $this->showid;
                     $xrayparams["showid"] = $this->showid;
@@ -130,6 +131,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 break;
             case 'discussionindividual':
                 // Params.
+                $xrayparams["name"] = "discussion";
                 if ($this->showid) {
                     $jouleparams["showid"] = $this->showid;
                     $xrayparams["showid"] = $this->showid;
@@ -145,6 +147,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 break;
             case 'discussionindividualforum':
                 // Params.
+                $xrayparams["name"] = "discussion";
                 if ($this->forumid) {
                     $jouleparams["forumid"] = $this->forumid;
                     $xrayparams["forumid"] = $this->forumid;
