@@ -644,6 +644,7 @@ $string['noaccessxrayreports'] = 'X-Ray Reports are not available. If you want t
 $string['noaccessoldxrayreports'] = 'This version of the report is no longer available. There is a new version of the '.
     'report available. If you still want this version of the report, please contact your system administrator.';
 $string['error_xrayreports_nourl'] = 'The Xray Reports URL is missing from the X-Ray Learning Analytics configuration page.';
+$string['error_xrayclientid'] = 'X-Ray Learning Analytics Client Identifier is empty';
 $string['error_xrayreports_gettoken'] = 'Error to get token for access to X-Ray reports.';
 
 
