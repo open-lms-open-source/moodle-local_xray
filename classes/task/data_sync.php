@@ -126,6 +126,9 @@ class data_sync extends scheduled_task {
             mtrace($e->getMessage());
             mtrace($e->getTraceAsString());
             sync_failed::create_from_exception($e)->trigger();
+            if (defined('XRAY_RUNNING_CLI_EXPORT') && XRAY_RUNNING_CLI_EXPORT) {
+                throw $e;
+            }
         }
     }
 
@@ -183,7 +186,9 @@ class data_sync extends scheduled_task {
             }
 
             // Save counters only when entire process passed OK.
-            data_export::store_counters();
+            if (isset($this->config->disablecounterincrease) && !$this->config->disablecounterincrease) {
+                data_export::store_counters();
+            }
 
             sync_log::create_msg("Uploaded {$destfile}.")->trigger();
         } else {
@@ -227,7 +232,9 @@ class data_sync extends scheduled_task {
             );
 
             // Save counters only when entire process passed OK.
-            data_export::store_counters();
+            if (isset($this->config->disablecounterincrease) && !$this->config->disablecounterincrease) {
+                data_export::store_counters();
+            }
 
             sync_log::create_msg("Uploaded export.")->trigger();
         }
