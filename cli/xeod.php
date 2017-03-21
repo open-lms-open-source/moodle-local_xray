@@ -36,20 +36,6 @@ use local_xray\task\data_sync;
 require_once(__DIR__.'/../../../config.php');
 require_once($CFG->libdir.'/clilib.php');
 
-// Global variables.
-
-// Required keys.
-$reqkeys = array(
-    "xrayclientid",
-    "awskey",
-    "awssecret",
-    "s3bucket",
-    "s3bucketregion",
-    "s3protocol",
-    "s3uploadretry",
-    "newformat"
-);
-
 // Add export execution flag.
 define('XRAY_RUNNING_CLI_EXPORT', true);
 
@@ -68,7 +54,18 @@ function process_xray_exports($xrayexportsconfig) {
  * @param $key array key
  */
 function process_xray_export($xrayexportconfig, $key) {
-    global $CFG, $reqkeys;
+    global $CFG;
+    // Required keys.
+    $reqkeys = array(
+        "xrayclientid",
+        "awskey",
+        "awssecret",
+        "s3bucket",
+        "s3bucketregion",
+        "s3protocol",
+        "s3uploadretry",
+        "newformat"
+    );
     mtrace('Processing export number '.($key + 1));
     // Check if the required values exist.
     if (count(array_intersect($reqkeys, array_keys($xrayexportconfig))) !== count($reqkeys)) {

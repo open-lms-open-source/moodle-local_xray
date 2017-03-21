@@ -186,7 +186,7 @@ class data_sync extends scheduled_task {
             }
 
             // Save counters only when entire process passed OK.
-            if (!isset($this->config->disablecounterincrease) || !$this->config->disablecounterincrease) {
+            if (empty($this->config->disablecounterincrease)) {
                 data_export::store_counters();
             }
 
@@ -232,7 +232,7 @@ class data_sync extends scheduled_task {
             );
 
             // Save counters only when entire process passed OK.
-            if (!isset($this->config->disablecounterincrease) || !$this->config->disablecounterincrease) {
+            if (empty($this->config->disablecounterincrease)) {
                 data_export::store_counters();
             }
 
