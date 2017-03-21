@@ -226,3 +226,33 @@ function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
     }
 }
 
+/**
+ * Listener for user enrolment updated. Implemented in order to remedy MDL-58079.
+ * @param \core\event\user_enrolment_updated $event
+ * @return void
+ */
+function local_xray_user_enrolment_updated(\core\event\user_enrolment_updated $event) {
+    global $DB, $CFG;
+    $versionwithfixes = [
+        ['branch' => '2.7', 'version' => 2014051219.01], // 2.7.19+ .
+        ['branch' => '3.0', 'version' => 2015111609.01], // 3.0.9+ .
+        ['branch' => '3.1', 'version' => 2016052305.02], // 3.1.5+ .
+        ['branch' => '3.2', 'version' => 2016120502.02], // 3.2.2+ .
+        ['branch' => '3.3', 'version' => null         ], // 3.3 .
+    ];
+
+    // TODO: complete validation check.
+    foreach ($versionwithfixes as $check) {
+        if ($CFG->branch == $check['branch']) {
+            if ($CFG->version > $check['version']) {
+                return;
+            }
+        }
+    }
+
+    $data = [
+        'id'           => $event->objectid,
+        'timemodified' => $event->timecreated
+    ];
+    $DB->update_record_raw('user_enrolments', $data);
+}

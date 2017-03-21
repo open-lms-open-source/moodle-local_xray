@@ -77,4 +77,9 @@ $observers = [
         'callback'    => 'local_xray_group_member_removed',
         'includefile' => '/local/xray/listeners.php'
     ],
+    [
+        'eventname'   => '\core\event\user_enrolment_updated',
+        'callback'    => 'local_xray_user_enrolment_updated',
+        'includefile' => '/local/xray/listeners.php'
+    ],
 ];
