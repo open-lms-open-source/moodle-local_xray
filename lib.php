@@ -20,14 +20,15 @@
  * @package local_xray
  * @author Pablo Pagnone
  * @author German Vitale
- * @author Darko MIletic
+ * @author Darko Miletic
+ * @author David Castro <david.castro@blackboard.com>
+ * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Moodlerooms
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-// Contants.
+// Constants.
 
 define('XRAYSUBSCRIBECOURSE', 0);
 define('XRAYSUBSCRIBEON', 1);
