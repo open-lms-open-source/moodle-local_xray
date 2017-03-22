@@ -233,19 +233,33 @@ function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
  */
 function local_xray_user_enrolment_updated(\core\event\user_enrolment_updated $event) {
     global $DB, $CFG;
-    $versionwithfixes = [
-        ['branch' => '2.7', 'version' => 2014051219.01], // 2.7.19+ .
-        ['branch' => '3.0', 'version' => 2015111609.01], // 3.0.9+ .
-        ['branch' => '3.1', 'version' => 2016052305.02], // 3.1.5+ .
-        ['branch' => '3.2', 'version' => 2016120502.02], // 3.2.2+ .
-        ['branch' => '3.3', 'version' => null         ], // 3.3 .
-    ];
 
-    // TODO: complete validation check.
-    foreach ($versionwithfixes as $check) {
-        if ($CFG->branch == $check['branch']) {
-            if ($CFG->version > $check['version']) {
-                return;
+     // In cases where we need to explicitly enforce this fix we can use:
+     // $CFG->local_xray_userenrolfix_enable variable.
+     // When set to true no version checking will be performed and event code will always be executed.
+    if (empty($CFG->local_xray_userenrolfix_enable)) {
+        // If Moodle 3.3 with fix just skip it.
+        if ($CFG->version >= 2017033000) {
+            return;
+        }
+
+        // Are we within 3.0 - 3.3.dev Moodle range?
+        if ($CFG->version >= 2015111600) {
+            $versionwithfixes = [
+                '30' => 2015111609.02, // 3.0.9+ .
+                '31' => 2016052305.03, // 3.1.5+ .
+                '32' => 2016120502.03, // 3.2.2+ .
+                '33' => null           // 3.3.dev .
+            ];
+            foreach ($versionwithfixes as $branch => $version) {
+                if ($CFG->branch == $branch) {
+                    if (!empty($version)) {
+                        if ($CFG->version >= $version) {
+                            return;
+                        }
+                    }
+                    break;
+                }
             }
         }
     }
