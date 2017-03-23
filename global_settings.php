@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') or die();
 if ($hassiteconfig) {
     global $CFG;
     /* @noinspection PhpIncludeInspection */
+    require_once($CFG->dirroot.'/local/xray/locallib.php');
     require_once($CFG->dirroot.'/local/xray/lib.php');
     $plugin = 'local_xray';
     

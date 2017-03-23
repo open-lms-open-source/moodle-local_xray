@@ -57,6 +57,7 @@ class send_emails extends scheduled_task {
     public function execute() {
         global $CFG, $DB, $OUTPUT;
 
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
         require_once($CFG->dirroot.'/local/xray/lib.php');
         require_once("$CFG->libdir/pdflib.php");
 

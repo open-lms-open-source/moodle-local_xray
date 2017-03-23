@@ -36,6 +36,7 @@ class local_xray_controller_subscribe extends mr_controller {
         $courseid = required_param('courseid', PARAM_INT);
         $saved = optional_param('saved', 0, PARAM_INT);
 
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
         require_once($CFG->dirroot.'/local/xray/lib.php');
         require_once($CFG->dirroot.'/local/xray/subscribeform.php');
 
