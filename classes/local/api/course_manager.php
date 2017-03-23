@@ -46,7 +46,28 @@ abstract class course_manager {
         if ($cid === 'all' || $cid === 0) {
             return array();
         }
-        return course_validation::get_courses($cid);
+
+        global $DB;
+
+        $query = 'SELECT mdc.id, mdc.fullname, lxsc.id AS xray_id
+                    FROM {course} mdc
+               LEFT JOIN {local_xray_selectedcourse} lxsc ON (mdc.id = lxsc.cid)
+                   WHERE mdc.category = ?
+                ORDER BY mdc.fullname';
+
+        $courses = $DB->get_records_sql($query, array($cid));
+
+        $res = array();
+        foreach ($courses as $course) {
+            $res[] = array(
+                'id' => $course->id,
+                'name' => $course->fullname,
+                'checked' => !is_null($course->xray_id), // TODO bring from database
+                'disabled' => false // TODO bring from database.
+            );
+        }
+
+        return $res;
     }
 
     /**

@@ -647,4 +647,3 @@ $string['error_xrayreports_nourl'] = 'The Xray Reports URL is missing from the X
 $string['error_xrayclientid'] = 'X-Ray Learning Analytics Client Identifier is empty';
 $string['error_xrayreports_gettoken'] = 'Error to get token for access to X-Ray reports.';
 
-

@@ -58,7 +58,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
     public function view_action() {
 
         $this->message_reports_disabled();
-        $this->validate_course_status();
+        if (!course_manager::is_course_selected($this->courseid)) {
+            return $this->output->notification(get_string('warn_course_disabled', 'local_xray'), 'notifymessage');
+        }
+        $this->validate_course();
         $this->addiconhelp();
         $output = '';
         $ctx = $this->get_context();

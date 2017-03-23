@@ -28,7 +28,6 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/local/mr/framework/controller.php');
 require_once($CFG->dirroot.'/local/xray/lib.php');
 use local_xray\event\get_report_failed;
-use local_xray\local\api\course_validation;
 
 /**
  * Xray integration Reports Controller
@@ -691,28 +690,15 @@ class local_xray_controller_reports extends mr_controller {
     /**
      * Validate if the course is available on X-Ray.
      */
-    public function validate_course_status() {
+    public function validate_course() {
         global $OUTPUT, $COURSE;
 
-        if (($courseinfo = course_validation::validate_course($COURSE)) && !defined('BEHAT_SITE_RUNNING')) {
-            if (!$courseinfo['status']) {
-                $a = new stdClass();
-                $a->single = ($courseinfo[course_validation::XRAYCOURSESINGLEFORMAT] ? get_string('course_single_activity_format', $this->component) : '');
-                $maxstudents = get_config('local_xray', 'maxstudents');
-                $max = (!empty($maxstudents) ? $maxstudents : course_validation::MAXSTUDENTS);
-                $a->students = ($courseinfo[course_validation::XRAYCOURSESTUDENTS] ? get_string('course_many_students', $this->component, $max) : '');
-                $a->hidden = ($courseinfo[course_validation::XRAYCOURSEHIDDEN] ? get_string('course_hidden', $this->component) : '');
-
-                $this->print_header();
-                echo $OUTPUT->notification(get_string('course_disabled', $this->component, $a), 'notifymessage');
-                $this->print_footer();
-                die();
-            } else if (!$courseinfo['checked']) {
-                $this->print_header();
-                echo $this->output->notification(get_string('warn_course_disabled', $this->component), 'notifymessage');
-                $this->print_footer();
-                die();
-            }
+        // Validate if the course has the Single Activity format.
+        if (local_xray_single_activity_course($COURSE->id)) {
+            $this->print_header();
+            echo $OUTPUT->notification(get_string("error_single_activity", $this->component));
+            $this->print_footer();
+            die();
         }
     }
 
