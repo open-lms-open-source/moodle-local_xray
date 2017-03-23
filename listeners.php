@@ -234,9 +234,9 @@ function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
 function local_xray_user_enrolment_updated(\core\event\user_enrolment_updated $event) {
     global $DB, $CFG;
 
-     // In cases where we need to explicitly enforce this fix we can use:
-     // $CFG->local_xray_userenrolfix_force_enable variable.
-     // When set to true no version checking will be performed and event code will always be executed.
+    // In cases where we need to explicitly enforce this fix we can use:
+    // $CFG->local_xray_userenrolfix_force_enable variable.
+    // When set to true no version checking will be performed and event code will always be executed.
     if (empty($CFG->local_xray_userenrolfix_force_enable)) {
         // If Moodle 3.3 with fix just skip it.
         if ($CFG->version >= 2017033000) {
