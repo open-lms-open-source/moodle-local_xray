@@ -56,7 +56,10 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         $PAGE->navbar->add($PAGE->title);
 
         $this->message_reports_disabled();
-        $this->validate_course_status();
+        if (!course_manager::is_course_selected($this->courseid)) {
+            return $this->output->notification(get_string('warn_course_disabled', 'local_xray'), 'notifymessage');
+        }
+        $this->validate_course();
         $this->addiconhelp();
 
         $output = "";
