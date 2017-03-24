@@ -207,10 +207,8 @@ function config_toggle_categories(YUI, data) {
     
     self.checkCourses = function(courses, checked) {
         for(var c in courses) {
-            if (!$(coursePrefix + courses[c].id).is(':disabled')) {
-                $(coursePrefix + courses[c].id).prop('checked', checked);
-                self.updateCourseSelection(courses[c], checked);
-            }
+            $(coursePrefix + courses[c].id).prop('checked', checked);
+            self.updateCourseSelection(courses[c], checked);
         }
     };
     
