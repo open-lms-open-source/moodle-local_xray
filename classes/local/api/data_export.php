@@ -1404,7 +1404,7 @@ class data_export {
             }
         }
 
-        return true;
+        return !empty($files);
     }
 
     /**
