@@ -36,6 +36,8 @@ $string['xraydisplayheading'] = 'Integración de curso';
 $string['xraydisplayheading_desc'] = 'Controla la visualización de información y links a los reportes en la página principal.';
 $string['displaymenu'] = 'Mostrar menu de reportes.';
 $string['displaymenu_desc'] = 'Controlar la visualización del menu de reportes en página principal del curso.';
+$string['displaysystemreports'] = 'Mostrar reportes del sistema.';
+$string['displaysystemreports_desc'] = 'Controla si se muestran los reportes del sistema.';
 $string['displayheaderdata'] = 'Mostrar Análisis';
 $string['displayheaderdata_desc'] = 'Controla la visualización de Análisis del curso en la página principal del curso.';
 $string['debuginfo'] = 'Información:';
@@ -106,6 +108,7 @@ $string['error_fexists'] = '¡El archivo "{$a}" ya existe!';
 $string['error_fnocreate'] = '¡No puedo crear el archivo "{$a}"!';
 $string['error_systemreports_nourl'] = 'La url para obtener reportes de sistemas no esta configurada correctamente.';
 $string['error_systemreports_gettoken'] = 'Error al obtener token para acceder a reportes de sistema.';
+$string['error_systemreports_disabled'] = 'Los reportes del sistema no se están mostrando. Están inhabilitados en la página de configuración de X-Ray.';
 
 /* Settings */
 $string['xrayclientid'] = 'Identificador de cliente';
