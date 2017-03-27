@@ -31,6 +31,8 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | xraypassword | xraypass | local_xray |
       | xrayclientid | testclient | local_xray |
       | displaymenu | 1 | local_xray |
+    And the following config values are set as admin:
+      | theme | clean |
     And the following "courses" exist:
       | fullname | shortname | format |
       | Course1 | C1 | topics |
@@ -67,10 +69,12 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I am on site homepage
     And I follow "Course1"
     And I follow "Forum 1 test"
-    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
+    And I expand "Course administration" node
+    Then I <vis> see "X-Ray Learning Analytics"
     And I follow "Course1"
     And I follow "HSUForum 1 test"
-    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
+    And I expand "Course administration" node
+    Then I <vis> see "X-Ray Learning Analytics"
     Examples:
       | user         | vis        |
       | user2teacher | should     |
@@ -88,10 +92,12 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I am on site homepage
     And I follow "Course1"
     And I follow "Forum 1 test"
-    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
+    And I expand "Course administration" node
+    Then I <vis> see "X-Ray Learning Analytics"
     And I follow "Course1"
     And I follow "HSUForum 1 test"
-    Then "X-Ray Learning Analytics" "text" <vis> exist in current page administration
+    And I expand "Course administration" node
+    Then I <vis> see "X-Ray Learning Analytics"
     Examples:
       | user         | vis        |
       | user2teacher | should     |
@@ -119,10 +125,15 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | forum      | Forum1    | intro test | general  | C1     | forum1       |
     # I create posts for the forum.
     And I log in as "admin"
+    And I wait until the page is ready
     And I am on site homepage
     And I follow "Course1"
+    And I wait until the page is ready
     And I follow "Forum1"
-    And I navigate to "X-Ray Learning Analytics > Forum Activity Report" in current page administration
+    And I wait until the page is ready
+    And I expand "Course administration" node
+    And I expand "X-Ray Learning Analytics" node
+    And I follow "Forum Activity Report"
     Then I should see "There is not enough data for this report. Please try again when there is more user activity in your course."
     And "a.xray-graph-box-link" "css_element" should not exist
     And I follow "Course1"
@@ -131,7 +142,9 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | Message | Generic Message       |
     And I follow "Course1"
     And I follow "Forum1"
-    And I navigate to "X-Ray Learning Analytics > Forum Activity Report" in current page administration
+    And I expand "Course administration" node
+    And I expand "X-Ray Learning Analytics" node
+    And I follow "Forum Activity Report"
     And "a.xray-graph-box-link" "css_element" should exist
     # Go to Accessible data.
     And I click on "a.xray-icon-accessibledata" "css_element"

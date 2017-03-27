@@ -33,6 +33,8 @@ Feature: Global and course level subscription pages.
       | displaymenu | 1 | local_xray |
       | emailfrequency | weekly | local_xray |
       | emailreport | 1 | local_xray |
+    And the following config values are set as admin:
+      | theme | clean |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -50,17 +52,21 @@ Feature: Global and course level subscription pages.
     Given I log in as "teacher1"
     And I am on site homepage
     And I follow "Xray Course 01"
+    And I wait until the page is ready
     And ".xray_subscription_link" "css_element" should exist
     And I follow "Subscribe to email report"
+    And I wait until the page is ready
     And I switch to "_xray_course_subscription" window
     And Xray email alerts are turned off
     And "#id_subscribe" "css_element" should exist
     And I click on "id_subscribe" "checkbox"
     And I press "Save changes"
+    And I wait until the page is ready
     And ".alert.alert-success" "css_element" should exist
     And I should see "Changes saved"
     And I switch to the main window
     And I reload the page
+    And I wait until the page is ready
     And ".xray_subscription_link" "css_element" should exist
     And I should not see "Subscribe to email report"
     And I should see "Unsubscribe from email report"

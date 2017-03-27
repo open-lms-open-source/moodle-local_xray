@@ -219,6 +219,8 @@ class local_xray_controller_reports extends mr_controller {
      * Require capabilities
      */
     public function require_capability() {
+        global $CFG;
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
         if (!local_xray_reports()) {
             require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
         }
@@ -685,7 +687,9 @@ class local_xray_controller_reports extends mr_controller {
      * Validate if the course is available on X-Ray.
      */
     public function validate_course() {
-        global $OUTPUT, $COURSE;
+        global $OUTPUT, $COURSE, $CFG;
+
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
 
         // Validate if the course has the Single Activity format.
         if (local_xray_single_activity_course($COURSE->id)) {
@@ -700,6 +704,8 @@ class local_xray_controller_reports extends mr_controller {
      * Check if the shiny reports are available.
      */
     public function message_reports_disabled() {
+        global $CFG;
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
         if (local_xray_reports() && !defined('BEHAT_SITE_RUNNING')) {
             $this->print_header();
             echo $this->output->notification(get_string('noaccessoldxrayreports', $this->component), 'error');
