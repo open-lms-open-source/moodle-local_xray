@@ -26,7 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 /* @var stdClass $CFG */
 require_once($CFG->dirroot.'/local/mr/framework/controller.php');
-require_once($CFG->dirroot.'/local/xray/lib.php');
 
 /**
  * Xray course listing API controller

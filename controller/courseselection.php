@@ -92,7 +92,6 @@ class local_xray_controller_courseselection extends mr_controller_admin {
         
             $selcourTable = 'local_xray_selectedcourse';
 
-            require_once($CFG->dirroot.'/local/xray/lib.php');
             require_once($CFG->dirroot.'/local/xray/courseselectionform.php');
 
             // Prepare the form

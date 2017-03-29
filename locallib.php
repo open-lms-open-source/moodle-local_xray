@@ -310,8 +310,6 @@ function local_xray_get_teacher_courses($userid) {
  * @return bool.
  */
 function local_xray_is_teacher_in_course ($courseid, $userid) {
-    global $CFG;
-    require_once($CFG->dirroot.'/local/xray/locallib.php');
     $usercourses = local_xray_get_teacher_courses($userid);
     if (array_key_exists($courseid, $usercourses)) {
         return true;
@@ -360,8 +358,6 @@ function local_xray_get_support_user() {
  * @return bool.
  */
 function local_xray_send_email_today() {
-    global $CFG;
-    require_once($CFG->dirroot.'/local/xray/locallib.php');
     // Check frequency.
     $frequency = get_config('local_xray', 'emailfrequency');
     // If the frequency is never, the email should not be sent.
