@@ -20,7 +20,7 @@
 # @copyright  Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-@local @local_xray @local_xray_subscription
+@local @local_xray @local_xray_email_subscription
 Feature: Global and course level subscription pages.
 
   Background:
