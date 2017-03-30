@@ -34,6 +34,7 @@ $string['reports'] = 'Reportes';
 $string['analytics'] = 'Análisis de curso';
 $string['xraydisplayheading'] = 'Integración de curso';
 $string['xraydisplayheading_desc'] = 'Controla la visualización de información y links a los reportes en la página principal.';
+$string['xraydisplaysystemheading'] = 'Reportes del sistema';
 $string['displaymenu'] = 'Mostrar menu de reportes.';
 $string['displaymenu_desc'] = 'Controlar la visualización del menu de reportes en página principal del curso.';
 $string['displaysystemreports'] = 'Mostrar reportes del sistema.';
