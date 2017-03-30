@@ -39,6 +39,7 @@ class dashboard {
      * @return bool|dashboard_data
      */
     public static function get($courseid, $userid = false) {
+        global $CFG;
 
         $result = "";
         $context = \context_course::instance($courseid);
@@ -149,12 +150,14 @@ class dashboard {
                 $recommendationslist = array();
                 if ($userid) {
                     $addrecommendations = '';
+                    require_once($CFG->dirroot.'/local/xray/locallib.php');
+                    $isteacherincourse = local_xray_is_teacher_in_course($courseid, $userid);
                     if (has_capability("local/xray:adminrecommendations_view", $context, $userid)) {
                         $addrecommendations = self::XRAYRECOMMENDATIONADMIN;
-                        if (local_xray_is_teacher_in_course($courseid, $userid)) {
+                        if ($isteacherincourse) {
                             $addrecommendations = self::XRAYRECOMMENDATIONALL;
                         }
-                    } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid) || local_xray_is_teacher_in_course($courseid, $userid)) {
+                    } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid) || $isteacherincourse) {
                         $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
                     }
                     // Recommendations for Admin user..

@@ -9,13 +9,13 @@
  */
 
 require_once("$CFG->libdir/formslib.php");
-require_once($CFG->dirroot.'/local/xray/lib.php');
 
 class globalsub_form extends moodleform {
     public function definition() {
-
+        global $CFG;
         $mform = $this->_form;
 
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
         $options = array(
             XRAYSUBSCRIBECOURSE => get_string('globalsubcourse', 'local_xray'),
             XRAYSUBSCRIBEON => get_string('globalsubon', 'local_xray'),

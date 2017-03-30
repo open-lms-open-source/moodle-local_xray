@@ -580,13 +580,11 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      */
     public function print_course_menu($reportcontroller, $reports) {
-        global $COURSE;
+        global $COURSE, $CFG, $PAGE, $OUTPUT, $USER;
 
         if (!course_manager::is_course_selected($COURSE->id)) {
             return '';
         }
-
-        global $PAGE, $OUTPUT, $USER;
 
         // Load Jquery.
         $PAGE->requires->jquery();
@@ -634,6 +632,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 $subscription_link = "";
 
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
+                    require_once($CFG->dirroot.'/local/xray/locallib.php');
 
                     $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id);
 

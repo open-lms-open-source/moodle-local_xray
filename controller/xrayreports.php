@@ -78,6 +78,9 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
      * Init
      */
     public function init() {
+        global $CFG;
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
+
         $this->reportname = required_param("name", PARAM_ALPHANUMEXT);
         $this->oldreportname = local_xray_name_conversion($this->reportname, true);
 
@@ -193,6 +196,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
         // The title will be displayed in the X-ray page.
         $this->heading->text = '';
 
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
         if (!local_xray_reports()) {
             return $OUTPUT->notification(get_string("noaccessxrayreports", $this->component), 'error');
         }

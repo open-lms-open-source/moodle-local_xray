@@ -35,7 +35,7 @@ class local_xray_controller_globalsub extends mr_controller {
         global $CFG, $USER, $DB, $OUTPUT;
         $saved = optional_param('saved', 0, PARAM_INT);
 
-        require_once($CFG->dirroot.'/local/xray/lib.php');
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
         require_once($CFG->dirroot.'/local/xray/globalsubform.php');
 
         if (local_xray_email_enable()) {
@@ -80,7 +80,8 @@ class local_xray_controller_globalsub extends mr_controller {
      * Require capabilities.
      */
     public function require_capability() {
-        global $USER;
+        global $USER, $CFG;
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
         if (!local_xray_get_teacher_courses($USER->id)) {
             require_capability("{$this->plugin}:globalsub_view", $this->get_context());
         }

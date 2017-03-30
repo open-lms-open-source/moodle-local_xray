@@ -9,7 +9,6 @@
  */
 
 require_once("$CFG->libdir/formslib.php");
-require_once($CFG->dirroot.'/local/xray/lib.php');
 
 class courseselection_form extends moodleform {
     

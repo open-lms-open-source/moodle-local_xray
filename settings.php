@@ -26,8 +26,6 @@ defined('MOODLE_INTERNAL') or die();
 
 if ($hassiteconfig) {
     global $CFG, $USER;
-    /* @noinspection PhpIncludeInspection */
-    require_once($CFG->dirroot.'/local/xray/lib.php');
     $plugin = 'local_xray';
     $allowedunamecourses = 'mrsupport';
 
