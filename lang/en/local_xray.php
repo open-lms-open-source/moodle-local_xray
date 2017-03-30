@@ -36,6 +36,8 @@ $string['xraydisplayheading'] = 'Course Integration';
 $string['xraydisplayheading_desc'] = 'Control the display of information and report links on the course frontpage.';
 $string['displaymenu'] = 'Show reports menu';
 $string['displaymenu_desc'] = 'Control the display reports menu on the course frontpage.';
+$string['displaysystemreports'] = 'Show System Reports';
+$string['displaysystemreports_desc'] = 'Control the display of System Reports.';
 $string['displayheaderdata'] = 'Show Analytics';
 $string['displayheaderdata_desc'] = 'Control the display course analytics on the course frontpage.';
 $string['debuginfo'] = 'Debug information:';
@@ -110,6 +112,7 @@ $string['error_fexists'] = 'File "{$a}" already exists!';
 $string['error_fnocreate'] = 'Unable to create "{$a}" file!';
 $string['error_systemreports_nourl'] = 'The System Reports URL is missing from the X-Ray Learning Analytics configuration page.';
 $string['error_systemreports_gettoken'] = 'Error to get token for access to system reports.';
+$string['error_systemreports_disabled'] = 'System Reports aren\'t displaying. This was turned off on the X-Ray Learning Analytics configuration page.';
 
 /* Settings */
 $string['enabledreports'] = 'Enabled Reports';

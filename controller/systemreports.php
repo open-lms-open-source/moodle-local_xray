@@ -56,6 +56,12 @@ class local_xray_controller_systemreports extends local_xray_controller_reports 
                 print_error("error_systemreports_nourl", $this->component);
             }
 
+            // Get the flag.
+            $showsystemreports = get_config('local_xray', 'displaysystemreports');
+            if (!$showsystemreports) {
+                print_error("error_systemreports_disabled", $this->component);
+            }
+
             // We allow cancel authentication in shiny server from config for the first version.
             if (isset($CFG->local_xray_system_reports_cancel_auth) && $CFG->local_xray_system_reports_cancel_auth) {
                 // We need to send the clientid.
