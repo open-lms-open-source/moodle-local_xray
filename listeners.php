@@ -226,3 +226,47 @@ function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
     }
 }
 
+/**
+ * Listener for user enrolment updated. Implemented in order to remedy MDL-58079.
+ * @param \core\event\user_enrolment_updated $event
+ * @return void
+ */
+function local_xray_user_enrolment_updated(\core\event\user_enrolment_updated $event) {
+    global $DB, $CFG;
+
+    // In cases where we need to explicitly enforce this fix we can use:
+    // $CFG->local_xray_userenrolfix_force_enable variable.
+    // When set to true no version checking will be performed and event code will always be executed.
+    if (empty($CFG->local_xray_userenrolfix_force_enable)) {
+        // If Moodle 3.3 with fix just skip it.
+        if ($CFG->version >= 2017033000) {
+            return;
+        }
+
+        // Are we within 3.0 - 3.3.dev Moodle range?
+        if ($CFG->version >= 2015111600) {
+            $versionwithfixes = [
+                '30' => 2015111609.02, // 3.0.9+ .
+                '31' => 2016052305.03, // 3.1.5+ .
+                '32' => 2016120502.03, // 3.2.2+ .
+                '33' => null           // 3.3.dev .
+            ];
+            foreach ($versionwithfixes as $branch => $version) {
+                if ($CFG->branch == $branch) {
+                    if (!empty($version)) {
+                        if ($CFG->version >= $version) {
+                            return;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    $data = [
+        'id'           => $event->objectid,
+        'timemodified' => $event->timecreated
+    ];
+    $DB->update_record_raw('user_enrolments', $data);
+}
