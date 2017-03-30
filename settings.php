@@ -54,8 +54,10 @@ if ($hassiteconfig) {
 // This has to be outside of global if so that we can permit non admin users to see this.
 if (has_capability('local/xray:systemreports_view', context_system::instance())) {
     // Get the URL.
-    $showsystemreport = !empty(get_config('local_xray', 'systemreportsurl'));
-    if ($showsystemreport) {
+    $systemreportsurl = !empty(get_config('local_xray', 'systemreportsurl'));
+    // Get the flag.
+    $showsystemreports = get_config('local_xray', 'displaysystemreports');
+    if ($systemreportsurl && $showsystemreports) {
         // Add tree X-ray -> Rebuke List to show in reports.
         $ADMIN->add('reports',
             new admin_category('local_xray_report', new lang_string('pluginname', 'local_xray'))

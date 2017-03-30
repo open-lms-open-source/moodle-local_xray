@@ -91,6 +91,11 @@ if ($hassiteconfig) {
                                                      new lang_string("displaymenu_desc", $plugin),
                                                      '0'));
 
+    $settings->add( new admin_setting_configcheckbox("{$plugin}/displaysystemreports",
+                                                     new lang_string("displaysystemreports", $plugin),
+                                                     new lang_string("displaysystemreports_desc", $plugin),
+                                                     '0'));
+
     // Frequency control for emails.
     $settings->add( new admin_setting_heading("{$plugin}/frequencyheading",
         new lang_string("frequencyheading", $plugin),
