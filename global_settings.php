@@ -94,7 +94,7 @@ if ($hassiteconfig) {
     // Settings for displaying System reports.
     $settings->add( new admin_setting_heading("{$plugin}/xraydisplaysystemheading",
         new lang_string("xraydisplaysystemheading", $plugin),
-        new lang_string("displaysystemreports_desc", $plugin)));
+        new lang_string("xraydisplaysystemheading_desc", $plugin)));
 
     $settings->add( new admin_setting_configcheckbox("{$plugin}/displaysystemreports",
                                                      new lang_string("displaysystemreports", $plugin),
