@@ -25,6 +25,9 @@
 
 namespace local_xray\local\api;
 
+use local_aws_sdk\aws_sdk;
+use Aws\S3\S3Client;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -225,15 +228,14 @@ abstract class validationaws {
         }
 
         try {
-            /* @noinspection PhpIncludeInspection */
-            require_once($CFG->dirroot . "/local/xray/lib/vendor/aws/aws-autoloader.php");
-
             // Testing AWS client creation
             $awsres->set_reason(get_string('error_aws_reason_client_create', wsapi::PLUGIN));
             $awsres->set_reason_fields(array('awskey','awssecret','s3bucket','s3bucketregion','s3protocol','s3uploadretry'));
-            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
+            aws_sdk::autoload();
+
             /* @noinspection PhpUndefinedClassInspection */
-            $s3 = new \Aws\S3\S3Client(
+            $s3 = new S3Client(
                 [
                   'version'     => '2006-03-01'
                 , 'region'      => $config->s3bucketregion
