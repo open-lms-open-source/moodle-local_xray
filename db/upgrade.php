@@ -306,5 +306,16 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070344, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070347) {
+        // Review if the system reports url is set.
+        $hassystemreportsurl = !empty(get_config('local_xray', 'systemreportsurl'));
+        if ($hassystemreportsurl) {
+            // Enable system reports if the url is set.
+            set_config('displaysystemreports', '1', 'local_xray');
+        }
+
+        upgrade_plugin_savepoint(true, 2015070347, 'local', 'xray');
+    }
+
     return true;
 }
