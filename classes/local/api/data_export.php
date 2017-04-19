@@ -1375,7 +1375,8 @@ class data_export {
             $lastmsg = system($command, $ret);
             if ($ret != 0) {
                 // We have error code should not upload...
-                print_error('error_generic', self::PLUGIN, '', empty($lastmsg) ? get_string('error_compress_packertar_invalid', self::PLUGIN) : $lastmsg);
+                $msg = empty($lastmsg) ? get_string('error_compress_packertar_invalid', self::PLUGIN) : $lastmsg;
+                print_error('error_generic', self::PLUGIN, '', $msg);
             }
         }
 
@@ -1534,20 +1535,17 @@ class data_export {
      * @return array[string]string
      */
     public static function elements() {
+
+        /** @var array $plugins */
+        $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
+        /** @var array $logstores */
+        $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
+
         $items = [
             'coursecategories'        => 'course_categories'    ,
             'courseinfo'              => 'course'               ,
             'userlist'                => 'user'                 ,
             'enrolment'               => 'role_assignments'     ,
-            'accesslog'               => 'log'                  ,
-            'standardlog'             => 'logstore_standard_log',
-            'forums'                  => 'forum'                ,
-            'threads'                 => 'forum_discussions'    ,
-            'posts'                   => 'forum_posts'          ,
-            'hsuforums'               => 'hsuforum'             ,
-            'hsuthreads'              => 'hsuforum_discussions' ,
-            'hsuposts'                => 'hsuforum_posts'       ,
-            'quiz'                    => 'quiz'                 ,
             'grades'                  => 'grade_grades'         ,
             'grades_history'          => 'grade_grades_history' ,
             'activity_delete'         => 'local_xray_cm'        ,
@@ -1568,6 +1566,30 @@ class data_export {
             'groups_members'          => 'groups_members'       ,
             'groups_members_deleted'  => 'local_xray_gruserdel' ,
         ];
+
+        if (array_key_exists('legacy', $logstores)) {
+            $items['accesslog'] = 'log';
+        }
+
+        if (array_key_exists('standard', $logstores)) {
+            $items['standardlog'] = 'logstore_standard_log';
+        }
+
+        if (array_key_exists('forum', $plugins)) {
+            $items['forums' ] = 'forum';
+            $items['threads'] = 'forum_discussions';
+            $items['posts'  ] = 'forum_posts';
+        }
+
+        if (array_key_exists('hsuforum', $plugins)) {
+            $items['hsuforums' ] = 'hsuforum';
+            $items['hsuthreads'] = 'hsuforum_discussions';
+            $items['hsuposts'  ] = 'hsuforum_posts';
+        }
+
+        if (array_key_exists('quiz', $plugins)) {
+            $items['quiz'] = 'quiz';
+        }
 
         return $items;
     }
