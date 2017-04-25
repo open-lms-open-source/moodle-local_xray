@@ -147,10 +147,10 @@ function local_xray_extends_settings_navigation(settings_navigation $settings, c
  * This is the version of the JS that should be used up to Moodle 2.8
  * New one will be required for Moodle 2.9+
  *
- * @param  global_navigation $nav
+ * @param  navigation_node $nav
  * @return void
  */
-function local_xray_extends_navigation(global_navigation $nav) {
+function local_xray_extends_navigation($nav) {
     global $PAGE;
     ($nav); // Just to remove unused param warning.
 
@@ -229,9 +229,9 @@ function local_xray_extend_settings_navigation(settings_navigation $settings, co
  * Moodle 2.9+ compliant method.
  *
  * @link  https://tracker.moodle.org/browse/MDL-49643 MDL-49643
- * @param global_navigation $nav
+ * @param navigation_node $nav
  */
-function local_xray_extend_navigation(global_navigation $nav) {
+function local_xray_extend_navigation($nav) {
     local_xray_extends_navigation($nav);
 }
 
