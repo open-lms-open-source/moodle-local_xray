@@ -34,7 +34,8 @@ if ($hassiteconfig) {
         new lang_string('pluginname', $plugin))
     );
 
-    require_once($CFG->dirroot.'/local/xray/global_settings.php');
+    // This code must be executed EVERY TIME so no require_once.
+    require($CFG->dirroot.'/local/xray/global_settings.php');
     // Add Course selection.
     $adminscanselectcourses = isset($CFG->local_xray_unrestrict_course_selection) &&
             $CFG->local_xray_unrestrict_course_selection;
