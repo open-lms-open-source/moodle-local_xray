@@ -308,8 +308,8 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
 
     if ($oldversion < 2015070347) {
         // Review if the system reports url is set.
-        $hassystemreportsurl = !empty(get_config('local_xray', 'systemreportsurl'));
-        if ($hassystemreportsurl) {
+        $hassystemreportsurl = get_config('local_xray', 'systemreportsurl');
+        if (!empty($hassystemreportsurl)) {
             // Enable system reports if the url is set.
             set_config('displaysystemreports', '1', 'local_xray');
         }

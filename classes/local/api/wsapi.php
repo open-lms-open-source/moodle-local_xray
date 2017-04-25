@@ -550,7 +550,8 @@ abstract class wsapi {
         $a->url = $imgurl->out();
         $a->graphelement = $graphelement->elementName;
 
-        if (!empty($ch->get_errno())) {
+        $cerrno = $ch->get_errno();
+        if ($cerrno != CURLE_OK) {
             // Error with curl connection.
             $a->error = $ch->error;
             print_error("xrayws_error_graphs", "local_xray", '', $a);
