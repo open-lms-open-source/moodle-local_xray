@@ -446,11 +446,11 @@ abstract class validationaws {
             }
             
         } catch (\Exception $ex) {
-            if (!empty($ex->getMessage())) {
-                $compressres->register_error('compress',$ex->getMessage());
+            $emsg = $ex->getMessage();
+            if (!empty($emsg)) {
+                $compressres->register_error('compress', $emsg);
             } else {
-                $compressres->add_result(get_string("error_compress_exception",
-                    wsapi::PLUGIN, $ex->getMessage()));
+                $compressres->add_result(get_string("error_compress_exception", wsapi::PLUGIN, $emsg));
             }
         }
 
