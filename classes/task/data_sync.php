@@ -151,23 +151,8 @@ class data_sync extends scheduled_task {
      * @throws \coding_exception
      */
     protected function upload_legacy($dirbase, $dirname) {
-        global $CFG;
 
-        /* @noinspection PhpIncludeInspection */
-        require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
-
-        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-        /* @noinspection PhpUndefinedClassInspection */
-        $s3 = new \Aws\S3\S3Client([
-            'version' => '2006-03-01',
-            'region'  => $this->config->s3bucketregion,
-            'scheme'  => $this->config->s3protocol,
-            'retries' => (int)$this->config->s3uploadretry,
-            'credentials' => [
-                'key'    => $this->config->awskey,
-                'secret' => $this->config->awssecret,
-            ],
-        ]);
+        $s3 = \local_xray\local\api\get_s3client($this->config);
 
         list($compfile, $destfile) = data_export::compress($dirbase, $dirname);
         if ($compfile !== null) {
@@ -202,23 +187,8 @@ class data_sync extends scheduled_task {
      * @throws \Exception
      */
     protected function upload_new($dirbase, $dirname) {
-        global $CFG;
 
-        /* @noinspection PhpIncludeInspection */
-        require_once($CFG->dirroot."/local/xray/lib/vendor/aws/aws-autoloader.php");
-
-        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-        /* @noinspection PhpUndefinedClassInspection */
-        $s3 = new \Aws\S3\S3Client([
-            'version' => '2006-03-01',
-            'region'  => $this->config->s3bucketregion,
-            'scheme'  => $this->config->s3protocol,
-            'retries' => (int)$this->config->s3uploadretry,
-            'credentials' => [
-                'key'    => $this->config->awskey,
-                'secret' => $this->config->awssecret,
-            ],
-        ]);
+        $s3 = \local_xray\local\api\get_s3client($this->config);
 
         $result = data_export::compress($dirbase, $dirname);
 

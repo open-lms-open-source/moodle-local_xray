@@ -25,6 +25,8 @@
 
 namespace local_xray\local\api;
 
+use local_xray\task\data_sync;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -197,7 +199,6 @@ abstract class validationaws {
         $awssteps = 5;
         $awsres = new validationresponse('s3_bucket', $awssteps);
 
-        global $CFG;
         $config = get_config('local_xray');
         if (empty($config)) {
             $awsres->add_result(get_string("error_wsapi_config_params_empty", wsapi::PLUGIN));
@@ -225,32 +226,24 @@ abstract class validationaws {
         }
 
         try {
-            /* @noinspection PhpIncludeInspection */
-            require_once($CFG->dirroot . "/local/xray/lib/vendor/aws/aws-autoloader.php");
-
-            // Testing AWS client creation
+            // Testing AWS client creation.
             $awsres->set_reason(get_string('error_aws_reason_client_create', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('awskey','awssecret','s3bucket','s3bucketregion','s3protocol','s3uploadretry'));
-            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-            /* @noinspection PhpUndefinedClassInspection */
-            $s3 = new \Aws\S3\S3Client(
-                [
-                  'version'     => '2006-03-01'
-                , 'region'      => $config->s3bucketregion
-                , 'scheme'      => $config->s3protocol
-                , 'retries'     => (int)$config->s3uploadretry
-                , 'credentials' => [
-                      'key'    => $config->awskey
-                    , 'secret' => $config->awssecret
-                    ]
-                ]
+            $awsres->set_reason_fields(array(
+                'awskey',
+                'awssecret',
+                's3bucket',
+                's3bucketregion',
+                's3protocol',
+                's3uploadretry'
+                )
             );
+
+            $s3 = get_s3client($config, false);
+
             // Increase step.
             $awsres->step();
 
-            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-            /* @noinspection PhpUndefinedClassInspection */
-            $task = new \local_xray\task\data_sync();
+            $task = new data_sync();
             $location = $task->get_storageprefix()."{$config->xrayclientid}/";
             $objectKey = $location.'sample.test.upload.txt';
             $objectContent = "sample test: ".md5(uniqid(rand(), true));
