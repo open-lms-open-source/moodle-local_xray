@@ -340,6 +340,7 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_compress() {
+        global $CFG;
         $compresssteps = 0;
         $compressres = new validationresponse('compress', $compresssteps);
         
@@ -379,6 +380,11 @@ abstract class validationaws {
             
             $file_list = [];
             define('DISABLE_MTRACE_DEBUG', self::DISABLE_TIME_TRACE);
+
+            // We can not permit extreme export. It has to be minimal since it is just test.
+            $CFG->forced_plugin_settings['local_xray']['maxrecords'        ] = 100;
+            $CFG->forced_plugin_settings['local_xray']['exporttime_hours'  ] = 0;
+            $CFG->forced_plugin_settings['local_xray']['exporttime_minutes'] = 0.034; // Set to 2sec.
             data_export::export_csv(0, $timeend, $storage->get_directory());
             
             // Store list of files before compression
@@ -392,9 +398,11 @@ abstract class validationaws {
             $compressres->set_reason('');
             $compressres->set_reason_fields(array('packertar'));
             $compressResult = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
-            
-            if($compressResult !== TRUE) { // TGZ Compression
+            if(is_array($compressResult)) { // TGZ Compression
                 list($compfile, $destfile) = $compressResult;
+                if (($compfile === null) and ($destfile === null)) {
+                    throw new \Exception('Nothing to export! Please reset export counters before running the test again.');
+                }
                 if (empty($compfile)) {
                     throw new \moodle_exception('error_compress_files', wsapi::PLUGIN);
                 }
@@ -411,7 +419,7 @@ abstract class validationaws {
                         $tgzfile_list[] = basename($cfile->pathname);
                     }
                 }
-                
+
                 if(count(array_intersect($tgzfile_list, $file_list)) != $num_files){
                     throw new \moodle_exception('error_compress_files', wsapi::PLUGIN);
                 }
