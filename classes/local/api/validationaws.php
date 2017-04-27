@@ -238,7 +238,7 @@ abstract class validationaws {
                 )
             );
 
-            $s3 = get_s3client($config, false);
+            $s3 = \local_xray\local\api\s3client::get($config, false);
 
             // Increase step.
             $awsres->step();
@@ -280,8 +280,8 @@ abstract class validationaws {
                     , 'private'
                     , ['debug' => true]
                 );
-                $metadata = $uploadresult->get('@metadata');
-                if ($metadata['statusCode'] !== 200) {
+
+                if (empty($uploadresult['ObjectURL'])) {
                     throw new \moodle_exception("Upload to S3 bucket failed!");
                 }
             } else {
@@ -299,9 +299,7 @@ abstract class validationaws {
                 'Key'    => $objectKey
             ));
 
-            if ($metadata['statusCode'] !== 200) {
-                throw new \moodle_exception("Download from S3 bucket failed!");
-            } else if($awsObject['Body'] != $objectContent) {
+            if($awsObject['Body'] != $objectContent) {
                 throw new \moodle_exception("S3 bucket corrupt.");
             }
             // Increase step.
@@ -311,16 +309,11 @@ abstract class validationaws {
             $awsres->set_reason(get_string('error_aws_reason_erase_file', wsapi::PLUGIN));
             $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
                     's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
-            $delResult = $s3->deleteObject(array(
+            $s3->deleteObject(array(
                 'Bucket' => $config->s3bucket,
                 'Key'    => $objectKey
             ));
 
-            $delMetadata = $delResult->get('@metadata');
-
-            if ($delMetadata['statusCode'] !== 204) {
-                throw new \moodle_exception("Deletion on S3 bucket failed!");
-            }
             // Increase step.
             $awsres->step();
 

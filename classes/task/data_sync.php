@@ -152,7 +152,7 @@ class data_sync extends scheduled_task {
      */
     protected function upload_legacy($dirbase, $dirname) {
 
-        $s3 = \local_xray\local\api\get_s3client($this->config);
+        $s3 = \local_xray\local\api\s3client::get($this->config);
 
         list($compfile, $destfile) = data_export::compress($dirbase, $dirname);
         if ($compfile !== null) {
@@ -165,8 +165,8 @@ class data_sync extends scheduled_task {
                 'private',
                 ['debug' => true]
             );
-            $metadata = $uploadresult->get('@metadata');
-            if ($metadata['statusCode'] != 200) {
+
+            if (empty($uploadresult['ObjectURL'])) {
                 throw new \Exception("Upload to S3 bucket failed!");
             }
 
@@ -188,7 +188,7 @@ class data_sync extends scheduled_task {
      */
     protected function upload_new($dirbase, $dirname) {
 
-        $s3 = \local_xray\local\api\get_s3client($this->config);
+        $s3 = \local_xray\local\api\s3client::get($this->config);
 
         $result = data_export::compress($dirbase, $dirname);
 
