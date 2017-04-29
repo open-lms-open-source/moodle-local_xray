@@ -31,6 +31,7 @@ use local_xray\local\api\data_export;
 use local_xray\event\sync_log;
 use local_xray\event\sync_failed;
 use local_xray\local\api\auto_clean;
+use local_xray\local\api\s3client;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -152,7 +153,7 @@ class data_sync extends scheduled_task {
      */
     protected function upload_legacy($dirbase, $dirname) {
 
-        $s3 = \local_xray\local\api\s3client::get($this->config);
+        $s3 = s3client::get($this->config);
 
         list($compfile, $destfile) = data_export::compress($dirbase, $dirname);
         if ($compfile !== null) {
@@ -188,7 +189,7 @@ class data_sync extends scheduled_task {
      */
     protected function upload_new($dirbase, $dirname) {
 
-        $s3 = \local_xray\local\api\s3client::get($this->config);
+        $s3 = s3client::get($this->config);
 
         $result = data_export::compress($dirbase, $dirname);
 
