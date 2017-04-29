@@ -26,6 +26,7 @@
 namespace local_xray\local\api;
 
 use local_xray\task\data_sync;
+use local_xray\local\api\s3client;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -238,7 +239,7 @@ abstract class validationaws {
                 )
             );
 
-            $s3 = \local_xray\local\api\s3client::get($config, false);
+            $s3 = s3client::get($config, false);
 
             // Increase step.
             $awsres->step();
