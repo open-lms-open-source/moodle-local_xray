@@ -65,6 +65,9 @@ class csv_meta {
      * @return string
      */
     public static function get_escape() {
+        if (!self::checkformat() && (PHP_VERSION_ID < 50504)) {
+            return '\\';
+        }
         return self::checkformat() ? '\\' : "\v";
     }
 

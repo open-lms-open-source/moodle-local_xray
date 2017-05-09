@@ -134,19 +134,8 @@ class csv_file {
      */
     protected function write($data) {
         $ndata = str_replace(["\r\n", "\n", "\r"], '\n', $data);
-        if (csv_meta::checkformat()) {
-            global $CFG;
-
-            /* @noinspection PhpIncludeInspection */
-            require_once($CFG->dirroot.'/local/xray/vendor/autoload.php');
-
-            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-            /* @noinspection PhpUndefinedClassInspection */
-            \Ajgl\Csv\Rfc\fputcsv($this->resource, $ndata, $this->delimiter, $this->enclosure, $this->escape);
-            return true;
-        } else {
-            return fputcsv($this->resource, $ndata, $this->delimiter, $this->enclosure, $this->escape);
-        }
+        csvhelper::fputcsv($this->resource, $ndata, $this->delimiter, $this->enclosure, $this->escape);
+        return true;
     }
 
     /**
