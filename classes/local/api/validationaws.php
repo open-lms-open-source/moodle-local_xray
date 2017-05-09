@@ -50,6 +50,8 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_ws_connect() {
+        global $CFG;
+
         $wsapisteps = 5;
         $wsapires = new validationresponse('ws_connect', $wsapisteps);
 
@@ -77,27 +79,18 @@ abstract class validationaws {
             return $wsapires;
         }
 
-        $cachetimeoutmng = new \stdClass();
-        $cachetimeoutmng->val = 0;
-        $cachetimeoutmng->changed = false;
         try {
             // Testing login
             $wsapires->set_reason(get_string('error_wsapi_reason_login', wsapi::PLUGIN));
             $wsapires->set_reason_fields(array('xrayurl','xrayusername','xraypassword'));
 
             // Omit cache for testing that login works
-            $cachetimeoutmng->val = get_config(wsapi::PLUGIN, 'curlcache');
-            set_config('curlcache', 0, wsapi::PLUGIN);
-            $cachetimeoutmng->changed = true;
+            $CFG->forced_plugin_settings['local_xray']['curlcache'] = 0;
 
             $loginRes = wsapi::login();
             if (!$loginRes) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
-
-            // Leave cache as it was before
-            set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
-            $cachetimeoutmng->changed = false;
 
             // Increase step.
             $wsapires->step();
@@ -169,10 +162,6 @@ abstract class validationaws {
 
         } catch (\Exception $ex) {
             $wsapires->register_error('wsapi',$ex->getMessage());
-            
-            if($cachetimeoutmng->changed) {
-                set_config('curlcache', $cachetimeoutmng->val, wsapi::PLUGIN);
-            }
         }
 
         if($wsapires->is_successful() && !$wsapires->is_finished()) {
@@ -354,6 +343,8 @@ abstract class validationaws {
      * @throws \moodle_exception
      */
     public static function check_compress() {
+        global $CFG;
+
         $compresssteps = 0;
         $compressres = new validationresponse('compress', $compresssteps);
         
@@ -393,6 +384,14 @@ abstract class validationaws {
             
             $file_list = [];
             define('DISABLE_MTRACE_DEBUG', self::DISABLE_TIME_TRACE);
+            define('DISABLE_EXPORT_COUNTERS', true);
+
+            // We can not permit extreme export. It has to be minimal since it is just test.
+            $CFG->forced_plugin_settings['local_xray']['maxrecords'            ] = 10;
+            $CFG->forced_plugin_settings['local_xray']['exporttime_hours'      ] = 0;
+            $CFG->forced_plugin_settings['local_xray']['exporttime_minutes'    ] = 0.03; // Set to 2sec.
+            $CFG->forced_plugin_settings['local_xray']['disablecounterincrease'] = true;
+
             data_export::export_csv(0, $timeend, $storage->get_directory());
             
             // Store list of files before compression
