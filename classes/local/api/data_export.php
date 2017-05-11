@@ -1438,7 +1438,7 @@ class data_export {
     /**
      * @return int
      */
-    protected static function executiontime() {
+    public static function executiontime() {
         $hours = get_config(self::PLUGIN, 'exporttime_hours');
         $minutes = get_config(self::PLUGIN, 'exporttime_minutes');
         $timeframe = ($hours * HOURSECS) + ($minutes * MINSECS);
