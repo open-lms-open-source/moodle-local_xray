@@ -389,7 +389,7 @@ abstract class validationaws {
             // We can not permit extreme export. It has to be minimal since it is just test.
             $CFG->forced_plugin_settings['local_xray']['maxrecords'            ] = 10;
             $CFG->forced_plugin_settings['local_xray']['exporttime_hours'      ] = 0;
-            $CFG->forced_plugin_settings['local_xray']['exporttime_minutes'    ] = 0.03; // Set to 2sec.
+            $CFG->forced_plugin_settings['local_xray']['exporttime_minutes'    ] = 0.0334; // Set to 2sec.
             $CFG->forced_plugin_settings['local_xray']['disablecounterincrease'] = true;
 
             data_export::export_csv(0, $timeend, $storage->get_directory());

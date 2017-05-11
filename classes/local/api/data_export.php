@@ -1436,6 +1436,16 @@ class data_export {
     }
 
     /**
+     * @return int
+     */
+    protected static function executiontime() {
+        $hours = get_config(self::PLUGIN, 'exporttime_hours');
+        $minutes = get_config(self::PLUGIN, 'exporttime_minutes');
+        $timeframe = ($hours * HOURSECS) + ($minutes * MINSECS);
+        return (int)$timeframe;
+    }
+
+    /**
      * @param int    $timest
      * @param int    $timeend
      * @param string $dir
@@ -1452,12 +1462,8 @@ class data_export {
         /** @var array $logstores */
         $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
 
-        $hours = (int)get_config(self::PLUGIN, 'exporttime_hours');
-        $minutes = (int)get_config(self::PLUGIN, 'exporttime_minutes');
-        $timeframe = ($hours * HOURSECS) + ($minutes * MINSECS);
-
         // In case timeframe is 0 - there would be no limit to the execution.
-        timer::start($timeframe);
+        timer::start(self::executiontime());
 
         // Assure we have accurate internal markers.
         self::internal_check_lastid();
