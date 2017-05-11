@@ -163,9 +163,14 @@ class data_export {
      */
     public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id', $skipextra = false) {
         global $DB;
-        $maxdatestore = get_config(self::PLUGIN, self::get_maxdate_setting($fn));
-        if (!empty($maxdatestore)) {
-            $from = (int)$maxdatestore;
+
+        if (!defined('DISABLE_EXPORT_COUNTERS')) {
+            $maxdatestore = get_config(self::PLUGIN, self::get_maxdate_setting($fn));
+            if (!empty($maxdatestore)) {
+                $from = (int)$maxdatestore;
+            }
+        } else {
+            $skipextra = true;
         }
 
         $sqlgt = " {$idfield} > :lastid
@@ -1184,12 +1189,13 @@ class data_export {
             $params = [];
         }
 
-        $lastidstore = get_config(self::PLUGIN, $filename);
-        if (!empty($lastidstore)) {
-            $lastidstore = (int)$lastidstore;
-            $lastid = $lastidstore;
-        } else {
-            $lastidstore = 0;
+        $lastidstore = 0;
+        if (!defined('DISABLE_EXPORT_COUNTERS')) {
+            $lastidstore = get_config(self::PLUGIN, $filename);
+            if (!empty($lastidstore)) {
+                $lastidstore = (int)$lastidstore;
+                $lastid = $lastidstore;
+            }
         }
 
         if ($newformat) {
@@ -1430,6 +1436,16 @@ class data_export {
     }
 
     /**
+     * @return int
+     */
+    public static function executiontime() {
+        $hours = get_config(self::PLUGIN, 'exporttime_hours');
+        $minutes = get_config(self::PLUGIN, 'exporttime_minutes');
+        $timeframe = ($hours * HOURSECS) + ($minutes * MINSECS);
+        return (int)$timeframe;
+    }
+
+    /**
      * @param int    $timest
      * @param int    $timeend
      * @param string $dir
@@ -1446,12 +1462,8 @@ class data_export {
         /** @var array $logstores */
         $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
 
-        $hours = (int)get_config(self::PLUGIN, 'exporttime_hours');
-        $minutes = (int)get_config(self::PLUGIN, 'exporttime_minutes');
-        $timeframe = ($hours * HOURSECS) + ($minutes * MINSECS);
-
         // In case timeframe is 0 - there would be no limit to the execution.
-        timer::start($timeframe);
+        timer::start(self::executiontime());
 
         // Assure we have accurate internal markers.
         self::internal_check_lastid();
