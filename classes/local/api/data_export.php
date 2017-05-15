@@ -817,7 +817,7 @@ class data_export {
     }
 
     /**
-     * Advanced forums discussion delete
+     * Moodlerooms forums discussion delete
      *
      * @param int    $timest
      * @param int    $timeend
@@ -879,7 +879,7 @@ class data_export {
     }
 
     /**
-     * Deleted advanced forum posts
+     * Deleted Moodlerooms forum posts
      *
      * @param int    $timest
      * @param int    $timeend
@@ -1498,13 +1498,13 @@ class data_export {
         } else {
             self::mtrace('Forum activity not installed. Skipping.');
         }
-        // Since Advanced Forum is not core plugin we check for it's presence.
+        // Since Moodlerooms Forum is not core plugin we check for it's presence.
         if (array_key_exists('hsuforum', $plugins)) {
             self::hsuforums($timest, $timeend, $dir);
             self::hsuthreads($timest, $timeend, $dir);
             self::hsuposts($timest, $timeend, $dir);
         } else {
-            self::mtrace('Advanced forum activity not installed. Skipping.');
+            self::mtrace('Moodlerooms forum activity not installed. Skipping.');
         }
         if (array_key_exists('quiz', $plugins)) {
             self::quiz($timest, $timeend, $dir);

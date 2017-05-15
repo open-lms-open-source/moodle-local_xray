@@ -24,7 +24,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="local_xray_hsudisc" COMMENT="Deleted Advanced forum discussions">
+    <TABLE NAME="local_xray_hsudisc" COMMENT="Deleted Moodlerooms forum discussions">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="discussion" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
@@ -35,7 +35,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="local_xray_hsupost" COMMENT="Deleted advanced forum post">
+    <TABLE NAME="local_xray_hsupost" COMMENT="Deleted Moodlerooms forum post">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="post" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
