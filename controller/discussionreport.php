@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
 use local_xray\local\api\course_manager;
@@ -48,8 +47,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         $ctx = $this->get_context();
         if (!has_capability("local/xray:discussionreport_view", $ctx) &&
             !has_capability("local/xray:discussionendogenicplagiarism_view", $ctx) &&
-            !has_capability("local/xray:discussiongrading_view", $ctx))
-        {
+            !has_capability("local/xray:discussiongrading_view", $ctx)) {
 
             throw new required_capability_exception($ctx, "local/xray:discussionreport_view", 'nopermissions', '');
         }
@@ -101,7 +99,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         $datatable->default_field_sort = 4; // Sort by column "Posts Last Week".
                         $datatable->sort_order = "desc";
                     } else {
-                        $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
+                        // Sort by first column "Lastname".Because table has action column.
+                        $datatable->default_field_sort = 1;
                     }
                     $output .= $this->output->standard_table((array)$datatable);
 
@@ -110,8 +109,10 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         array("controller" => "discussionreport",
                             "action" => "jsonweekdiscussion",
                             "courseid" => $this->courseid));
-                    $output .= $this->output->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek,
-                        $jsonurlresponse);
+                    $output .= $this->output->table_inverse_discussion_activity_by_week(
+                        $response->elements->discussionActivityByWeek,
+                        $jsonurlresponse
+                    );
 
                     $output .= $this->output->show_graph("wordcloud", $response->elements->wordcloud, $response->id);
                     $output .= $this->output->show_graph("avgWordPerPost", $response->elements->avgWordPerPost, $response->id);
@@ -184,6 +185,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
 
     /**
      * Json for provide data to participation_metrics table.
+     * @param $response
+     * @return array
      */
     public function responseparticipationdiscussion($response) {
 
@@ -215,7 +218,13 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                     if (isset($row->{$column}->colorCode)) {
                         $category = $row->{$column}->colorCode;
                     }
-                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat, $category);
+                    $r->{$column} = $this->show_intuitive_value(
+                        $row->{$column}->value,
+                        $response->elementName,
+                        $column,
+                        $dataformat,
+                        $category
+                    );
                 }
                 $data[] = $r;
             }
@@ -237,7 +246,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
 
-        $return = "";
+        $return = [];
 
         try {
             $report = "discussion";
@@ -276,7 +285,8 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                             if (isset($col->avgLag->value)) {
                                 // Check if timerange is defined.
                                 $minutes = false;
-                                if (isset($response->dataFormat->avgLag) && $response->dataFormat->avgLag == self::XRAYTIMERANGEMINUTE) {
+                                if (isset($response->dataFormat->avgLag) &&
+                                    $response->dataFormat->avgLag == self::XRAYTIMERANGEMINUTE) {
                                     $minutes = true;
                                 }
                                 // Set time to HH:MM.

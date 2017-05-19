@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,9 +25,13 @@
  */
 
 namespace local_xray\datatables;
-defined('MOODLE_INTERNAL') || die();
-use local_xray\datatables\datatablescolumns;
 
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Class datatables
+ * @package local_xray
+ */
 class datatables {
 
     /**
@@ -34,13 +39,13 @@ class datatables {
      * @var string
      */
     public $id;
-    
+
     /**
      * title for table
      * @var string
      */
     public $title;
-    
+
     /**
      * Url to get data with json format.
      * @var string
@@ -76,25 +81,25 @@ class datatables {
      * @var string
      */
     public $sProcessingMessage;
-    
+
     /**
      * Texts of datatables
      * @var string
      */
-    public $sFirst;   
+    public $sFirst;
     public $sLast;
-    public $sNext;    
+    public $sNext;
     public $sPrevious;
     public $sProcessing;
     public $sLengthMenu;
-    public $sZeroRecords; 
+    public $sZeroRecords;
     public $sEmptyTable;
     public $sInfo;
     public $sInfoEmpty;
     public $sLoadingRecords;
     public $sSortAscending;
     public $sSortDescending;
-    
+
     /**
      * Message to show in error case.
      * @var string
@@ -106,31 +111,31 @@ class datatables {
      * @var array
      */
     public $columns;
-    
+
     /**
      * Enable/Disable sortable.
      * @var boolean
      */
     public $sort;
-    
+
     /**
      * Default field sort(number of column).
      * The default is 0 , the first column.
      * @var integer
      */
     public $default_field_sort;
-    
+
     /**
      * Default sort order
      * Values required: "desc" or "asc"
      * @var string
      */
-    public $sort_order;    
-    
+    public $sort_order;
+
     /**
      * Construct
-     * 
-     * @param stdClass $element - element response of xray side.
+     *
+     * @param \stdClass $element - element response of xray side.
      * @param string $jsonurl
      * @param array $columns - If empty, columns will be take from element. This array is used for special cases.
      * @param bool $columnaction - Add column action first in table.
@@ -160,7 +165,7 @@ class datatables {
         $this->sort = $sort;
         $this->default_field_sort = $default_field_sort;
         $this->sort_order = $sort_order;
-        
+
         // Support lang with moodle lang.
         $this->sProcessingMessage = get_string('sProcessingMessage', 'local_xray');
         $this->sFirst = get_string('sFirst', 'local_xray');
@@ -173,13 +178,13 @@ class datatables {
         $this->sLengthMenu = get_string('sLengthMenu', 'local_xray');
         $this->sLoadingRecords = get_string('sLoadingRecords', 'local_xray');
         $this->sSortAscending = get_string('sSortAscending', 'local_xray');
-        $this->sSortDescending = get_string('sSortDescending', 'local_xray'); 
+        $this->sSortDescending = get_string('sSortDescending', 'local_xray');
         $this->sProcessing = get_string('sProcessing', 'local_xray');
         $this->sZeroRecords = get_string('sZeroRecords', 'local_xray');
-             
+
         $this->errorMessage = $OUTPUT->notification(get_string('error_datatables','local_xray'));
     }
-    
+
     /**
      * Create array of columns from element sent by xray webservice.
      * @param \stdClass $element
@@ -190,19 +195,19 @@ class datatables {
 
         $columns = array();
         if($actioncolumn){
-            $columns[] = new \local_xray\datatables\datatablescolumns('action', '', false, false);
+            $columns[] = new datatablescolumns('action', '', false, false);
         }
 
         if (!empty($element->columnOrder) && is_array($element->columnOrder)) {
             foreach ($element->columnOrder as $c) {
-                $columns[] = new \local_xray\datatables\datatablescolumns($c, $element->columnHeaders->{$c});
+                $columns[] = new datatablescolumns($c, $element->columnHeaders->{$c});
             }
         } else {
             // This report has not specified columnOrder.
             $c = get_object_vars($element->columnHeaders);
             foreach ($c as $id => $name) {
-                $columns[] = new \local_xray\datatables\datatablescolumns($id, $name);
-            }           
+                $columns[] = new datatablescolumns($id, $name);
+            }
         }
         return $columns;
     }

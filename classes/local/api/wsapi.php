@@ -44,7 +44,7 @@ abstract class wsapi {
     const XRAYHEATMAP       = 'xrayHeatmap';
 
     /**
-     * 
+     *
      * @return bool
      * @throws \Exception
      * @throws \dml_exception
@@ -54,7 +54,7 @@ abstract class wsapi {
         if (xrayws::instance()->hascookie()) {
             return true;
         }
-        
+
         $username = get_config(self::PLUGIN, 'xrayusername');
         $pass     = get_config(self::PLUGIN, 'xraypassword');
         $baseurl  = get_config(self::PLUGIN, 'xrayurl');
@@ -76,7 +76,7 @@ abstract class wsapi {
 
         return $result;
     }
-    
+
     /**
      * Returns result in this format:
      * array(
@@ -91,9 +91,9 @@ abstract class wsapi {
         if (empty($baseurl)) {
             return false;
         }
-        
+
         $data = self::generic_getcall($baseurl);
-        
+
         return !is_null($data) && isset($data->ok) && $data->ok;
     }
 
@@ -256,9 +256,9 @@ abstract class wsapi {
 
     /**
      * Generic http post call
-     * @param type $url
-     * @param type $postdata
-     * @return boolean
+     * @param string $url
+     * @param string $postdata
+     * @return bool|mixed
      */
     protected static function generic_postcall($url, $postdata) {
         if (empty($url)) {
@@ -567,12 +567,12 @@ abstract class wsapi {
 
         return $result;
     }
-   
+
     /**
      * Save the courses filter value for analysis.
-     * 
+     *
      * @param string[] $cids
-     * @return boolean
+     * @return mixed
      */
     public static function save_analysis_filter($cids) {
         global $CFG;
@@ -594,10 +594,10 @@ abstract class wsapi {
 
         return self::generic_postcall($url, $postdata);
     }
-    
+
     /**
      * Get the courses filter value for analysis.
-     * 
+     *
      * @return boolean|array False if there was an issue, array with courses otherwise
      */
     public static function get_analysis_filter() {

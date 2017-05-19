@@ -41,10 +41,10 @@ define('XRAYWEEKLY', 'weekly');
 /**
  * Get headline data for the template.
  * @param $courseid
+ * @param $userid
  * @return stdClass
  */
-function local_xray_template_data($courseid, $userid){
-    global $OUTPUT;
+function local_xray_template_data($courseid, $userid) {
     // Get headline data.
     $headlinedata = \local_xray\dashboard\dashboard::get($courseid, $userid);
 
@@ -53,7 +53,10 @@ function local_xray_template_data($courseid, $userid){
         $data = new stdClass();
 
         // Styles.
-        $linksnum = array('title' => get_string('link_gotoreport', 'local_xray'), 'style' => 'text-decoration: none; color: #777777; font-weight: bolder;');
+        $linksnum = array(
+            'title' => get_string('link_gotoreport', 'local_xray'),
+            'style' => 'text-decoration: none; color: #777777; font-weight: bolder;'
+        );
         $gotoreport = array('title' => get_string('link_gotoreport', 'local_xray'));
         $reporticonpdf = array('width' => '37px');
         $reporticonarrowpdf = array('width' => '25px');
@@ -121,12 +124,14 @@ function local_xray_template_data($courseid, $userid){
             array("controller" => "activityreport", "courseid" => $courseid, "header" => 1), "studentList");
 
         // Calculate colour status.
-        $statusclassactivity = local_xray\dashboard\dashboard_data::get_status_with_average($headlinedata->usersloggedinpreviousweek,
+        $statusclassactivity = local_xray\dashboard\dashboard_data::get_status_with_average(
+            $headlinedata->usersloggedinpreviousweek,
             $headlinedata->usersactivitytotal,
             $headlinedata->averageuserslastsevendays,
             $headlinedata->userstotalprevioussevendays,
             false,
-            true);
+            true
+        );
 
         $xrayactivityarrow = local_xray_get_email_icons($statusclassactivity[2]);
         $data->activityarrowpdf = html_writer::img($xrayactivityarrow, $statusclassactivity[1], $reporticonarrowpdf);
@@ -178,7 +183,11 @@ function local_xray_template_data($courseid, $userid){
         $data->gradebooknumber = html_writer::link($gradebookarrowurl, get_string('headline_number_percentage', 'local_xray',
             $headlinedata->averagegradeslastsevendays), $linksnum);
         $data->gradebookheadline = get_string('headline_average', 'local_xray');
-        $data->gradebookaverageofweek = get_string("averageofweek_gradebook", 'local_xray', $headlinedata->averagegradeslastsevendayspreviousweek);
+        $data->gradebookaverageofweek = get_string(
+            "averageofweek_gradebook",
+            'local_xray',
+            $headlinedata->averagegradeslastsevendayspreviousweek
+        );
 
         // Discussion.
         // Icon and link.
@@ -207,7 +216,11 @@ function local_xray_template_data($courseid, $userid){
         $data->discussiondatapdf = html_writer::span($headlinedata->postslastsevendays, '', $reportdata);
         $data->discussiondata = html_writer::link($discussionarrowurl, $headlinedata->postslastsevendays, $linksnum);
         $data->discussionposts = get_string('headline_posts', 'local_xray');
-        $data->discussionlastweekwas = get_string("headline_lastweekwas_discussion", 'local_xray', $headlinedata->postslastsevendayspreviousweek);
+        $data->discussionlastweekwas = get_string(
+            "headline_lastweekwas_discussion",
+            'local_xray',
+            $headlinedata->postslastsevendayspreviousweek
+        );
 
         // Recommended Actions.
         $data->recommendationslist = '';
@@ -223,13 +236,15 @@ function local_xray_template_data($courseid, $userid){
                 // Number.
                 $data->recommendationslist .= html_writer::tag('td', $recommendationnumber, array('align' => 'left',
                     'class' => 'MsoNormal',
-                    'style' => "color:#777777;font-family:'Segoe UI',sans-serif,Arial,Helvetica,Lato;font-size:29px;line-height:24px;padding-right:5px;",
+                    'style' => "color:#777777;font-family:'Segoe UI',sans-serif,Arial,Helvetica,Lato;".
+                               "font-size:29px;line-height:24px;padding-right:5px;",
                     'valign' => 'top'));
 
                 // Recommendation text.
                 $data->recommendationslist .= html_writer::tag('td', $recommendation, array('align' => 'left',
                     'class' => 'MsoNormal',
-                    'style' => "color:#777777;font-family:'Segoe UI',sans-serif,Arial,Helvetica,Lato;font-size:13px;line-height:24px;"));
+                    'style' => "color:#777777;font-family:'Segoe UI',sans-serif,Arial,Helvetica,Lato;".
+                               "font-size:13px;line-height:24px;"));
 
                 $data->recommendationslist .= html_writer::end_tag('tr');
                 $data->recommendationslist .= html_writer::tag('tr', '', array('style' => "height:16px;"));
@@ -262,6 +277,11 @@ function local_xray_email_capability($courseid, $userid) {
 
 /**
  * Add the link in the profile user for subscriptions.
+ * @param \core_user\output\myprofile\tree $tree
+ * @param $user
+ * @param $iscurrentuser
+ * @param $course
+ * @return bool
  */
 function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
     // Validate user.
@@ -273,7 +293,13 @@ function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, 
     $subscriptionurl = new moodle_url("/local/xray/view.php",
         array("controller" => "globalsub"));
 
-    $node = new core_user\output\myprofile\node('miscellaneous', 'local_xray', get_string('profilelink', 'local_xray'), null, $subscriptionurl);
+    $node = new core_user\output\myprofile\node(
+        'miscellaneous',
+        'local_xray',
+        get_string('profilelink', 'local_xray'),
+        null,
+        $subscriptionurl
+    );
     $tree->add_node($node);
     return true;
 }
@@ -428,7 +454,7 @@ function local_xray_create_pdf($headlinedata, $subject) {
 
     $pdf = new pdf();
 
-    // Set document information
+    // Set document information.
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetAuthor(get_string('pluginname', 'local_xray'));
     $pdf->SetTitle($subject);
@@ -444,7 +470,7 @@ function local_xray_create_pdf($headlinedata, $subject) {
     $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
     $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
     // Set auto page breaks.
-    $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+    $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
     // Set image scale factor.
     $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
     // Set font.
@@ -462,13 +488,22 @@ function local_xray_create_pdf($headlinedata, $subject) {
     $riskicontable->data = local_xray_report_head_row(get_string('risk', 'local_xray'), $headlinedata->riskiconpdf);
 
     $activityicontable = new html_table();
-    $activityicontable->data = local_xray_report_head_row(get_string('activityreport', 'local_xray'), $headlinedata->activityiconpdf);
+    $activityicontable->data = local_xray_report_head_row(
+        get_string('activityreport', 'local_xray'),
+        $headlinedata->activityiconpdf
+    );
 
     $gradebookicontable = new html_table();
-    $gradebookicontable->data = local_xray_report_head_row(get_string('gradebookreport', 'local_xray'), $headlinedata->gradebookiconpdf);
+    $gradebookicontable->data = local_xray_report_head_row(
+        get_string('gradebookreport', 'local_xray'),
+        $headlinedata->gradebookiconpdf
+    );
 
     $discussionicontable = new html_table();
-    $discussionicontable->data = local_xray_report_head_row(get_string('discussionreport', 'local_xray'), $headlinedata->discussioniconpdf);
+    $discussionicontable->data = local_xray_report_head_row(
+        get_string('discussionreport', 'local_xray'),
+        $headlinedata->discussioniconpdf
+    );
 
     $table = new html_table();
     $table->data[] = array(html_writer::table($riskicontable),
@@ -488,9 +523,24 @@ function local_xray_create_pdf($headlinedata, $subject) {
     $discussiondatatable = new html_table();
     $discussiondatatable->data[] = array($headlinedata->discussiondatapdf, $headlinedata->discussionarrowpdf);
 
-    $table->data[] = array(html_writer::table($riskdatatable), html_writer::table($activitydatatable), html_writer::table($gradebooknumbertable), html_writer::table($discussiondatatable));
-    $table->data[] = array($headlinedata->studentsrisk, $headlinedata->activityloggedstudents, $headlinedata->gradebookheadline, $headlinedata->discussionposts);
-    $table->data[] = array($headlinedata->riskaverageweek, $headlinedata->activitylastweekwasof, $headlinedata->gradebookaverageofweek, $headlinedata->discussionlastweekwas);
+    $table->data[] = array(
+        html_writer::table($riskdatatable),
+        html_writer::table($activitydatatable),
+        html_writer::table($gradebooknumbertable),
+        html_writer::table($discussiondatatable)
+    );
+    $table->data[] = array(
+        $headlinedata->studentsrisk,
+        $headlinedata->activityloggedstudents,
+        $headlinedata->gradebookheadline,
+        $headlinedata->discussionposts
+    );
+    $table->data[] = array(
+        $headlinedata->riskaverageweek,
+        $headlinedata->activitylastweekwasof,
+        $headlinedata->gradebookaverageofweek,
+        $headlinedata->discussionlastweekwas
+    );
 
     $html .= html_writer::table($table);
 
@@ -515,15 +565,14 @@ function local_xray_create_pdf($headlinedata, $subject) {
     $xraydate = new html_table();
     $xraydate->attributes = array('style' => 'padding: 20px 10px 0 10px;font-weight:bolder;text-align:center;');
 
-
     $date = new DateTime($headlinedata->reportdate);
     $xrayemaildate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
     $xraydate->data[] = array(get_string('xrayemaildate', 'local_xray', $xrayemaildate));
     $html .= html_writer::table($xraydate);
 
-    // Output the HTML content
+    // Output the HTML content.
     $pdf->writeHTML($html, true, 0, true, 0);
-    // Reset pointer to the last page
+    // Reset pointer to the last page.
     $pdf->lastPage();
 
     return $pdf;

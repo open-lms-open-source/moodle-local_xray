@@ -39,76 +39,106 @@ class local_xray_api_validationhelper_testcase extends advanced_testcase {
             '/somedomain error' => ['http://foo.com/somedomain', 'domain-schema.json',
                 'data-accessible-wordHistogram-final.json', false],
             '/somedomain/course ok' => ['http://foo.com/somedomain/course', 'courses-schema.json', 'courses-final.json', true],
-            '/somedomain/course error' => ['http://foo.com/somedomain/course', 'courses-schema.json',
-                'data-accessible-wordHistogram-final.json', false],
-            '/somedomain/course/123/activity ok' => ['http://foo.com/somedomain/course/123/activity',
+            '/somedomain/course error' => [
+                'http://foo.com/somedomain/course', 'courses-schema.json',
+                'data-accessible-wordHistogram-final.json', false
+            ],
+            '/somedomain/course/123/activity ok' => [
+                'http://foo.com/somedomain/course/123/activity',
                 'course-report-activity-schema.json',
-                'course-report-activity-final_v2.json', true],
-            '/somedomain/course/123/activity error' => ['http://foo.com/somedomain/course/123/activity',
+                'course-report-activity-final_v2.json', true
+            ],
+            '/somedomain/course/123/activity error' => [
+                'http://foo.com/somedomain/course/123/activity',
                 'course-report-activity-schema.json',
-                'data-accessible-wordHistogram-final.json', false],
-            '/somedomain/course/123/firstLogin ok' => ['http://foo.com/somedomain/course/123/firstLogin',
+                'data-accessible-wordHistogram-final.json', false
+            ],
+            '/somedomain/course/123/firstLogin ok' => [
+                'http://foo.com/somedomain/course/123/firstLogin',
                 'course-report-firstLogin-schema.json',
-                'course-report-firstLogin-final_v2.json', true],
-            '/somedomain/course/123/firstLogin error' => ['http://foo.com/somedomain/course/123/firstLogin',
+                'course-report-firstLogin-final_v2.json', true
+            ],
+            '/somedomain/course/123/firstLogin error' => [
+                'http://foo.com/somedomain/course/123/firstLogin',
                 'course-report-firstLogin-schema.json',
-                'data-accessible-wordHistogram-final.json', false],
-            '/somedomain/course/123/risk ok' => ['http://foo.com/somedomain/course/123/risk',
+                'data-accessible-wordHistogram-final.json', false
+            ],
+            '/somedomain/course/123/risk ok' => [
+                'http://foo.com/somedomain/course/123/risk',
                 'course-report-risk-schema.json',
-                'course-report-risk-final_v2.json', true],
-            '/somedomain/course/123/risk error' => ['http://foo.com/somedomain/course/123/risk',
+                'course-report-risk-final_v2.json', true
+            ],
+            '/somedomain/course/123/risk error' => [
+                'http://foo.com/somedomain/course/123/risk',
                 'course-report-risk-schema.json',
-                'data-accessible-wordHistogram-final.json', false],
+                'data-accessible-wordHistogram-final.json', false
+            ],
             // We place here two correct tests of different size to ensure validation is ok.
-            '/somedomain/course/123/discussion ok' => ['http://foo.com/somedomain/course/123/discussion',
+            '/somedomain/course/123/discussion ok' => [
+                'http://foo.com/somedomain/course/123/discussion',
                 'course-report-discussion-schema.json',
-                'course-report-discussion-final_v2.json', true],
-            '/somedomain/course/123/discussion ok 2' => ['http://foo.com/somedomain/course/123/discussion',
+                'course-report-discussion-final_v2.json', true
+            ],
+            '/somedomain/course/123/discussion ok 2' => [
+                'http://foo.com/somedomain/course/123/discussion',
                 'course-report-discussion-schema.json',
-                'course-report-discussion-final_v3.json', true],
-            '/somedomain/course/123/discussion error' => ['http://foo.com/somedomain/course/123/discussion',
+                'course-report-discussion-final_v3.json', true
+            ],
+            '/somedomain/course/123/discussion error' => [
+                'http://foo.com/somedomain/course/123/discussion',
                 'course-report-discussion-schema.json',
-                'data-accessible-wordHistogram-final.json', false],
-            '/somedomain/course/123/discussionEndogenicPlagiarism ok' =>
-                ['http://foo.com/somedomain/course/123/discussionEndogenicPlagiarism',
-                    'course-report-discussionEndogenicPlagiarism-schema.json',
-                    'course-report-discussionEndogenicPlagiarism-final_v2.json', true],
-            '/somedomain/course/123/discussionEndogenicPlagiarism error' =>
-                ['http://foo.com/somedomain/course/123/discussionEndogenicPlagiarism',
-                    'course-report-discussionEndogenicPlagiarism-schema.json',
-                    'data-accessible-wordHistogram-final.json', false],
-            '/somedomain/course/123/discussionGrading ok' =>
-                ['http://foo.com/somedomain/course/123/discussionGrading',
-                    'course-report-discussionGrading-schema.json',
-                    'course-report-discussionGrading-final_v2.json', true],
-            '/somedomain/course/123/discussionGrading error' =>
-                ['http://foo.com/somedomain/course/123/discussionGrading',
-                    'course-report-discussionGrading-schema.json',
-                    'data-accessible-wordHistogram-final.json', false],
-            '/somedomain/course/123/gradebook ok' =>
-                ['http://foo.com/somedomain/course/123/gradebook',
-                    'course-report-gradebook-schema.json',
-                    'course-report-gradebook-final.json', true],
-            '/somedomain/course/123/gradebook error' =>
-                ['http://foo.com/somedomain/course/123/gradebook',
-                    'course-report-gradebook-schema.json',
-                    'data-accessible-wordHistogram-final.json', false],
-            '/somedomain/course/123/133/activity ok' =>
-                ['http://foo.com/somedomain/course/123/133/activity',
-                    'course-report-activity-user-schema.json',
-                    'course-report-activity-user-final.json', true],
-            '/somedomain/course/123/133/activity error' =>
-                ['http://foo.com/somedomain/course/123/133/activity',
-                    'course-report-activity-user-schema.json',
-                    'data-accessible-wordHistogram-final.json', false],
-            '/somedomain/course/123/133/discussion ok' =>
-                ['http://foo.com/somedomain/course/123/133/discussion',
-                    'course-report-discussion-user-schema.json',
-                    'course-report-discussion-user-final.json', true],
-            '/somedomain/course/123/133/discussion error' =>
-                ['http://foo.com/somedomain/course/123/133/discussion',
-                    'course-report-discussion-user-schema.json',
-                    'data-accessible-wordHistogram-final.json', false],
+                'data-accessible-wordHistogram-final.json', false
+            ],
+            '/somedomain/course/123/discussionEndogenicPlagiarism ok' => [
+                'http://foo.com/somedomain/course/123/discussionEndogenicPlagiarism',
+                'course-report-discussionEndogenicPlagiarism-schema.json',
+                'course-report-discussionEndogenicPlagiarism-final_v2.json', true
+            ],
+            '/somedomain/course/123/discussionEndogenicPlagiarism error' => [
+                'http://foo.com/somedomain/course/123/discussionEndogenicPlagiarism',
+                'course-report-discussionEndogenicPlagiarism-schema.json',
+                'data-accessible-wordHistogram-final.json', false
+            ],
+            '/somedomain/course/123/discussionGrading ok' => [
+                'http://foo.com/somedomain/course/123/discussionGrading',
+                'course-report-discussionGrading-schema.json',
+                'course-report-discussionGrading-final_v2.json', true
+            ],
+            '/somedomain/course/123/discussionGrading error' => [
+                'http://foo.com/somedomain/course/123/discussionGrading',
+                'course-report-discussionGrading-schema.json',
+                'data-accessible-wordHistogram-final.json', false
+            ],
+            '/somedomain/course/123/gradebook ok' => [
+                'http://foo.com/somedomain/course/123/gradebook',
+                'course-report-gradebook-schema.json',
+                'course-report-gradebook-final.json', true
+            ],
+            '/somedomain/course/123/gradebook error' => [
+                'http://foo.com/somedomain/course/123/gradebook',
+                'course-report-gradebook-schema.json',
+                'data-accessible-wordHistogram-final.json', false
+            ],
+            '/somedomain/course/123/133/activity ok' => [
+                'http://foo.com/somedomain/course/123/133/activity',
+                'course-report-activity-user-schema.json',
+                'course-report-activity-user-final.json', true
+            ],
+            '/somedomain/course/123/133/activity error' => [
+                'http://foo.com/somedomain/course/123/133/activity',
+                'course-report-activity-user-schema.json',
+                'data-accessible-wordHistogram-final.json', false
+            ],
+            '/somedomain/course/123/133/discussion ok' => [
+                'http://foo.com/somedomain/course/123/133/discussion',
+                'course-report-discussion-user-schema.json',
+                'course-report-discussion-user-final.json', true
+            ],
+            '/somedomain/course/123/133/discussion error' => [
+                'http://foo.com/somedomain/course/123/133/discussion',
+                'course-report-discussion-user-schema.json',
+                'data-accessible-wordHistogram-final.json', false
+            ],
         ];
     }
 

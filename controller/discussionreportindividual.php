@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
 use local_xray\local\api\course_manager;
@@ -137,7 +136,7 @@ class local_xray_controller_discussionreportindividual extends local_xray_contro
         $sortorder = optional_param('sSortDir_0', "asc", PARAM_ALPHA); // Direction of sort.
         $sortfield = optional_param("mDataProp_{$sortcol}", "id", PARAM_TEXT); // Get column name.
 
-        $return = "";
+        $return = [];
 
         try {
             $report = "discussion";

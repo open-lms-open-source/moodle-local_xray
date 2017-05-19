@@ -35,12 +35,12 @@ defined('MOODLE_INTERNAL') || die();
  * @package local_xray
  */
 abstract class validationaws {
-    
+
     /**
      * Disable Time tracing for not damaging json response
      */
     const DISABLE_TIME_TRACE = true;
-    
+
     /**
      * This test can indicate several issues:
      * Plugin is not configured
@@ -78,53 +78,53 @@ abstract class validationaws {
             }
         }
 
-        if(!$wsapires->is_successful()) {
+        if (!$wsapires->is_successful()) {
             return $wsapires;
         }
 
         try {
-            // Testing login
+            // Testing login.
             $wsapires->set_reason(get_string('error_wsapi_reason_login', wsapi::PLUGIN));
-            $wsapires->set_reason_fields(array('xrayurl','xrayusername','xraypassword'));
+            $wsapires->set_reason_fields(array('xrayurl', 'xrayusername', 'xraypassword'));
 
-            // Omit cache for testing that login works
+            // Omit cache for testing that login works.
             $CFG->forced_plugin_settings['local_xray']['curlcache'] = 0;
 
-            $loginRes = wsapi::login();
-            if (!$loginRes) {
+            $loginres = wsapi::login();
+            if (!$loginres) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
 
             // Increase step.
             $wsapires->step();
 
-            // Testing the query endpoints
+            // Testing the query endpoints.
             $wsapires->set_reason(get_string('error_wsapi_reason_accesstoken', wsapi::PLUGIN));
-            $wsapires->set_reason_fields(array('xrayurl','xrayclientid'));
-            $tokenRes = wsapi::accesstoken();
-            if (!$tokenRes) {
+            $wsapires->set_reason_fields(array('xrayurl', 'xrayclientid'));
+            $tokenres = wsapi::accesstoken();
+            if (!$tokenres) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
             // Increase step.
             $wsapires->step();
 
-            // Testing login
+            // Testing login.
             $wsapires->set_reason(get_string('error_wsapi_reason_accountcheck', wsapi::PLUGIN));
-            $wsapires->set_reason_fields(array('xrayurl','xrayusername','xraypassword'));
-            $accountchkRes = wsapi::accountcheck();
-            if (!$accountchkRes) {
+            $wsapires->set_reason_fields(array('xrayurl', 'xrayusername', 'xraypassword'));
+            $accountchkres = wsapi::accountcheck();
+            if (!$accountchkres) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
             // Increase step.
             $wsapires->step();
 
             $wsapires->set_reason(get_string('error_wsapi_reason_domaininfo', wsapi::PLUGIN));
-            $wsapires->set_reason_fields(array('xrayurl','xrayclientid'));
-            $domainRes = wsapi::domaininfo();
-            if (!$domainRes) {
+            $wsapires->set_reason_fields(array('xrayurl', 'xrayclientid'));
+            $domainres = wsapi::domaininfo();
+            if (!$domainres) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             } else {
-                $requiredKeys = array(
+                $requiredkeys = array(
                     'name',
                     'courses',
                     'activecourses',
@@ -134,20 +134,22 @@ abstract class validationaws {
                     'totalreports'
                 );
 
-                $domainArr = (array) $domainRes->data;
-                $numExistingKeys = count(array_intersect_key(array_flip($requiredKeys), $domainArr));
-                $numReqKeys = count($requiredKeys);
+                $domainarr = (array) $domainres->data;
+                $numexistingkeys = count(array_intersect_key(array_flip($requiredkeys), $domainarr));
+                $numreqkeys = count($requiredkeys);
 
-                if($numExistingKeys !== $numReqKeys) {
-                    $missingKeys = [];
-                    foreach ($requiredKeys as $key) {
-                        if(!array_key_exists($key, $domainArr)) {
-                            $missingKeys[] = $key;
+                if ($numexistingkeys !== $numreqkeys) {
+                    $missingkeys = [];
+                    foreach ($requiredkeys as $key) {
+                        if (!array_key_exists($key, $domainarr)) {
+                            $missingkeys[] = $key;
                         }
                     }
 
-                    $error = get_string("error_wsapi_domaininfo_incomplete",
-                        wsapi::PLUGIN, implode(", ", $missingKeys));
+                    $error = get_string(
+                        "error_wsapi_domaininfo_incomplete",
+                        wsapi::PLUGIN, implode(", ", $missingkeys)
+                    );
                     throw new \moodle_exception($error);
                 }
             }
@@ -155,19 +157,19 @@ abstract class validationaws {
             $wsapires->step();
 
             $wsapires->set_reason(get_string('error_wsapi_reason_courses', wsapi::PLUGIN));
-            $wsapires->set_reason_fields(array('xrayurl','xrayclientid'));
-            $coursesRes = wsapi::courses();
-            if(!$coursesRes) {
+            $wsapires->set_reason_fields(array('xrayurl', 'xrayclientid'));
+            $coursesres = wsapi::courses();
+            if (!$coursesres) {
                 throw new \moodle_exception(xrayws::instance()->errorinfo());
             }
             // Increase step.
             $wsapires->step();
 
         } catch (\Exception $ex) {
-            $wsapires->register_error('wsapi',$ex->getMessage());
+            $wsapires->register_error('wsapi', $ex->getMessage());
         }
 
-        if($wsapires->is_successful() && !$wsapires->is_finished()) {
+        if ($wsapires->is_successful() && !$wsapires->is_finished()) {
             $wsapires->register_error('wsapi');
         }
 
@@ -188,8 +190,6 @@ abstract class validationaws {
     public static function check_s3_bucket() {
         $awssteps = 5;
         $awsres = new validationresponse('s3_bucket', $awssteps);
-
-        global $CFG;
         $config = get_config('local_xray');
         if (empty($config)) {
             $awsres->add_result(get_string("error_wsapi_config_params_empty", wsapi::PLUGIN));
@@ -217,9 +217,15 @@ abstract class validationaws {
         }
 
         try {
-            // Testing AWS client creation
+            // Testing AWS client creation.
             $awsres->set_reason(get_string('error_aws_reason_client_create', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('awskey','awssecret','s3bucket','s3bucketregion','s3protocol','s3uploadretry'));
+            $awsres->set_reason_fields(
+                array(
+                    'awskey', 'awssecret',
+                    's3bucket', 's3bucketregion',
+                    's3protocol', 's3uploadretry'
+                )
+            );
 
             aws_sdk::autoload();
 
@@ -243,13 +249,13 @@ abstract class validationaws {
             /* @noinspection PhpUndefinedClassInspection */
             $task = new \local_xray\task\data_sync();
             $location = $task->get_storageprefix()."{$config->xrayclientid}/";
-            $objectKey = $location.'sample.test.upload.txt';
-            $objectContent = "sample test: ".md5(uniqid(rand(), true));
+            $objectkey = $location.'sample.test.upload.txt';
+            $objectcontent = "sample test: ".md5(uniqid(rand(), true));
 
-            // Testing AWS object listing
+            // Testing AWS object listing.
             $awsres->set_reason(get_string('error_aws_reason_object_list', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
-                    's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
+            $awsres->set_reason_fields(array('xrayclientid', 'awskey', 'awssecret',
+                    's3bucket', 's3bucketregion', 's3protocol', 's3uploadretry'));
             // Try to list the directory and get no more than 1 items to speed things up.
             // It does not matter if there are no objects, we are checking the access rights here.
             $objects = $s3->listObjects(
@@ -265,15 +271,15 @@ abstract class validationaws {
 
             // Now we try to upload simple file.
             $awsres->set_reason(get_string('error_aws_reason_upload_file', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
-                    's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
+            $awsres->set_reason_fields(array('xrayclientid', 'awskey', 'awssecret',
+                    's3bucket', 's3bucketregion', 's3protocol', 's3uploadretry'));
             $uploadfile = tmpfile();
             if ($uploadfile !== false) {
-                fwrite($uploadfile, $objectContent);
+                fwrite($uploadfile, $objectcontent);
                 rewind($uploadfile);
                 $uploadresult = $s3->upload(
                       $config->s3bucket
-                    , $objectKey
+                    , $objectkey
                     , $uploadfile
                     , 'private'
                     , ['debug' => true]
@@ -290,16 +296,16 @@ abstract class validationaws {
 
             // Now we try to download simple file.
             $awsres->set_reason(get_string('error_aws_reason_download_file', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
-                    's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
-            $awsObject = $s3->getObject(array(
+            $awsres->set_reason_fields(array('xrayclientid', 'awskey', 'awssecret',
+                    's3bucket', 's3bucketregion', 's3protocol', 's3uploadretry'));
+            $awsobject = $s3->getObject(array(
                 'Bucket' => $config->s3bucket,
-                'Key'    => $objectKey
+                'Key'    => $objectkey
             ));
 
             if ($metadata['statusCode'] !== 200) {
                 throw new \moodle_exception("Download from S3 bucket failed!");
-            } else if($awsObject['Body'] != $objectContent) {
+            } else if ($awsobject['Body'] != $objectcontent) {
                 throw new \moodle_exception("S3 bucket corrupt.");
             }
             // Increase step.
@@ -307,33 +313,33 @@ abstract class validationaws {
 
             // Now we try to erase simple file.
             $awsres->set_reason(get_string('error_aws_reason_erase_file', wsapi::PLUGIN));
-            $awsres->set_reason_fields(array('xrayclientid','awskey','awssecret',
-                    's3bucket','s3bucketregion','s3protocol','s3uploadretry'));
-            $delResult = $s3->deleteObject(array(
+            $awsres->set_reason_fields(array('xrayclientid', 'awskey', 'awssecret',
+                    's3bucket', 's3bucketregion', 's3protocol', 's3uploadretry'));
+            $delresult = $s3->deleteObject(array(
                 'Bucket' => $config->s3bucket,
-                'Key'    => $objectKey
+                'Key'    => $objectkey
             ));
 
-            $delMetadata = $delResult->get('@metadata');
+            $delmetadata = $delresult->get('@metadata');
 
-            if ($delMetadata['statusCode'] !== 204) {
+            if ($delmetadata['statusCode'] !== 204) {
                 throw new \moodle_exception("Deletion on S3 bucket failed!");
             }
             // Increase step.
             $awsres->step();
 
         } catch (\Exception $ex) {
-            $awsres->register_error('awssync',$ex->getMessage());
+            $awsres->register_error('awssync', $ex->getMessage());
         }
 
-        if($awsres->is_successful() && !$awsres->is_finished()) {
+        if ($awsres->is_successful() && !$awsres->is_finished()) {
             $awsres->register_error('awssync');
         }
 
         return $awsres;
     }
 
-    
+
 
     /**
      * This test can indicate several issues:
@@ -349,14 +355,13 @@ abstract class validationaws {
 
         $compresssteps = 0;
         $compressres = new validationresponse('compress', $compresssteps);
-        
+
         $config = get_config('local_xray');
         if (empty($config)) {
             $compressres->add_result(get_string("error_wsapi_config_params_empty", wsapi::PLUGIN));
             return $compressres;
         }
 
-        /** @var string[] $params */
         $params = [
               'enablepacker' => ['packertar']
             , 'exportlocation' => []
@@ -367,7 +372,7 @@ abstract class validationaws {
                 $compressres->add_result(get_string("error_compress_config_{$prop}", wsapi::PLUGIN));
             } else if ($config->{$prop} == true) {
                 foreach ($subprops as $subprop) {
-                    if (!isset($config->{$subprop}) 
+                    if (!isset($config->{$subprop})
                         || ( gettype($config->{$subprop}) == 'string' && empty($config->{$subprop}))) {
                         $compressres->add_result(get_string("error_compress_config_{$subprop}", wsapi::PLUGIN));
                     }
@@ -380,11 +385,11 @@ abstract class validationaws {
         }
 
         try {
-            // Export database and compress files
+            // Export database and compress files.
             $timeend = time() - (2 * MINSECS);
             $storage = new auto_clean();
-            
-            $file_list = [];
+
+            $filelist = [];
             define('DISABLE_MTRACE_DEBUG', self::DISABLE_TIME_TRACE);
             define('DISABLE_EXPORT_COUNTERS', true);
 
@@ -395,55 +400,55 @@ abstract class validationaws {
             $CFG->forced_plugin_settings['local_xray']['disablecounterincrease'] = true;
 
             data_export::export_csv(0, $timeend, $storage->get_directory());
-            
-            // Store list of files before compression
-            $dir_list = $storage->listdir_as_array();
-            foreach ($dir_list as $filepath) {
-                $file_list[] = basename($filepath);
+
+            // Store list of files before compression.
+            $dirlist = $storage->listdir_as_array();
+            foreach ($dirlist as $filepath) {
+                $filelist[] = basename($filepath);
             }
-            $num_files = count($file_list);
-            
-            // Execute compression
+            $numfiles = count($filelist);
+
+            // Execute compression.
             $compressres->set_reason('');
             $compressres->set_reason_fields(array('packertar'));
-            $compressResult = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
-            
-            if($compressResult !== TRUE) { // TGZ Compression
-                list($compfile, $destfile) = $compressResult;
+            $compressresult = data_export::compress($storage->get_dirbase(), $storage->get_dirname());
+
+            if ($compressresult !== true) { // TGZ Compression.
+                list($compfile, $destfile) = $compressresult;
+                ($destfile);
                 if (empty($compfile)) {
                     throw new \moodle_exception('error_compress_files', wsapi::PLUGIN);
                 }
 
-                // tgz_extractor library
-                global $CFG;
+                // Get tgz_extractor library.
                 require_once($CFG->dirroot.'/lib/filestorage/tgz_extractor.php');
                 require_once($CFG->dirroot.'/lib/filestorage/tgz_packer.php');
-                
-                $comp_files = (new \tgz_extractor($compfile))->list_files();
-                $tgzfile_list = [];
-                foreach ($comp_files as $cfile) {
-                    if('./' !== $cfile->pathname) {
-                        $tgzfile_list[] = basename($cfile->pathname);
+
+                $compfiles = (new \tgz_extractor($compfile))->list_files();
+                $tgzfilelist = [];
+                foreach ($compfiles as $cfile) {
+                    if ('./' !== $cfile->pathname) {
+                        $tgzfilelist[] = basename($cfile->pathname);
                     }
                 }
-                
-                if(count(array_intersect($tgzfile_list, $file_list)) != $num_files){
+
+                if (count(array_intersect($tgzfilelist, $filelist)) != $numfiles) {
                     throw new \moodle_exception('error_compress_files', wsapi::PLUGIN);
                 }
-                
-            } else { // BZ2 Compression
-                $bcomp_files = $storage->listdir_as_array();
-                
-                $bz2file_list = [];
-                foreach ($bcomp_files as $bfile) {
-                    $bz2file_list[] = basename($bfile, '.bz2');
+
+            } else { // BZ2 Compression.
+                $bcompfiles = $storage->listdir_as_array();
+
+                $bz2filelist = [];
+                foreach ($bcompfiles as $bfile) {
+                    $bz2filelist[] = basename($bfile, '.bz2');
                 }
-                
-                if(count(array_intersect($bz2file_list, $file_list)) != $num_files){
+
+                if (count(array_intersect($bz2filelist, $filelist)) != $numfiles) {
                     throw new \moodle_exception('error_compress_files', wsapi::PLUGIN);
                 }
             }
-            
+
         } catch (\Exception $ex) {
             $emsg = $ex->getMessage();
             if (!empty($emsg)) {

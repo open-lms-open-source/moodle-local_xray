@@ -122,7 +122,7 @@ class auto_clean {
             mtrace($name);
         }
     }
-    
+
     /**
      * List contents of a directory.
      * Intended for debugging purporses.
@@ -131,17 +131,11 @@ class auto_clean {
         $objects = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
                 $this->directory,
-                \FilesystemIterator::KEY_AS_PATHNAME     |
-                \FilesystemIterator::CURRENT_AS_FILEINFO |
-                \FilesystemIterator::SKIP_DOTS
+                \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS
             ),
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
-        /**
-         * @var  string       $name
-         * @var  \SplFileInfo $object
-         */
         $res = [];
         foreach ($objects as $name => $object) {
             $res[] = $name;

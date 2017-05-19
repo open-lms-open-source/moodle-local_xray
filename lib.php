@@ -186,7 +186,7 @@ function local_xray_extends_navigation($nav) {
     if (!$reportview) {
         $reportcontroller = optional_param('controller', '', PARAM_ALPHA);
         $reports = local_xray_navigationlinks($PAGE, $PAGE->context);
-        /* @var local_xray_renderer $renderer */
+        /** @var local_xray_renderer $renderer */
         $renderer = $PAGE->get_renderer('local_xray');
         $menu = $renderer->print_course_menu($reportcontroller, $reports);
     }

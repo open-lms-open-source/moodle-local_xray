@@ -42,42 +42,42 @@ class admin_setting_api_diagnostics_xray extends \admin_setting_heading {
      */
     public function __construct() {
         global $PAGE;
-        
-        if($PAGE->pagetype === 'admin-setting-local_xray_global') {
+
+        if ($PAGE->pagetype === 'admin-setting-local_xray_global') {
             $this->require_js_libs();
             $output = $this->print_html_output();
-            parent::__construct('apidiagnostics', '', $output, '');
+            parent::__construct('apidiagnostics', '', $output);
         } else {
-            parent::__construct('apidiagnostics', '', '', '');
+            parent::__construct('apidiagnostics', '', '');
         }
-        
+
     }
-    
+
     /**
      * REquires the JavaScript libraries
-     * @global type $PAGE
-     * @global type $CFG
+     * @global \moodle_page $PAGE
+     * @global \stdClass $CFG
      */
     private function require_js_libs() {
         global $PAGE, $CFG;
-        
+
         // Load Jquery.
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         $PAGE->requires->jquery_plugin('ui-css');
         // Load specific js for validation.
         $PAGE->requires->jquery_plugin('local_xray-validate_api_aws_compress', 'local_xray');
-        
-        // Build the check list
+
+        // Build the check list.
         $checks = get_class_methods('local_xray\local\api\validationaws');
-        $api_msg_keys = [];
+        $apimsgkeys = [];
         $prefix = 'check_';
         foreach ($checks as $check) {
-            $api_msg_keys[] = substr($check, strlen($prefix));
+            $apimsgkeys[] = substr($check, strlen($prefix));
         }
-        
+
         $data = array(
-            'lang_strs' => [ // Language specific strings
+            'lang_strs' => [ // Language specific strings.
                 'connectionfailed' => get_string('connectionfailed', 'local_xray'),
                 'connectionverified' => get_string('connectionverified', 'local_xray'),
                 'verifyingapi' => get_string('verifyingapi', 'local_xray'),
@@ -87,24 +87,24 @@ class admin_setting_api_diagnostics_xray extends \admin_setting_heading {
                 'test_api_compress' => get_string('test_api_compress', 'local_xray'),
                 'validate_service_response' => get_string('validate_service_response', 'local_xray')
             ],
-            'watch_fields' => [ // Fields to watch for changes
+            'watch_fields' => [ // Fields to watch for changes.
                 'xrayurl', 'xrayusername', 'xraypassword', 'xrayclientid',
                 'enablesync', 'awskey', 'awssecret', 's3bucket', 's3bucketregion', 's3protocol', 's3uploadretry',
                 'enablepacker', 'packertar', 'exportlocation'
             ],
-            'www_root' => $CFG->wwwroot, // Root directory
-            'api_msg_keys' => $api_msg_keys // Check list
-            
+            'www_root' => $CFG->wwwroot, // Root directory.
+            'api_msg_keys' => $apimsgkeys // Check list.
+
         );
-        
+
         $strdata = [json_encode($data)];
-        // Initialize js
+        // Initialize js.
         $PAGE->requires->js_init_call('validate_api_aws_compress', $strdata);
     }
-    
+
     /**
      * Prints the button to be used and the dialog window where the information will be shown
-     * @global type $OUTPUT
+     * @global \renderer_base $OUTPUT
      * @return string
      */
     private function print_html_output() {
@@ -122,10 +122,11 @@ class admin_setting_api_diagnostics_xray extends \admin_setting_heading {
         $o .= '<div class="form-label">';
         $o .= '<label>'.get_string('test_api_label', 'local_xray').'</label>';
         $o .= '</div>';
-        $o .= '<div class="form-setting"><input class="form-submit api_diag_btn" type="submit" value="'.get_string('test_api_action', 'local_xray').'"></div>';
+        $o .= '<div class="form-setting"><input class="form-submit api_diag_btn" type="submit" value="'.
+              get_string('test_api_action', 'local_xray').'"></div>';
         $o .= '<div class="form-description"><p>'.get_string('test_api_description', 'local_xray').'</p></div>';
         $o .= '</div>';
-        
+
         return $o;
     }
 }

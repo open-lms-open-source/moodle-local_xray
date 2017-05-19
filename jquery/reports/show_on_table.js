@@ -12,7 +12,7 @@ function local_xray_show_on_table(YUI, data) {
         // Disable warning native.
         $.fn.dataTable.ext.errMode = 'none';
 
-        // Error to load data in datatables. Show message error and hide table. xray-js-table-
+        // Error to load data in datatables. Show message error and hide table. xray-js-table- .
         $("#xray-js-table-" + data.id).on('error.dt', function (e, settings, techNote, message) {
             $("#xray-js-table-" + data.id + "_wrapper").html(data.errorMessage);
         });
@@ -30,7 +30,7 @@ function local_xray_show_on_table(YUI, data) {
             "lengthMenu": data.lengthMenu,
             // We load language from lang of moodle.
             "language": {
-                "sProcessing": data.sProcessingMessage,
+                // A "sProcessing": data.sProcessingMessage, Disable.
                 "sInfo": data.sInfo,
                 "sInfoEmpty": data.sInfoEmpty,
                 "sLengthMenu": data.sLengthMenu,
@@ -48,7 +48,7 @@ function local_xray_show_on_table(YUI, data) {
                     "sSortDescending": data.sSortDescending
                 }
             },
-            //"sAjaxDataProp": "", // With this, you can change format of json.
+            // C "sAjaxDataProp": "", // With this, you can change format of json.
             "sAjaxSource": data.jsonurl,
             "aoColumns": data.columns,
             "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
@@ -63,9 +63,9 @@ function local_xray_show_on_table(YUI, data) {
             "fnDrawCallback": function( oSettings ,aoData) {
                 // Not show paginate when pager is 1.
                 if (table.fnGetData().length == oSettings._iRecordsTotal) {
-                    $("#xray-js-table-" + data.id +"_paginate").hide();
+                    $("#xray-js-table-" + data.id + "_paginate").hide();
                 } else {
-                    $("#xray-js-table-" + data.id +"_paginate").show();
+                    $("#xray-js-table-" + data.id + "_paginate").show();
                 }
 
                 /* Add tabindex to tbody, scope to th elements and scope to first element in rows(tbody). */

@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var string[] $string */
+/** @var string[] $string */
 $string['navigation_xray'] = 'X-Ray Learning Analytics ';
 $string['navitationcourse_xray'] = 'X-Ray Learning Analytics';
 $string['pluginname'] = 'X-Ray Learning Analytics';
@@ -39,7 +39,8 @@ $string['xraydisplaysystemheading_desc'] = 'Controla si se muestran los reportes
 $string['displaymenu'] = 'Mostrar menu de reportes.';
 $string['displaymenu_desc'] = 'Controlar la visualización del menu de reportes en página principal del curso.';
 $string['displaysystemreports'] = 'Mostrar reportes del sistema.';
-$string['displaysystemreports_desc'] = 'Por defecto, los reportes del sistema no aparecen en el menú de reportes. Selecciona esta opción para mostrarlos.';
+$string['displaysystemreports_desc'] = 'Por defecto, los reportes del sistema no aparecen en el menú de reportes.'.
+                                       ' Selecciona esta opción para mostrarlos.';
 $string['displayheaderdata'] = 'Mostrar Análisis';
 $string['displayheaderdata_desc'] = 'Controla la visualización de Análisis del curso en la página principal del curso.';
 $string['debuginfo'] = 'Información:';
@@ -102,7 +103,8 @@ $string['error_loadimg'] = 'Error al cargar imagen, por favor intenta nuevamente
                            'error persiste, por favor contacta con el administrador del sitio.';
 
 /* Error Webservice */
-$string['error_xray'] = 'Error al conectar con X-Ray Learning Analytics, por favor intenta nuevamente recargando la página. Si el error '.
+$string['error_xray'] = 'Error al conectar con X-Ray Learning Analytics, por favor intenta nuevamente recargando'.
+                        ' la página. Si el error '.
                         'persiste, por favor contacta con el administrador del sitio.';
 $string['error_compress'] = 'No fue possible crear archivo comprimido. Por favor contacta con el administrador del sitio.';
 $string['error_generic'] = '{$a}';
@@ -110,7 +112,8 @@ $string['error_fexists'] = '¡El archivo "{$a}" ya existe!';
 $string['error_fnocreate'] = '¡No puedo crear el archivo "{$a}"!';
 $string['error_systemreports_nourl'] = 'La url para obtener reportes de sistemas no esta configurada correctamente.';
 $string['error_systemreports_gettoken'] = 'Error al obtener token para acceder a reportes de sistema.';
-$string['error_systemreports_disabled'] = 'Los reportes del sistema no se están mostrando. Están inhabilitados en la página de configuración de X-Ray.';
+$string['error_systemreports_disabled'] = 'Los reportes del sistema no se están mostrando.'.
+                                          ' Están inhabilitados en la página de configuración de X-Ray.';
 
 /* Settings */
 $string['xrayclientid'] = 'Identificador de cliente';
@@ -245,7 +248,7 @@ $string['accessible_error'] = 'Versión accesible para este gráfico no fue enco
 $string['reports_help'] = 'Ayuda';
 $string['accessibledata_of'] = 'Datos accesibles de {$a}';
 
-/* Tables names all report*/
+// Tables names all report.
 $string['activityreport_nonStarters'] = 'Estudiantes inactivos';// Activity and risk report.
 $string['activityreport_studentList'] = 'Métricas de actividad'; // Activity report.
 $string['risk_nonStarters'] = 'Estudiantes inactivos'; // Risk report.
@@ -258,8 +261,9 @@ $string['discussionreport_studentDiscussionGrades'] = 'Calificaciones recomendad
 $string['discussionreportindividual_discussionMetrics'] = 'Métricas de participación'; // Discussion report individual.
 $string['discussionreportindividual_discussionActivityByWeek'] = 'Actividad semanal'; // Discussion report individual.
 
-/* Help tables all reports*/
-$string['activityreport_nonStarters_help'] = 'Los siguientes estudiantes aún no muestran actividad en el curso.';// Activity and risk report.
+// Help tables all reports.
+// Activity and risk report.
+$string['activityreport_nonStarters_help'] = 'Los siguientes estudiantes aún no muestran actividad en el curso.';
 $string['activityreport_studentList_help'] = 'Observando la actividad de los estudiantes en un curso, se obtiene'.
     ' una idea de su compromiso y sus prácticas. Esta tabla muestra la actividad del estudiante y su regularidad.'.
     ' Cuanto menor sea el número de la columna Regularidad de Visitas, más regular será el estudiante. También'.
@@ -493,7 +497,8 @@ $string['discussionreportindividualforum_wordHistogram_help'] = 'Este histograma
     ' utilizadas en el foro. Las palabras con una frecuencia menor a 10 han sido excluidas.';
 
 /* Behat test */
-$string['error_behat_getjson'] = 'Error al traer archivo "{$a}" de carpeta local/xray/tests/fixtures para simular llamada a X-Ray Learning Analytics webservice cuando se esta corriendo behat test.';
+$string['error_behat_getjson'] = 'Error al traer archivo "{$a}" de carpeta local/xray/tests/fixtures para simular '.
+                                 'llamada a X-Ray Learning Analytics webservice cuando se esta corriendo behat test.';
 $string['error_behat_instancefail'] = 'Esta es una instancia configurada para fallar al correr behat tests.';
 
 /* Format for time range value */
@@ -509,7 +514,8 @@ $string['coursesubscribe'] = 'Suscribirse a los reportes por correo electrónico
 $string['coursesubscribedesc'] = 'Usted recibirá un correo electrónico con el resumen de los datos de X-Ray';
 $string['email_log_desc'] = 'Correo electrónico enviado. ID de curso {$a->courseid} ID de usuario {$a->to}';
 $string['emailsubject'] = 'Resumen de informe de X-Ray para {$a}';
-$string['erroremailheadline'] = 'Error en el panel de datos destacados. No fue enviado el correo electrónico para el ID de curso {$a}';
+$string['erroremailheadline'] = 'Error en el panel de datos destacados.'.
+                                ' No fue enviado el correo electrónico para el ID de curso {$a}';
 $string['profilelink'] = 'Suscripción global a X-Ray';
 $string['subscribeall'] = 'Suscribirse a reportes por correo electrónico para todos los cursos';
 $string['subscribetothiscourse'] = 'Suscribirse al reporte por correo electrónico';
@@ -558,7 +564,7 @@ $string['youdonthave'] = 'Usted no tiene recomendaciones';
 $string['recommendedactions_button'] = 'Mostrar/Ocultar recomendaciones';
 $string['recommendedaction_button'] = 'Mostrar/Ocultar recomendación';
 
-// Config validation errors for wsapi
+// Config validation errors for wsapi.
 $string['error_wsapi_config_params_empty'] = 'Los parámetros X-Ray están vacíos';
 $string['error_wsapi_config_xrayusername'] = 'El campo username de X-Ray Learning Analytics está vacío';
 $string['error_wsapi_config_xraypassword'] = 'El campo password de X-Ray Learning Analytics está vacío';
@@ -567,7 +573,7 @@ $string['error_wsapi_config_xrayclientid'] = 'El campo clientid de X-Ray Learnin
 $string['error_wsapi_exception'] = 'Hubo un error al comunicarse con el servidor X-Ray:<br/>{$a}';
 $string['error_wsapi_domaininfo_incomplete'] = 'La información del dominio está incompleta: ${a}';
 
-// Config validation errors for aws
+// Config validation errors for aws.
 $string['error_awssync_config_enablesync'] = 'El campo Data Sync está vacío';
 $string['error_awssync_config_awskey'] = 'El campo AWS Key está vacío';
 $string['error_awssync_config_awssecret'] = 'El campo AWS Secret está vacío';
@@ -576,7 +582,7 @@ $string['error_awssync_config_s3bucketregion'] = 'El campo S3 region está vací
 $string['error_awssync_config_s3protocol'] = 'El campo Upload protocol está vacío';
 $string['error_awssync_exception'] = 'Hubo un error al comunicarse con el servidor AWS:<br />{$a}';
 
-// Config validation error reasons
+// Config validation error reasons.
 $string['error_wsapi_reason_login'] = 'Ingresar';
 $string['error_wsapi_reason_accesstoken'] = 'Acceder al token';
 $string['error_wsapi_reason_domaininfo'] = 'Obtener información del dominio';
@@ -587,14 +593,14 @@ $string['error_aws_reason_upload_file'] = 'Cargar un arhchivo';
 $string['error_aws_reason_download_file'] = 'Descargar un archivo';
 $string['error_aws_reason_erase_file'] = 'Borrar un archivo';
 
-// Config validation errors for compression
+// Config validation errors for compression.
 $string['error_compress_config_enablepacker'] = 'El capo de uso de compresión nativa está vacío';
 $string['error_compress_config_packertar'] = 'El campo del ejecutable GNU tar está vacío';
 $string['error_compress_config_exportlocation'] = 'El campo Locación de export está vacío';
 $string['error_compress_exception'] = 'Error al comprimir:<br />{$a}';
 $string['error_compress_files'] = 'Se encontraron archivos incorrectos en el/los archivo(s) comprimido(s)';
 
-// Temporary for API check
+// Temporary for API check.
 $string['connectionfailed'] = 'Conexión fallida - verificar parámetros';
 $string['connectionverified'] = 'Parámetros verificados';
 $string['connectionstatusunknown'] = 'Estado de conexión no verificado';
@@ -603,12 +609,13 @@ $string['test_api_action'] = 'Validar parámetros';
 $string['validate_check_fields'] = 'Por favor, revise los siguientes campos';
 $string['validate_service_response'] = 'Verifique la respuesta del servicio dando click acá';
 
-// API titles
+// API titles.
 $string['test_api_ws_connect'] = 'Servidor X-Ray';
 $string['test_api_s3_bucket'] = 'Bucket S3 de AWS';
 $string['test_api_compress'] = 'Compresión';
 $string['test_api_label'] = 'Validación';
-$string['test_api_description'] = 'Validar <strong>parámetros guardados</strong> para encontrar problemas de conexión o del sistema.';
+$string['test_api_description'] = 'Validar <strong>parámetros guardados</strong> '.
+                                  'para encontrar problemas de conexión o del sistema.';
 $string['validate_when'] = 'Al';
 
 // X-Ray Reports.

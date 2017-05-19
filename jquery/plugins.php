@@ -22,6 +22,8 @@
  * @package local_xray
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 $plugins = array(
     'local_xray-show_on_table' => array(
         'files' => array('dataTables/js/jquery.dataTables.min.js',
@@ -55,7 +57,7 @@ $plugins = array(
             'config/CollapsibleLists.css',
             'config/CollapsibleLists.js',
             'config/toggle_categories.js'
-            
+
         )
     )
 );

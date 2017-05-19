@@ -24,8 +24,6 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var stdClass $CFG */
-use local_xray\datatables\datatablescolumns;
 use local_xray\event\get_report_failed;
 use local_xray\local\api\course_manager;
 
@@ -477,7 +475,7 @@ class local_xray_renderer extends plugin_renderer_base {
                 $countrecommendations = get_string('countaction', 'local_xray', $data->countrecommendations);
             }
             $countrecommendations = html_writer::tag('b', $countrecommendations);
-            $iconrecommendations =  html_writer::span('',
+            $iconrecommendations = html_writer::span('',
                 'countrecommendedactions_icon_expand',
                 array('id' => 'xray-div-recommendations-icon',
                     'role' => 'button',
@@ -486,7 +484,10 @@ class local_xray_renderer extends plugin_renderer_base {
                     'tabindex' => 0,
                     'title' => $buttontext,
                     'onclick' => 'local_xray_recommendations_show()'));
-            $countrecommendations = html_writer::div($youhave.$countrecommendations.$iconrecommendations, 'countrecommendedactions');
+            $countrecommendations = html_writer::div(
+                $youhave.$countrecommendations.$iconrecommendations,
+                'countrecommendedactions'
+            );
 
             // Content recommendations.
             $recommendationnumber = 1;
@@ -593,7 +594,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $PAGE->requires->jquery_plugin("local_xray-recommendations", "local_xray");
 
         $displaymenu = get_config('local_xray', 'displaymenu');
-        
+
         $menu = '';
         if ($displaymenu) {
             if (!empty($reports)) {
@@ -621,7 +622,7 @@ class local_xray_renderer extends plugin_renderer_base {
                     $divicon = html_writer::tag('div', $icon,
                         array('id' => 'xray-icon'));
                     $title = html_writer::tag('h4', $pluginname);
-                    $title = html_writer::tag('div',$divicon.$title,
+                    $title = html_writer::tag('div', $divicon.$title,
                         array('id' => 'xray-title'));
                 }
                 $amenu = html_writer::alist($menuitems, array('class' => 'xray-reports-links'));
@@ -629,7 +630,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 // Check if show headerline in course frontpage.
                 $headerdata = "";
-                $subscription_link = "";
+                $subscriptionlink = "";
 
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
                     require_once($CFG->dirroot.'/local/xray/locallib.php');
@@ -645,7 +646,7 @@ class local_xray_renderer extends plugin_renderer_base {
                     }
 
                     // Url for subscribe.
-                    $subscription_link = '';
+                    $subscriptionlink = '';
                     if (local_xray_email_enable()) {
                         $subscriptionurl = new moodle_url("/local/xray/view.php",
                             array("controller" => "subscribe", 'courseid' => $COURSE->id));
@@ -656,7 +657,7 @@ class local_xray_renderer extends plugin_renderer_base {
                             $subscriptionstring = get_string('subscribetothiscourse', 'local_xray');
                         }
 
-                        $subscription_link = html_writer::link($subscriptionurl, $subscriptionstring,
+                        $subscriptionlink = html_writer::link($subscriptionurl, $subscriptionstring,
                             array("class" => "xray_subscription_link",
                                 "title" => get_string('changesubscription', 'local_xray'),
                                 "target" => "_xray_course_subscription"));
@@ -664,7 +665,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 }
 
-                $menu = html_writer::div($title . $navmenu . $headerdata . $subscription_link,
+                $menu = html_writer::div($title . $navmenu . $headerdata . $subscriptionlink,
                     $classes,
                     array('id' => 'xray-js-menu', 'role' => 'region'));
 

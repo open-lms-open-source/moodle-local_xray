@@ -26,7 +26,6 @@ namespace local_xray\local\api;
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var \stdClass $CFG */
 /* @noinspection PhpIncludeInspection */
 require_once($CFG->libdir.'/filelib.php');
 
@@ -56,8 +55,8 @@ class cache {
     public static function cache_timeout() {
         static $result = null;
         if ($result === null) {
-            $result = (int)get_config('local_xray', 'curlcache') * HOURSECS +
-                      (int)get_config('local_xray', 'curlcache_minutes') * MINSECS;
+            $result = (int)get_config('local_xray', 'curlcache') * HOURSECS;
+            $result += (int)get_config('local_xray', 'curlcache_minutes') * MINSECS;
         }
         return $result;
     }

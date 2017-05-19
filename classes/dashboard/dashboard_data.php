@@ -138,6 +138,9 @@ class dashboard_data {
      * @param integer $averagegradeslastsevendayspreviousweek
      * @param integer $postslastsevendays
      * @param integer $postslastsevendayspreviousweek
+     * @param mixed   $recommendations
+     * @param mixed   $countrecommendations
+     * @param mixed   $reportdate
      */
     public function __construct($usersinrisk,
                                 $risktotal,
@@ -182,6 +185,7 @@ class dashboard_data {
      *
      * @param null|string|int $valuenow - Webservice can return "-" or null.
      * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
+     * @param mixed $mail
      * @return array
      */
     public static function get_status_simple($valuenow, $valuepreviousweek, $mail = false) {
@@ -198,7 +202,7 @@ class dashboard_data {
 
         // Default, same value.
         $stylestatus = "xray-headline-same";
-        $status_lang = "arrow_same";
+        $statuslang = "arrow_same";
         if ($mail) {
             $filename = "arrow_yellow";
         }
@@ -206,19 +210,19 @@ class dashboard_data {
         if ($valuenow < $valuepreviousweek) {
             // Decrement.
             $stylestatus = "xray-headline-decrease";
-            $status_lang = "arrow_decrease";
+            $statuslang = "arrow_decrease";
             if ($mail) {
                 $filename = "arrow_red";
             }
         } else if ($valuenow > $valuepreviousweek) {
             // Increment.
             $stylestatus = "xray-headline-increase";
-            $status_lang = "arrow_increase";
+            $statuslang = "arrow_increase";
             if ($mail) {
                 $filename = "arrow_green";
             }
         }
-        $langstatus = get_string($status_lang, "local_xray");
+        $langstatus = get_string($statuslang, "local_xray");
         return array($stylestatus, $langstatus, $filename);
     }
 
@@ -238,6 +242,7 @@ class dashboard_data {
      * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
      * @param null|string|int $valuepreviousweek2 - Webservice can return "-" or null.
      * @param boolean $inversebehavior - Arrow will have inverse behavior (increment/decrement). Used by risk.
+     * @param mixed $mail
      * @return array
      */
     public static function get_status_with_average($valuenow1,
@@ -261,7 +266,7 @@ class dashboard_data {
 
         // Default, same value.
         $stylestatus = "xray-headline-same";
-        $status_lang = "arrow_same";
+        $statuslang = "arrow_same";
         if ($mail) {
             $filename = "arrow_yellow";
         }
@@ -270,7 +275,7 @@ class dashboard_data {
 
             // Decrement.
             $stylestatus = "xray-headline-decrease";
-            $status_lang = "arrow_decrease";
+            $statuslang = "arrow_decrease";
             if ($mail) {
                 $filename = "arrow_red";
             }
@@ -286,7 +291,7 @@ class dashboard_data {
 
             // Increment.
             $stylestatus = "xray-headline-increase";
-            $status_lang = "arrow_increase";
+            $statuslang = "arrow_increase";
             if ($mail) {
                 $filename = "arrow_green";
             }
@@ -299,7 +304,7 @@ class dashboard_data {
             }
         }
 
-        $langstatus = get_string($status_lang, "local_xray");
+        $langstatus = get_string($statuslang, "local_xray");
         return array($stylestatus, $langstatus, $filename);
     }
 }

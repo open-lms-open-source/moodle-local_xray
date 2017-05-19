@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -77,7 +78,6 @@ function process_xray_export($xrayexportconfig, $key) {
         }
         cli_separator();
         die(1);
-        return;
     }
     // Apply config forcefully to X-Ray plugin.
     foreach ($xrayexportconfig as $cfgkey => $value) {

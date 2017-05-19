@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -16,7 +17,7 @@
 
 /**
  * Create column for Datatable Jquery plugin integration.
- * 
+ *
  * @package local_xray
  * @author Pablo Pagnone
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -24,8 +25,13 @@
  */
 
 namespace local_xray\datatables;
+
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class datatablescolumns
+ * @package local_xray
+ */
 class datatablescolumns {
 
     /**
@@ -33,31 +39,31 @@ class datatablescolumns {
      * @var string
      */
     public $mData;
-    
+
     /**
      * Is searchable
      * @var boolean
      */
     public $bSearchable;
-    
+
     /**
      * Text to show
      * @var string
      */
     public $text;
-    
+
     /**
      * Is sortable
      * @var boolean
      */
     public $bSortable;
-    
+
     /**
      * Show column
      * @var boolean
      */
     public $bVisible;
-    
+
     /**
      * Width column
      * @var string

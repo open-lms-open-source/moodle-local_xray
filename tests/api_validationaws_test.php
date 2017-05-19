@@ -27,7 +27,7 @@ require_once(__DIR__.'/base.php');
  * @group local_xray
  */
 class local_xray_api_validationaws_testcase extends local_xray_base_testcase {
-    
+
     const PLUGIN = 'local_xray';
 
     /**

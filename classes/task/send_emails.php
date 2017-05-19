@@ -38,7 +38,6 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class send_emails extends scheduled_task {
 
     /**
@@ -106,7 +105,16 @@ class send_emails extends scheduled_task {
                             $increase++;
                         }
                     }
-                    if ($subscribedusers = $DB->get_recordset_select('local_xray_subscribe', $select, null, 'courseid', 'id, courseid, userid')) {
+                    $subscribedusers = $DB->get_recordset_select(
+                        'local_xray_subscribe',
+                        $select,
+                        null,
+                        'courseid',
+                        'id,
+                        courseid,
+                        userid'
+                    );
+                    if ($subscribedusers) {
                         foreach ($subscribedusers as $record) {
                             if (isset($record->userid) && $record->userid && isset($record->courseid) && $record->courseid) {
                                 if (!local_xray_single_activity_course($record->courseid)) {
@@ -139,8 +147,14 @@ class send_emails extends scheduled_task {
 
                             if ($headlinedata) {
                                 // Add the link to the subscription page.
-                                $subscriptionurl = new \moodle_url('/local/xray/view.php', array('controller' => 'subscribe', 'courseid' => $courseid));
-                                $headlinedata->subscription = \html_writer::link($subscriptionurl, get_string('unsubscribeemail', 'local_xray'));
+                                $subscriptionurl = new \moodle_url(
+                                    '/local/xray/view.php',
+                                    array('controller' => 'subscribe', 'courseid' => $courseid)
+                                );
+                                $headlinedata->subscription = \html_writer::link(
+                                    $subscriptionurl,
+                                    get_string('unsubscribeemail', 'local_xray')
+                                );
                                 // Add the title.
                                 $headlinedata->title = get_string('pluginname', 'local_xray');
                                 // Add the data in the template.
@@ -165,7 +179,7 @@ class send_emails extends scheduled_task {
                             if (isset($pdf) && $pdf instanceof \pdf) {
                                 // Close and output PDF document.
                                 $strfemaildate = get_string('strfemaildate', 'local_xray');
-                                $reportdate =  userdate(time(), $strfemaildate, 99, false);
+                                $reportdate = userdate(time(), $strfemaildate, 99, false);
                                 $filename = clean_param('XRAY_COURSE_'.$courseshortname.'_'.$reportdate.'.pdf', PARAM_FILE);
                                 $filecontent = $pdf->Output($filename, 'S');
                                 // Add as a temporary file.
@@ -181,7 +195,7 @@ class send_emails extends scheduled_task {
                             // Send Email.
                             $email = email_to_user($to, $from, $subject, $messagetext, $messagehtml, $attachment, $filename);
                             // Delete the file.
-                            if ($realpath = realpath($attachment)){
+                            if ($realpath = realpath($attachment)) {
                                 if (is_writable($realpath)) {
                                     unlink($realpath);
                                 }

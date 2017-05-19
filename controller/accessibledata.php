@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
 /* @noinspection PhpIncludeInspection */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 
@@ -117,20 +116,22 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         // Add nav to return to report.
         $paramsurl = array("controller" => $this->origincontroller,
             "courseid" => $this->courseid);
-        if(!empty($this->userid)) {
+        if (!empty($this->userid)) {
             $paramsurl["userid"] = $this->userid;
         }
-        if(!empty($this->cmid)) {
+        if (!empty($this->cmid)) {
             $paramsurl["cmid"] = $this->cmid;
         }
-        if(!empty($this->forum)) {
+        if (!empty($this->forum)) {
             $paramsurl["forum"] = $this->forum;
         }
-        if(!empty($this->d)) {
+        if (!empty($this->d)) {
             $paramsurl["d"] = $this->d;
         }
-        $PAGE->navbar->add(get_string($this->origincontroller, $this->component),
-            new moodle_url('/local/xray/view.php',$paramsurl));
+        $PAGE->navbar->add(
+            get_string($this->origincontroller, $this->component),
+            new moodle_url('/local/xray/view.php', $paramsurl)
+        );
         // Set title.
         $title = get_string("accessibledata_of", $this->component, $this->graphname);
         $PAGE->set_title($title);
@@ -142,7 +143,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         }
         $this->validate_course();
 
-        try{
+        try {
             $response = \local_xray\local\api\wsapi::report_accessibility($this->reportid, $this->elementname);
             if (!$response) {
                 // Fail response of webservice.
@@ -150,11 +151,11 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
             } else {
 
                 // Empty data.
-                if($response->status == "emptydata") {
+                if ($response->status == "emptydata") {
                     $output .= html_writer::tag("p", get_string("accessible_emptydata", $this->component));
                 }
                 // Show data in tables.
-                if($response->status == "OK") {
+                if ($response->status == "OK") {
                     switch($this->elementname){
                         // Special cases.
                         case "endogenicPlagiarismHeatmap":
@@ -162,13 +163,13 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
                         case "barplotOfActivityByWeekday":
                             $output .= $this->specialcase1($response->data);
                             break;
-                        //Specials cases, these has 1 table and 2 single values to show.
+                        // Specials cases, these has 1 table and 2 single values to show.
                         case "riskDensity":
                         case "scatterPlot":
                         case "balloonPlotRiskHistory":
                             $output .= $this->specialcase2($response);
                             break;
-                        //Special case, has 2 tables to show (and we need show the tables names).
+                        // Special case, has 2 tables to show (and we need show the tables names).
                         case "activityLevelTimeline":
                             $output .= $this->specialcase2($response, true);
                             break;
@@ -179,7 +180,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
                 }
 
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             get_report_failed::create_from_exception($e, context_course::instance($this->courseid), "accessibledata")->trigger();
             $output = $this->print_error('accessible_error', $e->getMessage());
         }
@@ -192,7 +193,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
      * We dont show column sent "_row".
      *
      * @param array $data
-     * @return array
+     * @return mixed
      */
     private function standard($data) {
 
@@ -200,14 +201,14 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $columnsnames = array();
         $rows = array();
         // Get data.
-        if(is_array($data) && !empty($data)) {
+        if (is_array($data) && !empty($data)) {
 
             // Get columns names.
             $columns = get_object_vars($data[0]);
-            $exclude_columns = array("_row");
+            $excludecolumns = array("_row");
             if (!empty($columns)) {
                 foreach ($columns as $c => $value) {
-                    if (in_array($c, $exclude_columns)) {
+                    if (in_array($c, $excludecolumns)) {
                         continue;
                     }
                     $columnsnames[] = $c;
@@ -215,10 +216,10 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
             }
 
             // Get columns data.
-            foreach($data as $val){
+            foreach ($data as $val) {
                 $row = new html_table_row();
-                foreach($val as $k => $value) {
-                    if(in_array($k, $exclude_columns)){
+                foreach ($val as $k => $value) {
+                    if (in_array($k, $excludecolumns)) {
                         continue;
                     }
                     $c  = new html_table_cell($value);
@@ -235,7 +236,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
     /**
      * Special case 1, we need to show first column with the value sent in "_row".
      * @param array $data
-     * @return array
+     * @return mixed
      */
     private function specialcase1($data) {
 
@@ -243,7 +244,7 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
         $columnsnames = array();
         $rows = array();
         // Get data.
-        if(is_array($data) && !empty($data)) {
+        if (is_array($data) && !empty($data)) {
 
             // Get columns names.
             $columns = get_object_vars($data[0]);
@@ -261,16 +262,16 @@ class local_xray_controller_accessibledata extends local_xray_controller_reports
             }
 
             // Get columns data.
-            foreach($data as $val){
+            foreach ($data as $val) {
                 $row = new html_table_row();
 
                 // When we have _row in object, we show this in first place.
-                if(isset($val->_row)) {
+                if (isset($val->_row)) {
                     $row->cells[] = $val->_row;;
                 }
 
-                foreach($val as $k => $value) {
-                    if($k == "_row"){
+                foreach ($val as $k => $value) {
+                    if ($k == "_row") {
                         continue;
                     }
                     $c  = new html_table_cell($value);

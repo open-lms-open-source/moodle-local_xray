@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
 require_once($CFG->dirroot.'/local/mr/framework/controller.php');
 use local_xray\event\get_report_failed;
 
@@ -106,7 +105,7 @@ class local_xray_controller_reports extends mr_controller {
             $PAGE->set_pagelayout('report');
             $PAGE->set_heading($COURSE->fullname);
         }
-        // Add specific class for xray heading
+        // Add specific class for xray heading.
         $this->heading->classes = 'xray-report-page-title';
     }
 
@@ -250,7 +249,8 @@ class local_xray_controller_reports extends mr_controller {
 
         $baserr = get_string($errorstring, $this->component) . \html_writer::empty_tag('br') . \html_writer::empty_tag('br');
         if (!empty($debuginfo) && isset($CFG->debugdisplay) && $CFG->debugdisplay && ($CFG->debug == DEBUG_DEVELOPER)) {
-            $debuginfotitle = \html_writer::tag('strong', get_string('debuginfo', $this->component)) . \html_writer::empty_tag('br');
+            $debuginfotitle = \html_writer::tag('strong', get_string('debuginfo', $this->component)) .
+                \html_writer::empty_tag('br');
             $baserr .= $OUTPUT->notification($debuginfotitle . $debuginfo);
         }
         $output = $this->output->error_text($baserr);
@@ -367,7 +367,13 @@ class local_xray_controller_reports extends mr_controller {
                     if (isset($row->{$column}->colorCode)) {
                         $category = $row->{$column}->colorCode;
                     }
-                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat, $category);
+                    $r->{$column} = $this->show_intuitive_value(
+                        $row->{$column}->value,
+                        $response->elementName,
+                        $column,
+                        $dataformat,
+                        $category
+                    );
                 }
             } else if (!empty($response->columnHeaders) && is_object($response->columnHeaders)) {
                 $c = get_object_vars($response->columnHeaders);
@@ -392,7 +398,6 @@ class local_xray_controller_reports extends mr_controller {
      * @return string
      */
     public function show_intuitive_value($value, $table, $column, $dateformat, $xraycategory = false) {
-        $plugin = 'local_xray';
         switch ($table) {
             case 'riskMeasures':
                 // Table Risk Measures from Risk Report.
@@ -457,7 +462,7 @@ class local_xray_controller_reports extends mr_controller {
                         // Column Total discussion posts.
                     case 'discussion_posts_last_week':
                         // Column Posts last week.
-                        // Add '-' for strange values
+                        // Add '-' for strange values.
                         if (isset($value) && is_numeric(trim($value))) {
                             return $value;
                         } else {
@@ -630,14 +635,14 @@ class local_xray_controller_reports extends mr_controller {
     public static function show_time_hours_minutes($time, $minutes = false) {
         if (is_numeric($time) && $time >= 0) {
             if ($minutes) { // Time range is sent in minutes.
-                // Get hours from minutes
+                // Get hours from minutes.
                 $hours = floor($time / 60);
                 // Get the remaining minutes.
                 $remainingminutes = $time % 60;
             } else { // Time range is sent in seconds.
-                // Get minutes from seconds
+                // Get minutes from seconds.
                 $minutes = floor($time / 60);
-                // Get hours from seconds
+                // Get hours from seconds.
                 $hours = floor($minutes / 60);
                 // Get the remaining minutes.
                 $remainingminutes = $minutes % 60;
@@ -646,7 +651,8 @@ class local_xray_controller_reports extends mr_controller {
             $hours = sprintf("%02d", $hours);
             $remainingminutes = sprintf("%02d", $remainingminutes);
             // Return the time range in format.
-            $timeformat = str_ireplace('%M', $remainingminutes, str_ireplace('%H', $hours, get_string('strftimehoursminutes', 'local_xray')));
+            $timeformat = str_ireplace('%M', $remainingminutes,
+                str_ireplace('%H', $hours, get_string('strftimehoursminutes', 'local_xray')));
             return $timeformat;
         } else {
             return '-';
@@ -672,7 +678,7 @@ class local_xray_controller_reports extends mr_controller {
 
     /**
      * Trigger the report_viewed event when the user views a Report.
-     * @param $data Array
+     * @param array $data
      */
     public function trigger_report_viewed_event ($data) {
         // Only for non-ajax views.

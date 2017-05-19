@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
 use local_xray\local\api\course_manager;
@@ -76,9 +75,10 @@ class local_xray_controller_discussionreportindividualforum extends local_xray_c
      * This controller identify forum type and get correct report.
      */
     public function view_action() {
-        global $CFG, $PAGE, $DB;
+        global $PAGE, $DB;
 
         // Add title to breadcrumb.
+        /** @var array $plugins */
         $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
         $modulename = 'forum';
         if (array_key_exists('hsuforum', $plugins)) {

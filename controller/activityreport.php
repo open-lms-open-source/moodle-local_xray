@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
 use local_xray\local\api\course_manager;
@@ -83,8 +82,11 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                         } else {
 
                             // We need show table first in activity report.
-                            $datatable = new local_xray\datatables\datatables($responsefirstlogin->elements->nonStarters,
-                                "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" . $this->courseid);
+                            $datatable = new local_xray\datatables\datatables(
+                                $responsefirstlogin->elements->nonStarters,
+                                "rest.php?controller='activityreport'&action='jsonfirstloginnonstarters'&courseid=" .
+                                $this->courseid
+                            );
                             $output .= $this->output->standard_table((array)$datatable);
                         }
 
@@ -94,13 +96,14 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                             array(),
                             true,
                             true,
-                            '<"top">rt<"bottom"flp><"clear">');// add column action.
+                            '<"top">rt<"bottom"flp><"clear">');// Add column action.
                         // If the user comes from header.
                         if ($this->header) {
                             $datatable->default_field_sort = 3; // Sort by column "Last activity".
                             $datatable->sort_order = "desc";
                         } else {
-                            $datatable->default_field_sort = 1; // Sort by first column "Lastname".Because table has action column);
+                            // Sort by first column "Lastname".Because table has action column.
+                            $datatable->default_field_sort = 1;
                         }
                         $output .= $this->output->standard_table((array)$datatable);
 
@@ -179,7 +182,13 @@ class local_xray_controller_activityreport extends local_xray_controller_reports
                     if (isset($row->{$column}->colorCode)) {
                         $category = $row->{$column}->colorCode;
                     }
-                    $r->{$column} = $this->show_intuitive_value($row->{$column}->value, $response->elementName, $column, $dataformat, $category);
+                    $r->{$column} = $this->show_intuitive_value(
+                        $row->{$column}->value,
+                        $response->elementName,
+                        $column,
+                        $dataformat,
+                        $category
+                    );
                 }
             }
             $data[] = $r;

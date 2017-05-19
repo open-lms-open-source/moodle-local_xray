@@ -7,27 +7,27 @@
  */
 function validate_api_aws_compress(YUI, data) {
     var self = this;
-    
+
     var json_data = JSON.parse(data);
-    
-    // Get values from backend
+
+    // Get values from backend.
     self.lang_strs = json_data.lang_strs;
     self.www_root = json_data.www_root;
     self.watch_fields = json_data.watch_fields;
     self.api_msg_keys = json_data.api_msg_keys;
-    
+
     // Special case for breaking the error list.
     self.strbreak = 'break';
-    
-    // Initialize
+
+    // Initialize.
     self.init = function() {
         for(var key in self.watch_fields) {
             self.watch_fields[key] = '#id_s_local_xray_' + self.watch_fields[key];
         }
-        
+
         self.applySettingChangeCheck();
         self.applyClickApiTest();
-        
+
         self.dialog = $('#api_diag').dialog({
             modal: true,
             autoOpen: false,
@@ -39,6 +39,7 @@ function validate_api_aws_compress(YUI, data) {
     /**
      * Render new api status message.
      *
+     * @param string msg_diag_key
      * @param string stringkey
      * @param string alertclass
      * @param string extraclasses
@@ -64,15 +65,13 @@ function validate_api_aws_compress(YUI, data) {
         var msgcontainer = $('#api_diag .noticetemplate_' + alertclass).children().first().clone();
 
         $(msgcontainer).addClass(extraclasses);
-        $(msgcontainer).html('<span class="api-connection-msg">'+
-                '<strong>' + test_api_title + '</strong>\n' + 
-                msg + '</span>' + reasonsMsg);
+        $(msgcontainer).html('<span class="api-connection-msg">' + '<strong>' + test_api_title + '</strong>\n' + msg + '</span>' + reasonsMsg);
 
         // Wipe out existing connection status msg container.
-        $('#api_diag #'+ msg_diag_key + '-status').empty();
+        $('#api_diag #' + msg_diag_key + '-status').empty();
 
         // Put in new msg container.
-        $('#api_diag #'+ msg_diag_key + '-status').append($(msgcontainer));
+        $('#api_diag #' + msg_diag_key + '-status').append($(msgcontainer));
 
     };
 
@@ -83,13 +82,13 @@ function validate_api_aws_compress(YUI, data) {
      */
     self.testApi = function(check_key, callback) {
         $.ajax({
-            url: self.www_root + '/local/xray/view.php?controller=validatesettings&action=check&check='+check_key,
+            url: self.www_root + '/local/xray/view.php?controller=validatesettings&action=check&check=' + check_key,
             dataType: 'json',
             success: function (data, status, xhr) {
                 var generalFail = false;
                 if(data.error || data.debuginfo || data.errorcode || data.stacktrace) {
                     generalFail = true;
-                    
+
                     var mappedData = $.map(data, function(value, index) {
                         return [self.strong(index) + '&nbsp;' + value];
                     });
@@ -131,14 +130,14 @@ function validate_api_aws_compress(YUI, data) {
         var enableValidateButton = function(){
             $('.api_diag_btn').removeAttr('disabled');
         };
-        
+
         $('.api_diag_btn').click(function(e){
             e.preventDefault();
-            
+
             self.dialog.dialog('open');
-            
+
             $('.api_diag_btn').attr('disabled','disabled');
-            
+
             for (var i = 0; i < self.api_msg_keys.length; i++) {
                 self.api_msg(self.api_msg_keys[i], 'verifyingapi', 'message', '');
             }
@@ -171,13 +170,13 @@ function validate_api_aws_compress(YUI, data) {
             $(self.watch_fields[s]).change(function(e) {
                 $('.api_diag_btn').attr('disabled','disabled');
             });
-            
+
             $(self.watch_fields[s]).keypress(function(e) {
                 $('.api_diag_btn').attr('disabled','disabled');
             });
         }
     };
-    
+
     /**
      * Apply listener for toggling of server info
      *
@@ -186,15 +185,15 @@ function validate_api_aws_compress(YUI, data) {
     self.applyServerInfoToggle = function(check_key) {
         $('#' + check_key).click(function(e){
             e.preventDefault();
-            $('#'+ check_key + '_txt').toggle();
+            $('#' + check_key + '_txt').toggle();
         });
-        
+
         $('#' + check_key).css('color', '#FFF');
     };
-    
+
     /**
      * Generates an html list from an array
-     * 
+     *
      * @param {Array} items
      * @returns {Strin}g
      */
@@ -209,28 +208,27 @@ function validate_api_aws_compress(YUI, data) {
         }
         return itemsTxt;
     };
-    
+
     /**
-     * 
+     *
      * @param {String} str
      * @returns {String}
      */
     self.strong = function(str) {
         return '<strong>' + str + '</strong>';
     };
-    
+
     /**
      * Generates a html div and button to show a tech message from the server
      * @param {String} key
      * @param {String} message
      * @param {Array} items
-     * @returns {String} 
+     * @returns {String}
      */
     self.serverTechMessage = function(key, message) {
-        return '<a id="' + key + '" class="xray_service_info_btn" href>' + self.lang_strs['validate_service_response'] + '</a><br /><br />' + 
-            '<div id="' + key + '_txt"class="xray_service_info">' + message + '</div>'
+        return '<a id="' + key + '" class="xray_service_info_btn" href>' + self.lang_strs['validate_service_response'] + '</a><br /><br />' + '<div id="' + key + '_txt"class="xray_service_info">' + message + '</div>'
     };
-    
+
     $(document).ready(function () {
         self.init();
     });

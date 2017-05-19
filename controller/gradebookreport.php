@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') or die();
 
-/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
 use local_xray\local\api\course_manager;

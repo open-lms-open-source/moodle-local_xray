@@ -29,7 +29,7 @@ if ($hassiteconfig) {
     /* @noinspection PhpIncludeInspection */
     require_once($CFG->dirroot.'/local/xray/locallib.php');
     $plugin = 'local_xray';
-    
+
     $settings = new admin_settingpage('local_xray_global',
             new lang_string('global_settings', $plugin));
 

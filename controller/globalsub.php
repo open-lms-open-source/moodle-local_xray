@@ -26,8 +26,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
-
+/**
+ * Class local_xray_controller_globalsub
+ */
 class local_xray_controller_globalsub extends mr_controller {
 
     public function view_action() {
@@ -40,7 +41,11 @@ class local_xray_controller_globalsub extends mr_controller {
 
         if (local_xray_email_enable()) {
             $mform = new globalsub_form($this->url);
-            if ($currentvalue = $DB->get_record('local_xray_globalsub', array('userid' => $USER->id), 'id, type', IGNORE_MULTIPLE)) {
+            if ($currentvalue = $DB->get_record(
+                'local_xray_globalsub',
+                array('userid' => $USER->id),
+                'id, type',
+                IGNORE_MULTIPLE)) {
                 $toform = new stdClass();
                 $toform->type = $currentvalue->type;
                 $mform->set_data($toform);
@@ -91,7 +96,7 @@ class local_xray_controller_globalsub extends mr_controller {
      * Setup.
      */
     public function setup() {
-        global $CFG, $PAGE, $COURSE, $USER;
+        global $CFG, $PAGE, $USER;
 
         require_login();
 
@@ -108,7 +113,7 @@ class local_xray_controller_globalsub extends mr_controller {
             $myurl = new moodle_url($CFG->wwwroot.'/my/');
             $PAGE->navbar->add(get_string("myhome"), $myurl);
         }
-        $profileurl = new moodle_url('/user/profile.php', array('id'=>$USER->id));
+        $profileurl = new moodle_url('/user/profile.php', array('id' => $USER->id));
         $PAGE->navbar->add(get_string("profile"), $profileurl);
         $PAGE->navbar->add(get_string("navigation_xray", $this->component));
         $PAGE->navbar->add(get_string("globalsubtitle", $this->component), $url);

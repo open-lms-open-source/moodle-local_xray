@@ -23,7 +23,7 @@
  */
 
 require_once('../../config.php');
-/* @var stdClass $CFG */
+global $CFG;
 require($CFG->dirroot.'/local/mr/bootstrap.php');
 
 mr_controller::render('local/xray', 'pluginname', 'local_xray');

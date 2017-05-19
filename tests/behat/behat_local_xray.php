@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -59,8 +60,8 @@ class behat_local_xray extends behat_base {
         make_upload_directory('express/tmp');
 
         // Add design at site context.
-        $context_course = context_course::instance(SITEID);
-        $parentcontextid = $context_course->id;
+        $contextcourse = context_course::instance(SITEID);
+        $parentcontextid = $contextcourse->id;
         $design = new block_express_model_design($parentcontextid);
         $data = new stdClass();
         $data->name = 'xrayheadlintest';
@@ -82,6 +83,7 @@ class behat_local_xray extends behat_base {
      * @Given /^I allow guest access for xray in course "(?P<shortname_string>(?:[^"]|\\")*)"$/
      * @param string $shortname
      * @return void
+     * @throws ExpectationException
      */
     public function i_allow_guest_access_for_xray_in_course($shortname) {
         global $DB;
@@ -108,11 +110,11 @@ class behat_local_xray extends behat_base {
      *
      * @Given /^I test Headline view "(?P<shortname_string>(?:[^"]|\\")*)"$/
      * @param string $shortname
+     * @param TableNode $pages
      * @return void
      */
-
     public function i_test_headline_view($shortname, TableNode $pages) {
-        global $DB;
+        /** @var behat_admin $admincontext */
         $admincontext = behat_context_helper::get('behat_admin');
         $this->courseshortname = $shortname;
         // Get themes and the course format for each one.
@@ -145,10 +147,12 @@ class behat_local_xray extends behat_base {
      * @param $formats
      * @param $shortname
      * @param bool|false $template
-     * @return array
+     * @return void
      */
     private function local_xray_test_headline_themes($theme, $formats, $shortname, $template = false) {
+        /** @var behat_general $generalcontext */
         $generalcontext = behat_context_helper::get('behat_general');
+        /** @var behat_admin $admincontext */
         $admincontext = behat_context_helper::get('behat_admin');
 
         if ($template) {
@@ -177,9 +181,10 @@ class behat_local_xray extends behat_base {
     /**
      * Add a Flexpage
      */
-
     private function add_flexpage () {
+        /** @var behat_general $generalcontext */
         $generalcontext = behat_context_helper::get('behat_general');
+        /** @var behat_forms $behatformscontext */
         $behatformscontext = behat_context_helper::get('behat_forms');
 
         $generalcontext->click_link("Turn editing on");
@@ -199,10 +204,9 @@ class behat_local_xray extends behat_base {
      * See all Headline Elements
      *
      * @param bool $positive
-     * @throws
      */
-
     private function headline_elements ($positive) {
+        /** @var behat_general $generalcontext */
         $generalcontext = behat_context_helper::get('behat_general');
         if ($positive) {// Test headline is present.
             $generalcontext->should_exist("#xray-nav-headline", "css_element");
@@ -225,8 +229,10 @@ class behat_local_xray extends behat_base {
      * Change course format.
      *
      * @Given /^I set course format "(?P<format_string>(?:[^"]|\\")*)" in course "(?P<shortname_string>(?:[^"]|\\")*)" for xray$/
-     * @param string $shortname
+     * @param  string $format
+     * @param  string $shortname
      * @return void
+     * @throws ExpectationException
      */
     public function i_set_course_format_in_course_for_xray($format, $shortname) {
         global $DB;
@@ -250,8 +256,9 @@ class behat_local_xray extends behat_base {
      * @return void
      */
     public function xray_email_alerts_are_turned_off() {
-
+        /** @var behat_admin $admincontext */
         $admincontext = behat_context_helper::get('behat_admin');
+        /** @var behat_general $generalcontext */
         $generalcontext = behat_context_helper::get('behat_general');
 
         $table = new \Behat\Gherkin\Node\TableNode([['emailfrequency', 'weekly', 'local_xray']]);
@@ -278,12 +285,13 @@ class behat_local_xray extends behat_base {
      * @param string $type courselevel/all/none
      * @param string $username
      * @return void
+     * @throws ExpectationException
      */
     public function xray_global_subscription($type, $username) {
         global $DB;
         $session = $this->getSession();
 
-        If ($userid = $DB->get_field('user', 'id', array('username' => $username), IGNORE_MULTIPLE)) {
+        if ($userid = $DB->get_field('user', 'id', array('username' => $username), IGNORE_MULTIPLE)) {
             switch ($type) {
                 case "courselevel":
                     $type = 0;

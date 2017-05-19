@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * @package local_xray
  */
 abstract class course_manager {
-    
+
     const PLUGIN = 'local_xray';
 
     /**
@@ -84,8 +84,8 @@ abstract class course_manager {
     /**
      * Retrieve the available categories for usage with X-Ray
      *
-     * @param string $cid Id of the category
-     * @return coursecat[] Format $id=>$fullname
+     * @param  int $cid Id of the category
+     * @return array
      * @throws \moodle_exception
      */
     public static function list_categories_as_simple_array($cid = 0) {
@@ -187,7 +187,7 @@ abstract class course_manager {
     /**
      * Retrieve the available categories for usage with X-Ray as json encoded string
      *
-     * @param string $cid Id of the category
+     * @param  int $cid Id of the category
      * @return string
      * @throws \moodle_exception
      */
@@ -216,16 +216,21 @@ abstract class course_manager {
      * @throws \moodle_exception
      */
     public static function load_course_ids_from_xray() {
-        if(!defined('XRAY_OMIT_CACHE')) {
+        if (!defined('XRAY_OMIT_CACHE')) {
             define('XRAY_OMIT_CACHE', true);
         }
-        
+
         $res = array();
-        
+
         if ($xraycourses = wsapi::get_analysis_filter()) {
             $res = $xraycourses->filtervalue;
         } else {
-            throw new \moodle_exception('xray_check_global_settings', self::PLUGIN, '',self::generate_xray_settings_link());
+            throw new \moodle_exception(
+                'xray_check_global_settings',
+                self::PLUGIN,
+                '',
+                self::generate_xray_settings_link()
+            );
         }
 
         return $res;
@@ -305,7 +310,7 @@ abstract class course_manager {
      * @throws \moodle_exception
      */
     private static function save_courses_to_xray() {
-        if(!defined('XRAY_OMIT_CACHE')) {
+        if (!defined('XRAY_OMIT_CACHE')) {
             define('XRAY_OMIT_CACHE', true);
         }
         $cids = self::list_selected_course_ids();
@@ -321,15 +326,15 @@ abstract class course_manager {
                 } else if (isset($wsapires)) {
                     $error = $wsapires;
                 }
-                throw new \moodle_exception('xray_save_course_filter_error', self::PLUGIN, '',$error);
+                throw new \moodle_exception('xray_save_course_filter_error', self::PLUGIN, '', $error);
             }
         } else {
             throw new \moodle_exception(
                     'xray_save_course_filter_error', self::PLUGIN,
-                    '',get_string('error_xray', self::PLUGIN));
+                    '', get_string('error_xray', self::PLUGIN));
         }
     }
-    
+
     /**
      * Generates X-Ray connection error text with a link to the global settings
      * @return string Text with a connection error to X-Ray and link to settings

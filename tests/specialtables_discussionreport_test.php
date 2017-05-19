@@ -49,7 +49,7 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
     private $course;
 
     /**
-     * Renderer local_xray.
+     * @var local_xray_renderer
      */
     private $renderer;
 
@@ -64,8 +64,15 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
         $this->course = $this->getDataGenerator()->create_course();
 
         // Set url of discussionreport.
-        $PAGE->set_url('/local/xray/view.php',
-            array('id' => $this->course->id, 'controller' => 'discussionreport', 'action' => 'view'));
+        $PAGE->set_url(
+            '/local/xray/view.php',
+            array(
+                'id' => $this->course->id,
+                'controller' => 'discussionreport',
+                'action' => 'view'
+            )
+        );
+
         $this->renderer = $PAGE->get_renderer(self::PLUGIN_NAME);
     }
 
@@ -82,13 +89,18 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
         // Tell the cache to load specific fixture for discussion report.
         $url = 'http://xrayserver.foo.com/demo/course/'.$this->course->id.'/discussion';
         /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-        \local_xray\local\api\testhelper::push_pair($url,
-            'course-report-discussion-final-withdiscussionActivityByWeekWithData.json');
+        \local_xray\local\api\testhelper::push_pair(
+            $url,
+            'course-report-discussion-final-withdiscussionActivityByWeekWithData.json'
+        );
 
         // Get response for discussion report.
         $response = \local_xray\local\api\wsapi::course($this->course->id, "discussion");
         $urljson = new moodle_url("test.php"); // We don't need set valid url.
-        $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek, $urljson);
+        $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week(
+            $response->elements->discussionActivityByWeek,
+            $urljson
+        );
 
         $this->assertStringStartsWith('<h3 class="xray-reportsname"', $tableoutput);
     }
@@ -112,7 +124,10 @@ class local_xray_specialtables_discussionreport_testcase extends local_xray_base
         // Get response for discussion report.
         $response = \local_xray\local\api\wsapi::course($this->course->id, "discussion");
         $urljson = new moodle_url("test.php"); // We don't need set valid url.
-        $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week($response->elements->discussionActivityByWeek, $urljson);
+        $tableoutput = $this->renderer->table_inverse_discussion_activity_by_week(
+            $response->elements->discussionActivityByWeek,
+            $urljson
+        );
 
         $this->assertStringStartsWith('<h3 class="xray-reportsname"', $tableoutput);
     }

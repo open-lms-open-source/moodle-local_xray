@@ -26,7 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 use local_xray\local\api\validationaws;
 
-/* @var stdClass $CFG */
 require_once($CFG->dirroot.'/local/mr/framework/controller.php');
 
 /**
@@ -40,7 +39,7 @@ require_once($CFG->dirroot.'/local/mr/framework/controller.php');
 class local_xray_controller_validatesettings extends mr_controller {
 
     /**
-     * 
+     *
      */
     public function view_action() {
         echo $this->ajax_notfound_response();
@@ -70,17 +69,18 @@ class local_xray_controller_validatesettings extends mr_controller {
         $prefix = 'check_';
 
         $checkmethod = $prefix.$checkkey;
-        if(in_array($checkmethod, $checks)) {
+        if (in_array($checkmethod, $checks)) {
             $checkresult = validationaws::{$checkmethod}();
             echo $this->process_response($checkresult);
         } else {
             echo $this->ajax_notfound_response();
         }
     }
-    
+
     /**
      * Processes a response for this service
-     * @param \local_xray\local\api\validationresponse $res
+     * @param mixed $res
+     * @return string
      */
     private function process_response($res) {
         $result = array();

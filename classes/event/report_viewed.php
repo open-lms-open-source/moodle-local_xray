@@ -25,11 +25,16 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace local_xray\event;
+
 use core\event\base;
 
 defined('MOODLE_INTERNAL') || die();
 
-class report_viewed extends \core\event\base {
+/**
+ * Class report_viewed
+ * @package local_xray
+ */
+class report_viewed extends base {
 
     /**
      * Init method.
@@ -58,17 +63,23 @@ class report_viewed extends \core\event\base {
     public function get_description() {
         // Do not use "report" in Discussion Report Individual and Discussion Report Individual Forum.
         $report = ' report';
-        if ($this->other['reportname'] == 'discussionreportindividual' || $this->other['reportname'] == 'discussionreportindividualforum' ||
-                $this->other['reportname'] == 'activityreportindividual') {
+        if ($this->other['reportname'] == 'discussionreportindividual'      ||
+            $this->other['reportname'] == 'discussionreportindividualforum' ||
+            $this->other['reportname'] == 'activityreportindividual') {
             $report = '';
         }
         // Basic description.
-        $description = "The user with id '$this->userid' viewed the X-Ray ".get_string($this->other['reportname'], 'local_xray')."$report for the course with id '$this->courseid'";
+        $description = "The user with id '$this->userid' viewed the X-Ray ".
+                       get_string($this->other['reportname'], 'local_xray').
+                       "$report for the course with id '$this->courseid'";
         // Special description for each case.
         if ($this->other['reportname'] == 'discussionreportindividualforum') {
             $description .= " for the forum with id '".$this->other['forumid']."'.";
         } else if (isset($this->other['accessibledata']) && $this->other['accessibledata']) {
-            $description = "The user with id '$this->userid' viewed the Accessible Data of the graph called ".$this->other['graphname']." in the X-Ray ".get_string($this->other['reportname'], 'local_xray')."$report for the course with id '$this->courseid'.";
+            $description = "The user with id '$this->userid' viewed the Accessible Data of the graph called ".
+                           $this->other['graphname']." in the X-Ray ".
+                           get_string($this->other['reportname'], 'local_xray').
+                           "$report for the course with id '$this->courseid'.";
         } else {
             $description .= ".";
         }
@@ -87,7 +98,8 @@ class report_viewed extends \core\event\base {
             'courseid' => $this->courseid
         );
         // Individual Reports.
-        if ($this->other['reportname'] == 'activityreportindividual' || $this->other['reportname'] == 'discussionreportindividual') {
+        if ($this->other['reportname'] == 'activityreportindividual' ||
+            $this->other['reportname'] == 'discussionreportindividual') {
             $params['userid'] = $this->relateduserid;
         }
         // Discussion individual Forum Report.

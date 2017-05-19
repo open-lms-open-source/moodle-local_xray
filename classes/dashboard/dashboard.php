@@ -35,7 +35,8 @@ class dashboard {
 
     /**
      * Connect with xray webservice and get data for dashboard.
-     * @param $courseid
+     * @param  int $courseid
+     * @param  int|bool $userid
      * @return bool|dashboard_data
      */
     public static function get($courseid, $userid = false) {
@@ -161,7 +162,8 @@ class dashboard {
                         $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
                     }
                     // Recommendations for Admin user..
-                    if ($addrecommendations == self::XRAYRECOMMENDATIONADMIN || $addrecommendations == self::XRAYRECOMMENDATIONALL) {
+                    if ($addrecommendations == self::XRAYRECOMMENDATIONADMIN ||
+                        $addrecommendations == self::XRAYRECOMMENDATIONALL) {
                         // Recommendations Admin.
                         $recommendationsisset = isset($response->elements->recommendationsAdmin);
                         if ($recommendationsisset) {
@@ -173,7 +175,8 @@ class dashboard {
                         }
                     }
                     // Recommendations for Instructor user..
-                    if ($addrecommendations == self::XRAYRECOMMENDATIONTEACHER || $addrecommendations == self::XRAYRECOMMENDATIONALL) {
+                    if ($addrecommendations == self::XRAYRECOMMENDATIONTEACHER ||
+                        $addrecommendations == self::XRAYRECOMMENDATIONALL) {
                         // Recommendations Instructor.
                         $recommendationsisset = isset($response->elements->recommendationsInstructor);
                         if ($recommendationsisset) {

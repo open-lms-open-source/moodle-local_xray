@@ -368,7 +368,7 @@ class xrayws {
             $responselist = explode("\r\n\r\n", $rawresponse);
             // Get last header and response.
             foreach ($responselist as $responseval) {
-                if(strpos($responseval, self::STR_HTTP) === 0) {
+                if (strpos($responseval, self::STR_HTTP) === 0) {
                     $this->respheaders = $responseval;
                 } else {
                     $this->rawresponse = $responseval;

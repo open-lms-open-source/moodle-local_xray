@@ -26,7 +26,7 @@ define('AJAX_SCRIPT', true);
 define('NO_DEBUG_DISPLAY', true);
 
 require_once('../../config.php');
-/* @var stdClass $CFG */
+
 /* @noinspection PhpIncludeInspection */
 require($CFG->dirroot.'/local/mr/bootstrap.php');
 

@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
 /**
@@ -153,6 +152,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 }
                 // Navbar.
                 // Add title to breadcrumb.
+                /** @var array $plugins */
                 $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
                 $modulename = 'forum';
                 if (array_key_exists('hsuforum', $plugins)) {
@@ -166,7 +166,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                         $modulename = $module->name;
                         if ($modulename == 'forum') {
                             $xrayparams["forumtype"] = "classic";
-                        } elseif ($modulename == 'hsuforum') {
+                        } else if ($modulename == 'hsuforum') {
                             $xrayparams["forumtype"] = "hsu";
                         }
                     }
@@ -217,12 +217,15 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
             }
             // Tokens.
             // TODO this should be disabled for INT-10445. It will be added later.
+
+            // @codingStandardsIgnoreStart
             /*$tokenparams = \local_xray\local\api\jwthelper::get_token_params();
             if (!$tokenparams) {
                 // Error to get token for shiny server.
                 print_error("error_xrayreports_gettoken", $this->component);
             }
             $xrayparams = array_merge($xrayparams,$tokenparams);*/
+            // @codingStandardsIgnoreEnd
 
             /*
              * Check if exist cookie for xray to use Safari browser.If not exist,we redirect to xray side with param

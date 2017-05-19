@@ -59,7 +59,7 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
         $result = \local_xray\local\api\wsapi::login();
         $this->assertFalse($result);
     }
-    
+
     /**
      * @return void
      */
@@ -169,8 +169,8 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
         $expected = json_decode(file_get_contents(__DIR__.'/fixtures/courses-final.json'));
         $this->assertNotEquals($expected, \local_xray\local\api\wsapi::courses());
     }
-    
-        
+
+
     /**
      * @return void
      */
@@ -178,12 +178,18 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
         $this->resetAfterTest(true);
         $this->config_set_ok();
 
-        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
-        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo/analysisfilter/course', 'analysisfilter-final.json');
+        \local_xray\local\api\testhelper::push_pair(
+            'http://xrayserver.foo.com/user/login',
+            'user-login-final.json'
+        );
+        \local_xray\local\api\testhelper::push_pair(
+            'http://xrayserver.foo.com/demo/analysisfilter/course',
+            'analysisfilter-final.json'
+        );
         $expected = json_decode(file_get_contents(__DIR__.'/fixtures/analysisfilter-final.json'));
         $this->assertEquals($expected, \local_xray\local\api\wsapi::get_analysis_filter());
     }
-    
+
     /**
      * @return void
      */
@@ -196,7 +202,7 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
         $expected = json_decode(file_get_contents(__DIR__.'/fixtures/analysisfilter-final.json'));
         $this->assertNotEquals($expected, \local_xray\local\api\wsapi::get_analysis_filter());
     }
-    
+
     /**
      * @return void
      */
@@ -204,12 +210,18 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
         $this->resetAfterTest(true);
         $this->config_set_ok();
 
-        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
-        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo/analysisfilter/course', 'save-analysisfilter-final.json');
+        \local_xray\local\api\testhelper::push_pair(
+            'http://xrayserver.foo.com/user/login',
+            'user-login-final.json'
+        );
+        \local_xray\local\api\testhelper::push_pair(
+            'http://xrayserver.foo.com/demo/analysisfilter/course',
+            'save-analysisfilter-final.json'
+        );
 
-        $this->assertTrue(\local_xray\local\api\wsapi::save_analysis_filter(array(1,2,3))->ok);
+        $this->assertTrue(\local_xray\local\api\wsapi::save_analysis_filter(array(1, 2, 3))->ok);
     }
-    
+
     /**
      * @return void
      */
@@ -217,10 +229,16 @@ class local_xray_api_wsapi_testcase extends local_xray_base_testcase {
         $this->resetAfterTest(true);
         $this->config_set_ok();
 
-        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/user/login', 'user-login-final.json');
-        \local_xray\local\api\testhelper::push_pair('http://xrayserver.foo.com/demo/analysisfilter/course', 'save-analysisfilter-fail-final.json');
+        \local_xray\local\api\testhelper::push_pair(
+            'http://xrayserver.foo.com/user/login',
+            'user-login-final.json'
+        );
+        \local_xray\local\api\testhelper::push_pair(
+            'http://xrayserver.foo.com/demo/analysisfilter/course',
+            'save-analysisfilter-fail-final.json'
+        );
 
-        $this->assertFalse(\local_xray\local\api\wsapi::save_analysis_filter(array(1,2,3))->ok);
+        $this->assertFalse(\local_xray\local\api\wsapi::save_analysis_filter(array(1, 2, 3))->ok);
     }
 
 }

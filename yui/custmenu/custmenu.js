@@ -11,7 +11,7 @@ YUI.add('moodle-local_xray-custmenu', function(Y) {
                 }
 
                 var location = 0;
-                // Header data
+                // Header data.
                 if (config.header && config.hdrsearch) {
                     if (config.hdrappend && Boolean(config.hdrappend)) {
                         location = null;
@@ -19,7 +19,7 @@ YUI.add('moodle-local_xray-custmenu', function(Y) {
                     this.embed(config.hdrsearch, config.header, location);
                 }
 
-                // Menu
+                // Menu.
                 if (config.items && config.menusearch) {
                     location = 0;
                     if (config.menuappend && Boolean(config.menuappend)){
@@ -27,7 +27,7 @@ YUI.add('moodle-local_xray-custmenu', function(Y) {
                     }
                     this.embed(config.menusearch, config.items, location);
                 }
-            }, // end init
+            }, // End init.
 
             embed: function (search, content, location) {
                 var node = Y.one(search);
@@ -38,9 +38,9 @@ YUI.add('moodle-local_xray-custmenu', function(Y) {
                         Y.log("Unable to locate element " + search, "error", this.module);
                     }
                 }
-            } // end embed
+            } // End embed.
 
-        }; // end custmenu
+    }; // End custmenu.
 
-    }, '@VERSION@', {requires: ['node', 'console']}
+}, '@VERSION@', {requires: ['node', 'console']}
 );

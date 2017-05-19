@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/* @var stdClass $CFG */
 require_once($CFG->libdir.'/adminlib.php');
 
 use local_xray\local\api\wsapi;
@@ -39,7 +38,7 @@ use local_xray\local\api\course_manager;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_controller_courseselection extends mr_controller_admin {
-    
+
     const PLUGIN = 'local_xray';
 
     /**
@@ -50,20 +49,20 @@ class local_xray_controller_courseselection extends mr_controller_admin {
     }
 
     /**
-     * 
+     *
      */
     public function admin_setup() {
         admin_externalpage_setup('courseselection_view');
     }
-    
-    private function require_js_libs(){
+
+    private function require_js_libs() {
         global $PAGE, $CFG;
-        
+
         // Load Jquery.
         $PAGE->requires->jquery();
         // Load specific js for validation.
         $PAGE->requires->jquery_plugin('local_xray-config_toggle_categories', self::PLUGIN);
-        // Initialize js
+        // Initialize js.
         $data = array(
             'lang_strs' => array(
                 'loading_please_wait' => new lang_string('loading_please_wait', self::PLUGIN)
@@ -73,15 +72,15 @@ class local_xray_controller_courseselection extends mr_controller_admin {
         $strdata = array(json_encode($data));
         $PAGE->requires->js_init_call('config_toggle_categories', $strdata);
     }
-    
+
     /**
-     * 
+     *
      */
     public function view_action() {
         global $CFG, $DB, $OUTPUT;
-        
-        $login_result = wsapi::login();
-        if (!$login_result) {
+
+        $loginresult = wsapi::login();
+        if (!$loginresult) {
             $errmessage = new lang_string('xray_check_global_settings', self::PLUGIN,
                     course_manager::generate_xray_settings_link());
             return $OUTPUT->notification($errmessage, 'notifyerror');
@@ -89,34 +88,34 @@ class local_xray_controller_courseselection extends mr_controller_admin {
 
         try {
             $saved = optional_param('saved', 0, PARAM_INT);
-        
-            $selcourTable = 'local_xray_selectedcourse';
+
+            $selcourtable = 'local_xray_selectedcourse';
 
             require_once($CFG->dirroot.'/local/xray/courseselectionform.php');
 
-            // Prepare the form
+            // Prepare the form.
             $mform = new courseselection_form($this->url);
-            if ($currentvalue = $DB->get_records($selcourTable)) {
+            if ($currentvalue = $DB->get_records($selcourtable)) {
                 $toform = new stdClass();
-                $formVal = array();
-                foreach ($currentvalue as $selCourse) {
-                    $formVal[] = $selCourse->cid;
+                $formval = array();
+                foreach ($currentvalue as $selcourse) {
+                    $formval[] = $selcourse->cid;
                 }
-                $toform->joined_courses = implode(',', array_unique($formVal));
+                $toform->joined_courses = implode(',', array_unique($formval));
                 $mform->set_data($toform);
-            } else if ($xrayids = course_manager::load_course_ids_from_xray()){
+            } else if ($xrayids = course_manager::load_course_ids_from_xray()) {
                 // If database is empty and courses are foung in X-Ray server, load them to the database.
                 \local_xray\local\api\course_manager::save_selected_courses($xrayids);
 
                 $toform = new stdClass();
-                $toform->joined_courses = implode(',',$xrayids);
+                $toform->joined_courses = implode(',', $xrayids);
                 $mform->set_data($toform);
             }
 
             if ($fromform = $mform->get_data()) {
                 $courseselection = array();
-                if($fromform->joined_courses && $fromform->joined_courses !== '') {
-                    $courseselection = explode(',',$fromform->joined_courses);
+                if ($fromform->joined_courses && $fromform->joined_courses !== '') {
+                    $courseselection = explode(',', $fromform->joined_courses);
                 }
 
                 course_manager::save_selected_courses($courseselection);
@@ -146,5 +145,5 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             return $this->output->box($OUTPUT->notification($exc->getMessage(), 'notifyerror'));
         }
     }
-    
+
 }
