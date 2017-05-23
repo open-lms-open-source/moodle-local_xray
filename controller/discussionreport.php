@@ -279,9 +279,9 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                         // Add the remaining data. The number of each week will be the column name.
                         foreach ($response->data as $col) {
                             // Number of posts.
-                            $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '');
+                            $posts[$col->week->value] = (isset($col->posts->value) ? $col->posts->value : '-');
                             // Average time to respond (hours).
-                            $avglag[$col->week->value] = '';
+                            $avglag[$col->week->value] = '-';
                             if (isset($col->avgLag->value)) {
                                 // Check if timerange is defined.
                                 $minutes = false;
@@ -293,7 +293,7 @@ class local_xray_controller_discussionreport extends local_xray_controller_repor
                                 $avglag[$col->week->value] = $this->show_time_hours_minutes($col->avgLag->value, $minutes);
                             }
                             // Average word count.
-                            $avgwordcount[$col->week->value] = '';
+                            $avgwordcount[$col->week->value] = '-';
                             if (isset($col->avgWordCount->value)) {
                                 // Round Value.
                                 $avgwordcount[$col->week->value] = round(floatval($col->avgWordCount->value), 2);
