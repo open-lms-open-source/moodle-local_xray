@@ -167,10 +167,6 @@ class data_sync extends scheduled_task {
                 ['debug' => true]
             );
 
-            if (empty($uploadresult['ObjectURL'])) {
-                throw new \Exception("Upload to S3 bucket failed!");
-            }
-
             // Save counters only when entire process passed OK.
             if (empty($this->config->disablecounterincrease)) {
                 data_export::store_counters();
