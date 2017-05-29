@@ -94,31 +94,17 @@ abstract class jwthelper {
         $context = \context_course::instance($COURSE->id);
         $canviewreports = has_capability('local/xray:view', $context);
         if ($canviewreports) {
-            $coursereports = [
-                'activity'   => 'activityreport',
-                'discussion' => 'discussionreport',
-                'gradebook'  => 'gradebookreport',
-                'risk'       => 'risk'
-            ];
-
-            $creports = [];
-            foreach ($coursereports as $coursereport => $capability) {
-                if (has_capability("local/xray:{$capability}_view", $context)) {
-                    $creports[] = $coursereport;
-                }
-            }
-
             $courseobject = (object) [
                 'path'      => '/coursereports',
                 'parameter' => [
-                    (object) ['name' => 'report'   , 'values' => $creports                               ],
-                    (object) ['name' => 'courseid' , 'values' => [(int)$COURSE->id]                      ],
-                    (object) ['name' => 'uid'      , 'values' => [(int)$USER->id]                        ],
-                    (object) ['name' => 'forumid'  , 'required' => false                                 ],
-                    (object) ['name' => 'forumtype', 'values' => ['classic', 'hsu'], 'required' => false ],
-                    (object) ['name' => 'jouleurl' , 'values' => [$CFG->wwwroot]                         ],
-                    (object) ['name' => 't'                                                              ],
-                    (object) ['name' => 'cid', 'values' => [$cid]                                        ],
+                    (object) ['name' => 'report'                                   ],
+                    (object) ['name' => 'courseid'                                 ],
+                    (object) ['name' => 'uid'      , 'values'   => [(int)$USER->id]],
+                    (object) ['name' => 'forumid'  , 'required' => false           ],
+                    (object) ['name' => 'forumtype', 'required' => false           ],
+                    (object) ['name' => 'jouleurl' , 'values'   => [$CFG->wwwroot] ],
+                    (object) ['name' => 't'                                        ],
+                    (object) ['name' => 'cid', 'values' => [$cid]                  ],
                 ]
             ];
 
