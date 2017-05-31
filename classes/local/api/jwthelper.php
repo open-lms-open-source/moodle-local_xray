@@ -99,12 +99,12 @@ abstract class jwthelper {
                 'parameter' => [
                     (object) ['name' => 'report'                                   ],
                     (object) ['name' => 'courseid'                                 ],
+                    (object) ['name' => 't'                                        ],
                     (object) ['name' => 'uid'      , 'values'   => [(int)$USER->id]],
                     (object) ['name' => 'forumid'  , 'required' => false           ],
                     (object) ['name' => 'forumtype', 'required' => false           ],
                     (object) ['name' => 'jouleurl' , 'values'   => [$CFG->wwwroot] ],
-                    (object) ['name' => 't'                                        ],
-                    (object) ['name' => 'cid', 'values' => [$cid]                  ],
+                    (object) ['name' => 'cid'      , 'values'   => [$cid]          ],
                 ]
             ];
 
