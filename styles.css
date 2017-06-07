@@ -162,7 +162,6 @@
 a.xray-headline-link:hover {
     text-decoration: none !important;
 }
-
 .xray-headline-desc {
     font-size: 14px;
     margin-bottom: 5px;
@@ -170,12 +169,10 @@ a.xray-headline-link:hover {
 .xray-headline-textweekbefore {
     font-size: 14px;
 }
-
 .xray-headline-link {
     display: inline-block;
     margin-bottom: 5px;
 }
-
 .xray-headline-icon {
     background-position: center 0px;
     background-repeat: no-repeat;
@@ -185,15 +182,12 @@ a.xray-headline-link:hover {
     margin-bottom: -5px;
     width: 30px;
 }
-
 .xray-headline-decrease-icon {
     background-image: url([[pix:local_xray|arrow_red]]);
 }
-
 .xray-headline-increase-icon {
     background-image: url([[pix:local_xray|arrow_green]]);
 }
-
 .xray-headline-same-icon {
     background-image: url([[pix:local_xray|arrow_yellow]]);
 }
@@ -229,7 +223,6 @@ a.xray-headline-link:hover {
     text-align: left;
     display: inline;
 }
-
 #xray-js-menu #xray-title #xray-icon img {
     max-width: 30px;
     max-height: 30px;
@@ -239,17 +232,12 @@ a.xray-headline-link:hover {
     background-repeat: no-repeat;
     background-size: 100% auto;
 }
-
 #xray-js-menu #xray-title div {
     max-width: 30px;
     max-height: 30px;
-    left: 0;
-    top: 0;
     margin: 0 10px 0 0;
     display: inline;
-    position: relative;
 }
-
 .xray-menu-item-active {
     font-weight: bold;
 }
@@ -259,14 +247,12 @@ a.xray-headline-link:hover {
     clear: both;
     padding: 2em 0;
 }
-
 .xray-reports-links {
     display: inline-block;
     margin: 0;
     padding: 0;
     width: 100%;
 }
-
 .xray-reports-links li {
     display: block;
     float:left;
@@ -274,7 +260,6 @@ a.xray-headline-link:hover {
     padding: 0 0.5%;
     margin: 0;
 }
-
 .xray-reports-links li a {
     display: block;
     text-align: left;
@@ -282,17 +267,14 @@ a.xray-headline-link:hover {
     background-repeat: no-repeat;
     background-image: url([[pix:local_xray|xray-discussions]]);
 }
-
 .xray-reports-links li a.xray-reports-links-image {
     background-size: 44px 44px !important;
     font-size: 14px;
     padding: 12px 0 18px 50px;
 }
-
 .xray-reports-links .risk {
     background-image: url([[pix:local_xray|xray-risk]]);
 }
-
 .xray-reports-links .activityreport {
     background-image: url([[pix:local_xray|xray-activity]]);
 }
@@ -303,8 +285,6 @@ a.xray-headline-link:hover {
     background-image: url([[pix:local_xray|xray-discussions]]);
 }
 /**************** End Navigation reports  *********************************/
-
-
 
 /* Some themes center align heading level elements */
 #headerdata h1,
@@ -324,7 +304,6 @@ a.xray-headline-link:hover {
     margin: 1em 2%;
     width: 29%;
 }
-
 .xray-graph-box-link{
     display: block;
     height: 300px;
@@ -333,15 +312,12 @@ a.xray-headline-link:hover {
             transition: all 0.4s ease-in-out;
     position: relative;
 }
-
 .xray-graph-box-link:hover {
     transform: scale(1.1);
 }
-
 .xray-graph-box-link:focus {
     transform: scale(1.1);
 }
-
 .xray-graph-small-image{
     display: block;
     position: absolute;
@@ -454,10 +430,12 @@ a.disabled {
     margin:0;
     padding:0;
 }
+
 #xray-nav-recommendations {
     margin-top: 15px;
     margin-left: 6px;
 }
+
 #xray-nav-recommendations li {
     font-size: 14px;
     display: inline-block;
@@ -478,6 +456,38 @@ a.disabled {
     display: inline-block;
     height: 30px;
     width: 30px;
+}
+
+#xray-div-headline-icon {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+}
+
+#xray-js-menu .headline_icon_expand {
+    background-image: url([[pix:local_xray|ExpandIcon]]);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    cursor:pointer;
+    display: inline-block !important;
+    height: 16px;
+    width: 20px;
+}
+
+#xray-js-menu .headline_icon_collapse {
+    background-image: url([[pix:local_xray|CollapseIcon]]);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    cursor:pointer;
+    display: inline-block !important;
+    height: 16px;
+    width: 20px;
+}
+
+.xray-div-headline {
+    display:none;
 }
 
 #xray-nav-recommendations li .countrecommendedactions_icon_expand {
@@ -507,19 +517,24 @@ a.disabled {
     background-image: url([[pix:local_xray|RecommendedActions_icon]]);
     background-repeat: no-repeat;
 }
+
 #xray-nav-recommendations .lireportdate {
     width:27%;
 }
+
 #xray-nav-recommendations .licountrecommendations {
     max-width:46%;
 }
+
 #xray-nav-recommendations .xray-liseparator {
     width:1%;
 }
+
 #xray-nav-recommendations .xray-liseparator div{
     height:50px;
     border-right: 1px solid #565656;
 }
+
 .xray-div-recommendations {
     display:none;
     font-size: 13px;

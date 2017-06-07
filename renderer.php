@@ -591,7 +591,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
         // Load specific js for tables.
-        $PAGE->requires->jquery_plugin("local_xray-recommendations", "local_xray");
+        $PAGE->requires->jquery_plugin("local_xray-dashboard", "local_xray");
 
         $displaymenu = get_config('local_xray', 'displaymenu');
 
@@ -621,8 +621,20 @@ class local_xray_renderer extends plugin_renderer_base {
                         array("tabindex" => -1, "class" => "x-ray-icon-title"));
                     $divicon = html_writer::tag('div', $icon,
                         array('id' => 'xray-icon'));
+
+                    $dashboardbutton = get_string('dashboard_button', 'local_xray');
+                    $iconheadlinetitle =  html_writer::div('',
+                        'headline_icon_expand',
+                        array('id' => 'xray-div-headline-icon',
+                            'role' => 'button',
+                            'aria-pressed' => false,
+                            'aria-label' => $dashboardbutton,
+                            'tabindex' => 0,
+                            'title' => $dashboardbutton,
+                            'onclick' => 'local_xray_headline_show()'));
+
                     $title = html_writer::tag('h4', $pluginname);
-                    $title = html_writer::tag('div', $divicon.$title,
+                    $title = html_writer::tag('div', $divicon.$title.(local_xray_reports() ? $iconheadlinetitle : ''),
                         array('id' => 'xray-title'));
                 }
                 $amenu = html_writer::alist($menuitems, array('class' => 'xray-reports-links'));
@@ -635,14 +647,13 @@ class local_xray_renderer extends plugin_renderer_base {
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
                     require_once($CFG->dirroot.'/local/xray/locallib.php');
 
-                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id);
+                    $xrayreports = local_xray_reports();
+                    $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id, $xrayreports);
 
-                    if (!local_xray_reports()) {
-                        if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
-                            $headerdata .= $this->dashboard_xray_output($dashboarddata);
-                        } else {
-                            $headerdata .= $OUTPUT->notification(get_string('error_xray', 'local_xray'));
-                        }
+                    if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
+                        $headerdata .= $this->dashboard_xray_output($dashboarddata);
+                    } else {
+                        $headerdata .= $OUTPUT->notification(get_string('error_xray', 'local_xray'));
                     }
 
                     // Url for subscribe.
@@ -665,7 +676,16 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 }
 
-                $menu = html_writer::div($title . $navmenu . $headerdata . $subscriptionlink,
+                if (local_xray_reports()) {
+                    $menucontent = html_writer::tag("div",
+                        $navmenu . $headerdata . $subscriptionlink,
+                        array("id" => "xray-div-headline-show",
+                            "class" => "xray-div-headline"));
+                } else {
+                    $menucontent = $navmenu . $headerdata . $subscriptionlink;
+                }
+
+                $menu = html_writer::div($title . $menucontent,
                     $classes,
                     array('id' => 'xray-js-menu', 'role' => 'region'));
 

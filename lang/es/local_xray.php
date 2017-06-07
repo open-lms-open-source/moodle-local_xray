@@ -619,8 +619,10 @@ $string['test_api_description'] = 'Validar <strong>parámetros guardados</strong
 $string['validate_when'] = 'Al';
 
 // X-Ray Reports.
+$string['xraydashboardurl'] = 'URL de la interfaz de X-Ray';
+$string['xraydashboardurl_desc'] = 'URL para conectar con la interfaz de X-Ray';
 $string['xrayreportsurl'] = 'URL de los reportes de X-Ray';
-$string['xrayreportsurl_desc'] = 'Url para conectar con los reportes de X-Ray';
+$string['xrayreportsurl_desc'] = 'URL para conectar con los reportes de X-Ray';
 $string['xrayreports'] = 'Reportes de X-Ray';
 $string['noaccessxrayreports'] = 'Los reportes de X-Ray no están disponibles. Por favor, contacta con el '.
     'administrador del sitio para solicitar su habilitación.';
@@ -628,3 +630,4 @@ $string['noaccessoldxrayreports'] = 'Esta versión de los reportes ya no está d
     'administrador del sitio para solicitar su habilitación.';
 $string['error_xrayreports_nourl'] = 'La url para obtener reportes de X-Ray no esta configurada correctamente.';
 $string['error_xrayreports_gettoken'] = 'Error al obtener token para acceder a los reportes de X-Ray.';
+$string['dashboard_button'] = 'Mostrar/Ocultar interfaz';
