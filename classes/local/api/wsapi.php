@@ -622,7 +622,7 @@ abstract class wsapi {
     public static function dashboard($courseid) {
         $baseurl = get_config(self::PLUGIN, 'xraydashboardurl');
         $domain = get_config(self::PLUGIN, 'xrayclientid');
-        $pass     = get_config(self::PLUGIN, 'xraypassword');
+        $pass = get_config(self::PLUGIN, 'xraypassword');
         $url = sprintf('%s/%s', $baseurl, 'dashboard');
 
         if (empty($url) || empty($domain) || empty($pass)) {

@@ -11,12 +11,11 @@ function local_xray_recommendations_show() {
             // Execute this after slideToggle is done.
             var iconClass = icon.attr("class");
             if (iconClass == 'countrecommendedactions_icon_expand') {
-                icon.addClass('countrecommendedactions_icon_collapse').removeClass('countrecommendedactions_icon_expand');
-                icon.attr('aria-pressed', 'true');
-
+                icon.addClass('countrecommendedactions_icon_collapse').removeClass('countrecommendedactions_icon_expand')
+                    .attr('aria-pressed', 'true');
             } else {
-                icon.addClass('countrecommendedactions_icon_expand').removeClass('countrecommendedactions_icon_collapse');
-                icon.attr('aria-pressed', 'false');
+                icon.addClass('countrecommendedactions_icon_expand').removeClass('countrecommendedactions_icon_collapse')
+                    .attr('aria-pressed', 'false');
             }
         });
     });
@@ -35,11 +34,11 @@ function local_xray_headline_show() {
             // Execute this after slideToggle is done.
             var iconClass = icon.attr("class");
             if (iconClass == 'headline_icon_expand') {
-                icon.addClass('headline_icon_collapse').removeClass('headline_icon_expand');
-                icon.attr('aria-pressed', 'true');
+                icon.addClass('headline_icon_collapse').removeClass('headline_icon_expand')
+                    .attr('aria-pressed', 'true');
             } else {
-                icon.addClass('headline_icon_expand').removeClass('headline_icon_collapse');
-                icon.attr('aria-pressed', 'false');
+                icon.addClass('headline_icon_expand').removeClass('headline_icon_collapse')
+                    .attr('aria-pressed', 'false');
             }
         });
     });

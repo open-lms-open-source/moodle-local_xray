@@ -36,6 +36,8 @@ class dashboard {
     /**
      * Connect with xray webservice and get data for dashboard.
      * @param $courseid
+     * @param  int|bool $userid
+     * @param  bool $xrayreports
      * @return bool|dashboard_data
      */
     public static function get($courseid, $userid = false, $xrayreports = false) {
@@ -170,8 +172,7 @@ class dashboard {
                         if ($addrecommendations == self::XRAYRECOMMENDATIONADMIN ||
                             $addrecommendations == self::XRAYRECOMMENDATIONALL) {
                             // Recommendations Admin.
-                            $recommendationsisset = isset($response->recommendationsAdmin);
-                            if ($recommendationsisset) {
+                            if (isset($response->recommendationsAdmin)) {
                                 foreach ($response->recommendationsAdmin as $recommendation) {
                                     if ($recommendation->text) {
                                         $recommendationslist[] = $recommendation->text;
@@ -183,8 +184,7 @@ class dashboard {
                         if ($addrecommendations == self::XRAYRECOMMENDATIONTEACHER ||
                             $addrecommendations == self::XRAYRECOMMENDATIONALL) {
                             // Recommendations Instructor.
-                            $recommendationsisset = isset($response->recommendationsInstructor);
-                            if ($recommendationsisset) {
+                            if (isset($response->recommendationsInstructor)) {
                                 foreach ($response->recommendationsInstructor as $recommendation) {
                                     if ($recommendation->text) {
                                         $recommendationslist[] = $recommendation->text;
@@ -192,8 +192,7 @@ class dashboard {
                                 }
                             }
                             // Recommendations Positive.
-                            $recommendationsisset = isset($response->recommendationsPositive);
-                            if ($recommendationsisset) {
+                            if (isset($response->recommendationsPositive)) {
                                 foreach ($response->recommendationsPositive as $recommendation) {
                                     if ($recommendation->text) {
                                         $recommendationslist[] = $recommendation->text;
@@ -207,8 +206,7 @@ class dashboard {
                             $countrecommendations = count($recommendations);
                         }
                         // Report date.
-                        $reportdateisset = isset($response->reportdate);
-                        if ($reportdateisset) {
+                        if (isset($response->reportdate)) {
                             $reportdate = $response->reportdate;
                         }
                     }
