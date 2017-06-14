@@ -308,8 +308,7 @@ class dashboard {
                         if ($addrecommendations == self::XRAYRECOMMENDATIONADMIN ||
                             $addrecommendations == self::XRAYRECOMMENDATIONALL) {
                             // Recommendations Admin.
-                            $recommendationsisset = isset($response->elements->recommendationsAdmin);
-                            if ($recommendationsisset) {
+                            if (isset($response->elements->recommendationsAdmin)) {
                                 foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
                                     if ($recommendation->text->value) {
                                         $recommendationslist[] = $recommendation->text->value;
@@ -321,8 +320,7 @@ class dashboard {
                         if ($addrecommendations == self::XRAYRECOMMENDATIONTEACHER ||
                             $addrecommendations == self::XRAYRECOMMENDATIONALL) {
                             // Recommendations Instructor.
-                            $recommendationsisset = isset($response->elements->recommendationsInstructor);
-                            if ($recommendationsisset) {
+                            if (isset($response->elements->recommendationsInstructor)) {
                                 foreach ($response->elements->recommendationsInstructor->data as $recommendation) {
                                     if ($recommendation->text->value) {
                                         $recommendationslist[] = $recommendation->text->value;
@@ -330,8 +328,7 @@ class dashboard {
                                 }
                             }
                             // Recommendations Positive.
-                            $recommendationsisset = isset($response->elements->recommendationsPositive);
-                            if ($recommendationsisset) {
+                            if (isset($response->elements->recommendationsPositive)) {
                                 foreach ($response->elements->recommendationsPositive->data as $recommendation) {
                                     if ($recommendation->text->value) {
                                         $recommendationslist[] = $recommendation->text->value;
@@ -345,8 +342,7 @@ class dashboard {
                             $countrecommendations = count($recommendations);
                         }
                         // Report date.
-                        $reportdateisset = isset($response->reportdate);
-                        if ($reportdateisset) {
+                        if (isset($response->reportdate)) {
                             $reportdate = $response->reportdate;
                         }
                     }
