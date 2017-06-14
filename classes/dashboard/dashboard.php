@@ -54,8 +54,10 @@ class dashboard {
             } else {
                 $response = api\wsapi::course($courseid, $report);
             }
+            // The object can be empty.
+            $resvalidation = (array)$response;
 
-            if (!$response) {
+            if (!$response || empty($resvalidation)) {
 
                 // Fail response of webservice.
                 api\xrayws::instance()->print_error();
