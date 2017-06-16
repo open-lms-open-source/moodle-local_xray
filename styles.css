@@ -363,7 +363,7 @@ a.xray-headline-link:hover {
     top: 0;
     background-color: white;
     overflow-y: scroll;
-    z-index: 1000;
+    z-index: 8010;
     display: none;
 }
 

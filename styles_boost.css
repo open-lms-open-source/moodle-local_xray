@@ -1,0 +1,35 @@
+#xray-js-menu #xray-title #xray-icon .icon {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: -6px;
+}
+
+#xray-js-menu {
+    background-color: white;
+    padding: 1.25rem;
+    margin-bottom: 23px;
+    border: 1px solid rgba(238,238,238,1);
+}
+
+.xray-graph-background{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    background-color: white;
+    overflow-y: scroll;
+    z-index: 1031;
+    display: none;
+}
+
+.xray-close-link{
+    position: absolute;
+    top: 6em;
+    right: 4em;
+    width: 2em;
+    height: 2em;
+    display: block;
+    background:url([[pix:local_xray|close_x]]) no-repeat center center;
+}

@@ -21,3 +21,15 @@
     padding-top:12px;
 }
 /**************** End styles for Recommended Actions ****************/
+
+.xray-graph-background{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    background-color: white;
+    overflow-y: scroll;
+    z-index: 1031;
+    display: none;
+}
