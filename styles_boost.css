@@ -12,7 +12,7 @@
     border: 1px solid rgba(238,238,238,1);
 }
 
-.xray-graph-background{
+.xray-graph-background {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -24,7 +24,7 @@
     display: none;
 }
 
-.xray-close-link{
+.xray-close-link {
     position: absolute;
     top: 6em;
     right: 4em;

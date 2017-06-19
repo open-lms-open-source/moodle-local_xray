@@ -22,7 +22,7 @@
 }
 /**************** End styles for Recommended Actions ****************/
 
-.xray-graph-background{
+.xray-graph-background {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -32,4 +32,14 @@
     overflow-y: scroll;
     z-index: 1031;
     display: none;
+}
+
+.xray-close-link {
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    width: 2em;
+    height: 2em;
+    display: block;
+    background:url([[pix:local_xray|close_x]]) no-repeat center center;
 }
