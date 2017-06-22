@@ -678,9 +678,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 if (local_xray_reports()) {
                     $menucontent = html_writer::tag("div",
-                        $navmenu . $headerdata . $subscriptionlink,
-                        array("id" => "xray-div-headline-show",
-                            "class" => "xray-div-headline"));
+                        $navmenu . $headerdata . $subscriptionlink);
                 } else {
                     $menucontent = $navmenu . $headerdata . $subscriptionlink;
                 }
