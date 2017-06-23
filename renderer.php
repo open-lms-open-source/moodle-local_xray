@@ -643,9 +643,13 @@ class local_xray_renderer extends plugin_renderer_base {
                 // Check if show headerline in course frontpage.
                 $headerdata = "";
                 $subscriptionlink = "";
+                $collheadlineattr = array();
 
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
                     require_once($CFG->dirroot.'/local/xray/locallib.php');
+
+                    $collheadlineattr["id"] = "xray-div-headline-show";
+                    $collheadlineattr["class"] = "xray-div-headline";
 
                     $xrayreports = local_xray_reports();
                     $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id, $xrayreports);
@@ -678,7 +682,8 @@ class local_xray_renderer extends plugin_renderer_base {
 
                 if (local_xray_reports()) {
                     $menucontent = html_writer::tag("div",
-                        $navmenu . $headerdata . $subscriptionlink);
+                        $navmenu . $headerdata . $subscriptionlink, $collheadlineattr
+                        );
                 } else {
                     $menucontent = $navmenu . $headerdata . $subscriptionlink;
                 }
