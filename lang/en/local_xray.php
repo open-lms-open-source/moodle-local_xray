@@ -660,7 +660,9 @@ $string['course_single_activity_format'] = "<li>The course is in Single Activity
     "Single Activity format to use X-Ray.</li>";
 
 // X-Ray Reports.
-$string['xrayreportsurl'] = 'X-Ray Reports Url';
+$string['xraydashboardurl'] = 'X-Ray Dashboard URL';
+$string['xraydashboardurl_desc'] = 'URL to connect with X-Ray dashboard.';
+$string['xrayreportsurl'] = 'X-Ray Reports URL';
 $string['xrayreportsurl_desc'] = 'URL to connect with X-Ray reports.';
 $string['xrayreports'] = 'X-Ray reports';
 $string['noaccessxrayreports'] = 'X-Ray Reports are not available. If you want the reports turned on, please contact '.
@@ -670,4 +672,5 @@ $string['noaccessoldxrayreports'] = 'This version of the report is no longer ava
 $string['error_xrayreports_nourl'] = 'The Xray Reports URL is missing from the X-Ray Learning Analytics configuration page.';
 $string['error_xrayclientid'] = 'X-Ray Learning Analytics Client Identifier is empty';
 $string['error_xrayreports_gettoken'] = 'Error to get token for access to X-Ray reports.';
+$string['dashboard_button'] = 'Show/Hide dashboard';
 

@@ -611,4 +611,43 @@ abstract class wsapi {
         return self::generic_getcall($url);
     }
 
+    /**
+     * Get the dashboard data for X-Ray reports.
+     *
+     * @param int $courseid
+     * @return bool|mixed
+     * @throws \Exception
+     * @throws \dml_exception
+     */
+    public static function dashboard($courseid) {
+        $baseurl = get_config(self::PLUGIN, 'xraydashboardurl');
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        $pass = get_config(self::PLUGIN, 'xraypassword');
+        $url = sprintf('%s/%s', $baseurl, 'dashboard');
+
+        if (empty($url) || empty($domain) || empty($pass)) {
+            return false;
+        }
+
+        $params = [];
+        $params['courseid'] = $courseid;
+        $params['domain'] = $domain;
+        $params['hash'] = md5('xTrEm35A1t'.$pass);
+
+        if (!empty($params)) {
+            $query = http_build_query($params, null, '&');
+            $url .= '?' . $query;
+        }
+
+        $result = xrayws::instance()->get($url);
+
+        if ($result) {
+            $data = json_decode(xrayws::instance()->lastresponse());
+            if ($data === false) {
+                return false;
+            }
+            $result = $data;
+        }
+        return $result;
+    }
 }

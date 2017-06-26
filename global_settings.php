@@ -72,14 +72,19 @@ if ($hassiteconfig) {
                                                  new lang_string("curlcache_desc", $plugin),
                                                  ['h' => 1, 'm' => 0]));
 
-    if (!$xrayreports) {
-        // Add the URL for System Reports.
-        $settings->add( new admin_setting_configtext("{$plugin}/systemreportsurl",
-            new lang_string("systemreportsurl", $plugin),
-            new lang_string("systemreportsurl_desc", $plugin),
+    if ($xrayreports) {
+        // Add the URL for Course Reports.
+        $settings->add( new admin_setting_configtext("{$plugin}/xraydashboardurl",
+            new lang_string("xraydashboardurl", $plugin),
+            new lang_string("xraydashboardurl_desc", $plugin),
             '', PARAM_URL));
     }
 
+    // Add the URL for System Reports.
+    $settings->add( new admin_setting_configtext("{$plugin}/systemreportsurl",
+        new lang_string("systemreportsurl", $plugin),
+        new lang_string("systemreportsurl_desc", $plugin),
+        '', PARAM_URL));
 
     // Settings for displaying content inline course front page.
     $settings->add( new admin_setting_heading("{$plugin}/xraydisplayheading",

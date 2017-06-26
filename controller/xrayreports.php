@@ -24,6 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/* @var stdClass $CFG */
 require_once($CFG->dirroot . '/local/xray/controller/reports.php');
 use local_xray\event\get_report_failed;
 /**
@@ -107,90 +108,6 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
         $PAGE->set_title(get_string($this->oldreportname, $this->component));
         // Add params.
         $jouleparams = array('name' => $this->reportname);
-        // Report name. Fix reportname for X-Ray params.
-        $xrayparams = array('name' => $this->reportname);
-        // Navbar and extra params.
-        switch ($this->reportname) {
-            case 'activityindividual':
-                // Params.
-                $xrayparams["name"] = "activity";
-                if ($this->showid) {
-                    $jouleparams["showid"] = $this->showid;
-                    $xrayparams["showid"] = $this->showid;
-                }
-                // Navbar.
-                $PAGE->navbar->add(get_string("navigation_xray", $this->component));
-                // Add nav to return to activityreport.
-                $PAGE->navbar->add(get_string("activityreport", $this->component),
-                    new moodle_url('/local/xray/view.php',
-                        array("controller" => "xrayreports", "name" => "activity",
-                            "courseid" => $this->courseid)));
-                $PAGE->navbar->add($PAGE->title);
-                break;
-            case 'discussionindividual':
-                // Params.
-                $xrayparams["name"] = "discussion";
-                if ($this->showid) {
-                    $jouleparams["showid"] = $this->showid;
-                    $xrayparams["showid"] = $this->showid;
-                }
-                // Navbar.
-                $PAGE->navbar->add(get_string("navigation_xray", $this->component));
-                // Add nav to return to discussionreport.
-                $PAGE->navbar->add(get_string("discussionreport", $this->component),
-                    new moodle_url('/local/xray/view.php',
-                        array("controller" => "xrayreports", "name" => "discussion",
-                            "courseid" => $this->courseid)));
-                $PAGE->navbar->add($PAGE->title);
-                break;
-            case 'discussionindividualforum':
-                // Params.
-                $xrayparams["name"] = "discussion";
-                if ($this->forumid) {
-                    $jouleparams["forumid"] = $this->forumid;
-                    $xrayparams["forumid"] = $this->forumid;
-                }
-                // Navbar.
-                // Add title to breadcrumb.
-                /** @var array $plugins */
-                $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
-                $modulename = 'forum';
-                if (array_key_exists('hsuforum', $plugins)) {
-                    // Get module name and forum/hsuforum id.
-                    $sqlmodule = "SELECT m.name
-                            FROM {course_modules} cm
-                            INNER JOIN {modules} m ON m.id = cm.module
-                            WHERE cm.id = :cmid";
-                    $params = array('cmid' => $this->cmid);
-                    if ($module = $DB->get_record_sql($sqlmodule, $params)) {
-                        $modulename = $module->name;
-                        if ($modulename == 'forum') {
-                            $xrayparams["forumtype"] = "classic";
-                        } else if ($modulename == 'hsuforum') {
-                            $xrayparams["forumtype"] = "hsu";
-                        }
-                    }
-
-                }
-
-                // Get and show forun name in navbar.
-                $forumname = $DB->get_field($modulename, 'name', array("id" => $this->showid));
-                $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/".$modulename."/view.php",
-                    array("id" => $this->cmid)));
-
-                if (!empty($this->d)) {
-                    // Get discussion name.
-                    $discussion = $DB->get_field($modulename."_discussions", 'name', array("id" => $this->d));
-                    $PAGE->navbar->add(format_string($discussion), new moodle_url("/mod/".$modulename."/discuss.php",
-                        array("d" => $this->d)));
-                }
-                $PAGE->navbar->add(get_string("navigation_xray", $this->component));
-                $PAGE->navbar->add($PAGE->title);
-                break;
-            default:
-                $PAGE->navbar->add(get_string("navigation_xray", $this->component));
-                $PAGE->navbar->add(get_string($this->oldreportname, $this->component), $this->url);
-        }
         // Url in joule side.
         $this->url->params($jouleparams);
         // The title will be displayed in the X-ray page.
@@ -215,18 +132,18 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
             if (($domain === false) || ($domain === '')) {
                 print_error("error_xrayclientid", $this->component);
             }
-            // Tokens.
-            // TODO this should be disabled for INT-10445. It will be added later.
 
-            // @codingStandardsIgnoreStart
-            /*$tokenparams = \local_xray\local\api\jwthelper::get_token_params();
-            if (!$tokenparams) {
-                // Error to get token for shiny server.
-                print_error("error_xrayreports_gettoken", $this->component);
+            // We allow cancel authentication in shiny server from config for the first version.
+            if (isset($CFG->local_xray_course_reports_cancel_auth) && $CFG->local_xray_course_reports_cancel_auth) {
+                // We need to send the clientid.
+                $xrayparams = array("cid" => get_config("local_xray", 'xrayclientid'));
+            } else {
+                $xrayparams = \local_xray\local\api\jwthelper::get_token_params();
+                if (!$xrayparams) {
+                    // Error to get token for shiny server.
+                    print_error("error_xrayreports_gettoken", $this->component);
+                }
             }
-            $xrayparams = array_merge($xrayparams,$tokenparams);*/
-            // @codingStandardsIgnoreEnd
-
             /*
              * Check if exist cookie for xray to use Safari browser.If not exist,we redirect to xray side with param
              * url for create cookie there and from xray side will redirect to Joule again.
@@ -237,15 +154,95 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                 $SESSION->xray_cookie_xrayreports = true;
                 redirect($url);
             }
-            // Client Id.
-            $xrayparams["cid"] = $domain;
+            // Report name. Fix reportname for X-Ray params.
+            $xrayparams['name'] = $this->reportname;
             // The param jouleurl is required in shiny server to add link to each report of joule side.
             $xrayparams["jouleurl"] = $CFG->wwwroot;
             // Course id.
             $xrayparams["courseid"] = $COURSE->id;
             // User id: Instructor/Admin who is seeing the report.
             $xrayparams["uid"] = $USER->id;
+            // Navbar and extra params.
+            switch ($this->reportname) {
+                case 'activityindividual':
+                    // Params.
+                    $xrayparams["name"] = "activity";
+                    if ($this->showid) {
+                        $jouleparams["showid"] = $this->showid;
+                        $xrayparams["showid"] = $this->showid;
+                    }
+                    // Navbar.
+                    $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+                    // Add nav to return to activityreport.
+                    $PAGE->navbar->add(get_string("activityreport", $this->component),
+                        new moodle_url('/local/xray/view.php',
+                            array("controller" => "xrayreports", "name" => "activity",
+                                "courseid" => $this->courseid)));
+                    $PAGE->navbar->add($PAGE->title);
+                    break;
+                case 'discussionindividual':
+                    // Params.
+                    $xrayparams["name"] = "discussion";
+                    if ($this->showid) {
+                        $jouleparams["showid"] = $this->showid;
+                        $xrayparams["showid"] = $this->showid;
+                    }
+                    // Navbar.
+                    $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+                    // Add nav to return to discussionreport.
+                    $PAGE->navbar->add(get_string("discussionreport", $this->component),
+                        new moodle_url('/local/xray/view.php',
+                            array("controller" => "xrayreports", "name" => "discussion",
+                                "courseid" => $this->courseid)));
+                    $PAGE->navbar->add($PAGE->title);
+                    break;
+                case 'discussionindividualforum':
+                    // Params.
+                    $xrayparams["name"] = "discussion";
+                    if ($this->forumid) {
+                        $jouleparams["forumid"] = $this->forumid;
+                        $xrayparams["forumid"] = $this->forumid;
+                    }
+                    // Navbar.
+                    // Add title to breadcrumb.
+                    /** @var array $plugins */
+                    $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
+                    $modulename = 'forum';
+                    if (array_key_exists('hsuforum', $plugins)) {
+                        // Get module name and forum/hsuforum id.
+                        $sqlmodule = "SELECT m.name
+                            FROM {course_modules} cm
+                            INNER JOIN {modules} m ON m.id = cm.module
+                            WHERE cm.id = :cmid";
+                        $params = array('cmid' => $this->cmid);
+                        if ($module = $DB->get_record_sql($sqlmodule, $params)) {
+                            $modulename = $module->name;
+                            if ($modulename == 'forum') {
+                                $xrayparams["forumtype"] = "classic";
+                            } else if ($modulename == 'hsuforum') {
+                                $xrayparams["forumtype"] = "hsu";
+                            }
+                        }
+                    }
 
+                    // Get and show forun name in navbar.
+                    $forumname = $DB->get_field($modulename, 'name', array("id" => $this->showid));
+                    $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/".$modulename."/view.php",
+                        array("id" => $this->cmid)));
+
+                    if (!empty($this->d)) {
+                        // Get discussion name.
+                        $discussion = $DB->get_field($modulename."_discussions", 'name', array("id" => $this->d));
+                        $PAGE->navbar->add(format_string($discussion), new moodle_url("/mod/".$modulename."/discuss.php",
+                            array("d" => $this->d)));
+                    }
+                    $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+                    $PAGE->navbar->add($PAGE->title);
+                    break;
+                default:
+                    $PAGE->navbar->add(get_string("navigation_xray", $this->component));
+                    $PAGE->navbar->add(get_string($this->oldreportname, $this->component), $this->url);
+            }
             $url = new moodle_url($xrayreportsurl, $xrayparams);
             $output .= $this->output->print_iframe_systemreport($url);
         } catch (Exception $e) {

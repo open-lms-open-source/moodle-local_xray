@@ -39,9 +39,9 @@ $plugins = array(
             'reports/systemreports.js'
         )
     ),
-    'local_xray-recommendations' => array(
+    'local_xray-dashboard' => array(
         'files' => array(
-            'reports/recommendations.js'
+            'reports/dashboard.js'
         )
     ),
     'local_xray-validate_api_aws_compress' => array(

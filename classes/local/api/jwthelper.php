@@ -97,7 +97,7 @@ abstract class jwthelper {
             $courseobject = (object) [
                 'path'      => '/coursereports',
                 'parameter' => [
-                    (object) ['name' => 'report'                                   ],
+                    (object) ['name' => 'name'                                     ],
                     (object) ['name' => 'courseid'                                 ],
                     (object) ['name' => 't'                                        ],
                     (object) ['name' => 'uid'      , 'values'   => [(int)$USER->id]],

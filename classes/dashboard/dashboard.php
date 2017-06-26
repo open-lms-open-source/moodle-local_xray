@@ -35,11 +35,12 @@ class dashboard {
 
     /**
      * Connect with xray webservice and get data for dashboard.
-     * @param  int $courseid
+     * @param $courseid
      * @param  int|bool $userid
+     * @param  bool $xrayreports
      * @return bool|dashboard_data
      */
-    public static function get($courseid, $userid = false) {
+    public static function get($courseid, $userid = false, $xrayreports = false) {
         global $CFG;
 
         $result = "";
@@ -48,9 +49,15 @@ class dashboard {
         try {
 
             $report = "dashboard";
-            $response = api\wsapi::course($courseid, $report);
+            if ($xrayreports) {
+                $response = api\wsapi::dashboard($courseid);
+            } else {
+                $response = api\wsapi::course($courseid, $report);
+            }
+            // The object can be empty.
+            $resvalidation = (array)$response;
 
-            if (!$response) {
+            if (!$response || empty($resvalidation)) {
 
                 // Fail response of webservice.
                 api\xrayws::instance()->print_error();
@@ -71,140 +78,273 @@ class dashboard {
                 $postslastsevendays = "-";
                 $postslastsevendayspreviousweek = "-";
 
-                // The number of persons in the risk metrics table, which are in the total risk (Headline Risk).
-                $usersinriskisset = isset($response->elements->element3->items[0]->value);
-                if ($usersinriskisset && is_numeric($response->elements->element3->items[0]->value)) {
-                    $usersinrisk = $response->elements->element3->items[0]->value;
-                }
+                if ($xrayreports) {
 
-                // The total number of persons in the risk metrics table (Headline Risk).
-                $risktotalisset = isset($response->elements->element3->items[2]->value);
-                if ($risktotalisset && is_numeric($response->elements->element3->items[2]->value)) {
-                    $risktotal = $response->elements->element3->items[2]->value;
-                }
-
-                // The average of the number of persons at risk during the seven days before (Headline Risk).
-                $averagerisksevendaybeforeisset = isset($response->elements->element3->items[1]->value);
-                if ($averagerisksevendaybeforeisset && is_numeric($response->elements->element3->items[1]->value)) {
-                    $averagerisksevendaybefore = $response->elements->element3->items[1]->value;
-                }
-
-                // Maximum of the total number of persons in the risk metrics table seven days before (Headline Risk).
-                $maximumtotalrisksevendaybeforeisset = isset($response->elements->element3->items[3]->value);
-                if ($maximumtotalrisksevendaybeforeisset && is_numeric($response->elements->element3->items[3]->value)) {
-                    $maximumtotalrisksevendaybefore = $response->elements->element3->items[3]->value;
-                }
-
-                // The number of 'yes' in the activity metrics table (Headline Activity).
-                $usersloggedinpreviousweekisset = isset($response->elements->element3->items[4]->value);
-                if ($usersloggedinpreviousweekisset && is_numeric($response->elements->element3->items[4]->value)) {
-                    $usersloggedinpreviousweek = $response->elements->element3->items[4]->value;
-                }
-
-                // The maximum of the total number of persons in the activity metrics (Headline Activity).
-                $usersactivitytotalisset = isset($response->elements->element3->items[6]->value);
-                if ($usersactivitytotalisset && is_numeric($response->elements->element3->items[6]->value)) {
-                    $usersactivitytotal = $response->elements->element3->items[6]->value;
-                }
-
-                // The number of 'yes' in the activity metrics table (Headline Activity).
-                $averageuserslastsevendaysisset = isset($response->elements->element3->items[5]->value);
-                if ($averageuserslastsevendaysisset && is_numeric($response->elements->element3->items[5]->value)) {
-                    $averageuserslastsevendays = $response->elements->element3->items[5]->value;
-                }
-
-                // The maximum of the total number of persons in the activity metrics(Headline Activity).
-                $userstotalprevioussevendaysisset = isset($response->elements->element3->items[7]->value);
-                if ($userstotalprevioussevendaysisset &&  is_numeric($response->elements->element3->items[7]->value)) {
-                    $userstotalprevioussevendays = $response->elements->element3->items[7]->value;
-                }
-
-                // Average grades last 7 days (Headline Gradebook).
-                $avgradeslastsevendaysisset = isset($response->elements->element3->items[8]->value);
-                if ($avgradeslastsevendaysisset && is_numeric($response->elements->element3->items[8]->value)) {
-                    $averagegradeslastsevendays = $response->elements->element3->items[8]->value;
-                }
-
-                // Average grades previous 7 days (Headline Gradebook).
-                $avlastsevendayspreviousweekisset = isset($response->elements->element3->items[9]->value);
-                if ($avlastsevendayspreviousweekisset && is_numeric($response->elements->element3->items[9]->value)) {
-                    $averagegradeslastsevendayspreviousweek = $response->elements->element3->items[9]->value;
-                }
-
-                // Posts last 7 days (Headline Discussions).
-                $postslastsevendaysisset = isset($response->elements->element3->items[10]->value);
-                if ($postslastsevendaysisset && is_numeric($response->elements->element3->items[10]->value)) {
-                    $postslastsevendays = $response->elements->element3->items[10]->value;
-                }
-
-                // Posts previous 7 days (Headline Discussions).
-                $postspreviousweekisset = isset($response->elements->element3->items[11]->value);
-                if ($postspreviousweekisset && is_numeric($response->elements->element3->items[11]->value)) {
-                    $postslastsevendayspreviousweek = $response->elements->element3->items[11]->value;
-                }
-
-                // Recommended actions.
-                $countrecommendations = 0;
-                $recommendations = false;
-                $reportdate = '';
-
-                $recommendationslist = array();
-                if ($userid) {
-                    $addrecommendations = '';
-                    require_once($CFG->dirroot.'/local/xray/locallib.php');
-                    $isteacherincourse = local_xray_is_teacher_in_course($courseid, $userid);
-                    if (has_capability("local/xray:adminrecommendations_view", $context, $userid)) {
-                        $addrecommendations = self::XRAYRECOMMENDATIONADMIN;
-                        if ($isteacherincourse) {
-                            $addrecommendations = self::XRAYRECOMMENDATIONALL;
-                        }
-                    } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid) || $isteacherincourse) {
-                        $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
+                    // The number of persons in the risk metrics table, which are in the total risk (Headline Risk).
+                    $usersinriskisset = isset($response->headlineData[0]->value);
+                    if ($usersinriskisset && is_numeric($response->headlineData[0]->value)) {
+                        $usersinrisk = $response->headlineData[0]->value;
                     }
-                    // Recommendations for Admin user..
-                    if ($addrecommendations == self::XRAYRECOMMENDATIONADMIN ||
-                        $addrecommendations == self::XRAYRECOMMENDATIONALL) {
-                        // Recommendations Admin.
-                        $recommendationsisset = isset($response->elements->recommendationsAdmin);
-                        if ($recommendationsisset) {
-                            foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
-                                if ($recommendation->text->value) {
-                                    $recommendationslist[] = $recommendation->text->value;
+
+                    // The total number of persons in the risk metrics table (Headline Risk).
+                    $risktotalisset = isset($response->headlineData[2]->value);
+                    if ($risktotalisset && is_numeric($response->headlineData[2]->value)) {
+                        $risktotal = $response->headlineData[2]->value;
+                    }
+
+                    // The average of the number of persons at risk during the seven days before (Headline Risk).
+                    $averagerisksevendaybeforeisset = isset($response->headlineData[1]->value);
+                    if ($averagerisksevendaybeforeisset && is_numeric($response->headlineData[1]->value)) {
+                        $averagerisksevendaybefore = $response->headlineData[1]->value;
+                    }
+
+                    // Maximum of the total number of persons in the risk metrics table seven days before (Headline Risk).
+                    $maximumtotalrisksevendaybeforeisset = isset($response->headlineData[3]->value);
+                    if ($maximumtotalrisksevendaybeforeisset && is_numeric($response->headlineData[3]->value)) {
+                        $maximumtotalrisksevendaybefore = $response->headlineData[3]->value;
+                    }
+
+                    // The number of 'yes' in the activity metrics table (Headline Activity).
+                    $usersloggedinpreviousweekisset = isset($response->headlineData[4]->value);
+                    if ($usersloggedinpreviousweekisset && is_numeric($response->headlineData[4]->value)) {
+                        $usersloggedinpreviousweek = $response->headlineData[4]->value;
+                    }
+
+                    // The maximum of the total number of persons in the activity metrics (Headline Activity).
+                    $usersactivitytotalisset = isset($response->headlineData[6]->value);
+                    if ($usersactivitytotalisset && is_numeric($response->headlineData[6]->value)) {
+                        $usersactivitytotal = $response->headlineData[6]->value;
+                    }
+
+                    // The number of 'yes' in the activity metrics table (Headline Activity).
+                    $averageuserslastsevendaysisset = isset($response->headlineData[5]->value);
+                    if ($averageuserslastsevendaysisset && is_numeric($response->headlineData[5]->value)) {
+                        $averageuserslastsevendays = $response->headlineData[5]->value;
+                    }
+
+                    // The maximum of the total number of persons in the activity metrics(Headline Activity).
+                    $userstotalprevioussevendaysisset = isset($response->headlineData[7]->value);
+                    if ($userstotalprevioussevendaysisset &&  is_numeric($response->headlineData[7]->value)) {
+                        $userstotalprevioussevendays = $response->headlineData[7]->value;
+                    }
+
+                    // Average grades last 7 days (Headline Gradebook).
+                    $avgradeslastsevendaysisset = isset($response->headlineData[8]->value);
+                    if ($avgradeslastsevendaysisset && is_numeric($response->headlineData[8]->value)) {
+                        $averagegradeslastsevendays = $response->headlineData[8]->value;
+                    }
+
+                    // Average grades previous 7 days (Headline Gradebook).
+                    $avlastsevendayspreviousweekisset = isset($response->headlineData[9]->value);
+                    if ($avlastsevendayspreviousweekisset && is_numeric($response->headlineData[9]->value)) {
+                        $averagegradeslastsevendayspreviousweek = $response->headlineData[9]->value;
+                    }
+
+                    // Posts last 7 days (Headline Discussions).
+                    $postslastsevendaysisset = isset($response->headlineData[10]->value);
+                    if ($postslastsevendaysisset && is_numeric($response->headlineData[10]->value)) {
+                        $postslastsevendays = $response->headlineData[10]->value;
+                    }
+
+                    // Posts previous 7 days (Headline Discussions).
+                    $postspreviousweekisset = isset($response->headlineData[11]->value);
+                    if ($postspreviousweekisset && is_numeric($response->headlineData[11]->value)) {
+                        $postslastsevendayspreviousweek = $response->headlineData[11]->value;
+                    }
+
+                    // Recommended actions.
+                    $countrecommendations = 0;
+                    $recommendations = false;
+                    $reportdate = '';
+
+                    $recommendationslist = array();
+                    if ($userid) {
+                        $addrecommendations = '';
+                        require_once($CFG->dirroot . '/local/xray/locallib.php');
+                        $isteacherincourse = local_xray_is_teacher_in_course($courseid, $userid);
+                        if (has_capability("local/xray:adminrecommendations_view", $context, $userid)) {
+                            $addrecommendations = self::XRAYRECOMMENDATIONADMIN;
+                            if ($isteacherincourse) {
+                                $addrecommendations = self::XRAYRECOMMENDATIONALL;
+                            }
+                        } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid) || $isteacherincourse) {
+                            $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
+                        }
+                        // Recommendations for Admin user..
+                        if ($addrecommendations == self::XRAYRECOMMENDATIONADMIN ||
+                            $addrecommendations == self::XRAYRECOMMENDATIONALL) {
+                            // Recommendations Admin.
+                            if (isset($response->recommendationsAdmin)) {
+                                foreach ($response->recommendationsAdmin as $recommendation) {
+                                    if ($recommendation->text) {
+                                        $recommendationslist[] = $recommendation->text;
+                                    }
                                 }
                             }
                         }
-                    }
-                    // Recommendations for Instructor user..
-                    if ($addrecommendations == self::XRAYRECOMMENDATIONTEACHER ||
-                        $addrecommendations == self::XRAYRECOMMENDATIONALL) {
-                        // Recommendations Instructor.
-                        $recommendationsisset = isset($response->elements->recommendationsInstructor);
-                        if ($recommendationsisset) {
-                            foreach ($response->elements->recommendationsInstructor->data as $recommendation) {
-                                if ($recommendation->text->value) {
-                                    $recommendationslist[] = $recommendation->text->value;
+                        // Recommendations for Instructor user..
+                        if ($addrecommendations == self::XRAYRECOMMENDATIONTEACHER ||
+                            $addrecommendations == self::XRAYRECOMMENDATIONALL) {
+                            // Recommendations Instructor.
+                            if (isset($response->recommendationsInstructor)) {
+                                foreach ($response->recommendationsInstructor as $recommendation) {
+                                    if ($recommendation->text) {
+                                        $recommendationslist[] = $recommendation->text;
+                                    }
+                                }
+                            }
+                            // Recommendations Positive.
+                            if (isset($response->recommendationsPositive)) {
+                                foreach ($response->recommendationsPositive as $recommendation) {
+                                    if ($recommendation->text) {
+                                        $recommendationslist[] = $recommendation->text;
+                                    }
                                 }
                             }
                         }
-                        // Recommendations Positive.
-                        $recommendationsisset = isset($response->elements->recommendationsPositive);
-                        if ($recommendationsisset) {
-                            foreach ($response->elements->recommendationsPositive->data as $recommendation) {
-                                if ($recommendation->text->value) {
-                                    $recommendationslist[] = $recommendation->text->value;
+                        if ($recommendationslist) {
+                            $recommendations = $recommendationslist;
+                            // Count recommendations.
+                            $countrecommendations = count($recommendations);
+                        }
+                        // Report date.
+                        if (isset($response->reportdate)) {
+                            $reportdate = $response->reportdate;
+                        }
+                    }
+
+                } else {
+                    // The number of persons in the risk metrics table, which are in the total risk (Headline Risk).
+                    $usersinriskisset = isset($response->elements->element3->items[0]->value);
+                    if ($usersinriskisset && is_numeric($response->elements->element3->items[0]->value)) {
+                        $usersinrisk = $response->elements->element3->items[0]->value;
+                    }
+
+                    // The total number of persons in the risk metrics table (Headline Risk).
+                    $risktotalisset = isset($response->elements->element3->items[2]->value);
+                    if ($risktotalisset && is_numeric($response->elements->element3->items[2]->value)) {
+                        $risktotal = $response->elements->element3->items[2]->value;
+                    }
+
+                    // The average of the number of persons at risk during the seven days before (Headline Risk).
+                    $averagerisksevendaybeforeisset = isset($response->elements->element3->items[1]->value);
+                    if ($averagerisksevendaybeforeisset && is_numeric($response->elements->element3->items[1]->value)) {
+                        $averagerisksevendaybefore = $response->elements->element3->items[1]->value;
+                    }
+
+                    // Maximum of the total number of persons in the risk metrics table seven days before (Headline Risk).
+                    $maximumtotalrisksevendaybeforeisset = isset($response->elements->element3->items[3]->value);
+                    if ($maximumtotalrisksevendaybeforeisset && is_numeric($response->elements->element3->items[3]->value)) {
+                        $maximumtotalrisksevendaybefore = $response->elements->element3->items[3]->value;
+                    }
+
+                    // The number of 'yes' in the activity metrics table (Headline Activity).
+                    $usersloggedinpreviousweekisset = isset($response->elements->element3->items[4]->value);
+                    if ($usersloggedinpreviousweekisset && is_numeric($response->elements->element3->items[4]->value)) {
+                        $usersloggedinpreviousweek = $response->elements->element3->items[4]->value;
+                    }
+
+                    // The maximum of the total number of persons in the activity metrics (Headline Activity).
+                    $usersactivitytotalisset = isset($response->elements->element3->items[6]->value);
+                    if ($usersactivitytotalisset && is_numeric($response->elements->element3->items[6]->value)) {
+                        $usersactivitytotal = $response->elements->element3->items[6]->value;
+                    }
+
+                    // The number of 'yes' in the activity metrics table (Headline Activity).
+                    $averageuserslastsevendaysisset = isset($response->elements->element3->items[5]->value);
+                    if ($averageuserslastsevendaysisset && is_numeric($response->elements->element3->items[5]->value)) {
+                        $averageuserslastsevendays = $response->elements->element3->items[5]->value;
+                    }
+
+                    // The maximum of the total number of persons in the activity metrics(Headline Activity).
+                    $userstotalprevioussevendaysisset = isset($response->elements->element3->items[7]->value);
+                    if ($userstotalprevioussevendaysisset &&  is_numeric($response->elements->element3->items[7]->value)) {
+                        $userstotalprevioussevendays = $response->elements->element3->items[7]->value;
+                    }
+
+                    // Average grades last 7 days (Headline Gradebook).
+                    $avgradeslastsevendaysisset = isset($response->elements->element3->items[8]->value);
+                    if ($avgradeslastsevendaysisset && is_numeric($response->elements->element3->items[8]->value)) {
+                        $averagegradeslastsevendays = $response->elements->element3->items[8]->value;
+                    }
+
+                    // Average grades previous 7 days (Headline Gradebook).
+                    $avlastsevendayspreviousweekisset = isset($response->elements->element3->items[9]->value);
+                    if ($avlastsevendayspreviousweekisset && is_numeric($response->elements->element3->items[9]->value)) {
+                        $averagegradeslastsevendayspreviousweek = $response->elements->element3->items[9]->value;
+                    }
+
+                    // Posts last 7 days (Headline Discussions).
+                    $postslastsevendaysisset = isset($response->elements->element3->items[10]->value);
+                    if ($postslastsevendaysisset && is_numeric($response->elements->element3->items[10]->value)) {
+                        $postslastsevendays = $response->elements->element3->items[10]->value;
+                    }
+
+                    // Posts previous 7 days (Headline Discussions).
+                    $postspreviousweekisset = isset($response->elements->element3->items[11]->value);
+                    if ($postspreviousweekisset && is_numeric($response->elements->element3->items[11]->value)) {
+                        $postslastsevendayspreviousweek = $response->elements->element3->items[11]->value;
+                    }
+
+                    // Recommended actions.
+                    $countrecommendations = 0;
+                    $recommendations = false;
+                    $reportdate = '';
+
+                    $recommendationslist = array();
+                    if ($userid) {
+                        $addrecommendations = '';
+                        require_once($CFG->dirroot.'/local/xray/locallib.php');
+                        $isteacherincourse = local_xray_is_teacher_in_course($courseid, $userid);
+                        if (has_capability("local/xray:adminrecommendations_view", $context, $userid)) {
+                            $addrecommendations = self::XRAYRECOMMENDATIONADMIN;
+                            if ($isteacherincourse) {
+                                $addrecommendations = self::XRAYRECOMMENDATIONALL;
+                            }
+                        } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid) || $isteacherincourse) {
+                            $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
+                        }
+                        // Recommendations for Admin user..
+                        if ($addrecommendations == self::XRAYRECOMMENDATIONADMIN ||
+                            $addrecommendations == self::XRAYRECOMMENDATIONALL) {
+                            // Recommendations Admin.
+                            if (isset($response->elements->recommendationsAdmin)) {
+                                foreach ($response->elements->recommendationsAdmin->data as $recommendation) {
+                                    if ($recommendation->text->value) {
+                                        $recommendationslist[] = $recommendation->text->value;
+                                    }
                                 }
                             }
                         }
-                    }
-                    if ($recommendationslist) {
-                        $recommendations = $recommendationslist;
-                        // Count recommendations.
-                        $countrecommendations = count($recommendations);
-                    }
-                    // Report date.
-                    $reportdateisset = isset($response->reportdate);
-                    if ($reportdateisset) {
-                        $reportdate = $response->reportdate;
+                        // Recommendations for Instructor user..
+                        if ($addrecommendations == self::XRAYRECOMMENDATIONTEACHER ||
+                            $addrecommendations == self::XRAYRECOMMENDATIONALL) {
+                            // Recommendations Instructor.
+                            if (isset($response->elements->recommendationsInstructor)) {
+                                foreach ($response->elements->recommendationsInstructor->data as $recommendation) {
+                                    if ($recommendation->text->value) {
+                                        $recommendationslist[] = $recommendation->text->value;
+                                    }
+                                }
+                            }
+                            // Recommendations Positive.
+                            if (isset($response->elements->recommendationsPositive)) {
+                                foreach ($response->elements->recommendationsPositive->data as $recommendation) {
+                                    if ($recommendation->text->value) {
+                                        $recommendationslist[] = $recommendation->text->value;
+                                    }
+                                }
+                            }
+                        }
+                        if ($recommendationslist) {
+                            $recommendations = $recommendationslist;
+                            // Count recommendations.
+                            $countrecommendations = count($recommendations);
+                        }
+                        // Report date.
+                        if (isset($response->reportdate)) {
+                            $reportdate = $response->reportdate;
+                        }
                     }
                 }
 
