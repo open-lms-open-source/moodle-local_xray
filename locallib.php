@@ -45,8 +45,10 @@ define('XRAYWEEKLY', 'weekly');
  * @return stdClass
  */
 function local_xray_template_data($courseid, $userid) {
+
     // Get headline data.
-    $headlinedata = \local_xray\dashboard\dashboard::get($courseid, $userid);
+    $xrayreports = local_xray_reports();
+    $headlinedata = \local_xray\dashboard\dashboard::get($courseid, $userid, $xrayreports);
 
     if ($headlinedata instanceof \local_xray\dashboard\dashboard_data) {
         // Add info in the template.
