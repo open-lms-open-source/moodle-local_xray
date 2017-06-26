@@ -375,8 +375,13 @@ class local_xray_renderer extends plugin_renderer_base {
         $textlink = get_string("averageofweek_integer", $plugin, $a);
 
         // To risk metrics.
-        $url = new moodle_url("/local/xray/view.php",
-            array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
+        if (local_xray_reports()) {
+            $url = new moodle_url("/local/xray/view.php",
+                array("controller" => "xrayreports", "name" => "risk", "courseid" => $COURSE->id, "action" => "view"));
+        } else {
+            $url = new moodle_url("/local/xray/view.php",
+                array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
+        }
         // Calculate colour status.
         $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($data->usersinrisk,
             $data->risktotal,
@@ -403,8 +408,13 @@ class local_xray_renderer extends plugin_renderer_base {
         $textlink = get_string("headline_lastweekwasof_activity", $plugin, $a);
 
         // To activity metrics.
-        $url = new moodle_url("/local/xray/view.php",
-            array("controller" => "activityreport", "courseid" => $COURSE->id, "header" => 1), "studentList");
+        if (local_xray_reports()) {
+            $url = new moodle_url("/local/xray/view.php",
+                array("controller" => "xrayreports", "name" => "activity", "courseid" => $COURSE->id, "action" => "view"));
+        } else {
+            $url = new moodle_url("/local/xray/view.php",
+                array("controller" => "activityreport", "courseid" => $COURSE->id, "header" => 10), "studentList");
+        }
         // Calculate colour status.
         $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($data->usersloggedinpreviousweek,
             $data->usersactivitytotal,
@@ -423,8 +433,13 @@ class local_xray_renderer extends plugin_renderer_base {
         // Number of average grades in the last 7 days.
         $textlink = get_string("averageofweek_gradebook", $plugin, $data->averagegradeslastsevendayspreviousweek);
         // To students grades.
-        $url = new moodle_url("/local/xray/view.php",
-            array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "courseGradeTable");
+        if (local_xray_reports()) {
+            $url = new moodle_url("/local/xray/view.php",
+                array("controller" => "xrayreports", "name" => "gradebook", "courseid" => $COURSE->id, "action" => "view"));
+        } else {
+            $url = new moodle_url("/local/xray/view.php",
+                array("controller" => "gradebookreport", "courseid" => $COURSE->id, "header" => 1), "courseGradeTable");
+        }
         // Calculate colour status.
         $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($data->averagegradeslastsevendays,
             $data->averagegradeslastsevendayspreviousweek);
@@ -438,8 +453,13 @@ class local_xray_renderer extends plugin_renderer_base {
         // Number of posts in the last 7 days.
         $textlink = get_string("headline_lastweekwas_discussion", $plugin, $data->postslastsevendayspreviousweek);
         // To participation metrics.
-        $url = new moodle_url("/local/xray/view.php",
-            array("controller" => "discussionreport", "courseid" => $COURSE->id, "header" => 1), "discussionMetrics");
+        if (local_xray_reports()) {
+            $url = new moodle_url("/local/xray/view.php",
+                array("controller" => "xrayreports", "name" => "discussion", "courseid" => $COURSE->id, "action" => "view"));
+        } else {
+            $url = new moodle_url("/local/xray/view.php",
+                array("controller" => "discussionreport", "courseid" => $COURSE->id, "header" => 1), "discussionMetrics");
+        }
         // Calculate colour status.
         $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($data->postslastsevendays,
             $data->postslastsevendayspreviousweek);
