@@ -357,8 +357,10 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      * */
     private function dashboard_xray_output($data) {
+        global $CFG, $COURSE;
 
-        global $COURSE;
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
+
         $plugin = "local_xray";
         $output = "";
 
@@ -603,6 +605,8 @@ class local_xray_renderer extends plugin_renderer_base {
     public function print_course_menu($reportcontroller, $reports) {
         global $COURSE, $CFG, $PAGE, $OUTPUT, $USER;
 
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
+
         if (!course_manager::is_course_selected($COURSE->id)) {
             return '';
         }
@@ -666,7 +670,6 @@ class local_xray_renderer extends plugin_renderer_base {
                 $collheadlineattr = array();
 
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
-                    require_once($CFG->dirroot.'/local/xray/locallib.php');
 
                     $collheadlineattr["id"] = "xray-div-headline-show";
                     $collheadlineattr["class"] = "xray-div-headline";
