@@ -117,7 +117,6 @@ abstract class jwthelper {
                 'parameter' => [
                     (object) ['name' => 't'                                     ],
                     (object) ['name' => 'cid'     , 'values' => [$cid]          ],
-                    (object) ['name' => 'uid'     , 'values' => [(int)$USER->id]],
                     (object) ['name' => 'jouleurl', 'values' => [$CFG->wwwroot] ],
                 ]
             ];
