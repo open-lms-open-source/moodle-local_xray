@@ -486,10 +486,6 @@ a.disabled {
     width: 20px;
 }
 
-.xray-div-headline {
-    display:none;
-}
-
 #xray-nav-recommendations li .countrecommendedactions_icon_expand {
     background-image: url([[pix:local_xray|ExpandIcon]]);
     background-position: center center;

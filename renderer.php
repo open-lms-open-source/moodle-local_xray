@@ -648,7 +648,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
                     $dashboardbutton = get_string('dashboard_button', 'local_xray');
                     $iconheadlinetitle =  html_writer::div('',
-                        'headline_icon_expand',
+                        'headline_icon_collapse',
                         array('id' => 'xray-div-headline-icon',
                             'role' => 'button',
                             'aria-pressed' => false,
@@ -672,7 +672,6 @@ class local_xray_renderer extends plugin_renderer_base {
                 if (empty($reportcontroller) && has_capability('local/xray:dashboard_view', $PAGE->context)) {
 
                     $collheadlineattr["id"] = "xray-div-headline-show";
-                    $collheadlineattr["class"] = "xray-div-headline";
 
                     $xrayreports = local_xray_reports();
                     $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id, $xrayreports);
