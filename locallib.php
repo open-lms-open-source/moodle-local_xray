@@ -278,32 +278,35 @@ function local_xray_email_capability($courseid, $userid) {
 }
 
 /**
- * Add the link in the profile user for subscriptions.
- * @param \core_user\output\myprofile\tree $tree
- * @param $user
- * @param $iscurrentuser
- * @param $course
+ * Is user teacher in any course
+ * Very efficient and secure way of checking
+ * @param int $userid
  * @return bool
+ * @throws dml_exception A DML specific exception is thrown for any errors.
  */
-function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
-    // Validate user.
-    if ((!has_capability("local/xray:globalsub_view", context_system::instance()) &&
-            !local_xray_get_teacher_courses($user->id)) || !local_xray_email_enable()) {
-        return false;
-    }
-    // Url for subscription.
-    $subscriptionurl = new moodle_url("/local/xray/view.php",
-        array("controller" => "globalsub"));
+function  local_xray_is_teacher($userid = 0) {
+    global $USER, $DB;
+    $params = [
+        'contextlevel' => CONTEXT_COURSE,
+        'capability'   => 'local/xray:teacherrecommendations_view',
+        'permission'   => CAP_ALLOW,
+        'userid'       => empty($userid) ? (int)$USER->id : $userid
+    ];
+    $sql = "
+                SELECT ra.id
+                  FROM {role_assignments}   ra
+                  JOIN {role_capabilities}  rc ON ra.roleid = rc.roleid
+                  JOIN {context}           ctx ON ra.contextid = ctx.id
+                 WHERE rc.capability = :capability
+                       AND
+                       rc.permission = :permission
+                       AND
+                       ra.userid = :userid
+                       AND
+                       ctx.contextlevel = :contextlevel
+                ";
 
-    $node = new core_user\output\myprofile\node(
-        'miscellaneous',
-        'local_xray',
-        get_string('profilelink', 'local_xray'),
-        null,
-        $subscriptionurl
-    );
-    $tree->add_node($node);
-    return true;
+    return $DB->record_exists_sql($sql, $params);
 }
 
 /**
@@ -338,11 +341,12 @@ function local_xray_get_teacher_courses($userid) {
  * @return bool.
  */
 function local_xray_is_teacher_in_course ($courseid, $userid) {
-    $usercourses = local_xray_get_teacher_courses($userid);
-    if (array_key_exists($courseid, $usercourses)) {
-        return true;
-    }
-    return false;
+    return has_capability(
+        'local/xray:teacherrecommendations_view',
+        context_course::instance($courseid),
+        $userid,
+        false
+    );
 }
 
 /**

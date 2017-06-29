@@ -167,7 +167,8 @@ class dashboard {
                             if ($isteacherincourse) {
                                 $addrecommendations = self::XRAYRECOMMENDATIONALL;
                             }
-                        } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid) || $isteacherincourse) {
+                        } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid)
+                                   || $isteacherincourse) {
                             $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
                         }
                         // Recommendations for Admin user..
@@ -301,7 +302,8 @@ class dashboard {
                             if ($isteacherincourse) {
                                 $addrecommendations = self::XRAYRECOMMENDATIONALL;
                             }
-                        } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid) || $isteacherincourse) {
+                        } else if (has_capability("local/xray:teacherrecommendations_view", $context, $userid)
+                                   || $isteacherincourse) {
                             $addrecommendations = self::XRAYRECOMMENDATIONTEACHER;
                         }
                         // Recommendations for Admin user..

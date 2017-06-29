@@ -228,3 +228,37 @@ function local_xray_extend_settings_navigation(settings_navigation $settings, co
 function local_xray_extend_navigation($nav) {
     local_xray_extends_navigation($nav);
 }
+
+/**
+ * Add the link in the profile user for subscriptions.
+ * @param \core_user\output\myprofile\tree $tree
+ * @param stdClass $user
+ * @param bool $iscurrentuser
+ * @param stdClass $course
+ * @return bool
+ */
+function local_xray_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
+    global $CFG;
+    ($iscurrentuser);
+    ($course);
+
+    require_once($CFG->dirroot.'/local/xray/locallib.php');
+
+    // Validate user.
+    if ((!has_capability("local/xray:globalsub_view", context_system::instance()) &&
+            !local_xray_is_teacher($user->id)) || !local_xray_email_enable()) {
+        return false;
+    }
+    // Url for subscription.
+    $subscriptionurl = new moodle_url("/local/xray/view.php", ["controller" => "globalsub"]);
+
+    $node = new core_user\output\myprofile\node(
+        'miscellaneous',
+        'local_xray',
+        get_string('profilelink', 'local_xray'),
+        null,
+        $subscriptionurl
+    );
+    $tree->add_node($node);
+    return true;
+}

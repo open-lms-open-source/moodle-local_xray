@@ -647,7 +647,7 @@ class local_xray_renderer extends plugin_renderer_base {
                         array('id' => 'xray-icon'));
 
                     $dashboardbutton = get_string('dashboard_button', 'local_xray');
-                    $iconheadlinetitle =  html_writer::div('',
+                    $iconheadlinetitle = html_writer::div('',
                         'headline_icon_collapse',
                         array('id' => 'xray-div-headline-icon',
                             'role' => 'button',

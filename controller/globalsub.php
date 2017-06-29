@@ -87,7 +87,7 @@ class local_xray_controller_globalsub extends mr_controller {
     public function require_capability() {
         global $USER, $CFG;
         require_once($CFG->dirroot.'/local/xray/locallib.php');
-        if (!local_xray_get_teacher_courses($USER->id)) {
+        if (!local_xray_is_teacher()) {
             require_capability("{$this->plugin}:globalsub_view", $this->get_context());
         }
     }

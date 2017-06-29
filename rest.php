@@ -25,9 +25,17 @@
 define('AJAX_SCRIPT', true);
 define('NO_DEBUG_DISPLAY', true);
 
+// @codingStandardsIgnoreStart
+// We need to prevent code sniffer looking here in order to prevent latest check
+// that insists on login check after inclusion of config.php - which we do somewhere else.
+
 require_once('../../config.php');
+
+global $CFG;
 
 /* @noinspection PhpIncludeInspection */
 require($CFG->dirroot.'/local/mr/bootstrap.php');
 
 mr_controller::render('local/xray', 'pluginname', 'local_xray');
+
+// @codingStandardsIgnoreEnd
