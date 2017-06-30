@@ -227,7 +227,7 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
                     }
 
                     // Get and show forun name in navbar.
-                    $forumname = $DB->get_field($modulename, 'name', array("id" => $this->showid));
+                    $forumname = $DB->get_field($modulename, 'name', array("id" => $this->forumid));
                     $PAGE->navbar->add(format_string($forumname), new moodle_url("/mod/".$modulename."/view.php",
                         array("id" => $this->cmid)));
 
