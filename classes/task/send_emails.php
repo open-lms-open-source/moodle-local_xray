@@ -98,22 +98,22 @@ class send_emails extends scheduled_task {
                     $increase = 1;
                     if ($skipusers) {
                         foreach ($skipusers as $skipuser) {
-                            $select .= 'userid <> '.$skipuser;
+                            $select .= 'sub.userid <> '.$skipuser;
                             if ($increase < count($skipusers)) {
                                 $select .= ' AND ';
                             }
                             $increase++;
                         }
                     }
-                    $subscribedusers = $DB->get_recordset_select(
-                        'local_xray_subscribe',
-                        $select,
-                        null,
-                        'courseid',
-                        'id,
-                        courseid,
-                        userid'
-                    );
+
+                    $sqlsub = "SELECT sub.id, sub.courseid, sub.userid FROM {local_xray_subscribe} AS sub JOIN {course} AS c
+	                   ON sub.courseid = c.id";
+                    if ($select) {
+                        $sqlsub .= " WHERE ".$select;
+                    }
+                    $sqlsub .= " ORDER BY sub.courseid";
+                    $subscribedusers = $DB->get_records_sql($sqlsub);
+
                     if ($subscribedusers) {
                         foreach ($subscribedusers as $record) {
                             if (isset($record->userid) && $record->userid && isset($record->courseid) && $record->courseid) {
