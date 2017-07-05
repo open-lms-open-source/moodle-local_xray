@@ -73,13 +73,17 @@ function local_xray_template_data($courseid, $userid) {
         $data->riskiconpdf = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'), $reporticonpdf);
         $data->riskicon = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'));
 
-        $riskurl = new moodle_url("/local/xray/view.php",
-            array("controller" => "risk", "courseid" => $courseid, "action" => "view"));
+        if (local_xray_reports()) {
+            $riskurl = $riskarrowurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "xrayreports", "name" => "risk", "courseid" => $courseid, "action" => "view"));
+        } else {
+            $riskurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "risk", "courseid" => $courseid, "action" => "view"));
 
+            $riskarrowurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "risk", "courseid" => $courseid, "header" => 1), "riskMeasures");
+        }
         $data->risklink = html_writer::link($riskurl, get_string('risk', 'local_xray'), $gotoreport);
-
-        $riskarrowurl = new moodle_url("/local/xray/view.php",
-            array("controller" => "risk", "courseid" => $courseid, "header" => 1), "riskMeasures");
 
         // Calculate colour status.
         $statusclassrisk = local_xray\dashboard\dashboard_data::get_status_with_average($headlinedata->usersinrisk,
@@ -117,13 +121,18 @@ function local_xray_template_data($courseid, $userid) {
             $reporticonpdf);
         $data->activityicon = html_writer::img($xrayactivityicon, get_string('activityreport', 'local_xray'));
 
-        $activityurl = new moodle_url("/local/xray/view.php",
-            array("controller" => "activityreport", "courseid" => $courseid, "action" => "view"));
+        if (local_xray_reports()) {
+            $activityurl = $activityarrowurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "xrayreports", "name" => "activity", "courseid" => $courseid, "action" => "view"));
+        } else {
+            $activityurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "activityreport", "courseid" => $courseid, "action" => "view"));
+
+            $activityarrowurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "activityreport", "courseid" => $courseid, "header" => 1), "studentList");
+        }
 
         $data->activitylink = html_writer::link($activityurl, get_string('activityreport', 'local_xray'), $gotoreport);
-
-        $activityarrowurl = new moodle_url("/local/xray/view.php",
-            array("controller" => "activityreport", "courseid" => $courseid, "header" => 1), "studentList");
 
         // Calculate colour status.
         $statusclassactivity = local_xray\dashboard\dashboard_data::get_status_with_average(
@@ -162,13 +171,18 @@ function local_xray_template_data($courseid, $userid) {
             $reporticonpdf);
         $data->gradebookicon = html_writer::img($xraygradeicon, get_string('gradebookreport', 'local_xray'));
 
-        $gradebookurl = new moodle_url("/local/xray/view.php",
-            array("controller" => "gradebookreport", "courseid" => $courseid, "action" => "view"));
+        if (local_xray_reports()) {
+            $gradebookurl = $gradebookarrowurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "xrayreports", "name" => "gradebook", "courseid" => $courseid, "action" => "view"));
+        } else {
+            $gradebookurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "gradebookreport", "courseid" => $courseid, "action" => "view"));
+
+            $gradebookarrowurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "gradebookreport", "courseid" => $courseid, "header" => 1), "courseGradeTable");
+        }
 
         $data->gradebooklink = html_writer::link($gradebookurl, get_string('gradebookreport', 'local_xray'), $gotoreport);
-
-        $gradebookarrowurl = new moodle_url("/local/xray/view.php",
-            array("controller" => "gradebookreport", "courseid" => $courseid, "header" => 1), "courseGradeTable");
 
         // Calculate colour status.
         $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($headlinedata->averagegradeslastsevendays,
@@ -198,13 +212,18 @@ function local_xray_template_data($courseid, $userid) {
             $reporticonpdf);
         $data->discussionicon = html_writer::img($xraydiscussionsicon, get_string('discussionreport', 'local_xray'));
 
-        $discussionurl = new moodle_url("/local/xray/view.php",
-            array("controller" => "discussionreport", "courseid" => $courseid, "action" => "view"));
+        if (local_xray_reports()) {
+            $discussionurl = $discussionarrowurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "xrayreports", "name" => "discussion", "courseid" => $courseid, "action" => "view"));
+        } else {
+            $discussionurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "discussionreport", "courseid" => $courseid, "action" => "view"));
+
+            $discussionarrowurl = new moodle_url("/local/xray/view.php",
+                array("controller" => "discussionreport", "courseid" => $courseid, "header" => 1), "discussionMetrics");
+        }
 
         $data->discussionlink = html_writer::link($discussionurl, get_string('discussionreport', 'local_xray'), $gotoreport);
-
-        $discussionarrowurl = new moodle_url("/local/xray/view.php",
-            array("controller" => "discussionreport", "courseid" => $courseid, "header" => 1), "discussionMetrics");
 
         // Calculate colour status.
         $statusclassdiscussion = local_xray\dashboard\dashboard_data::get_status_simple($headlinedata->postslastsevendays,
