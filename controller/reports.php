@@ -43,6 +43,7 @@ class local_xray_controller_reports extends mr_controller {
     const XRAYGREENCOLOR = 'green';
     const XRAYREDCOLOR = 'red';
     const XRAYYELLOWCOLOR = 'yellow';
+    const XRAYSYSTEMREPORTS = 'systemreports';
 
     /**
      * Course id
@@ -219,7 +220,7 @@ class local_xray_controller_reports extends mr_controller {
     public function require_capability() {
         global $CFG;
         require_once($CFG->dirroot.'/local/xray/locallib.php');
-        if (!local_xray_reports()) {
+        if (!local_xray_reports() || $this->name == self::XRAYSYSTEMREPORTS) {
             require_capability("{$this->plugin}:{$this->name}_view", $this->get_context());
         }
     }
