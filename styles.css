@@ -570,3 +570,8 @@ a.disabled {
     border-right: 0;
 }
 /**************** End styles for Recommended Actions ****************/
+/**************** Validation panel ****************/
+.xray-validate {
+    z-index: 1109 !important;
+}
+/**************** End styles for Validation panel ****************/
