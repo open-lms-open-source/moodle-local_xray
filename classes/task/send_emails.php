@@ -163,7 +163,6 @@ class send_emails extends scheduled_task {
                                 $pdf = local_xray_create_pdf($headlinedata, $subject);
                             } else {
                                 $data = array(
-                                    'context' => \context_course::instance($courseid),
                                     'other' => array(
                                         'message' => get_string('erroremailheadline', 'local_xray', $courseid)
                                     )
@@ -202,7 +201,6 @@ class send_emails extends scheduled_task {
                             }
                             if ($email) {
                                 $data = array(
-                                    'context' => \context_course::instance($courseid),
                                     'other' => array(
                                         'to' => $userid,
                                         'pdf' => $pdfstatus

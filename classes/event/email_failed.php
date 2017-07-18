@@ -39,6 +39,7 @@ class email_failed extends \core\event\base {
     protected function init() {
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_OTHER;
+        $this->context = \context_system::instance();
     }
 
     /**
