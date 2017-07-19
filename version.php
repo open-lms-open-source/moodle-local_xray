@@ -27,13 +27,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 /** @var stdClass $plugin */
-$plugin->version  = 2015070348;
+$plugin->version  = 2015070349;
 $plugin->requires = 2015051100; // Moodle 2.9 .
 $plugin->cron = 0;
 $plugin->component = 'local_xray';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '2.0 (Build: 2015070348)';
-$plugin->dependencies = array(
+$plugin->release = '2.0 (Build: 2015070349)';
+$plugin->dependencies = [
         'local_mr'       => ANY_VERSION,
         'local_aws_sdk'  => ANY_VERSION
-);
+];

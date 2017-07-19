@@ -29,40 +29,53 @@ if ($hassiteconfig) {
     $plugin = 'local_xray';
     $allowedunamecourses = 'mrsupport';
 
-    $ADMIN->add('localplugins',
-        new admin_category($plugin,
-        new lang_string('pluginname', $plugin))
+    $ADMIN->add(
+        'localplugins',
+        new admin_category(
+            $plugin,
+            new lang_string('pluginname', $plugin)
+        )
     );
 
     // This code must be executed EVERY TIME so no require_once.
     require($CFG->dirroot.'/local/xray/global_settings.php');
+
     // Add Course selection.
-    $adminscanselectcourses = isset($CFG->local_xray_unrestrict_course_selection) &&
-            $CFG->local_xray_unrestrict_course_selection;
-    if ($adminscanselectcourses ||
-            $USER->username === $allowedunamecourses) {
-        $urlcourseselection = new moodle_url('/local/xray/view.php',
-                array('controller' => 'courseselection',
-                      'action' => 'view'));
-        $ADMIN->add('local_xray', new admin_externalpage('courseselection_view',
-            new lang_string('courseselection', $plugin),
-            $urlcourseselection->out(false)));
+    if (!empty($CFG->local_xray_unrestrict_course_selection) ||
+        ($USER->username === $allowedunamecourses)) {
+        $urlcourseselection = new moodle_url(
+            '/local/xray/view.php',
+             ['controller' => 'courseselection', 'action' => 'view']
+        );
+        $ADMIN->add(
+            'local_xray',
+            new admin_externalpage(
+                'courseselection_view',
+                new lang_string('courseselection', $plugin),
+                $urlcourseselection->out(false)
+            )
+        );
     }
 }
 
 // This has to be outside of global if so that we can permit non admin users to see this.
 if (has_capability('local/xray:systemreports_view', context_system::instance())) {
-    // Get the URL.
-    $systemreportsurl = get_config('local_xray', 'systemreportsurl');
-    // Get the flag.
-    $showsystemreports = get_config('local_xray', 'displaysystemreports');
+    $systemreportsurl = get_config($plugin, 'systemreportsurl');
+    $showsystemreports = get_config($plugin, 'displaysystemreports');
     if (!empty($systemreportsurl) && $showsystemreports) {
         // Add tree X-ray -> Rebuke List to show in reports.
-        $ADMIN->add('reports',
-            new admin_category('local_xray_report', new lang_string('pluginname', 'local_xray'))
+        $ADMIN->add(
+            'reports',
+            new admin_category(
+                'local_xray_report',
+                new lang_string('pluginname', 'local_xray')
+            )
         );
         // Add System Reports.
-        $urlsystemreports = new moodle_url('/local/xray/view.php', ['controller' => 'systemreports']);
+        $urlsystemreports = new moodle_url(
+            '/local/xray/view.php',
+            ['controller' => 'systemreports']
+        );
         $ADMIN->add('local_xray_report',
             new admin_externalpage(
                 'systemreports',
