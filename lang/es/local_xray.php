@@ -110,7 +110,7 @@ $string['error_compress'] = 'No fue possible crear archivo comprimido. Por favor
 $string['error_generic'] = '{$a}';
 $string['error_fexists'] = '¡El archivo "{$a}" ya existe!';
 $string['error_fnocreate'] = '¡No puedo crear el archivo "{$a}"!';
-$string['error_systemreports_nourl'] = 'La url para obtener reportes de sistemas no esta configurada correctamente.';
+$string['error_systemreports_nourl'] = 'La URL para obtener reportes de sistemas no esta configurada correctamente.';
 $string['error_systemreports_gettoken'] = 'Error al obtener token para acceder a reportes de sistema.';
 $string['error_systemreports_disabled'] = 'Los reportes del sistema no se están mostrando.'.
                                           ' Están inhabilitados en la página de configuración de X-Ray.';
@@ -120,8 +120,8 @@ $string['xrayclientid'] = 'Identificador de cliente';
 $string['xrayclientid_desc'] = 'Identificador de cliente para X-Ray Learning Analytics';
 $string['xraypassword'] = 'Password para X-Ray Learning Analytics ';
 $string['xraypassword_desc'] = 'Password utilizado para loguearse en X-Ray Learning Analytics';
-$string['xrayurl'] = 'Url de X-Ray Learning Analytics';
-$string['xrayurl_desc'] = 'Url de servidor X-Ray Learning Analytics.';
+$string['xrayurl'] = 'URL de X-Ray Learning Analytics';
+$string['xrayurl_desc'] = 'URL de servidor X-Ray Learning Analytics.';
 $string['xrayusername'] = 'Usuario de X-Ray Learning Analytics';
 $string['xrayusername_desc'] = 'Usuario utilizado para loguearse en X-Ray Learning Analytics.';
 $string['xrayawsheading'] = 'Sincronización de datos';
@@ -568,7 +568,7 @@ $string['recommendedaction_button'] = 'Mostrar/Ocultar recomendación';
 $string['error_wsapi_config_params_empty'] = 'Los parámetros X-Ray están vacíos';
 $string['error_wsapi_config_xrayusername'] = 'El campo username de X-Ray Learning Analytics está vacío';
 $string['error_wsapi_config_xraypassword'] = 'El campo password de X-Ray Learning Analytics está vacío';
-$string['error_wsapi_config_xrayurl'] = 'El campo url de X-Ray Learning Analytics está vacío';
+$string['error_wsapi_config_xrayurl'] = 'El campo URL de X-Ray Learning Analytics está vacío';
 $string['error_wsapi_config_xrayclientid'] = 'El campo clientid de X-Ray Learning Analytics está vacío';
 $string['error_wsapi_exception'] = 'Hubo un error al comunicarse con el servidor X-Ray:<br/>{$a}';
 $string['error_wsapi_domaininfo_incomplete'] = 'La información del dominio está incompleta: ${a}';
@@ -628,6 +628,6 @@ $string['noaccessxrayreports'] = 'Los reportes de X-Ray no están disponibles. P
     'administrador del sitio para solicitar su habilitación.';
 $string['noaccessoldxrayreports'] = 'Esta versión de los reportes ya no está disponible. Por favor, contacta con el '.
     'administrador del sitio para solicitar su habilitación.';
-$string['error_xrayreports_nourl'] = 'La url para obtener reportes de X-Ray no esta configurada correctamente.';
+$string['error_xrayreports_nourl'] = 'La URL para obtener reportes de X-Ray no esta configurada correctamente.';
 $string['error_xrayreports_gettoken'] = 'Error al obtener token para acceder a los reportes de X-Ray.';
 $string['dashboard_button'] = 'Mostrar/Ocultar interfaz';
