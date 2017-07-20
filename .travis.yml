@@ -1,0 +1,51 @@
+language: php
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+ - 5.4
+
+env:
+ - AWS_BRANCH=LEGACY
+ - DB=mysqli
+ matrix:
+  - MOODLE_BRANCH=MOODLE_29_STABLE
+  - MOODLE_BRANCH=MOODLE_30_STABLE
+  - MOODLE_BRANCH=MOODLE_31_STABLE
+
+#matrix:
+# include:
+#  - php: 5.4
+#    env: MOODLE_BRANCH=MOODLE_29_STABLE AWS_BRANCH=LEGACY DB=mysqli
+#  - php: 5.4
+#    env: MOODLE_BRANCH=MOODLE_30_STABLE AWS_BRANCH=LEGACY DB=mysqli
+#  - php: 5.4
+#    env: MOODLE_BRANCH=MOODLE_31_STABLE AWS_BRANCH=LEGACY DB=mysqli
+
+before_install:
+  - phpenv config-rm xdebug.ini
+  - cd ../..
+  - composer selfupdate
+  - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^1
+  - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
+
+install:
+  - moodle-plugin-ci add-plugin -b ${AWS_BRANCH} moodlerooms/moodle-local_aws_sdk
+  - moodle-plugin-ci add-plugin -b ${MOODLE_BRANCH} moodlerooms/moodle-local_mr
+  - moodle-plugin-ci install
+
+script:
+  - moodle-plugin-ci phplint
+  - moodle-plugin-ci phpcpd
+  - moodle-plugin-ci phpmd
+  - moodle-plugin-ci codechecker
+  - moodle-plugin-ci csslint
+  - moodle-plugin-ci shifter
+  - moodle-plugin-ci jshint
+  - moodle-plugin-ci validate
+  - moodle-plugin-ci phpunit
+  - moodle-plugin-ci behat
