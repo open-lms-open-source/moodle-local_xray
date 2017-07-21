@@ -53,6 +53,13 @@ class behat_local_xray extends behat_base {
      */
     public function i_use_express_template_for_xray($template) {
         global $CFG;
+
+        $plugins = \core_plugin_manager::instance()->get_enabled_plugins('block');
+
+        if (!in_array('express', $plugins)) {
+            return;
+        }
+
         require_once("$CFG->dirroot/blocks/express/model/design.php");
 
         // Create express paths.
