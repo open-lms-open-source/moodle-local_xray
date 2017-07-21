@@ -59,4 +59,19 @@ abstract class local_xray_base_testcase extends advanced_testcase {
         unset_config('xrayadminserver', self::PLUGIN);
     }
 
+    // @codingStandardsIgnoreStart
+    /**
+     * Provide missing method in Moodle 2.9
+     * @param bool $condition
+     * @param string $message
+     */
+    public static function assertNotFalse($condition, $message = '') {
+        if (method_exists('PHPUnit_Framework_Assert', 'assertNotFalse')) {
+            parent::assertNotFalse($condition, $message);
+        } else {
+            static::assertThat($condition, static::logicalNot(static::isFalse()), $message);
+        }
+    }
+    // @codingStandardsIgnoreEnd
+
 }
