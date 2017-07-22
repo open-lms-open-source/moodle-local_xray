@@ -252,6 +252,7 @@ function local_xray_template_data($courseid, $userid) {
             $recommendationnumber = 1;
             foreach ($headlinedata->recommendations as $recommendation) {
                 // Add the recommendation.
+                $data->recommendationslist .= html_writer::start_tag('tr');
                 // Title.
                 $data->recommendationstitle = get_string('recommendedactions' , 'local_xray');
                 // Number.
