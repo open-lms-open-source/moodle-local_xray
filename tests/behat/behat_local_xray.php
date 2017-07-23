@@ -54,8 +54,7 @@ class behat_local_xray extends behat_base {
     public function i_use_express_template_for_xray($template) {
         global $CFG;
 
-        $plugins = \core_plugin_manager::instance()->get_enabled_plugins('block');
-
+        $plugins = \core_plugin_manager::instance()->get_installed_plugins('block');
         if (!in_array('express', $plugins)) {
             return;
         }
@@ -138,14 +137,19 @@ class behat_local_xray extends behat_base {
         foreach ($themes as $theme => $formats) {
             $this->local_xray_test_headline_themes($theme, $formats, $shortname);
         }
-        // Test express templates.
-        // Add express template.
-        if (get_config('core', 'theme') != 'express') {
-            $table = new \Behat\Gherkin\Node\TableNode([['theme', 'express']]);
-            $admincontext->the_following_config_values_are_set_as_admin($table);
-        }
-        foreach ($templates as $template => $formats) {
-            $this->local_xray_test_headline_themes($template, $formats, $shortname, true);
+
+        // Test express theme only when present.
+        $plugins = \core_plugin_manager::instance()->get_installed_plugins('theme');
+        if (in_array('express', $plugins)) {
+            // Test express templates.
+            // Add express template.
+            if (get_config('core', 'theme') != 'express') {
+                $table = new \Behat\Gherkin\Node\TableNode([['theme', 'express']]);
+                $admincontext->the_following_config_values_are_set_as_admin($table);
+            }
+            foreach ($templates as $template => $formats) {
+                $this->local_xray_test_headline_themes($template, $formats, $shortname, true);
+            }
         }
     }
 
