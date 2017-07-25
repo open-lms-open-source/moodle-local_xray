@@ -33,7 +33,7 @@ $plugin->cron = 0;
 $plugin->component = 'local_xray';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '2.0 (Build: 2015070348)';
-$plugin->dependencies = array(
+$plugin->dependencies = [
         'local_mr'       => ANY_VERSION,
         'local_aws_sdk'  => ANY_VERSION
-);
+];

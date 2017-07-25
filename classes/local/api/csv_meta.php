@@ -62,10 +62,13 @@ class csv_meta {
     }
 
     /**
+     * We are switching to exclusive use of
+     * {@link https://github.com/ajgarlag/AjglCsvRfc csv-rfc} and hence
+     * only one escape character is permitted.
      * @return string
      */
     public static function get_escape() {
-        return self::checkformat() ? '\\' : "\v";
+        return '\\';
     }
 
 }

@@ -760,4 +760,19 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         }
     }
 
+    // @codingStandardsIgnoreStart
+    /**
+     * Providing non-existent method in Moodle 2.9.x
+     */
+    public function waitForSecond() {
+        if (method_exists('advanced_testcase', 'waitForSecond')) {
+            parent::waitForSecond();
+        } else {
+            $starttime = time();
+            while (time() == $starttime) {
+                usleep(50000);
+            }
+        }
+    }
+    // @codingStandardsIgnoreEnd
 }

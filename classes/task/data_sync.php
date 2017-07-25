@@ -31,9 +31,7 @@ use local_xray\local\api\data_export;
 use local_xray\event\sync_log;
 use local_xray\event\sync_failed;
 use local_xray\local\api\auto_clean;
-use local_aws_sdk\aws_sdk;
-use /* @noinspection PhpUndefinedClassInspection */
-Aws\S3\S3Client;
+use local_xray\local\api\s3client;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -154,19 +152,8 @@ class data_sync extends scheduled_task {
      * @throws \coding_exception
      */
     protected function upload_legacy($dirbase, $dirname) {
-        aws_sdk::autoload();
 
-        /* @noinspection PhpUndefinedClassInspection */
-        $s3 = new S3Client([
-            'version' => '2006-03-01',
-            'region'  => $this->config->s3bucketregion,
-            'scheme'  => $this->config->s3protocol,
-            'retries' => (int)$this->config->s3uploadretry,
-            'credentials' => [
-                'key'    => $this->config->awskey,
-                'secret' => $this->config->awssecret,
-            ],
-        ]);
+        $s3 = s3client::create($this->config);
 
         list($compfile, $destfile) = data_export::compress($dirbase, $dirname);
         if ($compfile !== null) {
@@ -179,10 +166,6 @@ class data_sync extends scheduled_task {
                 'private',
                 ['debug' => true]
             );
-            $metadata = $uploadresult->get('@metadata');
-            if ($metadata['statusCode'] != 200) {
-                throw new \Exception("Upload to S3 bucket failed!");
-            }
 
             // Save counters only when entire process passed OK.
             if (empty($this->config->disablecounterincrease)) {
@@ -201,19 +184,8 @@ class data_sync extends scheduled_task {
      * @throws \Exception
      */
     protected function upload_new($dirbase, $dirname) {
-        aws_sdk::autoload();
 
-        /* @noinspection PhpUndefinedClassInspection */
-        $s3 = new S3Client([
-            'version' => '2006-03-01',
-            'region'  => $this->config->s3bucketregion,
-            'scheme'  => $this->config->s3protocol,
-            'retries' => (int)$this->config->s3uploadretry,
-            'credentials' => [
-                'key'    => $this->config->awskey,
-                'secret' => $this->config->awssecret,
-            ],
-        ]);
+        $s3 = s3client::create($this->config);
 
         $result = data_export::compress($dirbase, $dirname);
 

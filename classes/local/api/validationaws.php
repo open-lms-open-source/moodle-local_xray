@@ -25,9 +25,6 @@
 
 namespace local_xray\local\api;
 
-use local_aws_sdk\aws_sdk;
-use Aws\S3\S3Client;
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -227,21 +224,8 @@ abstract class validationaws {
                 )
             );
 
-            aws_sdk::autoload();
+            $s3 = s3client::create($config);
 
-            /* @noinspection PhpUndefinedClassInspection */
-            $s3 = new S3Client(
-                [
-                  'version'     => '2006-03-01'
-                , 'region'      => $config->s3bucketregion
-                , 'scheme'      => $config->s3protocol
-                , 'retries'     => (int)$config->s3uploadretry
-                , 'credentials' => [
-                      'key'    => $config->awskey
-                    , 'secret' => $config->awssecret
-                    ]
-                ]
-            );
             // Increase step.
             $awsres->step();
 
@@ -284,10 +268,6 @@ abstract class validationaws {
                     , 'private'
                     , ['debug' => true]
                 );
-                $metadata = $uploadresult->get('@metadata');
-                if ($metadata['statusCode'] !== 200) {
-                    throw new \moodle_exception("Upload to S3 bucket failed!");
-                }
             } else {
                 throw new \moodle_exception("Unable to create temporary file!");
             }
@@ -303,11 +283,10 @@ abstract class validationaws {
                 'Key'    => $objectkey
             ));
 
-            if ($metadata['statusCode'] !== 200) {
-                throw new \moodle_exception("Download from S3 bucket failed!");
-            } else if ($awsobject['Body'] != $objectcontent) {
+            if ($awsobject['Body'] != $objectcontent) {
                 throw new \moodle_exception("S3 bucket corrupt.");
             }
+
             // Increase step.
             $awsres->step();
 
