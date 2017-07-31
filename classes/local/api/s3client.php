@@ -60,51 +60,20 @@ abstract class s3client {
 
         aws_sdk::autoload();
 
-        // In case of PHP 5.4.x insist on AWS SDK 2.x.
-        if ((PHP_MAJOR_VERSION == 5) and (PHP_MINOR_VERSION == 4)) {
-            if (!class_exists('\Aws\Common\Aws')) {
-                throw new \Exception('Missing AWS SDK 2.x!');
-            }
-
-            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-            /* @noinspection PhpUndefinedClassInspection */
-            $s3cli = \Aws\S3\S3Client::factory(
-                [
-                      'version'     => '2006-03-01'
-                    , 'region'      => $config->s3bucketregion
-                    , 'scheme'      => $config->s3protocol
-                    , 'retries'     => (int)$config->s3uploadretry
-                    , 'credentials' => [
-                         'key'    => $config->awskey
-                       , 'secret' => $config->awssecret
-                      ]
-                ]
-            );
-
-        }
-
-        // In case of PHP 5.5+ insist on AWS SDK 3.x.
-        if ((PHP_MAJOR_VERSION >= 5) and (PHP_MINOR_VERSION >= 5)) {
-            if (!class_exists('\Aws\Sdk')) {
-                throw new \Exception('Missing AWS SDK 3.x!');
-            }
-
-            /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
-            /* @noinspection PhpUndefinedClassInspection */
-            $s3cli = new \Aws\S3\S3Client(
-                [
-                      'version'     => '2006-03-01'
-                    , 'region'      => $config->s3bucketregion
-                    , 'scheme'      => $config->s3protocol
-                    , 'retries'     => (int)$config->s3uploadretry
-                    , 'credentials' => [
-                          'key'    => $config->awskey
-                        , 'secret' => $config->awssecret
-                      ]
-                ]
-            );
-
-        }
+        /* @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+        /* @noinspection PhpUndefinedClassInspection */
+        $s3cli = \Aws\S3\S3Client::factory(
+            [
+                  'version'     => '2006-03-01'
+                , 'region'      => $config->s3bucketregion
+                , 'scheme'      => $config->s3protocol
+                , 'retries'     => (int)$config->s3uploadretry
+                , 'credentials' => [
+                     'key'    => $config->awskey
+                   , 'secret' => $config->awssecret
+                  ]
+            ]
+        );
 
         return $s3cli;
     }
