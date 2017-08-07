@@ -87,10 +87,16 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
 
         if ($this->reportname == 'activityindividual' || $this->reportname == 'discussionindividual') {
             $this->showid = required_param("showid", PARAM_INT); // User id viewed.
+            $this->url->param("showid", $this->showid);
         } else if ($this->reportname == 'discussionindividualforum') {
             $this->forumid = required_param("forumid", PARAM_INT); // Forum id viewed.
+            $this->url->param("forumid", $this->forumid);
             $this->cmid = required_param('cmid', PARAM_INT); // Cmid of forum/hsuforum.
+            $this->url->param("cmid", $this->cmid);
             $this->d = optional_param('d', null, PARAM_INT); // Id of discussion.
+            if (!empty($this->d)) {
+                $this->url->param("d", $this->d);
+            }
         }
     }
 
