@@ -298,7 +298,7 @@ class local_xray_renderer extends plugin_renderer_base {
     public function help_icon_external_url($title, $url) {
 
         // First get the help image icon.
-        $src = $this->pix_url('help');
+        $src = $this->image_url('help');
         $attributes = array('src' => $src, 'class' => 'iconhelp');
         $output = html_writer::empty_tag('img', $attributes);
 

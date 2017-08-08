@@ -520,7 +520,7 @@ abstract class wsapi {
         if (defined('BEHAT_SITE_RUNNING')) {
             global $OUTPUT;
             // Return X-ray logo for behat test.
-            $imgurl = $OUTPUT->pix_url("xray-logo", "local_xray");
+            $imgurl = $OUTPUT->image_url("xray-logo", "local_xray");
             return $imgurl;
         }
 
