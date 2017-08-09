@@ -600,6 +600,9 @@ $string['error_compress_config_exportlocation'] = 'El campo Locación de export 
 $string['error_compress_exception'] = 'Error al comprimir:<br />{$a}';
 $string['error_compress_files'] = 'Se encontraron archivos incorrectos en el/los archivo(s) comprimido(s)';
 
+// Extra errors for aws.
+$string['error_s3_client'] = 'Error con el cliente S3';
+
 // Temporary for API check.
 $string['connectionfailed'] = 'Conexión fallida - verificar parámetros';
 $string['connectionverified'] = 'Parámetros verificados';
