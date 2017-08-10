@@ -226,6 +226,10 @@ abstract class validationaws {
 
             $s3 = s3client::create($config);
 
+            if (!$s3) {
+                throw new \moodle_exception('error_s3_client', wsapi::PLUGIN);
+            }
+
             // Increase step.
             $awsres->step();
 

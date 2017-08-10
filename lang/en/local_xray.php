@@ -600,6 +600,9 @@ $string['error_compress_files'] = 'Incorrect files found in archive(s). Please c
     'against your operating system capabilities.';
 $string['error_compress_packertar_invalid'] = '<strong>GNU tar executable</strong> is invalid.';
 
+// Extra errors for aws.
+$string['error_s3_client'] = 'Error with S3 client';
+
 // Temporary for API check.
 $string['connectionfailed'] = 'Failed - please check parameters';
 $string['connectionverified'] = 'Parameters verified';
