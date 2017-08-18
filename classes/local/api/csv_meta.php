@@ -33,18 +33,10 @@ defined('MOODLE_INTERNAL') || die();
 class csv_meta {
 
     /**
-     * @var bool
-     */
-    protected static $newformat = null;
-
-    /**
      * @return bool
      */
     public static function checkformat() {
-        if (self::$newformat === null) {
-            self::$newformat = get_config('local_xray', 'newformat');
-        }
-        return self::$newformat;
+        return get_config('local_xray', 'newformat');
     }
 
     /**

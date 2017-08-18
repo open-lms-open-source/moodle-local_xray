@@ -239,4 +239,32 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
         $this->export_check('grades_history', [], $timenow, false, 0);
     }
 
+    /**
+     * Test delimiters
+     */
+    public function test_csv_format_delimiters() {
+        global $CFG;
+
+        $this->resetAfterTest();
+
+        $CFG->forced_plugin_settings['local_xray']['newformat'] = false;
+        $this->assertEquals(',', local_xray\local\api\csv_meta::get_delimiter());
+        $this->assertEquals("\x1", local_xray\local\api\csv_meta::get_enclosure());
+        $this->assertEquals('\\', local_xray\local\api\csv_meta::get_escape());
+
+        $CFG->forced_plugin_settings['local_xray']['newformat'] = true;
+        $this->assertEquals('|', local_xray\local\api\csv_meta::get_delimiter());
+        $this->assertEquals('"', local_xray\local\api\csv_meta::get_enclosure());
+        $this->assertEquals('\\', local_xray\local\api\csv_meta::get_escape());
+
+        $CFG->forced_plugin_settings['local_xray']['newformat'] = false;
+        $this->assertEquals(',', local_xray\local\api\csv_meta::get_delimiter());
+        $this->assertEquals("\x1", local_xray\local\api\csv_meta::get_enclosure());
+        $this->assertEquals('\\', local_xray\local\api\csv_meta::get_escape());
+
+        $CFG->forced_plugin_settings['local_xray']['newformat'] = true;
+        $this->assertEquals('|', local_xray\local\api\csv_meta::get_delimiter());
+        $this->assertEquals('"', local_xray\local\api\csv_meta::get_enclosure());
+        $this->assertEquals('\\', local_xray\local\api\csv_meta::get_escape());
+    }
 }
