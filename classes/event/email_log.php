@@ -57,7 +57,7 @@ class email_log extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        $messagedesc = get_string('email_log_desc', 'local_xray', array('courseid' => $this->courseid, 'to' => $this->other['to']));
+        $messagedesc = get_string('email_log_desc', 'local_xray', array('courseid' => $this->other['courseid'], 'to' => $this->other['to']));
         if (empty($this->other['pdf'])) {
             $messagedesc .= ' '.get_string('pdfnotattached', 'local_xray');
         }
@@ -70,6 +70,6 @@ class email_log extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/course/view.php', array('id' => $this->courseid));
+        return new \moodle_url('/course/view.php', array('id' => $this->other['courseid']));
     }
 }
