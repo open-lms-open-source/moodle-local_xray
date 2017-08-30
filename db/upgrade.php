@@ -265,7 +265,7 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         $table->add_field('cid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
 
-        // Conditionally launch create table for local_xray_subscribe.
+        // Conditionally launch create table for local_xray_selectedcourse.
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
         }

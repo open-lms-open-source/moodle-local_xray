@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/local/mr/framework/controller.php');
 use local_xray\event\get_report_failed;
+use local_xray\local\api\course_manager;
 
 /**
  * Xray integration Reports Controller
@@ -686,23 +687,6 @@ class local_xray_controller_reports extends mr_controller {
         if (!defined(AJAX_SCRIPT) || !AJAX_SCRIPT) {
             $event = \local_xray\event\report_viewed::create($data);
             $event->trigger();
-        }
-    }
-
-    /**
-     * Validate if the course is available on X-Ray.
-     */
-    public function validate_course() {
-        global $OUTPUT, $COURSE, $CFG;
-
-        require_once($CFG->dirroot.'/local/xray/locallib.php');
-
-        // Validate if the course has the Single Activity format.
-        if (local_xray_single_activity_course($COURSE->id)) {
-            $this->print_header();
-            echo $OUTPUT->notification(get_string("error_single_activity", $this->component));
-            $this->print_footer();
-            die();
         }
     }
 

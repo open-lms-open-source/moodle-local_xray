@@ -322,10 +322,29 @@ abstract class wsapi {
     }
 
     /**
+     * Returns list of all available valid courses for specified domain
+     *
+     * @param null|int $start
+     * @param null|int $count
+     * @return bool|mixed
+     * @throws \Exception
+     * @throws \dml_exception
+     */
+    public static function validcourses($start = null, $count = null) {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
+            return false;
+        }
+        $url = sprintf('%s/%s/course/valid', $baseurl, $domain);
+        return self::generic_getcall($url, $start, $count);
+    }
+
+    /**
      * Return specific course report
      *
      * @param int $courseid numeric id of the course within domain
-     * @param string $report name of the report to be used (See wiki documetation for available types)
+     * @param string $report name of the report to be used (See wiki documentation for available types)
      * @param int $userid - numerical user id value
      * @param string $date - single date in format YYYY-MM-DD
      * @param string $subtype - optional report type (usually empty)

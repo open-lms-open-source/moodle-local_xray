@@ -1,0 +1,189 @@
+/*
+ * Collapsible lists styles for the li buttons
+ */
+
+.xray-collapsible-list li {
+  list-style-image:url('images/arrowright.svg');
+  list-style-position: inside;
+  cursor:auto;
+}
+
+li.xray-collapsible-list-open {
+  list-style-image:url('images/arrowdown.svg');
+  list-style-position: inside;
+  cursor:pointer;
+}
+
+li.xray-collapsible-list-closed {
+  list-style-image:url('images/arrowright.svg');
+  list-style-position: inside;
+  cursor:pointer;
+}
+
+button.cat_label {
+  font-style: italic;
+  min-height: 30px;
+  text-decoration: inherit;
+  color: inherit;
+  cursor: auto;
+  height: 1em;
+  padding: 0;
+}
+
+button.cat_label:visited {
+  text-decoration: inherit;
+  color: inherit;
+  cursor: auto;
+}
+
+.xray-right-course-inputs {
+  float: right;
+}
+
+.xray-right-course-inputs > input[type=checkbox] {
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+}
+
+.xray-right-course-inputs > input[type=checkbox] + label {
+  background-image: url('images/xraycb.svg');
+  background-repeat: no-repeat;
+  display      : inline-block;
+  width        : 1em;
+  margin-left  : -1em;
+  padding-left : 1em;
+  line-height  : 1em;
+  border: 2px solid transparent;
+}
+
+.xray-right-course-inputs > input[type=checkbox]:checked + label {
+  background-image: url('images/xraycbchecked.svg');
+}
+
+.xray-right-course-inputs > input[type=checkbox]:indeterminate + label {
+  background-image: url('images/xraycbindeterminate.svg');
+}
+
+.xray-right-course-inputs > input[type=checkbox]:focus + label {
+  width        : 1em;
+  margin-left  : -1em;
+  padding-left : 1em;
+  line-height  : 1em;
+  box-shadow: 0 0 10px rgba(81, 203, 238, 1);
+  border: 2px solid rgba(81, 203, 238, 1);
+}
+
+li.xray-category {
+  background: #fbfbfb;
+}
+
+.xray-child-separator {
+  background-color: white;
+  width: 100%;
+  height: 10px;
+  padding-bottom: 5px;
+  margin-bottom: -5px;
+}
+
+.xray-child-container {
+  background-color: white;
+  padding-left: 10px;
+  margin-left: -10px;
+}
+
+.xray-category-tree {
+  background-color: white;
+  padding-left: 10px;
+  cursor: default;
+}
+
+.xray-course {
+  border-bottom: 0.5px solid lightgrey;
+  background-color: white;
+  margin: 5px;
+  padding: 5px;
+}
+
+li.xray-course {
+  list-style-type: none;
+  list-style-image: none;
+  cursor: default;
+}
+
+.xray-date-enable-btn {
+  display: none;
+}
+
+.xray-dates-form {
+  display: block;
+}
+
+.xray-time-btn {
+  background-color: #5cb85c;
+  border-radius: 4px;
+  border: 0.25px solid #000;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 1px 1px 0.5px #ccc;
+  background-image: none;
+}
+
+.xray-time-btn-pressed {
+  background-color: #d9534f;
+  box-shadow: none;
+}
+
+.xray-course-date {
+  display: none;
+}
+
+.xray-course-date-input {
+  font-size: 14px;
+  border: 1px solid #ccc;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  border-radius: 4px;
+}
+
+.xray-course-shortname {
+  display: inline;
+  padding: 5px;
+  color: #0a78d1;
+  cursor: pointer;
+}
+
+.xray-course-input {
+  display: inline;
+  cursor: pointer;
+}
+
+.xray-date-warning {
+  display: none;
+}
+
+.xray-date-error {
+  display: none;
+}
+
+.xray-disabled-error {
+  display: inline;
+}
+
+.xray-calendar {
+  width: 16px;
+  height: 16px;
+}
+
+.xray-input-has-error {
+  border-color: #a94442;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.xray-highlight {
+  background-color: yellow;
+}
+
+#xraysearchform {
+  display: none;
+}

@@ -54,10 +54,9 @@ $plugins = array(
     'local_xray-config_toggle_categories' => array(
         'files' => array(
             'validate/loader.css',
-            'config/CollapsibleLists.css',
-            'config/CollapsibleLists.js',
+            'config/xraycollapsiblelists.css',
+            'config/xraycollapsiblelists.js',
             'config/toggle_categories.js'
-
         )
     )
 );

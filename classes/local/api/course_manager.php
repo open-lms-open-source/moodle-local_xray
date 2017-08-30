@@ -35,39 +35,97 @@ abstract class course_manager {
 
     const PLUGIN = 'local_xray';
 
+    const MAXSTUDENTS = 1000;
+
     /**
      * Retrieve the available courses for usage with X-Ray
      *
      * @param string $cid Id of the category
-     * @return string[] Format $id=>$fullname
+     * @return \stdClass[] Has all course information and selection status
      * @throws \moodle_exception
      */
     public static function list_courses_as_simple_array($cid = 'all') {
-        if ($cid === 'all' || $cid === 0) {
+        return self::get_xray_courses($cid, null);
+    }
+
+    /**
+     * Validate if a course is selected for and usable with X-Ray
+     * @param int $courseid The course that needs to know if it is part of the X-Ray club
+     * @return bool true if course is part of club, false otherwise
+     */
+    public static function is_xray_course($courseid) {
+        if ((defined('PHPUNIT_TEST') && PHPUNIT_TEST) || (defined('BEHAT_SITE_RUNNING') &&  BEHAT_SITE_RUNNING)) {
+            return true;
+        }
+
+        $xraycourse = self::get_xray_courses(null, $courseid);
+        return $xraycourse['checked'];
+    }
+
+    /**
+     * Retrieves the xray courses for the specified category id or a specific course for the specified course id.
+     * @param int $categoryid
+     * @param int $courseid
+     * @return \stdClass[]|\stdClass Array of courses or single course that has all course information and selection status
+     */
+    public static function get_xray_courses($categoryid = 'all', $courseid = null) {
+        if ((is_null($categoryid) && is_null($courseid)) || $categoryid === 'all' || $categoryid === 0) {
             return array();
         }
 
-        global $DB;
+        $single = false;
+        $wherequery = 'WHERE mdc.category = :categoryid';
+        if (!is_null($courseid)) {
+            $single = true;
+            $wherequery = 'WHERE mdc.id = :courseid';
+        }
+        global $CFG, $DB;
 
-        $query = 'SELECT mdc.id, mdc.fullname, lxsc.id AS xray_id
-                    FROM {course} mdc
-               LEFT JOIN {local_xray_selectedcourse} lxsc ON (mdc.id = lxsc.cid)
-                   WHERE mdc.category = ?
-                ORDER BY mdc.fullname';
+        list($inoreqsql, $params) = $DB->get_in_or_equal(explode(',', $CFG->gradebookroles), SQL_PARAMS_NAMED, 'grbr0');
+        $params['contextcourse'] = CONTEXT_COURSE;
+        $params['categoryid'] = $categoryid;
+        $params['courseid'] = $courseid;
 
-        $courses = $DB->get_records_sql($query, array($cid));
+        $xraycoursequery = "
+            SELECT mdc.id,
+                   mdc.shortname,
+                   mdc.fullname,
+                   xsc.id AS xrayid
+
+              FROM {course} mdc
+         LEFT JOIN {local_xray_selectedcourse} xsc ON (mdc.id = xsc.cid)
+
+             $wherequery
+
+          GROUP BY mdc.id
+          ORDER BY mdc.id;
+        ";
+
+        $xraycourses = $DB->get_records_sql($xraycoursequery, $params);
+
+        $wsapires = wsapi::validcourses();
 
         $res = array();
-        foreach ($courses as $course) {
-            $res[] = array(
-                'id' => $course->id,
-                'name' => $course->fullname,
-                'checked' => !is_null($course->xray_id), // TODO bring from database
-                'disabled' => false // TODO bring from database.
+        foreach ($xraycourses as $xraycourse) {
+            if ((!empty($wsapires->data) && in_array($xraycourse->id, $wsapires->data)) || defined('BEHAT_SITE_RUNNING') ) {
+                $res[] = array(
+                    'id' => $xraycourse->id,
+                    'name' => $xraycourse->fullname,
+                    'shortname' => $xraycourse->shortname,
+                    'checked' => !is_null($xraycourse->xrayid)
+                );
+            }
+        }
+        if (!$single) {
+            return $res;
+        } else {
+            $emptycourse = array(
+                'id' => $courseid,
+                'checked' => false
             );
+            return empty($res) ? $emptycourse : $res[0];
         }
 
-        return $res;
     }
 
     /**
@@ -89,24 +147,38 @@ abstract class course_manager {
      * @throws \moodle_exception
      */
     public static function list_categories_as_simple_array($cid = 0) {
-        $res = array();
-
         global $DB;
 
-        $query = 'SELECT mdcat.id, mdcat.name,
+        $res = array();
+
+        $wsapires = wsapi::validcourses();
+
+        if (defined('BEHAT_SITE_RUNNING')) {
+            $query = "SELECT id from {course}";
+            $courseids = $DB->get_records_sql($query);
+            $courseidarr = [];
+            foreach ($courseids as $cids) {
+                $courseidarr[] = $cids->id;
+            }
+            $validcourseids = implode(',',$courseidarr);
+        } else {
+            $validcourseids = implode(',', $wsapires->data);
+        }
+
+        $query = "SELECT mdcat.id, mdcat.name,
 
                          COUNT(mdc.id) AS totcourses,
                          COUNT(lxc.id) AS xraycourses
 
                     FROM {course_categories} mdcat
-               LEFT JOIN {course} mdc ON mdc.category = mdcat.id
+               LEFT JOIN {course} mdc ON mdc.category = mdcat.id AND mdc.id IN ($validcourseids)
                LEFT JOIN {local_xray_selectedcourse} lxc ON mdc.id = lxc.cid
 
-                   WHERE mdcat.parent = ?
+                   WHERE mdcat.parent = :cid
                 GROUP BY mdcat.id, mdcat.name
-                ORDER BY mdcat.name';
+                ORDER BY mdcat.name";
 
-        $categories = $DB->get_records_sql($query, array($cid));
+        $categories = $DB->get_records_sql($query, array('cid' => $cid));
 
         foreach ($categories as $cat) {
             $xraycourses = $cat->xraycourses;
@@ -116,14 +188,17 @@ abstract class course_manager {
             $xraycourses += $subcatcourses->xraycourses;
             $totcourses += $subcatcourses->totcourses;
 
+            if($totcourses === 0) {
+                continue;
+            }
+
             $checkstatus = self::compute_check_status($xraycourses, $totcourses);
 
             $res[] = array(
                 'id' => $cat->id,
                 'name' => $cat->name,
                 'checked' => $checkstatus->checked,
-                'indeterminate' => $checkstatus->indeterminate,
-                'disabled' => $checkstatus->disabled
+                'indeterminate' => $checkstatus->indeterminate
             );
         }
 
@@ -136,23 +211,38 @@ abstract class course_manager {
      * @return \stdClass response with attributes: xraycourses, totcourses
      */
     private static function query_categories_selected_courses($cid = 0) {
-        $res = new \stdClass();
         global $DB;
 
-        $query = 'SELECT mdcat.id,
+        $res = new \stdClass();
+
+        $wsapires = wsapi::validcourses();
+
+        if (defined('BEHAT_SITE_RUNNING')) {
+            $query = "SELECT id from {course}";
+            $courseids = $DB->get_records_sql($query);
+            $courseidarr = [];
+            foreach ($courseids as $cids) {
+                $courseidarr[] = $cids->id;
+            }
+            $validcourseids = implode(',',$courseidarr);
+        } else {
+            $validcourseids = implode(',', $wsapires->data);
+        }
+
+        $query = "SELECT mdcat.id,
 
                          COUNT(mdc.id) AS totcourses,
                          COUNT(lxc.id) AS xraycourses
 
                     FROM {course_categories} mdcat
-               LEFT JOIN {course} mdc ON mdc.category = mdcat.id
+               LEFT JOIN {course} mdc ON mdc.category = mdcat.id AND mdc.id IN ($validcourseids)
                LEFT JOIN {local_xray_selectedcourse} lxc ON mdc.id = lxc.cid
 
-                   WHERE mdcat.parent = ?
+                   WHERE mdcat.parent = :cid
                 GROUP BY mdcat.id, mdcat.name
-                ORDER BY mdcat.name';
+                ORDER BY mdcat.name";
 
-        $categories = $DB->get_records_sql($query, array($cid));
+        $categories = $DB->get_records_sql($query, array('cid' => $cid));
 
         $res->xraycourses = 0;
         $res->totcourses = 0;
@@ -222,6 +312,10 @@ abstract class course_manager {
 
         $res = array();
 
+        if (defined('BEHAT_SITE_RUNNING')) {
+            return $res;
+        }
+
         if ($xraycourses = wsapi::get_analysis_filter()) {
             $res = $xraycourses->filtervalue;
         } else {
@@ -250,11 +344,22 @@ abstract class course_manager {
     }
 
     /**
-     * Saves selected courses
-     * @param array $cids
+     * Processes a UI course record for X-Ray selection persistence.
+     * @param string $courseid Course that comes from the UI
+     * @return \stdClass Processed course for persistence.
      */
-    public static function save_selected_courses($cids = null) {
-        if (is_null($cids)) {
+    private static function process_ui_record($courseid) {
+        $res = new \stdClass();
+        $res->cid = $courseid;
+        return $res;
+    }
+
+    /**
+     * Saves selected courses
+     * @param array $courseids
+     */
+    public static function save_selected_courses($courseids = null) {
+        if (is_null($courseids)) {
             return;
         }
 
@@ -267,20 +372,14 @@ abstract class course_manager {
             $DB->delete_records($selcourtable);
         }
 
-        // Create array of new records.
-        $cidobjects = array();
-        $uniquecids = array_unique($cids);
-        foreach ($uniquecids as $cid) {
-            $cidobject = new \stdClass();
-            $cidobject->cid = $cid;
-            $cidobjects[] = $cidobject;
-        }
-
         // Save all records.
-        $DB->insert_records($selcourtable, $cidobjects);
+        $records = array_map(array(__CLASS__, 'process_ui_record'), $courseids);
+        $DB->insert_records($selcourtable, $records);
 
         // Save courses to X-Ray as well.
-        self::save_courses_to_xray();
+        if (!defined('BEHAT_SITE_RUNNING')) {
+            self::save_courses_to_xray();
+        }
     }
 
     /**
@@ -305,20 +404,48 @@ abstract class course_manager {
     }
 
     /**
-     * Saves the enabled course list to the X-Ray server
-     * @return boolean Success status
+     * Retrieve the selected courses for usage with X-Ray
+     *
+     * @return \stdClass[] courses
+     * @throws \moodle_exception
+     */
+    private static function list_selected_courses() {
+        global $DB;
+        $selcourtable = 'local_xray_selectedcourse';
+        $courses = $DB->get_records($selcourtable);
+        return $courses;
+    }
+
+    /**
+     * Saves the enabled course list and dates to the X-Ray server
      * @throws \moodle_exception
      */
     private static function save_courses_to_xray() {
         if (!defined('XRAY_OMIT_CACHE')) {
             define('XRAY_OMIT_CACHE', true);
         }
-        $cids = self::list_selected_course_ids();
+        self::save_analysis_filter();
+    }
 
+    /**
+     * Saves the enabled course list to the X-Ray server
+     * @throws \moodle_exception
+     */
+    private static function save_analysis_filter() {
+        $cids = self::list_selected_course_ids();
         $wsapires = wsapi::save_analysis_filter($cids);
+        self::process_wsapi_save_response($wsapires);
+    }
+
+    /**
+     * Processes a response form the server which should result in {ok: true}
+     * @param $wsapires
+     * @throws \moodle_exception
+     */
+    private static function process_wsapi_save_response($wsapires) {
         if ($wsapires !== false) {
             if (!empty($wsapires->ok)) {
-                return true;
+                return;
             } else {
                 $error = get_string('error_xray_unknown', self::PLUGIN);
                 if (isset($wsapires->error)) {

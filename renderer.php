@@ -613,7 +613,7 @@ class local_xray_renderer extends plugin_renderer_base {
 
         require_once($CFG->dirroot.'/local/xray/locallib.php');
 
-        if (!course_manager::is_course_selected($COURSE->id)) {
+        if (!course_manager::is_xray_course($COURSE->id)) {
             return '';
         }
 

@@ -20,9 +20,15 @@ use \local_xray\local\api\course_manager;
 
 /**
  * Class local_xray_course_manager_testcase
+ * Test Course Manager.
+ * @author    German Vitale
+ * @author    David Castro
  * @group local_xray
+ * @group local_xray_course_validation
+ * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_xray_course_manager_testcase extends local_xray_base_testcase {
+class local_xray_course_manager_testcase extends \advanced_testcase {
 
     /**
      * Number of courses to use in tests
@@ -33,8 +39,7 @@ class local_xray_course_manager_testcase extends local_xray_base_testcase {
      * @return void
      */
     public function test_compute_check_status_disabled() {
-        $res = course_manager::compute_check_status(0, 0);
-        $this->assertTrue($res->disabled);
+        $res = course_manager::compute_check_status(0, 0, 0);
         $this->assertFalse($res->checked);
         $this->assertFalse($res->indeterminate);
     }
@@ -43,8 +48,7 @@ class local_xray_course_manager_testcase extends local_xray_base_testcase {
      * @return void
      */
     public function test_compute_check_status_unchecked() {
-        $res = course_manager::compute_check_status(0, self::NUM_COURSES);
-        $this->assertFalse($res->disabled);
+        $res = course_manager::compute_check_status(0, self::NUM_COURSES, 0);
         $this->assertFalse($res->checked);
         $this->assertFalse($res->indeterminate);
     }
@@ -53,8 +57,7 @@ class local_xray_course_manager_testcase extends local_xray_base_testcase {
      * @return void
      */
     public function test_compute_check_status_checked() {
-        $res = course_manager::compute_check_status(self::NUM_COURSES, self::NUM_COURSES);
-        $this->assertFalse($res->disabled);
+        $res = course_manager::compute_check_status(self::NUM_COURSES, self::NUM_COURSES, 0);
         $this->assertTrue($res->checked);
         $this->assertFalse($res->indeterminate);
     }
@@ -63,10 +66,20 @@ class local_xray_course_manager_testcase extends local_xray_base_testcase {
      * @return void
      */
     public function test_compute_check_status_checked_indeterminate() {
-        $res = course_manager::compute_check_status(self::NUM_COURSES / 2, self::NUM_COURSES);
-        $this->assertFalse($res->disabled);
+        $res = course_manager::compute_check_status(self::NUM_COURSES/2, self::NUM_COURSES, 0);
         $this->assertTrue($res->checked);
         $this->assertTrue($res->indeterminate);
     }
 
+    /**
+     * The course is enabled for X-ray.
+     *
+     * @return void
+     */
+    public function test_course_enabled() {
+        $this->resetAfterTest();
+        $course = $this->getDataGenerator()->create_course(array('visible' => 1));
+        $result = course_manager::is_xray_course($course);
+        $this->assertTrue($result);
+    }
 }

@@ -353,7 +353,8 @@ class xrayws {
         );
         $fullopts = $options + $useopts;
         $curlopts = $this->getopts($fullopts);
-        if (!defined('XRAY_OMIT_CACHE') && $ret = $this->cache->get($url)) {
+        $xrayomitcache = defined('XRAY_OMIT_CACHE') ? XRAY_OMIT_CACHE : false;
+        if (!$xrayomitcache && $ret = $this->cache->get($url)) {
             $this->rawresponse = $ret;
             return true;
         }

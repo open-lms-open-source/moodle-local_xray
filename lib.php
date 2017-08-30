@@ -41,7 +41,7 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     global $CFG;
     static $reports = null;
     // Course selection check.
-    if (!\local_xray\local\api\course_manager::is_course_selected($page->course->id)) {
+    if (!\local_xray\local\api\course_manager::is_xray_course($page->course->id)) {
         return $reports;
     }
 

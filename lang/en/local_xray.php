@@ -647,8 +647,15 @@ $string['error_xray_unknown'] = 'Unknown X-Ray response, please reload the page.
 // Courses.
 $string['xraycourses'] = 'X-Ray Courses';
 $string['xraycourses_instructions'] = 'Select from this list the Categories and Courses that you want to use '.
-    'with X-Ray Learning Analytics. Select a Category, if you want all of the associated courses to use X-Ray. '.
-    'Or expand a Category and select individual courses.';
+    'with X-Ray Learning Analytics. Select the box next to the category name to include all validated courses in the category, '.
+    'or select the arrow sign to expand the category for individual course selection. Courses will not appear for selection if they:
+    <ul>
+        <li>Have more than 1000 enrolled students.</li>
+        <li>Are hidden.</li>
+        <li>Use Single Activity course format.</li>
+        <li>Have had no activity in the past four months.</li>
+        <li>Have no enrolled students.</li>
+    </ul>';
 $string['xray_check_global_settings'] = 'Couldn\'t connect to X-Ray Learning Analytics Server. {$a}';
 $string['xray_check_global_settings_link'] = 'Please validate that X-Ray Learning Analytics Server is available '.
     'before selecting the courses.';
@@ -658,6 +665,7 @@ $string['warn_courses_do_not_match'] = "The selected courses on the X-Ray server
     " You will overwrite X-Ray server analysis filter if you save your selection.";
 $string['warn_courses_not_persisted_in_xrf'] = 'The selected courses weren\'t saved in the X-Ray server due to '.
     'system configuration.';
+$string['xray_valid_course_error'] = 'There was an error retrieving valid courses';
 
 // Course related messages.
 $string['warn_course_disabled'] = 'This course doesn\'t use X-Ray Learning Analytics. If you think it should, '.
@@ -670,6 +678,8 @@ $string['course_many_students'] = '<li>The course has too many students. There c
 $string['course_hidden'] = '<li>The course is hidden. Courses must be visible to use X-Ray.</li>';
 $string['course_single_activity_format'] = "<li>The course is in Single Activity format. Courses can't be in ".
     "Single Activity format to use X-Ray.</li>";
+$string['expand_all'] = 'Expand all';
+$string['collapse_all'] = 'Collapse all';
 
 // X-Ray Reports.
 $string['xraydashboardurl'] = 'X-Ray Dashboard URL';
