@@ -50,7 +50,7 @@ Feature: The headline data should be present in the course page for manager, edi
     Given I log in as "teacher1"
     # Test the Risk report link in Headline.
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     And I click on "#xray-headline-risk p.xray-headline-number" "css_element"
     And I wait until the page is ready
@@ -61,7 +61,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And ".sorting:nth-child(3).sorting_desc" "css_element" should exist
     # Test the Activity report link in Headline.
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     And I click on "#xray-headline-activity p.xray-headline-number" "css_element"
     And I wait until the page is ready
@@ -72,7 +72,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And ".sorting:nth-child(4).sorting_desc" "css_element" should exist
     # Test the Discussion report link in Headline.
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     And I click on "#xray-headline-discussion p.xray-headline-number" "css_element"
     And I wait until the page is ready
@@ -83,7 +83,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And ".sorting:nth-child(5).sorting_desc" "css_element" should exist
     # Test the Gradebook report link in Headline.
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     And I click on "#xray-headline-gradebook p.xray-headline-number" "css_element"
     And I wait until the page is ready
@@ -93,7 +93,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And ".sorting:nth-child(3).sorting_desc" "css_element" should exist
     # Test Headline in all themes, formats and templates.
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     And I test Headline view "xraycourse1"
       | theme      | formats                                                  | type     |
@@ -113,7 +113,7 @@ Feature: The headline data should be present in the course page for manager, edi
   Scenario: Headline is not displayed for students.
     Given I log in as "student1"
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
     And "img.x-ray-icon-title" "css_element" should not exist
@@ -126,7 +126,7 @@ Feature: The headline data should be present in the course page for manager, edi
       | xrayclientid | error | local_xray |
     And I log in as "admin"
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     Then I should see "Can’t connect to X-Ray Learning Analytics, please try reloading the page. If you still can’t connect, contact your system administrator."
     And "img.x-ray-icon-title" "css_element" should exist

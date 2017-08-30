@@ -50,7 +50,7 @@ Feature: The tree menu xray will visible or not in each place.
     Given I set course format "<format>" in course "C1" for xray
     And I log in as "user2teacher"
     And I am on site homepage
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I navigate to "More..." in current page administration
     Then I <vis> see "X-Ray Learning Analytic" in the "region-main" "region"
   Examples:
@@ -62,5 +62,5 @@ Feature: The tree menu xray will visible or not in each place.
   Scenario: Menu xray will not visible for students in courses.
     Given I log in as "user1student"
     And I am on site homepage
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     Then "X-Ray Learning Analytics" "text" should not exist in current page administration

@@ -55,7 +55,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     # I create posts for forums.
     And I log in as "admin"
     And I am on site homepage
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I add a new discussion to "Forum 1 test" forum with:
       | Subject | Discussion of Forum 1 |
       | Message | Generic Message       |
@@ -67,11 +67,11 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     # Check if link is visible/not visible for x user.
     And I log in as "<user>"
     And I am on site homepage
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I follow "Forum 1 test"
     And I expand "Course administration" node
     Then I <vis> see "X-Ray Learning Analytics"
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I follow "HSUForum 1 test"
     And I expand "Course administration" node
     Then I <vis> see "X-Ray Learning Analytics"
@@ -90,11 +90,11 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     # Check if link is visible/not visible for x user.
     And I log in as "<user>"
     And I am on site homepage
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I follow "Forum 1 test"
     And I expand "Course administration" node
     Then I <vis> see "X-Ray Learning Analytics"
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I follow "HSUForum 1 test"
     And I expand "Course administration" node
     Then I <vis> see "X-Ray Learning Analytics"
@@ -110,7 +110,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | quiz       | Quiz1  | Quiz 1 description | C1     | quiz1    |
     And I log in as "<user>"
     And I am on site homepage
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I follow "Quiz1"
     Then "X-Ray Learning Analytics" "link" should not exist in current page administration
     Examples:
@@ -127,7 +127,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I log in as "admin"
     And I wait until the page is ready
     And I am on site homepage
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I wait until the page is ready
     And I follow "Forum1"
     And I wait until the page is ready
@@ -140,7 +140,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
     And I add a new discussion to "Forum1" forum with:
       | Subject | Discussion of Forum1 |
       | Message | Generic Message       |
-    And I follow "Course1"
+    And I am on "Course1" course homepage
     And I follow "Forum1"
     And I expand "Course administration" node
     And I expand "X-Ray Learning Analytics" node

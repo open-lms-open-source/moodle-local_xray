@@ -51,7 +51,7 @@ Feature: Global and course level subscription pages.
   Scenario: Teacher sees global and course level subscription.
     Given I log in as "teacher1"
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     And ".xray_subscription_link" "css_element" should exist
     And I follow "Subscribe to email report"
@@ -92,7 +92,7 @@ Feature: Global and course level subscription pages.
     Given I log in as "student1"
     # Course level subscription.
     And I am on site homepage
-    And I follow "Xray Course 01"
+    And I am on "Xray Course 01" course homepage
     And ".xray_subscription_link" "css_element" should not exist
     And I should not see "Subscribe to email report"
     And I should not see "Unsubscribe from email report"
