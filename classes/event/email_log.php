@@ -25,11 +25,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace local_xray\event;
+
 use core\event\base;
 
 defined('MOODLE_INTERNAL') || die();
 
-class email_log extends \core\event\base {
+class email_log extends base {
 
     /**
      * Init method.
@@ -57,7 +58,8 @@ class email_log extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        $messagedesc = get_string('email_log_desc', 'local_xray', array('courseid' => $this->courseid, 'to' => $this->other['to']));
+        $courseid = (isset($this->other['courseid']) ? $this->other['courseid'] : 'unknown');
+        $messagedesc = get_string('email_log_desc', 'local_xray', array('courseid' => $courseid, 'to' => $this->other['to']));
         if (empty($this->other['pdf'])) {
             $messagedesc .= ' '.get_string('pdfnotattached', 'local_xray');
         }
@@ -70,6 +72,11 @@ class email_log extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/course/view.php', array('id' => $this->courseid));
+        if (isset($this->other['courseid'])) {
+            return new \moodle_url('/course/view.php', array('id' => $this->other['courseid']));
+        } else {
+            return new \moodle_url('/');
+        }
+
     }
 }

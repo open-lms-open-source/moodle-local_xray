@@ -205,6 +205,7 @@ class send_emails extends scheduled_task {
                             if ($email) {
                                 $data = array(
                                     'other' => array(
+                                        'courseid' => $courseid,
                                         'to' => $userid,
                                         'pdf' => $pdfstatus
                                     )
