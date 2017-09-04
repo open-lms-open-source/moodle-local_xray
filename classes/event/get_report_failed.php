@@ -101,4 +101,11 @@ class get_report_failed extends \core\event\base {
             'context' => $context,
         ]);
     }
+
+    /**
+     * @return array
+     */
+    public static function get_other_mapping() {
+        return ['controller' => base::NOT_MAPPED];
+    }
 }
