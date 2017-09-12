@@ -210,8 +210,8 @@ class dashboard {
                             $countrecommendations = count($recommendations);
                         }
                         // Report date.
-                        if (isset($response->reportdate)) {
-                            $reportdate = $response->reportdate;
+                        if (isset($response->reportDate[0])) {
+                            $reportdate = $response->reportDate[0];
                         }
                     }
 
