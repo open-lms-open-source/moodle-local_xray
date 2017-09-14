@@ -55,14 +55,13 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     $reports     = [];
     $extraparams = [];
 
-    $reportlist  = [
-        'courseadmin' => [
-            'risk'             => 'local/xray:risk_view',
-            'activityreport'   => 'local/xray:activityreport_view',
-            'gradebookreport'  => 'local/xray:gradebookreport_view',
-            'discussionreport' => 'local/xray:discussionreport_view'
-        ]
-    ];
+    if (!local_xray_risk_disabled($page->course->id)) {
+        $reportlist['courseadmin']['risk'] = 'local/xray:risk_view';
+    }
+    $reportlist['courseadmin']['activityreport'] = 'local/xray:activityreport_view';
+    $reportlist['courseadmin']['gradebookreport'] = 'local/xray:gradebookreport_view';
+    $reportlist['courseadmin']['discussionreport'] = 'local/xray:discussionreport_view';
+
 
     if (in_array($page->pagetype, ['mod-forum-view', 'mod-hsuforum-view',
         'mod-forum-discuss', 'mod-hsuforum-discuss'])) {

@@ -356,7 +356,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @param local_xray\dashboard\dashboard_data $data
      * @return string
      * */
-    private function dashboard_xray_output($data) {
+    private function dashboard_xray_output($data, $riskdisabled = false) {
         global $CFG, $COURSE;
 
         require_once($CFG->dirroot.'/local/xray/locallib.php');
@@ -365,37 +365,40 @@ class local_xray_renderer extends plugin_renderer_base {
         $output = "";
 
         // Number for risk.
-        $a = new stdClass();
-        $a->first = $data->usersinrisk;
-        $a->second = $data->risktotal;
-        $risknumber = get_string('headline_number_of', $plugin, $a);
+        $column1 = '';
+        if (!$riskdisabled) {
+            $a = new stdClass();
+            $a->first = $data->usersinrisk;
+            $a->second = $data->risktotal;
+            $risknumber = get_string('headline_number_of', $plugin, $a);
 
-        // Number of students at risk in the last 7 days.
-        $a = new stdClass();
-        $a->previous = $data->averagerisksevendaybefore;
-        $a->total = $data->maximumtotalrisksevendaybefore;
-        $textlink = get_string("averageofweek_integer", $plugin, $a);
+            // Number of students at risk in the last 7 days.
+            $a = new stdClass();
+            $a->previous = $data->averagerisksevendaybefore;
+            $a->total = $data->maximumtotalrisksevendaybefore;
+            $textlink = get_string("averageofweek_integer", $plugin, $a);
 
-        // To risk metrics.
-        if (local_xray_reports()) {
-            $url = new moodle_url("/local/xray/view.php",
-                array("controller" => "xrayreports", "name" => "risk", "courseid" => $COURSE->id, "action" => "view"));
-        } else {
-            $url = new moodle_url("/local/xray/view.php",
-                array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
+            // To risk metrics.
+            if (local_xray_reports()) {
+                $url = new moodle_url("/local/xray/view.php",
+                    array("controller" => "xrayreports", "name" => "risk", "courseid" => $COURSE->id, "action" => "view"));
+            } else {
+                $url = new moodle_url("/local/xray/view.php",
+                    array("controller" => "risk", "courseid" => $COURSE->id, "header" => 1), "riskMeasures");
+            }
+            // Calculate colour status.
+            $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($data->usersinrisk,
+                $data->risktotal,
+                $data->averagerisksevendaybefore,
+                $data->maximumtotalrisksevendaybefore,
+                true); // This arrow will be inverse to all.
+
+            $column1 = $this->headline_column($risknumber,
+                get_string('headline_studentatrisk', $plugin),
+                $url,
+                $textlink,
+                $statusclass);
         }
-        // Calculate colour status.
-        $statusclass = local_xray\dashboard\dashboard_data::get_status_with_average($data->usersinrisk,
-            $data->risktotal,
-            $data->averagerisksevendaybefore,
-            $data->maximumtotalrisksevendaybefore,
-            true); // This arrow will be inverse to all.
-
-        $column1 = $this->headline_column($risknumber,
-            get_string('headline_studentatrisk', $plugin),
-            $url,
-            $textlink,
-            $statusclass);
 
         // Number for activity.
         $a = new stdClass();
@@ -474,7 +477,9 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Menu list.
         $list = html_writer::start_tag("ul", array("class" => "xray-headline"));
-        $list .= html_writer::tag("li", $column1, array("id" => "xray-headline-risk", "tabindex" => 0));
+        if (!$riskdisabled) {
+            $list .= html_writer::tag("li", $column1, array("id" => "xray-headline-risk", "tabindex" => 0));
+        }
         $list .= html_writer::tag("li", $column2, array("id" => "xray-headline-activity", "tabindex" => 0));
         $list .= html_writer::tag("li", $column3, array("id" => "xray-headline-gradebook", "tabindex" => 0));
         $list .= html_writer::tag("li", $column4, array("id" => "xray-headline-discussion", "tabindex" => 0));
@@ -611,6 +616,8 @@ class local_xray_renderer extends plugin_renderer_base {
             return '';
         }
 
+        $riskdisabled = (isset($reports["courseadmin"]["risk"]) ? false : true);
+
         // Load Jquery.
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('ui');
@@ -661,7 +668,8 @@ class local_xray_renderer extends plugin_renderer_base {
                     $title = html_writer::tag('div', $divicon.$title.(local_xray_reports() ? $iconheadlinetitle : ''),
                         array('id' => 'xray-title'));
                 }
-                $amenu = html_writer::alist($menuitems, array('class' => 'xray-reports-links'));
+                $reportslinks = (local_xray_risk_disabled($COURSE->id) ? 'xray-reports-links-norisk' : 'xray-reports-links');
+                $amenu = html_writer::alist($menuitems, array('class' => $reportslinks));
                 $navmenu = html_writer::tag("nav", $amenu, array("id" => "xray-nav-reports"));
 
                 // Check if show headerline in course frontpage.
@@ -677,7 +685,7 @@ class local_xray_renderer extends plugin_renderer_base {
                     $dashboarddata = local_xray\dashboard\dashboard::get($COURSE->id, $USER->id, $xrayreports);
 
                     if ($dashboarddata instanceof local_xray\dashboard\dashboard_data) {
-                        $headerdata .= $this->dashboard_xray_output($dashboarddata);
+                        $headerdata .= $this->dashboard_xray_output($dashboarddata, $riskdisabled);
                     } else {
                         $headerdata .= $OUTPUT->notification(get_string('error_xray', 'local_xray'));
                     }

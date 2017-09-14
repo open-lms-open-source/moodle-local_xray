@@ -690,3 +690,16 @@ function local_xray_name_conversion($reportname, $inverse = false) {
     }
     return str_replace('report', '', $reportname);
 }
+
+/**
+ * Check if the risk Report is disabled in  the course.
+ *
+ * @return bool.
+ */
+function local_xray_risk_disabled($courseid) {
+    if (defined('BEHAT_SITE_RUNNING')) {
+        return true;
+    }
+    global $DB;
+    return $DB->record_exists('local_xray_riskdisabled', array('courseid' => $courseid));
+}
