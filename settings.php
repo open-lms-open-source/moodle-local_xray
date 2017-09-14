@@ -60,6 +60,7 @@ if ($hassiteconfig) {
 
 // This has to be outside of global if so that we can permit non admin users to see this.
 if (has_capability('local/xray:systemreports_view', context_system::instance())) {
+    $plugin = 'local_xray';
     $systemreportsurl = get_config($plugin, 'systemreportsurl');
     $showsystemreports = get_config($plugin, 'displaysystemreports');
     if (!empty($systemreportsurl) && $showsystemreports) {
@@ -68,7 +69,7 @@ if (has_capability('local/xray:systemreports_view', context_system::instance()))
             'reports',
             new admin_category(
                 'local_xray_report',
-                new lang_string('pluginname', 'local_xray')
+                new lang_string('pluginname', $plugin)
             )
         );
         // Add System Reports.
@@ -79,7 +80,7 @@ if (has_capability('local/xray:systemreports_view', context_system::instance()))
         $ADMIN->add('local_xray_report',
             new admin_externalpage(
                 'systemreports',
-                new lang_string('systemreports', 'local_xray'),
+                new lang_string('systemreports', $plugin),
                 $urlsystemreports->out(false),
                 'local/xray:systemreports_view'
             )
