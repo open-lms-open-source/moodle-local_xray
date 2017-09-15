@@ -140,7 +140,7 @@
 
 /**************** Course Headline data  *********************************/
 
-.xray-headline {
+.xray-headline, .xray-headline-norisk {
     display: inline-block;
     width:100%;
     margin:0;
@@ -150,6 +150,13 @@
     display: block;
     float:left;
     width: 24%;
+    padding:0 0.5%;
+    line-height: normal;
+}
+.xray-headline-norisk li {
+    display: block;
+    float:left;
+    width: 32%;
     padding:0 0.5%;
     line-height: normal;
 }
@@ -263,7 +270,7 @@ a.xray-headline-link:hover {
 .xray-reports-links-norisk li {
     display: block;
     float:left;
-    width: 33%;
+    width: 32%;
     padding: 0 0.5%;
     margin: 0;
 }

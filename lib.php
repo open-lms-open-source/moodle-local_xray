@@ -55,6 +55,7 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     $reports     = [];
     $extraparams = [];
 
+    require_once($CFG->dirroot.'/local/xray/locallib.php');
     if (!local_xray_risk_disabled($page->course->id)) {
         $reportlist['courseadmin']['risk'] = 'local/xray:risk_view';
     }
@@ -62,10 +63,9 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     $reportlist['courseadmin']['gradebookreport'] = 'local/xray:gradebookreport_view';
     $reportlist['courseadmin']['discussionreport'] = 'local/xray:discussionreport_view';
 
-
     if (in_array($page->pagetype, ['mod-forum-view', 'mod-hsuforum-view',
         'mod-forum-discuss', 'mod-hsuforum-discuss'])) {
-        require_once($CFG->dirroot.'/local/xray/locallib.php');
+
         if (local_xray_reports()) {
             $extraparams['forumid'] = $page->cm->instance;
         } else {

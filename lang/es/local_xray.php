@@ -197,6 +197,10 @@ $string['syncfailedexplanation'] = 'Fallo al sincronizar datos con X-Ray Learnin
 $string['synclog'] = 'Mensaje de información de sincronización de datos con X-Ray Learning Analytics';
 $string['synclogexplanation'] = 'Entrada de registro regular para sincronizar datos.';
 $string['dataprune'] = 'Limpieza de datos obsoletos';
+$string['risksync'] = 'Sincronización del reporte de Riesgo de X-Ray';
+$string['risksynclog'] = 'Registro de la sincronización del reporte de Riesgo de X-Ray';
+$string['risksynclogentry'] = 'Mensaje de información de la sincronización del reporte de Riesgo de X-Ray';
+$string['risksyncfailed'] = 'Fallo en la sincronización del reporte de Riesgo de X-Ray';
 
 // Course Header.
 $string['atrisk'] = 'En riesgo';

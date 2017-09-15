@@ -476,7 +476,8 @@ class local_xray_renderer extends plugin_renderer_base {
             $statusclass);
 
         // Menu list.
-        $list = html_writer::start_tag("ul", array("class" => "xray-headline"));
+        $xrayheadline = ($riskdisabled ? 'xray-headline-norisk' : 'xray-headline');
+        $list = html_writer::start_tag("ul", array("class" => $xrayheadline));
         if (!$riskdisabled) {
             $list .= html_writer::tag("li", $column1, array("id" => "xray-headline-risk", "tabindex" => 0));
         }
@@ -668,7 +669,7 @@ class local_xray_renderer extends plugin_renderer_base {
                     $title = html_writer::tag('div', $divicon.$title.(local_xray_reports() ? $iconheadlinetitle : ''),
                         array('id' => 'xray-title'));
                 }
-                $reportslinks = (local_xray_risk_disabled($COURSE->id) ? 'xray-reports-links-norisk' : 'xray-reports-links');
+                $reportslinks = ($riskdisabled ? 'xray-reports-links-norisk' : 'xray-reports-links');
                 $amenu = html_writer::alist($menuitems, array('class' => $reportslinks));
                 $navmenu = html_writer::tag("nav", $amenu, array("id" => "xray-nav-reports"));
 

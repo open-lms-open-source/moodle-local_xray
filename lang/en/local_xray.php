@@ -208,6 +208,10 @@ $string['dataprune'] = 'Data pruning';
 $string['reportviewed'] = 'Report viewed';
 $string['sendemails'] = 'X-Ray E-Mails';
 $string['emaillog'] = 'X-Ray E-Mail Log';
+$string['risksync'] = 'X-Ray Risk synchronization';
+$string['risksynclog'] = 'X-Ray Risk synchronization log';
+$string['risksynclogentry'] = 'Regular log entry for X-Ray Risk synchronization';
+$string['risksyncfailed'] = 'X-Ray Risk synchronization failed';
 
 // Course Header.
 $string['atrisk'] = 'At risk';
