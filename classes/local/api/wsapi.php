@@ -650,4 +650,20 @@ abstract class wsapi {
         }
         return $result;
     }
+
+    /**
+     * Get the risk configuration on X-Ray side.
+     *
+     * @return boolean|array False if there was an issue, array with risk configuration.
+     */
+    public static function get_risk_configuration() {
+        $baseurl = get_config(self::PLUGIN, 'xrayurl');
+        $domain = get_config(self::PLUGIN, 'xrayclientid');
+        if (empty($baseurl) || empty($domain)) {
+            return false;
+        }
+        $url = sprintf('%s/%s/editconf', $baseurl, $domain);
+
+        return self::generic_getcall($url);
+    }
 }

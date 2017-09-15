@@ -696,10 +696,13 @@ function local_xray_name_conversion($reportname, $inverse = false) {
  *
  * @return bool.
  */
-function local_xray_risk_disabled($courseid) {
+function local_xray_risk_disabled() {
     if (defined('BEHAT_SITE_RUNNING')) {
+        return false;
+    }
+    $riskdisabled = get_config('local_xray', 'riskdisabled');
+    if (($riskdisabled === false) || !$riskdisabled) {
         return true;
     }
-    global $DB;
-    return $DB->record_exists('local_xray_riskdisabled', array('courseid' => $courseid));
+    return false;
 }

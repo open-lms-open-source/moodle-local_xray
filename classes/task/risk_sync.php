@@ -58,7 +58,14 @@ class risk_sync extends scheduled_task {
         global $DB;
 
         try {
-            // TODO get risk status from X-Ray side.
+            $xrayriskdisabled = course_manager::is_risk_disabled();
+            $riskdisabled = local_xray_risk_disabled();
+
+            if ($xrayriskdisabled && !$riskdisabled) {
+                set_config('riskdisabled', 1, 'local_xray');
+            } else if (!$xrayriskdisabled && $riskdisabled) {
+                set_config('riskdisabled', 0, 'local_xray');
+            }
             $event = risk_sync_log::create();
             $event->trigger();
 
