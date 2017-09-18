@@ -55,9 +55,11 @@ class risk_sync extends scheduled_task {
      * Throw exceptions on errors (the job will be retried).
      */
     public function execute() {
-        global $DB;
+        global $DB, $CFG;
 
         try {
+            require_once($CFG->dirroot.'/local/xray/locallib.php');
+
             $xrayriskdisabled = course_manager::is_risk_disabled();
             $riskdisabled = local_xray_risk_disabled();
 

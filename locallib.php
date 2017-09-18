@@ -692,7 +692,7 @@ function local_xray_name_conversion($reportname, $inverse = false) {
 }
 
 /**
- * Check if the risk Report is disabled in  the course.
+ * Check if Risk Status report is disabled.
  *
  * @return bool.
  */
@@ -700,8 +700,7 @@ function local_xray_risk_disabled() {
     if (defined('BEHAT_SITE_RUNNING')) {
         return false;
     }
-    $riskdisabled = get_config('local_xray', 'riskdisabled');
-    if (($riskdisabled === false) || !$riskdisabled) {
+    if (get_config('local_xray', 'riskdisabled')) {
         return true;
     }
     return false;

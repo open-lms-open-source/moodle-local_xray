@@ -54,4 +54,13 @@ $tasks = [
         'month'     => '*',
         'disabled'  => 1
     ],
+    [
+        'classname' => 'local_xray\task\risk_sync',
+        'blocking'  => 0,
+        'minute'    => '1',
+        'hour'      => '0',
+        'day'       => '*',
+        'dayofweek' => '*',
+        'month'     => '*'
+    ],
 ];
