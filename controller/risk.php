@@ -39,6 +39,8 @@ use local_xray\local\api\course_manager;
 class local_xray_controller_risk extends local_xray_controller_reports {
 
     public function view_action() {
+        global $CFG;
+        require_once($CFG->dirroot.'/local/xray/locallib.php');
 
         $this->message_reports_disabled();
         $this->validate_course();
@@ -47,6 +49,10 @@ class local_xray_controller_risk extends local_xray_controller_reports {
         try {
             if (!course_manager::is_course_selected($this->courseid)) {
                 return $this->output->notification(get_string('warn_course_disabled', 'local_xray'), 'notifymessage');
+            }
+            // Check if the Risk Status report is disabled.
+            if (local_xray_risk_disabled()) {
+                return $this->output->notification(get_string("courseriskdisabled", $this->component), 'error');
             }
 
             $report = "risk";

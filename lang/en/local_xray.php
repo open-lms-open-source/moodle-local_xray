@@ -681,3 +681,6 @@ $string['error_xrayclientid'] = 'X-Ray Learning Analytics Client Identifier is e
 $string['error_xrayreports_gettoken'] = 'Error to get token for access to X-Ray reports.';
 $string['dashboard_button'] = 'Show/Hide dashboard';
 
+// Risk disabled.
+$string['courseriskdisabled'] = 'The Risk Status report is disabled. If you want this report enabled, '.
+    'please contact your system administrator.';

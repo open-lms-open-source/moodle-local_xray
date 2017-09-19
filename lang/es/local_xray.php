@@ -638,3 +638,7 @@ $string['noaccessoldxrayreports'] = 'Esta versión de los reportes ya no está d
 $string['error_xrayreports_nourl'] = 'La URL para obtener reportes de X-Ray no esta configurada correctamente.';
 $string['error_xrayreports_gettoken'] = 'Error al obtener token para acceder a los reportes de X-Ray.';
 $string['dashboard_button'] = 'Mostrar/Ocultar interfaz';
+
+// Risk disabled.
+$string['courseriskdisabled'] = 'El reporte de Estado de riesgo no está disponible. Por favor, contacta con el '.
+    'administrador del sitio para solicitar su habilitación.';
