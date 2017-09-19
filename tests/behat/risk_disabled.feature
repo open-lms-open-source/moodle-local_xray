@@ -56,7 +56,7 @@ Feature: The risk status report should not be present in the headline data.
   @javascript
   Scenario: Risk is not displayed in the headline
     Given the following config values are set as admin:
-      | riskdisabled | 0 | local_xray |
+      | riskdisabled | 1 | local_xray |
     And I log in as "teacher1"
     # Test the Risk report link in Headline.
     And I am on site homepage
