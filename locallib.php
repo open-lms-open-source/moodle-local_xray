@@ -697,9 +697,6 @@ function local_xray_name_conversion($reportname, $inverse = false) {
  * @return bool.
  */
 function local_xray_risk_disabled() {
-    if (defined('BEHAT_SITE_RUNNING')) {
-        return false;
-    }
     if (get_config('local_xray', 'riskdisabled')) {
         return true;
     }

@@ -328,14 +328,4 @@ class behat_local_xray extends behat_base {
             throw new ExpectationException("The username ".$username." doesn't exist", $session);
         }
     }
-
-    /**
-     * When the X-Ray Risk synchronization task runs, the caches are cleaned. So, we need to force clean caches for tests.
-     *
-     * @Given /^Xray purge caches$/
-     * @return void
-     */
-    public function xray_purge_caches() {
-        purge_all_caches();
-    }
 }
