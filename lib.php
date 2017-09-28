@@ -56,7 +56,7 @@ function local_xray_navigationlinks(moodle_page $page, context $context) {
     $extraparams = [];
 
     require_once($CFG->dirroot.'/local/xray/locallib.php');
-    if (!local_xray_risk_disabled($page->course->id)) {
+    if (!local_xray_risk_disabled()) {
         $reportlist['courseadmin']['risk'] = 'local/xray:risk_view';
     }
     $reportlist['courseadmin']['activityreport'] = 'local/xray:activityreport_view';
