@@ -690,3 +690,15 @@ function local_xray_name_conversion($reportname, $inverse = false) {
     }
     return str_replace('report', '', $reportname);
 }
+
+/**
+ * Check if Risk Status report is disabled.
+ *
+ * @return bool.
+ */
+function local_xray_risk_disabled() {
+    if (get_config('local_xray', 'riskdisabled')) {
+        return true;
+    }
+    return false;
+}

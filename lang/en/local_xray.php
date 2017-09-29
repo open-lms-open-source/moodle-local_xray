@@ -208,6 +208,10 @@ $string['dataprune'] = 'Data pruning';
 $string['reportviewed'] = 'Report viewed';
 $string['sendemails'] = 'X-Ray E-Mails';
 $string['emaillog'] = 'X-Ray E-Mail Log';
+$string['risksync'] = 'X-Ray Risk synchronization';
+$string['risksynclog'] = 'X-Ray Risk synchronization log';
+$string['risksynclogentry'] = 'Regular log entry for X-Ray Risk synchronization';
+$string['risksyncfailed'] = 'X-Ray Risk synchronization failed';
 
 // Course Header.
 $string['atrisk'] = 'At risk';
@@ -677,3 +681,6 @@ $string['error_xrayclientid'] = 'X-Ray Learning Analytics Client Identifier is e
 $string['error_xrayreports_gettoken'] = 'Error to get token for access to X-Ray reports.';
 $string['dashboard_button'] = 'Show/Hide dashboard';
 
+// Risk disabled.
+$string['courseriskdisabled'] = 'The Risk Status report is disabled. If you want this report enabled, '.
+    'please contact your system administrator.';

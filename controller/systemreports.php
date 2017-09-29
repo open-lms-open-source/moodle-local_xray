@@ -37,6 +37,10 @@ use local_xray\event\get_report_failed;
  */
 class local_xray_controller_systemreports extends local_xray_controller_reports {
 
+    // Risk Status.
+    const XRAYRISKDISABLED = 0;
+    const XRAYRISKENABLED = 1;
+
     public function view_action() {
 
         global $CFG, $PAGE, $SESSION;
@@ -71,6 +75,13 @@ class local_xray_controller_systemreports extends local_xray_controller_reports 
                     // Error to get token for shiny server.
                     print_error("error_systemreports_gettoken", $this->component);
                 }
+            }
+
+            // Check if Risk is enanled/disabled.
+            require_once($CFG->dirroot.'/local/xray/locallib.php');
+            $tokenparams["risk"] = self::XRAYRISKENABLED;
+            if (!local_xray_risk_disabled()) {
+                $tokenparams["risk"] = self::XRAYRISKDISABLED;
             }
 
             /*

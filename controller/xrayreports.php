@@ -124,6 +124,10 @@ class local_xray_controller_xrayreports extends local_xray_controller_reports {
         if (!local_xray_reports()) {
             return $OUTPUT->notification(get_string("noaccessxrayreports", $this->component), 'error');
         }
+        // Check if the Risk Status report is disabled.
+        if ($this->reportname == 'risk' && local_xray_risk_disabled()) {
+            return $OUTPUT->notification(get_string("courseriskdisabled", $this->component), 'error');
+        }
 
         $output = '';
         try {
