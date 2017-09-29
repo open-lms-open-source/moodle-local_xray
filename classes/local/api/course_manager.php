@@ -350,4 +350,29 @@ abstract class course_manager {
         return $globalsetlink;
     }
 
+    /**
+     * Check if the Risk Status report is disabled on X-Ray side.
+     * @return array
+     * @throws \moodle_exception
+     */
+    public static function is_risk_disabled() {
+        if (!defined('XRAY_OMIT_CACHE')) {
+            define('XRAY_OMIT_CACHE', true);
+        }
+        $res = false;
+        if ($xraycourses = wsapi::get_risk_configuration()) {
+            if (isset($xraycourses->currentSettings->RISK_REPORT)
+                    && $xraycourses->currentSettings->RISK_REPORT == "false") {
+                $res = true;
+            }
+        } else {
+            throw new \moodle_exception(
+                'xray_check_global_settings',
+                self::PLUGIN,
+                '',
+                self::generate_xray_settings_link()
+            );
+        }
+        return $res;
+    }
 }
