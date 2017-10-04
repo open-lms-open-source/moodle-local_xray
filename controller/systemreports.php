@@ -80,7 +80,7 @@ class local_xray_controller_systemreports extends local_xray_controller_reports 
             // Check if Risk is enanled/disabled.
             require_once($CFG->dirroot.'/local/xray/locallib.php');
             $tokenparams["risk"] = self::XRAYRISKENABLED;
-            if (!local_xray_risk_disabled()) {
+            if (local_xray_risk_disabled()) {
                 $tokenparams["risk"] = self::XRAYRISKDISABLED;
             }
 

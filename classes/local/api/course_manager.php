@@ -375,4 +375,22 @@ abstract class course_manager {
         }
         return $res;
     }
+
+    /*
+    * Check if the course is an X-Ray course and delete it.
+    * @param int $courseid
+    */
+    public static function check_xray_course_to_delete($courseid) {
+        global $DB;
+
+        // If the course is in local_xray_selectedcourse table, it should be deleted and saved in X-Ray side.
+        if ($DB->record_exists('local_xray_selectedcourse', array('cid' => $courseid))) {
+            // Delete the course in local_xray_selectedcourse table.
+            $DB->delete_records_select('local_xray_selectedcourse', "cid = :courseid", array('courseid' => $courseid));
+            // Update X-Ray side.
+            if (!PHPUNIT_TEST) {
+                self::save_courses_to_xray();
+            }
+        }
+    }
 }
