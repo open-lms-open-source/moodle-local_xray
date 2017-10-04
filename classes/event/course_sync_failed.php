@@ -15,13 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Class email_failed.
+ * Class course_sync_failed.
  *
- * This event is fired when the email is failed.
+ * This event is fired when the X-Ray course synchronization fails.
  *
  * @package   local_xray
  * @author    German Vitale
- * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace local_xray\event;
@@ -29,7 +29,7 @@ use core\event\base;
 
 defined('MOODLE_INTERNAL') || die();
 
-class email_failed extends \core\event\base {
+class course_sync_failed extends base {
 
     /**
      * Init method.
@@ -48,7 +48,7 @@ class email_failed extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('emailfailed', 'local_xray');
+        return get_string('coursesyncfailed', 'local_xray');
     }
 
     /**

@@ -15,13 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Class email_failed.
+ * Class course_sync_log.
  *
- * This event is fired when the email is failed.
+ * This event is fired when the X-Ray course synchronization happens.
  *
  * @package   local_xray
  * @author    German Vitale
- * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Blackboard Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace local_xray\event;
@@ -29,7 +29,7 @@ use core\event\base;
 
 defined('MOODLE_INTERNAL') || die();
 
-class email_failed extends \core\event\base {
+class course_sync_log extends base {
 
     /**
      * Init method.
@@ -48,7 +48,7 @@ class email_failed extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('emailfailed', 'local_xray');
+        return get_string('coursesynclog', 'local_xray');
     }
 
     /**
@@ -57,30 +57,6 @@ class email_failed extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return get_string('unexperror', 'local_xray').$this->other['message'];
-    }
-
-    /**
-     * Returns relevant URL.
-     *
-     * @return \moodle_url
-     */
-    public function get_url() {
-        return new \moodle_url('/course/view.php', array('id' => $this->courseid));
-    }
-
-    /**
-     * @param \Exception $exception
-     * @return self
-     * @throws \coding_exception
-     */
-    public static function create_from_exception(\Exception $exception) {
-        return self::create([
-            'other' => [
-                'message' => $exception->getMessage(),
-                'code'    => $exception->getCode(),
-                'trace'   => $exception->getTraceAsString(),
-            ]
-        ]);
+        return get_string('coursesynclogentry', 'local_xray');
     }
 }

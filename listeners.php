@@ -25,6 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+use local_xray\local\api\course_manager;
+
 /**
  * Listener for course delete event
  *
@@ -37,6 +39,8 @@ function local_xray_course_deleted(\core\event\course_deleted $event) {
         'timedeleted' => $event->timecreated
     ];
     $DB->insert_record_raw('local_xray_course', $data, false);
+    // If the course is in local_xray_selectedcourse table, it should be deleted and saved in X-Ray side.
+    \local_xray\local\api\course_manager::check_xray_course_to_delete($event->courseid);
 }
 
 /**

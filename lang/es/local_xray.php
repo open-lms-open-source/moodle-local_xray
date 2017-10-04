@@ -201,6 +201,13 @@ $string['risksync'] = 'Sincronización del reporte de Riesgo de X-Ray';
 $string['risksynclog'] = 'Registro de la sincronización del reporte de Riesgo de X-Ray';
 $string['risksynclogentry'] = 'Mensaje de información de la sincronización del reporte de Riesgo de X-Ray';
 $string['risksyncfailed'] = 'Fallo en la sincronización del reporte de Riesgo de X-Ray';
+$string['sendemails'] = 'Correos de X-Ray';
+$string['emaillog'] = 'Registro de los correos de X-Ray';
+$string['emailfailed'] = 'Fallo en los correos de X-Ray';
+$string['coursesync'] = 'Sincronización de los cursos de X-Ray';
+$string['coursesynclog'] = 'Registro de la sincronización de los cursos de X-Ray';
+$string['coursesyncfailed'] = 'Fallo en la sincronización de los cursos de X-Ray';
+$string['coursesynclogentry'] = 'Mensaje de información de la sincronización de los cursos de X-Ray';
 
 // Course Header.
 $string['atrisk'] = 'En riesgo';
