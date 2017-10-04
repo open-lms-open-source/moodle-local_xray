@@ -54,6 +54,14 @@ function local_xray_template_data($courseid, $userid) {
         // Add info in the template.
         $data = new stdClass();
 
+        $riskdisabled = local_xray_risk_disabled();
+        $data->columnwidth = "23%";
+        $data->riskenabled = true;
+        if ($riskdisabled) {
+            $data->columnwidth = "30%";
+            $data->riskenabled = false;
+        }
+
         // Styles.
         $linksnum = array(
             'title' => get_string('link_gotoreport', 'local_xray'),
@@ -68,51 +76,53 @@ function local_xray_template_data($courseid, $userid) {
         $data->reportdate = $headlinedata->reportdate;
 
         // Risk.
-        // Icon and link.
-        $xrayriskicon = local_xray_get_email_icons('xray-risk');
-        $data->riskiconpdf = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'), $reporticonpdf);
-        $data->riskicon = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'));
+        if (!$riskdisabled) {
+            // Icon and link.
+            $xrayriskicon = local_xray_get_email_icons('xray-risk');
+            $data->riskiconpdf = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'), $reporticonpdf);
+            $data->riskicon = html_writer::img($xrayriskicon, get_string('risk', 'local_xray'));
 
-        if (local_xray_reports()) {
-            $riskurl = $riskarrowurl = new moodle_url("/local/xray/view.php",
-                array("controller" => "xrayreports", "name" => "risk", "courseid" => $courseid, "action" => "view"));
-        } else {
-            $riskurl = new moodle_url("/local/xray/view.php",
-                array("controller" => "risk", "courseid" => $courseid, "action" => "view"));
+            if (local_xray_reports()) {
+                $riskurl = $riskarrowurl = new moodle_url("/local/xray/view.php",
+                    array("controller" => "xrayreports", "name" => "risk", "courseid" => $courseid, "action" => "view"));
+            } else {
+                $riskurl = new moodle_url("/local/xray/view.php",
+                    array("controller" => "risk", "courseid" => $courseid, "action" => "view"));
 
-            $riskarrowurl = new moodle_url("/local/xray/view.php",
-                array("controller" => "risk", "courseid" => $courseid, "header" => 1), "riskMeasures");
+                $riskarrowurl = new moodle_url("/local/xray/view.php",
+                    array("controller" => "risk", "courseid" => $courseid, "header" => 1), "riskMeasures");
+            }
+            $data->risklink = html_writer::link($riskurl, get_string('risk', 'local_xray'), $gotoreport);
+
+            // Calculate colour status.
+            $statusclassrisk = local_xray\dashboard\dashboard_data::get_status_with_average($headlinedata->usersinrisk,
+                $headlinedata->risktotal,
+                $headlinedata->averagerisksevendaybefore,
+                $headlinedata->maximumtotalrisksevendaybefore,
+                true,
+                true); // This arrow will be inverse to all.
+
+            $xrayriskarrow = local_xray_get_email_icons($statusclassrisk[2]);
+            $data->riskarrowpdf = html_writer::img($xrayriskarrow, $statusclassrisk[1], $reporticonarrowpdf);
+            $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1]);
+            $data->riskarrow = html_writer::link($riskarrowurl, $riskarrow, $gotoreport);
+
+            // Number for risk.
+            $a = new stdClass();
+            $a->first = $headlinedata->usersinrisk;
+            $a->second = $headlinedata->risktotal;
+            $data->riskdatapdf = html_writer::span(get_string('headline_number_of', 'local_xray', $a), '', $reportdata);
+            $data->riskdata = html_writer::link($riskarrowurl, get_string('headline_number_of', 'local_xray', $a),
+                $linksnum);
+
+            $data->studentsrisk = get_string('headline_studentatrisk', 'local_xray');
+
+            // Number of students at risk in the last 7 days.
+            $a = new stdClass();
+            $a->previous = $headlinedata->averagerisksevendaybefore;
+            $a->total = $headlinedata->maximumtotalrisksevendaybefore;
+            $data->riskaverageweek = get_string("averageofweek_integer", 'local_xray', $a);
         }
-        $data->risklink = html_writer::link($riskurl, get_string('risk', 'local_xray'), $gotoreport);
-
-        // Calculate colour status.
-        $statusclassrisk = local_xray\dashboard\dashboard_data::get_status_with_average($headlinedata->usersinrisk,
-            $headlinedata->risktotal,
-            $headlinedata->averagerisksevendaybefore,
-            $headlinedata->maximumtotalrisksevendaybefore,
-            true,
-            true); // This arrow will be inverse to all.
-
-        $xrayriskarrow = local_xray_get_email_icons($statusclassrisk[2]);
-        $data->riskarrowpdf = html_writer::img($xrayriskarrow, $statusclassrisk[1], $reporticonarrowpdf);
-        $riskarrow = html_writer::img($xrayriskarrow, $statusclassrisk[1]);
-        $data->riskarrow = html_writer::link($riskarrowurl, $riskarrow, $gotoreport);
-
-        // Number for risk.
-        $a = new stdClass();
-        $a->first = $headlinedata->usersinrisk;
-        $a->second = $headlinedata->risktotal;
-        $data->riskdatapdf = html_writer::span(get_string('headline_number_of', 'local_xray', $a), '', $reportdata);
-        $data->riskdata = html_writer::link($riskarrowurl, get_string('headline_number_of', 'local_xray', $a),
-            $linksnum);
-
-        $data->studentsrisk = get_string('headline_studentatrisk', 'local_xray');
-
-        // Number of students at risk in the last 7 days.
-        $a = new stdClass();
-        $a->previous = $headlinedata->averagerisksevendaybefore;
-        $a->total = $headlinedata->maximumtotalrisksevendaybefore;
-        $data->riskaverageweek = get_string("averageofweek_integer", 'local_xray', $a);
 
         // Activity.
         // Icon and link.
@@ -510,8 +520,11 @@ function local_xray_create_pdf($headlinedata, $subject) {
     $title->data[] = array($subject);
     $html = html_writer::table($title);
 
-    $riskicontable = new html_table();
-    $riskicontable->data = local_xray_report_head_row(get_string('risk', 'local_xray'), $headlinedata->riskiconpdf);
+    $riskdisabled = local_xray_risk_disabled();
+    if (!$riskdisabled) {
+        $riskicontable = new html_table();
+        $riskicontable->data = local_xray_report_head_row(get_string('risk', 'local_xray'), $headlinedata->riskiconpdf);
+    }
 
     $activityicontable = new html_table();
     $activityicontable->data = local_xray_report_head_row(
@@ -532,13 +545,21 @@ function local_xray_create_pdf($headlinedata, $subject) {
     );
 
     $table = new html_table();
-    $table->data[] = array(html_writer::table($riskicontable),
-        html_writer::table($activityicontable),
-        html_writer::table($gradebookicontable),
-        html_writer::table($discussionicontable));
 
-    $riskdatatable = new html_table();
-    $riskdatatable->data[] = array($headlinedata->riskdatapdf, $headlinedata->riskarrowpdf);
+    // First row.
+    $row1 = array();
+    if (!$riskdisabled) {
+        $row1[] = html_writer::table($riskicontable);
+    }
+    $row1[] = html_writer::table($activityicontable);
+    $row1[] = html_writer::table($gradebookicontable);
+    $row1[] = html_writer::table($discussionicontable);
+    $table->data[] = $row1;
+
+    if (!$riskdisabled) {
+        $riskdatatable = new html_table();
+        $riskdatatable->data[] = array($headlinedata->riskdatapdf, $headlinedata->riskarrowpdf);
+    }
 
     $activitydatatable = new html_table();
     $activitydatatable->data[] = array($headlinedata->activitydatapdf, $headlinedata->activityarrowpdf);
@@ -549,24 +570,35 @@ function local_xray_create_pdf($headlinedata, $subject) {
     $discussiondatatable = new html_table();
     $discussiondatatable->data[] = array($headlinedata->discussiondatapdf, $headlinedata->discussionarrowpdf);
 
-    $table->data[] = array(
-        html_writer::table($riskdatatable),
-        html_writer::table($activitydatatable),
-        html_writer::table($gradebooknumbertable),
-        html_writer::table($discussiondatatable)
-    );
-    $table->data[] = array(
-        $headlinedata->studentsrisk,
-        $headlinedata->activityloggedstudents,
-        $headlinedata->gradebookheadline,
-        $headlinedata->discussionposts
-    );
-    $table->data[] = array(
-        $headlinedata->riskaverageweek,
-        $headlinedata->activitylastweekwasof,
-        $headlinedata->gradebookaverageofweek,
-        $headlinedata->discussionlastweekwas
-    );
+    // Second row.
+    $row2 = array();
+    if (!$riskdisabled) {
+        $row2[] = html_writer::table($riskdatatable);
+    }
+    $row2[] = html_writer::table($activitydatatable);
+    $row2[] = html_writer::table($gradebooknumbertable);
+    $row2[] = html_writer::table($discussiondatatable);
+    $table->data[] = $row2;
+
+    // Third row.
+    $row3 = array();
+    if (!$riskdisabled) {
+        $row3[] = $headlinedata->studentsrisk;
+    }
+    $row3[] = $headlinedata->activityloggedstudents;
+    $row3[] = $headlinedata->gradebookheadline;
+    $row3[] = $headlinedata->discussionposts;
+    $table->data[] = $row3;
+
+    // Quarter row.
+    $row4 = array();
+    if (!$riskdisabled) {
+        $row4[] = $headlinedata->riskaverageweek;
+    }
+    $row4[] = $headlinedata->activitylastweekwasof;
+    $row4[] = $headlinedata->gradebookaverageofweek;
+    $row4[] = $headlinedata->discussionlastweekwas;
+    $table->data[] = $row4;
 
     $html .= html_writer::table($table);
 
