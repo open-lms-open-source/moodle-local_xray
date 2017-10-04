@@ -54,6 +54,14 @@ function local_xray_template_data($courseid, $userid) {
         // Add info in the template.
         $data = new stdClass();
 
+        $riskdisabled = local_xray_risk_disabled();
+        $data->columnwidth = "23%";
+        $data->riskenabled = true;
+        if ($riskdisabled) {
+            $data->columnwidth = "30%";
+            $data->riskenabled = false;
+        }
+
         // Styles.
         $linksnum = array(
             'title' => get_string('link_gotoreport', 'local_xray'),
@@ -510,8 +518,11 @@ function local_xray_create_pdf($headlinedata, $subject) {
     $title->data[] = array($subject);
     $html = html_writer::table($title);
 
-    $riskicontable = new html_table();
-    $riskicontable->data = local_xray_report_head_row(get_string('risk', 'local_xray'), $headlinedata->riskiconpdf);
+    $riskdisabled = local_xray_risk_disabled();
+    if (!$riskdisabled) {
+        $riskicontable = new html_table();
+        $riskicontable->data = local_xray_report_head_row(get_string('risk', 'local_xray'), $headlinedata->riskiconpdf);
+    }
 
     $activityicontable = new html_table();
     $activityicontable->data = local_xray_report_head_row(
@@ -532,13 +543,21 @@ function local_xray_create_pdf($headlinedata, $subject) {
     );
 
     $table = new html_table();
-    $table->data[] = array(html_writer::table($riskicontable),
-        html_writer::table($activityicontable),
-        html_writer::table($gradebookicontable),
-        html_writer::table($discussionicontable));
 
-    $riskdatatable = new html_table();
-    $riskdatatable->data[] = array($headlinedata->riskdatapdf, $headlinedata->riskarrowpdf);
+    // First row.
+    $row1 = array();
+    if (!$riskdisabled) {
+        $row1[] = html_writer::table($riskicontable);
+    }
+    $row1[] = html_writer::table($activityicontable);
+    $row1[] = html_writer::table($gradebookicontable);
+    $row1[] = html_writer::table($discussionicontable);
+    $table->data[] = $row1;
+
+    if (!$riskdisabled) {
+        $riskdatatable = new html_table();
+        $riskdatatable->data[] = array($headlinedata->riskdatapdf, $headlinedata->riskarrowpdf);
+    }
 
     $activitydatatable = new html_table();
     $activitydatatable->data[] = array($headlinedata->activitydatapdf, $headlinedata->activityarrowpdf);
@@ -549,24 +568,35 @@ function local_xray_create_pdf($headlinedata, $subject) {
     $discussiondatatable = new html_table();
     $discussiondatatable->data[] = array($headlinedata->discussiondatapdf, $headlinedata->discussionarrowpdf);
 
-    $table->data[] = array(
-        html_writer::table($riskdatatable),
-        html_writer::table($activitydatatable),
-        html_writer::table($gradebooknumbertable),
-        html_writer::table($discussiondatatable)
-    );
-    $table->data[] = array(
-        $headlinedata->studentsrisk,
-        $headlinedata->activityloggedstudents,
-        $headlinedata->gradebookheadline,
-        $headlinedata->discussionposts
-    );
-    $table->data[] = array(
-        $headlinedata->riskaverageweek,
-        $headlinedata->activitylastweekwasof,
-        $headlinedata->gradebookaverageofweek,
-        $headlinedata->discussionlastweekwas
-    );
+    // Second row.
+    $row2 = array();
+    if (!$riskdisabled) {
+        $row2[] = html_writer::table($riskdatatable);
+    }
+    $row2[] = html_writer::table($activitydatatable);
+    $row2[] = html_writer::table($gradebooknumbertable);
+    $row2[] = html_writer::table($discussiondatatable);
+    $table->data[] = $row2;
+
+    // Third row.
+    $row3 = array();
+    if (!$riskdisabled) {
+        $row3[] = $headlinedata->studentsrisk;
+    }
+    $row3[] = $headlinedata->activityloggedstudents;
+    $row3[] = $headlinedata->gradebookheadline;
+    $row3[] = $headlinedata->discussionposts;
+    $table->data[] = $row3;
+
+    // Quarter row.
+    $row4 = array();
+    if (!$riskdisabled) {
+        $row4[] = $headlinedata->riskaverageweek;
+    }
+    $row4[] = $headlinedata->activitylastweekwasof;
+    $row4[] = $headlinedata->gradebookaverageofweek;
+    $row4[] = $headlinedata->discussionlastweekwas;
+    $table->data[] = $row4;
 
     $html .= html_writer::table($table);
 
