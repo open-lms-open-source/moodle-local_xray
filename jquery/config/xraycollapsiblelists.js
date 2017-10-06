@@ -14,7 +14,7 @@ http://creativecommons.org/publicdomain/zero/1.0/legalcode
 // Create the CollapsibleLists object.
 var CollapsibleLists = new function(){
 
-        /* Makes all lists with the class 'collapsibleList' collapsible. The
+       /* Makes all lists with the class 'xray-collapsible-list' collapsible. The
         * parameter is:
         *
         * doNotRecurse - true if sub-lists should not be made collapsible
@@ -26,7 +26,7 @@ var CollapsibleLists = new function(){
             for (var index = 0; index < uls.length; index ++){
 
                 // Check whether this list should be made collapsible.
-                if (uls[index].className.match(/(^| )collapsibleList( |$)/)){
+                if (uls[index].className.match(/(^| )xray-collapsible-list( |$)/)){
 
                     // Make this list collapsible.
                     this.applyTo(uls[index], true);
@@ -34,10 +34,10 @@ var CollapsibleLists = new function(){
                     // Check whether sub-lists should also be made collapsible.
                     if (!doNotRecurse){
 
-                        // Add the collapsibleList class to the sub-lists.
+                        // Add the xray-collapsible-list class to the sub-lists.
                         var subUls = uls[index].getElementsByTagName('ul');
                         for (var subIndex = 0; subIndex < subUls.length; subIndex ++){
-                            subUls[subIndex].className += ' collapsibleList';
+                            subUls[subIndex].className += ' xray-collapsible-list';
                         }
 
                     }
@@ -121,7 +121,7 @@ var CollapsibleLists = new function(){
     function toggle(node){
 
         // Determine whether to open or close the unordered lists.
-        var open = node.className.match(/(^| )collapsibleListClosed( |$)/);
+        var open = node.className.match(/(^| )xray-collapsible-list-closed( |$)/);
 
         // Loop over the unordered list elements with the node.
         var uls = node.getElementsByTagName('ul');
@@ -138,11 +138,12 @@ var CollapsibleLists = new function(){
 
         // Remove the current class from the node.
         node.className = node.className.replace(
-            /(^| )collapsibleList(Open|Closed)( |$)/, '');
+            /(^| )xray-collapsible-list(-open|-closed)( |$)/, '');
+
 
         // If the node contains unordered lists, set its class.
         if (uls.length > 0){
-            node.className += ' collapsibleList' + (open ? 'Open' : 'Closed');
+            node.className += ' xray-collapsible-list' + (open ? '-open' : '-closed');
         }
 
     }

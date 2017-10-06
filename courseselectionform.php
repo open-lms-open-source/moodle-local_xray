@@ -41,25 +41,32 @@ class courseselection_form extends moodleform {
 
         // Hidden field with csv based values.
         $mform->addElement('hidden', 'joined_'.self::COMP_ID, '', '');
-        $mform->setType('joined_'.self::COMP_ID, PARAM_SEQUENCE);
+        $mform->setType('joined_'.self::COMP_ID, PARAM_RAW);
 
         // Hidden field to receive array of courses.
         $mform->addElement('hidden', self::COMP_ID, '', '');
         $mform->setType(self::COMP_ID, PARAM_RAW);
 
-        $mform->addElement('html', $this->buildcontainer());
+        $mform->addElement('html', $this->build_container());
 
         $this->add_action_buttons(false);
     }
 
-    private function buildcontainer() {
+    private function build_container() {
         $output = '';
 
         // Usage instructions.
         $output .= '<p>'.get_string('xraycourses_instructions', 'local_xray').'</p>';
 
+
+        $output .= '<div class="form-inline">';
+        $output .= '<button id="xrayexpandallbtn" class="btn btn-link">'.get_string('expand_all', self::PLUGIN).'</button>';
+        $output .= '|';
+        $output .= '<button id="xraycollapseallbtn" class="btn btn-link">'.get_string('collapse_all', self::PLUGIN).'</button>';
+        $output .= '</div>';
+
         // Categories and courses container.
-        $output .= '<ul id="cat_0_children">'
+        $output .= '<ul id="cat_0_children" class="xray-category-tree">'
                 .'<p><div class="xray_validate_loader"></div>'.(new lang_string('loading_please_wait', self::PLUGIN)).'</p>'
                 .'</ul>';
 

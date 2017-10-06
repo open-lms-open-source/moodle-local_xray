@@ -42,7 +42,7 @@ if ($hassiteconfig) {
 
     // Add Course selection.
     if (!empty($CFG->local_xray_unrestrict_course_selection) ||
-        ($USER->username === $allowedunamecourses)) {
+        ($USER->username === $allowedunamecourses || defined('BEHAT_SITE_RUNNING'))) {
         $urlcourseselection = new moodle_url(
             '/local/xray/view.php',
              ['controller' => 'courseselection', 'action' => 'view']

@@ -60,6 +60,8 @@ class local_xray_controller_courseselection extends mr_controller_admin {
 
         // Load Jquery.
         $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->jquery_plugin('ui-css');
         // Load specific js for validation.
         $PAGE->requires->jquery_plugin('local_xray-config_toggle_categories', self::PLUGIN);
         // Initialize js.
@@ -67,7 +69,8 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             'lang_strs' => array(
                 'loading_please_wait' => new lang_string('loading_please_wait', self::PLUGIN)
             ),
-            'www_root' => $CFG->wwwroot
+            'www_root' => $CFG->wwwroot,
+            'current_language' => current_language()
         );
         $strdata = array(json_encode($data));
         $PAGE->requires->js_init_call('config_toggle_categories', $strdata);
@@ -79,11 +82,13 @@ class local_xray_controller_courseselection extends mr_controller_admin {
     public function view_action() {
         global $CFG, $DB, $OUTPUT;
 
-        $loginresult = wsapi::login();
-        if (!$loginresult) {
-            $errmessage = new lang_string('xray_check_global_settings', self::PLUGIN,
+        if (!defined('BEHAT_SITE_RUNNING')) {
+            $loginresult = wsapi::login();
+            if (!$loginresult) {
+                $errmessage = new lang_string('xray_check_global_settings', self::PLUGIN,
                     course_manager::generate_xray_settings_link());
-            return $OUTPUT->notification($errmessage, 'notifyerror');
+                return $OUTPUT->notification($errmessage, 'notifyerror');
+            }
         }
 
         try {
@@ -106,9 +111,8 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             } else if ($xrayids = course_manager::load_course_ids_from_xray()) {
                 // If database is empty and courses are foung in X-Ray server, load them to the database.
                 \local_xray\local\api\course_manager::save_selected_courses($xrayids);
-
                 $toform = new stdClass();
-                $toform->joined_courses = implode(',', $xrayids);
+                $toform->joined_courses = implode(',', array_unique($formval));
                 $mform->set_data($toform);
             }
 

@@ -312,7 +312,7 @@ class behat_local_xray extends behat_base {
                     $type = 2;
                     break;
                 default:
-                    throw new ExpectationException('Invalid type '.$type, $session);
+                    throw new ExpectationException('Invalid type ' . $type, $session);
             }
 
             $data = new stdClass();
@@ -325,7 +325,89 @@ class behat_local_xray extends behat_base {
                 $DB->insert_record('local_xray_globalsub', $data);
             }
         } else {
-            throw new ExpectationException("The username ".$username." doesn't exist", $session);
+            throw new ExpectationException("The username " . $username . " doesn't exist", $session);
+        }
+    }
+
+    /**
+     * Expands a category in course selection
+     *
+     * @Given /^I expand the category "(?P<categoryname_string>(?:[^"]|\\")*)"$/
+     * @param string $categoryname Category name
+     * @throws ExpectationException
+     * return void
+     */
+    public function i_expand_the_category($categoryname) {
+        $session = $this->getSession();
+        $page = $session->getPage();
+        $findname = $page->findButton($categoryname);
+        if (!$findname) {
+            throw new ExpectationException($categoryname . " could not be found", $session);
+        } else {
+            $findname->click();
+        }
+    }
+
+    /**
+     * Checks the courses checkbox
+     *
+     * @Given /^I check the course "(?P<courseshortname_string>(?:[^"]|\\")*)"$/
+     * @param string $courseshortname Course short name
+     * @throws ExpectationException
+     * return void
+     */
+    public function i_check_the_course($courseshortname) {
+        global $DB;
+        $session = $this->getSession();
+        $page = $session->getPage();
+        $courseid = $DB->get_field('course', 'id', array('shortname' => $courseshortname));
+        $coursecheckbox = $page->findField('id_courses_'.$courseid);
+        if (!$coursecheckbox) {
+            throw new ExpectationException($courseshortname . " could not be found", $session);
+        } else {
+            $coursecheckbox->check();
+        }
+    }
+
+    /**
+     * Reviews is category is checked
+     *
+     * @Given /^I should see category "(?P<categoryname_string>(?:[^"]|\\")*)" checked$/
+     * @param string $categoryname Category name
+     * @throws ExpectationException
+     * return void
+     */
+    public function i_should_see_category_checked($categoryname) {
+        global $DB;
+        $session = $this->getSession();
+        $page = $session->getPage();
+        $categoryid = $DB->get_field('course_categories', 'id', array('name' => $categoryname));
+        $checkbox = $page->findField('cat_'.$categoryid);
+        if (!$checkbox) {
+            throw new ExpectationException($categoryname . " checkbox could not be found", $session);
+        } else if (!$checkbox->isChecked()) {
+            throw new ExpectationException($categoryname . " checkbox is not checked", $session);
+        }
+    }
+
+    /**
+     * Reviews if course is checked
+     *
+     * @Given /^I should see course "(?P<courseshortname_string>(?:[^"]|\\")*)" checked$/
+     * @param string $courseshortname Course short name
+     * @throws ExpectationException
+     * return void
+     */
+    public function i_should_see_course_checked($courseshortname) {
+        global $DB;
+        $session = $this->getSession();
+        $page = $session->getPage();
+        $courseid = $DB->get_field('course', 'id', array('shortname' => $courseshortname));
+        $coursecheckbox = $page->findField('id_courses_'.$courseid);
+        if (!$coursecheckbox) {
+            throw new ExpectationException($courseshortname . " checkbox could not be found", $session);
+        } else if (!$coursecheckbox->isChecked()) {
+            throw new ExpectationException($courseshortname . " checkbox is not checked", $session);
         }
     }
 }

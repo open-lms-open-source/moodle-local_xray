@@ -632,6 +632,56 @@ $string['test_api_description'] = 'Validar <strong>parámetros guardados</strong
                                   'para encontrar problemas de conexión o del sistema.';
 $string['validate_when'] = 'Al';
 
+// Validate courses.
+$string['error_single_activity'] = 'Los reportes no estan disponibles para los cursos individuales.';
+
+// Settings page.
+$string['global_settings'] = 'Configuración global para X-Ray';
+$string['courseselection'] = 'Selección de cursos para X-Ray';
+
+// Default X-Ray controller error.
+$string['page_not_found'] = '404 - Página no encontrada.';
+$string['error_xray_unknown'] = 'Respuesta desconocida de X-Ray. Vuelva a recargar la página, si el error persiste, contacte'.
+    'al administrador del sistema.';
+
+// Courses.
+$string['xraycourses'] = 'Cursos de X-Ray';
+$string['xraycourses_instructions'] = 'Seleccione de esta lista las categorías y cursos que desea utilizar con X-Ray Learning Analytics, '.
+    'seleccione la casilla junto al nombre de la categoría para incluir todos los cursos validados en la categoría o '.
+    'seleccione el signo de flecha para expandir la categoría para la selección de cursos individuales. Los cursos no aparecerán para la selección si:
+    <ul>
+        <li>Tienen más de 1000 estudiantes matriculados.</li>
+        <li>Están ocultos.</li>
+        <li>Utilizan el formato de curso individual.</li>
+        <li>No han tenido actividad en los últimos cuatro meses.</li>
+        <li>No tienen estudiantes matriculados.</li>
+    </ul>';
+
+$string['xray_check_global_settings'] = 'No se pudo conectar con el servidor de X-Ray Learning Analytics. {$a}';
+$string['xray_check_global_settings_link'] = 'Porfavor validar que el servidor de X-Ray Learning Analytics está disponible'.
+    'antes de seleccionar los cursos.';
+$string['xray_save_course_filter_error'] = 'Se ha producido un error salvando los cursos en el servidor de X-Ray Learning Analytics:<br />{$a}';
+$string['loading_please_wait'] = 'Cargando. Porfavor espere.';
+$string['warn_courses_do_not_match'] = "Los cursos seleccionados en el servidor de X-Ray server no coinciden con los cursos seleccionados.".
+    " Se sobreescribira el filtro en el servidor X-Ray si se salva la selección.";
+$string['warn_courses_not_persisted_in_xrf'] = 'Los cursos seleccionados no fueron salvados en el servidor de X-Ray debido a '.
+    'la configuración del sistema.';
+$string['xray_valid_course_error'] = 'Hubo un error recuperando los cursos validos';
+
+// Course related messages.
+$string['warn_course_disabled'] = 'Este curso no utiliza X-Ray Learning Analytics. Si piensa que debería, '.
+    'contacte al administrador del sistema.';
+$string['course_disabled'] = '<p>Este curso no puede usar X-Ray Learning Analytics en este momento. Acá el por que:'.
+    '</p><ul>{$a->students}{$a->hidden}{$a->single}</ul><p>Si piensa que su curso cumple con los requerimientos y '.
+    'aún así no puede usar X-Ray, contacte al administrador del sistema.</p>';
+$string['course_many_students'] = '<li>El curso tiene demasiados estudiantes. No pueden existir mas de {$a} estudiantes '.
+    'matriculados para poder usar X-Ray.</li>';
+$string['course_hidden'] = '<li>El curso está oculto. Los cursos deben estar visibles para usar X-Ray.</li>';
+$string['course_single_activity_format'] = "<li>El curso tiene el formato de curso individual. Los cursos no pueden ".
+    "tener el formato de actividad individual para poder usar X-Ray.</li>";
+$string['expand_all'] = 'Expandir todo';
+$string['collapse_all'] = 'Colapsar todo';
+
 // X-Ray Reports.
 $string['xraydashboardurl'] = 'URL de la interfaz de X-Ray';
 $string['xraydashboardurl_desc'] = 'URL para conectar con la interfaz de X-Ray';
