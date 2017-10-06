@@ -646,7 +646,7 @@ $string['error_xray_unknown'] = 'Respuesta desconocida de X-Ray. Vuelva a recarg
 
 // Courses.
 $string['xraycourses'] = 'Cursos de X-Ray';
-$string['xraycourses_instructions'] = 'Seleccione de esta lista las categorías y cursos que desea utilizar con X-Ray Learning Analytics, '.
+$string['xraycourses_instructions'] = 'Seleccionar las categorías y cursos que desea utilizar con X-Ray Learning Analytics, '.
     'seleccione la casilla junto al nombre de la categoría para incluir todos los cursos validados en la categoría o '.
     'seleccione el signo de flecha para expandir la categoría para la selección de cursos individuales. Los cursos no aparecerán para la selección si:
     <ul>
