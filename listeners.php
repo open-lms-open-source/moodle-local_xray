@@ -41,6 +41,8 @@ function local_xray_course_deleted(\core\event\course_deleted $event) {
     $DB->insert_record_raw('local_xray_course', $data, false);
     // If the course is in local_xray_selectedcourse table, it should be deleted and saved in X-Ray side.
     \local_xray\local\api\course_manager::check_xray_course_to_delete($event->courseid);
+    // Delete the course in local_xray_subscribe table.
+    $DB->delete_records_select('local_xray_subscribe', "courseid = :courseid", array('courseid' => $event->courseid));
 }
 
 /**

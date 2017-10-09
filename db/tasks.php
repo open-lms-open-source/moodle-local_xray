@@ -54,6 +54,15 @@ $tasks = [
         'month'     => '*'
     ],
     [
+        'classname' => 'local_xray\task\course_sync',
+        'blocking'  => 0,
+        'minute'    => '1',
+        'hour'      => '0',
+        'day'       => '*',
+        'dayofweek' => '*',
+        'month'     => '*'
+    ],
+    [
         'classname' => 'local_xray\task\send_emails',
         'blocking'  => 0,
         'minute'    => '1',
@@ -62,14 +71,5 @@ $tasks = [
         'dayofweek' => '*',
         'month'     => '*',
         'disabled'  => 1
-    ],
-    [
-        'classname' => 'local_xray\task\course_sync',
-        'blocking'  => 0,
-        'minute'    => '1',
-        'hour'      => '0',
-        'day'       => '*',
-        'dayofweek' => '*',
-        'month'     => '*'
     ]
 ];
