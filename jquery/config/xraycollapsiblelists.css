@@ -3,19 +3,19 @@
  */
 
 .xray-collapsible-list li {
-  list-style-image:url('images/arrowright.svg');
+  list-style-image:url('images/arrowright.png');
   list-style-position: inside;
   cursor:auto;
 }
 
 li.xray-collapsible-list-open {
-  list-style-image:url('images/arrowdown.svg');
+  list-style-image:url('images/arrowdown.png');
   list-style-position: inside;
   cursor:pointer;
 }
 
 li.xray-collapsible-list-closed {
-  list-style-image:url('images/arrowright.svg');
+  list-style-image:url('images/arrowright.png');
   list-style-position: inside;
   cursor:pointer;
 }

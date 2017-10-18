@@ -646,7 +646,7 @@ $string['error_xray_unknown'] = 'Unknown X-Ray response, please reload the page.
 
 // Courses.
 $string['xraycourses'] = 'X-Ray Courses';
-$string['xraycourses_instructions'] = 'Select from this list the Categories and Courses that you want to use '.
+$string['xraycourses_instructions'] = 'Select the Categories and Courses you want to use '.
     'with X-Ray Learning Analytics. Select the box next to the category name to include all validated courses in the category, '.
     'or select the arrow sign to expand the category for individual course selection. Courses will not appear for selection if they:
     <ul>

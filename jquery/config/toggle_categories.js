@@ -223,10 +223,10 @@ function config_toggle_categories(YUI, data) {
     self.toggleCategoryUI = function(cat, allowusage) {
         var catInput = $(catPrefix + cat.id), submitBtn = $(idSubmitBtn),
             catLbl = $(catPrefix + cat.id + '_lbl');
-
+            disabledstr = 'disabled';
 
         catInput.prop(!allowusage);
-        submitBtn.prop(!allowusage);
+        submitBtn.prop(disabledstr, !allowusage || !self.formIsValid);
         if (allowusage) {
             catLbl.children('.xray_validate_loader').remove();
         } else {
@@ -690,6 +690,28 @@ function config_toggle_categories(YUI, data) {
 
 
         $(catPrefix + parentCat.id + '_children').append(courseStr);
+
+        /**
+         * Validates the form and enables/disables the submit button accordingly
+         */
+        self.validateForm = function() {
+            var valid = true;
+
+            if(self.formIsValid === valid) {
+                return;
+            }
+
+            self.formIsValid = valid;
+            self.processFormSubmit();
+        };
+
+        /**
+         * Enables form submit according to self.formIsValid
+         */
+        self.processFormSubmit = function() {
+            var submitBtn = $(idSubmitBtn);
+            submitBtn.prop('disabled', !self.formIsValid);
+        };
     };
 
     $(document).ready(function () {
