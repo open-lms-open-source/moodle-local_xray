@@ -28,6 +28,7 @@ namespace local_xray\task;
 use core\task\scheduled_task;
 use local_xray\event\email_log;
 use local_xray\event\email_failed;
+use local_xray\local\api\course_manager;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -70,22 +71,18 @@ class send_emails extends scheduled_task {
                     $globalsettings = $DB->get_records_select('local_xray_globalsub', "type = :on OR type = :off", $params);
 
                     $skipusers = array();
+                    $selectedcourses = course_manager::list_selected_course_ids();
                     if ($globalsettings) {
                         foreach ($globalsettings as $record) {
                             if ($record->type == XRAYSUBSCRIBEON) {
-                                // If is Admin.
+                                // Admin.
                                 if (array_key_exists($record->userid, get_admins())) {
-                                    $courses = get_courses("all", "c.sortorder ASC", "c.id");
-                                    foreach ($courses as $course) {
-                                        if ($course->id != SITEID && !local_xray_single_activity_course($course->id)) {
-                                            $coursesusers[] = array($course->id => $record->userid);
-                                        }
+                                    foreach ($selectedcourses as $course) {
+                                        $coursesusers[] = array($course => $record->userid);
                                     }
-                                } else if ($courses = local_xray_get_teacher_courses($record->userid)) {
+                                } else if ($courses = local_xray_get_teacher_courses($record->userid)) { // Teacher.
                                     foreach ($courses as $course) {
-                                        if (!local_xray_single_activity_course($course->courseid)) {
-                                            $coursesusers[] = array($course->courseid => $record->userid);
-                                        }
+                                        $coursesusers[] = array($course->courseid => $record->userid);
                                     }
                                 }
                             }
@@ -120,7 +117,7 @@ class send_emails extends scheduled_task {
                     if ($subscribedusers) {
                         foreach ($subscribedusers as $record) {
                             if (isset($record->userid) && $record->userid && isset($record->courseid) && $record->courseid) {
-                                if (!local_xray_single_activity_course($record->courseid)) {
+                                if (in_array($record->courseid, $selectedcourses)) {
                                     $coursesusers[] = array($record->courseid => $record->userid);
                                 }
                             }
