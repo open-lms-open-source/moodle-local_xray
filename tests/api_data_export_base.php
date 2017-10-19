@@ -163,19 +163,24 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
     }
 
     /**
-     * @param int  $nr
-     * @param int $timecreated
+     * @param  int $nr - how any categories to create
+     * @param  int $timecreated - sets timemodified of the category
+     * @param  int $parent - parent category id
      * @return coursecat[]
      */
-    protected function addcategories($nr, $timecreated = null) {
+    protected function addcategories($nr, $timecreated = null, $parent = null) {
         global $DB;
 
         // Create categories.
         $datagen = $this->getDataGenerator();
         $categories = [];
+        $record = null;
+        if (!empty($parent)) {
+            $record = ['parent' => $parent];
+        }
         $count = 0;
         while ($count++ < $nr) {
-            $cat = $datagen->create_category();
+            $cat = $datagen->create_category($record);
             if (!empty($timecreated)) {
                 $catid = (int)$cat->id;
                 $DB->update_record('course_categories', (object)['id' => $catid, 'timemodified' => $timecreated]);

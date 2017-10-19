@@ -82,4 +82,9 @@ $observers = [
         'callback'    => 'local_xray_user_enrolment_updated',
         'includefile' => '/local/xray/listeners.php'
     ],
+    [
+        'eventname'   => '\core\event\course_category_updated',
+        'callback'    => 'local_xray_course_category_updated',
+        'includefile' => '/local/xray/listeners.php'
+    ],
 ];
