@@ -258,6 +258,10 @@ function config_toggle_categories(YUI, data) {
                     !self.areCoursesChecked(cat.courses));
             }
 
+            indeterminate = indeterminate || (
+                self.areCoursesChecked(cat.courses) &&
+                self.atLeastOneCatUnCheckedDisabled(cat.categories));
+
             var checked = indeterminate ||
                 self.atLeastOneCatChecked(cat.categories) ||
                 self.atLeastOneCourseChecked(cat.courses);

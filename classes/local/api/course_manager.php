@@ -98,7 +98,7 @@ abstract class course_manager {
              $wherequery
 
           GROUP BY mdc.id
-          ORDER BY mdc.id;
+          ORDER BY mdc.fullname;
         ";
 
         $xraycourses = $DB->get_records_sql($xraycoursequery, $params);
