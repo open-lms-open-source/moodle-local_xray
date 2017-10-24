@@ -1531,7 +1531,7 @@ class data_export {
         self::groups_deleted($timest, $timeend, $dir);
         self::groups_members_deleted($timest, $timeend, $dir);
 
-        // Export meta.json
+        // Export meta.json.
         self::export_metadata($dir);
 
         if (!$disabletimetrace) {
