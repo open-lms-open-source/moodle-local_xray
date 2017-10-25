@@ -650,11 +650,11 @@ $string['xraycourses_instructions'] = 'Select the Categories and Courses you wan
     'with X-Ray Learning Analytics. Select the box next to the category name to include all validated courses in the category, '.
     'or select the arrow sign to expand the category for individual course selection. Courses will not appear for selection if they:
     <ul>
-        <li>Have more than 1000 enrolled students.</li>
-        <li>Are hidden.</li>
-        <li>Use Single Activity course format.</li>
-        <li>Have had no activity in the past four months.</li>
-        <li>Have no enrolled students.</li>
+        <li>Have more than 1000 enrolled students</li>
+        <li>Are hidden</li>
+        <li>Use Single Activity course format</li>
+        <li>Have had no activity in the past four months</li>
+        <li>Have no enrolled students</li>
     </ul>';
 $string['xray_check_global_settings'] = 'Couldn\'t connect to X-Ray Learning Analytics Server. {$a}';
 $string['xray_check_global_settings_link'] = 'Please validate that X-Ray Learning Analytics Server is available '.

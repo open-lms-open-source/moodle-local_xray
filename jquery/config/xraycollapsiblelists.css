@@ -12,12 +12,51 @@ li.xray-collapsible-list-open {
   list-style-image:url('images/arrowdown.png');
   list-style-position: inside;
   cursor:pointer;
+  float: left;
 }
 
 li.xray-collapsible-list-closed {
   list-style-image:url('images/arrowright.png');
   list-style-position: inside;
   cursor:pointer;
+  float: left;
+}
+
+@media screen and (min-width: 1473px) {
+  li.xray-collapsible-list-open {
+    width: 96%;
+  }
+
+  li.xray-collapsible-list-closed {
+    width: 96%;
+  }
+
+  .xray-child-container {
+    width: 104%;
+  }
+}
+
+@media screen and (max-width: 1472px) {
+  li.xray-collapsible-list-open {
+    width: 90%;
+  }
+
+  li.xray-collapsible-list-closed {
+    width: 90%;
+  }
+  .xray-child-container {
+    width: 110%;
+  }
+}
+
+@media screen and (max-width: 613px) {
+  li.xray-collapsible-list-open {
+    width: 80%;
+  }
+
+  li.xray-collapsible-list-closed {
+    width: 80%;
+  }
 }
 
 button.cat_label {
@@ -25,7 +64,7 @@ button.cat_label {
   min-height: 30px;
   text-decoration: inherit;
   color: inherit;
-  cursor: auto;
+  cursor: pointer;
   height: 1em;
   padding: 0;
 }
@@ -33,7 +72,7 @@ button.cat_label {
 button.cat_label:visited {
   text-decoration: inherit;
   color: inherit;
-  cursor: auto;
+  cursor: pointer;
 }
 
 .xray-right-course-inputs {
@@ -90,6 +129,7 @@ li.xray-category {
   background-color: white;
   padding-left: 10px;
   margin-left: -10px;
+  float: left;
 }
 
 .xray-category-tree {
@@ -186,4 +226,8 @@ li.xray-course {
 
 #xraysearchform {
   display: none;
+}
+
+.xray-wrapper-category {
+  display: inline;
 }

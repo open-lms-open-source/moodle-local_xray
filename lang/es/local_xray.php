@@ -650,11 +650,11 @@ $string['xraycourses_instructions'] = 'Seleccionar las categorías y cursos que 
     'seleccione la casilla junto al nombre de la categoría para incluir todos los cursos validados en la categoría o '.
     'seleccione el signo de flecha para expandir la categoría para la selección de cursos individuales. Los cursos no aparecerán para la selección si:
     <ul>
-        <li>Tienen más de 1000 estudiantes matriculados.</li>
-        <li>Están ocultos.</li>
-        <li>Utilizan el formato de curso individual.</li>
-        <li>No han tenido actividad en los últimos cuatro meses.</li>
-        <li>No tienen estudiantes matriculados.</li>
+        <li>Tienen más de 1000 estudiantes matriculados</li>
+        <li>Están ocultos</li>
+        <li>Utilizan el formato de curso individual</li>
+        <li>No han tenido actividad en los últimos cuatro meses</li>
+        <li>No tienen estudiantes matriculados</li>
     </ul>';
 
 $string['xray_check_global_settings'] = 'No se pudo conectar con el servidor de X-Ray Learning Analytics. {$a}';

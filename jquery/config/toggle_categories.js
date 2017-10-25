@@ -256,11 +256,11 @@ function config_toggle_categories(YUI, data) {
                 indeterminate = indeterminate || (
                     self.areCatsChecked(cat.categories) &&
                     !self.areCoursesChecked(cat.courses));
-            }
 
-            indeterminate = indeterminate || (
-                self.areCoursesChecked(cat.courses) &&
-                self.atLeastOneCatUnCheckedDisabled(cat.categories));
+                indeterminate = indeterminate || (
+                    self.areCoursesChecked(cat.courses) &&
+                    self.atLeastOneCatUnCheckedDisabled(cat.categories));
+            }
 
             var checked = indeterminate ||
                 self.atLeastOneCatChecked(cat.categories) ||
@@ -624,17 +624,18 @@ function config_toggle_categories(YUI, data) {
      * @param cat Category to be rendered
      */
     self.renderCategory = function(parentCat, cat) {
-        var catStr = '<li id="cat_' + cat.id + '_li" class="xray-category">'
+        var catStr = '<div class="xray-wrapper-category"><li id="cat_' + cat.id + '_li" class="xray-category">'
             + '<button id="cat_' + cat.id + '_lbl" class="btn btn-link cat_label" href="javascript:void(0)" type="button">' + cat.name + '  </button>'
-            + '<div class="xray-right-course-inputs" >'
-            + '<input type="checkbox" name="cat_' + cat.id + '" id="cat_' + cat.id + '" value="1"'
-            + ' aria-label="' + cat.name + '" '+'><label for="cat_' + cat.id + '">&nbsp;</label>'
-            + '</div>'
             + '<div class="xray-child-separator"></div>'
             + '<div class="xray-child-container">'
             + '<ul id="cat_' + cat.id + '_children" class="xray-category-tree"></ul>'
             + '</div>'
-            + '</li>';
+            + '</li>'
+            + '<div class="xray-right-course-inputs" >'
+            + '<input type="checkbox" name="cat_' + cat.id + '" id="cat_' + cat.id + '" value="1"'
+            + ' aria-label="' + cat.name + '" '+'><label for="cat_' + cat.id + '">&nbsp;</label>'
+            + '</div>'
+            + '</div>';
 
         $(catPrefix + parentCat.id + '_children').append(catStr);
 
