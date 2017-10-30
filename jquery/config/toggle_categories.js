@@ -625,7 +625,9 @@ function config_toggle_categories(YUI, data) {
      */
     self.renderCategory = function(parentCat, cat) {
         var catStr = '<div class="xray-wrapper-category"><li id="cat_' + cat.id + '_li" class="xray-category">'
-            + '<button id="cat_' + cat.id + '_lbl" class="btn btn-link cat_label" href="javascript:void(0)" type="button">' + cat.name + '  </button>'
+            + '<button id="cat_' + cat.id + '_lbl" class="btn btn-link cat_label" href="javascript:void(0)"'
+            + ' title="' + cat.name + (self.rootcat.id == parentCat.id ? ' Category' : ' Subcategory') + '" type="button"'
+            + ' aria-label="' + cat.name + (self.rootcat.id == parentCat.id ? ' Category' : ' Subcategory') + '">' + cat.name + '</button>'
             + '<div class="xray-child-separator"></div>'
             + '<div class="xray-child-container">'
             + '<ul id="cat_' + cat.id + '_children" class="xray-category-tree"></ul>'
@@ -683,6 +685,9 @@ function config_toggle_categories(YUI, data) {
     self.renderCourse = function(parentCat, course) {
 
         var courseStr = '<li id="course_' + course.id + '_li" class="xray-course">'
+            + '<label for="courses[' + course.id + ']" tabindex="0" class="course_label"'
+            + 'title="'  + course.name + ' Course"'
+            + 'aria-label="' + course.name + ' Course">' + course.name + '</label>&nbsp;'
             + '<div class="xray-right-course-inputs" >'
             + '<a target="_blank" href="' + self.www_root + '/course/view.php?id=' + course.id + '" class="xray-course-shortname">' + course.shortname + '</a>'
             + '<input type="checkbox" id="id_courses_' + course.id + '" name="courses[' + course.id + ']" value="1" '
@@ -690,7 +695,6 @@ function config_toggle_categories(YUI, data) {
             + 'aria-label="' + course.name + '" '
             + 'class="xray-course-input"><label for="courses[' + course.id + ']">&nbsp;</label>' // This label is empty to show the checkboxes.
             + '</div>'
-            + '<label for="courses[' + course.id + ']" class="course_label">' + course.name + '</label>&nbsp;'
             + '</li>';
 
 

@@ -59,6 +59,11 @@ li.xray-collapsible-list-closed {
   }
 }
 
+button#xrayexpandallbtn, button#xraycollapseallbtn {
+  border: 1px solid;
+  margin: 0 5px 10px 0;
+}
+
 button.cat_label {
   font-style: italic;
   min-height: 30px;
@@ -188,7 +193,7 @@ li.xray-course {
 
 .xray-course-shortname {
   display: inline;
-  padding: 5px;
+  padding: 10px;
   color: #0a78d1;
   cursor: pointer;
 }

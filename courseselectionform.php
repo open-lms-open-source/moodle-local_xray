@@ -56,12 +56,10 @@ class courseselection_form extends moodleform {
         $output = '';
 
         // Usage instructions.
-        $output .= '<p>'.get_string('xraycourses_instructions', 'local_xray').'</p>';
-
+        $output .= '<div tabindex="0">'.get_string('xraycourses_instructions', 'local_xray').'</div>';
 
         $output .= '<div class="form-inline">';
         $output .= '<button id="xrayexpandallbtn" class="btn btn-link">'.get_string('expand_all', self::PLUGIN).'</button>';
-        $output .= '|';
         $output .= '<button id="xraycollapseallbtn" class="btn btn-link">'.get_string('collapse_all', self::PLUGIN).'</button>';
         $output .= '</div>';
 
