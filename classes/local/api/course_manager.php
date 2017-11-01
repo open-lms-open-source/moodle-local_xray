@@ -176,7 +176,7 @@ abstract class course_manager {
 
                    WHERE mdcat.parent = :cid
                 GROUP BY mdcat.id, mdcat.name
-                ORDER BY mdcat.name DESC, mdcat.timemodified";
+                ORDER BY mdcat.name ASC, mdcat.timemodified";
 
         $categories = $DB->get_records_sql($query, array('cid' => $cid));
 
@@ -240,7 +240,7 @@ abstract class course_manager {
 
                    WHERE mdcat.parent = :cid
                 GROUP BY mdcat.id, mdcat.name
-                ORDER BY mdcat.name DESC, mdcat.timemodified";
+                ORDER BY mdcat.name ASC, mdcat.timemodified";
 
         $categories = $DB->get_records_sql($query, array('cid' => $cid));
 
