@@ -198,7 +198,7 @@ $string['xrayws_error_graphs_incorrect_contentype'] = 'Incorrect content-type re
 
 // Scheduled task.
 $string['datasync'] = 'Data Synchronization';
-$string['syncfailed'] = 'X-Ray Learning Analytics data sync failed';
+$string['syncfailed'] = 'X-Ray Learning Analytics data sync failed ({$a->siteurl})';
 $string['unexperror'] = 'Unexpected error: ';
 $string['syncfailedexplanation'] = 'Failed to synchronize data with X-Ray Learning Analytics.';
 $string['synclog'] = 'X-Ray Learning Analytics data sync info message';
@@ -217,6 +217,7 @@ $string['coursesync'] = 'X-Ray course synchronization';
 $string['coursesynclog'] = 'X-Ray course synchronization log';
 $string['coursesyncfailed'] = 'X-Ray course synchronization failed';
 $string['coursesynclogentry'] = 'Regular log entry for X-Ray course synchronization';
+$string['moreinfoerror'] = 'More information on this error';
 
 // Course Header.
 $string['atrisk'] = 'At risk';

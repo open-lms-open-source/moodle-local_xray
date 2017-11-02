@@ -211,12 +211,20 @@ function local_xray_group_member_removed(\core\event\group_member_removed $event
  * @throws coding_exception
  */
 function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
+    global $CFG;
 
     $error = $event->get_description();
-    $subject = get_string('syncfailed', 'local_xray');
+    $subject = get_string('syncfailed', 'local_xray', array('siteurl' => $CFG->wwwroot));
     // We will send email to each administrator.
     $userfrom = get_admin();
     $admins = get_admins();
+
+    $text = $error . PHP_EOL;
+    $html = html_writer::tag('p', $error) . PHP_EOL;
+
+    $text .= PHP_EOL . get_string('moreinfoerror', 'local_xray') . PHP_EOL;
+    $html .= html_writer::link($CFG->wwwroot, get_string('moreinfoerror', 'local_xray')) . PHP_EOL;
+
     foreach ($admins as $admin) {
         $eventdata                    = new \core\message\message();
         $eventdata->courseid          = SITEID;
@@ -225,9 +233,9 @@ function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
         $eventdata->userfrom          = $userfrom;
         $eventdata->userto            = $admin;
         $eventdata->subject           = $subject;
-        $eventdata->fullmessage       = $error;
+        $eventdata->fullmessage       = $text;
         $eventdata->fullmessageformat = FORMAT_PLAIN;
-        $eventdata->fullmessagehtml   = '';
+        $eventdata->fullmessagehtml   = $html;
         $eventdata->smallmessage      = '';
         message_send($eventdata);
     }
