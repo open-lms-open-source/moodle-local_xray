@@ -59,6 +59,7 @@ class send_emails extends scheduled_task {
 
         require_once($CFG->dirroot.'/local/xray/locallib.php');
         require_once("$CFG->libdir/pdflib.php");
+        require_once($CFG->dirroot.'/course/lib.php');
 
         try {
             // Check frequency.
@@ -78,11 +79,11 @@ class send_emails extends scheduled_task {
                                 // Admin.
                                 if (array_key_exists($record->userid, get_admins())) {
                                     foreach ($selectedcourses as $course) {
-                                        $coursesusers[] = array($course => $record->userid);
+                                        $coursesusers[$course][] = $record->userid;
                                     }
                                 } else if ($courses = local_xray_get_teacher_courses($record->userid)) { // Teacher.
                                     foreach ($courses as $course) {
-                                        $coursesusers[] = array($course->courseid => $record->userid);
+                                        $coursesusers[$course->courseid][] = $record->userid;
                                     }
                                 }
                             }
@@ -118,7 +119,7 @@ class send_emails extends scheduled_task {
                         foreach ($subscribedusers as $record) {
                             if (isset($record->userid) && $record->userid && isset($record->courseid) && $record->courseid) {
                                 if (in_array($record->courseid, $selectedcourses)) {
-                                    $coursesusers[] = array($record->courseid => $record->userid);
+                                    $coursesusers[$record->courseid][] = $record->userid;
                                 }
                             }
                         }
@@ -129,86 +130,90 @@ class send_emails extends scheduled_task {
                 // Send emails to users subscribed only in some courses.
                 if ($coursesusers) {
                     $messagehtml = '';
-                    foreach ($coursesusers as $value) {
+                    foreach ($coursesusers as $courseid => $usersid) {
+                        if ($course = $DB->get_record('course', array('id' => $courseid), '*', IGNORE_MULTIPLE)) {
+                            $classified = course_classify_for_timeline($course);
 
-                        $courseid = key($value);
-                        $userid = $value[$courseid];
+                            if ($classified == COURSE_TIMELINE_INPROGRESS) {
+                                foreach ($usersid as $userid) {
 
-                        // Check if the user has capabilities to receive email.
-                        if (local_xray_email_capability($courseid, $userid)) {
-                            $to = $DB->get_record('user', array('id' => $userid));
-                            $from = local_xray_get_support_user();
-                            $courseshortname = $DB->get_field('course', 'shortname', array('id' => $courseid));
-                            $subject = get_string('emailsubject', 'local_xray', $courseshortname);
-                            $messagetext = '';
+                                    if (local_xray_email_capability($courseid, $userid)) {
+                                        $to = $DB->get_record('user', array('id' => $userid));
+                                        $from = local_xray_get_support_user();
 
-                            $pdfstatus = false;
-                            $headlinedata = local_xray_template_data($courseid, $userid);
+                                        $subject = get_string('emailsubject', 'local_xray', $course->shortname);
+                                        $messagetext = '';
 
-                            if ($headlinedata) {
-                                // Add the link to the subscription page.
-                                $subscriptionurl = new \moodle_url(
-                                    '/local/xray/view.php',
-                                    array('controller' => 'subscribe', 'courseid' => $courseid)
-                                );
-                                $headlinedata->subscription = \html_writer::link(
-                                    $subscriptionurl,
-                                    get_string('unsubscribeemail', 'local_xray')
-                                );
-                                // Add the title.
-                                $headlinedata->title = get_string('pluginname', 'local_xray');
-                                // Add the data in the template.
-                                $messagehtml = $OUTPUT->render_from_template('local_xray/email', $headlinedata);
-                                // Create PDF.
-                                $pdf = local_xray_create_pdf($headlinedata, $subject);
-                            } else {
-                                $data = array(
-                                    'other' => array(
-                                        'message' => get_string('erroremailheadline', 'local_xray', $courseid)
-                                    )
-                                );
-                                $event = email_failed::create($data);
-                                $event->trigger();
-                                continue;
-                            }
+                                        $pdfstatus = false;
+                                        $headlinedata = local_xray_template_data($courseid, $userid);
 
-                            $attachment = '';
-                            $filename = '';
-                            // Add PDF file in moodle.
-                            if (isset($pdf) && $pdf instanceof \pdf) {
-                                // Close and output PDF document.
-                                $strfemaildate = get_string('strfemaildate', 'local_xray');
-                                $reportdate = userdate(time(), $strfemaildate, 99, false);
-                                $filename = clean_param('XRAY_COURSE_'.$courseshortname.'_'.$reportdate.'.pdf', PARAM_FILE);
-                                $filecontent = $pdf->Output($filename, 'S');
-                                // Add as a temporary file.
-                                $dir = 'files';
-                                $fileprefix = 'tempup_';
-                                if ($dir = make_temp_directory($dir)) {
-                                    if ($attachment = tempnam($dir, $fileprefix)) {
-                                        file_put_contents($attachment , $filecontent);
-                                        $pdfstatus = true;
+                                        if ($headlinedata) {
+                                            // Add the link to the subscription page.
+                                            $subscriptionurl = new \moodle_url(
+                                                '/local/xray/view.php',
+                                                array('controller' => 'subscribe', 'courseid' => $courseid)
+                                            );
+                                            $headlinedata->subscription = \html_writer::link(
+                                                $subscriptionurl,
+                                                get_string('unsubscribeemail', 'local_xray')
+                                            );
+                                            // Add the title.
+                                            $headlinedata->title = get_string('pluginname', 'local_xray');
+                                            // Add the data in the template.
+                                            $messagehtml = $OUTPUT->render_from_template('local_xray/email', $headlinedata);
+                                            // Create PDF.
+                                            $pdf = local_xray_create_pdf($headlinedata, $subject);
+                                        } else {
+                                            $data = array(
+                                                'other' => array(
+                                                    'message' => get_string('erroremailheadline', 'local_xray', $courseid)
+                                                )
+                                            );
+                                            $event = email_failed::create($data);
+                                            $event->trigger();
+                                            continue;
+                                        }
+
+                                        $attachment = '';
+                                        $filename = '';
+                                        // Add PDF file in moodle.
+                                        if (isset($pdf) && $pdf instanceof \pdf) {
+                                            // Close and output PDF document.
+                                            $strfemaildate = get_string('strfemaildate', 'local_xray');
+                                            $reportdate = userdate(time(), $strfemaildate, 99, false);
+                                            $filename = clean_param('XRAY_COURSE_'.$course->shortname.'_'.$reportdate.'.pdf', PARAM_FILE);
+                                            $filecontent = $pdf->Output($filename, 'S');
+                                            // Add as a temporary file.
+                                            $dir = 'files';
+                                            $fileprefix = 'tempup_';
+                                            if ($dir = make_temp_directory($dir)) {
+                                                if ($attachment = tempnam($dir, $fileprefix)) {
+                                                    file_put_contents($attachment , $filecontent);
+                                                    $pdfstatus = true;
+                                                }
+                                            }
+                                        }
+                                        // Send Email.
+                                        $email = email_to_user($to, $from, $subject, $messagetext, $messagehtml, $attachment, $filename);
+                                        // Delete the file.
+                                        if ($realpath = realpath($attachment)) {
+                                            if (is_writable($realpath)) {
+                                                unlink($realpath);
+                                            }
+                                        }
+                                        if ($email) {
+                                            $data = array(
+                                                'other' => array(
+                                                    'courseid' => $courseid,
+                                                    'to' => $userid,
+                                                    'pdf' => $pdfstatus
+                                                )
+                                            );
+                                            $event = email_log::create($data);
+                                            $event->trigger();
+                                        }
                                     }
                                 }
-                            }
-                            // Send Email.
-                            $email = email_to_user($to, $from, $subject, $messagetext, $messagehtml, $attachment, $filename);
-                            // Delete the file.
-                            if ($realpath = realpath($attachment)) {
-                                if (is_writable($realpath)) {
-                                    unlink($realpath);
-                                }
-                            }
-                            if ($email) {
-                                $data = array(
-                                    'other' => array(
-                                        'courseid' => $courseid,
-                                        'to' => $userid,
-                                        'pdf' => $pdfstatus
-                                    )
-                                );
-                                $event = email_log::create($data);
-                                $event->trigger();
                             }
                         }
                     }
