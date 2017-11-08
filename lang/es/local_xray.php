@@ -191,7 +191,8 @@ $string['xrayws_error_graphs_incorrect_contentype'] = 'Incorrecto content-type r
 
 /* Scheduled task */
 $string['datasync'] = 'Sincronización de datos';
-$string['syncfailed'] = 'Sincronización de datos con X-Ray Learning Analytics ha fallado ({$a->siteurl})';
+$string['syncfailed'] = 'Sincronización de datos con X-Ray Learning Analytics ha fallado';
+$string['syncfailedmail'] = 'Sincronización de datos con X-Ray Learning Analytics ha fallado ({$a->siteurl})';
 $string['unexperror'] = 'Error inesperado: ';
 $string['syncfailedexplanation'] = 'Fallo al sincronizar datos con X-Ray Learning Analytics.';
 $string['synclog'] = 'Mensaje de información de sincronización de datos con X-Ray Learning Analytics';

@@ -214,7 +214,7 @@ function local_xray_sync_failed(\local_xray\event\sync_failed $event) {
     global $CFG;
 
     $error = $event->get_description();
-    $subject = get_string('syncfailed', 'local_xray', array('siteurl' => $CFG->wwwroot));
+    $subject = get_string('syncfailedmail', 'local_xray', array('siteurl' => $CFG->wwwroot));
     // We will send email to each administrator.
     $userfrom = get_admin();
     $admins = get_admins();

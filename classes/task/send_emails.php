@@ -132,8 +132,8 @@ class send_emails extends scheduled_task {
                     $messagehtml = '';
                     foreach ($coursesusers as $courseid => $usersid) {
                         if ($course = $DB->get_record('course', array('id' => $courseid), '*', IGNORE_MULTIPLE)) {
+                            // Check if the course is in progress.
                             $classified = course_classify_for_timeline($course);
-
                             if ($classified == COURSE_TIMELINE_INPROGRESS) {
                                 foreach ($usersid as $userid) {
 
