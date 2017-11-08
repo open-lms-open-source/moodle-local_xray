@@ -79,11 +79,11 @@ class send_emails extends scheduled_task {
                                 // Admin.
                                 if (array_key_exists($record->userid, get_admins())) {
                                     foreach ($selectedcourses as $course) {
-                                        $coursesusers[$course][] = $record->userid;
+                                        $coursesusers[$course][$record->userid] = $record->userid;
                                     }
                                 } else if ($courses = local_xray_get_teacher_courses($record->userid)) { // Teacher.
                                     foreach ($courses as $course) {
-                                        $coursesusers[$course->courseid][] = $record->userid;
+                                        $coursesusers[$course->courseid][$record->userid] = $record->userid;
                                     }
                                 }
                             }
@@ -119,7 +119,7 @@ class send_emails extends scheduled_task {
                         foreach ($subscribedusers as $record) {
                             if (isset($record->userid) && $record->userid && isset($record->courseid) && $record->courseid) {
                                 if (in_array($record->courseid, $selectedcourses)) {
-                                    $coursesusers[$record->courseid][] = $record->userid;
+                                    $coursesusers[$record->courseid][$record->userid] = $record->userid;
                                 }
                             }
                         }
