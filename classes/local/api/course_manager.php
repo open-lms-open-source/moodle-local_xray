@@ -96,9 +96,8 @@ abstract class course_manager {
          LEFT JOIN {local_xray_selectedcourse} xsc ON (mdc.id = xsc.cid)
 
              $wherequery
-
-          GROUP BY mdc.id
-          ORDER BY mdc.fullname;
+             
+          GROUP BY mdc.id;
         ";
 
         $xraycourses = $DB->get_records_sql($xraycoursequery, $params);
@@ -110,12 +109,18 @@ abstract class course_manager {
             if ((!empty($wsapires->data) && in_array($xraycourse->id, $wsapires->data)) || defined('BEHAT_SITE_RUNNING') ) {
                 $res[] = array(
                     'id' => $xraycourse->id,
-                    'name' => $xraycourse->fullname,
+                    'name' => strip_tags($xraycourse->fullname),
                     'shortname' => $xraycourse->shortname,
                     'checked' => !is_null($xraycourse->xrayid)
                 );
             }
         }
+
+        // Order alphabetical name when a course have multilang option.
+        usort($res, function ($a, $b) {
+            return strcasecmp($a['name'], $b['name']);
+        });
+
         if (!$single) {
             return $res;
         } else {

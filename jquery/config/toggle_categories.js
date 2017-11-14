@@ -628,16 +628,15 @@ function config_toggle_categories(YUI, data) {
             + '<button id="cat_' + cat.id + '_lbl" class="btn btn-link cat_label" href="javascript:void(0)"'
             + ' title="' + cat.name + (self.rootcat.id == parentCat.id ? ' Category' : ' Subcategory') + '" type="button"'
             + ' aria-label="' + cat.name + (self.rootcat.id == parentCat.id ? ' Category' : ' Subcategory') + '">' + cat.name + '</button>'
+            + '<div class="xray-right-course-inputs">'
+            + '<input type="checkbox" name="cat_' + cat.id + '" id="cat_' + cat.id + '" value="1"'
+            + ' aria-label="' + cat.name + '" '+'><label for="cat_' + cat.id + '">&nbsp;</label>'
+            + '</div>'
             + '<div class="xray-child-separator"></div>'
             + '<div class="xray-child-container">'
             + '<ul id="cat_' + cat.id + '_children" class="xray-category-tree"></ul>'
             + '</div>'
-            + '</li>'
-            + '<div class="xray-right-course-inputs" >'
-            + '<input type="checkbox" name="cat_' + cat.id + '" id="cat_' + cat.id + '" value="1"'
-            + ' aria-label="' + cat.name + '" '+'><label for="cat_' + cat.id + '">&nbsp;</label>'
-            + '</div>'
-            + '</div>';
+            + '</li>';
 
         $(catPrefix + parentCat.id + '_children').append(catStr);
 
@@ -686,10 +685,11 @@ function config_toggle_categories(YUI, data) {
 
         var courseStr = '<li id="course_' + course.id + '_li" class="xray-course">'
             + '<label for="courses[' + course.id + ']" tabindex="0" class="course_label"'
-            + 'title="'  + course.name + ' Course"'
             + 'aria-label="' + course.name + ' Course">' + course.name + '</label>&nbsp;'
-            + '<div class="xray-right-course-inputs" >'
+            + '<div class="xray-right-course-inputs">'
+            + '<div class="xray-course-link">'
             + '<a target="_blank" href="' + self.www_root + '/course/view.php?id=' + course.id + '" class="xray-course-shortname">' + course.shortname + '</a>'
+            + '</div>'
             + '<input type="checkbox" id="id_courses_' + course.id + '" name="courses[' + course.id + ']" value="1" '
             + (course.checked ? 'checked="checked" ' : ' ')
             + 'aria-label="' + course.name + '" '
