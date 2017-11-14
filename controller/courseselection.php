@@ -112,7 +112,7 @@ class local_xray_controller_courseselection extends mr_controller_admin {
                 // If database is empty and courses are foung in X-Ray server, load them to the database.
                 \local_xray\local\api\course_manager::save_selected_courses($xrayids);
                 $toform = new stdClass();
-                $toform->joined_courses = implode(',', array_unique($formval));
+                $toform->joined_courses = implode(',', array_unique($xrayids));
                 $mform->set_data($toform);
             }
 

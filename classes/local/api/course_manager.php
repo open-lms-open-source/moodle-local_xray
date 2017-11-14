@@ -64,20 +64,22 @@ abstract class course_manager {
 
     /**
      * Retrieves the xray courses for the specified category id or a specific course for the specified course id.
-     * @param int $categoryid
+     * @param int|string $categoryid Category id or 'all'
      * @param int $courseid
      * @return \stdClass[]|\stdClass Array of courses or single course that has all course information and selection status
      */
     public static function get_xray_courses($categoryid = 'all', $courseid = null) {
-        if ((is_null($categoryid) && is_null($courseid)) || $categoryid === 'all' || $categoryid === 0) {
+        if ((is_null($categoryid) && is_null($courseid)) || $categoryid === 0) {
             return array();
         }
 
         $single = false;
-        $wherequery = 'WHERE mdc.category = :categoryid';
-        if (!is_null($courseid)) {
+        $wherequery = '';
+        if (!is_null($categoryid) && $categoryid !== 'all') {
+            $wherequery .= 'WHERE mdc.category = :categoryid';
+        } else if (!is_null($courseid)) {
             $single = true;
-            $wherequery = 'WHERE mdc.id = :courseid';
+            $wherequery .= 'WHERE mdc.id = :courseid';
         }
         global $CFG, $DB;
 
@@ -131,12 +133,13 @@ abstract class course_manager {
     /**
      * Retrieve the available courses for usage with X-Ray as json encoded string
      *
-     * @param string $cid Id of the category
+     * @param string $categoryid Id of the category
+     * @param int $options JSON constant options
      * @return string[] Format $id=>$fullname
      * @throws \moodle_exception
      */
-    public static function list_courses_as_json($cid = 'all') {
-        return json_encode(self::list_courses_as_simple_array($cid));
+    public static function list_courses_as_json($categoryid = 'all', $options = 0) {
+        return json_encode(self::list_courses_as_simple_array($categoryid), $options);
     }
 
     /**
@@ -363,18 +366,37 @@ abstract class course_manager {
             return;
         }
 
-        global $DB;
+        global $DB, $USER;
 
         $selcourtable = 'local_xray_selectedcourse';
+        $allcategoriesid = 'all';
+
 
         // Clear the table from old selection.
         if ($DB->record_exists($selcourtable, array())) {
+            // X-Ray Course removal event data.
+            $remeventdata = array(
+                'other' => array('userid' => $USER->id,
+                                 'courses' => self::pretty_print_selected_courses()),
+                'context' => \context_system::instance());
+            // Record deletion.
             $DB->delete_records($selcourtable);
+            // X-Ray Course removal event trigger.
+            \local_xray\event\course_selection_removed::create($remeventdata)->trigger();
         }
 
-        // Save all records.
-        $records = array_map(array(__CLASS__, 'process_ui_record'), $courseids);
-        $DB->insert_records($selcourtable, $records);
+        // If no course ids are selected for saving, do not continue.
+        if (!empty($courseids)) {
+            // Save all records.
+            $records = array_map(array(__CLASS__, 'process_ui_record'), $courseids);
+            $DB->insert_records($selcourtable, $records);
+            // X-Ray Course addition event trigger.
+            $addeventdata = array(
+                'other' => array('userid' => $USER->id,
+                                 'courses' => self::pretty_print_selected_courses()),
+                'context' => \context_system::instance());
+            \local_xray\event\course_selection_added::create($addeventdata)->trigger();
+        }
 
         // Save courses to X-Ray as well.
         if (!defined('BEHAT_SITE_RUNNING')) {
@@ -393,10 +415,10 @@ abstract class course_manager {
 
         $selcourtable = 'local_xray_selectedcourse';
 
-        $courses = $DB->get_records($selcourtable);
+        $courseids = $DB->get_records($selcourtable);
 
         $res = array();
-        foreach ($courses as $course) {
+        foreach ($courseids as $course) {
             $res[] = $course->cid;
         }
 
@@ -412,8 +434,8 @@ abstract class course_manager {
     private static function list_selected_courses() {
         global $DB;
         $selcourtable = 'local_xray_selectedcourse';
-        $courses = $DB->get_records($selcourtable);
-        return $courses;
+        $courseids = $DB->get_records($selcourtable);
+        return $courseids;
     }
 
     /**
@@ -519,5 +541,27 @@ abstract class course_manager {
                 self::save_courses_to_xray();
             }
         }
+    }
+
+    /**
+     * Retrieve the available courses for usage with X-Ray as pretty printe string
+     * @return string
+     * @throws \moodle_exception
+     */
+    public static function pretty_print_selected_courses() {
+        $xraycourses = self::list_selected_courses();
+        return array_reduce($xraycourses, array(__CLASS__, 'pretty_print_xray_course_callback'));
+    }
+
+    /**
+     * Pretty prints the X-Ray course and appends it to the carried string.
+     * @param string $carry Carried string
+     * @param \stdClass $item X-Ray course
+     * @return string
+     */
+    private static function pretty_print_xray_course_callback($carry, $item) {
+        $carrystr = !is_null($carry) ? $carry.', ' : '';
+        $res = sprintf('%s(ID: %s)', $carrystr, $item->cid);
+        return $res;
     }
 }
