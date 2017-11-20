@@ -285,3 +285,44 @@ function local_xray_user_enrolment_updated(\core\event\user_enrolment_updated $e
     ];
     $DB->update_record_raw('user_enrolments', $data);
 }
+
+/**
+ * @param \core\event\course_category_updated $event
+ * @@throws dml_exception
+ */
+function local_xray_course_category_updated(\core\event\course_category_updated $event) {
+    global $DB;
+    $disabled = get_config('local_xray', 'disablecoursecatevent');
+    if (!empty($disabled)) {
+        return;
+    }
+    $dt = \local_xray\event\course_category_updated_override::createfrom($event);
+    if ($dt->is_hide() or $dt->is_show()) {
+        // Update timemodified for all courses in the category.
+        $path = $DB->get_field('course_categories', 'path', ['id' => $event->objectid]);
+        // Get all child categories and hide too.
+        $cats = [$event->objectid];
+        $count = 1;
+        if ($subcats = $DB->get_records_select('course_categories', "path LIKE ?", ["$path/%"], 'id')) {
+            foreach ($subcats as $cat) {
+                $cats[] = $cat->id;
+                $count++;
+            }
+        }
+        // Split update into batches to avoid sending overly large queries to the server.
+        // We also avoid executing lot's of queries in the loop.
+        try {
+            $transaction = $DB->start_delegated_transaction();
+            for ($pos = 0, $step = 100; $pos < $count; $pos += $step) {
+                list($sql, $params) = $DB->get_in_or_equal(array_slice($cats, $pos, $step), SQL_PARAMS_NAMED);
+                $params['t'] = $event->timecreated;
+                $DB->execute('UPDATE {course} c SET c.timemodified = :t WHERE c.category '.$sql, $params);
+            }
+            $transaction->allow_commit();
+        } catch (Exception $e) {
+            if (!empty($transaction) && !$transaction->is_disposed()) {
+                $transaction->rollback($e);
+            }
+        }
+    }
+}

@@ -196,7 +196,7 @@ $string['xrayws_error_curl'] = '{$a}';
 $string['xrayws_error_graphs'] = 'Error to get image ({$a->url}) for "{$a->graphelement}": {$a->error}.';
 $string['xrayws_error_graphs_incorrect_contentype'] = 'Incorrect content-type received from xray webservice: {$a}.';
 
-// Scheduled task.
+// Scheduled tasks.
 $string['datasync'] = 'Data Synchronization';
 $string['syncfailed'] = 'X-Ray Learning Analytics data sync failed';
 $string['syncfailedmail'] = 'X-Ray Learning Analytics data sync failed ({$a->siteurl})';
@@ -219,6 +219,12 @@ $string['coursesynclog'] = 'X-Ray course synchronization log';
 $string['coursesyncfailed'] = 'X-Ray course synchronization failed';
 $string['coursesynclogentry'] = 'Regular log entry for X-Ray course synchronization';
 $string['moreinfoerror'] = 'More information on this error';
+
+/* X-Ray Course Selection logging */
+$string['event_course_selection_added'] = 'X-Ray Course Selection Addition';
+$string['event_course_selection_added_desc'] = 'The user with id \'{$a->userid}\' added the courses with the following data to X-Ray Course Selection: [{$a->courses}]';
+$string['event_course_selection_removed'] = 'X-Ray Course Selection Removal';
+$string['event_course_selection_removed_desc'] = 'The user with id \'{$a->userid}\' removed the courses with the following data from X-Ray Course Selection: [{$a->courses}]';
 
 // Course Header.
 $string['atrisk'] = 'At risk';
