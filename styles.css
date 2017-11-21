@@ -257,7 +257,7 @@ a.xray-headline-link:hover {
 .xray-reports-links, .xray-reports-links-norisk {
     display: inline-block;
     margin: 0;
-    padding: 0;
+    padding: 0 0 4px 0;
     width: 100%;
 }
 .xray-reports-links li {
@@ -277,11 +277,12 @@ a.xray-headline-link:hover {
 .xray-reports-links li a img.icon, .xray-reports-links-norisk li a img.icon {
     width: 44px;
     height: 44px;
-    margin: 0 6px 0 0;
+    margin: 0 6px 3px 0;
 }
 .xray-reports-links li a.xray-reports-links-image, .xray-reports-links-norisk li a.xray-reports-links-image {
     background-size: 44px 44px !important;
     font-size: 14px;
+    padding-bottom: 18px;
 }
 /**************** End Navigation reports  *********************************/
 
