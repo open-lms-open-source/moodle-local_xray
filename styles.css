@@ -274,29 +274,14 @@ a.xray-headline-link:hover {
     padding: 0 0.5%;
     margin: 0;
 }
-.xray-reports-links li a, .xray-reports-links-norisk li a {
-    display: block;
-    text-align: left;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-image: url([[pix:local_xray|xray-discussions]]);
+.xray-reports-links li a img.icon, .xray-reports-links-norisk li a img.icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 6px 0 0;
 }
 .xray-reports-links li a.xray-reports-links-image, .xray-reports-links-norisk li a.xray-reports-links-image {
     background-size: 44px 44px !important;
     font-size: 14px;
-    padding: 12px 0 18px 50px;
-}
-.xray-reports-links .risk {
-    background-image: url([[pix:local_xray|xray-risk]]);
-}
-.xray-reports-links .activityreport, .xray-reports-links-norisk .activityreport {
-    background-image: url([[pix:local_xray|xray-activity]]);
-}
-.xray-reports-links .gradebookreport, .xray-reports-links-norisk .gradebookreport {
-    background-image: url([[pix:local_xray|xray-grade]]);
-}
-.xray-reports-links .discussionreport, .xray-reports-links-norisk .discussionreport {
-    background-image: url([[pix:local_xray|xray-discussions]]);
 }
 /**************** End Navigation reports  *********************************/
 

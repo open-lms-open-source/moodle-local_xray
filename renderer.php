@@ -640,7 +640,28 @@ class local_xray_renderer extends plugin_renderer_base {
                         if ($reportstring == $reportcontroller) {
                             $class .= " xray-menu-item-active";
                         }
-                        $menuitems[] = html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $class));
+
+                        $reportpix = '';
+                        switch($reportstring) {
+                            case "activityreport":
+                                $reportpix = 'xray-activity';
+                                break;
+                            case "discussionreport":
+                                $reportpix = 'xray-discussions';
+                                break;
+                            case "gradebookreport":
+                                $reportpix = 'xray-grade';
+                                break;
+                            case "risk":
+                                $reportpix = 'xray-risk';
+                                break;
+                        }
+
+                        $icon = $OUTPUT->pix_icon($reportpix,
+                            '',
+                            'local_xray');
+                        $menuitems[] = html_writer::link($url, $icon.get_string($reportstring, 'local_xray'), array('class' => $class));
+
                     }
                 }
                 $title = '';
