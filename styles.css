@@ -560,10 +560,9 @@ a.disabled {
     padding-top: 14px;
 }
 
-#xray-nav-recommendations .recommendedactionstitle {
-    padding-left: 45px;
-    padding-right: 5px;
-    padding-top: 14px;
+#xray-nav-recommendations .recommendedactionstitle img.icon{
+    width: 39px;
+    height: 45px;
 }
 
 #xray-nav-recommendations li:last-child {

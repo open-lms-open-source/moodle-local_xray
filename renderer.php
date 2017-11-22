@@ -357,7 +357,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      * */
     private function dashboard_xray_output($data, $riskdisabled = false) {
-        global $CFG, $COURSE;
+        global $CFG, $COURSE, $OUTPUT;
 
         require_once($CFG->dirroot.'/local/xray/locallib.php');
 
@@ -489,7 +489,8 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::tag("nav", $list, array("id" => "xray-nav-headline"));
 
         // Recommended Actions Title.
-        $recommendedactionstitle = html_writer::div(get_string('recommendedactions', 'local_xray'), 'recommendedactionstitle');
+        $recommendedactionsicon = $OUTPUT->pix_icon('RecommendedActions_icon', '', 'local_xray');
+        $recommendedactionstitle = html_writer::div($recommendedactionsicon.get_string('recommendedactions', 'local_xray'), 'recommendedactionstitle');
 
         // Check if there are recommended actions.
         $recommendationlist = '';
