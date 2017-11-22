@@ -575,3 +575,10 @@ a.disabled {
     z-index: 1109 !important;
 }
 /**************** End styles for Validation panel ****************/
+/**************** Print ****************/
+@media print {
+    #xray-js-menu {
+        width:650px;
+    }
+}
+/**************** End styles for Print ****************/
