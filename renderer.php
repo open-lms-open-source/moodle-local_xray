@@ -579,11 +579,13 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     private function headline_column($number, $text, $linkurl, $textweekbefore, $stylestatus) {
 
+        global $OUTPUT;
+
         // Link with Number and icon.
-        $icon = html_writer::span('', $stylestatus[0]."-icon xray-headline-icon");
+        $arrowicon = $OUTPUT->pix_icon($stylestatus[2], '', 'local_xray');
         $number = html_writer::tag("p", $number, array("class" => "xray-headline-number"));
         $link = html_writer::link($linkurl,
-            $number.$icon,
+            $number.$arrowicon,
             array("tabindex" => -1,
                 "class" => "xray-headline-link",
                 "title" => get_string('link_gotoreport', 'local_xray')));

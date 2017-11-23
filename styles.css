@@ -180,6 +180,13 @@ a.xray-headline-link:hover {
     display: inline-block;
     margin-bottom: 5px;
 }
+.xray-headline-link img.icon{
+    height: 30px;
+    width: 30px;
+    position:relative;
+    top: -6px;
+    left:-9px;
+}
 .xray-headline-icon {
     background-position: center 0px;
     background-repeat: no-repeat;
