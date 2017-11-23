@@ -667,6 +667,9 @@ $string['warn_courses_do_not_match'] = "The selected courses on the X-Ray server
 $string['warn_courses_not_persisted_in_xrf'] = 'The selected courses weren\'t saved in the X-Ray server due to '.
     'system configuration.';
 $string['xray_valid_course_error'] = 'There was an error retrieving valid courses';
+$string['xraycategory'] = ' Category';
+$string['xraysubcategory'] = ' Subcategory';
+$string['xraycourse'] = ' Course';
 
 // Course related messages.
 $string['warn_course_disabled'] = 'This course doesn\'t use X-Ray Learning Analytics. If you think it should, '.

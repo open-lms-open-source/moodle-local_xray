@@ -72,7 +72,7 @@ button.cat_label:visited {
 }
 
 .xray-right-course-inputs > input[type=checkbox]:focus + label {
-  width        : 1em;
+  width        : 0em;
   margin-left  : -1em;
   padding-left : 1em;
   line-height  : 1em;

@@ -668,6 +668,9 @@ $string['warn_courses_do_not_match'] = "Los cursos seleccionados en el servidor 
 $string['warn_courses_not_persisted_in_xrf'] = 'Los cursos seleccionados no fueron salvados en el servidor de X-Ray debido a '.
     'la configuración del sistema.';
 $string['xray_valid_course_error'] = 'Hubo un error recuperando los cursos validos';
+$string['xraycategory'] = ' Categoría';
+$string['xraysubcategory'] = ' Subcategoría';
+$string['xraycourse'] = ' Curso';
 
 // Course related messages.
 $string['warn_course_disabled'] = 'Este curso no utiliza X-Ray Learning Analytics. Si piensa que debería, '.
