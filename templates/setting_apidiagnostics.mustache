@@ -1,0 +1,50 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_xray/setting_apidiagnostics
+
+    API diagnostic button template.
+
+    Context variables required for this template:
+    * name - form element name
+    * id - element id
+    * problemnotif - Problem notification template
+    * successnotif - Success notification template
+    * messagenotif - Message notification template
+
+    Example context (json):
+    {
+        "name": "test",
+        "id": "test0",
+        "problemnotif": "...",
+        "successnotif": "...",
+        "messagenotif": "..."
+    }
+}}
+<div class="form-text">
+    <input name="{{name}}" id="{{id}}" class="api_diag_btn btn btn-secondary" type="submit"
+           value="{{# str }} test_api_action, local_xray {{/ str }}">
+    <div id="api_diag" title="{{# str }} test_api_action, local_xray {{/ str }}">
+        <div class="noticetemplate_problem">{{{ problemnotif }}}</div>
+        <div class="noticetemplate_success">{{{ successnotif }}}</div>
+        <div class="noticetemplate_message">{{{ messagenotif }}}</div>
+        <div id="ws_connect-status" class="api-connection-status"></div><hr />
+        <div id="s3_bucket-status" class="api-connection-status"></div><hr />
+        <div id="compress-status" class="api-connection-status"></div>
+    </div>
+</div>
+

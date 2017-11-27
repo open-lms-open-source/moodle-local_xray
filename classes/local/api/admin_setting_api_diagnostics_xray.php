@@ -35,7 +35,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class admin_setting_api_diagnostics_xray extends \admin_setting_heading {
+class admin_setting_api_diagnostics_xray extends \admin_setting {
 
     /**
      * Builds a settings button for testing valid xray api, aws and compression params
@@ -45,12 +45,10 @@ class admin_setting_api_diagnostics_xray extends \admin_setting_heading {
 
         if ($PAGE->pagetype === 'admin-setting-local_xray_global') {
             $this->require_js_libs();
-            $output = $this->print_html_output();
-            parent::__construct('apidiagnostics', '', $output);
-        } else {
-            parent::__construct('apidiagnostics', '', '');
         }
 
+        parent::__construct('local_xray/apidiagnostics', get_string('test_api_label', 'local_xray'),
+            get_string('test_api_description', 'local_xray'), '');
     }
 
     /**
@@ -103,30 +101,46 @@ class admin_setting_api_diagnostics_xray extends \admin_setting_heading {
     }
 
     /**
-     * Prints the button to be used and the dialog window where the information will be shown
-     * @global \renderer_base $OUTPUT
-     * @return string
+     * Always returns true
+     * @return bool Always returns true
      */
-    private function print_html_output() {
+    public function get_setting() {
+        return true;
+    }
+
+    /**
+     * Always returns true
+     * @return bool Always returns true
+     */
+    public function get_defaultsetting() {
+        return true;
+    }
+
+    /**
+     * Never write settings
+     * @return string Always returns an empty string
+     */
+    public function write_setting($data) {
+        // Do not write any setting.
+        return '';
+    }
+
+    /**
+     * Prints the button to be used and the dialog window where the information will be shown
+     * @return string Returns an HTML string
+     */
+    public function output_html($data, $query='') {
         global $OUTPUT;
 
-        $o = '<div id="api_diag" title="'.get_string('test_api_action', 'local_xray').'">';
-        $o .= '<div class="noticetemplate_problem">'.$OUTPUT->notification('', 'error').'</div>';
-        $o .= '<div class="noticetemplate_success">'.$OUTPUT->notification('', 'success').'</div>';
-        $o .= '<div class="noticetemplate_message">'.$OUTPUT->notification('', 'warning').'</div>';
-        $o .= '<div id="ws_connect-status" class="api-connection-status"></div><hr />';
-        $o .= '<div id="s3_bucket-status" class="api-connection-status"></div><hr />';
-        $o .= '<div id="compress-status" class="api-connection-status"></div>';
-        $o .= '</div>';
-        $o .= '<div class="form-item">';
-        $o .= '<div class="form-label">';
-        $o .= '<label>'.get_string('test_api_label', 'local_xray').'</label>';
-        $o .= '</div>';
-        $o .= '<div class="form-setting"><input class="form-submit api_diag_btn" type="submit" value="'.
-              get_string('test_api_action', 'local_xray').'"></div>';
-        $o .= '<div class="form-description"><p>'.get_string('test_api_description', 'local_xray').'</p></div>';
-        $o .= '</div>';
+        $context = (object) [
+            'id' => $this->get_id(),
+            'name' => $this->get_full_name(),
+            'problemnotif' => $OUTPUT->notification('', 'error'),
+            'successnotif' => $OUTPUT->notification('', 'success'),
+            'messagenotif' => $OUTPUT->notification('', 'warning'),
+        ];
+        $element = $OUTPUT->render_from_template('local_xray/setting_apidiagnostics', $context);
 
-        return $o;
+        return format_admin_setting($this, $this->visiblename, $element, $this->description, true, '', null, $query);
     }
 }
