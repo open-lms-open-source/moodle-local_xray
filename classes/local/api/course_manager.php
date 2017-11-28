@@ -371,33 +371,57 @@ abstract class course_manager {
         $selcourtable = 'local_xray_selectedcourse';
         $allcategoriesid = 'all';
 
-
+        $context = \context_system::instance();
+        $before_xraycourses_saved = $DB->get_records_menu($selcourtable, array());
         // Clear the table from old selection.
         if ($DB->record_exists($selcourtable, array())) {
-            // X-Ray Course removal event data.
-            $remeventdata = array(
-                'other' => array('userid' => $USER->id,
-                                 'courses' => self::pretty_print_selected_courses()),
-                'context' => \context_system::instance());
             // Record deletion.
             $DB->delete_records($selcourtable);
-            // X-Ray Course removal event trigger.
-            \local_xray\event\course_selection_removed::create($remeventdata)->trigger();
         }
-
         // If no course ids are selected for saving, do not continue.
         if (!empty($courseids)) {
             // Save all records.
             $records = array_map(array(__CLASS__, 'process_ui_record'), $courseids);
             $DB->insert_records($selcourtable, $records);
+        }
+        $after_xraycourses_saved = $DB->get_records_menu($selcourtable, array());
+        $added_xraycourses = array_diff($after_xraycourses_saved, $before_xraycourses_saved);
+        if ($added_xraycourses) {
+            $diff = array();
+            foreach ($added_xraycourses as $id => $course) {
+                $diff[] = 'ID: ' . $course;
+            }
+            // Order the numbers of the course ids on the log page from the lowest to the highest.
+            usort($diff, function ($a, $b) {
+                return strcasecmp($a, $b);
+            });
+            $diff = implode(', ', $diff);
             // X-Ray Course addition event trigger.
             $addeventdata = array(
+                'context' => $context,
                 'other' => array('userid' => $USER->id,
-                                 'courses' => self::pretty_print_selected_courses()),
-                'context' => \context_system::instance());
+                                 'courses' => $diff));
             \local_xray\event\course_selection_added::create($addeventdata)->trigger();
         }
-
+        $deleted_xraycourses = array_diff($before_xraycourses_saved, $after_xraycourses_saved);
+        if ($deleted_xraycourses) {
+            $diff = array();
+            foreach ($deleted_xraycourses as $id => $course) {
+                $diff[] = 'ID: ' . $course;
+            }
+            // Order the numbers of the course ids on the log page from the lowest to the highest.
+            usort($diff, function ($a, $b) {
+                return strcasecmp($a, $b);
+            });
+            $diff = implode(', ', $diff);
+            // X-Ray Course removal event data.
+            $remeventdata = array(
+                'context' => $context,
+                'other' => array('userid' => $USER->id,
+                                 'courses' => $diff));
+            // X-Ray Course removal event trigger.
+            \local_xray\event\course_selection_removed::create($remeventdata)->trigger();
+        }
         // Save courses to X-Ray as well.
         if (!defined('BEHAT_SITE_RUNNING')) {
             self::save_courses_to_xray();
@@ -541,27 +565,5 @@ abstract class course_manager {
                 self::save_courses_to_xray();
             }
         }
-    }
-
-    /**
-     * Retrieve the available courses for usage with X-Ray as pretty printe string
-     * @return string
-     * @throws \moodle_exception
-     */
-    public static function pretty_print_selected_courses() {
-        $xraycourses = self::list_selected_courses();
-        return array_reduce($xraycourses, array(__CLASS__, 'pretty_print_xray_course_callback'));
-    }
-
-    /**
-     * Pretty prints the X-Ray course and appends it to the carried string.
-     * @param string $carry Carried string
-     * @param \stdClass $item X-Ray course
-     * @return string
-     */
-    private static function pretty_print_xray_course_callback($carry, $item) {
-        $carrystr = !is_null($carry) ? $carry.', ' : '';
-        $res = sprintf('%s(ID: %s)', $carrystr, $item->cid);
-        return $res;
     }
 }
