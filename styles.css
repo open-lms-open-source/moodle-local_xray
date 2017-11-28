@@ -164,7 +164,10 @@
     font-size: 30px;
     margin-bottom: 0;
     margin-right: 5px;
-    display: inline;
+    float: left;
+}
+.xray-arrow {
+    float: left;
 }
 a.xray-headline-link:hover {
     text-decoration: none !important;
@@ -178,14 +181,12 @@ a.xray-headline-link:hover {
 }
 .xray-headline-link {
     display: inline-block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
-.xray-headline-link img.icon{
+.xray-headline-link img.icon {
     height: 30px;
     width: 30px;
-    position:relative;
-    left:-9px;
-    margin-bottom: 11px;
+    padding-top: 5px;
 }
 .xray-headline-icon {
     background-position: center 0px;
@@ -567,6 +568,12 @@ a.disabled {
 @media print {
     #xray-js-menu {
         width:650px;
+    }
+    .xray-headline-number {
+        float: none;
+    }
+    .xray-arrow {
+        float: none;
     }
 }
 /**************** End styles for Print ****************/

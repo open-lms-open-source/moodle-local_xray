@@ -582,8 +582,10 @@ class local_xray_renderer extends plugin_renderer_base {
         global $OUTPUT;
 
         // Link with Number and icon.
-        $arrowicon = $OUTPUT->pix_icon($stylestatus[2], '', 'local_xray');
-        $number = html_writer::tag("p", $number, array("class" => "xray-headline-number"));
+        $icon = $OUTPUT->pix_icon($stylestatus[2], '', 'local_xray');
+        $arrowicon = html_writer::tag("div", $icon, array("class" => "xray-arrow"));
+        $number = html_writer::tag("div", $number, array("class" => "xray-headline-number"));
+
         $link = html_writer::link($linkurl,
             $number.$arrowicon,
             array("tabindex" => -1,
