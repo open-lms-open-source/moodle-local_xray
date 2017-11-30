@@ -643,7 +643,7 @@ $string['error_single_activity'] = 'Reports aren’t available for Single Activi
 
 // Settings page.
 $string['global_settings'] = 'X-Ray Global Settings';
-$string['courseselection'] = 'X-Ray Course Selection';
+$string['courseselection'] = '<span tabindex="0">X-Ray Course Selection</span>';
 
 // Default X-Ray controller error.
 $string['page_not_found'] = '404 - Page not found.';
@@ -655,6 +655,7 @@ $string['xraycourses'] = 'X-Ray Courses';
 $string['xraycourses_instructions'] = 'Select the Categories and Courses you want to use '.
     'with X-Ray Learning Analytics. Select the box next to the category name to include all validated courses in the category, '.
     'or select the arrow sign to expand the category for individual course selection. Courses will not appear for selection if they:
+    <br><br>
     <ul>
         <li>Have more than 1000 enrolled students</li>
         <li>Are hidden</li>
@@ -672,6 +673,9 @@ $string['warn_courses_do_not_match'] = "The selected courses on the X-Ray server
 $string['warn_courses_not_persisted_in_xrf'] = 'The selected courses weren\'t saved in the X-Ray server due to '.
     'system configuration.';
 $string['xray_valid_course_error'] = 'There was an error retrieving valid courses';
+$string['xraycategory'] = ' Category';
+$string['xraysubcategory'] = ' Subcategory';
+$string['xraycourse'] = ' Course';
 
 // Course related messages.
 $string['warn_course_disabled'] = 'This course doesn\'t use X-Ray Learning Analytics. If you think it should, '.
