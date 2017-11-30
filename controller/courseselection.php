@@ -67,7 +67,10 @@ class local_xray_controller_courseselection extends mr_controller_admin {
         // Initialize js.
         $data = array(
             'lang_strs' => array(
-                'loading_please_wait' => new lang_string('loading_please_wait', self::PLUGIN)
+                'loading_please_wait' => get_string('loading_please_wait', self::PLUGIN),
+                'xraycategory' => get_string('xraycategory', self::PLUGIN),
+                'xraysubcategory' => get_string('xraysubcategory', self::PLUGIN),
+                'xraycourse' => get_string('xraycourse', self::PLUGIN)
             ),
             'www_root' => $CFG->wwwroot,
             'current_language' => current_language()

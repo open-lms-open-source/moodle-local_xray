@@ -12,51 +12,17 @@ li.xray-collapsible-list-open {
   list-style-image:url('images/arrowdown.png');
   list-style-position: inside;
   cursor:pointer;
-  float: left;
 }
 
 li.xray-collapsible-list-closed {
   list-style-image:url('images/arrowright.png');
   list-style-position: inside;
   cursor:pointer;
-  float: left;
 }
 
-@media screen and (min-width: 1473px) {
-  li.xray-collapsible-list-open {
-    width: 96%;
-  }
-
-  li.xray-collapsible-list-closed {
-    width: 96%;
-  }
-
-  .xray-child-container {
-    width: 104%;
-  }
-}
-
-@media screen and (max-width: 1472px) {
-  li.xray-collapsible-list-open {
-    width: 90%;
-  }
-
-  li.xray-collapsible-list-closed {
-    width: 90%;
-  }
-  .xray-child-container {
-    width: 110%;
-  }
-}
-
-@media screen and (max-width: 613px) {
-  li.xray-collapsible-list-open {
-    width: 80%;
-  }
-
-  li.xray-collapsible-list-closed {
-    width: 80%;
-  }
+button#xrayexpandallbtn, button#xraycollapseallbtn {
+  border: 1px solid;
+  margin: 0 5px 10px 0;
 }
 
 button.cat_label {
@@ -83,6 +49,7 @@ button.cat_label:visited {
   margin  : 0;
   padding : 0;
   opacity : 0;
+  width: 18px;
 }
 
 .xray-right-course-inputs > input[type=checkbox] + label {
@@ -91,9 +58,9 @@ button.cat_label:visited {
   display      : inline-block;
   width        : 1em;
   margin-left  : -1em;
-  padding-left : 1em;
+  padding-left : 0;
   line-height  : 1em;
-  border: 2px solid transparent;
+  border: 0;
 }
 
 .xray-right-course-inputs > input[type=checkbox]:checked + label {
@@ -105,7 +72,7 @@ button.cat_label:visited {
 }
 
 .xray-right-course-inputs > input[type=checkbox]:focus + label {
-  width        : 1em;
+  width        : 0em;
   margin-left  : -1em;
   padding-left : 1em;
   line-height  : 1em;
@@ -129,7 +96,7 @@ li.xray-category {
   background-color: white;
   padding-left: 10px;
   margin-left: -10px;
-  float: left;
+  cursor: default;
 }
 
 .xray-category-tree {
@@ -149,6 +116,12 @@ li.xray-course {
   list-style-type: none;
   list-style-image: none;
   cursor: default;
+}
+
+@media screen and (max-width: 1250px) {
+  li.xray-course {
+    padding-bottom: 25px;
+  }
 }
 
 .xray-date-enable-btn {
@@ -188,7 +161,7 @@ li.xray-course {
 
 .xray-course-shortname {
   display: inline;
-  padding: 5px;
+  padding: 10px;
   color: #0a78d1;
   cursor: pointer;
 }
@@ -230,4 +203,53 @@ li.xray-course {
 
 .xray-wrapper-category {
   display: inline;
+}
+
+label.course_label {
+  max-width: 20em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.xray-course-link {
+  float: left;
+  max-width: 15em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+button.btn.btn-link.cat_label {
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 621px) and (max-width: 1020px) {
+  label.course_label {
+    max-width: 15em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  label.course_label {
+    max-width: 12em;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .xray-course-link {
+    max-width: 7em;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .xray-course-link {
+    max-width: 4em;
+  }
 }

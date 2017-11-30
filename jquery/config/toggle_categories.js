@@ -19,7 +19,6 @@ function config_toggle_categories(YUI, data) {
     self.lang_strs = json_data.lang_strs;
     self.www_root = json_data.www_root;
     self.formIsValid = true;
-    self.currLang = json_data.current_language;
 
     // Self properties.
     self.selection = [];
@@ -624,18 +623,19 @@ function config_toggle_categories(YUI, data) {
      * @param cat Category to be rendered
      */
     self.renderCategory = function(parentCat, cat) {
-        var catStr = '<div class="xray-wrapper-category"><li id="cat_' + cat.id + '_li" class="xray-category">'
-            + '<button id="cat_' + cat.id + '_lbl" class="btn btn-link cat_label" href="javascript:void(0)" type="button">' + cat.name + '  </button>'
+        var catStr = '<li id="cat_' + cat.id + '_li" class="xray-category">'
+            + '<button id="cat_' + cat.id + '_lbl" class="btn btn-link cat_label" href="javascript:void(0)"'
+            + 'type="button"'
+            + 'aria-label="' + cat.name + (self.rootcat.id == parentCat.id ? self.lang_strs.xraycategory : self.lang_strs.xraysubcategory) + '">' + cat.name + '</button>'
+            + '<div class="xray-right-course-inputs">'
+            + '<input type="checkbox" name="cat_' + cat.id + '" id="cat_' + cat.id + '" value="1"'
+            + ' aria-label="' + cat.name + '" '+'><label for="cat_' + cat.id + '">&nbsp;</label>'
+            + '</div>'
             + '<div class="xray-child-separator"></div>'
             + '<div class="xray-child-container">'
             + '<ul id="cat_' + cat.id + '_children" class="xray-category-tree"></ul>'
             + '</div>'
-            + '</li>'
-            + '<div class="xray-right-course-inputs" >'
-            + '<input type="checkbox" name="cat_' + cat.id + '" id="cat_' + cat.id + '" value="1"'
-            + ' aria-label="' + cat.name + '" '+'><label for="cat_' + cat.id + '">&nbsp;</label>'
-            + '</div>'
-            + '</div>';
+            + '</li>';
 
         $(catPrefix + parentCat.id + '_children').append(catStr);
 
@@ -683,15 +683,19 @@ function config_toggle_categories(YUI, data) {
     self.renderCourse = function(parentCat, course) {
 
         var courseStr = '<li id="course_' + course.id + '_li" class="xray-course">'
-            + '<div class="xray-right-course-inputs" >'
+            + '<label for="courses[' + course.id + ']" tabindex="0" class="course_label"'
+            + 'aria-label="' + course.name + self.lang_strs.xraycourse + '">' + course.name + '</label>&nbsp;'
+            + '<div class="xray-right-course-inputs">'
+            + '<div class="xray-course-link">'
             + '<a target="_blank" href="' + self.www_root + '/course/view.php?id=' + course.id + '" class="xray-course-shortname">' + course.shortname + '</a>'
+            + '</div>'
             + '<input type="checkbox" id="id_courses_' + course.id + '" name="courses[' + course.id + ']" value="1" '
             + (course.checked ? 'checked="checked" ' : ' ')
             + 'aria-label="' + course.name + '" '
             + 'class="xray-course-input"><label for="courses[' + course.id + ']">&nbsp;</label>' // This label is empty to show the checkboxes.
             + '</div>'
-            + '<label for="courses[' + course.id + ']" class="course_label">' + course.name + '</label>&nbsp;'
             + '</li>';
+
 
 
         $(catPrefix + parentCat.id + '_children').append(courseStr);
