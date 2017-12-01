@@ -625,7 +625,7 @@ function config_toggle_categories(YUI, data) {
     self.renderCategory = function(parentCat, cat) {
         var catStr = '<li id="cat_' + cat.id + '_li" class="xray-category">'
             + '<button id="cat_' + cat.id + '_lbl" class="btn btn-link cat_label" href="javascript:void(0)"'
-            + 'type="button"'
+            + 'type="button" title="' + cat.name + '"'
             + 'aria-label="' + cat.name + (self.rootcat.id == parentCat.id ? self.lang_strs.xraycategory : self.lang_strs.xraysubcategory) + '">' + cat.name + '</button>'
             + '<div class="xray-right-course-inputs">'
             + '<input type="checkbox" name="cat_' + cat.id + '" id="cat_' + cat.id + '" value="1"'
@@ -683,11 +683,11 @@ function config_toggle_categories(YUI, data) {
     self.renderCourse = function(parentCat, course) {
 
         var courseStr = '<li id="course_' + course.id + '_li" class="xray-course">'
-            + '<label for="courses[' + course.id + ']" tabindex="0" class="course_label"'
+            + '<label for="courses[' + course.id + ']" tabindex="0" title="' + course.name + '" class="course_label"'
             + 'aria-label="' + course.name + self.lang_strs.xraycourse + '">' + course.name + '</label>&nbsp;'
             + '<div class="xray-right-course-inputs">'
             + '<div class="xray-course-link">'
-            + '<a target="_blank" href="' + self.www_root + '/course/view.php?id=' + course.id + '" class="xray-course-shortname">' + course.shortname + '</a>'
+            + '<a target="_blank" href="' + self.www_root + '/course/view.php?id=' + course.id + '" title="' + course.shortname + '" class="xray-course-shortname">' + course.shortname + '</a>'
             + '</div>'
             + '<input type="checkbox" id="id_courses_' + course.id + '" name="courses[' + course.id + ']" value="1" '
             + (course.checked ? 'checked="checked" ' : ' ')
