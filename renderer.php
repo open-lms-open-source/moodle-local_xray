@@ -490,7 +490,8 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Recommended Actions Title.
         $recommendedactionsicon = $OUTPUT->pix_icon('RecommendedActions_icon', '', 'local_xray');
-        $recommendedactionstitle = html_writer::div($recommendedactionsicon.get_string('recommendedactions', 'local_xray'), 'recommendedactionstitle');
+        $recommendedactionsicon = html_writer::div($recommendedactionsicon, 'recommendedactionsicon');
+        $recommendedtitle = html_writer::tag('p', get_string('recommendedactions', 'local_xray'), array('class' => 'recommendedtitle'));
 
         // Check if there are recommended actions.
         $recommendationlist = '';
@@ -513,11 +514,12 @@ class local_xray_renderer extends plugin_renderer_base {
                     'tabindex' => 0,
                     'title' => $buttontext,
                     'onclick' => 'local_xray_recommendations_show()'));
+
+            $fullrecommendationstext = html_writer::tag('p', $youhave.$countrecommendations.$iconrecommendations);
             $countrecommendations = html_writer::div(
-                $youhave.$countrecommendations.$iconrecommendations,
+                $fullrecommendationstext,
                 'countrecommendedactions'
             );
-
             // Content recommendations.
             $recommendationnumber = 1;
             foreach ($data->recommendations as $recommendation) {
@@ -533,16 +535,18 @@ class local_xray_renderer extends plugin_renderer_base {
             $youdonthave = get_string('youdonthave', 'local_xray');
             $countrecommendations = html_writer::div($youdonthave, 'countrecommendedactions');
         }
-
         // Report date.
         $dashboarddate = html_writer::div($this->inforeport($data->reportdate), 'recommendationdate');
-
         // Create list.
         $recommendations = html_writer::start_tag("ul",
             array("class" => "xray-headline-recommendations"));
         $recommendations .= html_writer::tag("li",
-            $recommendedactionstitle,
-            array("class" => "lirecommendedactions",
+            $recommendedactionsicon,
+            array("class" => "lirecommendedactionsicon",
+                "tabindex" => 0));
+        $recommendations .= html_writer::tag("li",
+            html_writer::div($recommendedtitle, 'recommendedactionstitle'),
+            array("class" => "lirecommendedactionstitle",
                 "tabindex" => 0));
         $recommendations .= html_writer::tag("li", html_writer::empty_tag("div"), array("class" => "xray-liseparator"));
         $recommendations .= html_writer::tag("li",
