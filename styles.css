@@ -519,13 +519,13 @@ a.disabled {
 }
 
 .recommendedactionsicon {
-    width: 35px;
-    height: 44px;
+    width: 39px;
+    height: 45px;
     float: left;
 }
 .recommendedactionsicon img.icon{
-    width: 35px;
-    height: 44px;
+    width: 39px;
+    height: 45px;
 }
 
 .recommendedactionstitle {
@@ -619,7 +619,7 @@ p.inforeport {
 }
 
 #xray-nav-recommendations .lirecommendedactionsicon {
-    width: 36px;
+    width: 39px;
 }
 
 #xray-nav-recommendations .lirecommendedactionstitle {
