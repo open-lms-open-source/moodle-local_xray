@@ -680,7 +680,7 @@ p.inforeport {
 /**************** Print ****************/
 @media print {
     #xray-js-menu {
-        min-width:605px;
+        min-width:590px;
     }
     .xray-headline-number {
         float: none;
