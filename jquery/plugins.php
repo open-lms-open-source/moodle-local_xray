@@ -55,8 +55,7 @@ $plugins = array(
         'files' => array(
             'validate/loader.css',
             'config/xraycollapsiblelists.css',
-            'config/xraycollapsiblelists.js',
-            'config/toggle_categories.js'
+            'config/xraycollapsiblelists.js'
         )
     )
 );
