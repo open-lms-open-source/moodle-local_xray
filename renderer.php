@@ -56,7 +56,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $date = new DateTime($reportdate);
         $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
         $output .= html_writer::tag("p",
-            get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'inforeport'));
+            get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'xray-inforeport'));
         return $output;
     }
 
@@ -490,8 +490,8 @@ class local_xray_renderer extends plugin_renderer_base {
 
         // Recommended Actions Title.
         $recommendedactionsicon = $OUTPUT->pix_icon('RecommendedActions_icon', '', 'local_xray');
-        $recommendedactionsicon = html_writer::div($recommendedactionsicon, 'recommendedactionsicon');
-        $recommendedtitle = html_writer::tag('p', get_string('recommendedactions', 'local_xray'), array('class' => 'recommendedtitle'));
+        $recommendedactionsicon = html_writer::div($recommendedactionsicon, 'xray-recommendedactionsicon');
+        $recommendedtitle = html_writer::tag('p', get_string('recommendedactions', 'local_xray'), array('class' => 'xray-recommendedtitle'));
 
         // Check if there are recommended actions.
         $recommendationlist = '';
@@ -545,7 +545,7 @@ class local_xray_renderer extends plugin_renderer_base {
             array("class" => "lirecommendedactionsicon",
                 "tabindex" => 0));
         $recommendations .= html_writer::tag("li",
-            html_writer::div($recommendedtitle, 'recommendedactionstitle'),
+            html_writer::div($recommendedtitle, 'xray-recommendedactionstitle'),
             array("class" => "lirecommendedactionstitle",
                 "tabindex" => 0));
         $recommendations .= html_writer::tag("li", html_writer::empty_tag("div"), array("class" => "xray-liseparator"));

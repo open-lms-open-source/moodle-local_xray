@@ -520,28 +520,28 @@ a.disabled {
     top: 4px;
 }
 
-.recommendedactionsicon {
+.xray-recommendedactionsicon {
     width: 39px;
     height: 45px;
     float: left;
 }
-.recommendedactionsicon img.icon{
+.xray-recommendedactionsicon img.icon{
     width: 39px;
     height: 45px;
 }
 
-.recommendedactionstitle {
+.xray-recommendedactionstitle {
     float: left;
     height: 44px;
     line-height: 44px;
     margin-left: 5px;
 }
 
-.recommendedactionstitle p {
+.xray-recommendedactionstitle p {
     margin:0;
 }
 
-.recommendedtitle {
+.xray-recommendedtitle {
     display: inline-block;
     vertical-align: top;
     line-height: normal;
@@ -603,7 +603,7 @@ a.disabled {
     line-height: 44px;
 }
 
-.inforeport {
+.xray-inforeport {
     display: inline-block;
     vertical-align: top;
     line-height: normal;
@@ -611,11 +611,11 @@ a.disabled {
     top: 14px;
 }
 
-p.inforeport {
+p.xray-inforeport {
     margin: 0;
 }
 
-#xray-nav-recommendations .recommendedactionstitle img.icon{
+#xray-nav-recommendations .xray-recommendedactionstitle img.icon{
     width: 39px;
     height: 45px;
 }
@@ -654,7 +654,7 @@ p.inforeport {
     #xray-nav-recommendations .lirecommendedactionstitle {
         width:70%;
     }
-    .recommendedtitle {
+    .xray-recommendedtitle {
         vertical-align: middle;
         position: relative;
         top: 0;
@@ -662,7 +662,7 @@ p.inforeport {
     #xray-nav-recommendations .lireportdate {
         width:100%;
     }
-    .inforeport {
+    .xray-inforeport {
         vertical-align: middle;
         position: relative;
         top: 0;
@@ -698,7 +698,7 @@ p.inforeport {
     #xray-nav-recommendations .lirecommendedactionstitle {
         max-width: 21%;
     }
-    .recommendedtitle {
+    .xray-recommendedtitle {
         vertical-align: top;
         position: relative;
         top: 14px;
@@ -706,7 +706,7 @@ p.inforeport {
     #xray-nav-recommendations .lireportdate {
         max-width:24%;
     }
-    .inforeport {
+    .xray-inforeport {
         vertical-align: top;
         position: relative;
         top: 14px;
