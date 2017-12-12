@@ -99,7 +99,6 @@ function local_xray_template_data($courseid, $userid) {
                 $headlinedata->risktotal,
                 $headlinedata->averagerisksevendaybefore,
                 $headlinedata->maximumtotalrisksevendaybefore,
-                true,
                 true); // This arrow will be inverse to all.
 
             $xrayriskarrow = local_xray_get_email_icons($statusclassrisk[2]);
@@ -150,8 +149,7 @@ function local_xray_template_data($courseid, $userid) {
             $headlinedata->usersactivitytotal,
             $headlinedata->averageuserslastsevendays,
             $headlinedata->userstotalprevioussevendays,
-            false,
-            true
+            false
         );
 
         $xrayactivityarrow = local_xray_get_email_icons($statusclassactivity[2]);
@@ -196,8 +194,7 @@ function local_xray_template_data($courseid, $userid) {
 
         // Calculate colour status.
         $statusclass = local_xray\dashboard\dashboard_data::get_status_simple($headlinedata->averagegradeslastsevendays,
-            $headlinedata->averagegradeslastsevendayspreviousweek,
-            true);
+            $headlinedata->averagegradeslastsevendayspreviousweek);
 
         $xraygradebookarrow = local_xray_get_email_icons($statusclass[2]);
         $data->gradebookarrowpdf = html_writer::img($xraygradebookarrow, $statusclass[1], $reporticonarrowpdf);
@@ -237,8 +234,7 @@ function local_xray_template_data($courseid, $userid) {
 
         // Calculate colour status.
         $statusclassdiscussion = local_xray\dashboard\dashboard_data::get_status_simple($headlinedata->postslastsevendays,
-            $headlinedata->postslastsevendayspreviousweek,
-            true);
+            $headlinedata->postslastsevendayspreviousweek);
 
         $xraydiscussionsarrow = local_xray_get_email_icons($statusclassdiscussion[2]);
         $data->discussionarrowpdf = html_writer::img($xraydiscussionsarrow, $statusclassdiscussion[1], $reporticonarrowpdf);

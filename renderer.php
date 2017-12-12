@@ -56,7 +56,7 @@ class local_xray_renderer extends plugin_renderer_base {
         $date = new DateTime($reportdate);
         $mreportdate = userdate($date->getTimestamp(), get_string('strftimedayshort', 'langconfig'), 'UTC');
         $output .= html_writer::tag("p",
-            get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'inforeport'));
+            get_string("reportdate", "local_xray") . ": " . $mreportdate , array('class' => 'xray-inforeport'));
         return $output;
     }
 
@@ -357,7 +357,7 @@ class local_xray_renderer extends plugin_renderer_base {
      * @return string
      * */
     private function dashboard_xray_output($data, $riskdisabled = false) {
-        global $CFG, $COURSE;
+        global $CFG, $COURSE, $OUTPUT;
 
         require_once($CFG->dirroot.'/local/xray/locallib.php');
 
@@ -489,7 +489,9 @@ class local_xray_renderer extends plugin_renderer_base {
         $output .= html_writer::tag("nav", $list, array("id" => "xray-nav-headline"));
 
         // Recommended Actions Title.
-        $recommendedactionstitle = html_writer::div(get_string('recommendedactions', 'local_xray'), 'recommendedactionstitle');
+        $recommendedactionsicon = $OUTPUT->pix_icon('RecommendedActions_icon', '', 'local_xray');
+        $recommendedactionsicon = html_writer::div($recommendedactionsicon, 'xray-recommendedactionsicon');
+        $recommendedtitle = html_writer::tag('p', get_string('recommendedactions', 'local_xray'), array('class' => 'xray-recommendedtitle'));
 
         // Check if there are recommended actions.
         $recommendationlist = '';
@@ -512,11 +514,12 @@ class local_xray_renderer extends plugin_renderer_base {
                     'tabindex' => 0,
                     'title' => $buttontext,
                     'onclick' => 'local_xray_recommendations_show()'));
+
+            $fullrecommendationstext = html_writer::tag('p', $youhave.$countrecommendations.$iconrecommendations);
             $countrecommendations = html_writer::div(
-                $youhave.$countrecommendations.$iconrecommendations,
+                $fullrecommendationstext,
                 'countrecommendedactions'
             );
-
             // Content recommendations.
             $recommendationnumber = 1;
             foreach ($data->recommendations as $recommendation) {
@@ -532,16 +535,18 @@ class local_xray_renderer extends plugin_renderer_base {
             $youdonthave = get_string('youdonthave', 'local_xray');
             $countrecommendations = html_writer::div($youdonthave, 'countrecommendedactions');
         }
-
         // Report date.
         $dashboarddate = html_writer::div($this->inforeport($data->reportdate), 'recommendationdate');
-
         // Create list.
         $recommendations = html_writer::start_tag("ul",
             array("class" => "xray-headline-recommendations"));
         $recommendations .= html_writer::tag("li",
-            $recommendedactionstitle,
-            array("class" => "lirecommendedactions",
+            $recommendedactionsicon,
+            array("class" => "lirecommendedactionsicon",
+                "tabindex" => 0));
+        $recommendations .= html_writer::tag("li",
+            html_writer::div($recommendedtitle, 'xray-recommendedactionstitle'),
+            array("class" => "lirecommendedactionstitle",
                 "tabindex" => 0));
         $recommendations .= html_writer::tag("li", html_writer::empty_tag("div"), array("class" => "xray-liseparator"));
         $recommendations .= html_writer::tag("li",
@@ -578,11 +583,15 @@ class local_xray_renderer extends plugin_renderer_base {
      */
     private function headline_column($number, $text, $linkurl, $textweekbefore, $stylestatus) {
 
+        global $OUTPUT;
+
         // Link with Number and icon.
-        $icon = html_writer::span('', $stylestatus[0]."-icon xray-headline-icon");
-        $number = html_writer::tag("p", $number, array("class" => "xray-headline-number"));
+        $icon = $OUTPUT->pix_icon($stylestatus[2], '', 'local_xray');
+        $arrowicon = html_writer::tag("div", $icon, array("class" => "xray-arrow"));
+        $number = html_writer::tag("div", $number, array("class" => "xray-headline-number"));
+
         $link = html_writer::link($linkurl,
-            $number.$icon,
+            $number.$arrowicon,
             array("tabindex" => -1,
                 "class" => "xray-headline-link",
                 "title" => get_string('link_gotoreport', 'local_xray')));
@@ -640,7 +649,28 @@ class local_xray_renderer extends plugin_renderer_base {
                         if ($reportstring == $reportcontroller) {
                             $class .= " xray-menu-item-active";
                         }
-                        $menuitems[] = html_writer::link($url, get_string($reportstring, 'local_xray'), array('class' => $class));
+
+                        $reportpix = '';
+                        switch($reportstring) {
+                            case "activityreport":
+                                $reportpix = 'xray-activity';
+                                break;
+                            case "discussionreport":
+                                $reportpix = 'xray-discussions';
+                                break;
+                            case "gradebookreport":
+                                $reportpix = 'xray-grade';
+                                break;
+                            case "risk":
+                                $reportpix = 'xray-risk';
+                                break;
+                        }
+
+                        $icon = $OUTPUT->pix_icon($reportpix,
+                            '',
+                            'local_xray');
+                        $menuitems[] = html_writer::link($url, $icon.get_string($reportstring, 'local_xray'), array('class' => $class));
+
                     }
                 }
                 $title = '';

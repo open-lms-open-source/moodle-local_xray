@@ -164,7 +164,10 @@
     font-size: 30px;
     margin-bottom: 0;
     margin-right: 5px;
-    display: inline;
+    float: left;
+}
+.xray-arrow {
+    float: left;
 }
 a.xray-headline-link:hover {
     text-decoration: none !important;
@@ -178,7 +181,12 @@ a.xray-headline-link:hover {
 }
 .xray-headline-link {
     display: inline-block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+}
+.xray-headline-link img.icon {
+    height: 30px;
+    width: 30px;
+    padding-top: 5px;
 }
 .xray-headline-icon {
     background-position: center 0px;
@@ -189,24 +197,6 @@ a.xray-headline-link:hover {
     margin-bottom: -5px;
     width: 30px;
 }
-.xray-headline-decrease-icon {
-    background-image: url([[pix:local_xray|arrow_red]]);
-}
-.xray-headline-increase-icon {
-    background-image: url([[pix:local_xray|arrow_green]]);
-}
-.xray-headline-same-icon {
-    background-image: url([[pix:local_xray|arrow_yellow]]);
-}
-/* Risk work with inverse arrows */
-.xray-headline-increase-caserisk-icon{
-    background-image: url([[pix:local_xray|arrow_green_risk]]);
-}
-.xray-headline-decrease-caserisk-icon{
-    background-image: url([[pix:local_xray|arrow_red_risk]]);
-}
-/* End Risk work with inverse arrows */
-
 .xray-headline-errortoconnect {
     color:#F86B69 !important;
     padding:5px;
@@ -230,6 +220,9 @@ a.xray-headline-link:hover {
     text-align: left;
     display: inline;
 }
+#xray-js-menu #xray-title {
+    margin-bottom: 5px;
+}
 #xray-js-menu #xray-title #xray-icon img {
     max-width: 30px;
     max-height: 30px;
@@ -242,8 +235,13 @@ a.xray-headline-link:hover {
 #xray-js-menu #xray-title div {
     max-width: 30px;
     max-height: 30px;
-    margin: 0 10px 0 0;
     display: inline;
+}
+#xray-js-menu #xray-title #xray-icon .icon {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: -6px;
 }
 .xray-menu-item-active {
     font-weight: bold;
@@ -257,7 +255,7 @@ a.xray-headline-link:hover {
 .xray-reports-links, .xray-reports-links-norisk {
     display: inline-block;
     margin: 0;
-    padding: 0;
+    padding: 0 0 4px 0;
     width: 100%;
 }
 .xray-reports-links li {
@@ -274,29 +272,15 @@ a.xray-headline-link:hover {
     padding: 0 0.5%;
     margin: 0;
 }
-.xray-reports-links li a, .xray-reports-links-norisk li a {
-    display: block;
-    text-align: left;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-image: url([[pix:local_xray|xray-discussions]]);
+.xray-reports-links li a img.icon, .xray-reports-links-norisk li a img.icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 6px 3px 0;
 }
 .xray-reports-links li a.xray-reports-links-image, .xray-reports-links-norisk li a.xray-reports-links-image {
     background-size: 44px 44px !important;
     font-size: 14px;
-    padding: 12px 0 18px 50px;
-}
-.xray-reports-links .risk {
-    background-image: url([[pix:local_xray|xray-risk]]);
-}
-.xray-reports-links .activityreport, .xray-reports-links-norisk .activityreport {
-    background-image: url([[pix:local_xray|xray-activity]]);
-}
-.xray-reports-links .gradebookreport, .xray-reports-links-norisk .gradebookreport {
-    background-image: url([[pix:local_xray|xray-grade]]);
-}
-.xray-reports-links .discussionreport, .xray-reports-links-norisk .discussionreport {
-    background-image: url([[pix:local_xray|xray-discussions]]);
+    padding-bottom: 18px;
 }
 /**************** End Navigation reports  *********************************/
 
@@ -461,9 +445,19 @@ a.disabled {
 }
 
 #xray-nav-recommendations li .countrecommendedactions {
-    float:left;
     padding-left: 5px;
-    padding-top: 11px;
+    padding-right: 5px;
+    height: 44px;
+    line-height: 44px;
+}
+
+#xray-nav-recommendations li .countrecommendedactions p {
+    display: inline-block;
+    vertical-align: top;
+    line-height: normal;
+    margin: 0;
+    position: relative;
+    top: 12px;
 }
 
 #xray-div-recommendations-icon {
@@ -509,6 +503,8 @@ a.disabled {
     display: inline-block;
     height: 16px;
     width: 20px;
+    position: relative;
+    top: 4px;
 }
 
 #xray-nav-recommendations li .countrecommendedactions_icon_collapse {
@@ -520,12 +516,41 @@ a.disabled {
     display: inline-block;
     height: 16px;
     width: 20px;
+    position: relative;
+    top: 4px;
+}
+
+.xray-recommendedactionsicon {
+    width: 39px;
+    height: 45px;
+    float: left;
+}
+.xray-recommendedactionsicon img.icon{
+    width: 39px;
+    height: 45px;
+}
+
+.xray-recommendedactionstitle {
+    float: left;
+    height: 44px;
+    line-height: 44px;
+    margin-left: 5px;
+}
+
+.xray-recommendedactionstitle p {
+    margin:0;
+}
+
+.xray-recommendedtitle {
+    display: inline-block;
+    vertical-align: top;
+    line-height: normal;
+    position: relative;
+    top: 14px;
 }
 
 #xray-nav-recommendations .lirecommendedactions {
     width:25%;
-    background-image: url([[pix:local_xray|RecommendedActions_icon]]);
-    background-repeat: no-repeat;
 }
 
 #xray-nav-recommendations .lireportdate {
@@ -533,7 +558,7 @@ a.disabled {
 }
 
 #xray-nav-recommendations .licountrecommendations {
-    max-width:46%;
+    width:43%;
 }
 
 #xray-nav-recommendations .xray-liseparator {
@@ -551,11 +576,13 @@ a.disabled {
     padding-top:20px;
     margin-bottom:10px;
 }
+
 .xray-div-recommendations .recommendationdiv {
     padding: 6px 0 7px;
     margin: auto;
     width: 92%;
 }
+
 .xray-div-recommendations .recommendationdiv .recommendationnumber {
     float: left;
     font-size: 29px;
@@ -563,6 +590,7 @@ a.disabled {
     padding-right: 2px;
     text-align: center;
 }
+
 .xray-div-recommendations .recommendationdiv .recommendationtext {
     float: left;
     width: 90%;
@@ -571,17 +599,37 @@ a.disabled {
 #xray-nav-recommendations .recommendationdate {
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 14px;
+    height: 44px;
+    line-height: 44px;
 }
 
-#xray-nav-recommendations .recommendedactionstitle {
-    padding-left: 45px;
-    padding-right: 5px;
-    padding-top: 14px;
+.xray-inforeport {
+    display: inline-block;
+    vertical-align: top;
+    line-height: normal;
+    position: relative;
+    top: 14px;
+}
+
+p.xray-inforeport {
+    margin: 0;
+}
+
+#xray-nav-recommendations .xray-recommendedactionstitle img.icon{
+    width: 39px;
+    height: 45px;
 }
 
 #xray-nav-recommendations li:last-child {
     border-right: 0;
+}
+
+#xray-nav-recommendations .lirecommendedactionsicon {
+    width: 39px;
+}
+
+#xray-nav-recommendations .lirecommendedactionstitle {
+    width: 21%;
 }
 /**************** End styles for Recommended Actions ****************/
 /**************** Validation panel ****************/
@@ -589,3 +637,87 @@ a.disabled {
     z-index: 1109 !important;
 }
 /**************** End styles for Validation panel ****************/
+/**************** Screen resolution for Dashboard ****************/
+@media all and (min-width: 640px) and (max-width: 730px) {/*730*/
+    #xray-nav-recommendations .lireportdate {
+        max-width:24%;
+    }
+    #xray-nav-recommendations .licountrecommendations {
+        max-width:31%;
+    }
+}
+@media all and (max-width: 640px) {
+    #xray-nav-recommendations .xray-liseparator {
+        width:0%;
+        display: none;
+    }
+    #xray-nav-recommendations .lirecommendedactionstitle {
+        width:70%;
+    }
+    .xray-recommendedtitle {
+        vertical-align: middle;
+        position: relative;
+        top: 0;
+    }
+    #xray-nav-recommendations .lireportdate {
+        width:100%;
+    }
+    .xray-inforeport {
+        vertical-align: middle;
+        position: relative;
+        top: 0;
+    }
+    #xray-nav-recommendations .licountrecommendations {
+        width:100%;
+    }
+    #xray-nav-recommendations li .countrecommendedactions p {
+        vertical-align: middle;
+        position: relative;
+        top: 0;
+    }
+}
+/**************** End styles for Screen resolution for Dashboard ****************/
+/**************** Print ****************/
+@media print {
+    #xray-js-menu {
+        min-width:590px;
+    }
+    .xray-headline-number {
+        float: none;
+    }
+    .xray-arrow {
+        float: none;
+    }
+    #xray-nav-recommendations li .countrecommendedactions_icon_expand, #xray-div-recommendations-icon {
+        width: 0;
+    }
+    #xray-nav-recommendations .xray-liseparator {
+        width:1%;
+        display: block;
+    }
+    #xray-nav-recommendations .lirecommendedactionstitle {
+        max-width: 21%;
+    }
+    .xray-recommendedtitle {
+        vertical-align: top;
+        position: relative;
+        top: 14px;
+    }
+    #xray-nav-recommendations .lireportdate {
+        max-width:24%;
+    }
+    .xray-inforeport {
+        vertical-align: top;
+        position: relative;
+        top: 14px;
+    }
+    #xray-nav-recommendations .licountrecommendations {
+        max-width:31%;
+    }
+    #xray-nav-recommendations li .countrecommendedactions p {
+        vertical-align: top;
+        position: relative;
+        top: 14px;
+    }
+}
+/**************** End styles for Print ****************/

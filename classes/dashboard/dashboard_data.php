@@ -185,10 +185,10 @@ class dashboard_data {
      *
      * @param null|string|int $valuenow - Webservice can return "-" or null.
      * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
-     * @param mixed $mail
      * @return array
      */
-    public static function get_status_simple($valuenow, $valuepreviousweek, $mail = false) {
+    public static function get_status_simple($valuenow, $valuepreviousweek) {
+
         // File name for email case.
         $filename = '';
 
@@ -203,24 +203,18 @@ class dashboard_data {
         // Default, same value.
         $stylestatus = "xray-headline-same";
         $statuslang = "arrow_same";
-        if ($mail) {
-            $filename = "arrow_yellow";
-        }
+        $filename = "arrow_yellow";
 
         if ($valuenow < $valuepreviousweek) {
             // Decrement.
             $stylestatus = "xray-headline-decrease";
             $statuslang = "arrow_decrease";
-            if ($mail) {
-                $filename = "arrow_red";
-            }
+            $filename = "arrow_red";
         } else if ($valuenow > $valuepreviousweek) {
             // Increment.
             $stylestatus = "xray-headline-increase";
             $statuslang = "arrow_increase";
-            if ($mail) {
-                $filename = "arrow_green";
-            }
+            $filename = "arrow_green";
         }
         $langstatus = get_string($statuslang, "local_xray");
         return array($stylestatus, $langstatus, $filename);
@@ -242,15 +236,14 @@ class dashboard_data {
      * @param null|string|int $valuepreviousweek - Webservice can return "-" or null.
      * @param null|string|int $valuepreviousweek2 - Webservice can return "-" or null.
      * @param boolean $inversebehavior - Arrow will have inverse behavior (increment/decrement). Used by risk.
-     * @param mixed $mail
      * @return array
      */
     public static function get_status_with_average($valuenow1,
                                                    $valuenow2,
                                                    $valuepreviousweek,
                                                    $valuepreviousweek2,
-                                                   $inversebehavior = false,
-                                                   $mail = false) {
+                                                   $inversebehavior = false) {
+
         // File name for email case.
         $filename = '';
         $firstaverage = 0;
@@ -267,24 +260,19 @@ class dashboard_data {
         // Default, same value.
         $stylestatus = "xray-headline-same";
         $statuslang = "arrow_same";
-        if ($mail) {
-            $filename = "arrow_yellow";
-        }
+        $filename = "arrow_yellow";
 
         if ($firstaverage < $secondaverage) {
 
             // Decrement.
             $stylestatus = "xray-headline-decrease";
             $statuslang = "arrow_decrease";
-            if ($mail) {
-                $filename = "arrow_red";
-            }
+            $filename = "arrow_red";
+
             if ($inversebehavior) {
                 // Arrow will be inverse.
                 $stylestatus = "xray-headline-increase-caserisk";
-                if ($mail) {
-                    $filename = "arrow_green_risk";
-                }
+                $filename = "arrow_green_risk";
             }
 
         } else if ($firstaverage > $secondaverage) {
@@ -292,15 +280,12 @@ class dashboard_data {
             // Increment.
             $stylestatus = "xray-headline-increase";
             $statuslang = "arrow_increase";
-            if ($mail) {
-                $filename = "arrow_green";
-            }
+            $filename = "arrow_green";
+
             if ($inversebehavior) {
                 // Arrow will be inverse.
                 $stylestatus = "xray-headline-decrease-caserisk";
-                if ($mail) {
-                    $filename = "arrow_red_risk";
-                }
+                $filename = "arrow_red_risk";
             }
         }
 

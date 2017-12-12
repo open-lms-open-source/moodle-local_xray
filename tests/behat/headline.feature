@@ -52,7 +52,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I am on site homepage
     And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
-    And I click on "#xray-headline-risk p.xray-headline-number" "css_element"
+    And I click on "#xray-headline-risk div.xray-headline-number" "css_element"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
     And "img.x-ray-icon-title" "css_element" should not exist
@@ -63,7 +63,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I am on site homepage
     And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
-    And I click on "#xray-headline-activity p.xray-headline-number" "css_element"
+    And I click on "#xray-headline-activity div.xray-headline-number" "css_element"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
     And "img.x-ray-icon-title" "css_element" should not exist
@@ -74,7 +74,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I am on site homepage
     And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
-    And I click on "#xray-headline-discussion p.xray-headline-number" "css_element"
+    And I click on "#xray-headline-discussion div.xray-headline-number" "css_element"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
     And "img.x-ray-icon-title" "css_element" should not exist
@@ -85,7 +85,7 @@ Feature: The headline data should be present in the course page for manager, edi
     And I am on site homepage
     And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
-    And I click on "#xray-headline-gradebook p.xray-headline-number" "css_element"
+    And I click on "#xray-headline-gradebook div.xray-headline-number" "css_element"
     And I wait until the page is ready
     Then "#xray-nav-headline" "css_element" should not exist
     And "img.x-ray-icon-title" "css_element" should not exist

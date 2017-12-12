@@ -51,7 +51,7 @@ Feature: The risk status report should not be present in the headline data.
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
-    And "#xray-headline-risk p.xray-headline-number" "css_element" should exist
+    And "#xray-headline-risk div.xray-headline-number" "css_element" should exist
 
   @javascript
   Scenario: Risk is not displayed in the headline
@@ -62,4 +62,4 @@ Feature: The risk status report should not be present in the headline data.
     And I am on site homepage
     And I follow "Xray Course 01"
     And I wait until the page is ready
-    And "#xray-headline-risk p.xray-headline-number" "css_element" should not exist
+    And "#xray-headline-risk div.xray-headline-number" "css_element" should not exist
