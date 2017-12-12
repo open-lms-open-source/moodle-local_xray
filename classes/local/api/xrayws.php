@@ -395,6 +395,18 @@ class xrayws {
                             $this->errorstring = 'xrayws_error_server';
                         }
                     }
+                } else {
+                    // Extra validation for empty data.
+                    $decode = json_decode($this->rawresponse);
+                    if ($decode) {
+                        $resvalidation = (array)$decode;
+                        if (empty($resvalidation) || (isset($resvalidation[0]) && !$resvalidation[0])) {
+                            $this->errorno = self::ERR_JSON;
+                            $this->error = get_string("xrayws_error_empty_json", "local_xray");
+                            $this->errorstring = 'xrayws_error_server';
+                            $response = false;
+                        }
+                    }
                 }
             }
         } else {
