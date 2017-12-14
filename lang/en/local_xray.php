@@ -186,7 +186,7 @@ $string['systemreportsurl'] = 'System Reports URL';
 $string['systemreportsurl_desc'] = 'URL to connect with System Reports.';
 
 // Webservice api.
-$string['xrayws_error_empty_json'] = 'Empty JSON';
+$string['xrayws_error_empty_json'] = 'Empty JSON. Course ID: {$a}.';
 $string['xrayws_error_nocurl'   ] = 'cURL module must be present and enabled!';
 $string['xrayws_error_nourl'    ] = 'You must specify URL!';
 $string['xrayws_error_nomethod' ] = 'You must specify request method!';

@@ -179,7 +179,7 @@ $string['apnortheast1'] = 'Asia Pacific (Tokio)';
 $string['saeast1'] = 'South America (San Pablo)';
 
 /* webservice api */
-$string['xrayws_error_empty_json'] = 'JSON vacío';
+$string['xrayws_error_empty_json'] = 'JSON vacío. ID del curso: {$a}.';
 $string['xrayws_error_nocurl'   ] = '¡El módulo cURL debe estar presente y activado!';
 $string['xrayws_error_nourl'    ] = '¡Debes especificar una URL!';
 $string['xrayws_error_nomethod' ] = '¡Debes especificar el método requerido!';

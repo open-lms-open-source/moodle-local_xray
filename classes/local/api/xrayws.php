@@ -292,7 +292,7 @@ class xrayws {
      * @throws nourl_exception
      */
     public function request($url, $method, array $custheaders = array(), array $options = array()) {
-        global $CFG;
+        global $CFG, $COURSE;
 
         if (empty($url)) {
             throw new nourl_exception();
@@ -402,7 +402,7 @@ class xrayws {
                         $resvalidation = (array)$decode;
                         if (empty($resvalidation) || (isset($resvalidation[0]) && !$resvalidation[0])) {
                             $this->errorno = self::ERR_JSON;
-                            $this->error = get_string("xrayws_error_empty_json", "local_xray");
+                            $this->error = get_string("xrayws_error_empty_json", "local_xray", $COURSE->id);
                             $this->errorstring = 'xrayws_error_server';
                             $response = false;
                         }
