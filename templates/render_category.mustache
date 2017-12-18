@@ -1,0 +1,55 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_xray/render_category
+
+    Renders course categories
+
+    Classes required for JS:
+    * none
+
+    Data attibutes required for JS:
+    * none
+
+    Context variables required for this template:
+    * categoryid - The id for the current category
+    * categoryname - List of possible actions
+    * categorytree - Choose between category or subcategory
+
+    Example context (json):
+    {
+        "categoryid": "1",
+        "categoryname": "Math",
+        "categorytree": "subcategory",
+        "courseid": "160"
+    }
+}}
+
+<li id="cat_{{categoryid}}_li" class="xray-category">
+    <button title="{{categoryname}}" id="cat_{{categoryid}}_lbl" href="javascript:void(0)" class="btn btn-link cat_label" type="button" aria-label="{{categoryname}}{{{categorytree}}}">{{categoryname}}</button>
+    <div class="xray-right-course-inputs">
+        <input id="cat_{{categoryid}}" name="cat_{{categoryid}}" type="checkbox" value="1" aria-label="{{categoryname}}">
+        <label for="cat_{{categoryid}}">&nbsp;</label>
+    </div>
+    <div class="xray-child-separator">&nbsp;</div>
+    <div class="xray-child-container">
+        <ul id="cat_{{categoryid}}_children" class="xray-category-tree"></ul>
+    </div>
+</li>
+
+
+

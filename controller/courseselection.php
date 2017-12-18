@@ -76,7 +76,7 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             'current_language' => current_language()
         );
         $strdata = array(json_encode($data));
-        $PAGE->requires->js_init_call('config_toggle_categories', $strdata);
+        $PAGE->requires->js_call_amd('local_xray/toggle_categories', 'init', $strdata);
     }
 
     /**
