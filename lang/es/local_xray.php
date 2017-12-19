@@ -179,9 +179,10 @@ $string['apnortheast1'] = 'Asia Pacific (Tokio)';
 $string['saeast1'] = 'South America (San Pablo)';
 
 /* webservice api */
-$string['xrayws_error_nocurl'   ] = 'Módulo cURL debe estar presente y activado!';
-$string['xrayws_error_nourl'    ] = 'Debes espeficificar una URL!';
-$string['xrayws_error_nomethod' ] = 'Debes especificar método requerido!';
+$string['xrayws_error_empty_json'] = 'JSON vacío. ID del curso: {$a}.';
+$string['xrayws_error_nocurl'   ] = '¡El módulo cURL debe estar presente y activado!';
+$string['xrayws_error_nourl'    ] = '¡Debes especificar una URL!';
+$string['xrayws_error_nomethod' ] = '¡Debes especificar el método requerido!';
 
 /* Web service errors returned from X-Ray Learning Analytics*/
 $string['xrayws_error_server'] = '{$a}';
