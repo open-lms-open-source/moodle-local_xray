@@ -104,6 +104,9 @@ abstract class course_manager {
 
         $xraycourses = $DB->get_records_sql($xraycoursequery, $params);
 
+        if (!defined('XRAY_OMIT_CACHE')) {
+            define('XRAY_OMIT_CACHE', true);
+        }
         $wsapires = wsapi::validcourses();
 
         $res = array();
@@ -159,6 +162,9 @@ abstract class course_manager {
 
         $res = array();
 
+        if (!defined('XRAY_OMIT_CACHE')) {
+            define('XRAY_OMIT_CACHE', true);
+        }
         $wsapires = wsapi::validcourses();
 
         if (defined('BEHAT_SITE_RUNNING')) {
@@ -223,6 +229,9 @@ abstract class course_manager {
 
         $res = new \stdClass();
 
+        if (!defined('XRAY_OMIT_CACHE')) {
+            define('XRAY_OMIT_CACHE', true);
+        }
         $wsapires = wsapi::validcourses();
 
         if (defined('BEHAT_SITE_RUNNING')) {
