@@ -69,6 +69,7 @@ abstract class course_manager {
      * @return \stdClass[]|\stdClass Array of courses or single course that has all course information and selection status
      */
     public static function get_xray_courses($categoryid = 'all', $courseid = null) {
+        global $CFG, $DB;
         if ((is_null($categoryid) && is_null($courseid)) || $categoryid === 0) {
             return array();
         }
@@ -81,7 +82,11 @@ abstract class course_manager {
             $single = true;
             $wherequery .= 'WHERE mdc.id = :courseid';
         }
-        global $CFG, $DB;
+
+        $validcourseids = valid_course_handler::instance()->get_valid_course_list_as_string();
+        if (!empty($validcourseids)) {
+            $wherequery .= (empty($wherequery) ? 'WHERE ' : ' AND ') . 'mdc.id IN ('.$validcourseids.')';
+        }
 
         list($inoreqsql, $params) = $DB->get_in_or_equal(explode(',', $CFG->gradebookroles), SQL_PARAMS_NAMED, 'grbr0');
         $params['contextcourse'] = CONTEXT_COURSE;
@@ -98,33 +103,21 @@ abstract class course_manager {
          LEFT JOIN {local_xray_selectedcourse} xsc ON (mdc.id = xsc.cid)
 
              $wherequery
-             
-          GROUP BY mdc.id;
+
+          ORDER BY mdc.fullname
         ";
 
         $xraycourses = $DB->get_records_sql($xraycoursequery, $params);
 
-        if (!defined('XRAY_OMIT_CACHE')) {
-            define('XRAY_OMIT_CACHE', true);
-        }
-        $wsapires = wsapi::validcourses();
-
         $res = array();
         foreach ($xraycourses as $xraycourse) {
-            if ((!empty($wsapires->data) && in_array($xraycourse->id, $wsapires->data)) || defined('BEHAT_SITE_RUNNING') ) {
-                $res[] = array(
-                    'id' => $xraycourse->id,
-                    'name' => strip_tags($xraycourse->fullname),
-                    'shortname' => $xraycourse->shortname,
-                    'checked' => !is_null($xraycourse->xrayid)
-                );
-            }
+            $res[] = array(
+                'id' => $xraycourse->id,
+                'name' => strip_tags($xraycourse->fullname),
+                'shortname' => $xraycourse->shortname,
+                'checked' => !is_null($xraycourse->xrayid)
+            );
         }
-
-        // Order alphabetical name when a course have multilang option.
-        usort($res, function ($a, $b) {
-            return strcasecmp($a['name'], $b['name']);
-        });
 
         if (!$single) {
             return $res;
@@ -162,22 +155,7 @@ abstract class course_manager {
 
         $res = array();
 
-        if (!defined('XRAY_OMIT_CACHE')) {
-            define('XRAY_OMIT_CACHE', true);
-        }
-        $wsapires = wsapi::validcourses();
-
-        if (defined('BEHAT_SITE_RUNNING')) {
-            $query = "SELECT id from {course}";
-            $courseids = $DB->get_records_sql($query);
-            $courseidarr = [];
-            foreach ($courseids as $cids) {
-                $courseidarr[] = $cids->id;
-            }
-            $validcourseids = implode(',',$courseidarr);
-        } else {
-            $validcourseids = implode(',', $wsapires->data);
-        }
+        $validcourseids = valid_course_handler::instance()->get_valid_course_list_as_string();
 
         $query = "SELECT mdcat.id, mdcat.name,
 
@@ -229,22 +207,7 @@ abstract class course_manager {
 
         $res = new \stdClass();
 
-        if (!defined('XRAY_OMIT_CACHE')) {
-            define('XRAY_OMIT_CACHE', true);
-        }
-        $wsapires = wsapi::validcourses();
-
-        if (defined('BEHAT_SITE_RUNNING')) {
-            $query = "SELECT id from {course}";
-            $courseids = $DB->get_records_sql($query);
-            $courseidarr = [];
-            foreach ($courseids as $cids) {
-                $courseidarr[] = $cids->id;
-            }
-            $validcourseids = implode(',',$courseidarr);
-        } else {
-            $validcourseids = implode(',', $wsapires->data);
-        }
+        $validcourseids = valid_course_handler::instance()->get_valid_course_list_as_string();
 
         $query = "SELECT mdcat.id,
 
