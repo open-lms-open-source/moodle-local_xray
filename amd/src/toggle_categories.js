@@ -5,8 +5,8 @@
  * @param YUI, $, str, ajax, Templates
  * @param data
  */
-define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
-    function($, str, ajax, Templates, YUI) {
+define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
+    function($, str, ajax, Templates) {
         return {
             init: function (data) {
                 var self = this;
@@ -395,7 +395,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
                 };
 
                 self.atLeastOneCatUnCheckedDisabled = function(cats) {
-                    if (!cats) return false;
+                    if (!cats) {
+                        return false;
+                    }
 
                     for (var c in cats) {
                         if (!$(catPrefix + cats[c].id).prop('checked')) {
@@ -406,7 +408,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
                 };
 
                 self.atLeastOneCourseUnChecked = function(courses) {
-                    if (!courses) return false;
+                    if (!courses) {
+                        return false;
+                    }
 
                     for (var c in courses) {
                         if (!$(coursePrefix + courses[c].id).prop('checked')) {
@@ -422,7 +426,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
                  * @returns {boolean} true if all are checked, false otherwise
                  */
                 self.areCoursesChecked = function(courses) {
-                    if (!courses || Object.keys(courses).length === 0) return true;
+                    if (!courses || Object.keys(courses).length === 0) {
+                        return true;
+                    }
 
                     var res = true;
                     for (var c in courses) {
@@ -548,36 +554,44 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
 
                     $.when (
                         $.ajax({
-                            url: self.www_root + '/local/xray/view.php?controller=courseapi&action=listcategories&categoryid=' + cat.id,
+                            url: self.www_root + '/local/xray/view.php'
+                                    + '?controller=courseapi'
+                                    + '&action=listcategories'
+                                    + '&categoryid=' + cat.id,
                             dataType: "json",
-                            success: function (data, status, xhr) {
+                            success: function (data) {
                                 if (!data || data.length === 0) {
                                     return;
                                 }
 
                                 cat.categories = data;
                             },
-                            error: function (xhr, status, err) {
+                            error: function () {
                                 cat.loaded = false;
                             }
                         }),
                         $.ajax({
-                            url: self.www_root + '/local/xray/view.php?controller=courseapi&action=listcourses&categoryid=' + cat.id,
+                            url: self.www_root + '/local/xray/view.php'
+                                    + '?controller=courseapi'
+                                    + '&action=listcourses'
+                                    + '&categoryid=' + cat.id,
                             dataType: "json",
-                            success: function (data, status, xhr) {
+                            success: function (data) {
                                 if (!data || data.length === 0) {
                                     return;
                                 }
 
                                 cat.courses = data;
                             },
-                            error: function (xhr, status, err) {
+                            error: function () {
                                 cat.loaded = false;
                             }
                         })
                     ).then(function() {
                         if (!cat.loaded) {
-                            return callback(); }
+                            if (callback) { callback(); }
+                            return;
+                        }
 
                         self.emptyCat(cat);
                         var catDef = self.renderCategories(cat, cat.categories);
@@ -621,6 +635,8 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
                         defs.push(def);
                     }
                     $.when.apply($, defs).then(function () {
+                        /*global CollapsibleLists:true*/
+                        /*eslint no-undef: "error"*/
                         CollapsibleLists.applyTo(document.getElementById('cat_' + parentCat.id + '_children'));
                         myDef.resolve();
                     });
@@ -636,7 +652,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
                 self.renderCategory = function(parentCat, cat) {
 
                     var catDef = $.Deferred();
-                    var categorytree =  self.rootcat.id == parentCat.id ? self.lang_strs.xraycategory : self.lang_strs.xraysubcategory;
+                    var categorytree =  self.rootcat.id == parentCat.id ?
+                                            self.lang_strs.xraycategory :
+                                            self.lang_strs.xraysubcategory;
                     var content = {
                         'categoryid': cat.id,
                         'categoryname': cat.name,
@@ -690,8 +708,6 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
                     });
 
                     return myDef;
-
-                    return defs;
                 };
 
                 /**
@@ -717,27 +733,6 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
                         $(catPrefix + parentCat.id + '_children').append(html);
                         courseDef.resolve();
                     });
-                    /**
-                     * Validates the form and enables/disables the submit button accordingly
-                     */
-                    self.validateForm = function() {
-                        var valid = true;
-
-                        if(self.formIsValid === valid) {
-                            return;
-                        }
-
-                        self.formIsValid = valid;
-                        self.processFormSubmit();
-                    };
-
-                    /**
-                     * Enables form submit according to self.formIsValid
-                     */
-                    self.processFormSubmit = function() {
-                        var submitBtn = $(idSubmitBtn);
-                        submitBtn.prop('disabled', !self.formIsValid);
-                    };
 
                     return courseDef;
                 };
@@ -746,6 +741,5 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates', 'core/yui'],
                     self.init();
                 });
             }
-
-        }
+        };
     });
