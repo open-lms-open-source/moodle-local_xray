@@ -74,18 +74,19 @@ abstract class course_manager {
             return array();
         }
 
-        $single = false;
+        $res = array();
         $wherequery = '';
-        if (!is_null($categoryid) && $categoryid !== 'all') {
-            $wherequery .= 'WHERE mdc.category = :categoryid';
-        } else if (!is_null($courseid)) {
-            $single = true;
-            $wherequery .= 'WHERE mdc.id = :courseid';
-        }
-
         $validcourseids = valid_course_handler::instance()->get_valid_course_list_as_string();
         if (!empty($validcourseids)) {
-            $wherequery .= (empty($wherequery) ? 'WHERE ' : ' AND ') . 'mdc.id IN ('.$validcourseids.')';
+            $wherequery .= 'WHERE mdc.id IN ('.$validcourseids.')';
+        } else {
+            return self::process_xray_courses_response($courseid, $res);
+        }
+
+        if (!is_null($categoryid) && $categoryid !== 'all') {
+            $wherequery .= ' AND mdc.category = :categoryid';
+        } else if (!is_null($courseid)) {
+            $wherequery .= ' AND mdc.id = :courseid';
         }
 
         list($inoreqsql, $params) = $DB->get_in_or_equal(explode(',', $CFG->gradebookroles), SQL_PARAMS_NAMED, 'grbr0');
@@ -109,7 +110,6 @@ abstract class course_manager {
 
         $xraycourses = $DB->get_records_sql($xraycoursequery, $params);
 
-        $res = array();
         foreach ($xraycourses as $xraycourse) {
             $res[] = array(
                 'id' => $xraycourse->id,
@@ -119,16 +119,24 @@ abstract class course_manager {
             );
         }
 
-        if (!$single) {
+        return self::process_xray_courses_response($courseid, $res);
+    }
+
+    /**
+     * @param null|int $courseid
+     * @param array $res
+     * @return \stdClass[]|\stdClass Array of courses or single course that has all course information and selection status
+     */
+    private static function process_xray_courses_response($courseid = null, $res) {
+        if (is_null($courseid)) {
             return $res;
-        } else {
-            $emptycourse = array(
-                'id' => $courseid,
-                'checked' => false
-            );
-            return empty($res) ? $emptycourse : $res[0];
         }
 
+        $emptycourse = array(
+            'id' => $courseid,
+            'checked' => false
+        );
+        return empty($res) ? $emptycourse : $res[0];
     }
 
     /**
@@ -156,6 +164,9 @@ abstract class course_manager {
         $res = array();
 
         $validcourseids = valid_course_handler::instance()->get_valid_course_list_as_string();
+        if (empty($validcourseids)) {
+            return $res;
+        }
 
         $query = "SELECT mdcat.id, mdcat.name,
 
@@ -208,6 +219,9 @@ abstract class course_manager {
         $res = new \stdClass();
 
         $validcourseids = valid_course_handler::instance()->get_valid_course_list_as_string();
+        if (empty($validcourseids)) {
+            return $res;
+        }
 
         $query = "SELECT mdcat.id,
 
