@@ -546,7 +546,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  */
                 self.loadCategory = function(cat, callback) {
                     if (cat.loaded) {
-                        if (callback) { callback(); }
+                        if (callback) {
+                            callback();
+                        }
                         return;
                     }
 
@@ -589,7 +591,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                         })
                     ).then(function() {
                         if (!cat.loaded) {
-                            if (callback) { callback(); }
+                            if (callback) {
+                                callback();
+                            }
                             return;
                         }
 
@@ -606,7 +610,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
 
                                 self.applyStatusToCategories(cat.categories);
 
-                                if (callback) { callback(); }
+                                if (callback) {
+                                    callback();
+                                }
                             });
                         });
                     });
