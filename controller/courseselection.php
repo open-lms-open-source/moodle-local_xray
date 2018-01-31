@@ -96,44 +96,9 @@ class local_xray_controller_courseselection extends mr_controller_admin {
 
         try {
             $saved = optional_param('saved', 0, PARAM_INT);
-
-            $selcourtable = 'local_xray_selectedcourse';
-
-            require_once($CFG->dirroot.'/local/xray/courseselectionform.php');
-
-            // Prepare the form.
-            $mform = new courseselection_form($this->url);
-            if ($currentvalue = $DB->get_records($selcourtable)) {
-                $toform = new stdClass();
-                $formval = array();
-                foreach ($currentvalue as $selcourse) {
-                    $formval[] = $selcourse->cid;
-                }
-                $toform->joined_courses = implode(',', array_unique($formval));
-                $mform->set_data($toform);
-            } else if ($xrayids = course_manager::load_course_ids_from_xray()) {
-                // If database is empty and courses are foung in X-Ray server, load them to the database.
-                \local_xray\local\api\course_manager::save_selected_courses($xrayids);
-                $toform = new stdClass();
-                $toform->joined_courses = implode(',', array_unique($xrayids));
-                $mform->set_data($toform);
-            }
-
-            if ($fromform = $mform->get_data()) {
-                $courseselection = array();
-                if ($fromform->joined_courses && $fromform->joined_courses !== '') {
-                    $courseselection = explode(',', $fromform->joined_courses);
-                }
-
-                course_manager::save_selected_courses($courseselection);
-
-                $this->url->param('action', 'view');
-                $this->url->param('saved', 1);
-                redirect($this->url);
-            }
+            $output = '';
 
             // Print all output.
-            $output = '';
             $analysisfilterdisabled = isset($CFG->local_xray_disable_analysisfilter) &&
                 $CFG->local_xray_disable_analysisfilter;
             if ($saved) {
@@ -145,8 +110,53 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             if (!$saved && !$analysisfilterdisabled && !course_manager::courses_match()) {
                 $output .= $OUTPUT->notification(get_string('warn_courses_do_not_match', 'local_xray'), 'notifymessage');
             }
-            $output .= $mform->render();
-            $this->require_js_libs(); // Require js libs if everything worked out alright.
+
+            // Usage instructions.
+            $output .= '<div tabindex="0">'.get_string('xraycourses_instructions', 'local_xray').'</div>';
+
+            if (!empty(course_manager::get_xray_courses())) {
+                require_once($CFG->dirroot.'/local/xray/courseselectionform.php');
+                $mform = new courseselection_form($this->url);
+                $selcourtable = 'local_xray_selectedcourse';
+
+                // Prepare the form.
+                if ($currentvalue = $DB->get_records($selcourtable)) {
+                    $toform = new stdClass();
+                    $formval = array();
+                    foreach ($currentvalue as $selcourse) {
+                        $formval[] = $selcourse->cid;
+                    }
+                    $toform->joined_courses = implode(',', array_unique($formval));
+                    $mform->set_data($toform);
+                } else if ($xrayids = course_manager::load_course_ids_from_xray()) {
+                    // If database is empty and courses are foung in X-Ray server, load them to the database.
+                    \local_xray\local\api\course_manager::save_selected_courses($xrayids);
+                    $toform = new stdClass();
+                    $toform->joined_courses = implode(',', array_unique($xrayids));
+                    $mform->set_data($toform);
+                }
+
+                // Get data from form.
+                if ($fromform = $mform->get_data()) {
+                    $courseselection = array();
+                    if ($fromform->joined_courses && $fromform->joined_courses !== '') {
+                        $courseselection = explode(',', $fromform->joined_courses);
+                    }
+
+                    course_manager::save_selected_courses($courseselection);
+
+                    $this->url->param('action', 'view');
+                    $this->url->param('saved', 1);
+                    redirect($this->url);
+                }
+
+                $output .= $mform->render();
+                $this->require_js_libs(); // Require js libs if everything worked out alright.
+            } else {
+                $novalidmessage = new lang_string('xray_no_valid_courses', self::PLUGIN);
+                $output .= $OUTPUT->notification($novalidmessage, 'warning');
+            }
+
             return $this->output->box($output, 'boxwidthwide');
         } catch (\Exception $exc) {
             return $this->output->box($OUTPUT->notification($exc->getMessage(), 'notifyerror'));
