@@ -161,7 +161,7 @@ li.xray-course {
 
 .xray-course-shortname {
   display: inline;
-  padding: 10px;
+  padding-right: 10px;
   color: #0a78d1;
   cursor: pointer;
 }
