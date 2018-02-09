@@ -140,7 +140,6 @@ var CollapsibleLists = new function(){
         node.className = node.className.replace(
             /(^| )xray-collapsible-list(-open|-closed)( |$)/, '');
 
-
         // If the node contains unordered lists, set its class.
         if (uls.length > 0){
             node.className += ' xray-collapsible-list' + (open ? '-open' : '-closed');

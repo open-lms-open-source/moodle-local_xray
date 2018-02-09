@@ -24,6 +24,7 @@ env:
     - DB=mysqli
     - MOODLE_CI_VER=2
     - AWS_BRANCH=LEGACY
+    - IGNORE_PATHS=amd/src/toggle_categories.js
 
 matrix:
  include:

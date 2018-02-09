@@ -114,7 +114,8 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             // Usage instructions.
             $output .= '<div tabindex="0">'.get_string('xraycourses_instructions', 'local_xray').'</div>';
 
-            if (!empty(course_manager::get_xray_courses())) {
+            $xraycourses = course_manager::get_xray_courses();
+            if (!empty($xraycourses)) {
                 require_once($CFG->dirroot.'/local/xray/courseselectionform.php');
                 $mform = new courseselection_form($this->url);
                 $selcourtable = 'local_xray_selectedcourse';
