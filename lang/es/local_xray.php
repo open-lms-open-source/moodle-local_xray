@@ -664,6 +664,7 @@ $string['xraycourses_instructions'] = 'Seleccionar las categorías y cursos que 
 $string['xray_check_global_settings'] = 'No se pudo conectar con el servidor de X-Ray Learning Analytics. {$a}';
 $string['xray_check_global_settings_link'] = 'Porfavor validar que el servidor de X-Ray Learning Analytics está disponible'.
     'antes de seleccionar los cursos.';
+$string['xray_no_valid_courses'] = 'No se encontraron cursos válidos dentro del servidor de XRay Learning Analytics. Por favor espere a que su sitio sincronice sus cursos o contacte al administrador del sistema.';
 $string['xray_save_course_filter_error'] = 'Se ha producido un error salvando los cursos en el servidor de X-Ray Learning Analytics:<br />{$a}';
 $string['loading_please_wait'] = 'Cargando. Porfavor espere.';
 $string['warn_courses_do_not_match'] = "Los cursos seleccionados en el servidor de X-Ray server no coinciden con los cursos seleccionados.".
