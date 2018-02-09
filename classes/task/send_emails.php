@@ -181,7 +181,10 @@ class send_emails extends scheduled_task {
                                             // Close and output PDF document.
                                             $strfemaildate = get_string('strfemaildate', 'local_xray');
                                             $reportdate = userdate(time(), $strfemaildate, 99, false);
-                                            $filename = clean_param('XRAY_COURSE_'.$course->shortname.'_'.$reportdate.'.pdf', PARAM_FILE);
+                                            $filename = clean_param(
+                                                'XRAY_COURSE_'.$course->shortname.'_'.$reportdate.'.pdf',
+                                                PARAM_FILE
+                                            );
                                             $filecontent = $pdf->Output($filename, 'S');
                                             // Add as a temporary file.
                                             $dir = 'files';
@@ -194,7 +197,15 @@ class send_emails extends scheduled_task {
                                             }
                                         }
                                         // Send Email.
-                                        $email = email_to_user($to, $from, $subject, $messagetext, $messagehtml, $attachment, $filename);
+                                        $email = email_to_user(
+                                            $to,
+                                            $from,
+                                            $subject,
+                                            $messagetext,
+                                            $messagehtml,
+                                            $attachment,
+                                            $filename
+                                        );
                                         // Delete the file.
                                         if ($realpath = realpath($attachment)) {
                                             if (is_writable($realpath)) {

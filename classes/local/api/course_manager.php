@@ -195,7 +195,7 @@ abstract class course_manager {
             $xraycourses += $subcatcourses->xraycourses;
             $totcourses += $subcatcourses->totcourses;
 
-            if($totcourses === 0) {
+            if ($totcourses === 0) {
                 continue;
             }
 
@@ -367,7 +367,7 @@ abstract class course_manager {
         $allcategoriesid = 'all';
 
         $context = \context_system::instance();
-        $before_xraycourses_saved = $DB->get_records_menu($selcourtable, array());
+        $beforexraycoursessaved = $DB->get_records_menu($selcourtable, array());
         // Clear the table from old selection.
         if ($DB->record_exists($selcourtable, array())) {
             // Record deletion.
@@ -379,11 +379,11 @@ abstract class course_manager {
             $records = array_map(array(__CLASS__, 'process_ui_record'), $courseids);
             $DB->insert_records($selcourtable, $records);
         }
-        $after_xraycourses_saved = $DB->get_records_menu($selcourtable, array());
-        $added_xraycourses = array_diff($after_xraycourses_saved, $before_xraycourses_saved);
-        if ($added_xraycourses) {
+        $afterxraycoursessaved = $DB->get_records_menu($selcourtable, array());
+        $addedxraycourses = array_diff($afterxraycoursessaved, $beforexraycoursessaved);
+        if ($addedxraycourses) {
             $diff = array();
-            foreach ($added_xraycourses as $id => $course) {
+            foreach ($addedxraycourses as $id => $course) {
                 $diff[] = 'ID: ' . $course;
             }
             // Order the numbers of the course ids on the log page from the lowest to the highest.
@@ -398,10 +398,10 @@ abstract class course_manager {
                                  'courses' => $diff));
             \local_xray\event\course_selection_added::create($addeventdata)->trigger();
         }
-        $deleted_xraycourses = array_diff($before_xraycourses_saved, $after_xraycourses_saved);
-        if ($deleted_xraycourses) {
+        $deletedxraycourses = array_diff($beforexraycoursessaved, $afterxraycoursessaved);
+        if ($deletedxraycourses) {
             $diff = array();
-            foreach ($deleted_xraycourses as $id => $course) {
+            foreach ($deletedxraycourses as $id => $course) {
                 $diff[] = 'ID: ' . $course;
             }
             // Order the numbers of the course ids on the log page from the lowest to the highest.

@@ -491,7 +491,11 @@ class local_xray_renderer extends plugin_renderer_base {
         // Recommended Actions Title.
         $recommendedactionsicon = $OUTPUT->pix_icon('RecommendedActions_icon', '', 'local_xray');
         $recommendedactionsicon = html_writer::div($recommendedactionsicon, 'xray-recommendedactionsicon');
-        $recommendedtitle = html_writer::tag('p', get_string('recommendedactions', 'local_xray'), array('class' => 'xray-recommendedtitle'));
+        $recommendedtitle = html_writer::tag(
+            'p',
+            get_string('recommendedactions', 'local_xray'),
+            array('class' => 'xray-recommendedtitle')
+        );
 
         // Check if there are recommended actions.
         $recommendationlist = '';
@@ -669,7 +673,11 @@ class local_xray_renderer extends plugin_renderer_base {
                         $icon = $OUTPUT->pix_icon($reportpix,
                             '',
                             'local_xray');
-                        $menuitems[] = html_writer::link($url, $icon.get_string($reportstring, 'local_xray'), array('class' => $class));
+                        $menuitems[] = html_writer::link(
+                            $url,
+                            $icon.get_string($reportstring, 'local_xray'),
+                            array('class' => $class)
+                        );
 
                     }
                 }

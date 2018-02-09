@@ -66,7 +66,7 @@ class local_xray_course_manager_testcase extends \advanced_testcase {
      * @return void
      */
     public function test_compute_check_status_checked_indeterminate() {
-        $res = course_manager::compute_check_status(self::NUM_COURSES/2, self::NUM_COURSES, 0);
+        $res = course_manager::compute_check_status(self::NUM_COURSES / 2, self::NUM_COURSES, 0);
         $this->assertTrue($res->checked);
         $this->assertTrue($res->indeterminate);
     }
