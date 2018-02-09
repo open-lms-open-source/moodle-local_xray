@@ -50,7 +50,7 @@ class csv_meta {
      * @return string
      */
     public static function get_enclosure() {
-        return self::checkformat() ? '"' : "\x1";
+        return (self::checkformat() || get_config('local_xray', 'forceenclosure')) ? '"' : "\x1";
     }
 
     /**

@@ -163,6 +163,7 @@ class data_export {
      */
     public static function range_where($field1, $field2 = null, $from, $to, $fn, $idfield = 'id', $skipextra = false) {
         global $DB;
+        ($to);
 
         if (!defined('DISABLE_EXPORT_COUNTERS')) {
             $maxdatestore = get_config(self::PLUGIN, self::get_maxdate_setting($fn));
@@ -183,34 +184,28 @@ class data_export {
         // Use lastid only if not exporting for the first time.
         $lastidstore = get_config(self::PLUGIN, $fn);
         if (!empty($lastidstore) && !$skipextra) {
-            if ($from > $to) {
-                if ($DB->get_debug()) {
-                    mtrace("BBB - {$fn} - Start date more recent than end date!!! from: {$from} to: {$to}");
-                }
-            }
-
-            $sqlbetween = " {$field1} BETWEEN (:from + 1) AND :to
+            $sqlbetween = " {$field1} > :from
                              AND
                              {$idfield} <= :lastid
                              ORDER BY {$idfield} ASC ";
-            $sqlparams[] = ['sql' => $sqlbetween, 'params' => ['from' => $from, 'to' => $to]];
+            $sqlparams[] = ['sql' => $sqlbetween, 'params' => ['from' => $from]];
 
             if (!empty($field2)) {
-                $sqlbetween2 = " {$field2} BETWEEN (:from + 1) AND :to
+                $sqlbetween2 = " {$field2} > :from
                                  AND
                                  {$field1} = 0
                                  AND
                                  {$idfield} <= :lastid
                                  ORDER BY {$idfield} ASC ";
-                $sqlparams[] = ['sql' => $sqlbetween2, 'params' => ['from' => $from, 'to' => $to]];
+                $sqlparams[] = ['sql' => $sqlbetween2, 'params' => ['from' => $from]];
 
-                $sqlbetween3 = " {$field2} BETWEEN (:from + 1) AND :to
+                $sqlbetween3 = " {$field2} > :from
                                  AND
                                  {$field1} IS NULL
                                  AND
                                  {$idfield} <= :lastid
                                  ORDER BY {$idfield} ASC ";
-                $sqlparams[] = ['sql' => $sqlbetween3, 'params' => ['from' => $from, 'to' => $to]];
+                $sqlparams[] = ['sql' => $sqlbetween3, 'params' => ['from' => $from]];
             }
         }
 
@@ -1014,7 +1009,7 @@ class data_export {
         /* @noinspection PhpIncludeInspection */
         require_once($CFG->libdir.'/grade/constants.php');
 
-        $wherecond = self::range_where('gh.timemodified', null, $timest, $timeend, __FUNCTION__, 'gh.id');
+        $wherecond = self::range_where('gh.timemodified', null, $timest, $timeend, __FUNCTION__, 'gh.id', true);
 
         $sql = "
             SELECT gh.id,
@@ -1077,7 +1072,7 @@ class data_export {
      * @return void
      */
     public static function groups_deleted($timest, $timeend, $dir) {
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
 
         $sql = "
             SELECT id,
@@ -1124,7 +1119,7 @@ class data_export {
      * @return void
      */
     public static function groups_members_deleted($timest, $timeend, $dir) {
-        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__);
+        $wherecond = self::range_where('timedeleted', null, $timest, $timeend, __FUNCTION__, 'id', true);
 
         $sql = "
             SELECT id,
@@ -1199,10 +1194,7 @@ class data_export {
         }
 
         if ($newformat) {
-            $ndir = $dir.DIRECTORY_SEPARATOR.$filename;
-            if (!file_exists($ndir)) {
-                make_writable_directory($ndir, false);
-            }
+            $ndir = make_writable_directory($dir.DIRECTORY_SEPARATOR.$filename, false);
         }
 
         do {
@@ -1453,19 +1445,15 @@ class data_export {
     public static function export_csv($timest, $timeend, $dir, $disabletimetrace = false) {
         self::$meta = [];
         self::reset_counter_storage();
+        \cache_helper::invalidate_by_definition('core', 'config', [], self::PLUGIN);
 
         $newformat = get_config(self::PLUGIN, 'newformat');
 
-        /** @var array $plugins */
-        $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
-        /** @var array $logstores */
+        $plugins = \core_plugin_manager::instance()->get_enabled_plugins('mod');
         $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
 
         // In case timeframe is 0 - there would be no limit to the execution.
         timer::start(self::executiontime());
-
-        // Assure we have accurate internal markers.
-        self::internal_check_lastid();
 
         // Order of export matters. Do not change unless sure.
         self::coursecategories($timest, $timeend, $dir);
@@ -1545,9 +1533,7 @@ class data_export {
      */
     public static function elements() {
 
-        /** @var array $plugins */
-        $plugins = \core_plugin_manager::instance()->get_plugins_of_type('mod');
-        /** @var array $logstores */
+        $plugins = \core_plugin_manager::instance()->get_enabled_plugins('mod');
         $logstores = \core_plugin_manager::instance()->get_plugins_of_type('logstore');
 
         $items = [
@@ -1601,35 +1587,6 @@ class data_export {
         }
 
         return $items;
-    }
-
-    /**
-     * Method that confirms that last stored id in configuration table actually works for current table id
-     * @return void
-     */
-    public static function internal_check_lastid() {
-        global $DB;
-        // Provide all table names and obtain max id.
-        // In case there is wrong discrepancy ( config lastid > table max(id) ) delete the config value.
-        foreach (self::elements() as $setting => $table) {
-            $recordset = $DB->get_recordset_sql("SELECT id FROM {{$table}} ORDER BY id DESC", null, 0, 1);
-            $recordset->rewind();
-            if (!$recordset->valid()) {
-                $recordset->close();
-                $recordset = null;
-                continue;
-            }
-            $lastid = (int)$recordset->current()->id;
-            $recordset->close();
-            $recordset = null;
-            if ($lastid > 0) {
-                $id = get_config(self::PLUGIN, $setting);
-                if ($id > $lastid) {
-                    // Inconsistency detected.
-                    self::delete_setting($setting);
-                }
-            }
-        }
     }
 
     /**
