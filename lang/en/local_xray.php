@@ -669,7 +669,7 @@ $string['xraycourses_instructions'] = 'Select the Categories and Courses you wan
 $string['xray_check_global_settings'] = 'Couldn\'t connect to X-Ray Learning Analytics Server. {$a}';
 $string['xray_check_global_settings_link'] = 'Please validate that X-Ray Learning Analytics Server is available '.
     'before selecting the courses.';
-$string['xray_no_valid_courses'] = 'There were no valid courses found in the X-Ray Learning Analytics server. Please wait for your site to sync its courses or contact you system administrator.';
+$string['xray_no_valid_courses'] = 'There were no valid courses found in the X-Ray Learning Analytics server. Please wait for your site to sync or contact your system administrator.';
 $string['xray_save_course_filter_error'] = 'There was an error saving the courses to X-Ray Learning Analytics server:<br />{$a}';
 $string['loading_please_wait'] = 'Loading. Please wait.';
 $string['warn_courses_do_not_match'] = "The selected courses on the X-Ray server don't match the courses selected here.".
