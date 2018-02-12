@@ -93,7 +93,7 @@ class valid_course_handler {
                     $courseidarr[] = $cids->id;
                 }
                 $this->validcourselist = $courseidarr;
-            } else if ($wsapires && $wsapires->data) {
+            } else if (is_object($wsapires) && property_exists($wsapires, 'data') && $wsapires->data) {
                 $this->validcourselist = $wsapires->data;
             } else {
                 $this->validcourselist = [];
