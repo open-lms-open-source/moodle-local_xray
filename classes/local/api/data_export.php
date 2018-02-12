@@ -105,26 +105,30 @@ class data_export {
         // Do not use textual datetime representation in the new format.
         $newformat = get_config(self::PLUGIN, 'newformat');
         if ($newformat) {
-            return $fieldname;
-        }
-
-        switch($DB->get_dbfamily()) {
-            case 'mysql':
-                $format = 'FROM_UNIXTIME(%s)';
-                break;
-            case 'postgres':
-                $format = "TO_CHAR(TO_TIMESTAMP(%s), 'YYYY-MM-DD HH24:MI:SS')";
-                break;
-            case 'mssql':
-                $format = "CONVERT(VARCHAR, DATEADD(S, %s, '1970-01-01'), 120)";
-                break;
-            case 'oracle':
-                $format = "TO_CHAR(TO_DATE('1970-01-01', 'YYYY-MM-DD')".
-                          " + NUMTODSINTERVAL(%s, 'SECOND'), 'YYYY-MM-DD HH24:MI:SS')";
-                break;
-            case 'sqlite':
-                $format = "DATETIME(%s, 'unixepoch', 'localtime')";
-                break;
+            if ($DB->get_dbfamily() == 'mysql') {
+                $format = "UNIX_TIMESTAMP(FROM_UNIXTIME(%s))";
+            } else {
+                return $fieldname;
+            }
+        } else {
+            switch($DB->get_dbfamily()) {
+                case 'mysql':
+                    $format = 'FROM_UNIXTIME(%s)';
+                    break;
+                case 'postgres':
+                    $format = "TO_CHAR(TO_TIMESTAMP(%s), 'YYYY-MM-DD HH24:MI:SS')";
+                    break;
+                case 'mssql':
+                    $format = "CONVERT(VARCHAR, DATEADD(S, %s, '1970-01-01'), 120)";
+                    break;
+                case 'oracle':
+                    $format = "TO_CHAR(TO_DATE('1970-01-01', 'YYYY-MM-DD')".
+                        " + NUMTODSINTERVAL(%s, 'SECOND'), 'YYYY-MM-DD HH24:MI:SS')";
+                    break;
+                case 'sqlite':
+                    $format = "DATETIME(%s, 'unixepoch', 'localtime')";
+                    break;
+            }
         }
 
         if ($doalias) {
