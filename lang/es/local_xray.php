@@ -640,7 +640,7 @@ $string['error_single_activity'] = 'Los reportes no estan disponibles para los c
 
 // Settings page.
 $string['global_settings'] = 'Configuración global para X-Ray';
-$string['courseselection'] = '<span tabindex="0">Selección de cursos para X-Ray</span>';
+$string['courseselection'] = 'Selección de cursos para X-Ray';
 
 // Default X-Ray controller error.
 $string['page_not_found'] = '404 - Página no encontrada.';

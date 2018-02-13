@@ -646,7 +646,7 @@ $string['error_single_activity'] = 'Reports aren’t available for Single Activi
 
 // Settings page.
 $string['global_settings'] = 'X-Ray Global Settings';
-$string['courseselection'] = '<span tabindex="0">X-Ray Course Selection</span>';
+$string['courseselection'] = 'X-Ray Course Selection';
 
 // Default X-Ray controller error.
 $string['page_not_found'] = '404 - Page not found.';
