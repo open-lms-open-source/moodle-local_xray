@@ -418,7 +418,7 @@ abstract class course_manager {
             \local_xray\event\course_selection_removed::create($remeventdata)->trigger();
         }
         // Save courses to X-Ray as well.
-        if (!defined('PHPUNIT_TEST') && !defined('BEHAT_SITE_RUNNING')) {
+        if (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !(defined('BEHAT_SITE_RUNNING') && BEHAT_SITE_RUNNING)) {
             self::save_courses_to_xray();
         }
     }
