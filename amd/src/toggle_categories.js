@@ -6,7 +6,7 @@
  * @param data
  */
 define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
-    function($, str, ajax, Templates) {
+    function ($, str, ajax, Templates) {
         return {
             init: function (data) {
                 var self = this;
@@ -26,10 +26,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                 self.selection = [];
 
                 // Root category.
-                self.rootcat = {id:0};
+                self.rootcat = {id: 0};
 
                 // Initializing function.
-                self.init = function() {
+                self.init = function () {
                     self.loadCategory(self.rootcat, self.initExpandCollapseButtons);
                     self.loadSelection();
                 };
@@ -37,31 +37,32 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                 /**
                  * Loads the selection that comes from a hidden field into a data structure.
                  */
-                self.loadSelection = function() {
+                self.loadSelection = function () {
                     var rawVal = $('[name=' + joinedInputName + ']').val();
                     if (rawVal && rawVal !== '') {
                         self.selection = rawVal.split(',');
                     }
                 };
 
-                self.initExpandCollapseButtons = function() {
-                    $('#xrayexpandallbtn').on('click', function(event) {
+                self.initExpandCollapseButtons = function () {
+                    $('#xrayexpandallbtn').on('click', function (event) {
                         event.preventDefault();
-                        self.expandAllCategories(function(){});
+                        self.expandAllCategories(function () {
+                        });
                     });
 
-                    $('#xraycollapseallbtn').on('click', function(event) {
+                    $('#xraycollapseallbtn').on('click', function (event) {
                         event.preventDefault();
                         self.recurseCategoryCollapse(self.rootcat);
                     });
                 };
 
-                self.expandAllCategories = function(callback) {
+                self.expandAllCategories = function (callback) {
                     var expandBtnNode = $('#xrayexpandallbtn'), collapseBtnNode = $('#xraycollapseallbtn');
                     expandBtnNode.append('<span class="xray_validate_loader"></span>');
                     expandBtnNode.prop('disabled', true);
                     collapseBtnNode.prop('disabled', true);
-                    self.recurseCategoryExpand(self.rootcat, function() {
+                    self.recurseCategoryExpand(self.rootcat, function () {
                         expandBtnNode.children('.xray_validate_loader').remove();
                         expandBtnNode.prop('disabled', false);
                         collapseBtnNode.prop('disabled', false);
@@ -69,10 +70,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                     });
                 };
 
-                self.recurseCategoryExpand = function(cat, callback) {
-                    // Load the category before clicking it to ensure that all subcategories have loaded
+                self.recurseCategoryExpand = function (cat, callback) {
+                    // Load the category before clicking it to ensure that all subcategories have loaded.
                     self.toggleCategoryUI(cat, false);
-                    self.loadCategory(cat, function() {
+                    self.loadCategory(cat, function () {
                         if (!cat.categories && !cat.courses) {
                             return;
                         }
@@ -87,7 +88,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                             self.toggleCategoryUI(cat, true);
                             callback();
                         } else {
-                            self.recurseCategoriesExpand(0, cat.categories, function() {
+                            self.recurseCategoriesExpand(0, cat.categories, function () {
                                 self.toggleCategoryUI(cat, true);
                                 callback();
                             });
@@ -95,10 +96,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                     });
                 };
 
-                self.recurseCategoriesExpand = function(idx, cats, callback) {
+                self.recurseCategoriesExpand = function (idx, cats, callback) {
                     if (idx < cats.length) {
                         var nextIdx = idx + 1;
-                        self.recurseCategoryExpand(cats[idx], function() {
+                        self.recurseCategoryExpand(cats[idx], function () {
                             self.recurseCategoriesExpand(nextIdx, cats, callback);
                         });
                     } else {
@@ -106,7 +107,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                     }
                 };
 
-                self.recurseCategoryCollapse = function(cat) {
+                self.recurseCategoryCollapse = function (cat) {
                     if (!cat.categories && !cat.courses) {
                         return;
                     }
@@ -129,8 +130,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Creates category listeners for the categories.
                  * @param cats
                  */
-                self.createCategoryListeners = function(cats) {
-                    if (!cats) { return; }
+                self.createCategoryListeners = function (cats) {
+                    if (!cats) {
+                        return;
+                    }
 
                     for (var c in cats) {
                         self.createListenersInCategory(cats[c]);
@@ -141,7 +144,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Adds the category status update listener to the child courses.
                  * @param cat Parent category
                  */
-                self.addMyListenerToCategories = function(cat) {
+                self.addMyListenerToCategories = function (cat) {
                     if (cat.categories && cat.myListener) {
                         for (var c in cat.categories) {
                             $(catPrefix + cat.categories[c].id).change(cat.myListener);
@@ -154,7 +157,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Adds the category status update listener to the child courses.
                  * @param cat Parent category
                  */
-                self.addMyListenerToCourses = function(cat) {
+                self.addMyListenerToCourses = function (cat) {
                     if (cat.courses && cat.myListener) {
                         for (var c in cat.courses) {
                             self.addMyListenerToCourse(cat, cat.courses[c]);
@@ -167,8 +170,8 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param cat Parent category
                  * @param course Child course
                  */
-                self.addMyListenerToCourse = function(cat, course) {
-                    $(coursePrefix + course.id).change(function(){
+                self.addMyListenerToCourse = function (cat, course) {
+                    $(coursePrefix + course.id).change(function () {
                         var checked = $(this).is(":checked");
                         self.updateCourseSelection(course, checked);
                         cat.myListener();
@@ -179,8 +182,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Adds the click listeners to a list of categories for selection and expansion
                  * @param cats Categories whose ui will receive the listeners
                  */
-                self.addClickListenersToCategories = function(cats){
-                    if (!cats) { return; }
+                self.addClickListenersToCategories = function (cats) {
+                    if (!cats) {
+                        return;
+                    }
 
                     for (var c in cats) {
                         self.addClickListenersToCategory(cats[c]);
@@ -191,28 +196,28 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Adds the click listeners to a category rendered ui for selection and expansion
                  * @param cat Specific category whose ui will receive the listeners
                  */
-                self.addClickListenersToCategory = function(cat) {
-                    var selectCategory = function(event) {
+                self.addClickListenersToCategory = function (cat) {
+                    var selectCategory = function (event) {
                         event.stopPropagation();
                         var catInput = $(this);
                         // Check sub categories and courses.
                         self.toggleCategoryUI(cat, false);
-                        self.checkCategory(cat, catInput.prop('checked'), function() {
+                        self.checkCategory(cat, catInput.prop('checked'), function () {
                             self.toggleCategoryUI(cat, true);
                         });
                     };
 
-                    var expandCategory = function( event ) {
+                    var expandCategory = function (event) {
                         event.stopPropagation();
                         self.toggleCategoryUI(cat, false);
-                        self.loadCategory(cat, function(){
+                        self.loadCategory(cat, function () {
                             self.toggleCategoryUI(cat, true);
                         });
                     };
 
-                    // Add click handler to checks to check children when parent is checked
+                    // Add click handler to checks to check children when parent is checked.
                     $(catPrefix + cat.id).on('click', selectCategory);
-                    // Add click handler to checks to check children when parent is checked
+                    // Add click handler to checks to check children when parent is checked.
                     $(catPrefix + cat.id + '_li').on('click', expandCategory);
                 };
 
@@ -221,7 +226,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param cat Category
                  * @param allowusage Can it be used?
                  */
-                self.toggleCategoryUI = function(cat, allowusage) {
+                self.toggleCategoryUI = function (cat, allowusage) {
                     var catInput = $(catPrefix + cat.id), submitBtn = $(idSubmitBtn),
                         catLbl = $(catPrefix + cat.id + '_lbl'),
                         disabledstr = 'disabled';
@@ -240,8 +245,8 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Creates status update listeners in a specific category
                  * @param cat Specific category
                  */
-                self.createListenersInCategory = function(cat) {
-                    cat.myListener = function() {
+                self.createListenersInCategory = function (cat) {
+                    cat.myListener = function () {
                         var indeterminate = self.atLeastOneCourseChecked(cat.courses) &&
                             self.areCoursesIndeterminate(cat.courses);
 
@@ -253,7 +258,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                             self.atLeastOneCatChecked(cat.categories) &&
                             self.areCatsIndeterminate(cat.categories));
 
-                        if(cat.courses && cat.categories) {
+                        if (cat.courses && cat.categories) {
                             indeterminate = indeterminate || (
                                 self.areCatsChecked(cat.categories) &&
                                 !self.areCoursesChecked(cat.courses));
@@ -268,8 +273,8 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                             self.atLeastOneCourseChecked(cat.courses);
 
                         var catInput = $(catPrefix + cat.id);
-                        catInput.prop('checked',checked);
-                        catInput.prop('indeterminate',indeterminate);
+                        catInput.prop('checked', checked);
+                        catInput.prop('indeterminate', indeterminate);
 
                         if (cat.parentListener) {
                             cat.parentListener();
@@ -285,7 +290,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param checked Check status
                  * @param callback Executed after all categories' check status has been applied
                  */
-                self.checkCategories = function(cats, checked, callback) {
+                self.checkCategories = function (cats, checked, callback) {
                     for (var c in cats) {
                         self.toggleCategoryUI(cats[c], false);
                     }
@@ -299,10 +304,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param checked Check status
                  * @param callback Executed after all categories' check status has been applied
                  */
-                self.recursiveCategoryCheck = function(idx, cats, checked, callback) {
+                self.recursiveCategoryCheck = function (idx, cats, checked, callback) {
                     if (idx < cats.length) {
                         var nextIdx = idx + 1;
-                        self.checkCategory(cats[idx], checked, function() {
+                        self.checkCategory(cats[idx], checked, function () {
                             self.recursiveCategoryCheck(nextIdx, cats, checked, callback);
                         });
                     } else {
@@ -316,9 +321,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param checked
                  * @param callback
                  */
-                self.checkCategory = function(cat, checked, callback) {
+                self.checkCategory = function (cat, checked, callback) {
                     // Allow usage of this category (Even if it is disabled).
-                    var allowMyUsage = function() {
+                    var allowMyUsage = function () {
                         self.toggleCategoryUI(cat, true);
                         cat.myListener();
                         return callback();
@@ -328,7 +333,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
 
                     catInput.prop('checked', checked);
 
-                    var checkMyStuff = function() {
+                    var checkMyStuff = function () {
                         if (cat.courses) {
                             self.checkCourses(cat.courses, checked);
                         }
@@ -343,7 +348,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                             allowMyUsage();
                         }
 
-                        if (cat.parentListener) { cat.parentListener(); }
+                        if (cat.parentListener) {
+                            cat.parentListener();
+                        }
                     };
 
                     self.loadCategory(cat, checkMyStuff);
@@ -354,7 +361,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param courses
                  * @param checked
                  */
-                self.checkCourses = function(courses, checked) {
+                self.checkCourses = function (courses, checked) {
                     for (var c in courses) {
                         $(coursePrefix + courses[c].id).prop('checked', checked);
                         self.updateCourseSelection(courses[c], checked);
@@ -366,11 +373,13 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param cats
                  * @returns {boolean} true if all are checked, false otherwise
                  */
-                self.areCatsChecked = function(cats) {
-                    if (!cats) { return false; }
+                self.areCatsChecked = function (cats) {
+                    if (!cats) {
+                        return false;
+                    }
 
                     var res = true;
-                    for(var c in cats) {
+                    for (var c in cats) {
                         res = res && ($(catPrefix + cats[c].id).prop('checked'));
                     }
                     return res;
@@ -381,8 +390,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param cats
                  * @returns {boolean} true if at least one is checked, false otherwise
                  */
-                self.atLeastOneCatChecked = function(cats) {
-                    if (!cats) { return false; }
+                self.atLeastOneCatChecked = function (cats) {
+                    if (!cats) {
+                        return false;
+                    }
 
                     var res = false;
                     for (var c in cats) {
@@ -394,7 +405,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                     return res;
                 };
 
-                self.atLeastOneCatUnCheckedDisabled = function(cats) {
+                self.atLeastOneCatUnCheckedDisabled = function (cats) {
                     if (!cats) {
                         return false;
                     }
@@ -407,7 +418,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                     return false;
                 };
 
-                self.atLeastOneCourseUnChecked = function(courses) {
+                self.atLeastOneCourseUnChecked = function (courses) {
                     if (!courses) {
                         return false;
                     }
@@ -425,7 +436,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param courses
                  * @returns {boolean} true if all are checked, false otherwise
                  */
-                self.areCoursesChecked = function(courses) {
+                self.areCoursesChecked = function (courses) {
                     if (!courses || Object.keys(courses).length === 0) {
                         return true;
                     }
@@ -442,8 +453,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param cats
                  * @returns {boolean} true if some categories are incomplete, false if all categories are completely selected
                  */
-                self.areCatsIndeterminate = function(cats) {
-                    if (!cats) { return false; }
+                self.areCatsIndeterminate = function (cats) {
+                    if (!cats) {
+                        return false;
+                    }
 
                     var catCount = 0, catIndCount = 0, catLength = Object.keys(cats).length;
                     for (var c in cats) {
@@ -458,8 +471,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param courses
                  * @returns {boolean} true if not all course are selected, false otherwise
                  */
-                self.areCoursesIndeterminate = function(courses) {
-                    if (!courses) { return false; }
+                self.areCoursesIndeterminate = function (courses) {
+                    if (!courses) {
+                        return false;
+                    }
 
                     var courseCount = 0, courseLength = Object.keys(courses).length;
                     for (var c in courses) {
@@ -473,8 +488,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param courses
                  * @returns {boolean} true if at least one is checked, false otherwise
                  */
-                self.atLeastOneCourseChecked = function(courses) {
-                    if (!courses) { return false; }
+                self.atLeastOneCourseChecked = function (courses) {
+                    if (!courses) {
+                        return false;
+                    }
 
                     var res = false;
                     for (var c in courses) {
@@ -491,7 +508,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param course Course info
                  * @param checked Check status
                  */
-                self.updateCourseSelection = function(course, checked) {
+                self.updateCourseSelection = function (course, checked) {
                     if (checked) {
                         self.addCourseToSelection(course);
                     } else {
@@ -504,7 +521,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Adds a course to the current selection (To be saved)
                  * @param course
                  */
-                self.addCourseToSelection = function(course) {
+                self.addCourseToSelection = function (course) {
                     if (self.selection.indexOf(course.id) === -1) {
                         self.selection.push(course.id);
                     }
@@ -514,7 +531,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Removes a course from the current selection (To be saved)
                  * @param course
                  */
-                self.remCourseFromSelection = function(course) {
+                self.remCourseFromSelection = function (course) {
                     var idx = self.selection.indexOf(course.id);
                     while (idx > -1) {
                         self.selection.splice(idx, 1);
@@ -527,7 +544,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param selCourse
                  * @returns {number} The index of the course, -1 if not found
                  */
-                self.getSelectedCourseIdx = function(selCourse) {
+                self.getSelectedCourseIdx = function (selCourse) {
                     var res = -1;
                     for (var selIdx in self.selection) {
                         if (self.selection[selIdx].cid === selCourse.cid) {
@@ -544,7 +561,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param cat Category whose children will be loaded
                  * @param callback Executed after all children have loaded
                  */
-                self.loadCategory = function(cat, callback) {
+                self.loadCategory = function (cat, callback) {
                     if (cat.loaded) {
                         if (callback) {
                             callback();
@@ -554,12 +571,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
 
                     cat.loaded = true;
 
-                    $.when (
+                    $.when(
                         $.ajax({
-                            url: self.www_root + '/local/xray/view.php'
-                                    + '?controller=courseapi'
-                                    + '&action=listcategories'
-                                    + '&categoryid=' + cat.id,
+                            url: (self.www_root + '/local/xray/view.php'
+                            ) + '?controller=courseapi' + '&action=listcategories' + '&categoryid=' + cat.id,
                             dataType: "json",
                             success: function (data) {
                                 if (!data || data.length === 0) {
@@ -573,10 +588,8 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                             }
                         }),
                         $.ajax({
-                            url: self.www_root + '/local/xray/view.php'
-                                    + '?controller=courseapi'
-                                    + '&action=listcourses'
-                                    + '&categoryid=' + cat.id,
+                            url: (self.www_root + '/local/xray/view.php'
+                            ) + '?controller=courseapi' + '&action=listcourses' + '&categoryid=' + cat.id,
                             dataType: "json",
                             success: function (data) {
                                 if (!data || data.length === 0) {
@@ -589,7 +602,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                                 cat.loaded = false;
                             }
                         })
-                    ).then(function() {
+                    ).then(function () {
                         if (!cat.loaded) {
                             if (callback) {
                                 callback();
@@ -599,7 +612,7 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
 
                         self.emptyCat(cat);
                         var catDef = self.renderCategories(cat, cat.categories);
-                        $.when(catDef).then(function(){
+                        $.when(catDef).then(function () {
                             var courseDef = self.renderCourses(cat, cat.courses);
                             $.when(courseDef).then(function () {
                                 self.createCategoryListeners(cat.categories);
@@ -622,19 +635,20 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Empties the UI for children in a category, used for emptying the loading dialogue
                  * @param cat
                  */
-                self.emptyCat = function(cat) {
+                self.emptyCat = function (cat) {
                     $(catPrefix + cat.id + '_children').empty();
                 };
-
 
                 /**
                  * Renders a los of categories in the UI
                  * @param parentCat
                  * @param cats
                  */
-                self.renderCategories = function(parentCat, cats){
+                self.renderCategories = function (parentCat, cats) {
 
-                    if (!cats) { return; }
+                    if (!cats) {
+                        return;
+                    }
                     var defs = [], myDef = $.Deferred();
                     for (var c in cats) {
                         var def = self.renderCategory(parentCat, cats[c]);
@@ -655,12 +669,12 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param parentCat Parent category
                  * @param cat Category to be rendered
                  */
-                self.renderCategory = function(parentCat, cat) {
+                self.renderCategory = function (parentCat, cat) {
 
                     var catDef = $.Deferred();
-                    var categorytree =  self.rootcat.id == parentCat.id ?
-                                            self.lang_strs.xraycategory :
-                                            self.lang_strs.xraysubcategory;
+                    var categorytree = self.rootcat.id == parentCat.id ?
+                        self.lang_strs.xraycategory :
+                        self.lang_strs.xraysubcategory;
                     var content = {
                         'categoryid': cat.id,
                         'categoryname': cat.name,
@@ -677,8 +691,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Applies the loaded check/selection status to a list of categories
                  * @param cats
                  */
-                self.applyStatusToCategories = function(cats) {
-                    if (!cats) { return; }
+                self.applyStatusToCategories = function (cats) {
+                    if (!cats) {
+                        return;
+                    }
 
                     for (var c in cats) {
                         self.applyStatusToCategory(cats[c]);
@@ -689,9 +705,9 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * Applies the loaded check/selection status to a specific category
                  * @param cat
                  */
-                self.applyStatusToCategory = function(cat) {
-                    $(catPrefix + cat.id).prop('indeterminate',cat.indeterminate);
-                    $(catPrefix + cat.id).prop('checked',cat.checked);
+                self.applyStatusToCategory = function (cat) {
+                    $(catPrefix + cat.id).prop('indeterminate', cat.indeterminate);
+                    $(catPrefix + cat.id).prop('checked', cat.checked);
                 };
 
                 /**
@@ -699,8 +715,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param parentCat
                  * @param courses
                  */
-                self.renderCourses = function(parentCat, courses){
-                    if (!courses) { return; }
+                self.renderCourses = function (parentCat, courses) {
+                    if (!courses) {
+                        return;
+                    }
 
                     var defs = [], myDef = $.Deferred();
 
@@ -721,10 +739,10 @@ define(['jquery', 'core/str', 'core/ajax', 'core/templates'],
                  * @param parentCat Parent category of the course
                  * @param course Course to be rendered
                  */
-                self.renderCourse = function(parentCat, course) {
+                self.renderCourse = function (parentCat, course) {
 
                     var courseDef = $.Deferred();
-                    var courselink =  self.www_root + '/course/view.php?id=' + course.id;
+                    var courselink = self.www_root + '/course/view.php?id=' + course.id;
                     var courselabel = self.lang_strs.xraycourse;
                     var coursechecked = (course.checked ? 'checked="checked" ' : ' ');
                     var content = {
