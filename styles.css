@@ -720,4 +720,8 @@ p.xray-inforeport {
         top: 14px;
     }
 }
+
+#page-admin-local-xray-view #region-main .mr_html_heading:not(.axtitle) {
+    display: none;
+}
 /**************** End styles for Print ****************/

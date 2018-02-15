@@ -110,7 +110,8 @@ class local_xray_controller_courseselection extends mr_controller_admin {
             if (!$saved && !$analysisfilterdisabled && !course_manager::courses_match()) {
                 $output .= $OUTPUT->notification(get_string('warn_courses_do_not_match', 'local_xray'), 'notifymessage');
             }
-
+            $output .= '<div class="mr_html_heading axtitle"><h2 class="main"<span tabindex="0">'.
+                get_string('courseselection', 'local_xray') .'</span><h2></div>';
             // Usage instructions.
             $output .= '<div tabindex="0">'.get_string('xraycourses_instructions', 'local_xray').'</div>';
 
