@@ -40,20 +40,19 @@ if ($hassiteconfig) {
     require($CFG->dirroot.'/local/xray/global_settings.php');
 
     // Add Course selection.
-    if (!empty($CFG->local_xray_unrestrict_course_selection) || defined('BEHAT_SITE_RUNNING')) {
-        $urlcourseselection = new moodle_url(
-            '/local/xray/view.php',
-             ['controller' => 'courseselection', 'action' => 'view']
-        );
-        $ADMIN->add(
-            'local_xray',
-            new admin_externalpage(
-                'courseselection_view',
-                new lang_string('courseselection', $plugin),
-                $urlcourseselection->out(false)
-            )
-        );
-    }
+    $urlcourseselection = new moodle_url(
+        '/local/xray/view.php',
+         ['controller' => 'courseselection', 'action' => 'view']
+    );
+    $ADMIN->add(
+        'local_xray',
+        new admin_externalpage(
+            'courseselection_view',
+            new lang_string('courseselection', $plugin),
+            $urlcourseselection->out(false)
+        )
+    );
+
 }
 
 // This has to be outside of global if so that we can permit non admin users to see this.
