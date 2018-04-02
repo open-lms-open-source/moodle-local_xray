@@ -27,7 +27,6 @@ defined('MOODLE_INTERNAL') or die();
 if ($hassiteconfig) {
     global $CFG, $USER;
     $plugin = 'local_xray';
-    $allowedunamecourses = 'mrsupport';
 
     $ADMIN->add(
         'localplugins',
@@ -41,8 +40,7 @@ if ($hassiteconfig) {
     require($CFG->dirroot.'/local/xray/global_settings.php');
 
     // Add Course selection.
-    if (!empty($CFG->local_xray_unrestrict_course_selection) ||
-        ($USER->username === $allowedunamecourses || defined('BEHAT_SITE_RUNNING'))) {
+    if (!empty($CFG->local_xray_unrestrict_course_selection) || defined('BEHAT_SITE_RUNNING')) {
         $urlcourseselection = new moodle_url(
             '/local/xray/view.php',
              ['controller' => 'courseselection', 'action' => 'view']
