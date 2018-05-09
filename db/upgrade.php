@@ -317,5 +317,20 @@ function xmldb_local_xray_upgrade($oldversion = 0) {
         upgrade_plugin_savepoint(true, 2015070347, 'local', 'xray');
     }
 
+    if ($oldversion < 2015070353) {
+
+        // Define field whole to be dropped from local_xray_subscribe.
+        $table = new xmldb_table('local_xray_subscribe');
+        $field = new xmldb_field('whole');
+
+        // Conditionally launch drop field whole.
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        // Xray savepoint reached.
+        upgrade_plugin_savepoint(true, 2015070353, 'local', 'xray');
+    }
+
     return true;
 }
