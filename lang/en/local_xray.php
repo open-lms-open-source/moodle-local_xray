@@ -713,3 +713,56 @@ $string['dashboard_button'] = 'Show/Hide dashboard';
 // Risk disabled.
 $string['courseriskdisabled'] = 'The Risk Status report is disabled. If you want this report enabled, '.
     'please contact your system administrator.';
+$string['courselevel_subscription'] = 'Subscription at course level.';
+$string['no_subscription'] = 'Not subscribed.';
+$string['all_subscription'] = 'Subscribed to all reports.';
+$string['privacy:metadata:xray_roleunas'] = 'Role unassignments on course level.';
+$string['privacy:metadata:xray_roleunas:role'] = 'The ID record for the role that has been unassign.';
+$string['privacy:metadata:xray_roleunas:userid'] = 'The ID of the user.';
+$string['privacy:metadata:xray_roleunas:course'] = 'The course ID in which the user had the role.';
+$string['privacy:metadata:xray_roleunas:timedeleted'] = 'The timestamp of the delete action.';
+
+$string['privacy:metadata:xray_suscribe'] = 'Stores emails subscriptions for Xray data uptades.';
+$string['privacy:metadata:xray_subscribe:userid'] = 'ID record of the subscribed user.';
+$string['privacy:metadata:xray_subscribe:course'] = 'ID record of the course in which the user is subscribed to.';
+
+$string['privacy:metadata:xray_globalsub'] = 'Stores the global subscriptions for emails.';
+$string['privacy:metadata:xray_globalsub:userid'] = 'ID record of the subscribed user.';
+$string['privacy:metadata:xray_globalsub:type'] = 'Subscription type.';
+
+$string['privacy:metadata:xray_enroldel'] = 'Stores the deleted user enrollments';
+$string['privacy:metadata:xray_enroldel:enrolid'] = 'ID record of the role assignment.';
+$string['privacy:metadata:xray_enroldel:userid'] = 'ID record of the enrolled user.';
+$string['privacy:metadata:xray_enroldel:courseid'] = 'The course ID in which the user had the role assignment.';
+$string['privacy:metadata:xray_enroldel:timedeleted'] = 'The timestamp of the delete action.';
+
+$string['privacy:metadata:xray_gruserdel'] = 'Stores group members deletions.';
+$string['privacy:metadata:xray_gruserdel:groupid'] = 'ID record of the group.';
+$string['privacy:metadata:xray_gruserdel:participantid'] = 'ID record of the user that no longer belongs to the group.';
+$string['privacy:metadata:xray_gruserdel:timedeleted'] = 'The timestamp of the delete action.';
+
+$string['privacy:metadata:xray:userid'] = 'The userid is sent from Moodle as part of enrolment, forum, roles, and grades information.';
+$string['privacy:metadata:xray:enroleid'] = 'The enrolid is sent from Moodle as part of enrolment information for the user.';
+$string['privacy:metadata:xray:forumname'] = 'The forum name is sent from Moodle as part of forums information.';
+$string['privacy:metadata:xray:forumintro'] = 'The forum intro is sent from Moodle as part of forums information.';
+$string['privacy:metadata:xray:forumtimemodified'] = 'The timemodified is sent from Moodle as part of forums, enrolment, grades, groups, user listing and activity modules information.';
+$string['privacy:metadata:xray:gradesfinalgrade'] = 'The finalgrade is sent from Moodle as part of grades information.';
+$string['privacy:metadata:xray:grades_history:loggeduser'] = 'The loggeduser is sent from Moodle as part of grades_history information.';
+$string['privacy:metadata:xray:groups_members:groupid'] = 'The groupid is sent from Moodle as part of groups members deleted information.';
+$string['privacy:metadata:xray:message'] = 'The message is sent from Moodle as part of posts information.';
+$string['privacy:metadata:xray:subject'] = 'The subject is sent from Moodle as part of posts information.';
+$string['privacy:metadata:xray_userlistv2:username'] = 'The username is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_userlistv2:firstname'] = 'The firstname is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_userlistv2:lastname'] = 'The lastname is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_userlistv2:gender'] = 'The gender is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_userlistv2:email'] = 'The email is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_userlistv2:timecreated'] = 'The timecreated is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_userlistv2:firstaccess'] = 'The timemodified is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_userlistv2:lastaccess'] = 'The firstaccess is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_accesslog:ip'] = 'The ip is sent from Moodle as part of accesslog information.';
+$string['privacy:metadata:xray_userlistv2:lastaccess'] = 'The lastaccess (unix time) is sent from Moodle as part of user listing information.';
+$string['privacy:metadata:xray_accesslog:ip'] = 'The ip address is sent from Moodle as part of accesslog information.';
+$string['privacy:metadata:xray_accesslog:action'] = "The user's action is sent from Moodle as part of accesslog information.";
+$string['privacy:metadata:xray_accesslog:time'] = 'The current time is sent from Moodle as part of accesslog information.';
+$string['privacy:metadata:xray_quiz:attempts'] = 'The amount of quiz attemps made by the user is sent from Moodle as part of quiz information';
+$string['privacy:metadata:xray'] = 'Xray Analytics';
