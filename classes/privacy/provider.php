@@ -109,6 +109,15 @@ class provider implements metadataprovider, pluginprovider, preference_provider 
     }
 
     /**
+     * Store all user preferences for the plugin.
+     *
+     * @param int $userid The userid of the user whose data is to be exported.
+     */
+    public static function _export_user_preferences($userid) {
+
+    }
+
+    /**
      * Returns all of the contexts that has information relating to the userid.
      *
      * @param  int $userid The user ID.
