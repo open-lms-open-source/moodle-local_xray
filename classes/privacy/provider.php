@@ -32,6 +32,7 @@ use \core_privacy\local\metadata\provider as metadataprovider;
 use \core_privacy\local\request\contextlist;
 use \core_privacy\local\request\plugin\provider as pluginprovider;
 use \core_privacy\local\request\user_preference_provider as preference_provider;
+use \core_privacy\local\request\transform;
 use \core_privacy\local\request\writer;
 use \core_privacy\local\request\approved_contextlist;
 
@@ -178,7 +179,7 @@ class provider implements metadataprovider, pluginprovider, preference_provider 
             $exportdata[] = (object) [
                 'course' => $record->course,
                 'role' => $record->role,
-                'timedeleted' => $record->timedeleted
+                'timedeleted' => transform::datetime($record->timedeleted)
             ];
         }
         if (!empty($exportdata)) {
@@ -254,7 +255,7 @@ class provider implements metadataprovider, pluginprovider, preference_provider 
             $exportdata[] = (object) [
                 'course' => $record->courseid,
                 'enrolment_id' => $record->enrolid,
-                'time_deleted' => $record->timedeleted
+                'time_deleted' => transform::datetime($record->timedeleted)
             ];
         }
         if (!empty($exportdata)) {
@@ -277,7 +278,7 @@ class provider implements metadataprovider, pluginprovider, preference_provider 
         foreach ($data as $record) {
             $exportdata[] = (object) [
                 'group_id' => $record->groupid,
-                'time_deleted' => $record->timedeleted
+                'time_deleted' => transform::datetime($record->timedeleted)
             ];
         }
         if (!empty($exportdata)) {
