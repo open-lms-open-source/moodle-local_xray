@@ -31,7 +31,6 @@ use \core_privacy\local\metadata\collection;
 use \core_privacy\local\metadata\provider as metadataprovider;
 use \core_privacy\local\request\contextlist;
 use \core_privacy\local\request\plugin\provider as pluginprovider;
-use \core_privacy\local\request\user_preference_provider as preference_provider;
 use \core_privacy\local\request\transform;
 use \core_privacy\local\request\writer;
 use \core_privacy\local\request\approved_contextlist;
@@ -45,7 +44,7 @@ use \core_privacy\local\request\approved_contextlist;
  * @copyright  Copyright (c) 2018 Blackboard Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements metadataprovider, pluginprovider, preference_provider {
+class provider implements metadataprovider, pluginprovider {
 
     use \core_privacy\local\legacy_polyfill;
 
@@ -107,15 +106,6 @@ class provider implements metadataprovider, pluginprovider, preference_provider 
         ], 'privacy:metadata:xray_gruserdel');
 
         return $collection;
-    }
-
-    /**
-     * Store all user preferences for the plugin.
-     *
-     * @param int $userid The userid of the user whose data is to be exported.
-     */
-    public static function _export_user_preferences($userid) {
-
     }
 
     /**
