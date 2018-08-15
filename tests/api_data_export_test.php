@@ -87,12 +87,12 @@ class local_xray_api_data_export_testcase extends local_xray_api_data_export_bas
     }
 
     /**
-     * Add's 5 Moodlerooms forums with some content, exports them in csv and checks the export format.
+     * Add's 5 Open Forums with some content, exports them in csv and checks the export format.
      * @return void
      */
     public function test_hsuforums_export() {
         if (!$this->plugin_present('mod_hsuforum')) {
-            $this->markTestSkipped('Moodlerooms Forum not present!');
+            $this->markTestSkipped('Open Forum not present!');
         }
 
         $this->resetAfterTest();

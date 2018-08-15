@@ -19,7 +19,7 @@
  *
  * @package   local_xray
  * @author    Darko Miletic <darko.miletic@blackboard.com>
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * Class data_export for exporting raw data for xray processing
  *
  * @package   local_xray
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class data_export {
@@ -816,7 +816,7 @@ class data_export {
     }
 
     /**
-     * Moodlerooms forums discussion delete
+     * Open Forums discussion delete
      *
      * @param int    $timest
      * @param int    $timeend
@@ -878,7 +878,7 @@ class data_export {
     }
 
     /**
-     * Deleted Moodlerooms forum posts
+     * Deleted Open Forum posts
      *
      * @param int    $timest
      * @param int    $timeend
@@ -1489,13 +1489,13 @@ class data_export {
         } else {
             self::mtrace('Forum activity not installed. Skipping.');
         }
-        // Since Moodlerooms Forum is not core plugin we check for it's presence.
+        // Since Open Forum is not core plugin we check for it's presence.
         if (array_key_exists('hsuforum', $plugins)) {
             self::hsuforums($timest, $timeend, $dir);
             self::hsuthreads($timest, $timeend, $dir);
             self::hsuposts($timest, $timeend, $dir);
         } else {
-            self::mtrace('Moodlerooms forum activity not installed. Skipping.');
+            self::mtrace('Open Forum activity not installed. Skipping.');
         }
         if (array_key_exists('quiz', $plugins)) {
             self::quiz($timest, $timeend, $dir);

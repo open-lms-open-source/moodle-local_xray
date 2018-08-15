@@ -19,7 +19,7 @@
  *
  * @package   local_xray
  * @author    David Castro
- * @copyright Copyright (c) 2017 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

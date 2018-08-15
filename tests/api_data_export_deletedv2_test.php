@@ -88,7 +88,7 @@ class local_xray_api_data_export_deletev2_testcase extends local_xray_api_data_e
      */
     public function test_hsuforum_discussions_delete_export() {
         if (!$this->plugin_present('mod_hsuforum')) {
-            $this->markTestSkipped('Moodlerooms Forum not present!');
+            $this->markTestSkipped('Open Forum not present!');
         }
 
         global $DB;

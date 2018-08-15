@@ -60,7 +60,7 @@ function local_xray_course_category_deleted(\core\event\course_category_deleted 
 }
 
 /**
- * Listener for Moodlerooms forum discussion delete
+ * Listener for Open Forum discussion delete
  *
  * @param \mod_hsuforum\event\discussion_deleted $event
  */
@@ -75,7 +75,7 @@ function local_xray_hsu_discussion_deleted(\mod_hsuforum\event\discussion_delete
 }
 
 /**
- * Listener for Moodlerooms forum post delete
+ * Listener for Open Forum post delete
  *
  * @param \mod_hsuforum\event\post_deleted $event
  */

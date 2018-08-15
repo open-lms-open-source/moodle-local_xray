@@ -60,7 +60,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | Subject | Discussion of Forum 1 |
       | Message | Generic Message       |
     And I follow "Course1"
-    And I add a new discussion to "HSUForum 1 test" Moodlerooms forum with:
+    And I add a new discussion to "HSUForum 1 test" Open Forum with:
       | Subject | Discussion of HSUForum 1  |
       | Message | Generic Messag            |
     And I log out

@@ -24,7 +24,7 @@ require_once(__DIR__.'/base.php');
  * @package   local_xray
  * @group local_xray
  * @group local_xray_tables_reports
- * @copyright Copyright (c) 2016 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_tables_reports_testcase extends local_xray_base_testcase {
