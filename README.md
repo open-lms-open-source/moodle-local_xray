@@ -13,9 +13,9 @@
 * Install AWS SDK
 * Deploy and install X-Ray Learning Analytics plugin
 
-### Moodlerooms Framework
+### Blackboard Open LMS Framework
 
-Moodlerooms Framework can be obtained from [Moodle plugins][mr-framework-moodle] database or from our [GitHub repository][mr-framework-github]. Either way is suitable. Make sure to choose the correct version of the plugin for your version of Moodle.
+Blackboard Open LMS Framework can be obtained from [Moodle plugins][mr-framework-moodle] database or from our [GitHub repository][mr-framework-github]. Either way is suitable. Make sure to choose the correct version of the plugin for your version of Moodle.
 
 ### AWS SDK
 
@@ -66,8 +66,8 @@ Any Blackboard trademarks and logos included in these plugins are property of Bl
 
 [xray-site]: http://www.blackboard.com/education-analytics/xray-learning-analytics.aspx "X-Ray Analytics"
 [moodle-29]: https://docs.moodle.org/dev/Moodle_2.9_release_notes "Moodle 2.9 Release Notes"
-[mr-framework-github]: https://github.com/moodlerooms/moodle-local_mr "Moodlerooms Framework"
-[mr-framework-moodle]: https://moodle.org/plugins/view.php?plugin=local_mr "Moodlerooms Framework"
+[mr-framework-github]: https://github.com/moodlerooms/moodle-local_mr "Blackboard Open LMS Framework"
+[mr-framework-moodle]: https://moodle.org/plugins/view.php?plugin=local_mr "Blackboard Open LMS Framework"
 [mr-aws-sdk]: https://github.com/moodlerooms/moodle-local_aws_sdk "AWS SDK"
 [mr-aws-sdk-31-branch]: https://github.com/moodlerooms/moodle-local_aws_sdk/tree/MOODLE_31_STABLE "3.1 SDK"
 [mr-aws-sdk-32-branch]: https://github.com/moodlerooms/moodle-local_aws_sdk/tree/MOODLE_32_STABLE "3.2 SDK"
