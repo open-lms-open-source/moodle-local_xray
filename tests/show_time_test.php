@@ -18,7 +18,7 @@
  * show_time_hours_minutes tests
  *
  * @package   local_xray
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -33,7 +33,7 @@ defined('MOODLE_INTERNAL') || die();
  * @package   local_xray
  * @group     local_xray
  * @group     local_xray_show_time
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_show_time_testcase extends \advanced_testcase {

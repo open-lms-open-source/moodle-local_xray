@@ -19,7 +19,7 @@
  *
  * @package   local_xray
  * @author    Darko Miletic <darko.miletic@blackboard.com>
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * Class data_export for exporting raw data for xray processing
  *
  * @package   local_xray
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class data_export {

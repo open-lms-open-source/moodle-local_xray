@@ -20,7 +20,7 @@
  *
  * @package   local_xray
  * @category  test
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -36,7 +36,7 @@ use Behat\Mink\Exception\ExpectationException as ExpectationException;
  *
  * @package   local_xray
  * @category  test
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class behat_local_xray extends behat_base {

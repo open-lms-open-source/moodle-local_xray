@@ -18,7 +18,7 @@
  * CSV export support - helper.
  *
  * @package   local_xray
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.moodlerooms.com)
+ * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboardopenlms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
