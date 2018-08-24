@@ -20,7 +20,7 @@
  * @package   local_xray
  * @author    Darko MIletic
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Moodlerooms
+ * @copyright Copyright (c) Blackboard Inc. (http://www.blackboardopenlms.com)
  */
 
 defined('MOODLE_INTERNAL') || die();

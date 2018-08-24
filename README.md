@@ -3,13 +3,13 @@
 ## Requirements
 
 * [Moodle 2.9+][moodle-29]
-* [Moodlerooms Framework][mr-framework-github]
+* [Blackboard Open LMS framework][mr-framework-github]
 * [AWS PHP SDK][mr-aws-sdk]
 * Purchased licence of X-Ray Learning Analytics service ( For more information please visit the official [site][xray-site]. ) 
 
 ## Installation
 
-* Install Moodlerooms Framework
+* Install Blackboard Open LMS framework
 * Install AWS SDK
 * Deploy and install X-Ray Learning Analytics plugin
 
