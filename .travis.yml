@@ -68,13 +68,13 @@ before_install:
   - nvm install 8.9
   - nvm use 8.9
   - cd ../..
-  - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^${MOODLE_CI_VER}
+  - composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^${MOODLE_CI_VER}
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:
-  - moodle-plugin-ci add-plugin -b ${AWS_BRANCH}    moodlerooms/moodle-local_aws_sdk
-  - moodle-plugin-ci add-plugin -b ${MOODLE_BRANCH} moodlerooms/moodle-local_mr
-  - moodle-plugin-ci add-plugin -b ${MOODLE_BRANCH} moodlerooms/moodle-mod_hsuforum
+  - moodle-plugin-ci add-plugin -b ${AWS_BRANCH}    blackboard-open-source/moodle-local_aws_sdk
+  - moodle-plugin-ci add-plugin -b ${MOODLE_BRANCH} blackboard-open-source/moodle-local_mr
+  - moodle-plugin-ci add-plugin -b ${MOODLE_BRANCH} blackboard-open-source/moodle-mod_hsuforum
   - moodle-plugin-ci install
 
 # We do not include behat testing for now since there are numerous issues
