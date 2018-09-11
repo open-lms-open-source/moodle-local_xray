@@ -16,7 +16,7 @@
 
 /**
  *
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
  * @package local_xray
  * @author David Castro

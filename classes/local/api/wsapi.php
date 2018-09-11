@@ -19,7 +19,7 @@
  *
  * @package   local_xray
  * @author    Darko Miletic
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * Class wsapi
  *
  * @package   local_xray
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 abstract class wsapi {

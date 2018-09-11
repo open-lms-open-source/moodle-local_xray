@@ -20,7 +20,7 @@
  * @package local_xray
  * @author Darko Miletic
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @copyright Copyright (c) Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) Blackboard Inc. (http://www.blackboard.com)
  */
 
 namespace local_xray\event;

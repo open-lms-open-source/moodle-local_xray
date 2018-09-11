@@ -17,7 +17,7 @@
 #
 # @package    local_xray
 # @author     German Vitale
-# @copyright  Copyright (c) 2017 Blackboard Inc. (http://www.blackboardopenlms.com)
+# @copyright  Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
 # @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 @local @local_xray @local_xray_email_subscription

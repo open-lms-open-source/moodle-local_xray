@@ -22,7 +22,7 @@
  * @author German Vitale
  * @author Darko Miletic
  * @author David Castro <david.castro@blackboard.com>
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

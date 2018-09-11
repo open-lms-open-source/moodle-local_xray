@@ -18,7 +18,7 @@
  * Xray course listing API controller
  *
  * @package   local_xray
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,7 +31,7 @@ require_once($CFG->dirroot.'/local/mr/framework/controller.php');
  *
  * @author    David Castro
  * @package   local_xray
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_controller_courseapi extends mr_controller {

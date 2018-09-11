@@ -18,7 +18,7 @@
  * MUC support.
  *
  * @package   local_xray
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ require_once($CFG->libdir.'/filelib.php');
 /**
  * Class cache
  * @package   local_xray
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cache {

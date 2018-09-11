@@ -18,7 +18,7 @@
  * X-Ray plugin renderer
  *
  * @package   local_xray
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ use local_xray\local\api\course_manager;
  *
  * @package   local_xray
  * @author    Pablo Pagnone
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_renderer extends plugin_renderer_base {

@@ -18,7 +18,7 @@
  * Report controller.
  *
  * @package   local_xray
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ use local_xray\event\get_report_failed;
  * @package   local_xray
  * @author    Pablo Pagnone
  * @author    German Vitale
- * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboardopenlms.com)
+ * @copyright Copyright (c) 2016 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_controller_systemreports extends local_xray_controller_reports {
