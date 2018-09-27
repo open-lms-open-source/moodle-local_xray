@@ -97,17 +97,17 @@ Feature: The headline data should be present in the course page for manager, edi
     And I wait until the page is ready
     And I test Headline view "xraycourse1"
       | theme      | formats                                                  | type     |
-      | clean      | weeks,topics,folderview,onetopic,social,topcoll          | theme    |
-      | more       | weeks,topics,folderview,onetopic,social,topcoll          | theme    |
+      | clean      | weeks,topics,onetopic,social,topcoll          | theme    |
+      | more       | weeks,topics,onetopic,social,topcoll          | theme    |
       | snap       | weeks,topics                                             | theme    |
-      | minimal    | weeks,topics,folderview,onetopic,social,topcoll          | template |
-      | cherub     | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | dropshadow | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | future     | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | joule      | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | simple     | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | sleek      | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
-      | topslide   | flexpage,weeks,topics,folderview,onetopic,social,topcoll | template |
+      | minimal    | weeks,topics,onetopic,social,topcoll          | template |
+      | cherub     | flexpage,weeks,topics,onetopic,social,topcoll | template |
+      | dropshadow | flexpage,weeks,topics,onetopic,social,topcoll | template |
+      | future     | flexpage,weeks,topics,onetopic,social,topcoll | template |
+      | joule      | flexpage,weeks,topics,onetopic,social,topcoll | template |
+      | simple     | flexpage,weeks,topics,onetopic,social,topcoll | template |
+      | sleek      | flexpage,weeks,topics,onetopic,social,topcoll | template |
+      | topslide   | flexpage,weeks,topics,onetopic,social,topcoll | template |
 
   @javascript
   Scenario: Headline is not displayed for students.

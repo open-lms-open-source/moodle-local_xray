@@ -151,7 +151,6 @@ function local_xray_extends_navigation($nav) {
         'topics' => '#region-main',
         'weeks' => '#region-main',
         'flexpage' => '#page-content',
-        'folderview' => '#region-main',
         'onetopic' => '#region-main',
         'singleactivity' => '.notexist', // Not sure what to do here?
         'social' => '#region-main',
