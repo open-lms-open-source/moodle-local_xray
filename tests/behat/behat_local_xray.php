@@ -181,32 +181,7 @@ class behat_local_xray extends behat_base {
             $generalcontext->reload();
             $generalcontext->wait_until_the_page_is_ready();
             $this->headline_elements(true);
-            // Test headline in flexpages.
-            if ($theme == 'express' && $format == 'flexpage') {
-                $this->add_flexpage();
-                $this->headline_elements(true);
-            }
         }
-    }
-
-    /**
-     * Add a Flexpage
-     */
-    private function add_flexpage () {
-        /** @var behat_general $generalcontext */
-        $generalcontext = behat_context_helper::get('behat_general');
-        /** @var behat_forms $behatformscontext */
-        $behatformscontext = behat_context_helper::get('behat_forms');
-
-        $generalcontext->click_link("Turn editing on");
-        $generalcontext->wait_until_the_page_is_ready();
-        $generalcontext->i_click_on('a[href^="/course/format/flexpage/view.php?controller=ajax&action=addpages&"]', "css_element");
-        $generalcontext->i_wait_seconds(3);
-        $behatformscontext->i_set_the_field_to("name[]", "Xray Flexpage 01");
-        $behatformscontext->press_button("Add flexpages");
-        $generalcontext->wait_until_the_page_is_ready();
-        $generalcontext->i_click_on("a#format_flexpage_next_page-button", "css_element");
-        $generalcontext->wait_until_the_page_is_ready();
     }
 
     /**

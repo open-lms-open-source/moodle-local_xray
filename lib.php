@@ -150,7 +150,6 @@ function local_xray_extends_navigation($nav) {
     static $search = [
         'topics' => '#region-main',
         'weeks' => '#region-main',
-        'flexpage' => '#page-content',
         'onetopic' => '#region-main',
         'singleactivity' => '.notexist', // Not sure what to do here?
         'social' => '#region-main',
