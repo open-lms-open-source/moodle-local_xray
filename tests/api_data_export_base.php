@@ -184,7 +184,7 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
             if (!empty($timecreated)) {
                 $catid = (int)$cat->id;
                 $DB->update_record('course_categories', (object)['id' => $catid, 'timemodified' => $timecreated]);
-                $cat = coursecat::get($catid);
+                $cat = core_course_category::get($catid);
             }
             $categories[] = $cat;
         }

@@ -61,7 +61,7 @@ class local_xray_api_data_export_extra_testcase extends local_xray_api_data_expo
         ];
 
         // Initial export.
-        $this->export_check('coursecategories', $typedef, $exportuntil, false, coursecat::count_all());
+        $this->export_check('coursecategories', $typedef, $exportuntil, false, core_course_category::count_all());
 
         // Check export of modified categories.
         $newnow = $now - (4 * HOURSECS);
