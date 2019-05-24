@@ -52,24 +52,29 @@ class local_xray_privacy_provider_testcase extends \core_privacy\tests\provider_
         $this->assertInstanceOf(collection::class, $result);
     }
 
-    public function set_test_data($user) {
+    public function set_test_data($users) {
         global $DB;
         $course = $this->getDataGenerator()->create_course();
-        $record = new stdClass();
-        $record->userid = $user->id;
-        $record->type = 1;
-        $DB->insert_record('local_xray_globalsub', $record);
-        $record->role = 5;
-        $record->course = $course->id;
-        $record->timedeleted = time();
-        $DB->insert_record('local_xray_roleunas', $record);
-        $record->courseid = $course->id;
-        $DB->insert_record('local_xray_subscribe', $record);
-        $record->enrolid = 10;
-        $DB->insert_record('local_xray_enroldel', $record);
-        $record->groupid = 12;
-        $record->participantid = $user->id;
-        $DB->insert_record('local_xray_gruserdel', $record);
+        if(!is_array($users)){
+            $users =[$users];
+        }
+        foreach ($users as $user) {
+            $record = new stdClass();
+            $record->userid = $user->id;
+            $record->type = 1;
+            $DB->insert_record('local_xray_globalsub', $record);
+            $record->role = 5;
+            $record->course = $course->id;
+            $record->timedeleted = time();
+            $DB->insert_record('local_xray_roleunas', $record);
+            $record->courseid = $course->id;
+            $DB->insert_record('local_xray_subscribe', $record);
+            $record->enrolid = 10;
+            $DB->insert_record('local_xray_enroldel', $record);
+            $record->groupid = 12;
+            $record->participantid = $user->id;
+            $DB->insert_record('local_xray_gruserdel', $record);
+        }
         return $course->id;
     }
 
@@ -147,5 +152,84 @@ class local_xray_privacy_provider_testcase extends \core_privacy\tests\provider_
         $this->assertEmpty($DB->get_records('local_xray_enroldel', ['userid' => $user->id]));
         $this->assertEmpty($DB->get_records('local_xray_gruserdel', ['participantid' => $user->id]));
 
+    }
+
+    /**
+     * Test that only users within a user context are fetched.
+     */
+    public function test_get_users_in_context() {
+        global $DB;
+        $this->resetAfterTest();
+        $users = [];
+        $users[] = $this->getDataGenerator()->create_user();
+        $users[] = $this->getDataGenerator()->create_user();
+        $users[] = $this->getDataGenerator()->create_user();
+        $users2 = [];
+        $users2[] = $this->getDataGenerator()->create_user();
+        $users2[] = $this->getDataGenerator()->create_user();
+        $users2[] = $this->getDataGenerator()->create_user();
+        $courseid = $this->set_test_data($users);
+        $courseid2 = $this->set_test_data($users2);
+
+        $this->assertCount(6, $DB->get_records('local_xray_roleunas'));
+        $this->assertCount(6, $DB->get_records('local_xray_subscribe'));
+        $this->assertCount(6, $DB->get_records('local_xray_globalsub'));
+        $this->assertCount(6, $DB->get_records('local_xray_enroldel'));
+        $this->assertCount(6, $DB->get_records('local_xray_gruserdel'));
+
+        $context = context_course::instance($courseid);
+        $contextlist = new \core_privacy\local\request\userlist($context, 'local_xray');
+        provider::get_users_in_context($contextlist);
+        $this->assertCount(3,$contextlist->get_userids());
+
+        $context = context_course::instance($courseid2);
+        $contextlist = new \core_privacy\local\request\userlist($context, 'local_xray');
+        provider::get_users_in_context($contextlist);
+        $this->assertCount(3,$contextlist->get_userids());
+
+    }
+
+    /**
+     * Test that data for users in approved userlist is deleted.
+     */
+    public function test_delete_data_for_users() {
+        global $DB;
+        $this->resetAfterTest();
+        $users = [];
+        $users[] = $this->getDataGenerator()->create_user();
+        $users[] = $this->getDataGenerator()->create_user();
+        $users[] = $this->getDataGenerator()->create_user();
+        $users2 = [];
+        $users2[] = $this->getDataGenerator()->create_user();
+        $users2[] = $this->getDataGenerator()->create_user();
+        $users2[] = $this->getDataGenerator()->create_user();
+        $courseid = $this->set_test_data($users);
+        $courseid2 = $this->set_test_data($users2);
+
+        $this->assertCount(6, $DB->get_records('local_xray_roleunas'));
+        $this->assertCount(6, $DB->get_records('local_xray_subscribe'));
+        $this->assertCount(6, $DB->get_records('local_xray_enroldel'));
+
+        $context = context_course::instance($courseid);
+        $usersid = [];
+        foreach ($users as $user) {
+            $usersid[] = $user->id;
+        }
+        $contextlist = new \core_privacy\local\request\approved_userlist($context, 'local_xray', $usersid);
+        provider::delete_data_for_users($contextlist);
+        $this->assertCount(3, $DB->get_records('local_xray_roleunas'));
+        $this->assertCount(3, $DB->get_records('local_xray_subscribe'));
+        $this->assertCount(3, $DB->get_records('local_xray_enroldel'));
+
+        $context = context_course::instance($courseid2);
+        $usersid = [];
+        foreach ($users2 as $user) {
+            $usersid[] = $user->id;
+        }
+        $contextlist = new \core_privacy\local\request\approved_userlist($context, 'local_xray', $usersid);
+        provider::delete_data_for_users($contextlist);
+        $this->assertCount(0, $DB->get_records('local_xray_roleunas'));
+        $this->assertCount(0, $DB->get_records('local_xray_subscribe'));
+        $this->assertCount(0, $DB->get_records('local_xray_enroldel'));
     }
 }

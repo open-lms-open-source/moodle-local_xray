@@ -34,6 +34,8 @@ use \core_privacy\local\request\plugin\provider as pluginprovider;
 use \core_privacy\local\request\transform;
 use \core_privacy\local\request\writer;
 use \core_privacy\local\request\approved_contextlist;
+use core_privacy\local\request\userlist;
+use core_privacy\local\request\approved_userlist;
 
 
 /**
@@ -318,6 +320,62 @@ class provider implements metadataprovider, pluginprovider {
         $DB->delete_records('local_xray_globalsub', ['userid' => $userid]);
         $DB->delete_records('local_xray_enroldel', ['userid' => $userid]);
         $DB->delete_records('local_xray_gruserdel', ['participantid' => $userid]);
+    }
+
+    /**
+     * Get the list of users within a specific context.
+     *
+     * @param userlist $userlist The userlist containing the list of users who have data in this context/plugin combination.
+     */
+    public static function get_users_in_context(userlist $userlist) {
+
+        $context = $userlist->get_context();
+        if ($context->contextlevel != CONTEXT_COURSE) {
+            return;
+        }
+
+        $courseid = $context->instanceid;
+
+        $sql = "SELECT DISTINCT ru.userid as userid
+                           FROM {local_xray_roleunas} ru
+                          WHERE ru.course = :course";
+
+        $userlist->add_from_sql('userid', $sql, ['course' => $courseid]);
+
+        $sql = "SELECT DISTINCT su.userid as userid
+                           FROM {local_xray_subscribe} su
+                          WHERE su.courseid = :courseid";
+
+        $userlist->add_from_sql('userid', $sql, ['courseid' => $courseid]);
+
+        $sql = "SELECT DISTINCT ed.userid as userid
+                           FROM {local_xray_enroldel} ed
+                          WHERE ed.courseid = :courseid";
+
+        $userlist->add_from_sql('userid', $sql, ['courseid' => $courseid]);
 
     }
+
+    /**
+     * Delete multiple users within a single context.
+     *
+     * @param approved_userlist $userlist The approved context and user information to delete information for.
+     */
+    public static function delete_data_for_users(approved_userlist $userlist) {
+        global $DB;
+
+        $context = $userlist->get_context();
+        if ($context->contextlevel != CONTEXT_COURSE) {
+            return;
+        }
+        $courseid = $context->instanceid;
+        $usersid = $userlist->get_userids();
+
+        foreach ($usersid as $userid) {
+            $DB->delete_records('local_xray_roleunas', ['userid' => $userid, 'course' => $courseid]);
+            $DB->delete_records('local_xray_subscribe', ['userid' => $userid, 'courseid' => $courseid]);
+            $DB->delete_records('local_xray_enroldel', ['userid' => $userid, 'courseid' => $courseid]);
+        }
+    }
+
 }
