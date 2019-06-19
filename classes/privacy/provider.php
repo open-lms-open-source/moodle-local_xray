@@ -46,7 +46,8 @@ use core_privacy\local\request\approved_userlist;
  * @copyright  Copyright (c) 2018 Blackboard Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements metadataprovider, pluginprovider {
+class provider implements metadataprovider, pluginprovider,
+    \core_privacy\local\request\core_userlist_provider {
 
     use \core_privacy\local\legacy_polyfill;
 
