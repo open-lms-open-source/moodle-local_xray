@@ -27,15 +27,16 @@ namespace local_xray\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
-use \core_privacy\local\metadata\collection;
-use \core_privacy\local\metadata\provider as metadataprovider;
-use \core_privacy\local\request\contextlist;
-use \core_privacy\local\request\plugin\provider as pluginprovider;
-use \core_privacy\local\request\transform;
-use \core_privacy\local\request\writer;
-use \core_privacy\local\request\approved_contextlist;
+use core_privacy\local\metadata\collection;
+use core_privacy\local\metadata\provider as metadataprovider;
+use core_privacy\local\request\contextlist;
+use core_privacy\local\request\plugin\provider as pluginprovider;
+use core_privacy\local\request\transform;
+use core_privacy\local\request\writer;
+use core_privacy\local\request\approved_contextlist;
 use core_privacy\local\request\userlist;
 use core_privacy\local\request\approved_userlist;
+use core_privacy\local\request\core_userlist_provider;
 
 
 /**
@@ -46,12 +47,9 @@ use core_privacy\local\request\approved_userlist;
  * @copyright  Copyright (c) 2018 Blackboard Inc.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements metadataprovider, pluginprovider,
-    \core_privacy\local\request\core_userlist_provider {
+class provider implements metadataprovider, pluginprovider, core_userlist_provider {
 
-    use \core_privacy\local\legacy_polyfill;
-
-    public static function _get_metadata(collection $collection) {
+    public static function get_metadata(collection $collection) : collection {
 
         $collection->add_external_location_link('xray', [
             'userid' => 'privacy:metadata:xray:userid',
@@ -117,7 +115,7 @@ class provider implements metadataprovider, pluginprovider,
      * @param  int $userid The user ID.
      * @return contextlist an object with the contexts related to a userid.
      */
-    public static function _get_contexts_for_userid($userid) {
+    public static function get_contexts_for_userid(int $userid) : contextlist {
         $sql = "SELECT cx.id
                   FROM {context} cx
              LEFT JOIN {local_xray_roleunas} role ON role.userid = cx.instanceid 
@@ -142,7 +140,7 @@ class provider implements metadataprovider, pluginprovider,
      *
      * @param approved_contextlist $contextlist contexts that we are writing data out from.
      */
-    public static function _export_user_data(approved_contextlist $contextlist) {
+    public static function export_user_data(approved_contextlist $contextlist) {
         if (empty($contextlist)) {
             return;
         }
@@ -286,7 +284,7 @@ class provider implements metadataprovider, pluginprovider,
      *
      * @param context $context The course context.
      */
-    public static function _delete_data_for_all_users_in_context(\context $context) {
+    public static function delete_data_for_all_users_in_context(\context $context) {
         global $DB;
         if (empty($context)) {
             return;
@@ -305,7 +303,7 @@ class provider implements metadataprovider, pluginprovider,
      *
      * @param approved_contextlist $contextlist The approved contexts and user information to delete information for.
      */
-    public static function _delete_data_for_user(approved_contextlist $contextlist) {
+    public static function delete_data_for_user(approved_contextlist $contextlist) {
         global $DB;
         $userid = $contextlist->get_user()->id;
         $context = \context_user::instance($userid);
