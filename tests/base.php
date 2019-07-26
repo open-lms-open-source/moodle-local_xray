@@ -65,7 +65,7 @@ abstract class local_xray_base_testcase extends advanced_testcase {
      * @param bool $condition
      * @param string $message
      */
-    public static function assertNotFalse($condition, $message = '') {
+    public static function assertNotFalse($condition, string $message = ''):void  {
         if (method_exists('PHPUnit_Framework_Assert', 'assertNotFalse')) {
             parent::assertNotFalse($condition, $message);
         } else {
