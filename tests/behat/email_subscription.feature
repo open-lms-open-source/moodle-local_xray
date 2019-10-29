@@ -59,6 +59,7 @@ Feature: Global and course level subscription pages.
     And I switch to "_xray_course_subscription" window
     And Xray email alerts are turned off
     And "#id_subscribe" "css_element" should exist
+    And I change window size to "large"
     And I click on "id_subscribe" "checkbox"
     And I press "Save changes"
     And I wait until the page is ready
