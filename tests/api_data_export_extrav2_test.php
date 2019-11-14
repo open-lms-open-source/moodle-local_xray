@@ -40,7 +40,6 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
      */
     public function test_coursecategories_export() {
         global $DB;
-        $this->markTestSkipped('Started to fail after the 3.7.1 merge');
 
         $this->resetAfterTest(false);
         $now = time();
@@ -61,9 +60,10 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
             ['optional' => false, 'type' => 'string' ],
             ['optional' => false, 'type' => 'numeric'],
         ];
+        $basecategory = \core_course_category::get(0);
 
         // Initial export.
-        $this->export_check('coursecategories', $typedef, $exportuntil, false, core_course_category::count_all());
+        $this->export_check('coursecategories', $typedef, $exportuntil, false, $basecategory->get_children_count());
 
         // Check export of modified categories.
         $newnow = $now - (4 * HOURSECS);
