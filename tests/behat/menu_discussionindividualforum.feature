@@ -32,7 +32,7 @@ Feature: The menu xray with link to Discussion Report Individual Forum should be
       | xrayclientid | testclient | local_xray |
       | displaymenu | 1 | local_xray |
     And the following config values are set as admin:
-      | theme | clean |
+      | theme | classic |
     And the following "courses" exist:
       | fullname | shortname | format |
       | Course1 | C1 | topics |

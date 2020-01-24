@@ -34,7 +34,7 @@ Feature: Global and course level subscription pages.
       | emailfrequency | weekly | local_xray |
       | emailreport | 1 | local_xray |
     And the following config values are set as admin:
-      | theme | clean |
+      | theme | classic |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |

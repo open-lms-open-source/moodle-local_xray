@@ -19,7 +19,7 @@ Feature: X-Ray course selection presents the list of categories and courses and 
       | xrayclientid | qa2nxtclonesb | local_xray |
       | displaymenu | 1 | local_xray |
     And the following config values are set as admin:
-      | theme | clean |
+      | theme | classic |
     And the following "categories" exist:
       | name | description | parent | idnumber |
       | Category 1 | This is the category 1 | 0 | CAT01 |

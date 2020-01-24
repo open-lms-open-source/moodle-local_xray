@@ -32,7 +32,7 @@ Feature: The headline data should be present in the course page for manager, edi
       | xrayclientid | datapushdemo | local_xray |
       | displaymenu | 1 | local_xray |
     And the following config values are set as admin:
-      | theme | clean |
+      | theme | classic |
     And the following "users" exist:
       | username | firstname | lastname | email |
       | teacher1 | Teacher | 1 | teacher1@example.com |
@@ -96,10 +96,9 @@ Feature: The headline data should be present in the course page for manager, edi
     And I am on "Xray Course 01" course homepage
     And I wait until the page is ready
     And I test Headline view "xraycourse1"
-      | theme      | formats                                         | type     |
-      | clean      | weeks,topics,onetopic,social,topcoll | theme    |
-      | more       | weeks,topics,onetopic,social,topcoll | theme    |
-      | snap       | weeks,topics                                    | theme    |
+      | theme      | formats                              | type     |
+      | classic    | weeks,topics,onetopic,social,topcoll | theme    |
+      | snap       | weeks,topics                         | theme    |
       | minimal    | weeks,topics,onetopic,social,topcoll | template |
       | cherub     | weeks,topics,onetopic,social,topcoll | template |
       | dropshadow | weeks,topics,onetopic,social,topcoll | template |
