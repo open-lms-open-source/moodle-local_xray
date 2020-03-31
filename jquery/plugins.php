@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * List of jQuery plugins moodletxt uses in its interface,
+ * List of jQuery plugins local_xray uses in its interface,
  * for loading via Moodle's plugin manager
  *
  * @author Pablo Pagnone
