@@ -36,7 +36,7 @@ class local_xray_api_data_export_grades_testcase extends local_xray_api_data_exp
      *
      */
     public function test_grade_update_export() {
-        $this->markTestSkipped('Started to fail after the 3.7.1 merge');
+        $this->markTestSkipped('Started to fail randomly in the build after the 3.7.1 merge. To be fixed in INT-15841');
 
         global $CFG;
         /* @noinspection PhpIncludeInspection */
