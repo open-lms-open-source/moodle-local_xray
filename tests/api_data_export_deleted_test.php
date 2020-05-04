@@ -35,7 +35,6 @@ class local_xray_api_data_export_delete_testcase extends local_xray_api_data_exp
      * Test forum discussions and posts delete
      */
     public function test_forum_discussions_delete_export() {
-        $this->markTestSkipped('Started to fail since the 3.8.1 merge. To be fixed in INT-15841');
         if (!$this->plugin_present('mod_forum')) {
             $this->markTestSkipped('Forum not present!');
         }

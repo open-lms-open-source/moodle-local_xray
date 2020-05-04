@@ -64,21 +64,6 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
         $course = get_course($courseid);
         $forum = $DB->get_record('forum', ['id' => $forumid]);
         forum_delete_discussion($discussion, true, $course, $cm, $forum);
-
-        // That is a great design. They did not place event code into forum_delete_discussion API.
-        // So I have to do it.
-        $modcontext = context_module::instance($cmid);
-        $params = [
-            'objectid' => $discussion->id,
-            'context'  => $modcontext,
-            'other'    => [
-                'forumid' => $forum->id,
-            ]
-        ];
-
-        $event = \mod_forum\event\discussion_deleted::create($params);
-        $event->add_record_snapshot('forum_discussions', $discussion);
-        $event->trigger();
     }
 
     /**
