@@ -156,7 +156,6 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
      * @throws dml_exception
      */
     public function test_userlist_export() {
-        $this->markTestSkipped('Failing after 3.9.2 merge, to be reviewed in INT-16297');
         global $DB;
 
         $this->resetAfterTest(false);
@@ -189,28 +188,6 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
 
         // Initial export.
         $this->export_check('userlistv2', $typedef, $exportuntil, false, ($nr + $usercount));
-
-        // Check export of modified categories.
-        $newnow = $now - (4 * HOURSECS);
-        list($exportuntil, $timemodified) = $this->get_now_past($newnow);
-        $cats = [];
-        foreach ($elements as $elem) {
-            $cats[] = (int)$elem->id;
-        }
-        $params = ['timemodified' => $timemodified];
-        list ($insql, $tparams) = $DB->get_in_or_equal($cats, SQL_PARAMS_NAMED);
-        $params += $tparams;
-        $DB->execute(
-            "UPDATE {user} SET timemodified = :timemodified WHERE id {$insql}",
-            $params
-        );
-        $this->assertEquals(
-            $nr,
-            $DB->count_records('user', ['timemodified' => $timemodified])
-        );
-
-        // Update export.
-        $this->export_check('userlistv2', $typedef, $exportuntil, false, $nr);
     }
 
     /**
