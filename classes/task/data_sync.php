@@ -45,7 +45,7 @@ defined('MOODLE_INTERNAL') || die();
  *
  * To manually execute run:
  *
- * php -f admin/tool/task/cli/schedule_task.php -- --execute=\\local_xray\\task\\data_sync
+ * php -f admin/cli/scheduled_task.php -- --execute=\\local_xray\\task\\data_sync
  *
  * @package   local_xray
  * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
