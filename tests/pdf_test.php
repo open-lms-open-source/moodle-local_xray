@@ -41,7 +41,7 @@ class local_xray_pdf_testcase extends \advanced_testcase {
     /**
      * Setup.
      */
-    public function setUp() {
+    public function setUp(): void {
         global $CFG;
         require_once($CFG->dirroot.'/local/xray/locallib.php');
         require_once($CFG->libdir.'/pdflib.php');

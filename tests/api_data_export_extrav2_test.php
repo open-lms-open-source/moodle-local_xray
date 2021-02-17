@@ -27,7 +27,7 @@ class local_xray_api_data_export_extrav2_testcase extends local_xray_api_data_ex
     /**
      * preset
      */
-    public function setUp() {
+    public function setUp(): void {
         $this->init_base();
         set_config('newformat', true, 'local_xray');
     }

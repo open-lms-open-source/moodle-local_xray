@@ -27,7 +27,7 @@ class local_xray_api_data_export_groups_testcase extends local_xray_api_data_exp
     /**
      * preset
      */
-    public function setUp() {
+    public function setUp(): void {
         $this->init_base();
     }
 

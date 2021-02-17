@@ -108,7 +108,7 @@ class local_xray_valid_courses_test extends local_xray_base_testcase {
     /**
      * @return void
      */
-    public function setUp() {
+    public function setUp(): void {
         $this->reset_ws();
     }
 

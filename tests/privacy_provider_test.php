@@ -41,7 +41,7 @@ class local_xray_privacy_provider_testcase extends \core_privacy\tests\provider_
     /**
      * Ensure that get_metadata exports valid content.
      */
-    public function setUp() {
+    public function setUp(): void {
         $this->resetAfterTest(true);
     }
 

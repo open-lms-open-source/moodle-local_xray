@@ -24,7 +24,7 @@ require_once(__DIR__.'/csviterator.php');
  */
 class local_xray_task_data_sync_testcase extends advanced_testcase {
 
-    public function setUp() {
+    public function setUp(): void {
         $this->setAdminUser();
     }
 

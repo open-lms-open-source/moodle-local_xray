@@ -41,7 +41,7 @@ class local_xray_add_category_testcase extends \advanced_testcase {
     /**
      * Setup.
      */
-    public function setUp() {
+    public function setUp(): void {
         $this->resetAfterTest(true);
         global $CFG;
         /* @noinspection PhpIncludeInspection */

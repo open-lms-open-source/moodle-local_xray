@@ -48,7 +48,7 @@ class local_xray_tables_reports_testcase extends local_xray_base_testcase {
     /**
      * Setup test data.
      */
-    public function setUp() {
+    public function setUp(): void {
 
         global $PAGE;
         $this->resetAfterTest(true);

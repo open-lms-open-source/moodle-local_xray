@@ -33,7 +33,7 @@ class local_xray_api_validationaws_testcase extends local_xray_base_testcase {
     /**
      * @return void
      */
-    public function setUp() {
+    public function setUp(): void {
         $this->reset_ws();
     }
 

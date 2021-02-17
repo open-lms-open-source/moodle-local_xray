@@ -46,7 +46,7 @@ class local_xray_headline_testcase extends \advanced_testcase {
     /**
      * Setup test data.
      */
-    public function setUp() {
+    public function setUp(): void {
         $this->course = $this->getDataGenerator()->create_course();
 
         $this->user = $this->getDataGenerator()->create_user();
