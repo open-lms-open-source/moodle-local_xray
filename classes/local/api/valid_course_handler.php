@@ -18,8 +18,8 @@
  * Convenient wrappers and helper for using the X-Ray web service API.
  *
  * @package   local_xray
- * @author    David Castro <david.castro@blackboard.com>
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @author    David Castro <david.castro@openlms.net>
+ * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,8 +31,8 @@ defined('MOODLE_INTERNAL') || die();
  * A helper class to manage the valid course list gotten from X-Ray services.
  *
  * @package   local_xray
- * @author    David Castro <david.castro@blackboard.com>
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @author    David Castro <david.castro@openlms.net>
+ * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class valid_course_handler {

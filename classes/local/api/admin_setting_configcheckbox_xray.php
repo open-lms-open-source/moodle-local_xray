@@ -19,7 +19,7 @@
  *
  * @package   local_xray
  * @author    Darko Miletic
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  *
  * @package local_xray
  * @author    Darko Miletic
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class admin_setting_configcheckbox_xray extends \admin_setting_configcheckbox {

@@ -18,7 +18,7 @@
  * Valid courses test.
  *
  * @package   local_xray
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,7 +34,7 @@ use \local_xray\local\api\course_manager;
  * All tests in this class will fail in case there is no appropriate fixture to be loaded.
  *
  * @package   local_xray
- * @copyright Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2018 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_valid_courses_test extends local_xray_base_testcase {

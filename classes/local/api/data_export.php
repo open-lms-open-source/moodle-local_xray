@@ -18,8 +18,8 @@
  * Data export API.
  *
  * @package   local_xray
- * @author    Darko Miletic <darko.miletic@blackboard.com>
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @author    Darko Miletic <darko.miletic@openlms.net>
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * Class data_export for exporting raw data for xray processing
  *
  * @package   local_xray
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class data_export {

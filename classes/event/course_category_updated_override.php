@@ -21,7 +21,7 @@
  *
  * @package   local_xray
  * @author    Darko Miletic
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

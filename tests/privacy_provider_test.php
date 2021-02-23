@@ -18,8 +18,8 @@
  * Tests for the lcoal_xray implementation of the Privacy Provider API.
  *
  * @package    local_xray
- * @author     Jonathan Garcia Gomez jonathan.garcia@blackboard.com
- * @copyright  Copyright (c) 2018 Blackboard Inc.
+ * @author     Jonathan Garcia Gomez jonathan.garcia@openlms.net
+ * @copyright  Copyright (c) 2018 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -33,7 +33,7 @@ use \local_xray\privacy\provider;
 /**
  * Tests for the local_xray implementation of the Privacy Provider API.
  *
- * @copyright  Copyright (c) 2018 Blackboard Inc.
+ * @copyright  Copyright (c) 2018 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_xray_privacy_provider_testcase extends \core_privacy\tests\provider_testcase {

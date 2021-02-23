@@ -1,21 +1,21 @@
-# Blackboard X-Ray Learning Analytics local plugin
+# Open LMS X-Ray Learning Analytics local plugin
 
 ## Requirements
 
 * [Moodle 2.9+][moodle-29]
-* [Blackboard Open LMS framework][mr-framework-github]
+* [Open LMS framework][mr-framework-github]
 * [AWS PHP SDK][mr-aws-sdk]
 * Purchased licence of X-Ray Learning Analytics service ( For more information please visit the official [site][xray-site]. ) 
 
 ## Installation
 
-* Install Blackboard Open LMS framework
+* Install Open LMS framework
 * Install AWS SDK
 * Deploy and install X-Ray Learning Analytics plugin
 
-### Blackboard Open LMS Framework
+### Open LMS Framework
 
-Blackboard Open LMS Framework can be obtained from [Moodle plugins][mr-framework-moodle] database or from our [GitHub repository][mr-framework-github]. Either way is suitable. Make sure to choose the correct version of the plugin for your version of Moodle.
+Open LMS Framework can be obtained from [Moodle plugins][mr-framework-moodle] database or from our [GitHub repository][mr-framework-github]. Either way is suitable. Make sure to choose the correct version of the plugin for your version of Moodle.
 
 ### AWS SDK
 
@@ -56,18 +56,18 @@ Example:
 
 ## Configuration
 
-Contact the Blackboard X-Ray specialists about configuration information and onboarding process.
+Contact the Open LMS X-Ray specialists about configuration information and onboarding process.
 
 ## Copyright
 
 &copy; Blackboard, Inc.  Code for this plugin is licensed under the [GPLv3 license][GPLv3].
 
-Any Blackboard trademarks and logos included in these plugins are property of Blackboard and should not be reused, redistributed, modified, repurposed, or otherwise altered or used outside of this plugin.
+Any Open LMS trademarks and logos included in these plugins are property of Open LMS and should not be reused, redistributed, modified, repurposed, or otherwise altered or used outside of this plugin.
 
 [xray-site]: http://www.blackboard.com/education-analytics/xray-learning-analytics.aspx "X-Ray Analytics"
 [moodle-29]: https://docs.moodle.org/dev/Moodle_2.9_release_notes "Moodle 2.9 Release Notes"
-[mr-framework-github]: https://github.com/blackboard-open-source/moodle-local_mr "Blackboard Open LMS Framework"
-[mr-framework-moodle]: https://moodle.org/plugins/view.php?plugin=local_mr "Blackboard Open LMS Framework"
+[mr-framework-github]: https://github.com/blackboard-open-source/moodle-local_mr "Open LMS Framework"
+[mr-framework-moodle]: https://moodle.org/plugins/view.php?plugin=local_mr "Open LMS Framework"
 [mr-aws-sdk]: https://github.com/blackboard-open-source/moodle-local_aws_sdk "AWS SDK"
 [mr-aws-sdk-31-branch]: https://github.com/blackboard-open-source/moodle-local_aws_sdk/tree/MOODLE_31_STABLE "3.1 SDK"
 [mr-aws-sdk-32-branch]: https://github.com/blackboard-open-source/moodle-local_aws_sdk/tree/MOODLE_32_STABLE "3.2 SDK"

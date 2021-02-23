@@ -19,7 +19,7 @@
  *
  * @package   local_xray
  * @author    Darko Miletic
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -48,7 +48,7 @@ defined('MOODLE_INTERNAL') || die();
  * php -f admin/cli/scheduled_task.php -- --execute=\\local_xray\\task\\data_sync
  *
  * @package   local_xray
- * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Open LMS (https://www.openlms.net)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class data_sync extends scheduled_task {
