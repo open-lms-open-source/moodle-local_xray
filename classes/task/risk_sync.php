@@ -19,7 +19,7 @@
  *
  * @package   local_xray
  * @author    German Vitale
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -36,7 +36,7 @@ defined('MOODLE_INTERNAL') || die();
  * Class risk_sync - implementation of the task.
  *
  * @package   local_xray
- * @copyright Copyright (c) 2017 Blackboard Inc.
+ * @copyright Copyright (c) 2017 Open LMS
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class risk_sync extends scheduled_task {

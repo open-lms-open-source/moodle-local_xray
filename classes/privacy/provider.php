@@ -18,8 +18,8 @@
  * Privacy class for requesting user data.
  *
  * @package    local_xray
- * @author     Jonathan Garcia Gomez jonathan.garcia@blackboard.com
- * @copyright  Copyright (c) 2018 Blackboard Inc.
+ * @author     Jonathan Garcia Gomez jonathan.garcia@openlms.net
+ * @copyright  Copyright (c) 2018 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -44,7 +44,7 @@ use core_privacy\local\request\core_userlist_provider;
  *
  * @package    local_xray
  * @author     Jonathan Garcia Gomez
- * @copyright  Copyright (c) 2018 Blackboard Inc.
+ * @copyright  Copyright (c) 2018 Open LMS
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements metadataprovider, pluginprovider, core_userlist_provider {
