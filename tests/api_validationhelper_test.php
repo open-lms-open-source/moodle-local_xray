@@ -154,6 +154,7 @@ class local_xray_api_validationhelper_testcase extends advanced_testcase {
      * @dataProvider ws_schema_provider_ok
      */
     public function test_webservice_schemas($url, $schemafile, $jsonfile, $noerror) {
+        $this->markTestSkipped('Xray EOL');
         // Check if url is correctly recognized and schema name checks.
         $schemafilegot = \local_xray\local\api\validationhelper::generate_schema_name($url);
         $this->assertEquals($schemafile, $schemafilegot, "No schema file pattern for {$url}!");

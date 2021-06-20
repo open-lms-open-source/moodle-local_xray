@@ -84,7 +84,7 @@ class local_xray_headline_testcase extends \advanced_testcase {
      * Data returned by webservice is incorrect for show headline.
      */
     public function test_get_incorrect_data() {
-
+        $this->markTestSkipped('Xray EOL');
         $this->resetAfterTest();
 
         // Set clientid, with clientid "error", webservice class send us error when phpunit is running.
