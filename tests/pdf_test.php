@@ -114,7 +114,7 @@ class local_xray_pdf_testcase extends \advanced_testcase {
             'risus placerat consectetur. Integer et turpis et dolor vestibulum tempus sit amet at diam. Ut '.
             'luctus cursus rhoncus.');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertInstanceOf('\html_table_cell', $result[0]);
         $this->assertInstanceOf('\html_table_cell', $result[1]);
     }
@@ -126,7 +126,7 @@ class local_xray_pdf_testcase extends \advanced_testcase {
 
         $result = local_xray_add_recommendation_pdf('3', 8);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertInstanceOf('\html_table_cell', $result[0]);
         $this->assertInstanceOf('\html_table_cell', $result[1]);
     }
@@ -138,7 +138,7 @@ class local_xray_pdf_testcase extends \advanced_testcase {
 
         $result = local_xray_report_head_row('Title', 'Icon');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertInstanceOf('\html_table_row', $result[0]);
         $this->assertInstanceOf('\html_table_row', $result[1]);
         $this->assertInstanceOf('\html_table_row', $result[2]);

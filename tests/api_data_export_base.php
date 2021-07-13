@@ -728,7 +728,8 @@ abstract class local_xray_api_data_export_base_testcase extends advanced_testcas
             }
             foreach ($item as $field) {
                 if (($typedef[$pos]['optional'] and !empty($field)) or !$typedef[$pos]['optional']) {
-                    $this->assertInternalType($typedef[$pos]['type'], $field);
+                    $functionassemble = 'assertIs' . $typedef[$pos]['type'];
+                    $this->{$functionassemble}($field);
                 }
                 if (!empty($validate)) {
                     $this->assertArrayHasKey($pos, $validator, var_export($validator, true));
